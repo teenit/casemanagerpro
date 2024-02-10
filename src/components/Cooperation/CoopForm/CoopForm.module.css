@@ -1,0 +1,42 @@
+.wrap input{
+    border: none;
+}
+.wrap{
+    width: 90%;
+    margin: auto;
+}
+.wrap__form{
+    width: 90%;
+    margin: auto;
+}
+.inner__form{
+    width: 100%;
+    box-sizing: border-box;
+}
+.g__3{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+.form__container{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+.textarea{
+    border: none;
+    border-radius: 0;
+    border-bottom: solid 1px #186fc6;
+}
+.cont__line{
+    width: 90%;
+    margin: auto;
+}
+.close__icon{
+    float: right;
+}
+@media screen and (max-width:600px){
+    .g__3{
+        grid-template-columns: 1fr;
+    }
+}

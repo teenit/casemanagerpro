@@ -1,0 +1,54 @@
+.wrap{
+    width: 90%;
+    margin: auto;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ebe8ea;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f6f6f6;
+  }
+table{
+    text-align: center;
+    display: block;
+    border-collapse: collapse
+}
+thead{
+    font-weight: 600;
+    background-color: #a9a6a8;
+    border: 1px solid #000;
+}
+td{
+    border: 1px solid #ccc;
+    padding: 2px;
+}
+.btn__print{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin: auto;
+    margin-top: 30px;
+    padding: 5px 20px;
+    border: solid 3px var(--main-color);
+    border-radius: 10px;
+    background-color: #fff;
+    transition: all .3s;
+    cursor: pointer;
+}
+.btn__print:hover{
+    box-shadow: 0 0 5px 0 var(--main-color);
+    border-radius: 5px;
+}
+.print__img{
+    width: 25px;
+}
+@media screen and (max-width:1024px) {
+    table{
+        overflow-x: scroll;
+    }
+}

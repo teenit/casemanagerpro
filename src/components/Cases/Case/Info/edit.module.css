@@ -1,0 +1,26 @@
+.close{
+    display: block;
+    width: 25px;
+    height: 25px;
+    position: fixed;
+    right: 50px;
+    top: 100px;
+    cursor: pointer;
+    transition: all .3s;
+}
+.close:hover{
+    transform: scale(1.1);
+}
+.close span{
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: calc(50% - 4px);
+    height: 4px;
+    background-color: #000;
+    border-radius: 5px;
+    transform: rotate(45deg);
+}
+.close span+span{
+    transform: rotate(-45deg);
+}

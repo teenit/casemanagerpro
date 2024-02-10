@@ -1,0 +1,123 @@
+.wrap__add__case{
+    width: 100%;
+}
+.add__case__inner{
+    width: 70%;
+    margin: auto;
+    padding: 50px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+}
+
+.add__case__inner textarea:focus{
+    resize: none;
+    border: solid 1px rgb(0, 47, 91);
+    border-radius: 5px;
+    transform: scale(1);
+}
+.add__case__line__three{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 30px;
+}
+.add__case__item__inner__input label{
+    width: max-content;
+    display: block;
+    margin-left: 15px;
+    padding-bottom: 5px;
+}
+.add__case__line__two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+}
+
+.add__case__line__one{
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.add__case__item__inner__category__item{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+.add__case__item__inner__category{
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+}
+.add__case__item__inner__category label{
+    padding: 0;
+}
+.add__case__name__of__block{
+    padding: 20px 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+.add__case__item__inner__input__item input{
+    margin-left: 0;
+    
+}
+.add__case__item__inner__input__item{
+    margin-top: 20px;
+}
+.color__red{
+    color: red;
+}
+.add__case__modal{
+    width: 100%;
+    position: fixed;
+    height: 100vh;
+    background-color: #00000077;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.add__case__modal__inner{
+    background-color: #fff;
+    padding: 50px;
+}
+.add__case__modal.active{
+    display: flex;
+}
+.add__case__modal__inner button{
+    padding: 15px;
+}
+.add__case__line button{
+    padding: 15px 5%;
+}
+.part__plan__description{
+    width: 80%;
+    margin: auto;
+    padding: 20px 5%;
+    border: solid 1px #000;
+}
+.wrap__plan{
+    overflow-y: scroll;
+}
+
+@media (max-width:500px){
+    .add__case__inner {
+        width: 90%;
+        margin: auto;
+        padding: 50px 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 30px;
+    }
+    .add__case__line__three {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 30px;
+    }
+    .add__case__line__two {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 30px;
+    }
+}

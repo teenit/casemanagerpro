@@ -1,0 +1,17 @@
+.stats__grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    width: 90%;
+    margin: auto;
+    color: #f99c9c;
+    margin-top: 50px;
+}
+@media screen and (max-width:600px) {
+    .stats__grid{
+        grid-template-columns: 1fr;
+    }
+}
+.amount__cases__wr > h2{
+    text-align: center;
+}

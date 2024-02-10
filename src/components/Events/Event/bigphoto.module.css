@@ -1,0 +1,22 @@
+.wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #00000044;
+    overflow: hidden;
+    height: 100vh;
+    width: 100%
+}
+.inner{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    overflow-y: scroll;
+}
+.inner img{
+    max-width: 90%;
+}

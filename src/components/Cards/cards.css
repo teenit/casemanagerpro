@@ -1,0 +1,118 @@
+.wrap__cards{
+    width: 100%;
+}
+.inner__cards{
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 10%;
+    row-gap: 50px;
+}
+.card{
+    box-shadow: 0 0 10px 0 gray;
+    position: relative;
+    border-radius: 10px;
+    background-color: #ded9e2;
+}
+.card__img{
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    column-gap: 30px;
+    width: 90%;
+    margin: auto;
+    margin-top: 15px;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+
+.card__img img{
+width: 100%;
+border-radius: 10px;
+}
+.card__case__name{
+    text-align: center;
+}
+.card__info{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+}
+.card__description{
+    width: 90%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+}
+.card__info__status{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    width: 90%;
+    margin: auto;
+}
+.card__description__phones{
+    display: flex;
+    justify-content: space-between;
+}
+.card__description__email{
+    text-align: center;
+}
+.status__color{
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: red;
+}
+.status__color.green{
+    background-color: green;
+}
+.status__color.orange{
+    background-color: orange;
+}
+.card__info__status__date{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.category__circle{
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    border-radius: 50%;
+    box-shadow:  0 0 5px 0 #00000077;
+    margin: auto;
+}
+.card__categories{
+   display: flex;
+   flex-direction: column;
+   grid-template-columns: 1fr;
+   row-gap: 10px;
+   align-items: top;
+}
+.card__categories__inner{
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+}
+.card__info a{
+    color: #000;
+}
+.card__id{
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+}
+@media (max-width:600px){
+    .inner__cards {
+        width: 80%;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 10%;
+        row-gap: 50px;
+    }
+}

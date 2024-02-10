@@ -1,0 +1,31 @@
+.modal__window{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #000000aa;
+}
+.modal__window__inner{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal__window__message{
+    width: max-content;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+}
+.modal__window__message.red{
+    border:solid 2px red;
+    color: red;
+}
+.modal__window__message.green{
+    border:solid 2px green;
+    color: green;
+}

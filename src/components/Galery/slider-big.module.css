@@ -1,0 +1,89 @@
+.slider{
+    width: 100%;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00000099;
+    height: calc(100vh - 60px);
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    z-index: 1;
+}
+.inner{
+    overflow: hidden;
+}
+.inner__slider{
+    display: flex;
+    transition: all .3s;
+    align-items: center;
+    justify-content: center;
+}
+.media__block{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.photo{
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 15px;
+}
+.video{
+    height: 80%;
+    width: 100%;
+    border-radius: 15px;
+
+}
+.arrow{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.arrow > img{
+    transition: all .3s;
+    cursor: pointer;
+}
+.left__arrow > img:hover{
+    transform: scale(1.1);
+}
+.right__arrow > img{
+    transform: rotate(180deg);
+
+}
+.right__arrow > img:hover{
+    transform: scale(1.1) rotate(180deg);
+}
+.close{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    transition: all .3s;
+    z-index: 9;
+}
+.close:hover{
+    transform: rotate(500deg);
+}
+.close > span{
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    background-color: #fff;
+    top:50%;
+    
+
+}
+.close__one{
+    transform: translateY(-50%) rotate(-45deg);
+}
+.close__two{
+    transform: translateY(-50%) rotate(45deg);
+}

@@ -1,0 +1,122 @@
+.wrap__bells{
+    width: 100%;
+    height: calc(100vh - 60px);
+    position: fixed;
+    top: 60px;
+    left: 0;
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+.black{
+    transition: all .3s;
+    width: 0;
+}
+.items{
+    background-color: #fff;
+    height: 100%;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    grid-template-columns: 1fr;
+    border-left: solid 3px var(--main-color);
+    position: relative;
+}
+.item{
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    cursor: pointer;
+    transition: all .5s;
+    background-color: var(--second-color);
+    border-bottom: solid 3px var(--main-color);
+}
+.item:hover{
+    background-color: aquamarine;
+}
+.active{
+    animation-duration: .7s;
+    animation-name: active;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+}
+.bell__img{
+    cursor: pointer;
+    transition: all .3s;
+}
+.bell__img:hover{
+    animation-duration: .1s;
+    animation-name: hoverBell;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+}
+.wr__img{
+    position: relative;
+}
+.count{
+    position: absolute;
+    width: max-content;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: -7px;
+    border-radius: 50%;
+    background-color: #fff;
+    padding: 3px;
+    font-size: 12px;
+    color: #f00;
+    min-width: 15px;
+    min-height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.date__bell{
+    font-size: 12px;
+    font-weight: 600;
+    float: right;
+}
+.link__item{
+    color: #000;
+    font-weight: 400;
+}
+.item__read{
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    cursor: pointer;
+    transition: all .5s;
+    background-color: #eeecf1;
+    border-bottom: solid 3px var(--main-color);
+}
+@keyframes active {
+    from{
+        width: 0;
+    }
+    to{
+        width: 100%;
+    }
+}
+
+@keyframes hoverBell {
+    from{
+        transform: rotate(10deg);
+    }
+    to{
+        transform: rotate(-10deg);
+    }
+}
+@media screen and (max-width:600px) {
+    .wrap__bells{
+        grid-template-columns: 20% 80%;
+    }
+}

@@ -1,0 +1,37 @@
+.modal__wrap{
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    background-color: rgb(217, 130, 130);
+}
+.modal__inner{
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+}
+.close{
+    display: block;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    cursor: pointer;
+    transition: all .3s;
+}
+.close:hover{
+    transform: scale(1.1);
+}
+.close span{
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: calc(50% - 4px);
+    height: 4px;
+    background-color: #fff;
+    border-radius: 5px;
+    transform: rotate(45deg);
+}
+.close span+span{
+    transform: rotate(-45deg);
+}

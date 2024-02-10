@@ -1,0 +1,14 @@
+.section_contact {
+  position: relative;
+  min-width: 320px;
+  margin: 65px auto;
+}
+
+.responsive {
+  max-width: 1200px;
+}
+
+.section_contact h2 {
+  font-size: 40px;
+  text-align: center;
+}

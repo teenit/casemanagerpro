@@ -1,0 +1,71 @@
+.header{
+    width: 100%;
+    height: 60px;
+    background-color: var(--main-color);
+}
+.wrap__header{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.logo__img{
+    width: 50px;
+    transition: .7s;
+}
+.logo__img:hover{
+    transform: rotate(1080deg);
+}
+.logout{
+    transition: all .3s;
+    box-sizing: border-box;
+    border: solid 1px var(--main-color);
+}
+.logout:hover{
+    
+    border: solid 1px #fff;
+    border-radius: 50%;
+}
+.container{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: space-between;
+}
+.logo{
+    height: 60px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+}
+.control img{
+    width: 40px;
+}
+.control{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    gap: 15px;
+}
+.calendar__link{
+    position: relative;
+}
+.day__number{
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.day__number{
+    color: #fff;
+}
+@media screen and (max-width:600px) {
+    .control img{
+        width: 30px;
+    }
+    .day__number{
+        position: absolute;
+        top: 16%;
+        font-size: 16px;
+    }
+}

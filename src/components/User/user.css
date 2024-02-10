@@ -1,0 +1,180 @@
+.user__wrap {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin: auto;
+  width: 100%;
+}
+
+.case__contact__info__img__inner {
+  position: relative;
+}
+
+.case__contact__info__img img {
+  max-width: 100%;
+  width: 100%;
+}
+
+#uploadbtn {
+  visibility: hidden;
+}
+
+.case__contact__info__img {
+  position: relative;
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 20% 38% 38%;
+  gap: 20px;
+}
+
+.user_info,
+.change_password {
+  height: 320px;
+  border: solid 3px #b399cb;
+  border-radius: 15px;
+}
+
+.user_info_name,
+.user_info_phone,
+.user_info_mail {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.added_contact,
+.added_report {
+  margin-bottom: 20px;
+  border: solid 3px #b399cb;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.added_all_contact {
+  background-color: #ded9e2;
+  border: solid 3px #b399cb;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.added_contact_list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.added_contact_list_item,
+.added_report_list_item {
+  background-color: white;
+  border: solid 3px #b399cb;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.error__recovery {
+  font-weight: bold;
+  color: red;
+}
+
+.added_contact_wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+}
+.added_new_cases{
+  display: flex;
+  justify-content: end;
+}
+.added_contact_title {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+}
+
+.user_pagination {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user_pagination li > button {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 50%;
+  background: gray;
+  cursor: pointer;
+}
+
+.added_new_cases a {
+  padding: 5px;
+  font-weight: 800;
+  border: solid 1px #b399cb;
+  box-shadow: 0px 0px 7px 7px rgb(179 153 203 / 20%);
+  border-radius: 15px;
+}
+
+.added_report_list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.added_report_list_item_wrap {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn__active {
+  background-color: rgb(126, 160, 223) !important;
+}
+.wrap__change__form{
+  width: 80%;
+  margin: auto;
+}
+@media (max-width:700px){
+  .case__contact__info__img {
+    position: relative;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin: auto;
+    gap: 20px;
+}
+.added_contact_list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 95%;
+  margin: auto;
+}
+.added_all_contact{
+  width: 95%;
+  margin: auto;
+  padding: 20px 0;
+}
+.added_contact_wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.added_contact, .added_report {
+  margin-bottom: 20px;
+  border: solid 3px #b399cb;
+  border-radius: 15px;
+  padding: 20px 0;
+  width: 100%;
+  margin: auto;
+}
+}

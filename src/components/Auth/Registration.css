@@ -1,0 +1,73 @@
+.reg__container{
+    width: 50%;
+   display: block;
+    row-gap: 30px;
+    margin: auto;
+    margin-top: 50px;
+    padding: 50px 0;
+}
+
+.reg__container  h1{
+    text-align: center;
+}
+.reg__container{
+    border-radius: 20px;
+    box-shadow: 0 0 10px #000;
+}
+.reg__block{
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: auto;
+    margin-top: 20px;
+}
+.error__mes{
+    color: red;
+}
+.reg__menu{
+    width: max-content;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+}
+.reg__menu__item.active{
+    color: gold;
+}
+.reg__form__recovery__btn.active{
+    color: gold;
+}
+.reg__menu__item{
+    transition: all .3s;
+    font-weight: 900;
+}
+.reg__menu__item:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.forget__form{
+    width: 80%;
+    margin: auto;
+    display: grid;
+    margin-top: 30px;
+    row-gap: 10px;
+}
+.forget__form h2{
+    text-align: center;
+}
+.reg__form__recovery{
+    width: max-content;
+    margin: auto;
+}
+.reg__form__recovery__btn{
+    cursor: pointer;
+}
+.reg__form__recovery__btn:hover{
+    color: #00000099;
+}
+@media (max-width:700px){
+    .reg__container{
+        width: 90%;
+    }
+}

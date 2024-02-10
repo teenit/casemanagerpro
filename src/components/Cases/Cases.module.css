@@ -1,0 +1,41 @@
+.cases{
+    font-size: 40px;
+}
+.select__sort{
+    width: 50%;
+    padding: 15px 0;
+    margin:auto
+}
+.look__more{
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    padding: 5px;
+    border: solid 5px var(--main-color);
+    border-radius: 10px;
+    background-color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .3s;
+}
+.look__more:hover{
+    box-shadow: 0 0 10px 0 var(--main-color);
+}
+.look__more__text{
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    text-align: center;
+}
+.like__btn{
+    display: block;
+    margin: auto;
+    width: max-content;
+    margin-top: 15px;
+    cursor: pointer;
+    border: solid 4px var(--main-color);
+    border-radius: 10px;
+    background-color: #fff;
+    text-transform: uppercase;
+    padding: 5px 15px;
+}

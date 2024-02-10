@@ -1,0 +1,31 @@
+.home{
+    font-size: 40px;
+}
+.text__center{
+    text-align: center;
+}
+.menu__wrap{
+    width: 80%;
+    margin: auto;
+}
+.ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    text-align: center;
+    justify-content: space-between;
+}
+.li{
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: solid 5px var(--main-color);
+}
+.a:hover{
+    color: gold;
+}

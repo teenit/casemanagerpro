@@ -1,0 +1,24 @@
+.wrap__portal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+
+}
+.inner__portal{
+    width: 100%;
+    height: 80vh;
+    position: absolute;
+    top: 10vh;
+    overflow-y: scroll;
+    background-color: #fff;
+    padding: 10px;
+  
+}
