@@ -19,6 +19,7 @@ import Calendar from "../Calendar/Calendar";
 import Cooperation from "../Cooperation/Cooperation";
 import Task from "../Task/Task";
 import AccessPage from "../pages/AccessPage";
+import AccessPageRight from "../pages/AccessPageRight";
 
 const localToken = localStorage.getItem("token");
 
@@ -38,6 +39,7 @@ const MainContent = ()=>{
             <Route path='/contacts' element={<Contacts/>} />
             <Route path="/resources" element = {<Resources />} />
             <Route path="/access" element = {<AccessPage />} />
+            <Route path="/access/:id" element = {<AccessPageRight />} />
             <Route path='events' element={<Events />} />
             <Route path='events/:link' element={<Event />} />
             <Route path='calendar' element={<Calendar />} />

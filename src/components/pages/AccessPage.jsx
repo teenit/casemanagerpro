@@ -1,8 +1,9 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const AccessPage = () => {
 
-    return <div className="AccessPage">Access PAge</div>
+    return <NavLink to="1" className="AccessPage">Access Page</NavLink>
 }
 
 export default AccessPage;
