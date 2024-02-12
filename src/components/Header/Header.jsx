@@ -20,11 +20,14 @@ import SearchMenu from "./Menu/SearchMenu";
 import ModalErrorConnection from "../Modals/ModalErrorConnection";
 import Bell from "./Menu/Bell";
 import moment from "moment";
+import { setAccess } from "../../store/Slices/accessSlice";
+import { useAccess } from "../../hooks/use-access";
 const Header = () => {
   const [errorNet, setErrorNet] = useState(null);
   const localToken = localStorage.getItem("token");
   const dispatch = useDispatch();
   const { isAuth } = useAuth();
+  const {access} = useAccess();
   const [active, setActive] = useState(false);
   const today = moment().format('D');
   useEffect(()=>{
@@ -37,6 +40,7 @@ const Header = () => {
       })
         .then((data) => {
           data = data.data;
+          dispatch(setAccess({access:data}));
           if ("message" in data) {
             dispatch(removeUser());
           }
@@ -48,9 +52,7 @@ const Header = () => {
       }
   },[])
   
-  
-
-  return isAuth ? (
+  return isAuth && access ? (
     <div className={s.wrap__header}>
       {errorNet ? <ModalErrorConnection error={errorNet} func={()=>{
         setErrorNet(null)
@@ -88,7 +90,7 @@ const Header = () => {
   <header className={s.header}>
     <div className={s.container}>
       <div className={s.control}>
-      <NavLink className={s.a} to="/login"> Увійти до програми</NavLink>
+        <NavLink className={s.a} to="/login"> Увійти до програми</NavLink>
       </div>
     </div>
   </header>

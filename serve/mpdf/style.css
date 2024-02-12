@@ -1,0 +1,64 @@
+.container{
+    width: 700px;
+}
+.header__logo{
+    height: 150px;
+}
+.imgs__div{
+    text-align: center;
+    margin-top: 15px;
+}
+.imgs{
+    max-width: 500px;
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+}
+.imgs.mark{
+    opacity: .3;
+}
+.container.mark{
+    background: url('logo-case.png');
+}
+.cont__img{
+    width: 250px;
+}
+.cont__img__wrap{
+    width: 250px;
+    float: left;
+}
+.cont__info{
+    width: 400px;
+    float: right;
+}
+.container__h1{
+    text-align: center;
+}
+.to__info{
+    width: 700px;
+}
+.to__info__left{
+    width:340px;
+    float: left;
+}
+.to__info__right{
+    width:340px;
+    float: right;
+}
+h2{
+    text-align: center;
+}
+.color__red{
+    color: red;
+}
+.color__green{
+    color: green;
+}
+.color__orange{
+    color: orange;
+}
+.mark__img{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
