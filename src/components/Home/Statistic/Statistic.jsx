@@ -79,6 +79,7 @@ const Statistic = () =>{
          // console.log(data)
         });
         getCasesHappy().then((data) => {
+         // return console.log(data)
           setAmountHappy(data)
         });
     },[])

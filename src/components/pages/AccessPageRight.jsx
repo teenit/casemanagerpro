@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import { apiResponse } from '../Functions/get_apiObj'
 const LANG = {
   a_page_case_add:"Створити кейс",
   a_page_case_edit:"Редагувати кейс",
@@ -64,9 +66,19 @@ const RIGHTS = {
 }
 
 const AccessPageRight = () => {
+  const LOCATION = useLocation()
+  useEffect(()=>{
+    apiResponse({access_id:LOCATION.pathname.slice(LOCATION.pathname.length - 1)},"access/get-by-id.php").then((data)=>{
+      setState({...state, rights:data.access})
+      console.log(data)
+
+    })
+
+  },[])
   const [state,setState] = useState({
     selectedPage:0,
-    selectedRights:[]
+    selectedRights:[],
+    rights:{}
   })
   const changeState = (key,value)=>{
     setState({...state,[key]:value})
@@ -80,7 +92,7 @@ const AccessPageRight = () => {
     });
     setState({ ...state, selectedRights: [...mas], selectedPage: index })
   };
-  
+  console.log(state)
   return (
     <div className='AccessPageRight'>
       <div className='AccessPageRight-left'>

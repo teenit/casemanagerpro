@@ -18,22 +18,24 @@ const LoginForm = ({show})=>{
         })
             .then(res => res.json())
             .then((data) => {
+               
                 if("message" in data){
                     setModal(true)
                    return setModalInfo(data)
                 }
                 localStorage.setItem("token", data.token)
                 localStorage.setItem("email", data.email)
-                localStorage.setItem("id", data.id)
+                localStorage.setItem("id", data.user_id)
                 localStorage.setItem("userName", data.userName)
                 localStorage.setItem("profilePhoto", data.profilePhoto)
                dispatch(setUser({
                     email:data.email,
-                    id: data.id,
+                    id: data.user_id,
                     token: data.token,
                     data:data,
                     userName:data.userName,
-                    profilePhoto:data.profilePhoto
+                    profilePhoto:data.profilePhoto,
+                    access: data.access
                 }))
 
                 window.location.href ="/"

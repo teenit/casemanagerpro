@@ -1,0 +1,646 @@
+{
+    "settings": [
+        {
+            "title": "Кейс",
+            "description": "Розподіл прав доступу до кейсу",
+            "right": [
+                {
+                    "title": "Створити кейс",
+                    "key": "case2",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Редагувати свій кейс",
+                    "key": "case3",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Редагувати чужий кейс",
+                    "key": "case4",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Додавати файли до свого кейсу",
+                    "key": "case5",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Додавати файли до чужого кейсу",
+                    "key": "case6",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Додавати медіа-файли до свого кейсу",
+                    "key": "case7",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Додавати медіа-файли до чужого кейсу",
+                    "key": "case8",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Передати кейс іншому користувачу",
+                    "key": "case9",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Створення індивідуального плану",
+                    "key": "case10",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Створення зв'язків між кейсами",
+                    "key": "case11",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Додавати нотатки до свого кейсу",
+                    "key": "case12",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Додавати нотатки до чужого кейсу",
+                    "key": "case13",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Додавати запис про надану допомогу, свій кейс",
+                    "key": "case14",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Додавати запис про надану допомогу, чужий кейс",
+                    "key": "case15",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Експорт кейсу у ПДФ (свій кейс)",
+                    "key": "case16",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Експорт кейсу у ПДФ (чужий кейс)",
+                    "key": "case17",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Додавати водяний знак у ПДФ",
+                    "key": "case18",
+                    "value": false,
+                    "type": "case"
+                },
+                {
+                    "title": "Видалити кейс",
+                    "key": "case19",
+                    "value": false,
+                    "type": "case"
+                }
+            ]
+        },
+        {
+            "title": "Сторінки",
+            "description": "Доступ до сторінок",
+            "right": [
+                {
+                    "title": "Налаштування",
+                    "key": "page0",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Статистика",
+                    "key": "page1",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Кейси",
+                    "key": "page2",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Кейс",
+                    "key": "page3",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Додати кейс",
+                    "key": "page4",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Івенти (події)",
+                    "key": "page5",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Івент (подія)",
+                    "key": "page6",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Календар",
+                    "key": "page7",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Телефонна книга",
+                    "key": "page8",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Розширений пошук",
+                    "key": "page9",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Ресурси",
+                    "key": "page10",
+                    "value": false,
+                    "type": "page"
+                },
+                {
+                    "title": "Профіль",
+                    "key": "page11",
+                    "value": false,
+                    "type": "page"
+                }
+            ]
+        },
+        {
+            "title": "Статистика",
+            "description": "Доступ до розділу статистики",
+            "right": [
+                {
+                    "title": "Доступне місце на сервері",
+                    "key": "statistics0",
+                    "value": false,
+                    "type": "statistics"
+                },
+                {
+                    "title": "Категорії кейсів",
+                    "key": "statistics1",
+                    "value": false,
+                    "type": "statistics"
+                },
+                {
+                    "title": "Дні народження кейсів по місяцях",
+                    "key": "statistics2",
+                    "value": false,
+                    "type": "statistics"
+                }
+            ]
+        },
+        {
+            "title": "Календар",
+            "description": "Доступ до розділу календар",
+            "right": [
+                {
+                    "title": "Бачити події створені для всіх користувачів",
+                    "key": "cal0",
+                    "value": false,
+                    "type": "calendar"
+                },
+                {
+                    "title": "Бачити дні народження кейсів",
+                    "key": "cal1",
+                    "value": false,
+                    "type": "calendar"
+                },
+                {
+                    "title": "Бачити дні народження користувачів",
+                    "key": "cal2",
+                    "value": false,
+                    "type": "calendar"
+                },
+                {
+                    "title": "Бачити дні народження із телефонної книги",
+                    "key": "cal3",
+                    "value": false,
+                    "type": "calendar"
+                },
+                {
+                    "title": "Записи в календар (для себе)",
+                    "key": "cal4",
+                    "value": false,
+                    "type": "calendar"
+                },
+                {
+                    "title": "Записи в календар (для всіх)",
+                    "key": "cal5",
+                    "value": false,
+                    "type": "calendar"
+                },
+                {
+                    "title": "Редагувати запис (свій)",
+                    "key": "cal6",
+                    "value": false,
+                    "type": "calendar"
+                },
+                {
+                    "title": "Редагувати запис (чужий)",
+                    "key": "cal7",
+                    "value": false,
+                    "type": "calendar"
+                },
+                {
+                    "title": "Видалити запис (свій)",
+                    "key": "cal8",
+                    "value": false,
+                    "type": "calendar"
+                },
+                {
+                    "title": "Видалити запис (чужий)",
+                    "key": "cal9",
+                    "value": false,
+                    "type": "calendar"
+                }
+            ]
+        },
+        {
+            "title": "Кейси",
+            "description": "Доступ до розділу кейси",
+            "right": [
+                {
+                    "title": "Відобразити кейси, як список",
+                    "key": "cases0",
+                    "value": false,
+                    "type": "cases"
+                },
+                {
+                    "title": "Друк кейсів або збереження як ПДФ",
+                    "key": "cases1",
+                    "value": false,
+                    "type": "cases"
+                }
+            ]
+        },
+        {
+            "title": "Івент (подія)",
+            "description": "Доступ до розділу івенту (події)",
+            "right": [
+                {
+                    "title": "Видалити івент (свій)",
+                    "key": "ivent0",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Видалити івент (чужий)",
+                    "key": "ivent1",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Перемістити в архів (свій)",
+                    "key": "ivent2",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Перемістити в архів (чужий)",
+                    "key": "ivent3",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Додати учасника івенту (організатора)",
+                    "key": "ivent4",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Додати учасника івенту (кейс)",
+                    "key": "ivent5",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Видалити учасника івента (організатора)",
+                    "key": "ivent6",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Видалити учасника івента (кейс)",
+                    "key": "ivent7",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Редагувати назву і опис івенту (свій)",
+                    "key": "ivent8",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Редагувати назву і опис івенту (чужий)",
+                    "key": "ivent9",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Створити івент",
+                    "key": "ivent10",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Додати план (свій івент)",
+                    "key": "ivent11",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Додати план (чужий івент)",
+                    "key": "ivent12",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Додати відгук до плану (свій івент)",
+                    "key": "ivent13",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Додати відгук до плану (чужий івент)",
+                    "key": "ivent14",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Редагувати план (свій івент)",
+                    "key": "ivent15",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Редагувати план (чужий івент)",
+                    "key": "ivent16",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Редагувати відгук до плану (свій івент)",
+                    "key": "ivent17",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Редагувати відгук до плану (чужий івент)",
+                    "key": "ivent18",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Завантаження документів (свій івент)",
+                    "key": "ivent19",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Завантаження документів (чужий івент)",
+                    "key": "ivent20",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Видалення документів (свій івент)",
+                    "key": "ivent21",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Видалення документів (чужий івент)",
+                    "key": "ivent22",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Завантаження медіа-файлів (свій івент)",
+                    "key": "ivent23",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Завантаження медіа-файлів (чужий івент)",
+                    "key": "ivent24",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Видалення медіа-файлів (свій івент)",
+                    "key": "ivent25",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Видалення медіа-файлів (чужий івент)",
+                    "key": "ivent26",
+                    "value": false,
+                    "type": "ivent"
+                },
+                {
+                    "title": "Доступ до івенту, якщо додано як організатора",
+                    "key": "ivent27",
+                    "value": false,
+                    "type": "ivent"
+                }
+            ]
+        },
+        {
+            "title": "Ресурси",
+            "description": "Доступ до розділу ресурси",
+            "right": [
+                {
+                    "title": "Додати ресурс",
+                    "key": "resource0",
+                    "value": false,
+                    "type": "resource"
+                },
+                {
+                    "title": "Видалити ресурс",
+                    "key": "resource1",
+                    "value": false,
+                    "type": "resource"
+                },
+                {
+                    "title": "Завантажити ресурс",
+                    "key": "resource2",
+                    "value": false,
+                    "type": "resource"
+                },
+                {
+                    "title": "Редагувати ресурс",
+                    "key": "resource3",
+                    "value": false,
+                    "type": "resource"
+                }
+            ]
+        },
+        {
+            "title": "Телефонна книга",
+            "description": "Доступ до розділу телефонна книга",
+            "right": [
+                {
+                    "title": "Створення контакту",
+                    "key": "phonebook0",
+                    "value": false,
+                    "type": "phonebook"
+                },
+                {
+                    "title": "Редагування контакту",
+                    "key": "phonebook1",
+                    "value": false,
+                    "type": "phonebook"
+                },
+                {
+                    "title": "Видалення контакту",
+                    "key": "phonebook2",
+                    "value": false,
+                    "type": "phonebook"
+                }
+            ]
+        },
+        {
+            "title": "Профіль користувача",
+            "description": "Доступ до розділу профілю користувачів",
+            "right": [
+                {
+                    "title": "Доступ заборонено",
+                    "key": "profile0",
+                    "value": false,
+                    "type": "profile"
+                },
+                {
+                    "title": "Контактна інформація",
+                    "key": "profile1",
+                    "value": false,
+                    "type": "profile"
+                },
+                {
+                    "title": "Створені кейси",
+                    "key": "profile2",
+                    "value": false,
+                    "type": "profile"
+                },
+                {
+                    "title": "Доступні кейси",
+                    "key": "profile3",
+                    "value": false,
+                    "type": "profile"
+                },
+                {
+                    "title": "Подані звіти",
+                    "key": "profile4",
+                    "value": false,
+                    "type": "profile"
+                },
+                {
+                    "title": "Подані історії",
+                    "key": "profile5",
+                    "value": false,
+                    "type": "profile"
+                }
+            ]
+        },
+        {
+            "title": "Керування програмою",
+            "description": "Доступ до розділу керування програмою",
+            "right": [
+                {
+                    "title": "Створити кетегорію кейсів",
+                    "key": "manage0",
+                    "value": false,
+                    "type": "manage"
+                },
+                {
+                    "title": "Редагувати категорію кейсів",
+                    "key": "manage1",
+                    "value": false,
+                    "type": "manage"
+                },
+                {
+                    "title": "Видалити категорію кейсів",
+                    "key": "manage2",
+                    "value": false,
+                    "type": "manage"
+                },
+                {
+                    "title": "Створити категорію контакту",
+                    "key": "manage3",
+                    "value": false,
+                    "type": "manage"
+                },
+                {
+                    "title": "Редагувати категорію контакту",
+                    "key": "manage4",
+                    "value": false,
+                    "type": "manage"
+                },
+                {
+                    "title": "Видалити категорію контакту",
+                    "key": "manage5",
+                    "value": false,
+                    "type": "manage"
+                },
+                {
+                    "title": "Активація / Деактивація користувачів",
+                    "key": "manage6",
+                    "value": false,
+                    "type": "manage"
+                },
+                {
+                    "title": "Налаштування прав для користувача",
+                    "key": "manage7",
+                    "value": false,
+                    "type": "manage"
+                },
+                {
+                    "title": "Видалити користувача",
+                    "key": "manage8",
+                    "value": false,
+                    "type": "manage"
+                },
+                {
+                    "title": "Оновлення програми Case Manager",
+                    "key": "manage9",
+                    "value": false,
+                    "type": "manage"
+                }
+            ]
+        }
+    ],
+    "caseCategories":{
+        "title":"Категорії кейсів"
+    },
+    "contactCategories":{
+        "title":"Категорії контактів"
+    }
+}
