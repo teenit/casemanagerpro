@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { apiResponse } from '../Functions/get_apiObj'
 const LANG = {
-  a_page_case_add:"Створити кейс",
-  a_page_case_edit:"Редагувати кейс",
+  a_page_case_add:"Створити кейс 0 - заборонено, 1 - призначеної категорії, 8 - повний доступ",
+  a_page_case_look:"Переглядати кейс (свій) 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 8 - повний доступ",
+  a_page_case_edit:"Редагувати кейс 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 8 - повний доступ",
+  a_page_case_hidden:"Приховати інформацію 0 - приховано повністю, 1 - майже все приховано, 2 - середньо, 3 - низько, 8 - повний доступ",
   a_page_statistics_cases:"Відображати статистику кейсів",
   a_page_statistics_cases_hb:"Відображати статистику по днях народження кейсів",
   a_page_calendar_add:"Створити подію у календарі",
