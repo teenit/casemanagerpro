@@ -179,7 +179,8 @@ const AccessPageRight = () => {
         </div>
 
         <div className='AccessPageRight-right-block'>
-          <AccessBlockCase />
+          <AccessBlockCase accesses={[]}/>
+
         </div>
 
         {
