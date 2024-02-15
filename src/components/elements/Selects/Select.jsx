@@ -4,8 +4,8 @@ import Select from '@mui/material/Select';
 
 
 const SelectElem = ({ options = [], defaultValue, onChange, title = "" }) => {
-  const [selectedValue, setSelectedValue] = useState(defaultValue.value || '');
-
+  const [selectedValue, setSelectedValue] = useState(defaultValue || 0);
+console.log(defaultValue);
   const handleChange = (e) => {
     const value = e.target.value;
     setSelectedValue(value);

@@ -2,6 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { apiResponse } from '../Functions/get_apiObj'
 import AccessBlockCase from '../blocks/access/AccessBlockCase'
+import AccessBlockStatistics from '../blocks/access/AccessBlockStatistics'
+import AccessBlockCalendar from '../blocks/access/AccessBlockCalendar'
+import AccessBlockCases from '../blocks/access/AccessBlockCases'
+import AccessBlockEvents from '../blocks/access/AccessBlockEvents'
+import AccessBlockResources from '../blocks/access/AccessBlockResources'
+import AccessBlockPhonebook from '../blocks/access/AccessBlockPhonebook'
+import AccessBlockProfile from '../blocks/access/AccessBlockProfile'
+import AccessBlockManage from '../blocks/access/AccessBlockManage'
+import AccessBlockAccess from '../blocks/access/AccessBlockAccess'
 const LANG = {
   a_page_case_add:"Створити кейс 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 8 - повний доступ",
   a_page_case_look:"Переглядати кейс 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 8 - повний доступ",
@@ -23,7 +32,7 @@ const LANG = {
   a_page_cases_contacts_info:"Приховати контактну інформацію кейсів 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 8 - повний доступ",
   a_page_event_watch:"Дивитися івент 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 4 - Є доступ до івенту, якщо додано як організатора 8 - повний доступ",
   a_page_event_edit:"Редагувати івент 0 - заборонено, 1 - редагувати, 2 - видаляти, 3 - переміщати в архів, 8 - повний доступ",
-  a_page_event_members:"івент 0 - заборонено, 1 - додавати учасника кейсу, 2 - видаляти учасника кейсу, 3 - додавати організатора, 4 - видаляти організатора,  8 - повний доступ",
+  a_page_event_members:"Учасники івенту 0 - заборонено, 1 - додавати учасника кейсу, 2 - видаляти учасника кейсу, 3 - додавати організатора, 4 - видаляти організатора,  8 - повний доступ",
   a_page_event_plan:"План івенту 0 - заборонено, 1 - тільки свої, 2 - відгук до плану 3 - редагувати план, 4 - редагувати відгук до плану, 8 - повний доступ",
   a_page_event_documents:"Документи до івенту 0 - заборонено, 1 - завантажувати, 2 - видаляти, 3 - завантажувати медіа-файли, 4 - видаляти медіа-файли, 8 - повний доступ",
   a_page_resources:"Доступ до розділу ресурси 0 - заборонено, 1 - додати, 2 - видаляти, 3 - завантажити, 4 - редагувати, 8 - повний доступ",
@@ -123,24 +132,33 @@ const RIGHTS = {
 };
 
 
+
 const AccessPageRight = () => {
   const LOCATION = useLocation()
   useEffect(()=>{
     apiResponse({access_id:LOCATION.pathname.slice(LOCATION.pathname.length - 1)},"access/get-by-id.php").then((data)=>{
       setState({...state, rights:data.access})
       console.log(data)
-
     })
 
   },[])
   const [state,setState] = useState({
     selectedPage:0,
     selectedRights:[],
-    rights:{}
+    rights:{},
+    accesses:[]
   })
   const changeState = (key,value)=>{
     setState({...state,[key]:value})
   }
+  // const formAccessesMas = () => {
+  //   const newMas = state.selectedRights.map((item) => ({
+  //     value: state.rights[item],
+  //     option: LANG[item],
+  //   }));
+  //   setState(({ ...state, accesses: newMas }));
+  // };
+  
   const filterSelectedRights = (selectedPage, index) => {
     let mas = [];
     Object.keys(state.rights).forEach((item) => {
@@ -149,6 +167,7 @@ const AccessPageRight = () => {
       }
     });
     setState({ ...state, selectedRights: [...mas], selectedPage: index })
+    // formAccessesMas()
   };
   console.log(state)
   return (
@@ -159,6 +178,7 @@ const AccessPageRight = () => {
           {PAGES.map((item,index)=>{
             return <div className='AccessPageRight-left-options-option' key={index} onClick={()=>{
               filterSelectedRights("selectedPage",index)
+              console.log(state.accesses);
             }}>
             <span></span>
             <p>{item.title}</p>
@@ -179,8 +199,41 @@ const AccessPageRight = () => {
         </div>
 
         <div className='AccessPageRight-right-block'>
-          <AccessBlockCase accesses={[]}/>
+        {
+  state.rights && (
+    <div>
+      {(() => {
+        switch (state.selectedPage) {
+          case 0:
+            return <AccessBlockCase accesses={state.rights} />;
+          case 1:
+            return <AccessBlockStatistics accesses={state.rights} />;
+          case 2:
+            return <AccessBlockCalendar accesses={state.rights} />;
+          case 3:
+            return <AccessBlockCases accesses={state.rights} />;
+          case 4:
+            return <AccessBlockEvents accesses={state.rights} />;
+          case 5:
+            return <AccessBlockResources accesses={state.rights} />;
+          case 6:
+            return <AccessBlockPhonebook accesses={state.rights} />;
+          case 7:
+            return <AccessBlockProfile accesses={state.rights} />;
+          case 8:
+            return <AccessBlockManage accesses={state.rights} />;
+          case 9:
+            return <AccessBlockAccess accesses={state.rights} />;
+          default:
+            return null; // or handle unknown cases
+        }
+      })()}
+    </div>
+  )
+}
 
+
+         
         </div>
 
         {
