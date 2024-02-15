@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { apiResponse } from '../Functions/get_apiObj'
+import AccessBlockCase from '../blocks/access/AccessBlockCase'
 const LANG = {
   a_page_case_add:"Створити кейс 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 8 - повний доступ",
   a_page_case_look:"Переглядати кейс 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 8 - повний доступ",
@@ -142,7 +143,7 @@ const AccessPageRight = () => {
   }
   const filterSelectedRights = (selectedPage, index) => {
     let mas = [];
-    Object.keys(RIGHTS).forEach((item) => {
+    Object.keys(state.rights).forEach((item) => {
       if (item.includes(PAGES[index].access + "_")) {
         mas.push(item);
       }
@@ -176,6 +177,11 @@ const AccessPageRight = () => {
             <button className='AccessPageRight-right-head-buttons-SaveButton'>Зберегти</button>
           </div>
         </div>
+
+        <div className='AccessPageRight-right-block'>
+          <AccessBlockCase />
+        </div>
+
         {
           state.selectedRights.map((item)=>{
             let strPage = PAGES[state.selectedPage].access

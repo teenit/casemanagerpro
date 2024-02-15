@@ -1,0 +1,35 @@
+.Select {
+    .select-container {
+        display: inline-block;
+        position: relative;
+        font-family: Arial, sans-serif;
+      }
+      
+      select {
+        appearance: none;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        cursor: pointer;
+        outline: none;
+        width: 200px; // Ширина можно изменить по своему усмотрению
+      }
+      
+      select:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+      
+      select::-ms-expand {
+        display: none;
+      }
+      
+      option {
+        background-color: #fff;
+        color: #000;
+      }
+      
+      
+}
