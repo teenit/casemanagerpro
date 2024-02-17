@@ -1,0 +1,8 @@
+.flex {
+    display: flex;
+    width: 100%;
+    &.space {
+        align-items: center;
+        justify-content: space-between;
+    }
+}

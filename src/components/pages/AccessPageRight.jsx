@@ -145,7 +145,7 @@ const AccessPageRight = () => {
   const [state,setState] = useState({
     selectedPage:0,
     selectedRights:[],
-    rights:{},
+    rights:null,
     accesses:[]
   })
   const changeState = (key,value)=>{

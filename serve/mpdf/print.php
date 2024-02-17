@@ -14,8 +14,8 @@ $addPlan = $data->plan;
 $addNotes = $data->notes;
 $addHelp = $data->help;
 $addMedia = $data->media;
-//$mark = 'mark';
-$mark = '';
+$mark = 'mark';
+//$mark = '';
 $comb = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 $shfl = str_shuffle($comb);
 $pwd = substr($shfl,0,8);
@@ -32,7 +32,7 @@ $notes = json_decode($res['notes']);
 function get_file_extension($filename) {
    return end(explode(".", $filename));
    }
-//$imgMark = '<img class="mark__img" src="'.'https://'.$_SERVER['HTTP_HOST'].'/serve/mpdf/logo-case.png">';
+$imgMark = '<img class="mark__img" src="'.'https://'.$_SERVER['HTTP_HOST'].'/serve/mpdf/logo-case.png">';
 $helpHTML = '';
 $notesHTML = '';
 

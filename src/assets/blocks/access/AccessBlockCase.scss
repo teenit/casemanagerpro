@@ -1,11 +1,18 @@
 .AccessBlockCase {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    &-line{
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    &-line {
+        background-color: rgba($color: $table-color-one, $alpha: .2);
+        padding: 5px;
+        border-radius: 15px;
+        &:nth-child(2n) {
+            background-color: rgba($color: $table-color-one, $alpha: .4);
+        }
+        &:hover {
+            background-color: rgba($color: $table-color-one, $alpha: 1);
+        }
     }
+    
 }
