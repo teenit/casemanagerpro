@@ -130,6 +130,7 @@ const AccessBlockCase = ({ accesses }) => {
     const handleSelectChange = (value, key) => {
       console.log(value, key)
       setState({...state, [key]:{...state[key], value: value}})
+  
     };
     const LOCATION = useLocation()
     useEffect(()=>{
@@ -137,12 +138,48 @@ const AccessBlockCase = ({ accesses }) => {
         console.log(data)
       })
     },[])
+    const updateObjData =()=>{
+      const obj = {
+        accesses:[
+          {
+            value:0,
+            key:"a_page_case_add"
+          },
+          {
+            value:3,
+            key:"a_page_case_look"
+          },
+          {
+            value:[1,2,4],
+            key:"a_id_cases_categories"
+          },
+          {
+            value:1,
+            key:"a_page_case_edit_permission"
+          },
+          {
+            value:[1,3],
+            key:"a_id_cases_categories"
+          },
+          {
+            value:1,
+            key:"a_page_case_edit_actions"
+          },
+        ],
+        id_access:3
+      }
+    Object.keys(state).map((item,index)=>{
+      obj.accesses[index].key = item
+      obj.accesses[index].value = `accesses.${item}`
+      
+    })
+    }
     return (
       
         <div className="AccessBlockCase">
             {
               Object.values(state).map((item)=>{
-                console.log(item)
+                // console.log(item)
                    return <div className="AccessBlockCase-line flex space">
                         <div className="AccessBlockCase-line-title">{item.title}</div>
                         <div className="AccessBlockCase-line-right"><SelectElem options={item.options} defaultValue={item.value} value={item.value} onChange={(value)=>{handleSelectChange(value, item.key)}} /></div>

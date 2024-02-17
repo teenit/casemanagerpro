@@ -1,0 +1,13 @@
+.CatCheckBoxes{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+
+        &-option{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+    
+}
