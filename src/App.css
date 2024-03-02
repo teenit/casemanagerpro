@@ -73,12 +73,12 @@ a{
   border: 2px solid #ffffff;
   cursor: pointer;
 }
-input[type=text],input[type=number],input[type=email],input[type=password]{
+/* input[type=text],input[type=number],input[type=email],input[type=password]{
   border: solid 3px #b399cb;
   border-radius: 7px;
   width: calc(100% - 21px);
   padding: 5px 5px 5px 10px;
-}
+} */
 select{
   border: solid 3px #b399cb;
   border-radius: 7px;
@@ -121,7 +121,7 @@ input[type=checkbox]:checked:after {
   top: 2px;
   left: 8px;
 }
-textarea{
+/* textarea{
   border: solid 3px #b399cb;
   border-radius: 7px;
   width: calc(100% - 21px);
@@ -131,7 +131,7 @@ textarea{
 textarea:focus{
   outline: solid 3px var(--main-color);
   padding: 5px 5px 5px 10px;
-}
+} */
 input[type="color"] {
   -webkit-appearance: none;
   border: none;

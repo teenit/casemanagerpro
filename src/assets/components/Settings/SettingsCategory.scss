@@ -1,0 +1,13 @@
+.SettingsCategory {
+    &--form{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        &-inputs {
+            display: grid;
+            grid-template-columns: max-content 125px;
+            gap: 10px;
+        }
+        
+    }
+}

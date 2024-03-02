@@ -4,18 +4,18 @@ import Select from '@mui/material/Select';
 import CatCheckBoxes from '../CheckBoxes/CatCheckBoxes';
 
 
-const SelectElem = ({ options = [], defaultValue, onChange, title = "" }) => {
-  const [selectedValue, setSelectedValue] = useState(defaultValue || 0);
+const SelectElem = ({ options = [], value, onChange, title = "" }) => {
+  const [selectedValue, setSelectedValue] = useState(value || 0);
+  const [selectedId, setSelectedId] = useState(value || 0);
   const [active,setActive] = useState(false)
-// console.log(defaultValue);
-  const handleChange = (e) => {
+  const handleChange = (e, child) => {
     const value = e.target.value;
-    
-    if(value==1){
-      setActive(true)
-    }else{
-      setActive(false)
-    }
+   console.log(e,child)
+  //   if(value==1){
+  //     setActive(true)
+  //   }else{
+  //     setActive(false)
+  //   }
     setSelectedValue(value);
     if (onChange) {
       onChange(value);
@@ -42,11 +42,14 @@ const categoryData  =[
                 onChange={handleChange}
             >
             {
-                options.map((item)=>{
-                    return <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
+                options.map((item,ind)=>{
+                    return <MenuItem key={item.value} selectedId={ind} value={item.value}>{item.label}</MenuItem>
                 })
             }
             </Select>
+            {
+
+            }
             {active&&(<CatCheckBoxes data = {categoryData}/>)}
         </FormControl>
     </div>

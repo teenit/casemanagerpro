@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { serverAddres } from "../Functions/serverAddres";
 import SetEvent from "./SetEvent/SetEvent";
+import SettingsCategory from "./SettingsCategory/SettingsCategory";
+import ListCategories from "./SettingsCategory/ListCategories";
+import { LANG } from "../../services/LANG";
 const Settings = ()=>{
    
     const [page, setPage] = useState({loading:true,effload:false,message:""})
@@ -49,6 +52,11 @@ const Settings = ()=>{
             </div>
             <div className="settings__page">
             <SetUser categories = {categories} categoriesCont = {categoriesCont}/>
+            <div>
+                <SettingsCategory title={LANG.SETTINGS.title_category_case} categoryColor = "#1976d2" categoryKey = "case"/>
+                <ListCategories categoryKey = "case" />
+            </div>
+            
             <SetCategories cats = {(arg)=>{
                 setCategories(arg)
             }}/>

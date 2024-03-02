@@ -1,0 +1,19 @@
+.ListCategories {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 20px 0;
+    &--item{
+        display: grid;
+        grid-template-columns: 20px 20px 1fr;
+        gap: 10px;
+        &-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        &-number {
+            text-align: center;
+        }
+    }
+}

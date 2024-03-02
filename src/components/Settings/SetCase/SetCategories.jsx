@@ -4,11 +4,16 @@ import editImg from "./../../../img/icons/edit-50.png";
 import axios from "axios";
 import { serverAddres } from "../../Functions/serverAddres";
 import LoadingPage from "../../Loading/LoadingPage";
+import { apiResponse } from "../../Functions/get_apiObj";
 
 let categoriesStr = "";
 const SetCategories = ({cats})=>{
     const [categoriesCase, setCategoriesCase] = useState(false)
     const [page, setPage] = useState({loading:true,effload:false,message:""})
+    const [state, setState] = useState({
+        nameOfCategory:"",
+        colorOfCategory:"#ffa800"
+    })
     useEffect(()=>{
         let obj = {
             id: localStorage.getItem("id"),
@@ -57,28 +62,34 @@ const SetCategories = ({cats})=>{
         .catch((error)=>console.log(error)) 
     }
     function addNewCategory(id){
-        if(document.querySelector("#" + id).value == "") return alert("Заповніть поле");
-        let category = {
-            value: "catCase" + transliterate(document.querySelector("#" + id).value),
-            text:document.querySelector("#" + id).value.replace("'", "’"),
-            color:document.querySelector("#colorBackground").value
-        }
-        let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token"),
-            category:category
-        }
-        axios({
-            url: serverAddres("manage/add-categories-case.php"),
-            method: "POST",
-            header : {'Content-Type': 'application/json;charset=utf-8'},
-            data : JSON.stringify(obj),
+        // if(document.querySelector("#" + id).value == "") return alert("Заповніть поле");
+        // let category = {
+        //     value: "catCase" + transliterate(document.querySelector("#" + id).value),
+        //     text:document.querySelector("#" + id).value.replace("'", "’"),
+        //     color:document.querySelector("#colorBackground").value
+        // }
+        // let obj = {
+        //     id: localStorage.getItem("id"),
+        //     token: localStorage.getItem("token"),
+        //     category:category
+        // }
+        // axios({
+        //     url: serverAddres("manage/add-categories-case.php"),
+        //     method: "POST",
+        //     header : {'Content-Type': 'application/json;charset=utf-8'},
+        //     data : JSON.stringify(obj),
+        // })
+        // .then((data)=>{ 
+        //     document.querySelector("#" + id).value = ""
+        //     setCategoriesCase(data.data);
+        // })
+        // .catch((error)=>console.log(error)) 
+        apiResponse({
+            text: state.nameOfCategory.trim().replaceAll("'", "’"),
+            color: state.colorOfCategory
+        },"manage/add-categories-case.php").then((data)=>{
+            console.log(data)
         })
-        .then((data)=>{ 
-            document.querySelector("#" + id).value = ""
-            setCategoriesCase(data.data);
-        })
-        .catch((error)=>console.log(error)) 
     }
     const CategoriesData = ({category, index})=>{
         return (
@@ -111,8 +122,8 @@ const SetCategories = ({cats})=>{
                 </div>
                 {!page.loading ? <div className="set__categories__case__control">
                     <div className="set__categories__case__control__inp">
-                        <input title="Нова категорія" type="text" id="set__categories__case__control__inp" placeholder={"Назва категорії"}/>
-                        <input title="Колір категорії" type="color" name="colorBackground" id="colorBackground" defaultValue={"#ffa800"}/>
+                        <input value={state.nameOfCategory} title="Нова категорія" type="text" id="set__categories__case__control__inp" placeholder={"Назва категорії"} onChange={((e)=>setState({...state, nameOfCategory:e.target.value}))}/>
+                        <input value={state.colorOfCategory} title="Колір категорії" type="color" name="colorBackground" id="colorBackground" onChange={((e)=>setState({...state, colorOfCategory:e.target.value}))}/>
                     </div>
                     <div className="set__categories__case__control__btn">
                         <button className="primary__btn padding20px"

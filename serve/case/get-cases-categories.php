@@ -10,7 +10,7 @@ if(isset($data->meta_key)){
     $prf = $data->meta_key;
 
     // Формуємо запит до бази даних з використанням параметризованих запитів
-    $sql = "SELECT meta_value FROM usermeta WHERE user_id = ? AND meta_key = ?";
+    $sql = "SELECT meta_id, meta_value FROM usermeta WHERE user_id = ? AND meta_key = ?";
     
     // Підготовлюємо запит до виконання
     $stmt = $conn->prepare($sql);
@@ -29,14 +29,16 @@ if(isset($data->meta_key)){
     
     // Перевіряємо результат запиту
     if ($result) {
-        $row = $result->fetch_assoc();
-        if ($row) {
-            // Якщо дані знайдено, повертаємо їх у вигляді JSON
-            $response = array("mas" => json_decode($row["meta_value"]));
-        } else {
-            // Якщо дані не знайдено, повертаємо порожній масив
-            $response = array("mas" => []);
+        $data = array();
+        while ($row = $result->fetch_assoc()) {
+            // Додавання id та значення meta_value до масиву $data
+            $data[] = array(
+                "id" => $row["meta_id"],
+                "value" => json_decode($row["meta_value"])
+            );
         }
+        // Формування відповіді
+        $response = array("mas" => $data);
     } else {
         // Якщо виникла помилка запиту до бази даних, повертаємо повідомлення про помилку
         $response = array("error" => "Помилка запиту до бази даних: " . $conn->error);
