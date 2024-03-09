@@ -1,4 +1,59 @@
 .AccessPage {
-    color: $main-color;
-    background-color: $second-color;
+    width: max-content;
+    display: flex;
+    gap: 50px;
+    &-title{
+        color: $main-color;
+        background-color: $second-color;
+    }
+    &-button{
+        padding: 12.5px 17.5px;
+        border-radius: 10px;
+        border: none;
+        background-color: $main-color;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    &-modal{
+        h2{
+            text-align: center;
+        }
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        &-option{
+            display: flex;
+            flex-direction: column;
+            input{
+                padding: 12.5px 17.5px;
+            }
+        }
+        &-cross{
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            &-c1{
+                width: 25px;
+                height: 1.5px;
+                background-color: black;
+                transform: rotate(45deg);
+                position: relative;
+                top: 13.5px;
+            }
+            &-c2{
+                width: 25px;
+                height: 1.5px;
+                background-color: black;
+                transform: rotate(-45deg);
+                position: relative;
+                top: 12.5px;
+
+            }
+        }
+    }
 }
