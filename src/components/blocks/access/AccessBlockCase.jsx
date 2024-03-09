@@ -3,6 +3,8 @@ import SelectElem from "../../elements/Selects/Select";
 import { useLocation } from "react-router-dom";
 import { apiResponse } from "../../Functions/get_apiObj";
 import { appConfig } from "../../../services/config";
+import SelectAllTransferList from "../../elements/TransferList/SelectAllTransferList";
+import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 
 const LANG = {
   forbidden: "Заборонено",
@@ -30,36 +32,71 @@ const LANG = {
   a_page_case_hidden:"Приховати інформацію",         
 }
 
-const AccessBlockCase = ({ accesses, defaultAccess, changeAccess }) => {
-
+const AccessBlockCase = ({ accesses, defaultAccess, changeAccess, caseCategiries }) => {
+const getCategoriesByType = (type) => {
+  let cats = [];
+  switch (type) {
+    case "case_categories":
+      cats = caseCategiries;
+      break;
+  }
+  return cats
+}
     const [state, setState] = useState({...appConfig.access[defaultAccess]})
     const handleSelectChange = (value, key) => {
-      console.log(value, key)
       setState({...state, [key]:{...state[key], value: value}})
       changeAccess(value, key)
+      console.log({...state, [key]:{...state[key], value: value}})
     };
+
+    const handleCheckboxChange = (value, options, key) => {
+      let categories = [];
+      if (options.includes(value)) {
+        categories = options.filter(element => element !== value);
+      } else {
+        categories = [...options, value];
+      }
+     // setState({...state, [key]:{...state[key], value: value}})
+      changeAccess(JSON.stringify(categories), key)
+    };
+
+
     const LOCATION = useLocation()
     useEffect(()=>{
       apiResponse({meta_key:"case_categories"},"case/get-cases-categories.php").then((data)=>{
-        console.log(data)
       })
     },[])
-
     return (
       
         <div className="AccessBlockCase">
             {
               Object.values(state).map((item)=>{
-                 console.log(accesses[item.key])
-                   return <div className="AccessBlockCase-line flex space">
-                        <div className="AccessBlockCase-line-title">{item.title}</div>
-                        <div className="AccessBlockCase-line-right"><SelectElem options={item.options} value={accesses[item.key]} onChange={(value)=>{handleSelectChange(value, item.key)}} /></div>
+                   return (
+                    <div className="AccessBlockCase-line grid">
+                      <div className="AccessBlockCase-line flex space">
+                          <div className="AccessBlockCase-line-title">{item.title}</div>
+                          <div className="AccessBlockCase-line-right"><SelectElem options={item.options} value={accesses[item.key]} onChange={(value)=>{handleSelectChange(value, item.key)}} /></div>
+                      </div>
                       {
-                         item.options.map((elem)=>{
-                          if((elem.value == accesses[item.key]) && elem.ids) return <p>ooooooooooooooo</p>
-                        })
-                      }
+                          item.options.map((elem)=>{
+                            
+                            if((elem.value == accesses[item.key]) && elem.ids) {
+                              let options = [];
+                              if (Array.isArray(JSON.parse(accesses[elem.key]))) options = JSON.parse(accesses[elem.key]);
+                              console.log(accesses[elem.key])
+                              return <CheckboxListAccess 
+                              allMas={()=>{return getCategoriesByType(elem.type)}} 
+                              checkedMas={options}
+                              onChange={(value)=>{
+                                //return console.log(value, options, elem.key)
+                                handleCheckboxChange(value, options, elem.key)}}/>
+                            }
+                          })
+                        }
                     </div>
+                   )
+                   
+                   
               })
             }
           <button onClick={()=>console.log(state,accesses)}>polp</button>

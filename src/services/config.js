@@ -29,7 +29,7 @@ export const appConfig = {
             a_page_case_add: {
               options: [
                 { value: '0', label: LANG.forbidden },
-                { value: '1', label: LANG.assigned_categories, ids: true, type: 'case_categories' },
+                { value: '1', label: LANG.assigned_categories, ids: true, type: 'case_categories', key: "a_id_cases_add_categories" },
                 { value: '8', label: LANG.full_access },
               ],
               title: LANG.a_page_case_add,
@@ -39,7 +39,7 @@ export const appConfig = {
               options: [
                 { value: '0', label: LANG.forbidden },
                 { value: '1', label: LANG.only_own },
-                { value: '2', label: LANG.assigned_categories, ids: true, type: 'case_categories' },
+                { value: '2', label: LANG.assigned_categories, ids: true, type: 'case_categories', key: "a_id_cases_look_categories" },
                 { value: '3', label: LANG.only_assigned , ids: true, type: 'cases'},
                 { value: '8', label: LANG.full_access },
               ],
