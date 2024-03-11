@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ModalSimple from '../Modals/ModalSimple'
+import { apiResponse } from '../Functions/get_apiObj'
 const AccessPageModal = ({ close }) => {
     const [data,setData] = useState({
         name:"",
@@ -7,7 +8,8 @@ const AccessPageModal = ({ close }) => {
     })
     const [state,setState] = useState(null)
     useEffect(()=>{
-        apiResponse({},'access/filename.php').then((res)=>setState(res))
+        
+         apiResponse ({},'access/filename.php').then((res)=>setState(res))
         console.log("test")
     },[
     ])

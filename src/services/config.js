@@ -21,7 +21,11 @@ export const LANG = {
     a_page_case_edit_actions:"Редагувати кейс",
     a_page_case_transfer:"Передати кейс іншому користувачу",
     a_page_case_add_notes:"Додавати нотатки до кейсу",
-    a_page_case_hidden:"Приховати інформацію",         
+    a_page_case_hidden:"Приховати інформацію", 
+    access:{
+      add_name:"Назва нового права",
+      add_description:"Опис нового права",
+    }        
   };
 export const appConfig = {
     access:{
