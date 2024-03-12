@@ -4,6 +4,9 @@ import {serverAddres} from "../../../Functions/serverAddres"
 import RouteNavLink from "../../../Modals/RouteNavLink";
 import ModalError from "../../Add-case/ModalErrors";
 import s from "./edit.module.css"
+import Input from "../../../elements/Inputs/Input";
+import Textarea from "../../../elements/Inputs/Textarea";
+import { StyledEngineProvider } from "@mui/material";
 let categoriesStr = "";
 let masCategories = [];
 
@@ -153,37 +156,35 @@ const EditCaseInfo = ({caseInfo,close})=>{
             <span></span>
         </div>
         <div className="wrap__add__case">
+        
         <div className="add__case__inner">
             <div className="add__case__line">
                 <div className="add__case__line__three">
-                    <div className="add__case__item">
+                <div className="add__case__item">
                         <div className="add__case__item__inner__input">
-                            <label htmlFor="surname">Прізвище <span className="color__red">*</span></label>
-                            <input type="text" id="surname" name="surname" defaultValue={addObj.surname}
-                            onChange={(e)=>{
+                            <label htmlFor="phone1">Прізвище<span className="color__red">*</span></label>
+                            <Input required value={addObj.surname} onChange={(e)=>{
                                 setAddObj({...addObj,surname:e.target.value})
                                 console.log(e.target.value)
-                            }} />
+                    }}/>
                         </div>
                     </div>
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
-                            <label htmlFor="firstName">Ім'я <span className="color__red">*</span></label>
-                            <input type="text" id="firstName" name="firstName" defaultValue={addObj.firstName}
-                            onChange={(e)=>{
+                            <label htmlFor="phone1">Ім'я<span className="color__red">*</span></label>
+                            <Input required value={addObj.firstName} onChange={(e)=>{
                                 setAddObj({...addObj,firstName:e.target.value})
                                 console.log(e.target.value)
-                            }}/>
+                    }}/>
                         </div>
                     </div>
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
-                            <label htmlFor="secondName">По батькові</label>
-                            <input type="text" id="secondName" name="secondName" defaultValue={addObj.secondName}
-                            onChange={(e)=>{
-                                setAddObj({...addObj,secondName:e.target.value})
+                            <label htmlFor="phone1">По батькові <span className="color__red">*</span></label>
+                            <Input required value={addObj.firstName} onChange={(e)=>{
+                                setAddObj({...addObj,firstName:e.target.value})
                                 console.log(e.target.value)
-                            }}/>
+                    }}/>
                         </div>
                     </div>
                 </div>
@@ -193,7 +194,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="phone1">Номер телефону 1 <span className="color__red">*</span></label>
-                            <input type="text" id="phone1" name="phone1" defaultValue={addObj.phone1}
+                            <Input type="text" id="phone1" name="phone1" value={addObj.phone1}
                             onChange={(e)=>{
                                 setAddObj({...addObj,phone1:e.target.value})
                                 console.log(e.target.value)
@@ -203,7 +204,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="phone2">Номер телефону 2</label>
-                            <input type="text" id="phone2" name="phone2" defaultValue={addObj.phone2}
+                            <Input type="text" id="phone2" name="phone2" value={addObj.phone2}
                             onChange={(e)=>{
                                 setAddObj({...addObj,phone2:e.target.value})
                                 console.log(e.target.value)
@@ -213,7 +214,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="email">Email</label>
-                            <input type="text" id="email" name="email" defaultValue={addObj.email}
+                            <Input type="text" id="email" name="email" value={addObj.email}
                             onChange={(e)=>{
                                 setAddObj({...addObj,email:e.target.value})
                                 console.log(e.target.value)
@@ -223,11 +224,11 @@ const EditCaseInfo = ({caseInfo,close})=>{
                 </div>
             </div>
             <div className="add__case__line">
-                <div className="add__case__line__one">
+                <div className="add__case__line__three">
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="happybd">Дата народження</label>
-                            <input type="date" id="happybd" name="happybd" defaultValue={addObj.happybd}
+                            <Input type="date" id="happybd" name="happybd" value={addObj.happybd}
                             onChange={(e)=>{
                                 let year = e.target.value.slice(0,4)
                                 let month = e.target.value.slice(5,7)
@@ -249,21 +250,21 @@ const EditCaseInfo = ({caseInfo,close})=>{
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="addressPropiska">Адреса по прописці</label>
-                            <textarea name="addressPropiska" id="addressPropiska" cols="30" rows="10" defaultValue={addObj.addressPropiska}
+                            <Textarea name="addressPropiska" id="addressPropiska" cols="30" rows="10" value={addObj.addressPropiska}
                             onChange={(e)=>{
                                 setAddObj({...addObj,addressPropiska:e.target.value})
                                 console.log(e.target.value)
-                            }}></textarea>
+                            }}></Textarea>
                         </div>
                     </div>
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="addressLive">Адреса фактичного проживання</label>
-                            <textarea name="addressLive" id="addressLive" cols="30" rows="10" defaultValue={addObj.addressLive}
+                            <Textarea name="addressLive" id="addressLive" cols="30" rows="10" value={addObj.addressLive}
                             onChange={(e)=>{
                                 setAddObj({...addObj,addressLive:e.target.value})
                                 console.log(e.target.value)
-                            }}></textarea>
+                            }}></Textarea>
                         </div>
                     </div>
                 </div>
@@ -273,7 +274,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="chanelComunity">Канал комунікації</label>
-                            <input type="text" id="chanelComunity" name="chanelComunity" defaultValue={addObj.chanelComunity}
+                            <Input type="text" id="chanelComunity" name="chanelComunity" value={addObj.chanelComunity}
                             onChange={(e)=>{
                                 setAddObj({...addObj,chanelComunity:e.target.value})
                                 console.log(e.target.value)
@@ -283,7 +284,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="firstContact">Дата першого контакту <span className="color__red">*</span></label>
-                            <input type="date" id="firstContact" name="firstContact" defaultValue={addObj.firstContact}
+                            <Input type="date" id="firstContact" name="firstContact" value={addObj.firstContact}
                             onChange={(e)=>{
                                 setAddObj({...addObj,firstContact:e.target.value})
                                 console.log(e.target.value)
@@ -298,11 +299,11 @@ const EditCaseInfo = ({caseInfo,close})=>{
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="potreba">Потреба, запит</label>
-                            <textarea name="potreba" id="potreba" cols="30" rows="10" defaultValue={addObj.potreba}
+                            <Textarea name="potreba" id="potreba" cols="30" rows="10" value={addObj.potreba}
                             onChange={(e)=>{
                                 setAddObj({...addObj,familyStan:e.target.value})
                                 console.log(e.target.value)
-                            }}></textarea>
+                            }}></Textarea>
                         </div>
                     </div>
                     
@@ -313,11 +314,11 @@ const EditCaseInfo = ({caseInfo,close})=>{
                 <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="familyStan">Сімейний стан, деталі про сім'ю, її слад</label>
-                            <textarea id="familyStan" name="familyStan" cols="30" rows="10" defaultValue={addObj.familyStan}
+                            <Textarea id="familyStan" name="familyStan" cols="30" rows="10" value={addObj.familyStan}
                             onChange={(e)=>{
                                 setAddObj({...addObj,familyStan:e.target.value})
                                 console.log(e.target.value)
-                            }} ></textarea>
+                            }} ></Textarea>
                         </div>
                     </div>
                 </div>
@@ -327,11 +328,11 @@ const EditCaseInfo = ({caseInfo,close})=>{
                 <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="familyHistory">Історія сім'ї / особи</label>
-                            <textarea id="familyHistory" name="familyHistory" cols="30" rows="10" defaultValue={addObj.familyHistory}
+                            <Textarea id="familyHistory" name="familyHistory" cols="30" rows="10" value={addObj.familyHistory}
                             onChange={(e)=>{
                                 setAddObj({...addObj,familyHistory:e.target.value})
                                 console.log(e.target.value)
-                            }} ></textarea>
+                            }} ></Textarea>
                         </div>
                     </div>
                 </div>
@@ -352,7 +353,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <label htmlFor="" className="add__case__name__of__block">Договір</label>
                             <div className="add__case__item__inner__input__item">
                                 <label htmlFor="dateDogovir">Дата підписання договору</label>
-                                <input type="date" name="dateDogovir" id="dateDogovir" defaultValue={addObj.dateDogovir}
+                                <Input type="date" name="dateDogovir" id="dateDogovir" value={addObj.dateDogovir}
                                 onChange={(e)=>{
                                     setAddObj({...addObj,dateDogovir:e.target.value})
                                     console.log(e.target.value)
@@ -360,7 +361,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             </div>
                             <div className="add__case__item__inner__input__item">
                                 <label htmlFor="numberDogovir">Номер договору</label>
-                                <input type="text" name="numberDogovir" id="numberDogovir" defaultValue={addObj.numberDogovir}
+                                <Input type="text" name="numberDogovir" id="numberDogovir" value={addObj.numberDogovir}
                                 onChange={(e)=>{
                                     setAddObj({...addObj,numberDogovir:e.target.value})
                                     console.log(e.target.value)
@@ -375,11 +376,11 @@ const EditCaseInfo = ({caseInfo,close})=>{
                     <div className="add__case__item">
                         <div className="add__case__item__inner__input">
                             <label htmlFor="commentar">Коментар до кейсу</label>
-                            <textarea name="commentar" id="commentar" cols="30" rows="10" defaultValue={addObj.commentar}
+                            <Textarea name="commentar" id="commentar" cols="30" rows="10" value={addObj.commentar}
                             onChange={(e)=>{
                                 setAddObj({...addObj,commentar:e.target.value})
                                 console.log(e.target.value)
-                            }}></textarea>
+                            }}></Textarea>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
 
 .add__case__inner textarea:focus{
     resize: none;
-    border: solid 1px rgb(0, 47, 91);
+    /* border: solid 1px rgb(0, 47, 91); */
     border-radius: 5px;
     transform: scale(1);
 }
@@ -21,11 +21,20 @@
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 30px;
 }
+.add__case__item__inner__input >div>div{
+width: 100%;
+}
+.add__case__line:has(.primary__btn){
+    display: flex;
+    justify-content: center;
+}
+
+
 .add__case__item__inner__input label{
     width: max-content;
     display: block;
-    margin-left: 15px;
     padding-bottom: 5px;
+    font-weight: 700;
 }
 .add__case__line__two {
     display: grid;
