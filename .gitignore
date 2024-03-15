@@ -4,12 +4,13 @@
 /node_modules
 /.pnp
 .pnp.js
-
+/serve/config.php
 # testing
 /coverage
 
 # production
 /build
+/serveLaravel
 
 # misc
 .DS_Store

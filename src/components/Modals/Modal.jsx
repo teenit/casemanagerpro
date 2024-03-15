@@ -6,6 +6,15 @@ const Modal = (props) => {
     const closeHandler = () =>{
         props.closeHandler();
     }
+   const a = {
+    Name: "01:30 to 10:30 America (USD/RUB, EUR/RUB)",
+    TimeZoneId: "Eastern Standart Time",
+    UTCWinterOffset: -300,
+    SessionScedule: {
+        OpenTimeSeconds: 1800,
+        CloseTimeSeconds: 55800
+    }
+    }
     return (
         <RootPortal>
         <div className="Modal">

@@ -16,10 +16,12 @@ const AccessPage = () => {
         description: "",
         name: ""
     })
-    useEffect(() => {
-        apiResponse({}, 'access/get-list.php').then((res) => setState(res))
-        console.log("test")
-    }, [
+    useEffect(()=>{
+        apiResponse({},'access/get-list.php').then((res)=>{
+            console.log(res)
+            setState(res)})
+
+    },[
     ])
     return (
         <div className="AccessPage">
