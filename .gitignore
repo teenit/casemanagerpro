@@ -10,7 +10,8 @@
 
 # production
 /build
-
+/serveLaravel
+/serve/config.php
 # misc
 .DS_Store
 .env.local

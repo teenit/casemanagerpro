@@ -65,6 +65,7 @@ const getCategoriesByType = (type) => {
     useEffect(()=>{
       apiResponse({meta_key:"case_categories"},"case/get-cases-categories.php").then((data)=>{
       })
+      
     },[])
     return (
       

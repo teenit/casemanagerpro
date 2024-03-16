@@ -146,6 +146,11 @@ const AccessPageRight = () => {
       console.log(data)
     })
 
+    apiResponse({categoryKey:"case"},"manage/get-cases-for-access.php").then((data)=>{
+      setCaseCategories(data.data)
+      console.log(data)
+    })
+
   },[])
   const [state,setState] = useState({
     selectedPage:0,
