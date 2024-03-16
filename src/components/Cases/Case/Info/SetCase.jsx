@@ -21,7 +21,7 @@ const SetCase = ({caseInfo,close,level,id})=>{
             <div className={s.inner}>
                 <ChangeUser id={id} userId = {caseInfo.userId}/>
                 <div className={s.user__wrap}>
-                    <p>Експортувати кейс у ПДФ</p>
+                    <p><b>Експортувати кейс у ПДФ</b></p>
                     {checkRight(level,"apiPdfCase") ? <ExportPDF />  : <p><i>У вас немає прав</i></p>}
                 </div>
                 <div className={s.user__wrap}>

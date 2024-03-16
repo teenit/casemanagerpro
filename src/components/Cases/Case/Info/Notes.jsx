@@ -4,6 +4,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { serverAddres } from "../../../Functions/serverAddres";
 import imgSend from "../../../../img/icons/send.png";
+import edit from '../../../../img/icons/edit.svg'
 
 
 const Active = ({elem})=>{
@@ -13,14 +14,29 @@ const Active = ({elem})=>{
          <div className="notes__viewer__data">
              <div>
              <NavLink to={`/user?${elem.userId}`} >{elem.userName}</NavLink>
-                 <span>{elem.date}</span>  
-                 <span>{elem.time}</span>  
+             <div>
+                <span>{elem.date}</span>  
+                <span>{elem.time}</span>  
+             </div>
+
              </div>
              
          </div>
          <div className="notes__viewer__mess">
             <span dangerouslySetInnerHTML= {{__html:elem.mess}} />
+            <div className="notes__viewer__mess__panel">
+                <div className="notes__viewer__mess__panel__edit">
+                    <div className="notes__viewer__mess__panel__edit__ico__wrap">
+                        <img src={edit} alt="Редагувати нотатки" />
+                    </div>
+                </div>
+                <div className="notes__viewer__mess__panel__edit">
+                    <div className="notes__viewer__mess__panel__edit__option"></div>
+                    <div className="notes__viewer__mess__panel__edit__option notes__delete"></div>
+                </div>
+            </div>
          </div>
+         
      </div>
     )
 }
@@ -67,7 +83,7 @@ const Notes = ({notes,level})=>{
                     {level ?<div className="notes__mes__wrap">
                         <div className="notes__mes__inner">
                              <div className="notes__field">
-                                <textarea name="" id="mess__note" cols="30" rows="5"></textarea>
+                                <textarea name="" id="mess__note" cols="30" rows="3"></textarea>
                                 <img src={imgSend} onClick={addNote} alt="" />
                             </div>
                         </div>

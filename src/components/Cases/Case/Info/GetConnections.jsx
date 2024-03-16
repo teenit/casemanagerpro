@@ -33,11 +33,11 @@ const GetConnections = ({id})=>{
         <div className="er__con__wrap">
             <div className="er__con__inner">
                 <div className="er__con__from">
-                    <p>Встановлено зв'язок</p>
                     {connectionsFrom.map((item,index)=>{
                         return(
                             <div key={item.caseID + Math.floor(Math.random() * 500)} className="er__con__from__item__inner">
                                 <div className="er__con__from__item">
+                                <p>Встановлено зв'язок</p>
                                     <p><a href={`/case?${item.caseID}`}>{item.caseName}</a> - {item.commentar}</p>
                                 </div>
                             </div>
@@ -45,11 +45,11 @@ const GetConnections = ({id})=>{
                     })}
                 </div>
                 <div className="er__con__for">
-                    <p>Отримано зв'язок</p>
                     {connectionsFor.map((item,index)=>{
                             return(
                                 <div key={item.caseID + Math.random()} className="er__con__from__item__inner">
                                     <div className="er__con__from__item">
+                                    <p>Отримано зв'язок</p>
                                         <p><a href={`/case?${item.caseIDWho}`}>{item.caseNameWho}</a> - {item.commentar}</p>
                                     </div>
                                 </div>

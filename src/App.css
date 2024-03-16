@@ -18,15 +18,15 @@ a{
   border: solid 2px #b399cb;
 }
 .primary__btn {
+  height: 50px;
   width: max-content;
-  padding: 10px 0px;
+  padding: 7.5px 17.5px;
   border: none;
-  background-color: #fff;
   color: #000;
   transition: all .3s;
   background-color: #b399cb;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 10px;
   font-weight: 700;
   font-size: 18px;
   position: relative;

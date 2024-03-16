@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { serverAddres } from "../../../Functions/serverAddres";
 import s from "./Settings/set.module.css";
+import Input from '../../../elements/Inputs/Input'
 const Connections = ({id,caseInfo})=>{
     console.log(caseInfo)
     const [connect, setConnect] = useState({
@@ -62,7 +63,7 @@ const Connections = ({id,caseInfo})=>{
     return(
         <div className={s.con__form}>
             <div className={s.search__inp}>
-                <input type="text" value={connect.search} placeholder="Пошук кейсу для зв'язку" onChange={(e)=>{
+                <Input type="text" value={connect.search} label="Пошук кейсу для зв'язку" onChange={(e)=>{
                     setConnect({...connect,search:e.target.value})
                     getSearch()
                     setOpenSearch(true)
@@ -92,7 +93,7 @@ const Connections = ({id,caseInfo})=>{
                     })}
                 </div>:null}
                     <div className={s.commentar}>
-                        <input type="text" placeholder="Причина зв'язку" onChange={(e)=>setConnect({...connect,commentar:e.target.value.trim().replaceAll("'","’")})}/>
+                        <Input type="text" label ="Причина зв'язку" onChange={(e)=>setConnect({...connect,commentar:e.target.value.trim().replaceAll("'","’")})}/>
                     </div>
                 <div className={s.add__connect}>
                     <button onClick={addConnect} className={s.btn}>Створити зв'язок</button>

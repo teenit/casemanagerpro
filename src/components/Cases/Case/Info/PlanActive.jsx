@@ -187,6 +187,7 @@ const WindowCreate = ()=>{
     
     return info !== null  ? (
         <div className="plan__active">
+            <div className="plan__active__header">
             <h2>Індивідуальний план</h2>
             <div className="select__plan" id="">
                 <select name="selectPlan" id="selectPlan" onClick={addOptions} onChange={changePlan}>
@@ -194,6 +195,8 @@ const WindowCreate = ()=>{
                 </select>
                 {level ? <button className="primary__btn" onClick={()=>{setOpenWindowCreate(true)}}>Створити план</button> : ""}
             </div>
+            </div>
+
             <div className="plan__active__default__data">
                 <div className="plan__active__default__data__name"></div>
                 <div className="plan__active__default__data__date"></div>

@@ -56,7 +56,7 @@ const ChangeUser = ({userId,id})=>{
         
             <div className={s.user__wrap}>
                 <div>
-                    <p>Відповідальний за ведення кейсу <b>{currentUser.userName}</b></p>
+                    <p>Відповідальний за ведення кейсу <br /> <b>{currentUser.userName}</b></p>
                 </div>
                 <div>
                     <label htmlFor="users">Передати кейс користувачу</label>
@@ -70,9 +70,9 @@ const ChangeUser = ({userId,id})=>{
                     ):null
                 })}
             </select>
-                <button onClick={changeUserCase} className={s.btn}>Передати</button>
                 </div>
-            
+                <button onClick={changeUserCase} className={s.btn}>Передати</button>
+
             </div>
         
     )

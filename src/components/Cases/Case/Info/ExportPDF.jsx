@@ -69,6 +69,7 @@ const ExportPDF = ()=>{
     <div className="export__pdf__wrap">
     <div className="export__pdf__inner">
         <p>Включити у ПДФ</p>
+        <div className="item__pdf__wrap">
         <div className="item__pdf">
             <input type="checkbox" id="pdf__plan"
                 onChange={()=>{
@@ -90,6 +91,7 @@ const ExportPDF = ()=>{
         onChange={()=>{
             objData.media = !objData.media
         }}/><label htmlFor="pdf__media">Фотографії</label></div>
+        </div>
         <div className="pdf__btn">
             <button className="primary__btn" disabled = {disabled}
         onClick={()=>{

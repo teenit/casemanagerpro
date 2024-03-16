@@ -97,7 +97,7 @@ const CaseShortInfo = ({info})=>{
                     </div>
                 </div>:null}
             </div>           
-            <div className="case__info__inner">
+            <div className="case__info__inner__right">
                 <div className="case__info__text__center">
                     <div className="case__info__card">
                         <div className="case__info__card__img">

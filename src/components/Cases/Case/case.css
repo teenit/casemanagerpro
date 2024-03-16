@@ -17,26 +17,34 @@
 }
 
 .form__add__media{
-    width: 50%;
+    width: max-content;
     margin: auto;
     margin-top: 30px;
-    text-align: center;
-    border: solid 3px #b399cb;
     padding: 15px;
     border-radius: 20px;
+    background-color: #ded9e2;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
 }
 .form__inp__wr__grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 30px;
+    display: flex;
+    gap: 30px;
 }
 .form__inp__wr{
-    border: solid 3px #b399cb;
-    border-radius: 20px;
     padding: 10px;
-    display: grid;
-    margin-top: 15px;
-    row-gap: 15px;
+   display: flex;
+    gap: 15px;
+}
+.form__inp__file__mask{
+    
+}
+.form__inp__wr__files{
+    border: solid 3px #b399cb;
+    background-color: #fff;
+    border-radius: 20px; 
+    padding: 10px;
+
 }
 .Journal__and__plan{
     display: grid;

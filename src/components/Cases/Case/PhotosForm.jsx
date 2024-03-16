@@ -6,7 +6,8 @@ import { useState } from "react";
 import { serverAddres } from "../../Functions/serverAddres";
 import LoadingPage from "../../Loading/LoadingPage";
 import { changeAps } from "../../Functions/translateString";
-
+import send from '../../../img/icons/send-media.png'
+import add from '../../../img/icons/add-media.png'
 
 
 
@@ -56,12 +57,15 @@ const PhotosForm = ({show})=>{
                 <LoadingPage effload={false} message = "kdkdd" />
             </div>:""}
                 <div className="form__inp__wr">
-                    <div className="form__inp__wr__upl">
-                        <input multiple type="file" {...register("pic", { required: true })}/>
+                    <div className="form__inp__wr__files">
                     </div>
                     <div className="form__inp__wr__grid">
-                        <input type="text" {...register('title', { required: true })} placeholder="Назва файлу"/>
-                        <button className="primary__btn">Надіслати</button>
+                        {/* <input type="text" {...register('title', { required: true })} placeholder="Назва файлу"/> */}
+                        <div className="form__inp__file__mask">
+                        <img src={add} alt="Завантажити файл" />
+                        <input multiple type="file" {...register("pic", { required: true })}/>
+                        </div>
+                        <img src={send} alt="Відправити файл" />
                     </div>
                 
                 <div>

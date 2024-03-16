@@ -5,21 +5,37 @@ import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { serverAddres } from "../../../Functions/serverAddres";
 import imgSend from "../../../../img/icons/send.png";
-
+import edit from '../../../../img/icons/edit.svg'
+import Input from '../../../elements/Inputs/Input'
 
 const Active = ({elem})=>{
     console.log(elem)
     return(
          <div className="helpes__viewer__line">
          <div className="helpes__viewer__data">
+            <div>
             <NavLink to={`/user?${elem.userId}`}>{elem.userName}</NavLink>
             <span>{elem.date}</span>  
+            </div>
          </div>
          <div className="helpes__viewer__mess">
-
-            <p><b>Надавав допомогу</b> {elem.whoHelp}.</p>
+        <span>
+        <p><b>Надавав допомогу</b> {elem.whoHelp}.</p>
             <p><b>Дата надання</b> {elem.dateHelp}</p>
              <p><b>Деталі наданої допомоги</b> <span dangerouslySetInnerHTML= {{__html:elem.mess}} /></p>
+        </span>
+           
+             <div className="notes__viewer__mess__panel">
+                <div className="notes__viewer__mess__panel__edit">
+                    <div className="notes__viewer__mess__panel__edit__ico__wrap">
+                        <img src={edit} alt="Редагувати нотатки" />
+                    </div>
+                </div>
+                <div className="notes__viewer__mess__panel__edit">
+                    <div className="notes__viewer__mess__panel__edit__option"></div>
+                    <div className="notes__viewer__mess__panel__edit__option notes__delete"></div>
+                </div>
+            </div>
          </div>
      </div>
     )
@@ -91,7 +107,7 @@ const CaseGiveHelp = ({level})=>{
                                     <input type="text" name="who__help" id="who__help" placeholder="Хто надав допомогу"/>
                                 </div>
                             <div className="helpes__field">
-                                <textarea name="" id="mess__help" cols="30" rows="5" placeholder="Деталі наданої допомоги"></textarea>
+                                <textarea name="" id="mess__help" cols="30" rows="3" placeholder="Деталі наданої допомоги"></textarea>
                                 <img onClick={addHelp} src={imgSend} alt="" />
                             </div>
                           
