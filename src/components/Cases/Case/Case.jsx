@@ -31,7 +31,7 @@ const Case = ()=>{
         cases:false,
         message:""
     })
-    useEffect(()=>{
+    const successHandler=()=>{
         let obj = {
             "id":window.location.search.slice(1),
             "userId":localStorage.getItem("id"),
@@ -73,6 +73,9 @@ const Case = ()=>{
                 setPost(res)
         })
         .catch((error)=>console.log(error)) 
+    }
+    useEffect(()=>{
+        successHandler()
        
     },[])
     
