@@ -12,17 +12,19 @@ import add from '../../../img/icons/add-media.png'
 
 
 const PhotosForm = ({show})=>{
+    const [filesData,setFilesData] = useState([])
+    const [imgData,setData] = useState([])
     const {register, handleSubmit,formState: { errors }} = useForm();
     const [loading, setLoading] = useState({timer:"",message:"",active:""});
     const [loadImg, setLoadImg] = useState(false)
     const onSubmit = (data) =>{
         const formData = new FormData();
-        for(let i=0; i<data.pic.length; i++){
-            formData.append(`images[${i}]`, data.pic[i])
+        for(let i=0; i<imgData.length; i++){
+            formData.append(`images[${i}]`, imgData[i])
         }
         
         formData.append("id",window.location.search.slice(1))
-        formData.append("title",changeAps(data.title))
+        formData.append("title","test")
         formData.append("userId",localStorage.getItem("id"))
         formData.append("token",localStorage.getItem("token"))
         axios({
@@ -41,7 +43,7 @@ const PhotosForm = ({show})=>{
         })
         .then((data)=>{
             setLoading({active:""})
-            if(data.data?.message)
+           // if(data.data?.message)
           //  window.location.reload()
           console.log(data)
         })
@@ -58,14 +60,32 @@ const PhotosForm = ({show})=>{
             </div>:""}
                 <div className="form__inp__wr">
                     <div className="form__inp__wr__files">
+                        {filesData.map((item,index)=>{
+                            return(
+                                <div key={index}>
+                                    <p style={{textDecoration:"underline"}} >{item}</p>
+                                    <div className="form__inp__wr__files__delete"></div>
+                                </div>
+                                
+                            )
+                        })}
                     </div>
                     <div className="form__inp__wr__grid">
-                        {/* <input type="text" {...register('title', { required: true })} placeholder="Назва файлу"/> */}
-                        <div className="form__inp__file__mask">
-                        <img src={add} alt="Завантажити файл" />
-                        <input multiple type="file" {...register("pic", { required: true })}/>
-                        </div>
-                        <img src={send} alt="Відправити файл" />
+                        <input type="text" {...register('title', { required: true })} placeholder="Назва файлу"/>
+                        <label htmlFor="fileInput"><img src={add} alt="Завантажити файл" /></label>
+                        <input style={{display:"none"}} id="fileInput" multiple type="file" onChange={(e)=>{
+                            setData(e.target.files)
+                            console.log(imgData);
+                            const newMas=[]
+                            Object.values(e.target.files).map((item,index)=>{
+                                console.log(item);
+                                newMas.push(item.name)
+                            })
+                            setFilesData(newMas)
+                            console.log(newMas);
+                        }}/>
+                        <label htmlFor="submitInput"><img src={send} alt="Відправити файл" /></label>
+                        <input style={{display:"none"}} type="submit" id="submitInput" />
                     </div>
                 
                 <div>

@@ -29,7 +29,11 @@
 }
 .form__inp__wr__grid{
     display: flex;
+    align-items: center;
     gap: 30px;
+}
+.form__inp__wr__grid img{
+    height: max-content;
 }
 .form__inp__wr{
     padding: 10px;
@@ -44,7 +48,22 @@
     background-color: #fff;
     border-radius: 20px; 
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
+}
+.form__inp__wr__files>div{
+display: flex;
+gap: 25px;
+justify-content: space-between;
+align-items: center;
+}
+.form__inp__wr__files__delete{
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: solid 2px red;
 }
 .Journal__and__plan{
     display: grid;
