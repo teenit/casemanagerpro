@@ -55,13 +55,19 @@
     background-color: #fff;
 }
 .search__inp{
+    padding-top: 25px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 15px;
-    margin: auto;
 }
-
+.search__inp >div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.search__inp>div>div{
+    width: 100%;
+}
 .item__result{
     display: flex;
     align-items: center;

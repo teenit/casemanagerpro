@@ -92,9 +92,7 @@ const Connections = ({id,caseInfo})=>{
                         )
                     })}
                 </div>:null}
-                    <div className={s.commentar}>
                         <Input type="text" label ="Причина зв'язку" onChange={(e)=>setConnect({...connect,commentar:e.target.value.trim().replaceAll("'","’")})}/>
-                    </div>
                 <div className={s.add__connect}>
                     <button onClick={addConnect} className={s.btn}>Створити зв'язок</button>
                 </div>

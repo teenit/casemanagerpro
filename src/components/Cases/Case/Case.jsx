@@ -22,6 +22,7 @@ import SetCase from "./Info/SetCase";
 import GetConnections from "./Info/GetConnections";
 import { giveGoodPhotosCase } from "../../Functions/giveGoodPhotos";
 import Galery from "../../Galery/Galery";
+import Input from '../../elements/Inputs/Input'
 const Case = ()=>{
     const [post, setPost] = useState({id:"",contact:{caseName:""},photos:[],notes:[]});
     const [editActive, setEditActive] = useState(null)
@@ -134,8 +135,8 @@ const Case = ()=>{
                 <h2>Індивідуальний план</h2>
                 <p>Неможливо встановити Індивідуальний, необхідно заключити договір з клієнтом</p>
                 {checkRight(post.level, "editOwnCase") ? <div className="grod">
-                    <label htmlFor="dogovirDate">Дата<input type="date" id="dogovirDate"/></label>
-                    <label htmlFor="dogovirNumber">Номер<input type="text" id="dogovirNumber"/></label>
+                    <label htmlFor="dogovirDate">Дата<Input type="date" id="dogovirDate"/></label>
+                    <label htmlFor="dogovirNumber">Номер<Input type="text" id="dogovirNumber"/></label>
                     <button className="primary__btn padding20px" onClick={saveInfoDogovir}>Зберегти інформацію</button>
                 </div>:"" } 
             </div>}

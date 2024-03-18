@@ -71,7 +71,7 @@ const PhotosForm = ({show})=>{
                         })}
                     </div>
                     <div className="form__inp__wr__grid">
-                        <input type="text" {...register('title', { required: true })} placeholder="Назва файлу"/>
+                        {/* <input type="text" {...register('title', { required: true })} placeholder="Назва файлу"/> */}
                         <label htmlFor="fileInput"><img src={add} alt="Завантажити файл" /></label>
                         <input style={{display:"none"}} id="fileInput" multiple type="file" onChange={(e)=>{
                             setData(e.target.files)

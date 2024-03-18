@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import ModalPlanDone from "./ModalPlanDone";
 import { serverAddres } from "../../../Functions/serverAddres";
-import edit from '../../../../img/icons/edit.svg'
+import PlanCard from "./PlanCard";
 let ind;
 function elemPlanDelete(a){
    // return console.log(a)
@@ -145,7 +145,7 @@ const Plan = ({plan,index,level})=>{
             return <ElemPlan key={index} planis={planis} index = {pty}/>
     })
     }
-    console.log(plan)
+    console.log(plan.plans)
 
     return(
             // <div className={`wrap__plan ${plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__good" : !plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__notgood" : ""}`}>
@@ -164,34 +164,14 @@ const Plan = ({plan,index,level})=>{
             //     setActiveModalPlan(false)
             // }}/>
             // </div>
-            <div className={`wrap__plan ${plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__good" : !plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__notgood" : ""}`}>
-         <div className="plan__viewer__line">
-         <div className="plan__viewer__data">
-             <div>
-                {/* {ElemsPlan()}
-                {part} */}
-                <p><b>{plan.start}</b></p>
-                <p><b>{plan.end}</b></p>
-                <span>{plan.dateCreated}</span>
-             </div>
-             
-         </div>
-         <div className="plan__viewer__mess">
-            {/* <span dangerouslySetInnerHTML= {{__html:elem.mess}} /> */}
-            <div className="notes__viewer__mess__panel">
-                <div className="notes__viewer__mess__panel__edit">
-                    <div className="notes__viewer__mess__panel__edit__ico__wrap">
-                        <img src={edit} alt="Редагувати нотатки" />
-                    </div>
-                </div>
-                <div className="notes__viewer__mess__panel__edit">
-                    <div className="notes__viewer__mess__panel__edit__option"></div>
-                    <div className="notes__viewer__mess__panel__edit__option notes__delete"></div>
-                </div>
-            </div>
-         </div>
-         
-     </div>
+                
+                <div className={`wrap__plan ${plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__good" : !plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__notgood" : ""}`}>
+                    {Object.values(plan.plans).map((item,index)=>{
+                        return(
+                                 <PlanCard item={item} index={index} plan={plan}/>
+                        )
+                    })}
+
                 {/* <div className="plan__created">
                 <span>{plan.dateCreated}</span>
             </div>

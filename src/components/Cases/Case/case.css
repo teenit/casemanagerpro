@@ -72,16 +72,19 @@ align-items: center;
     margin-top: 50px;   
 }
 .grod{
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 20px;
-}
-.grod input{
-    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 .grod button{
     width: max-content;
     display: block;   
+}
+.grod label{
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .notes{
     display: grid;

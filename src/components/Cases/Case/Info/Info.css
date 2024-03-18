@@ -314,6 +314,7 @@ gap: 50px;
 #modalSaveBtn.active{
     display: block;
 }
+
 .plan__active{
     border-radius: 10px;
     background-color: #ded9e2;
@@ -330,6 +331,7 @@ gap: 50px;
     grid-template-columns: 1fr;
     padding-top: 30px;
     max-height: 500px;
+    gap: 15px;
 }
 
 .part__line__elem{
@@ -641,6 +643,7 @@ border: solid 2px green;
     align-items: center;
     justify-content: space-around;
     margin-top: 15px;
+    width: 100%;
 }
 .helpes__viewer__line{
     display: grid;
@@ -663,6 +666,13 @@ border: solid 2px green;
 .helpes__mes__wrap{
     margin-top: 15px;
 }
+.helpes__mes__inner{
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 .helpes__viewer__mess{
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -679,6 +689,12 @@ border: solid 2px green;
     flex-direction: column;
     justify-content: space-between;
 }
+.helpes__btn input{
+    border: solid 2px #b399cb;
+    border-radius: 10px;
+    height: 100%;
+    padding: 5px 5px 5px 10px;
+}
 .plan__viewer__line{
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -690,17 +706,22 @@ border: solid 2px green;
     border: solid 2px #b399cb;
     background-color: #fff; 
 }
+.plan__date__row{
+    display: flex;
+    justify-content: space-between;
+}
 .plan__viewer__data{
     display: flex;
     align-items: center;
 }
 .plan__viewer__data>div{
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.plan__viewer__data > span{
+.plan__viewer__data span{
     color: #bababa;
 }
 .plan__viewer__mess{
