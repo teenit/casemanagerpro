@@ -128,14 +128,14 @@ const Event = ()=>{
             <div className={s.inner}>
                 <div className={s.title__wrap}>
                     <div className={s.title}>
-                        <h1 style={{color:event.color}}>{event.title}</h1>
+                        <h1>{event.title}</h1>
                     </div>
                     <div className={s.desc}>
                         <p dangerouslySetInnerHTML={{__html:event.description}}></p>
                     </div>
                 </div>
                 <div className={s.members}>
-                    <h2>Учасники івенту</h2>
+                    <h2>{event.title}</h2>
                     <div className={s.members__inner}>
                     <div>
                         <p>Організатори</p>

@@ -4,6 +4,19 @@
     gap: 15px;
     margin-top: 30px;
 }
+.plan__header{
+    background-color: var(--main-color);
+    border-radius: 7px;
+    padding: 10px 0px;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+.plan__header__inner{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
 .time__line{
     display: flex;
     align-items: center;
@@ -24,33 +37,35 @@
 .plan__date{
     margin-left: 5px;
 }
+
 .result{
-    padding: 5px;
-    box-shadow: 0 0 2px 0 var(--main-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: solid 2px var(--main-color);
     border-radius: 10px;
     position: relative;
     padding-bottom: 40px;
 }
-.title{
-    text-align: center;
-    margin: 10px 0;
+.result__inner{
+    width: 90%;
+    margin: auto;
 }
 .btn__feed{
-    height: 25px;
     bottom: 5px;
     position: absolute;
     left: 50%;
     display: block;
     width: max-content;
     transform: translate(-50%,0);
-    padding: 0 25px;
-    border: solid 2px var(--main-color);
-    background-color: #fff;
+    padding: 7.5px 17.5px;
+    background-color: var(--main-color);
     cursor: pointer;
     transition: all .3s;
-    font-weight: bold;
-    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 18px;    
     border-radius: 5px;
+    border: none;
 }
 .btn__feed:hover{
     background-color: var(--main-color);

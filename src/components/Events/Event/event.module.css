@@ -27,17 +27,24 @@
 }
 .members{
     padding: 10px;
-    border: solid 5px var(--main-color);
+    border: solid 2px var(--main-color);
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .members__inner{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
 }
+.members__inner >div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 .plans{
     padding: 10px;
-    border: solid 5px var(--main-color);
     border-radius: 15px;
 }
 .plans__inner{

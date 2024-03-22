@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { serverAddres } from "../../Functions/serverAddres";
 import s from "./modal.module.css";
+import Input from '../../elements/Inputs/Input'
 const SearchUsers = ({eventID,getUsers})=>{
     const [user,setUser] = useState({userName:"",position:""})
     const [userInSystem, setUserInSystem] = useState(true);
@@ -59,7 +60,7 @@ const SearchUsers = ({eventID,getUsers})=>{
                 }}>Новий</span> </p>
             {userInSystem ?
                 <div className={s.add__user__search}>
-                    <input value={user.userName} placeholder="Пошук користувача..." type="text" onChange={(e)=>{
+                    <Input value={user.userName} label="Пошук користувача..." type="text" onChange={(e)=>{
                         search(e.target.value)
                         setUser({...user,userName:e.target.value})
                     }} />
@@ -80,22 +81,20 @@ const SearchUsers = ({eventID,getUsers})=>{
                 </div>
                :
                 <div className={s.add__user__form}>
-                    <input value={user.userName} placeholder="Введіть ПІБ" type="text" onChange={(e)=>{
+                    <Input value={user.userName} label="Введіть ПІБ" type="text" onChange={(e)=>{
                         setUser({...user,userName:e.target.value})
                     }}/>
-                    <input placeholder="Введіть номер телефону" type="text"  onChange={(e)=>{
+                    <Input label="Введіть номер телефону" type="text"  onChange={(e)=>{
                         setUser({...user,phone:e.target.value})
                     }}/>
                 </div>
             }
             <div className={s.add__user__form} >
-                <input value={user.position} className={s.margin__top__20px} placeholder="Введіть позицію на івенті" type="text" onChange={(e)=>{
+                <Input value={user.position} className={s.margin__top__20px} label="Введіть позицію на івенті" type="text" onChange={(e)=>{
                         setUser({...user,position:e.target.value})
                     }} />
             </div>
-            <div className={s.margin__top__20px}>
                 <button onClick={addUser} className="primary__btn">Додати користувача</button>
-            </div>
         </div>
     )
 }

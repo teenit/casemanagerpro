@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { serverAddres } from "../../Functions/serverAddres";
 import s from "./modal.module.css";
+import Input from '../../elements/Inputs/Input'
 const SearchCase = ({eventID,getUsers})=>{
     const [sCase, setSCase] = useState({userName:""})
     const [searchVal, setSearchVal] = useState("");
@@ -62,7 +63,7 @@ const SearchCase = ({eventID,getUsers})=>{
                 }}>Новий</span> </p>
             {userInSystem ?
                 <div className={s.add__user__search}>
-                    <input value={sCase.userName} className={s.search__inp} type="text" 
+                    <Input value={sCase.userName} className={s.search__inp} type="text" 
                          onChange={(val)=>{
                             setSearchVal(val.target.value)
                             setSCase({...sCase,userName:val.target.value})
@@ -88,17 +89,15 @@ const SearchCase = ({eventID,getUsers})=>{
                 </div>
                :
                 <div className={s.add__user__form}>
-                    <input value={sCase.userName} placeholder="Введіть ПІБ" type="text" onChange={(e)=>{
+                    <Input value={sCase.userName} label="Введіть ПІБ" type="text" onChange={(e)=>{
                         setSCase({...sCase,userName:e.target.value})
                     }}/>
-                    <input value={sCase.phone} placeholder="Введіть номер телефону" type="text"  onChange={(e)=>{
+                    <Input value={sCase.phone} label="Введіть номер телефону" type="text"  onChange={(e)=>{
                         setSCase({...sCase,phone:e.target.value.trim()})
                     }}/>
                 </div>
             }
-            <div className={s.margin__top__20px}>
                 <button onClick={addUser} className="primary__btn">Додати користувача</button>
-            </div>
         </div>
     )
 }

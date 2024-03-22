@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { serverAddres } from "../../Functions/serverAddres";
 import s from "./modal.module.css"
+import Input from '../../elements/Inputs/Input'
+
 const EventAddPlan = ({eventID,getPlans})=>{
     const [plan,setPlan]  = useState({
         title:"",
@@ -46,42 +48,45 @@ const EventAddPlan = ({eventID,getPlans})=>{
             <p>Додати план</p>
             <div className={s.add__plan__form}>
                 <div className={s.add__plan__item}>
-                    <input onChange={(e)=>{
+                    <Input onChange={(e)=>{
                             setPlan({...plan,title:e.target.value})
-                        }} value={plan.title} type="text" placeholder="Назва плану" />
+                        }} value={plan.title} type="text" label="Назва плану" />
                 </div>
                 <div className={s.add__plan__item}>
                     <label htmlFor="">
                         Дата початку
-                        <input onChange={(e)=>{
+                        <Input onChange={(e)=>{
                             setPlan({...plan,dateStart:e.target.value})
                         }} value={plan.dateStart} type="date" />
                     </label>
                     <label htmlFor="">
                         Час початку
-                        <input onChange={(e)=>{
+                        <Input onChange={(e)=>{
                             setPlan({...plan,timeStart:e.target.value})
                         }} value={plan.timeStart}  type="time" />
                     </label>
                 </div>
                 <div className={s.add__plan__item}>
                     <label htmlFor="">
-                        Дата завершення
-                        <input onChange={(e)=>{
+                        Дата кінця
+                        <Input onChange={(e)=>{
                             setPlan({...plan,dateEnd:e.target.value})
                         }} value={plan.dateEnd}  type="date" />
                     </label>
                     <label htmlFor="">
-                        Час завершення
-                        <input onChange={(e)=>{
+                        Час кінця
+                        <Input onChange={(e)=>{
                             setPlan({...plan,timeEnd:e.target.value})
                         }} value={plan.timeEnd}  type="time" />
                     </label>
                 </div>
-                <div className={s.add__plan__item}>
-                    <textarea onChange={(e)=>{
+                <div className={s.item__textarea} >
+                    <label htmlFor="">
+                        План
+                    </label>
+                    <textarea placeholder="Що буде?" onChange={(e)=>{
                         setPlan({...plan,description:e.target.value})
-                    }} value={plan.description} name="" id="" cols="30" rows="10" placeholder="Саме план... Що буде?"></textarea>
+                    }} value={plan.description} name="" id="" cols="30" rows="10" label="Саме план... Що буде?"></textarea>
                 </div>
                 <div className={s.add__plan__item}>
                     <button onClick={addPlan} className="primary__btn">Створити план</button>

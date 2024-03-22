@@ -1,12 +1,13 @@
 .result{
     display: flex;
+    justify-content: space-between;
     font-size: 14px;
     gap: 15px;
     padding: 5px;
 }
 .result__constant{
-    border: solid 1px var(--main-color);
-    border-radius: 30px;
+    background-color: var(--main-color);
+    border-radius: 10px;
 }
 .result p{
     margin: 0;
@@ -19,6 +20,10 @@
 }
 .result:nth-child(2n+1):hover{
     background-color: #00000033;
+}
+.result__left{
+    display: flex;
+    gap: 15px;
 }
 .plan{
     display: grid;

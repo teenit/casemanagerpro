@@ -1,11 +1,13 @@
 .wrapper{
     width: 80%;
     margin: auto;
-    padding-top: 50px;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
 }
 .title{
     text-align: center;
-    text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,10 +29,10 @@
     justify-content: center;
     cursor: pointer;
     transition: all .3s;
+    color: #fff;
 }
 .plus:hover{
     transform: scale(1.1);
-    color: #fff;
 }
 .add__form__wrap{
     width: 50%;
@@ -74,22 +76,46 @@
     cursor: pointer;
 }
 .wrap__cards{
-    display: grid;
-    grid-template-columns: repeat(5,20%);
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    margin-top: 30px;
+    gap: 10px;
+    border: solid 1px var(--main-color);
+}
+.inner__cards{
+    padding: 0px 50px;
+
+}
+.wrap__cards__list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+.cards__header{
+    text-align: center;
+    background-color: var(--main-color);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-weight: bold;
+    padding: 10px 0px;
 }
 .wrap__cards img{
-    width: 100%;
-    display: block;
-    margin: auto;
+    max-height: 40px;
+    max-width: 40px;
 }
 .file__card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     transition: all .3s;
 }
 .file__card:hover{
     cursor: pointer;
+}
+.card__row__left{
+    display: flex;
+    align-items: center;
+    gap: 50px;
 }
 .modal__file{
     width: 100%;
@@ -116,6 +142,22 @@
     grid-template-columns: 1fr 1fr;
     gap: 30px;
     max-width: 50%;
+}
+.modal__file__info{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.modal__file__info span{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.modal__file__inner p{
+font-size: 14px;
+}
+.modal__file__title{
+font-weight: bold;
 }
 .modal__file__img{
     display: flex;

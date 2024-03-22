@@ -4,6 +4,8 @@ import { useState } from "react";
 import { serverAddres } from "../../Functions/serverAddres";
 import { changeAps, translateStringToLink } from "../../Functions/translateString";
 import s from "./upload.module.css";
+import Input from '../../elements/Inputs/Input'
+
 
 const UploadEventMedia = ({eventID})=>{
     function sendResources(index){
@@ -60,19 +62,19 @@ const UploadEventMedia = ({eventID})=>{
         const [loaderProgress, setLoaderProgress] = useState(0)
         return(
             <div className={s.add__form__wrap}>
-                <h2>Завантаження MEDIA</h2>
+                <h2>Завантаження медіафайлів</h2>
                     <div className={s.add__form}>
                         <div className={s.add__form__title}>
-                            <input type="text" 
-                                    placeholder="Назва документу"
+                            <Input type="text" 
+                                    label="Назва документу"
                                     value={meta.title}
                                     onChange={(e)=>{
                                         setMeta({...meta,title:e.target.value})
                                     }}/>
                         </div>
                         <div className={s.add__form__desc}>
-                            <input type="text" 
-                                    placeholder="Опис Документу"
+                            <Input type="text" 
+                                    label="Опис Документу"
                                     value={meta.description}
                                     onChange={(e)=>{
                                         setMeta({...meta,description:e.target.value})
