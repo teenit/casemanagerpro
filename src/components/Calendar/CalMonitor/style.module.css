@@ -7,10 +7,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    font-size: 22px;
+    gap: 10px;
+    font-size: 18px;
     padding-top: 10px;
-    padding-bottom: 10px;
 }
 .week{
     display: grid;
@@ -37,6 +36,9 @@
     border-radius: 5px;
     transition: all .3s;
 }
+.control__btn:nth-child(even){
+    color: #000;
+}
 .control__btn:hover{
     transform: scale(1.05);
 }
@@ -45,10 +47,10 @@
     gap: 5px;
 }
 .days__week{
-    border: solid 1px var(--second-color);
+    color: #fff;
     box-sizing: border-box;
     background-color: var(--main-color);
-    padding: 5px;
+    padding: 10px 5px 5px 5px;
     font-weight: 700;
     border-radius: 10px 10px 0 0;
     text-align: center;

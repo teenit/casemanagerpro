@@ -25,6 +25,7 @@ const CalGrid =({keys,startDay,today,events})=>{
                             <div className={`${s.date} ${currentMonth(item) ? s.current__month:null}`}>
                                 <div className={`${s.day} ${currentDay(item) ? s.currentDay : null}`}>{item.format('D')}</div>
                             </div>
+                            <div className={s.events__wrap}>
                             {events.map((eve,ind)=>{    
                                 if(keys.happyCase == eve.key || keys.myCalendar == eve.key || keys.forAll == eve.key){
                                     if(eve.day == item.format('D') && eve.month == item.month()){
@@ -38,6 +39,7 @@ const CalGrid =({keys,startDay,today,events})=>{
                                 }
                                     
                                 })}
+                                </div>
                         </div>
                     )
                 })

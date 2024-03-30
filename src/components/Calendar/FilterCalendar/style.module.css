@@ -1,4 +1,9 @@
 .show__cal{
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     margin-top: 15px;
+}
+.show__cal input{
+    margin-right: 10px;
 }
