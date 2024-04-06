@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { get_apiObj } from "../../Functions/get_apiObj";
 import { changeAps, changeApsBr } from "../../Functions/translateString";
 import s from "./cal.module.css"
+import Input from '../../elements/Inputs/Input'
 const AddCalEventForm = ({date,close})=>{
     const [form,setForm] = useState({
         color:{
@@ -64,7 +65,7 @@ const AddCalEventForm = ({date,close})=>{
             <div className={s.add__form__line}>
                 <div className={s.add__form__f__line}>
                     <div className={s.add__form__title}>
-                        <input value={form.title.value} placeholder="Назва *" type="text" 
+                        <Input value={form.title.value} label="Назва *" type="text" 
                         onChange={(e)=>{
                             let error = true;
                             if(form.title.requare && changeAps(e.target.value).length > 1) error = false;
@@ -93,8 +94,8 @@ const AddCalEventForm = ({date,close})=>{
                 </div>
             </div>
             <div className={s.add__form__line}>
-                <div className={s.add__form__time}>
-                    <label htmlFor="">Початок<input value={form.start.value} type="time" name="" id="" 
+                <div className={s.add__form__row}>
+                    <label htmlFor="">Початок<Input value={form.start.value} type="time" name="" id="" 
                      onChange={(e)=>{
                         setForm({
                             ...form,
@@ -105,7 +106,7 @@ const AddCalEventForm = ({date,close})=>{
                         })
                     }}/></label>
                     
-                    <label htmlFor="">Кінець<input value={form.end.value} type="time" name="" id="" 
+                    <label htmlFor="">Кінець<Input value={form.end.value} type="time" name="" id="" 
                      onChange={(e)=>{
                         setForm({
                             ...form,
@@ -119,7 +120,7 @@ const AddCalEventForm = ({date,close})=>{
             </div>
             <div className={s.add__form__line}>
                 <div className={s.add__form__text}>
-                    <textarea value={form.text.value} placeholder="Введіть текст події *" cols="30" rows="10"
+                    <textarea value={form.text.value} label="Введіть текст події *" cols="30" rows="10"
                    onChange={(e)=>{
                     let error = true;
                     if(form.text.requare && e.target.value.length > 5) error = false;
@@ -145,7 +146,7 @@ const AddCalEventForm = ({date,close})=>{
             </div>
             <div className={s.add__form__line}>
                 <div className={s.add__form__link}>
-                    <input value={form.link.value} type="text" placeholder="Додати посилання" 
+                    <Input value={form.link.value} type="text" label="Додати посилання" 
                     onChange={(e)=>{
                         let error = true;
                         if(changeAps(e.target.value).length > 1) error = false;

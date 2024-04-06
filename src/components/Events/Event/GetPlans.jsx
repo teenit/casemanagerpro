@@ -24,6 +24,7 @@ const GetPlans = ({ id, plans }) => {
                                 </div>
                             </div>
                             <div className={s.result__inner}>
+                                <div className={s.result__inner__90}>
                             {/* <div className={s.time__line}><span className={s.plan__time__date}>
                                 <span className={s.plan__time}>{item.timeStart}</span>
                                 <span className={s.plan__date}>{item.dateStart}</span>
@@ -34,10 +35,12 @@ const GetPlans = ({ id, plans }) => {
                                 </span>
                             </div> */}
                             <p dangerouslySetInnerHTML={{ __html: item.description }}></p>
+
+                            </div>
+                            <div className={s.feed__back__wrap}>
                             <div className={s.feed__back__line}>
                                 <b>Зворотній зв'язок</b>
                             </div>
-                            <div className={s.feed__back__wrap}>
                                 {item.feedBack.length == 0 ? <p>Немає зворотнього зв'язку</p> : null}
                                 {item.feedBack.map((elem, ind) => {
                                     return (

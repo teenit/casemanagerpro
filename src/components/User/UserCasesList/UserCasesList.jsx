@@ -42,9 +42,9 @@ export class UserCasesList extends Component {
         <div className="added_contact">
           <div className="added_contact_wrap">
             <h4 className="added_contact_title">Створені кейси</h4>
-            <div className="added_new_cases">
-              <NavLink className={"padding20px"} to="/add-case">+ новий кейс</NavLink>
-            </div>
+            <button className="added_new_cases">
+            <NavLink to="/add-case">Створити кейс</NavLink>
+            </button>
           </div>
           <ul className="added_contact_list">
             {addCases.map(({ id, firstName, surname }) => (

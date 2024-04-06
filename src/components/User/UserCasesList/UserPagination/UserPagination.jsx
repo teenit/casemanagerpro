@@ -1,4 +1,6 @@
 import React from "react";
+import arrowLeft from '../../../../img/icons/slider-arrow-left.svg'
+import arrowRight from '../../../../img/icons/slider-arrow-right.svg'
 
 const UserPagination = ({ casesPerPage, totalCases, paginate, activeKey }) => {
   const pageNumber = [];
@@ -6,9 +8,17 @@ const UserPagination = ({ casesPerPage, totalCases, paginate, activeKey }) => {
   for (let i = 1; i <= Math.ceil(totalCases / casesPerPage); i++) {
     pageNumber.push(i);
   }
+
   return (
-    <div>
+    <div className="pagination__wrap">
       <ul className="user_pagination">
+        <div className="arrow__wrap">
+          <img src={arrowLeft} alt="Стрілка вліво" onClick={()=>{
+            if(activeKey!==1){
+              paginate(activeKey - 1);
+            }
+          }}/>
+        </div>
         {pageNumber.map((number) => (
           <li key={number}>
             <button
@@ -16,10 +26,16 @@ const UserPagination = ({ casesPerPage, totalCases, paginate, activeKey }) => {
               type="button"
               onClick={() => paginate(number)}
             >
-              {/* {number} */}
             </button>
           </li>
         ))}
+        <div className="arrow__wrap">
+          <img src={arrowRight} alt="Стрілка вправо" onClick={()=>{
+            if(activeKey!==pageNumber.length){
+              paginate(activeKey + 1);
+            }
+          }}/>
+        </div>
       </ul>
     </div>
   );

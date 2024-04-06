@@ -9,6 +9,7 @@ import { ReactComponent as Email } from "../../../img/icons/email.svg";
 import { ReactComponent as User } from "../../../img/icons/user.svg";
 import { removeUser } from "../../../store/Slices/userSlice";
 import { useDispatch } from "react-redux";
+import Input from '../../elements/Inputs/Input'
 const ProfilePhoto = ({ url, userName, email,changePass,phone }) => {
   const [loading, setLoading] = useState("");
   const [olderPass, setOlderPass] = useState("");
@@ -51,6 +52,7 @@ const ProfilePhoto = ({ url, userName, email,changePass,phone }) => {
   };
   return (
     <div className="case__contact__info__img">
+      <div className="case__contact__info__img__left">
       <div className="case__contact__info__img__inner">
         <img src={`${url}`} alt="" />
         <Loadpic show={loading} />
@@ -58,7 +60,7 @@ const ProfilePhoto = ({ url, userName, email,changePass,phone }) => {
           <label htmlFor="uploadbtn" className="case__edit__img">
             Змінити
           </label>
-          <input
+          <Input
             onChangeCapture={() => {
               changePic("caseImgEdit");
             }}
@@ -70,64 +72,47 @@ const ProfilePhoto = ({ url, userName, email,changePass,phone }) => {
         </form>:""}
       </div>
       <div className="user_info">
-        <h4 className="user_info_name">
-          <User
-            width="25"
-            height="25"
-            style={{
-              marginRight: 10,
-            }}
-          />
-          {userName}
-        </h4>
-        <h4 className="user_info_phone">
+        <h1 className="user_info_name">{userName}</h1>
+        <div className="user_info_phone">
           <Phone
             width="20"
             height="20"
-            style={{
-              marginRight: 15,
-            }}
           />
           {phone}
-        </h4>
-        <h4 className="user_info_mail">
+        </div>
+        <div className="user_info_mail">
           <Email
             width="20"
             height="20"
-            style={{
-              marginRight: 15,
-            }}
           />
           {email}
-        </h4>
+        </div>
+      </div>
       </div>
       {changePass ? <div className="change_password">
-        <h4>Змінити пароль</h4>
+        <p>Змінити пароль</p>
         <div className="wrap__change__form">
-        <label htmlFor="change__pass__older">Введіть старий пароль</label>
-          <input
+          <Input
+            label="Введіть старий пароль"
             type="password"
-            name="change__pass__older"
             id="change__pass__older"
             value={olderPass}
             onChange={(e) => {
               setOlderPass(e.target.value);
             }}
           />
-          <label htmlFor="change__pass">Введіть новий пароль</label>
-          <input
+          <Input
+          label="Введіть новий пароль"
             type="password"
-            name="change__pass"
             id="change__pass"
             value={newPass}
             onChange={(e) => {
               setNewPass(e.target.value);
             }}
           />
-          <label htmlFor="change__passto">Повторіть пароль</label>
-          <input
+          <Input
+          label="Повторіть пароль"
             type="password"
-            name="change__passto"
             id="change__passto"
             value={newPassTo}
             onChange={(e) => {

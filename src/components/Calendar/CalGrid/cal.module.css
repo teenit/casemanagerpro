@@ -65,10 +65,15 @@
     background-color: #fff;
     box-shadow: 0 0 10px 0 var(--main-color);
     border-radius: 10px;
-    min-width: 50%;
+    min-width: 75%;
     max-width: 50%;
     max-height: 70vh;
     overflow-y: scroll;
+}
+.inner__modal{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 .add__form__f__line{
     display: grid;
@@ -76,15 +81,22 @@
     gap: 10px;
 }
 .add__form{
-    display: grid;
+    width: 75%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
-    margin-top: 15px;
+}
+.add__form textarea{
+    border: solid 3px var(--main-color);
+    width: 100%;
 }
 .add__title{
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: sticky;
+    z-index: 999;
     top: 0;
     background: #fff;
 }
@@ -116,7 +128,11 @@
     gap: 15px;
     font-weight: 600;
 }
-
+.inner__content{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 50px;
+}
 .event__day{
     height: 5px;
     width: 90%;
@@ -125,19 +141,60 @@
     margin-bottom: 5px;
 }
 .events{
-    margin-top: 15px;
+    height: max-content;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 5px;
+    gap: 25px;
 }
 p{
     margin: 0;
 }
-.event__line{
-    border-bottom: solid 1px var(--main-color);
-    background-color: #f5f5f5fc;
+.timetable__event{
+    width: calc(100% - 30px);
+    border-radius: 2.5px;
+    background-color: #fff;
+    position: absolute;
+    z-index: 99;
+    padding: 0px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: auto;
+}
+.timetable{
+    display: flex;
+    flex-direction: column;
     border-radius: 10px;
-    padding: 2.5px;
+    box-shadow: 0px 0px 10px 1px #bababa;
+
+}
+.timetable__row__right{
+    position: relative;
+}
+.timetable__row{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    border-bottom: solid 1px #000;
+}
+.timetable__row__left{
+    padding: 10px 0px;
+    text-align: center;
+    border-right: solid 1.5px #000;
+}
+.event__line{
+    display: flex;
+    flex-direction: column;
+    gap: 7.5px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 1px #bababa;
+    height: max-content;
+    padding: 20px;
+}
+.event__color__line{
+    border-radius: 10px;
+    width: 100%;
+    height: 6px;
 }
 .current__day{
     background-color: var(--main-color);
@@ -146,9 +203,19 @@ p{
     color: #fff;
     cursor: pointer;
 }
-.add__form__time{
-    display: flex;
-    justify-content: space-between;
+.add__form__row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+.add__form__row label div{
+    width: 100%;
+}
+
+.event__title{
+display: flex;
+justify-content: space-between;
+width: 100%;
 }
 .event__times{
     display: flex;

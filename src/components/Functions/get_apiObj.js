@@ -16,7 +16,7 @@ export function get_apiObj(setState,url,objData){
         data : JSON.stringify(objData),
     })
     .then((data)=>{ 
-        console.log(data)
+        // console.log(data)
        setState(data.data) 
     })
     .catch((error)=>console.log(error)) 

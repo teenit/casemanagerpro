@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const UserCasesListItem = ({ id, surname, firstName }) => {
   return (
     <>
-      <h5>№ {id}</h5>
+      <p>№ {id}</p>
     
         <NavLink to = {"/case?" + id}>
         {surname} {firstName}

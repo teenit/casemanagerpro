@@ -39,6 +39,7 @@
 }
 
 .result{
+
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -48,8 +49,14 @@
     padding-bottom: 40px;
 }
 .result__inner{
+    max-height: 300px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.result__inner__90{
     width: 90%;
-    margin: auto;
 }
 .btn__feed{
     bottom: 5px;
@@ -130,6 +137,7 @@
     position: relative;
 }
 .feed__back__wrap{
+    width: 90%;
     display: grid;
     grid-template-columns: 1fr;
     gap: 5px;
