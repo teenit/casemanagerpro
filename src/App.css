@@ -15,7 +15,7 @@ a{
   font-weight: 600;
 }
 .MuiOutlinedInput-root {
-  border: solid 2px #b399cb;
+  border: solid 2px var(--main-color);
 }
 .primary__btn {
   height: max-content;
@@ -24,7 +24,7 @@ a{
   border: none;
   color: #000;
   transition: all .3s;
-  background-color: #b399cb;
+  background-color: var(--main-color);
   cursor: pointer;
   border-radius: 10px;
   font-weight: 700;
@@ -39,16 +39,16 @@ a{
   margin-top: 50px;
 }
 .primary__btn:hover {
-  box-shadow: 0 0 10px #b399cb;
+  box-shadow: 0 0 10px var(--main-color);
   border-radius: 10px;
 }
 
 .primary__btn.active {
-  box-shadow: 0 0 6px 0px #b399cb;
+  box-shadow: 0 0 6px 0px var(--main-color);
 }
 
 .primary__btn.active:hover {
-  box-shadow: 0 0 6px 0 #b399cb;
+  box-shadow: 0 0 6px 0 var(--main-color);
   border-radius: 15px;
 }
 
@@ -57,7 +57,7 @@ a{
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #b399cb #ededed;
+  scrollbar-color: var(--main-color) #ededed;
 }
 
 /* Chrome, Edge, and Safari */
@@ -72,7 +72,7 @@ a{
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #b399cb;
+  background-color: var(--main-color);
   border-radius: 10px;
   border: 2px solid #ffffff;
   cursor: pointer;
@@ -84,7 +84,7 @@ a{
   padding: 5px 5px 5px 10px;
 } */
 select{
-  border: solid 3px #b399cb;
+  border: solid 3px var(--main-color);
   border-radius: 7px;
   width: calc(100% - 21px);
   padding: 5px 5px 5px 10px;
@@ -110,7 +110,7 @@ input[type=checkbox]:before {
   height: 20px;
   top: 0;
   left: 0;
-  border: 3px solid #b399cb;
+  border: 3px solid var(--main-color);
   border-radius: 3px;
   background-color: white;
 }

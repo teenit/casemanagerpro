@@ -21,6 +21,7 @@ import Task from "../Task/Task";
 import AccessPage from "../pages/AccessPage";
 import AccessPageRight from "../pages/AccessPageRight";
 import TestPage from "../pages/TestPage";
+import AddCaseForm from "../Cases/newDesign/AddCaseForm";
 
 const localToken = localStorage.getItem("token");
 
@@ -30,7 +31,7 @@ const MainContent = ()=>{
     return isAuth ?(
         <div className='wrap__content'>
           <Routes >
-            <Route path='/add-case' element={<AddCase />} />
+            <Route path='/add-case' element={<AddCaseForm />} />
             <Route path='/cases' element={<Cases />} />
             <Route path='/case' element={<Case />} />
             <Route path='/registration' element={<Registration />} />
