@@ -87,6 +87,7 @@ const AddCaseForm = () => {
                     <div className="AddCaseForm-inner-line-two">
                         <div>
                             <Input
+                                type="number"
                                 value={stateGeneral.phone1}
                                 label="Номер телефону 1"
                                 onChange={(e) => {
@@ -96,6 +97,7 @@ const AddCaseForm = () => {
                         </div>
                         <div>
                             <Input
+                                type="number"
                                 value={stateGeneral.phone2}
                                 label="Номер телефону 2"
                                 onChange={(e) => {
@@ -117,6 +119,7 @@ const AddCaseForm = () => {
                         </div>
                         <div>
                             <Input
+                                type="date"
                                 value={stateGeneral.happy_bd}
                                 label="Дата народження"
                                 onChange={(e) => {
@@ -161,6 +164,7 @@ const AddCaseForm = () => {
                     <div className="AddCaseForm-inner-line-three">
                         <div>
                             <Input
+                                type="date"
                                 value={stateData.date_first_contact}
                                 label="Дата першого контакту"
                                 onChange={(e) => {
@@ -170,6 +174,7 @@ const AddCaseForm = () => {
                         </div>
                         <div>
                             <Input
+                                type="date"
                                 value={stateData.contract_date}
                                 label="Дата укладення договору"
                                 onChange={(e) => {
@@ -179,6 +184,7 @@ const AddCaseForm = () => {
                         </div>
                         <div>
                             <Input
+                                type="number"
                                 value={stateData.contract_number}
                                 label="Номер договору"
                                 onChange={(e) => {
@@ -226,7 +232,7 @@ const AddCaseForm = () => {
                         />
                     </div>
 
-                    <button className="primary__btn" onClick={handleSubmit}>Зберегти</button>
+                    <button className="primary__btn">Зберегти</button>
                 </div>
             }
 
