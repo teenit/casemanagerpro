@@ -46,5 +46,7 @@ if (isset($data->access) && isset($data->id_access)){
 
     // Закриваємо з'єднання з базою даних
     $conn->close();
+} else {
+    echo $accessId;
 }
 ?>

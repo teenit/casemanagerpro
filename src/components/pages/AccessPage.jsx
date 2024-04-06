@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { apiResponse } from "../Functions/get_apiObj";
-import AccessPageModal from "./AccessPageModal";
 import Modal from "../Modals/Modal";
 import Input from "../elements/Inputs/Input";
 import Textarea from "../elements/Inputs/Textarea";
-import { Button, StyledEngineProvider } from "@mui/material";
+import { Button } from "@mui/material";
 import { LANG } from "../../services/config";
+import { changeAps, changeApsBr } from "../Functions/translateString";
 
 const AccessPage = () => {
 
@@ -20,9 +20,16 @@ const AccessPage = () => {
         apiResponse({},'access/get-list.php').then((res)=>{
             console.log(res)
             setState(res)})
+    },[]);
 
-    },[
-    ])
+    const addNewAccess = () => {
+        console.log(state)
+        if (addAccess.name.length < 1) return alert("Помилка: Ви не ввели назву шаблону права");
+        apiResponse({name: changeAps(addAccess.name), description: changeApsBr(addAccess.description)}, "access/add-access.php").then((res)=>{
+            console.log(res)
+        })
+    }
+
     return (
         <div className="AccessPage">
             {state.map((item) => {
@@ -34,15 +41,7 @@ const AccessPage = () => {
                         <h3 className="">Додати новий шаблон прав</h3>
                     }
                     footer={
-                        <StyledEngineProvider>
-                            <Button variant="contained" className="button" onClick={() => {
-                                if (addAccess.name.length > 0) {
-                                    setModal(false)
-                                } else {
-                                    alert("Помилка: Ви не ввели назву шаблону права")
-                                }
-                            }}>Зберегти</Button>
-                        </StyledEngineProvider>
+                            <Button variant="contained" className="button" onClick={addNewAccess}>Зберегти</Button>
                     }
                 >
                     <Input value={addAccess.name} className="input" onChange={e => setAccess({ ...addAccess, name: e.target.value })} label={LANG.access.add_name} type="text" />

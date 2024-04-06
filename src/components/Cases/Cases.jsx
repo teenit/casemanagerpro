@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { serverAddres } from "../Functions/serverAddres";
 import LoadingPage from "../Loading/LoadingPage";
 import GetCases from "./GetCases";
+import AddCaseForm from "./newDesign/AddCaseForm";
 
 const Cases = ()=>{
     const [posts, setPosts] = useState("");
@@ -63,6 +64,7 @@ const Cases = ()=>{
         </div>
     ):(
                 <>
+                <AddCaseForm />
                 <h2 style={{
                     textAlign:"center"
                 }}>Кейси</h2>

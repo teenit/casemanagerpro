@@ -20,6 +20,7 @@ import Cooperation from "../Cooperation/Cooperation";
 import Task from "../Task/Task";
 import AccessPage from "../pages/AccessPage";
 import AccessPageRight from "../pages/AccessPageRight";
+import TestPage from "../pages/TestPage";
 
 const localToken = localStorage.getItem("token");
 
@@ -45,6 +46,7 @@ const MainContent = ()=>{
             <Route path='calendar' element={<Calendar />} />
             <Route path='cooperation' element={<Cooperation />} />
             <Route path='task' element={<Task />} />
+            <Route path='test' element={<TestPage />} />
             <Route index element={<Home />} />
           </Routes>
         </div>

@@ -159,6 +159,23 @@ const AccessPageRight = () => {
     accesses:[]
   })
 
+  const getRightsForBack = () => {
+    let obj = {
+      id_access: state.rights.id,
+      access: []
+    }
+    Object.keys(state.rights).forEach(item => {
+      if (item !== 'id' && state.rights[item] !== null) obj.access.push({value: state.rights[item], key: item})
+    })
+    return obj;
+  }
+
+ const updateRights = () => {
+  let access = getRightsForBack();
+  console.log(access)
+  apiResponse(access, "access/update-access.php").then(res=>console.log(res))
+ }
+
   const [caseCategiries, setCaseCategories] = useState([])
 
   const changeRight = (value, key) => {
@@ -200,7 +217,7 @@ const AccessPageRight = () => {
           </div>
           <div className='AccessPageRight-right-head-buttons'>
             <button className='AccessPageRight-right-head-buttons-CancelButton'>Скасувати</button>
-            <button className='AccessPageRight-right-head-buttons-SaveButton'>Зберегти</button>
+            <button className='AccessPageRight-right-head-buttons-SaveButton' onClick={updateRights}>Зберегти</button>
           </div>
         </div>
 
