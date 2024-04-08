@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../elements/Inputs/Input";
 import { changeAps, changeApsBr } from "../../Functions/translateString";
 import {apiResponse} from '../../Functions/get_apiObj'
@@ -6,6 +6,14 @@ const AddCaseForm = () => {
     const [state, setState] = useState({
         general: true
     })
+    const [caseCategories, setCaseCategories] = useState([])
+
+    useEffect(()=>{
+        apiResponse({categoryKey:"case"},"manage/get-categories.php").then((data)=>{
+            setCaseCategories(data.data)
+            console.log(data)
+          })
+    },[])
 
     const [stateGeneral, setStateGeneral] = useState({
         first_name: "",
@@ -40,13 +48,21 @@ const AddCaseForm = () => {
     function handleSubmit() {
         if (stateGeneral.first_name.length > 0) {
             sendGeneral()
-           // setSwitchData({ ...switchData, general: false, data: true })
+            
         } else {
             alert("Будь ласка, введіть ім'я кейсу")
         }
     }
     function sendGeneral(){
         apiResponse({...stateGeneral},"case/create-case.php").then(data=>{
+            if (data.id) {
+                setStateData({...stateData, case_id:data.id});
+                setSwitchData({ ...switchData, general: false, data: true });
+            };
+        })
+    }
+    function sendData(){
+        apiResponse({...stateData},"case/insert-case-info.php").then(data=>{
             console.log(data)
         })
     }
