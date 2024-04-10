@@ -13,7 +13,7 @@
     box-shadow: 0 0 10px 0 gray;
     position: relative;
     border-radius: 10px;
-    background-color: #ded9e2;
+    background-color: var(--second-color);
 }
 .card__img{
     display: grid;

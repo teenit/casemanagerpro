@@ -96,7 +96,7 @@ gap: 50px;
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 0px;
-    border: solid 2px #b399cb;
+    border: solid 2px var(--main-color);
     border-radius: 15px;
     padding: 20px;
 }
@@ -147,7 +147,7 @@ gap: 50px;
     transform: scale(1.1);
 }
 .er__con__wrap{
-    border: solid 3px var(--main-color);
+    border: solid 3px var(--second-color);
     margin-top: 35px;
     border-radius: 10px;
 }
@@ -156,7 +156,7 @@ gap: 50px;
 }
 .er__con__from{
     padding: 10px;
-    background-color: #b399cb;
+    background-color: var(--second-color);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
@@ -317,7 +317,7 @@ gap: 50px;
 
 .plan__active{
     border-radius: 10px;
-    background-color: #ded9e2;
+    background-color: var(--second-color);
     padding: 20px;
 }
 .plan__active__header{
@@ -337,7 +337,7 @@ gap: 50px;
 .part__line__elem{
     width: 3px;
     height: 20px;
-    background-color: #b399cb;
+    background-color: var(--main-color);
     position: relative;
     margin: auto;
 }
@@ -346,12 +346,12 @@ gap: 50px;
     width: max-content;
     margin: auto;
     padding: 10px;
-    border: solid 3px #b399cb;
+    border: solid 3px var(--main-color);
     border-radius: 10px;
 }
 .part__plan__description{
     padding: 10px;
-    border: solid 3px #b399cb;
+    border: solid 3px var(--main-color);
     border-radius: 10px;
 }
 .part__plan__btn{
@@ -468,7 +468,7 @@ gap: 50px;
     background-color: rgba(113, 94, 94, 0.192);
 }
 .connect__viewer__line{
-    border: solid 3px #b399cb;
+    border: solid 3px var(--main-color);
     padding: 10px;
     border-radius: 20px;
 }
@@ -480,11 +480,11 @@ gap: 50px;
     margin-top: 15px;
 }
 .connections__from .connect__viewer__line{
-    background-color: #ded9e2;
+    background-color: var(--second-color);
 }
 .notes__wrap{
     border-radius: 10px;
-background-color: #ded9e2;
+background-color: var(--second-color);
 padding: 20px;
 }
 .notes__field{
@@ -497,7 +497,7 @@ padding: 20px;
     border-radius: 15px;
     padding: 5px;
     background-color: #fff;
-    border: solid 2.5px #b399cb;
+    border: solid 2.5px var(--main-color);
 }
 .notes__field img{
     cursor: pointer;
@@ -556,7 +556,7 @@ padding: 20px;
 .notes__viewer__data{
     display: flex;
     align-items: center;
-    border-right: solid 3px #b399cb;
+    border-right: solid 3px var(--main-color);
 }
 .notes__viewer__data > div{
     height: 100%;
@@ -575,7 +575,7 @@ padding: 20px;
     padding: 10px;
     border-radius: 10px;
     column-gap: 15px;
-    border: solid 2px #b399cb;
+    border: solid 2px var(--main-color);
     background-color: #fff;
 }
 .notes__viewer__mess{
@@ -610,7 +610,7 @@ border: solid 2px green;
 }
 .helpes__wrap{
     border-radius: 10px;
-    background-color: #ded9e2;
+    background-color: var(--second-color);
     padding: 20px;
 }
 .helpes__field{
@@ -623,7 +623,7 @@ border: solid 2px green;
     border-radius: 15px;
     padding: 5px;
     background-color: #fff;
-    border: solid 2.5px #b399cb;
+    border: solid 2.5px var(--main-color);
 }
 .helpes__field img{
     cursor: pointer;
@@ -653,7 +653,7 @@ border: solid 2px green;
     padding: 10px;
     border-radius: 10px;
     column-gap: 15px;
-    border: solid 2px #b399cb;
+    border: solid 2px var(--main-color);
     background-color: #fff;
 }
 .helpes__viewer__data a{
@@ -681,7 +681,7 @@ border: solid 2px green;
 .helpes__viewer__data{
     display: flex;
     align-items: center;
-    border-right: solid 3px #b399cb;
+    border-right: solid 3px var(--main-color);
 }
 .helpes__viewer__data >div{
     height: 100%;
@@ -690,7 +690,7 @@ border: solid 2px green;
     justify-content: space-between;
 }
 .helpes__btn input{
-    border: solid 2px #b399cb;
+    border: solid 2px var(--main-color);
     border-radius: 10px;
     height: 100%;
     padding: 5px 5px 5px 10px;
@@ -703,7 +703,7 @@ border: solid 2px green;
     padding: 10px;
     border-radius: 10px;
     column-gap: 15px;
-    border: solid 2px #b399cb;
+    border: solid 2px var(--main-color);
     background-color: #fff; 
 }
 .plan__date__row{

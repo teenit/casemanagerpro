@@ -65,7 +65,7 @@
 }
 
 .added_all_contact, .added_contact {
-  background-color: #ded9e2;
+  background-color: var(--second-color);
   border-radius: 15px;
   padding: 20px;
 }

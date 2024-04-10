@@ -41,7 +41,7 @@
 .set__user__wr{
     display: flex;
     grid-template-columns: 2fr 1fr;
-    border: solid 3px #b399cb;
+    border: solid 3px var(--main-color);
     padding: 5px 10px;
     border-radius: 20px;
     align-items: center;
@@ -87,7 +87,7 @@
     margin-right: 10px;
     padding: 5px 10px;
     border-radius: 20px;
-    border: solid 3px #b399cb;
+    border: solid 3px var(--main-color);
 }
 .set__users__data__line.arc .set__user__control__panel__icons{
     border: solid 3px #dad5df;
@@ -181,7 +181,7 @@
     border-radius: 20px;
 }
 .set__categories__case__list__category.arc{
-    border: solid 3px #b399cb;
+    border: solid 3px var(--main-color);
     background-color: #fff;
     border-radius: 20px;
 }

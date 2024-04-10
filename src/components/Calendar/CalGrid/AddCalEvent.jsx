@@ -6,8 +6,9 @@ import s from "./cal.module.css"
 const AddCalEvent = ({ close, addEvent, events, keys }) => {
     const [form, setForm] = useState(false)
     const dayEvents = events.filter(item => item.day == addEvent.date.format('D') && item.month == addEvent.date.month());
-    const endDay = Math.min(...dayEvents.map(item => Number(item.value.start.slice(0, 2))), 8);
-    const startDay = Math.max(...dayEvents.map(item => Number(item.value.end.slice(0, 2))), 20);
+    const dayEventsWithoutFull = dayEvents.filter(item=> item.value.start!=="0:00"&&item.value.end!=="23:59")
+    const endDay = Math.min(...dayEventsWithoutFull.map(item => Number(item.value.start.slice(0, 2))), 8);
+    const startDay = Math.max(...dayEventsWithoutFull.map(item => Number(item.value.end.slice(0, 2))), 20);
     const timeMas = Array(startDay - endDay + 1).fill().map((item, index) => index + endDay);
 const sortedDayEvents = dayEvents.sort((a, b) => {
     const startTimeA = Number(a.value.start.slice(0, 2));
