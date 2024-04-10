@@ -30,7 +30,7 @@
     border: none;
     color: #000;
     transition: all .3s;
-    background-color: #b399cb;
+    background-color: var(--main-color);
     cursor: pointer;
     border-radius: 10px;
     font-weight: 700;

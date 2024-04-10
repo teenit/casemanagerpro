@@ -1,0 +1,17 @@
+.CheckboxForm{
+
+    ul{
+        display: flex;
+        flex-direction: column;
+        max-height: 200px;
+        overflow-y: scroll;
+        li{
+            display: flex;
+            gap: 10px;
+            div{
+                width: max-content !important;
+                padding-left: 0;
+            }
+        }
+    }
+}

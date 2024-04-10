@@ -22,7 +22,7 @@
     margin-top: 30px;
     padding: 15px;
     border-radius: 20px;
-    background-color: #ded9e2;
+    background-color: var(--second-color);
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -44,7 +44,7 @@
     
 }
 .form__inp__wr__files{
-    border: solid 3px #b399cb;
+    border: solid 3px var(--main-color);
     background-color: #fff;
     border-radius: 20px; 
     padding: 10px;
@@ -93,7 +93,7 @@ align-items: center;
     margin-top: 50px;   
 }
 .case__title span{
-    color: #d2bee3;
+    color: var(--main-color);
 }
 .connections__wrap{
     display: grid;
