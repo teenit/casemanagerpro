@@ -28,7 +28,7 @@ $stmt->bind_param("isssssssssss", $data['case_id'], $data['address_registered'],
 
 // Виконання запиту
 if ($stmt->execute() === TRUE) {
-    echo "Data inserted successfully";
+    echo json_encode(array("status" => true));
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

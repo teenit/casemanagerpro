@@ -43,9 +43,9 @@ if ($stmt->execute() === TRUE) {
     // Отримання ідентифікатора останнього вставленого запису
     $last_id = $stmt->insert_id;
     // Повернення ідентифікатора на фронт у форматі JSON
-    echo json_encode(array("id" => $last_id));
+    echo json_encode(array("id" => $last_id, "status" => true));
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo json_encode(array("status" => false));
 }
 
 // Закриття з'єднання
