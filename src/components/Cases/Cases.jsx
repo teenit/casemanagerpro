@@ -5,6 +5,7 @@ import { serverAddres } from "../Functions/serverAddres";
 import LoadingPage from "../Loading/LoadingPage";
 import GetCases from "./GetCases";
 import AddCaseForm from "./newDesign/AddCaseForm";
+import FilesUploader from "../elements/Uploaders/FilesUploader";
 
 const Cases = ()=>{
     const [posts, setPosts] = useState("");
@@ -65,6 +66,11 @@ const Cases = ()=>{
     ):(
                 <>
                 <AddCaseForm />
+                <FilesUploader multiple={false} meta={{
+                    key:"test",
+                    case_id:11,
+                    type:"case"
+                }} />
                 <h2 style={{
                     textAlign:"center"
                 }}>Кейси</h2>
