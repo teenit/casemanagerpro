@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { serverAddres } from '../../Functions/serverAddres';
+import pdf from './../../../img/resources/pdf.png';
+
+const FORMAT = {
+  pdf: {
+    imgUrl: pdf
+  }
+}
+
+function ext(name) {
+  return name.match(/\.([^.]+)$|$/)[1];
+}
+
 
 function FilesUploader({multiple = true, successHandler = ()=>{}, meta = null}) {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -12,6 +24,7 @@ function FilesUploader({multiple = true, successHandler = ()=>{}, meta = null}) 
     if (files) {
       const filesArray = Array.from(files);
       setSelectedFiles(filesArray);
+      console.log(filesArray)
       const images = [];
       filesArray.forEach(file => {
         if (file.type.startsWith('image/')) {
@@ -54,6 +67,7 @@ function FilesUploader({multiple = true, successHandler = ()=>{}, meta = null}) 
   
   };
 
+
   return (
     <div className='FilesUploader'>
       <input type="file" multiple={multiple} onChange={handleFileChange} />
@@ -63,7 +77,13 @@ function FilesUploader({multiple = true, successHandler = ()=>{}, meta = null}) 
             {preview ? (
               <img src={preview} alt={`Preview ${index}`} />
             ) : (
-              <span>{selectedFiles[index].name}</span>
+              <span>
+                {
+                  FORMAT[ext(selectedFiles[index].name)] && <img src={FORMAT[ext(selectedFiles[index].name)].imgUrl}/>
+                }
+                
+                {selectedFiles[index].name}
+              </span>
             )}
           </div>
         ))}
