@@ -1,6 +1,7 @@
 :root{
   --main-color: #42A5F5;
   --second-color:#90CAF9;
+  --background-color:#E9F4FE;
 }
 body{
   font-family: Montserrat;

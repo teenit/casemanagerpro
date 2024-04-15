@@ -67,7 +67,7 @@ const Cases = ()=>{
                 <>
                 <AddCaseForm />
                 <FilesUploader multiple={false} meta={{
-                    key:"test",
+                    key:"case_files",
                     case_id:11,
                     type:"case"
                 }} />

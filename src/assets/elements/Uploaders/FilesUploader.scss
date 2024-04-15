@@ -1,0 +1,50 @@
+.FilesUploader {
+    width: max-content;
+    margin: auto;
+    margin-top: 30px;
+    padding: 15px;
+    border-radius: 20px;
+    background-color: $background-color;
+    display: flex;
+    gap: 25px;
+
+    &-files {
+        border: solid 3px $second-color;
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        div {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &-delete {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            border: solid 2px red;
+        }
+        &-preview{
+            max-width: 25px;
+            max-height: 25px;
+        }
+    }
+
+    &-buttons {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        img{
+            height: max-content;
+            cursor: pointer;
+        }
+    }
+}
+

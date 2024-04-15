@@ -22,28 +22,25 @@
     margin-top: 30px;
     padding: 15px;
     border-radius: 20px;
-    background-color: var(--second-color);
+    background-color: var(--background-color);
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
-.form__inp__wr__grid{
+.form__input__buttons{
     display: flex;
     align-items: center;
     gap: 30px;
 }
-.form__inp__wr__grid img{
+.form__input__buttons img{
     height: max-content;
 }
-.form__inp__wr{
+.form__input{
     padding: 10px;
    display: flex;
     gap: 15px;
 }
-.form__inp__file__mask{
-    
-}
-.form__inp__wr__files{
+.form__input__files{
     border: solid 3px var(--main-color);
     background-color: #fff;
     border-radius: 20px; 
@@ -53,13 +50,13 @@
     gap: 10px;
 
 }
-.form__inp__wr__files>div{
+.form__input__files>div{
 display: flex;
 gap: 25px;
 justify-content: space-between;
 align-items: center;
 }
-.form__inp__wr__files__delete{
+.form__input__files__delete{
     width: 20px;
     height: 20px;
     border-radius: 5px;

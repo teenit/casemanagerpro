@@ -58,20 +58,19 @@ const PhotosForm = ({show})=>{
                 {loadImg ? <div className="block__loading">
                 <LoadingPage effload={false} message = "kdkdd" />
             </div>:""}
-                <div className="form__inp__wr">
-                    <div className="form__inp__wr__files">
+                <div className="form__input">
+                    <div className="form__input__files">
                         {filesData.map((item,index)=>{
                             return(
                                 <div key={index}>
                                     <p style={{textDecoration:"underline"}} >{item}</p>
-                                    <div className="form__inp__wr__files__delete"></div>
+                                    <div className="form__input__files__delete"></div>
                                 </div>
                                 
                             )
                         })}
                     </div>
-                    <div className="form__inp__wr__grid">
-                        {/* <input type="text" {...register('title', { required: true })} placeholder="Назва файлу"/> */}
+                    <div className="form__input__buttons">
                         <label htmlFor="fileInput"><img src={add} alt="Завантажити файл" /></label>
                         <input style={{display:"none"}} id="fileInput" multiple type="file" onChange={(e)=>{
                             setData(e.target.files)
