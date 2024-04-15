@@ -25,7 +25,18 @@ export const LANG = {
     access:{
       add_name:"Назва нового права",
       add_description:"Опис нового права",
-    }        
+    },
+    status_plan: {
+      0:"Задачу створено",
+      1:"Задача в процесі",
+      2:"Задача призупинена",
+      3:"Задача видалена",
+      4:"Задачу завершено не успішно",
+      7:"Задача виконана не успішно",
+      8:"Задача виконана успішно",
+    },
+    status_task: "Статус задачі" 
+
   };
 export const appConfig = {
     access:{
@@ -109,5 +120,35 @@ export const appConfig = {
               key:"a_page_case_hidden"
             }
           }
+    },
+    statusPlan:{
+      0:{
+        title: LANG.status_plan[0],
+        color: "#f2e8cf"
+      },
+      1:{
+        title: LANG.status_plan[1],
+        color: "#ffba08"
+      },
+      2:{
+        title: LANG.status_plan[2],
+        color: "#ca6702"
+      },
+      3:{
+        title: LANG.status_plan[3],
+        color: "#d90429"
+      },
+      4:{
+        title: LANG.status_plan[4],
+        color: "#c9184a"
+      },
+      7:{
+        title: LANG.status_plan[7],
+        color: "#ff8fa3"
+      },
+      8:{
+        title: LANG.status_plan[8],
+        color: "#80ed99"
+      },
     }
 }

@@ -3,7 +3,6 @@ import Login from "../Auth/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AddCase from '../Cases/Add-case/AddCase';
 import Cases from "../Cases/Cases";
-import Case from "../Cases/Case/Case";
 import Registration from "../Auth/Registration";
 import Home from "../Home/Home";
 import User from "../User/User";
@@ -22,6 +21,7 @@ import AccessPage from "../pages/AccessPage";
 import AccessPageRight from "../pages/AccessPageRight";
 import TestPage from "../pages/TestPage";
 import AddCaseForm from "../Cases/newDesign/AddCaseForm";
+import Case from "../newDesign/Case/Case";
 
 const localToken = localStorage.getItem("token");
 
@@ -33,7 +33,7 @@ const MainContent = ()=>{
           <Routes >
             <Route path='/add-case' element={<AddCaseForm />} />
             <Route path='/cases' element={<Cases />} />
-            <Route path='/case' element={<Case />} />
+            <Route path='/case/:id' element={<Case />} />
             <Route path='/registration' element={<Registration />} />
             <Route path='/login' element={<Login />} />
             <Route path='/user' element={<User />} />
