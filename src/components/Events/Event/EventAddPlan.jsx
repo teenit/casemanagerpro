@@ -47,7 +47,7 @@ const EventAddPlan = ({eventID,getPlans})=>{
         <div className={s.add__plan}>
             <p>Додати план</p>
             <div className={s.add__plan__form}>
-                <div className={s.add__plan__item}>
+                <div>
                     <Input onChange={(e)=>{
                             setPlan({...plan,title:e.target.value})
                         }} value={plan.title} type="text" label="Назва плану" />
@@ -88,7 +88,7 @@ const EventAddPlan = ({eventID,getPlans})=>{
                         setPlan({...plan,description:e.target.value})
                     }} value={plan.description} name="" id="" cols="30" rows="10" label="Саме план... Що буде?"></textarea>
                 </div>
-                <div className={s.add__plan__item}>
+                <div className={s.add__plan__item__single}>
                     <button onClick={addPlan} className="primary__btn">Створити план</button>
                 </div>
             </div>

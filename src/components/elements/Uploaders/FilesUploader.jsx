@@ -85,7 +85,7 @@ const handleDelete = (index)=>{
 }
   return (
     <div className="FilesUploader">
-      <div className="FilesUploader-files">
+      {selectedFiles.length>0&&<div className="FilesUploader-files">
         {selectedFiles.map((file, index) => (
           <div key={index}>
             <p style={{ textDecoration: "underline" }}>{file.name}</p>
@@ -95,7 +95,8 @@ const handleDelete = (index)=>{
             }}></div>
           </div>
         ))}
-      </div>
+      </div>}
+      
       <div className="FilesUploader-buttons">
         <label htmlFor="fileInput"><img src={add} alt="Завантажити файл" /></label>
         <input style={{ display: "none" }} id="fileInput" multiple type="file" onChange={handleFileChange} />

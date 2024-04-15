@@ -113,10 +113,23 @@
     grid-template-columns: 1fr;
     gap: 15px;
 }
-.add__plan__item{
-    display: flex;
-    justify-content: space-between;
+.add__plan__item__single{
+    margin: auto;
 }
+.add__plan__item{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+.add__plan__item label {
+    display: block;
+}
+
+
+
+
+
 .item__textarea{
     display: flex;
     flex-direction: column;

@@ -38,7 +38,7 @@
     justify-content: center;
 }
 .weekend{
-    background-color: #e2d9ea;
+    background-color: var(--background-color);
 }
 .currentDay{
     color: #fff;

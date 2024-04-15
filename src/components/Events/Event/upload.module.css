@@ -45,6 +45,10 @@
     gap: 10px;
     box-sizing: border-box;
 }
+.add__form__btn{
+    display: flex;
+    justify-content: center;
+}
 .hidden__text{
     text-align: center;
 }

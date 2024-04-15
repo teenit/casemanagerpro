@@ -322,8 +322,7 @@ gap: 50px;
 }
 .plan__active__header{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 25px;
     padding-bottom: 25px;
 }
 .wrap__plan{
@@ -520,8 +519,9 @@ padding: 20px;
     padding: 5px 20px;
 }
 .select__plan{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    align-items: center;
+    gap: 25px;
 }
 .notes__viewer{
     min-height: 400px;
@@ -587,6 +587,7 @@ padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 15px;
 }
 .notes__viewer__mess__panel > div{
     width: 100%;
@@ -598,6 +599,7 @@ padding: 20px;
     width: 100%;
     display: flex;
     justify-content: end;
+    cursor: pointer;
 }
 .notes__viewer__mess__panel__edit__option{
 width: 20px;
@@ -709,6 +711,7 @@ border: solid 2px green;
 .plan__date__row{
     display: flex;
     justify-content: space-between;
+    gap: 25px;
 }
 .plan__viewer__data{
     display: flex;
@@ -720,6 +723,9 @@ border: solid 2px green;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+.plan__viewer__data__edit > div{
+    gap: 25px;
 }
 .plan__viewer__data span{
     color: #bababa;

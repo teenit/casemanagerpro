@@ -5,6 +5,7 @@ import { serverAddres } from "../../Functions/serverAddres";
 import { changeAps, translateStringToLink } from "../../Functions/translateString";
 import s from "./upload.module.css";
 import Input from '../../elements/Inputs/Input'
+import FilesUploader from "../../elements/Uploaders/FilesUploader";
 
 
 const UploadEventDocs = ({eventID})=>{
@@ -75,7 +76,7 @@ const UploadEventDocs = ({eventID})=>{
                                         setMeta({...meta,description:e.target.value})
                                     }}/>
                         </div>
-                        <div className={s.add__form__file}>
+                        {/* <div className={s.add__form__file}>
                             <div className={s.res__file__wrap}>
                                 <div className={s.hidden__btn}>Обрати файл</div>
                                 <input type="file" 
@@ -89,7 +90,12 @@ const UploadEventDocs = ({eventID})=>{
                                     
                             </div>
                             <div className={s.hidden__text}>{hiddenText}</div>
-                        </div>
+                        </div> */}
+                        <FilesUploader multiple={true} meta={{
+                            key:"event_files",
+                            case_id:11,
+                            type:"event"
+                        }}/>
                         <div className={s.add__form__btn}>
                             <button
                             className={`primary__btn ${bload ? s.b__load : ''}`}

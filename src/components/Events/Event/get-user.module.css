@@ -16,7 +16,7 @@
     background-color: #00000033;
 }
 .result:nth-child(2n+1){
-    background-color: rgb(225, 220, 220);
+    background-color: var(--second-color);
 }
 .result:nth-child(2n+1):hover{
     background-color: #00000033;

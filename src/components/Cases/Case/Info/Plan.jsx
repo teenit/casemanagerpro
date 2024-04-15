@@ -58,7 +58,7 @@ function elemPlanDone(a){
 }
 
 let pty = -1;
-const Plan = ({plan,index,level})=>{
+const Plan = ({plan,index,level,testData,onChange})=>{
     const [activeModalPlan, setActiveModalPlan] = useState(false);
     function planIsDone(){
         setActiveModalPlan(true)
@@ -168,7 +168,7 @@ const Plan = ({plan,index,level})=>{
                 <div className={`wrap__plan ${plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__good" : !plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__notgood" : ""}`}>
                     {Object.values(plan.plans).map((item,index)=>{
                         return(
-                                 <PlanCard item={item} index={index} plan={plan}/>
+                                 <PlanCard item={testData} onChange={onChange} index={index} plan={plan}/>
                         )
                     })}
 

@@ -6,6 +6,7 @@ import delImg from "../../../../img/icons/delete-48.png";
 import axios from "axios";
 import Plan from "./Plan";
 import { serverAddres } from "../../../Functions/serverAddres";
+import SelectStatusPlan from '../../../elements/Selects/SelectStatusPlan'
 let number = 0;
 let objNewPlan = {};
 let boolPlan = true;
@@ -109,6 +110,14 @@ function addModalLine(){
 const PlanActive = ({info,level})=>{
     const [openWindowCreate, setOpenWindowCreate] = useState(false);
     const [plan, setPlan] = useState(0);
+    const [planData, setPlanData] = useState({
+        id:1,
+        case_id:11,
+        startTime:"12-12-2023",
+        endTime:"12-13-2023",
+        value:"test etstettst",
+        status:0
+    })
     console.log(info)
 
 const WindowCreate = ()=>{
@@ -184,15 +193,19 @@ const WindowCreate = ()=>{
         console.log(selectPlan.value)
         setPlan(selectPlan.value)
     }
-    
+    function handleTestChange(obj){
+        // setPlanData({...planData,[key]:value})
+        setPlanData(obj)
+    }
     return info !== null  ? (
         <div className="plan__active">
             <div className="plan__active__header">
             <h2>Індивідуальний план</h2>
             <div className="select__plan" id="">
-                <select name="selectPlan" id="selectPlan" onClick={addOptions} onChange={changePlan}>
+                <SelectStatusPlan value={planData.status} onChange={(e)=>setPlanData({...planData,value:e.target.value})}/>
+                {/* <select name="selectPlan" id="selectPlan" onClick={addOptions} onChange={changePlan}>
                     <option value={info[plan]}>{info[plan].nameOfPlan}</option>
-                </select>
+                </select> */}
                 {level ? <button className="primary__btn" onClick={()=>{setOpenWindowCreate(true)}}>Створити план</button> : ""}
             </div>
             </div>
@@ -201,7 +214,7 @@ const WindowCreate = ()=>{
                 <div className="plan__active__default__data__name"></div>
                 <div className="plan__active__default__data__date"></div>
             </div>
-           <Plan plan={info[plan]} ind={plan} level = {level}/>
+           <Plan plan={info[plan]} testData = {planData} onChange={(obj)=>{handleTestChange(obj)}} ind={plan} level = {level}/>
            <WindowCreate/>
         </div>
     ):(

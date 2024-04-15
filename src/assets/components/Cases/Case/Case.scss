@@ -1,0 +1,238 @@
+.media__content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 30px;
+    row-gap: 30px;
+    margin-top: 50px;
+
+    img, video {
+        width: 100%;
+    }
+}
+
+.case__contact__info__img__inner img {
+    max-width: 100%;
+}
+
+.media__content > div {
+    width: 100%;
+    height: auto;
+}
+
+.form__add__media {
+    width: max-content;
+    margin: auto;
+    margin-top: 30px;
+    padding: 15px;
+    border-radius: 20px;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    .form__input__buttons {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        img {
+            height: max-content;
+        }
+    }
+
+    .form__input {
+        padding: 10px;
+        display: flex;
+        gap: 15px;
+    }
+
+    .form__input__files {
+        border: solid 3px var(--main-color);
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        > div {
+            display: flex;
+            gap: 25px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &__delete {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            border: solid 2px red;
+        }
+    }
+}
+
+.Journal__and__plan {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 50px;
+    margin-top: 50px;
+
+    .grod {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        button {
+            width: max-content;
+            display: block;
+        }
+
+        label {
+            width: max-content;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+}
+
+.notes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 50px;
+    margin-top: 50px;
+}
+
+.connections__wrap {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 50px;
+    margin-top: 50px;
+}
+
+.container__grid__two {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.set__case__ico {
+    width: 30px;
+    position: absolute;
+    right: 20px;
+    top: 80px;
+
+    .setImg {
+        width: 100%;
+        transition: all .7s;
+
+        &:hover {
+            transform: rotate(500deg);
+        }
+    }
+
+    img {
+        width: 100%;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 600px) {
+    .container__grid__two {
+        grid-template-columns: 1fr;
+    }
+
+    .connections__wrap {
+        grid-template-columns: 1fr;
+        row-gap: 30px;
+    }
+
+    .case__contact__info > div > h1 {
+        text-align: center;
+    }
+
+    .form__inp__wr__grid {
+        grid-template-columns: 1fr;
+        row-gap: 10px;
+        width: 87%;
+    }
+
+    .plan__active > h2 {
+        padding-bottom: 15px;
+    }
+
+    .case__contact__info {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 30px;
+        margin-top: 50px;
+        row-gap: 10px;
+    }
+
+    .case__info {
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+    }
+
+    .connections__case {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .Journal__and__plan {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 50px;
+        margin-top: 50px;
+        row-gap: 50px;
+    }
+
+    .notes {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 50px;
+        margin-top: 50px;
+        row-gap: 50px;
+    }
+
+    .media__content {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 30px;
+        row-gap: 30px;
+        margin-top: 50px;
+    }
+
+    .form__add__media {
+        width: 90%;
+        margin: auto;
+        margin-top: 30px;
+        text-align: center;
+        padding: 15px;
+
+        img {
+            width: auto;
+            max-width: 100%;
+        }
+
+        .media__content img, .media__content video {
+            width: auto;
+            max-width: 100%;
+            margin: auto;
+        }
+    }
+
+    .case__edit__info__wrap, .mod__plan__wrap {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #000000bb;
+        height: auto;
+        overflow-y: scroll;
+        color: #fff;
+        padding-bottom: 200px;
+    }
+}
