@@ -71,7 +71,7 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
       }
     })
       .then((response) => {
-        console.log(response.data)
+        setSelectedFiles([])
         successHandler(response.data)
       })
       .catch((error) => console.log(error))

@@ -51,10 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
                 echo "Останній код помилки: " . error_get_last()['message'];
                 continue; // Перейти до наступного файлу
             }
-
+            $link = "https://".$_SERVER['SERVER_NAME']."/serve/".$fileName;
             // Вставляємо запис в БД
             $stmt = $conn->prepare("INSERT INTO casemeta (case_id, meta_key, meta_value) VALUES (?, ?, ?)");
-            $stmt->bind_param("iss", $caseId, $metaKey, $fileName); // Використання підготовленого зв'язування параметрів
+            $stmt->bind_param("iss", $caseId, $metaKey, $link); // Використання підготовленого зв'язування параметрів
 
             // Виконання запиту до бази даних
             if (!$stmt->execute()) {
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
 
         // Повертаємо посилання на файли у вигляді JSON
         $fileLinks = array_map(function($fileName) {
-            return 'https://' . $_SERVER['HTTP_HOST'] . '/'.$fileName; // Додаємо базову URL
+            return 'https://' . $_SERVER['HTTP_HOST'] . '/serve/'.$fileName; // Додаємо базову URL
         }, $fileLinks);
         echo json_encode($fileLinks, JSON_UNESCAPED_UNICODE);
     } else {
