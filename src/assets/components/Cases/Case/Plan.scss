@@ -1,0 +1,74 @@
+.Plan {
+    display: grid;
+    grid-template-rows: 50px calc(100% - 100px) 50px;
+    background-color: $background-color;
+    padding: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    &-title {
+        font-size: 24px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .content {
+        overflow-y: auto;
+        max-height: 400px;
+    }
+    &-content {
+
+
+        &-element {
+            .str {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .str-date {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                
+                .dates {
+                    
+                    &-start {
+                        display: flex;
+                        gap: 8px;
+                    }
+                }
+                .controls {
+                    img {
+                        width: 20px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .bottom {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+    }
+    &-create {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        &-date {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        &-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+    }
+    &-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+    }
+}

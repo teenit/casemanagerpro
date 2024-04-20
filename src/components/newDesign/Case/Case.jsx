@@ -22,6 +22,7 @@ import { serverAddres } from "../../Functions/serverAddres";
 import axios from "axios";
 import { giveGoodPhotosCase } from "../../Functions/giveGoodPhotos";
 import LoadingPage from "../../Loading/LoadingPage";
+import Plan from "./Plan";
 
 const Case = () => {
     const [page, setPage] = useState({
@@ -84,19 +85,7 @@ const Case = () => {
             </div>
 
             <div className="container__grid__two">
-                {/* {false ? <JournalActive info={post.activity} /> : ""} */}
-
-                {/* { post.contact.dateDogovir.length > 1 ? <PlanActive info = {post.plan == "" ? null : post.plan} level = {checkRight(post.level, "createIndividualPlan")}/> : 
-            <div className="plan__active">
-                <h2>Індивідуальний план</h2>
-                <p>Неможливо встановити Індивідуальний, необхідно заключити договір з клієнтом</p>
-                {checkRight(post.level, "editOwnCase") ? <div className="grod">
-                    <label htmlFor="dogovirDate">Дата<Input type="date" id="dogovirDate"/></label>
-                    <label htmlFor="dogovirNumber">Номер<Input type="text" id="dogovirNumber"/></label>
-                    <button className="primary__btn padding20px" onClick={saveInfoDogovir}>Зберегти інформацію</button>
-                </div>:"" } 
-            </div>} */}
-                {/* <Notes notes = {post.notes} level={checkRight(post.level, "notesCase")}/> */}
+                <Plan plans={state.plans} case_id={case_id}/>
                 <CaseGiveHelp level={checkRight(post.level, "helpesCase")} />
             </div>
 

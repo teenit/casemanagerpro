@@ -64,10 +64,31 @@ try {
     $stmt_cases_data->bind_param("i", $case_id);
     $stmt_cases_data->execute();
     $result_cases_data = $stmt_cases_data->get_result();
-    $cases_data = [];
+    $cases_data = new stdClass();
+    $cases_data->{'address_registered'} = null;
+    $cases_data->{'address_live'} = null;
+    $cases_data->{'categories'} = null;
+    $cases_data->{'channel'} = null;
+    $cases_data->{'date_first_contact'} = null;
+    $cases_data->{'contract_date'} = null;
+    $cases_data->{'contract_number'} = null;
+    $cases_data->{'comment'} = null;
+    $cases_data->{'potreba'} = null;
+    $cases_data->{'family_info'} = null;
+    $cases_data->{'history'} = null;
 
     while ($row_cases_data = $result_cases_data->fetch_assoc()) {
-        $cases_data = $row_cases_data;
+        $cases_data->{'address_registered'} = $row_cases_data['address_registered'];
+        $cases_data->{'address_live'} = $row_cases_data['address_live'];
+        $cases_data->{'categories'} = json_decode($row_cases_data['categories']);
+        $cases_data->{'channel'} = $row_cases_data['channel'];
+        $cases_data->{'date_first_contact'} = $row_cases_data['date_first_contact'];
+        $cases_data->{'contract_date'} = $row_cases_data['contract_date'];
+        $cases_data->{'contract_number'} = $row_cases_data['contract_number'];
+        $cases_data->{'comment'} = $row_cases_data['comment'];
+        $cases_data->{'potreba'} = $row_cases_data['potreba'];
+        $cases_data->{'family_info'} = $row_cases_data['family_info'];
+        $cases_data->{'history'} = $row_cases_data['history'];
     }
 
      // Розшифрування даних
