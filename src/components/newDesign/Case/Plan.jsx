@@ -11,6 +11,8 @@ import { changeApsBr } from "../../Functions/translateString";
 import SelectStatusPlan from "../../elements/Selects/SelectStatusPlan";
 import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
+import Modal from "../../Modals/Modal";
+import SmallNotification from "../../elements/Notifications/SmallNotification";
 const PlanElem = ({plan}) => {
     const [state, setState] = useState({
         ...plan,
@@ -113,7 +115,7 @@ const PlanElem = ({plan}) => {
                         {
                             state.editPlan
                             ?
-                                <SelectStatusPlan />
+                                <SelectStatusPlan value={state.status} onChange={(e)=>changeHandler("status", e)}/>
                             :
                             <div>
                                 {
@@ -129,13 +131,18 @@ const PlanElem = ({plan}) => {
 }
 
 
-const Plan = ({plans, case_id}) => {
+const Plan = ({plans, case_id, getCaseInfo}) => {
     const [state, setState] = useState({
         end_time:" ",
         start_time:" ",
         status:0,
         value:"",
         create:false
+    })
+    const [notification, setNotification] = useState({
+        show: false,
+        status: null,
+        message: null
     })
     const changeHandler = (key, value)=>{
         setState({
@@ -149,7 +156,13 @@ const Plan = ({plans, case_id}) => {
             ...state,
             case_id: case_id,
         },"case/create-plan-task.php").then((res)=>{
-            console.log(res)
+            setState({...state, create: false})
+            setNotification({
+                show:true,
+                status:res.status,
+                message:res.message
+            })
+            getCaseInfo();
         })
     }
     return (
@@ -161,7 +174,23 @@ const Plan = ({plans, case_id}) => {
                     plans.map(plan=><PlanElem key={plan.id} plan={plan}/>)
                 }
             </div>
-           {state.create && <div className="Plan-create">
+           
+            </div>
+            <div className="Plan-bottom">
+                <Button onClick={()=>changeHandler("create", true)} variant="contained">{LANG.create_plan}</Button>
+            </div>
+            {
+                state.create && <Modal 
+                    header={LANG.create_plan}
+                    closeHandler={()=>changeHandler("create", false)}
+                    footer={
+                        <div className="Modal--footer">
+                            <Button onClick={()=>changeHandler("create", false)} color="error" variant="contained">{LANG.cancel}</Button>
+                            <Button onClick={createPlan} variant="contained">{LANG.save}</Button>
+                        </div>
+                    }
+                >
+                    <div className="Plan-create">
                 <div className="Plan-create-date">
                     <Input 
                         type="datetime-local"
@@ -198,18 +227,12 @@ const Plan = ({plans, case_id}) => {
                     />
                 </div>
                 
-            </div>}
             </div>
-            <div className="Plan-bottom">
-                {
-                    state.create ? <>
-                        <Button onClick={()=>changeHandler("create", false)} color="error" variant="contained">{LANG.cancel}</Button>
-                        <Button onClick={createPlan} variant="contained">{LANG.save}</Button>
-                    </> : 
-                    <Button onClick={()=>changeHandler("create", true)} variant="contained">{LANG.create_plan}</Button>
-                }
-                
-            </div>
+                </Modal>
+            }
+            {
+                notification.show && <SmallNotification isSuccess={notification.status} text={notification.message} close={()=>setNotification({show:false})}/>
+            }
         </div>
     )
    

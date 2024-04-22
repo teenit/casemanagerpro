@@ -38,11 +38,15 @@ const Case = () => {
     const [state, setState] = useState(null)
     const [editActive, setEditActive] = useState(null)
     const [openSetting, setOpenSetting] = useState(false)
-    useEffect(() => {
+
+    const getCaseInfo = ()=> {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
             setState({ ...res })
             console.log(state);
         })
+    }
+    useEffect(() => {
+        getCaseInfo();
     }, [])
     const handleDataChange = (key, value) => {
         setState({ ...state, data: [...state.data] })
@@ -85,7 +89,7 @@ const Case = () => {
             </div>
 
             <div className="container__grid__two">
-                <Plan plans={state.plans} case_id={case_id}/>
+                <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo}/>
                 <CaseGiveHelp level={checkRight(post.level, "helpesCase")} />
             </div>
 
