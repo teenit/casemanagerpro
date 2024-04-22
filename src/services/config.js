@@ -35,8 +35,15 @@ export const LANG = {
       7:"Задача виконана не успішно",
       8:"Задача виконана успішно",
     },
-    status_task: "Статус задачі" 
-
+    status_task: "Статус задачі", 
+    start_time: "Дата початку",
+    end_time: "Дата кінця",
+    task_plan:"Задача плану",
+    create_plan: "Створити план",
+    cancel:"Відмінити",
+    save:"Зберегти",
+    status:"Статус",
+    planing:"Планування"
   };
 export const appConfig = {
     access:{

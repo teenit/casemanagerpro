@@ -4,10 +4,6 @@ import { useEffect } from "react";
 import { serverAddres } from "../Functions/serverAddres";
 import LoadingPage from "../Loading/LoadingPage";
 import GetCases from "./GetCases";
-import AddCaseForm from "./newDesign/AddCaseForm";
-import FilesUploader from "../elements/Uploaders/FilesUploader";
-import { apiResponse } from "../Functions/get_apiObj";
-import SelectStatusPlan from "../elements/Selects/SelectStatusPlan";
 
 const Cases = ()=>{
     const [posts, setPosts] = useState("");
@@ -18,16 +14,6 @@ const Cases = ()=>{
             message:""
         }
     )
-    const testPlan = () => {
-        apiResponse({
-            case_id:11,
-            plan_id:1,
-            status: 7,
-            start_time: "27-05-1585 17:15:25",
-            end_time: "30-05-1585 17:15:25",
-            value:"vivuer re fhebrhf erferjfgerf er fgerfvyuevrfeyfe rfuyrergfyefu erf"
-        },"case/update-plan-task.php").then(res=>console.log(res))
-    }
     useEffect(()=>{
         let obj = {
             id: localStorage.getItem("id"),
@@ -77,14 +63,7 @@ const Cases = ()=>{
         </div>
     ):(
                 <>
-                <SelectStatusPlan value={1} onChange={(item)=>console.log(item)}/>
-                <button onClick={testPlan}>Test plan</button>
-                <AddCaseForm />
-                <FilesUploader multiple={false} meta={{
-                    key:"case_files",
-                    case_id:11,
-                    type:"case"
-                }} />
+            
                 <h2 style={{
                     textAlign:"center"
                 }}>Кейси</h2>
