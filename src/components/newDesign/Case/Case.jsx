@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { apiResponse } from "../../Functions/get_apiObj";
 import FilesUploader from "../../elements/Uploaders/FilesUploader";
 import CasePhoto from "../../Cases/Case/Info/CasePhoto";
-import CaseShortInfo from "../../Cases/Case/Info/Caseshortinfo";
+import CaseShortInfo from "../../Cases/Case/Info/ShortInfo/Caseshortinfo";
 import GetConnections from "../../Cases/Case/Info/GetConnections";
 import JournalActive from "../../Cases/Case/Info/JournalActive";
 import PlanActive from "../../Cases/Case/Info/PlanActive";
@@ -39,8 +39,7 @@ const Case = () => {
     const [openSetting, setOpenSetting] = useState(false)
     useEffect(() => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
-            setState({ ...res })
-            console.log(state);
+            setState({...res})
         })
     }, [])
     const handleDataChange = (key, value) => {
@@ -49,6 +48,8 @@ const Case = () => {
     const handleGeneralChange = (key, value) => {
         setState({ ...state, general: { ...state.general, [key]: value } })
     }
+    console.log(state);
+
     return state && state.general ? (
         <div className="case__wrap">
             <div className="set__case__ico">
@@ -77,8 +78,7 @@ const Case = () => {
                     <CasePhoto url={`${editImg}`} level={checkRight(post.level, "editOwnCase")} />
                 </div>
                 <div>
-                    <h1>{state.general.name}</h1>
-                    {/* <CaseShortInfo info={state.generalL} /> */}
+                    <CaseShortInfo info={state} />
                     <GetConnections id={state.general.id} />
                 </div>
             </div>
