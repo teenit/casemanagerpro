@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { apiResponse } from "../../Functions/get_apiObj";
 import FilesUploader from "../../elements/Uploaders/FilesUploader";
 import CasePhoto from "../../Cases/Case/Info/CasePhoto";
-import CaseShortInfo from "../../Cases/Case/Info/ShortInfo/Caseshortinfo";
+import CaseShortInfo from "./Caseshortinfo";
 import GetConnections from "../../Cases/Case/Info/GetConnections";
 import JournalActive from "../../Cases/Case/Info/JournalActive";
 import PlanActive from "../../Cases/Case/Info/PlanActive";
@@ -48,7 +48,7 @@ const Case = () => {
         getCaseInfo();
     }, [])
     const handleDataChange = (key, value) => {
-        setState({ ...state, data: [...state.data] })
+        setState({ ...state, data: { ...state.data, [key]: value } })
     }
     const handleGeneralChange = (key, value) => {
         setState({ ...state, general: { ...state.general, [key]: value } })
@@ -83,7 +83,7 @@ const Case = () => {
                     <CasePhoto url={`${editImg}`} level={checkRight(post.level, "editOwnCase")} />
                 </div>
                 <div>
-                    <CaseShortInfo info={state} />
+                    <CaseShortInfo info={state} changeData = {(key,value)=>{handleDataChange(key,value)}} changeGeneral = {(key,value)=>{handleGeneralChange(key,value)}} />
                     <GetConnections id={state.general.id} />
                 </div>
             </div>
