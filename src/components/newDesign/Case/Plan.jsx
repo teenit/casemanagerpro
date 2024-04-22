@@ -13,6 +13,7 @@ import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
 import Modal from "../../Modals/Modal";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
+import { appConfig } from "../../../services/config";
 const PlanElem = ({plan}) => {
     const [state, setState] = useState({
         ...plan,
@@ -70,8 +71,8 @@ const PlanElem = ({plan}) => {
                                 </>
                             :
                                 <>
-                                    <span> {moment(state.start_time).format("LLL")} </span>
-                                    <span> {moment(state.end_time).format("LLL")} </span>
+                                    <span> {moment(state.start_time).format("DD-MM-YYYY")} </span>
+                                    <span> {moment(state.end_time).format("DD-MM-YYYY")} </span>
                                 </>
                         }
                     </div>
@@ -109,7 +110,7 @@ const PlanElem = ({plan}) => {
                 </div>
                 <div className="bottom">
                     <div className="bottom-date">
-                        {state.date_created}
+                    {moment(state.start_time).format("DD-MM-YYYY")}
                     </div>
                     <div className="bottom-status">
                         {
@@ -117,7 +118,9 @@ const PlanElem = ({plan}) => {
                             ?
                                 <SelectStatusPlan value={state.status} onChange={(e)=>changeHandler("status", e)}/>
                             :
-                            <div>
+                            <div style={{
+                                backgroundColor: appConfig.statusPlan[state.status].color
+                            }}>
                                 {
                                     LANG.status_plan[state.status]
                                 }
@@ -177,7 +180,7 @@ const Plan = ({plans, case_id, getCaseInfo}) => {
            
             </div>
             <div className="Plan-bottom">
-                <Button onClick={()=>changeHandler("create", true)} variant="contained">{LANG.create_plan}</Button>
+                <div className="primary__btn" onClick={()=>changeHandler("create", true)}>{LANG.create_plan}</div>
             </div>
             {
                 state.create && <Modal 

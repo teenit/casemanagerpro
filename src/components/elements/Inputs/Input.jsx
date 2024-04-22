@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import React from "react";
 
-const Input = ({value="", onChange, label="", type="text", variant="standart"}) =>{
+const Input = ({value="", onChange, label="", type="text", variant="outlined"}) =>{
 
     return (
         <div className="Input">

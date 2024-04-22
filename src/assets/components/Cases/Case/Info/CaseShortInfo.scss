@@ -62,8 +62,10 @@
       &-card {
           display: flex;
           justify-content: space-between;
-          p{
+          span{
+            p{
             font-weight: bold
+            }
           }
           span {
               display: flex;

@@ -13,11 +13,18 @@
     .content {
         overflow-y: auto;
         max-height: 400px;
+
     }
     &-content {
-
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
 
         &-element {
+            border-radius: 10px;
+            background-color: #fff;
+            border: solid 3px $second-color;
+            padding: 15px;
             .str {
                 display: flex;
                 flex-direction: column;
@@ -29,10 +36,10 @@
                 justify-content: space-between;
                 
                 .dates {
-                    
                     &-start {
                         display: flex;
-                        gap: 8px;
+                        font-weight: bold;
+                        gap: 25px;
                     }
                 }
                 .controls {
@@ -46,6 +53,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                &-date{
+                    color: #bababa;
+                }
             }
         }
     }
