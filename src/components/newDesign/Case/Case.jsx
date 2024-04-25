@@ -23,6 +23,7 @@ import axios from "axios";
 import { giveGoodPhotosCase } from "../../Functions/giveGoodPhotos";
 import LoadingPage from "../../Loading/LoadingPage";
 import Plan from "./Plan";
+import CaseProfilePhoto from "./CaseProfilePhoto";
 
 const Case = () => {
     const [page, setPage] = useState({
@@ -53,8 +54,6 @@ const Case = () => {
     const handleGeneralChange = (key, value) => {
         setState({ ...state, general: { ...state.general, [key]: value } })
     }
-    console.log(state);
-
     return state && state.general ? (
         <div className="case__wrap">
             <div className="set__case__ico">
@@ -79,9 +78,7 @@ const Case = () => {
 
 
             <div className="case__contact__info">
-                <div>
-                    <CasePhoto url={`${editImg}`} level={checkRight(post.level, "editOwnCase")} />
-                </div>
+                    <CaseProfilePhoto profileImg={state.meta.profileImg.link} case_id={case_id}/>
                 <div>
                     <CaseShortInfo info={state} changeData = {(key,value)=>{handleDataChange(key,value)}} changeGeneral = {(key,value)=>{handleGeneralChange(key,value)}} />
                     <GetConnections id={state.general.id} />
