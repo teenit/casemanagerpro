@@ -78,7 +78,7 @@ const Case = () => {
 
 
             <div className="case__contact__info">
-                    <CaseProfilePhoto profileImg={state.meta.profileImg.link} case_id={case_id}/>
+                    {state.meta?.profileImg?.link && <CaseProfilePhoto profileImg={state.meta.profileImg.link} case_id={case_id}/>}
                 <div>
                     <CaseShortInfo info={state} changeData = {(key,value)=>{handleDataChange(key,value)}} changeGeneral = {(key,value)=>{handleGeneralChange(key,value)}} />
                     <GetConnections id={state.general.id} />
