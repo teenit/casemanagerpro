@@ -1,5 +1,5 @@
 import { Button, TextField, TextareaAutosize } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {LANG} from "../../../services/LANG";
 import { changeAps } from "../../Functions/translateString";
 import Input from "../../elements/Inputs/Input";
@@ -7,6 +7,7 @@ import Textarea from "../../elements/Inputs/Textarea";
 import InputColor from "../../elements/Inputs/InputColor";
 import { apiResponse } from "../../Functions/get_apiObj";
 import { MuiColorInput } from "mui-color-input";
+import ListCategories from "./ListCategories";
 
 const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "", categoryColor = "", categoryKey = null}) => {
     const [state, setState] = useState({
@@ -15,14 +16,30 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
         categoryColor:categoryColor,
         categoryKey:categoryKey,
     })
+    const [categories, setCategories]  = useState([]);
+    const getCategories = (key) => {
+        apiResponse({categoryKey:key},"manage/get-categories.php").then((data)=>{
+            console.log(data.data)
+            setCategories([...data.data])
+        })
+    }
+    useEffect(()=>{
+        getCategories(state.categoryKey);
+    },[])
     const changeHandler = (val, key)=>{
         let value = changeAps(val);
         setState({...state, [key]:value})
     }
     const clickHandler = () => {
-      //  return console.log(state)
+        //return console.log(state)
         apiResponse({...state}, "manage/add-categories.php").then((data)=>{
-            console.log(data)
+            getCategories(state.categoryKey);
+            setState({
+                categoryName:categoryName,
+                categoryDescription:categoryDescription,
+                categoryColor:categoryColor,
+                categoryKey:categoryKey, 
+            })
         })
     }
 
@@ -55,7 +72,7 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
                 </div>
                 )
             }
-            
+            <ListCategories categories={categories}/>
         </div>
     )
 }

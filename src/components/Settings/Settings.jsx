@@ -12,6 +12,7 @@ import SetEvent from "./SetEvent/SetEvent";
 import SettingsCategory from "./SettingsCategory/SettingsCategory";
 import ListCategories from "./SettingsCategory/ListCategories";
 import { LANG } from "../../services/LANG";
+import { apiResponse } from "../Functions/get_apiObj";
 const Settings = ()=>{
    
     const [page, setPage] = useState({loading:true,effload:false,message:""})
@@ -41,6 +42,7 @@ const Settings = ()=>{
         })
         .catch((error)=>console.log(error)) 
     },[])
+   
     return page.loading ?(
         <div className="page__loading">
             <LoadingPage message={page.message} effload = {page.effload}/>
@@ -53,16 +55,29 @@ const Settings = ()=>{
             <div className="settings__page">
             <SetUser categories = {categories} categoriesCont = {categoriesCont}/>
             <div>
-                <SettingsCategory title={LANG.SETTINGS.title_category_case} categoryColor = "#1976d2" categoryKey = "case"/>
-                <ListCategories categoryKey = "case" />
+                <SettingsCategory 
+                    title={LANG.SETTINGS.title_category_case} 
+                    categoryColor = "#1976d2" 
+                    categoryKey = "case"
+                />
+               
             </div>
-            
-            <SetCategories cats = {(arg)=>{
+
+            <div>
+                <SettingsCategory 
+                    title={LANG.SETTINGS.title_category_case_helps} 
+                    categoryColor = "#1976d2" 
+                    categoryKey = "case_helps"
+                />
+             
+            </div>
+
+            {/* <SetCategories cats = {(arg)=>{
                 setCategories(arg)
             }}/>
             <SetContactCategory cats = {(arg)=>{
                 setCategoriesCont(arg)
-            }} />
+            }} /> */}
             <SetEvent />
         </div>
         

@@ -89,7 +89,7 @@ const handleDelete = (index)=>{
   newMas.splice(index,1)
   setSelectedFiles(newMas)
 }
-
+//ALTER TABLE case_helps ADD FOREIGN KEY (user_id) REFERENCES users(id);
   return (
     <div className="PhotoUploader">
        <div className="PhotoUploader-buttons">

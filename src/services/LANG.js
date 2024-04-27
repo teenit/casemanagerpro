@@ -9,6 +9,7 @@ export const LANG = {
         title_category:"Назва категорії",
         description_category:"Опис категорії",
         color_category:"Колір категорії",
-        title_category_case:"Категорії кейсів"
+        title_category_case:"Категорії кейсів",
+        title_category_case_helps: "Категорії наданої допомоги"
     }
 }

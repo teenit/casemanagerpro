@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { apiResponse } from "../../Functions/get_apiObj";
 
-const ListCategories = ({categoryKey = ""}) => {
+const ListCategories = ({categories}) => {
     const [state, setState] = useState({
-        list:[]
+        list:categories
     })
-    useEffect(()=>{
-        apiResponse({categoryKey:categoryKey},"manage/get-categories.php").then((data)=>{
-            setState({...state, list:[...data.data]})
-        })
-    },[categoryKey])
     return (
         <div className="ListCategories">
             {
-                state.list.map((item, ind)=>{
+                categories.map((item, ind)=>{
                     return(
                     <div className="ListCategories--item" key={item.id} title={item.description}>
                         <div className="ListCategories--item-number">{ind + 1}.</div>

@@ -58,6 +58,18 @@ try {
         $case_plans_data[] = $row_case_plans;
     }
 
+    // Отримання даних з таблиці case_plans
+    $sql_case_helps = "SELECT * FROM case_helps WHERE case_id = ?";
+    $stmt_case_helps = $conn->prepare($sql_case_helps);
+    $stmt_case_helps->bind_param("i", $case_id);
+    $stmt_case_helps->execute();
+    $result_case_helps = $stmt_case_helps->get_result();
+    $case_helps_data = [];
+
+    while ($row_case_helps = $result_case_helps->fetch_assoc()) {
+        $case_helps_data[] = $row_case_helps;
+    }
+
     // Отримання даних з таблиці cases_data
     $sql_cases_data = "SELECT * FROM cases_data WHERE case_id = ?";
     $stmt_cases_data = $conn->prepare($sql_cases_data);
@@ -106,6 +118,7 @@ try {
         'general' => $row_cases_new,
         'meta' => $case_meta_obj,
         'plans' => $case_plans_data,
+        'helps' => $case_helps_data,
         'data' => $cases_data
     ];
 
