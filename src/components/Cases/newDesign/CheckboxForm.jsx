@@ -11,7 +11,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 export default function CheckboxForm({allMas, checkedMas, onChange}) {
   const [checked, setChecked] = useState([]);
   const [allMasElements, setAllMasElements] = useState([]);
-
+console.log(allMas);
   useEffect(() => {
     setChecked(checkedMas);
   }, [checkedMas]);
@@ -21,44 +21,40 @@ export default function CheckboxForm({allMas, checkedMas, onChange}) {
   }, [allMas]);
 
   const handleToggle = (value) => () => {
-    const currentIndex = checked.findIndex(item => item.id === value.id);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
+    const checkIndex = allMasElements.findIndex(item => item.value === value.value);
+    const isChecked = checked.includes(checkIndex);
+  
+    const newChecked = isChecked ? checked.filter(index => index !== checkIndex) : [...checked, checkIndex]
+    newChecked.sort((a, b) => a - b)
     setChecked(newChecked);
     onChange(newChecked);
   };
-
-  const checkChecked = (val) => {
-    let check = false;
-    checked.forEach(element => {
-      if (element.id === val.id) check = true;
-    });
-    return check;
-  }
+  
+  
+  const checkChecked = (value) => {
+    const checkIndex = allMasElements.findIndex(item => item.value === value.value)
+    return checked.includes(checkIndex);
+  };
+  
 
   return (
     <div className='CheckboxForm'>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {allMasElements.map((item) => {
+        {allMasElements.map((item,index) => {
           const labelId = `checkbox-list-label-${item.id + 1}`;
           return (
             <ListItem
-              key={item.id}
-              secondaryAction={
-                <IconButton edge="end" aria-label="comments">
-                  <CommentIcon />
-                </IconButton>
-              } 
+              key={index}
+              // secondaryAction={
+              //   <IconButton edge="end" aria-label="comments">
+              //     <CommentIcon />
+              //   </IconButton>
+              // } 
               disablePadding
             >
+              
               <ListItemButton role={undefined} onClick={handleToggle(item)} dense>
-                <ListItemIcon>
+              <ListItemText id={labelId} primary={item.text} />
                  <Checkbox
                     edge="start"
                     checked={checkChecked(item)}
@@ -66,10 +62,9 @@ export default function CheckboxForm({allMas, checkedMas, onChange}) {
                     disableRipple
                     inputProps={{ 'aria-labelledby': labelId }}
                   />
-                </ListItemIcon>
-                <ListItemText id={labelId} primary={item.name} />
               </ListItemButton>
             </ListItem>
+          
           );
         })}
       </List>
