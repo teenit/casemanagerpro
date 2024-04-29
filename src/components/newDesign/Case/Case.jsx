@@ -24,6 +24,7 @@ import { giveGoodPhotosCase } from "../../Functions/giveGoodPhotos";
 import LoadingPage from "../../Loading/LoadingPage";
 import Plan from "./Plan";
 import CaseProfilePhoto from "./CaseProfilePhoto";
+import Gallery from "./Gallery";
 
 const Case = () => {
     const [page, setPage] = useState({
@@ -94,7 +95,7 @@ const Case = () => {
                 <Galery media={post.newPhotos} title="Медіа фото" />
             </div> */}
             {/* <PhotosForm photos = {post.photos} show = {post.level?.loadCaseFiles == true || post.level?.root == "true" ? true : false}/> */}
-
+                <Gallery photos = {state.meta.files}/>
             <FilesUploader multiple={false} meta={{
                 key: "case_files",
                 case_id: case_id,
