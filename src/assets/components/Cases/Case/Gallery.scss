@@ -1,0 +1,38 @@
+.Gallery{
+    height: max-content;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    &-grid{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 25px;
+        &-img-wrap{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                max-height: 150px;
+                border-radius: 10px;
+            }
+        }
+    }
+    &-documents{
+        border-collapse: collapse;
+        border: solid 1.5px #fff;
+        thead{
+            background-color: $main-color;
+            color: #fff;
+            td{
+                padding: 0px 75px;
+            }
+        }
+        tbody{
+            background-color: $second-color;
+            &:nth-child(even){
+                background-color: $background-color;
+            }
+        }
+    }
+}

@@ -43,7 +43,9 @@ export const LANG = {
     cancel:"Відмінити",
     save:"Зберегти",
     status:"Статус",
-    planing:"Планування"
+    planing:"Планування",
+    gallery:"Додані медіа файли",
+    documents:"Додані документи"
   };
 export const appConfig = {
     access:{

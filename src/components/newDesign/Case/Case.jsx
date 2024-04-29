@@ -26,6 +26,8 @@ import Plan from "./Plan";
 import CaseProfilePhoto from "./CaseProfilePhoto";
 import { loadCategories } from "../../../actions/categories";
 import { useDispatch, useSelector } from "react-redux";
+import Gallery from "./Gallery";
+import GiveHelp from "./GiveHelp";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -97,14 +99,14 @@ const Case = () => {
 
             <div className="container__grid__two">
                 <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo}/>
-                <CaseGiveHelp level={checkRight(post.level, "helpesCase")} />
+                <GiveHelp level={checkRight(post.level, "helpesCase")} />
             </div>
 
             {/* <div className="media__content__">
                 <Galery media={post.newPhotos} title="Медіа фото" />
             </div> */}
             {/* <PhotosForm photos = {post.photos} show = {post.level?.loadCaseFiles == true || post.level?.root == "true" ? true : false}/> */}
-
+                <Gallery photos = {state.meta.files}/>
             <FilesUploader multiple={false} meta={{
                 key: "case_files",
                 case_id: case_id,

@@ -17,7 +17,6 @@ import Input from "../../elements/Inputs/Input";
 import CheckboxForm from "../../Cases/newDesign/CheckboxForm"
 
 const CaseShortInfo = ({ info, changeGeneral, changeData }) => {
-    console.log(info);
     const [categories, setCategories] = useState(null)
     const [alert, setAlert] = useState(null)
     // State for data
@@ -96,11 +95,9 @@ const CaseShortInfo = ({ info, changeGeneral, changeData }) => {
     useEffect(() => {
         apiResponse({}, "manage/get-categories-case.php").then((res) => {
             setCategories([...res.mas]);
-            console.log(res);
         });
     }, []);
 
-    // JSX content
     return (
         <div className="case-info">
             <div className="case-info-inner">
@@ -280,7 +277,6 @@ const CaseShortInfo = ({ info, changeGeneral, changeData }) => {
             </div>
             {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => {
                 setAlert(false);
-                console.log(alert);
             }} />}
         </div>
 
