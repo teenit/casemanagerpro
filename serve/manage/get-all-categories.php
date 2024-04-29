@@ -3,7 +3,8 @@ require_once '../config.php';
 
 // Створюємо масив для зберігання даних відповіді
 $response = array();
-
+$case = [];
+$case_helps = [];
 // Перевіряємо, чи отримане значення categoryKey
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -13,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['message'] = "Помилка з'єднання: " . $conn->connect_error;
     } else {
         // Підготовлюємо SQL запит
-        $sql = "SELECT id, name, description, color FROM categories";
+        $sql = "SELECT id, name, description, color, category_key FROM categories";
         
         // Підготовлюємо вираз
         $stmt = $conn->prepare($sql);
@@ -29,11 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Перетворюємо результат в масив
             $rows = array();
             while ($row = $result->fetch_assoc()) {
+                if ($row['category_key'] == 'case') {
+                    $case[] = $row;
+                }
+                if ($row['category_key'] == 'case_helps') {
+                    $case_helps[] = $row;
+                }
                 $rows[] = $row;
             }
             $response['status'] = true;
             $response['message'] = "Записи знайдено";
             $response['data'] = $rows;
+            $response['case'] = $case;
+            $response['help'] = $case_helps;  
         } else {
             $response['status'] = false;
             $response['message'] = "Записи не знайдено";
@@ -45,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     $response['status'] = false;
     $response['message'] = "Ключ категорії не наданий";
+
 }
 
 // Повертаємо відповідь у форматі JSON

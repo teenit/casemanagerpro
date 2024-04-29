@@ -13,6 +13,7 @@ if($res !== null){
     $end = $res["endtime"];
         if($start > $end){
             $obj->{'message'} = "Помилка авторизації";
+            $obj->{'status'} = false;
             echo json_encode($obj);
             exit;
         }else{
@@ -31,13 +32,16 @@ if($res !== null){
                 $result = $stmt->get_result();
                 if ($result->num_rows > 0) {
                     while($res = $result->fetch_assoc()) {
-                        echo json_encode($res);
+                        $obj->{'status'} = true;
+                        $obj->{'data'} = $res;
+                        echo json_encode($obj);
                     }
                 }
             }
         }
 }else{
-     $obj->{'message'} = "Помилка авторизації";
-            echo json_encode($obj);
-            exit;
+    $obj->{'message'} = "Помилка авторизації";
+    $obj->{'status'} = false;
+    echo json_encode($obj);
+    exit;
 }

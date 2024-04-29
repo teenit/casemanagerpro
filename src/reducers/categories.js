@@ -1,19 +1,24 @@
-import { SET_CATEGORIES } from './../actions/categories';
+// reducer.js
+import { SET_CATEGORIES } from '../actions/categories';
 
 const initialState = {
-  data:[]
+  categories: [],
+  case:[],
+  help:[]
 };
 
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      case SET_CATEGORIES:
-        return {
-          ...state,
-          data: action.payload,
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default reducer;
+const categoriesReducer = (state = initialState, action) => {
+    console.log(action)
+  switch (action.type) {
+    case SET_CATEGORIES:
+      return {
+        ...state,
+        case: [...state.case, ...action.payload.case],
+        help: [...state.help, ...action.payload.help],
+      };
+    default:
+      return state;
+  }
+};
+
+export default categoriesReducer;

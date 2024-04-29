@@ -24,8 +24,18 @@ import { giveGoodPhotosCase } from "../../Functions/giveGoodPhotos";
 import LoadingPage from "../../Loading/LoadingPage";
 import Plan from "./Plan";
 import CaseProfilePhoto from "./CaseProfilePhoto";
+import { loadCategories } from "../../../actions/categories";
+import { useDispatch, useSelector } from "react-redux";
 
 const Case = () => {
+    const dispatch = useDispatch();
+  const categories = useSelector(state => state.categories); // Припускається, що в вашому стані назва редуктора, який містить категорії, є "categories"
+  const loading = useSelector(state => state.loading);
+
+  useEffect(() => {
+    dispatch(loadCategories());
+  }, [dispatch]);
+
     const [page, setPage] = useState({
         loading: true,
         cases: false,

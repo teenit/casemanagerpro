@@ -33,9 +33,9 @@ try {
         switch ($row_case_meta['meta_key']) {
             case 'case_files':
                 $obj = new stdClass();
-                $obj->{'link'} = $row_case_meta['meta_value'];
+                $obj->{'link'} = json_decode($row_case_meta['meta_value']);
                 $obj->{'meta_id'} = $row_case_meta['meta_id'];
-                $case_meta_obj->{'files'}[] = $obj;
+                $case_meta_obj->{'files'}[] = json_decode($row_case_meta['meta_value']);
                 break;
             case 'case_profile_img':
                 $obj = new stdClass();

@@ -3,7 +3,7 @@ import s from "./Loadingpage.module.css";
 import loadImg from "../../img/loading_3.gif"
 const LoadingPage = (
     {
-        message,effload
+        message, effload
     }
 ) =>{
     return(

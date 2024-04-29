@@ -15,6 +15,10 @@ a{
   color: #000;
   font-weight: 600;
 }
+#root {
+  min-height: 100vh;
+  height: 100%;
+}
 .primary__btn {
   height: max-content;
   width: max-content;
