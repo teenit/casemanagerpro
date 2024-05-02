@@ -11,6 +11,7 @@ import { loadUserAuth } from './actions/auth'; // Подставьте прав�
 import { connect } from 'react-redux';
 import { store } from './store';
 import Login from './components/Auth/Login';
+import { loadCategories } from './actions/categories';
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.loadUserAuth(); // Вызываем экшен для загрузки авторизации
+    this.props.loadCategories();
   }
 
   render() {
@@ -47,11 +49,12 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.auth // Подставьте правильное имя вашего редуктора для авторизации
+  auth: state.auth 
 });
 
 const mapDispatchToProps = {
-  loadUserAuth // Подставьте правильный экшен для загрузки авторизации
+  loadUserAuth,
+  loadCategories
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

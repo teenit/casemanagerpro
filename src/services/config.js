@@ -64,7 +64,7 @@ export const appConfig = {
                 { value: '0', label: LANG.forbidden },
                 { value: '1', label: LANG.only_own },
                 { value: '2', label: LANG.assigned_categories, ids: true, type: 'case_categories', key: "a_id_cases_look_categories" },
-                { value: '3', label: LANG.only_assigned , ids: true, type: 'cases'},
+                { value: '3', label: LANG.only_assigned , ids: true, type: 'cases', key: "a_id_cases"},
                 { value: '8', label: LANG.full_access },
               ],
               title: LANG.a_page_case_look,
@@ -129,6 +129,38 @@ export const appConfig = {
               key:"a_page_case_hidden"
             }
           }
+    },
+    newAccess:{
+      access:[
+        "a_super",
+        "a_administartor",
+        "a_blocked"
+      ],
+      accessCases:[
+        "a_page_cases_edit_id", 
+        "a_page_cases_look_id", 
+        "a_page_cases_category_edit_id", 
+        "a_page_cases_category_look_id"
+      ],
+      case: {
+        yes_no:[
+          "a_page_case_export", 
+          "a_page_case_media_download",
+        ],
+        view_edit:[
+          "a_page_case", 
+          "a_page_case_add", 
+          "a_page_case_transfer", 
+          "a_page_case_notes", 
+          "a_page_case_plan", 
+          "a_page_case_help", 
+          "a_page_case_media", 
+          "a_page_case_connection",
+          "a_page_case_contact_info",
+          "a_page_case_simple_info",
+          "a_page_case__info",
+        ],
+      }
     },
     statusPlan:{
       0:{

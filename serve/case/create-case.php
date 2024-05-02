@@ -11,8 +11,8 @@ $email_encrypted = encryptData($data['email'], $key);
 $name = $data["last_name"]." ".$data["first_name"]." ".$data["middle_name"];
 
 // Підготовка SQL-запиту для вставки даних
-$sql = "INSERT INTO cases_new (name, first_name, middle_name, last_name, phone1, phone2, email, happy_bd) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO cases_new (name, first_name, middle_name, last_name, phone1, phone2, email, happy_bd, user_id, responsible_id) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 // Підготовка запиту
 $stmt = $conn->prepare($sql);
@@ -23,21 +23,27 @@ if ($stmt === false) {
 }
 
 // Прив'язка параметрів та виконання запиту
-$stmt->bind_param("ssssssss", $name, $data['first_name'], $data['middle_name'], $data['last_name'], 
-                            $phone1_encrypted, $phone2_encrypted, $email_encrypted, $data['happy_bd']);
+$stmt->bind_param("ssssssssii", $name, $data['first_name'], $data['middle_name'], $data['last_name'], 
+                            $phone1_encrypted, $phone2_encrypted, $email_encrypted, $data['happy_bd'], $data['id'], $data['id']);
 
 // Виконання запиту
 if ($stmt->execute() === TRUE) {
     // Отримання ідентифікатора останнього вставленого запису
     $last_id = $stmt->insert_id;
     // Повернення ідентифікатора на фронт у форматі JSON
-    echo json_encode(array("id" => $last_id, "status" => true));
+    $mysql = "INSERT INTO cases_data (case_id) VALUES (?)";
+    $stmts = $conn->prepare($mysql);
+    $stmts->bind_param("i",$last_id);
+    if ($stmts->execute() === TRUE) {
+        echo json_encode(array("id" => $last_id, "status" => true));
+    }   
 } else {
     echo json_encode(array("status" => false));
 }
 
 // Закриття з'єднання
 $stmt->close();
+$stmts->close();
 $conn->close();
 
 ?>

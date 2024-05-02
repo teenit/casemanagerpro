@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { apiResponse } from '../Functions/get_apiObj'
 import AccessBlockCase from '../blocks/access/AccessBlockCase'
 import AccessBlockStatistics from '../blocks/access/AccessBlockStatistics'
@@ -11,6 +11,8 @@ import AccessBlockPhonebook from '../blocks/access/AccessBlockPhonebook'
 import AccessBlockProfile from '../blocks/access/AccessBlockProfile'
 import AccessBlockManage from '../blocks/access/AccessBlockManage'
 import AccessBlockAccess from '../blocks/access/AccessBlockAccess'
+import { useSelector } from 'react-redux'
+import AccessDefaultBlock from '../blocks/access/AccessDefaultBlock'
 // const LANG = {
 //   a_page_case_add:"Створити кейс 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 8 - повний доступ",
 //   a_page_case_look:"Переглядати кейс 0 - заборонено, 1 - тільки свої, 2 - призначеної категорії, 3 - тільки призначені, 8 - повний доступ",
@@ -135,21 +137,27 @@ const RIGHTS = {
 
 const AccessPageRight = () => {
   const LOCATION = useLocation()
+  const categoriesCase = useSelector(state => state.categories.case);
+  let params = useParams();
+  const access_id = params.id;
+  const [cases, setCases] = useState([])
   useEffect(()=>{
-    apiResponse({access_id:LOCATION.pathname.slice(LOCATION.pathname.length - 1)},"access/get-by-id.php").then((data)=>{
+    apiResponse({access_id:access_id},"access/get-by-id.php").then((data)=>{
       setState({...state, rights:data.access})
       console.log(data)
     })
-
-    apiResponse({categoryKey:"case"},"manage/get-categories.php").then((data)=>{
-      setCaseCategories(data.data)
-      console.log(data)
+    apiResponse({},"access/get-cases-name.php").then((data)=>{
+      setCases([...data])
     })
+    // apiResponse({categoryKey:"case"},"manage/get-categories.php").then((data)=>{
+    //   setCaseCategories(data.data)
+    //   console.log(data)
+    // })
 
-    apiResponse({categoryKey:"case"},"manage/get-cases-for-access.php").then((data)=>{
-      setCaseCategories(data.data)
-      console.log(data)
-    })
+    // apiResponse({categoryKey:"case"},"manage/get-cases-for-access.php").then((data)=>{
+    //   setCaseCategories(data.data)
+    //   console.log(data)
+    // })
 
   },[])
   const [state,setState] = useState({
@@ -228,9 +236,14 @@ const AccessPageRight = () => {
       {(() => {
         switch (state.selectedPage) {
           case 0:
-            return <AccessBlockCase changeAccess = {(value, key)=>{
-              changeRight(value, key);
-            }} accesses={state.rights} defaultAccess = {'case'} caseCategiries = {caseCategiries}/>;
+            return <AccessDefaultBlock 
+              changeAccess = {(value, key)=>{
+                changeRight(value, key);
+              }} 
+              accesses={state.rights} 
+              type = {'case'} 
+              caseCategiries = {categoriesCase} 
+              cases={cases}/>;
           case 1:
             return <AccessBlockStatistics accesses={state.rights} />;
           case 2:

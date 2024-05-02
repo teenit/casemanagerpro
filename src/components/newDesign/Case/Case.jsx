@@ -31,13 +31,9 @@ import GiveHelp from "./GiveHelp";
 
 const Case = () => {
     const dispatch = useDispatch();
-  const categories = useSelector(state => state.categories); // Припускається, що в вашому стані назва редуктора, який містить категорії, є "categories"
+  const categories = useSelector(state => state.categories);
   const loading = useSelector(state => state.loading);
-
-  useEffect(() => {
-    dispatch(loadCategories());
-  }, [dispatch]);
-
+console.log(categories)
     const [page, setPage] = useState({
         loading: true,
         cases: false,
@@ -62,9 +58,15 @@ const Case = () => {
     }, [])
     const handleDataChange = (key, value) => {
         setState({ ...state, data: { ...state.data, [key]: value } })
+        apiResponse({[key]: value, case_id:case_id}, "case/update-case-data.php").then((data)=>{
+            console.log(data)
+        })
     }
     const handleGeneralChange = (key, value) => {
         setState({ ...state, general: { ...state.general, [key]: value } })
+        apiResponse({[key]: value, case_id:case_id}, "case/update-case.php").then((data)=>{
+            console.log(data)
+        })
     }
     return state && state.general ? (
         <div className="case__wrap">

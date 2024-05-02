@@ -32,12 +32,15 @@ const LANG = {
   a_page_case_hidden:"Приховати інформацію",         
 }
 
-const AccessBlockCase = ({ accesses, defaultAccess, changeAccess, caseCategiries }) => {
+const AccessBlockCase = ({ accesses, defaultAccess, changeAccess, caseCategiries, cases }) => {
 const getCategoriesByType = (type) => {
   let cats = [];
   switch (type) {
     case "case_categories":
       cats = caseCategiries;
+      break;
+    case "cases":
+      cats = cases
       break;
   }
   return cats
@@ -61,12 +64,6 @@ const getCategoriesByType = (type) => {
     };
 
 
-    const LOCATION = useLocation()
-    useEffect(()=>{
-      apiResponse({meta_key:"case_categories"},"case/get-cases-categories.php").then((data)=>{
-      })
-      
-    },[])
     return (
       
         <div className="AccessBlockCase">
@@ -84,11 +81,12 @@ const getCategoriesByType = (type) => {
                             if((elem.value == accesses[item.key]) && elem.ids) {
                               let options = [];
                               if (Array.isArray(JSON.parse(accesses[elem.key]))) options = JSON.parse(accesses[elem.key]);
-                              console.log(accesses[elem.key])
+                              console.log(elem)
                               return <CheckboxListAccess 
                               allMas={()=>{return getCategoriesByType(elem.type)}} 
                               checkedMas={options}
                               onChange={(value)=>{
+
                                 //return console.log(value, options, elem.key)
                                 handleCheckboxChange(value, options, elem.key)}}/>
                             }
