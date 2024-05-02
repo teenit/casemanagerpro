@@ -14,6 +14,7 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 const Active = ({ elem, handleEdit }) => {
     const [edit, setEdit] = useState(false)
     const [editMessage, setEditMessage] = useState(elem.mess)
+    console.log(elem);
     return (
         <div className="GiveHelp-inner-viewer-line">
             <div className="GiveHelp-inner-viewer-line-data">
@@ -95,6 +96,8 @@ const GiveHelp = ({ level }) => {
             })
             .catch((error) => console.log(error))
     }, [])
+
+
     const handleEdit = (newValue) => {
         const updatedActHelp = actHelp.map((item, index) => {
             if (newValue !== item.mess) {
@@ -123,13 +126,13 @@ const GiveHelp = ({ level }) => {
                 <div className="GiveHelp-inner-viewer">
                     {active}
                 </div>
-                {level &&
+                {/* {level &&} */}
                     <div className="GiveHelp-inner-message">
                         <div className="GiveHelp-inner-message-field">
                             <textarea name="" id="mess__help" cols="30" rows="3" placeholder="Деталі наданої допомоги" value={message} onChange={(e) => { handleMessageChange(e.target.value) }}></textarea>
                             <img onClick={addHelp} src={imgSend} alt="" />
                         </div>
-                    </div>}
+                    </div>
 
             </div>
             {alert && <SmallNotification isSuccess={true} text="Дані оновлено" close={() => { setAlert(false) }} />}
