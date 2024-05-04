@@ -29,8 +29,9 @@ const Gallery = ({ photos }) => {
 
     const getType = (str) => {
         let newStr = ''
-        let slashIndex = str.indexOf("/") + 1
-        newStr = str.slice(slashIndex, str.length)
+        let slashIndex = str.indexOf("/")
+        newStr = str.slice(0,slashIndex)
+        console.log(newStr);
         return newStr;
     };
 

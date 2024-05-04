@@ -8,7 +8,6 @@ import GetConnections from "../../Cases/Case/Info/GetConnections";
 import JournalActive from "../../Cases/Case/Info/JournalActive";
 import PlanActive from "../../Cases/Case/Info/PlanActive";
 import CaseGiveHelp from "../../Cases/Case/Info/CaseGiveHelp";
-import Notes from "../../Cases/Case/Info/Notes";
 import Galery from "../../Galery/Galery";
 import PhotosForm from "../../Cases/Case/PhotosForm";
 import EditCaseInfo from "../../Cases/Case/Info/EditCaseInfo";
@@ -28,6 +27,7 @@ import { loadCategories } from "../../../actions/categories";
 import { useDispatch, useSelector } from "react-redux";
 import Gallery from "./Gallery";
 import GiveHelp from "./GiveHelp";
+import Notes from "./Notes";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -102,6 +102,15 @@ console.log(categories)
             <div className="container__grid__two">
                 <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo}/>
                 <GiveHelp level={checkRight(post.level, "helpesCase")} />
+            </div>
+            <div className="container__grid__two">
+                <Notes level={8} notes={[{
+                    mess:"test note",
+                    usedId:9,
+                    userName:"nameys",
+                    date:"12-56-2023",
+                    time:"14:45"
+                }]}/>
             </div>
 
             {/* <div className="media__content__">

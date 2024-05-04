@@ -27,7 +27,6 @@ const Active = ({ elem, handleEdit }) => {
     const handleActiveDataChange = (key, value) => {
         setActiveData({ ...activeData, [key]: value })
     }
-    console.log(elem);
     return (
         <div className="GiveHelp-inner-viewer-line">
             {!edit && <div className="GiveHelp-inner-viewer-line-data">
@@ -92,7 +91,7 @@ const GiveHelp = ({ level }) => {
         message: ""
     })
     const handleEdit = (obj) => {
-        if((obj.dateHelp.length || obj.whoHelp.length) <1){
+        if(obj.whoHelp.length<1){
             setAlert({...alert, error: true})
         }
         const updatedActHelp = actHelp.map((item, index) => {
@@ -103,10 +102,12 @@ const GiveHelp = ({ level }) => {
                 };
             }
             if (obj.whoHelp !== item.whoHelp) {
+
                 return {
                     ...item,
                     whoHelp: obj.whoHelp
                 };
+
             }
             if (obj.message !== item.mess) {
                 return {
@@ -121,7 +122,6 @@ const GiveHelp = ({ level }) => {
     function addHelp() {
         if ((helpData.dateHelp.length && helpData.whoHelp.length) >= 1) {
             setModal(false)
-            console.log(helpData);
             let obj = {
                 caseId: window.location.search.slice(1),
                 id: localStorage.getItem("id"),
@@ -131,7 +131,6 @@ const GiveHelp = ({ level }) => {
                 mess: changeAps(helpData.message),
                 userName: localStorage.getItem("userName")
             }
-            console.log(obj)
             axios({
                 url: serverAddres("case/add-help.php"),
                 method: "POST",
@@ -139,7 +138,6 @@ const GiveHelp = ({ level }) => {
                 data: JSON.stringify(obj),
             })
                 .then((data) => {
-                    console.log(data)
                     setActHelp(data.data)
                     setHelpData({ ...helpData, dateHelp: "", whoHelp: "", message: "" })
                     setAlert({ ...alert, success: true })
@@ -179,7 +177,6 @@ const GiveHelp = ({ level }) => {
     })
 
     const handleDataChange = (key, value) => {
-        console.log("New value for", key, ":", value); // Add this line for debugging
         setHelpData({ ...helpData, [key]: value })
     }
     
