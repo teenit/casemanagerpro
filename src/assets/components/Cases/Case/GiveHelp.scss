@@ -2,21 +2,37 @@
     border-radius: 10px;
     background-color: $background-color;
     padding: 20px;
-    &-notes-delete{
+
+    &-notes-delete {
         border: solid 2px red !important;
     }
+
     &-inner {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: 50px 1fr;
         gap: 25px;
+
+        &-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            img {
+                cursor: pointer;
+            }
+        }
+
         &-viewer {
+            img{
+                width: 20px;
+                cursor: pointer;
+            }
             &-line {
-                display: grid;
-                grid-template-columns: 1fr 2.5fr;
-                padding: 10px;
+                display: flex;
+                padding: 15px;
                 border-radius: 10px;
                 column-gap: 15px;
-                border: solid 2px $main-color;
+                border: solid 3px $second-color;
                 background-color: #fff;
 
                 &-data {
@@ -24,13 +40,15 @@
                     flex-direction: column;
                     justify-content: space-between;
                     gap: 15px;
-                    border-right: solid 3px $main-color;
+                    border-right: solid 3px $second-color;
                     padding-right: 5px;
-                    >div{
+
+                    >div {
                         display: flex;
                         flex-direction: column;
                     }
-                    >span{
+
+                    >span {
                         color: #bababa;
                     }
                 }
@@ -41,24 +59,27 @@
                 }
 
                 &-message {
-                    display: grid;
-                    grid-template-columns: 3fr 1fr;
-                    gap: 25px;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+
+                    &-text {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 15px;
+                        &-split{
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 25px;
+                        }
+                    }
 
                     &-panel {
                         display: flex;
                         flex-direction: column;
                         justify-content: space-between;
                         gap: 15px;
-
-                        >div {
-                            width: 100%;
-                            height: 25px;
-                            display: flex;
-                            justify-content: space-between;
-                        }
-
-                        &-edit {
+   
                             &-option {
                                 width: 20px;
                                 height: 20px;
@@ -71,9 +92,8 @@
                                 width: 100%;
                                 display: flex;
                                 justify-content: end;
-                                cursor: pointer;
                             }
-                        }
+                        
 
                     }
                 }
@@ -81,49 +101,61 @@
 
         }
 
-        &-message {
+
+    }
+
+    &-modal {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+
+        &-inputs {
+            display: flex;
+            width: 100%;
+            gap: 25px;
+
+            >div {
+                width: 100%;
+            }
+        }
+
+        &-btn {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            column-gap: 20px;
+            align-items: center;
+            justify-content: space-around;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        &-field {
             width: 100%;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: 1fr 30px;
+            column-gap: 15px;
+            align-items: center;
+            border-radius: 15px;
+            padding: 5px;
+            background-color: #fff;
+            border: solid 2.5px var(--main-color);
 
-            &-btn {
-                display: grid;
-                grid-template-columns: 1fr 3fr;
-                column-gap: 20px;
-                align-items: center;
-                justify-content: space-around;
-                margin-top: 15px;
+            textarea {
                 width: 100%;
+                outline: none;
+                resize: none;
+                border: none;
+                margin: auto;
+                display: block;
             }
 
-            &-field {
-                width: 100%;
-                position: relative;
-                display: grid;
-                grid-template-columns: 1fr 30px;
-                column-gap: 15px;
-                align-items: center;
-                border-radius: 15px;
-                padding: 5px;
-                background-color: #fff;
-                border: solid 2.5px var(--main-color);
-
-                textarea {
-                    width: 100%;
-                    outline: none;
-                    resize: none;
-                    border: none;
-                    margin: auto;
-                    display: block;
-                }
-
-                img {
-                    cursor: pointer;
-                }
-
+            img {
+                cursor: pointer;
             }
+
+
         }
     }
 }

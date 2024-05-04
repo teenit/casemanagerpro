@@ -45,7 +45,11 @@ export const LANG = {
     status:"Статус",
     planing:"Планування",
     gallery:"Додані медіа файли",
-    documents:"Додані документи"
+    documents:"Додані документи",
+    giveHelp:{
+      title:"Надано допомогу",
+      addHelp: "Додати запис"
+    }
   };
 export const appConfig = {
     access:{

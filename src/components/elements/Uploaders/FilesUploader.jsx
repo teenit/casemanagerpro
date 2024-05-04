@@ -17,6 +17,7 @@ import xlsxImg from "./../../../img/resources/xlsx.png";
 import send from '../../../img/icons/send-media.png';
 import add from '../../../img/icons/add-media.png';
 import {apiResponse} from '../../Functions/get_apiObj'
+import SmallNotification from '../Notifications/SmallNotification';
 
 const FORMAT = {
   pdf: { imgUrl: pdfImg },
@@ -39,6 +40,7 @@ function ext(name) {
 }
 
 function FilesUploader({ multiple = true, successHandler = () => {}, meta = null }) {
+  const [alert,setAlert] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
 
@@ -73,6 +75,7 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
       .then((response) => {
         setSelectedFiles([])
         successHandler(response.data)
+        setAlert(true)
       })
       .catch((error) => console.log(error))
   };
@@ -101,8 +104,9 @@ const handleDelete = (index)=>{
         <label htmlFor="fileInput"><img src={add} alt="Завантажити файл" /></label>
         <input style={{ display: "none" }} id="fileInput" multiple type="file" onChange={handleFileChange} />
         <label htmlFor="submitInput" onClick={handleUpload}><img src={send} alt="Відправити файл" /></label>
-        <input style={{ display: "none" }} type="submit" id="submitInput" />
+        <input disabled={uploading} style={{ display: "none" }} type="submit" id="submitInput" />
       </div>
+      {alert&&<SmallNotification isSuccess={true} text="Файли завантажено успішно" close = {()=>{setAlert(false)}}/>}
     </div>
   );
 }

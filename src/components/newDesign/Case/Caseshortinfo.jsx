@@ -86,11 +86,11 @@ const CaseShortInfo = ({ info, changeGeneral, changeData }) => {
     const handleCheckboxChange = (val) => {
         let categories = val.map(item => item.id);
         setDataState(prevState => ({
-          ...prevState,
-          categories: categories
+            ...prevState,
+            categories: categories
         }));
-      };
-      
+    };
+
 
     useEffect(() => {
         apiResponse({}, "manage/get-categories-case.php").then((res) => {
@@ -197,34 +197,36 @@ const CaseShortInfo = ({ info, changeGeneral, changeData }) => {
                         </div>
                     </span>
                 </div>
-                <div className="case-info-right-card">
-                    <span>
-                        <div className="case-info-card-img">
-                            <img src={contractImg} alt="" />
-                        </div>
-                        <div className="case-info-card-text">
-                            <span>Договір</span>
-                            {editState.contract ?
-                                <div className="case-info-card-contract">
-                                    <Input type="date" value={dataState.contract.date} onChange={(e) => { handleContractChange("date", e.target.value) }} />
-                                    <p>№</p>
-                                    <Input type="number" value={dataState.contract.number} onChange={(e) => { handleContractChange("number", e.target.value) }} />
-                                </div>
+                {(dataState.contract.date || dataState.contract.number) &&
+                    <div className="case-info-right-card">
+                        <span>
+                            <div className="case-info-card-img">
+                                <img src={contractImg} alt="" />
+                            </div>
+                            <div className="case-info-card-text">
+                                <span>Договір</span>
+                                {editState.contract ?
+                                    <div className="case-info-card-contract">
+                                        <Input type="date" value={dataState.contract.date} onChange={(e) => { handleContractChange("date", e.target.value) }} />
+                                        <p>№</p>
+                                        <Input type="number" value={dataState.contract.number} onChange={(e) => { handleContractChange("number", e.target.value) }} />
+                                    </div>
+                                    :
+                                    <div>
+                                        <p>{dataState.contract.date} № {dataState.contract.number}</p>
+                                    </div>
+                                }
+                            </div>
+                        </span>
+                        <div className="case-info-card-img" >
+                            {editState.contract ? <img src={save} alt="Зберегти" onClick={() => { saveHandler("contract", dataState.contract.date, "data") }} />
                                 :
-                                <div>
-                                    <p>{dataState.contract.date} № {dataState.contract.number}</p>
-                                </div>
+                                <img src={edit} alt="Редагувати" onClick={(() => { handleEditChange("contract") })} />
                             }
                         </div>
-                    </span>
-                    <div className="case-info-card-img" >
-                        {editState.contract ? <img src={save} alt="Зберегти" onClick={() => { saveHandler("contract", dataState.contract.date, "data") }} />
-                            :
-                            <img src={edit} alt="Редагувати" onClick={(() => { handleEditChange("contract") })} />
-                        }
                     </div>
-                </div>
-                <div className="case-info-right-card">
+                }
+                {dataState.channel && <div className="case-info-right-card">
                     <span>
                         <div className="case-info-card-img">
                             <img src={channelImg} alt="" />
@@ -244,7 +246,8 @@ const CaseShortInfo = ({ info, changeGeneral, changeData }) => {
                             <img src={edit} alt="Редагувати" onClick={(() => { handleEditChange("channel") })} />
                         }
                     </div>
-                </div>
+                </div>}
+
                 <div className="case-info-right-card">
                     <span>
                         <div className="case-info-card-img">

@@ -14,93 +14,95 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import Modal from "../../Modals/Modal";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import { appConfig } from "../../../services/config";
-const PlanElem = ({plan}) => {
+import plus from "../../../img/icons/plus.svg"
+const PlanElem = ({ plan }) => {
     const [state, setState] = useState({
         ...plan,
         editPlan: false
     })
     const editHandler = () => {
-        setState({...state, editPlan: true})
+        setState({ ...state, editPlan: true })
     }
     const saveHandler = () => {
         console.log(state)
         apiResponse({
             ...state,
-            plan_id:state.id
-        },"case/update-plan-task.php").then((res)=>{
+            plan_id: state.id
+        }, "case/update-plan-task.php").then((res) => {
             console.log(res)
-            setState({...state, editPlan: false})
+            setState({ ...state, editPlan: false })
         })
-        
+
     }
-    const changeHandler = (key, value)=>{
+    const changeHandler = (key, value) => {
         setState({
             ...state,
-            [key]:value
+            [key]: value
         })
     }
     return (
         <div className="Plan-content-element">
             <div className="str">
-            <div className="str-date">
-                <div className="dates">
-                    <div className="dates-start">
+                <div className="str-date">
+                    <div className="dates">
+                        <div className="dates-start">
+                            {
+                                state.editPlan
+                                    ?
+                                    <>
+                                        <Input
+                                            type="datetime-local"
+                                            label={LANG.start_time}
+                                            value={state.start_time}
+                                            variant="standard"
+                                            onChange={(e) => {
+                                                console.log(e.target.value)
+                                                changeHandler("start_time", e.target.value)
+                                            }}
+                                        />
+                                        <Input
+                                            type="datetime-local"
+                                            label={LANG.end_time}
+                                            value={state.end_time}
+                                            variant="standard"
+                                            onChange={(e) => {
+                                                changeHandler("end_time", e.target.value)
+                                            }}
+                                        />
+                                    </>
+                                    :
+                                    <>
+                                        <span> {moment(state.start_time).format("DD-MM-YYYY")} </span>
+                                        <span> {moment(state.end_time).format("DD-MM-YYYY")} </span>
+                                    </>
+                            }
+                        </div>
+                    </div>
+                    <div className="controls">
                         {
-                            state.editPlan 
-                            ? 
-                                <>
-                                <Input 
-                                    type="datetime-local"
-                                    label={LANG.start_time}
-                                    value={state.start_time}
-                                    variant="standard"
-                                    onChange={(e)=>{
-                                        console.log(e.target.value)
-                                        changeHandler("start_time", e.target.value)
-                                    }}
-                                />
-                                <Input 
-                                    type="datetime-local"
-                                    label={LANG.end_time}
-                                    value={state.end_time}
-                                    variant="standard"
-                                    onChange={(e)=>{
-                                        changeHandler("end_time", e.target.value)
-                                    }}
-                                />
-                                </>
-                            :
-                                <>
-                                    <span> {moment(state.start_time).format("DD-MM-YYYY")} </span>
-                                    <span> {moment(state.end_time).format("DD-MM-YYYY")} </span>
-                                </>
+                            state.editPlan
+                                ?
+                                <img src={saveImg} onClick={saveHandler} />
+                                :
+                                <img src={editImg} onClick={editHandler} />
                         }
                     </div>
-                </div>
-                <div className="controls">
-                    {
-                        state.editPlan 
-                        ? 
-                            <img src={saveImg} onClick={saveHandler}/> 
-                        : 
-                            <img src={editImg} onClick={editHandler}/>
-                    }
-                </div>
                 </div>
                 <div className="task">
                     {
                         state.editPlan
-                        ?
+                            ?
                             <div className="task-textarea">
-                                <Textarea 
+                                <Textarea
                                     label={LANG.task_plan}
                                     value={state.value}
-                                    onChange={(e)=>{
+                                    onChange={(e) => {
                                         console.log(e)
-                                        changeHandler("value", e.target.value)}}
+                                        changeHandler("value", e.target.value)
+                                    }}
                                 />
                             </div>
-                        :
+                            :
                             <div className="task-value">
                                 {
                                     state.value
@@ -110,21 +112,21 @@ const PlanElem = ({plan}) => {
                 </div>
                 <div className="bottom">
                     <div className="bottom-date">
-                    {moment(state.start_time).format("DD-MM-YYYY")}
+                        {moment(state.start_time).format("DD-MM-YYYY")}
                     </div>
                     <div className="bottom-status">
                         {
                             state.editPlan
-                            ?
-                                <SelectStatusPlan value={state.status} onChange={(e)=>changeHandler("status", e)}/>
-                            :
-                            <div style={{
-                                backgroundColor: appConfig.statusPlan[state.status].color
-                            }}>
-                                {
-                                    LANG.status_plan[state.status]
-                                }
-                            </div>
+                                ?
+                                <SelectStatusPlan value={state.status} onChange={(e) => changeHandler("status", e)} />
+                                :
+                                <div style={{
+                                    backgroundColor: appConfig.statusPlan[state.status].color
+                                }}>
+                                    {
+                                        LANG.status_plan[state.status]
+                                    }
+                                </div>
                         }
                     </div>
                 </div>
@@ -134,23 +136,23 @@ const PlanElem = ({plan}) => {
 }
 
 
-const Plan = ({plans, case_id, getCaseInfo}) => {
+const Plan = ({ plans, case_id, getCaseInfo }) => {
     const [state, setState] = useState({
-        end_time:" ",
-        start_time:" ",
-        status:0,
-        value:"",
-        create:false
+        end_time: " ",
+        start_time: " ",
+        status: 0,
+        value: "",
+        create: false
     })
     const [notification, setNotification] = useState({
         show: false,
         status: null,
         message: null
     })
-    const changeHandler = (key, value)=>{
+    const changeHandler = (key, value) => {
         setState({
             ...state,
-            [key]:value
+            [key]: value
         })
     }
     const createPlan = () => {
@@ -158,86 +160,89 @@ const Plan = ({plans, case_id, getCaseInfo}) => {
         apiResponse({
             ...state,
             case_id: case_id,
-        },"case/create-plan-task.php").then((res)=>{
-            setState({...state, create: false})
+        }, "case/create-plan-task.php").then((res) => {
+            setState({ ...state, create: false })
             setNotification({
-                show:true,
-                status:res.status,
-                message:res.message
+                show: true,
+                status: res.status,
+                message: res.message
             })
             getCaseInfo();
         })
     }
     return (
         <div className="Plan">
-            <div className="Plan-title">{LANG.planing}</div>
-            <div className="content">
-            <div className="Plan-content">
-                {
-                    plans.map(plan=><PlanElem key={plan.id} plan={plan}/>)
-                }
+            <div className="Plan-title">
+                <h2>{LANG.planing}</h2>
+                <img onClick={() => changeHandler("create", true)} src={plus} alt="Додати план" />
             </div>
-           
+            <div className="content">
+                <div className="Plan-content">
+                    {
+                        plans.map(plan => <PlanElem key={plan.id} plan={plan} />)
+                    }
+                </div>
+
             </div>
             <div className="Plan-bottom">
-                <div className="primary__btn" onClick={()=>changeHandler("create", true)}>{LANG.create_plan}</div>
             </div>
             {
-                state.create && <Modal 
+                state.create && <Modal
                     header={LANG.create_plan}
-                    closeHandler={()=>changeHandler("create", false)}
+                    closeHandler={() => changeHandler("create", false)}
                     footer={
                         <div className="Modal--footer">
-                            <Button onClick={()=>changeHandler("create", false)} color="error" variant="contained">{LANG.cancel}</Button>
+                            <Button onClick={() => changeHandler("create", false)} color="error" variant="contained">{LANG.cancel}</Button>
                             <Button onClick={createPlan} variant="contained">{LANG.save}</Button>
                         </div>
                     }
                 >
                     <div className="Plan-create">
-                <div className="Plan-create-date">
-                    <Input 
-                        type="datetime-local"
-                        label={LANG.start_time}
-                        value={state.start_time}
-                        variant="standard"
-                        onChange={(e)=>{
-                            console.log(e.target.value)
-                            changeHandler("start_time", e.target.value)
-                        }}
-                    />
-                    <Input 
-                        type="datetime-local"
-                        label={LANG.end_time}
-                        value={state.end_time}
-                        variant="standard"
-                        onChange={(e)=>{
-                            console.log(e.target.value)
-                            changeHandler("end_time", e.target.value)
-                        }}
-                    />
-                </div>
-                <div className="Plan-create-status">
-                    <div className="bold">{LANG.status}</div>
-                    <SelectStatusPlan value={state.status} onChange={(e)=>changeHandler("status", e)}/>
-                </div>
-                <div className="Plan-create-value">
-                    <Textarea 
-                        label={LANG.task_plan}
-                        value={state.value}
-                        onChange={(e)=>{
-                            console.log(e)
-                            changeHandler("value", e.target.value)}}
-                    />
-                </div>
-                
-            </div>
+                        <div className="Plan-create-date">
+                            <Input
+                                type="datetime-local"
+                                label={LANG.start_time}
+                                value={state.start_time}
+                                variant="standard"
+                                onChange={(e) => {
+                                    console.log(e.target.value)
+                                    changeHandler("start_time", e.target.value)
+                                }}
+                            />
+                            <Input
+                                type="datetime-local"
+                                label={LANG.end_time}
+                                value={state.end_time}
+                                variant="standard"
+                                onChange={(e) => {
+                                    console.log(e.target.value)
+                                    changeHandler("end_time", e.target.value)
+                                }}
+                            />
+                        </div>
+                        <div className="Plan-create-status">
+                            <div className="bold">{LANG.status}</div>
+                            <SelectStatusPlan value={state.status} onChange={(e) => changeHandler("status", e)} />
+                        </div>
+                        <div className="Plan-create-value">
+                            <Textarea
+                                label={LANG.task_plan}
+                                value={state.value}
+                                onChange={(e) => {
+                                    console.log(e)
+                                    changeHandler("value", e.target.value)
+                                }}
+                            />
+                        </div>
+
+                    </div>
                 </Modal>
             }
             {
-                notification.show && <SmallNotification isSuccess={notification.status} text={notification.message} close={()=>setNotification({show:false})}/>
+                notification.show && <SmallNotification isSuccess={notification.status} text={notification.message} close={() => setNotification({ show: false })} />
             }
         </div>
     )
-   
+
 }
 export default Plan
