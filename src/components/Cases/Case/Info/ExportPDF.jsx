@@ -51,7 +51,6 @@ const ExportPDF = ()=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-           console.log(data.data)
            setHavePdf(data.data);   
         })
         .catch((error)=>console.log(error)) 

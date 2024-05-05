@@ -47,7 +47,6 @@ const Case = ()=>{
         .then((data)=>{ 
 
             let res = data.data;
-            console.log(data.data)
             if(res?.message){
                 setPage({...page,message:res.message})
                 return console.log(res.message)
@@ -97,7 +96,6 @@ const Case = ()=>{
             data : JSON.stringify(obj)
         })
         .then((data)=>{ 
-            console.log(data)
           // window.location.reload()        
         })
         .catch((error)=>console.log(error))  

@@ -22,6 +22,9 @@
                 border: solid 1px $main-color;
                 text-transform: uppercase;
                 cursor: pointer;
+                &.active {
+                    background-color: $background-color;
+                }
             }
         }
     }

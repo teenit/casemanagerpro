@@ -1,4 +1,10 @@
 export const LANG = {
+    GLOBAL:{
+      save: "Зберегти",
+      cancel: "Відмінити",
+    },
+    settings_to_page: "Налаштування до сторінки",
+    access_users_pages: "Права користувачів (Сторінки)",
     forbidden: "Заборонено",
     assigned_categories: "Призначені категорії",
     full_access: "Повний доступ",
@@ -45,6 +51,99 @@ export const LANG = {
     status:"Статус",
     planing:"Планування",
     gallery:"Додані медіа файли",
+    documents:"Додані документи",
+    access: {
+      "a_cases_category_edit_id":"Доступні категорії кейсів для редагування", 
+      "a_cases_category_look_id":"Доступні категорії кейсів для перегляду", 
+      "a_cases_edit_id":"Доступні кейси для редагування", 
+      "a_cases_look_id":"Доступні кейси для перегляду",
+      "a_super":"Супер-адміністратор",
+      "a_administartor":"Адміністратор",
+      "a_blocked":"Заблокувати доступ до програми",
+      "a_update_program":"Оновлювати програму Case Manager Pro",
+      'a_page_case': "Доступ до сторінки кейс",
+      "a_page_case_export_pdf":"Експорт кейсу у ПДФ", 
+      "a_page_case_media_download":"Дозволити завантажувати миедіа файли",    
+      "a_page_case_add":"Створення кейсів", 
+      "a_page_case_transfer":"Передавати кейс іншому відповідальному", 
+      "a_page_case_notes":"Доступ до нотаток", 
+      "a_page_case_plan":"Доступ до планування", 
+      "a_page_case_help":"Доступ до наданої допомоги", 
+      "a_page_case_media":"Доступ до медіа даних кейса (документи, фото тощо..)", 
+      "a_page_case_connection":"Встановлювати зв'язки з іншими кейсами",
+      "a_page_case_contact_info":"Доступ до контактної інформації кейса",
+      "a_page_case_simple_info":"Доступ до загальної інформації кейса",
+      "a_page_case_info":"Доступ до іншої інформації кейса",
+      "a_cases_get": "Доступ до кейсів",
+      "get_options": {
+        0:"Заборонено",
+        1:"Тільки свої",
+        2:"Призначені",
+        7:"Повний доступ (перегляд)",
+        8:"Повний доступ (редагування)",
+      }, 
+      "a_page_cases":"Доступ до сторінки кейси",
+      "a_page_cases_print":"Друк списку кеййсів",
+      "a_page_cases_mask":"Маскувати контактні дані кейсів",
+      "a_page_cases_look_list":"Переглядати список кейсів як список",
+      "a_page_cases_sort":"Відображати панель сортування кейсів",
+      "a_page_resources":"Доступ до сторінки ресурси",
+      "a_page_resources_upload":"Додавати нові ресурси",
+      "a_page_resources_download":"Завантажувати (скачувати) ресурси",
+      "a_page_resources_edit":"Редагувати ресурси",
+      "a_page_resources_remove":"Видаляти ресурси",
+      "a_page_phonebook":"Доступ до сторінки Телефонної книги",
+      "a_page_phonebook_remove":"Видалити контакт з телефонної книги",
+      "a_page_phonebook_contact":"Контактні дані з телефонної книги",
+      "a_page_calendar":"Доступ до сторінки календар",
+      "a_page_calendar_look_cases_HB":"Бачити дні народження кейсів",
+      "a_page_calendar_look_users_HB":"Бачити дні народження користувачів",
+      "a_page_calendar_add_event":"Додати запис в календар",
+      "a_page_calendar_edit":"Редагувати запис в календарі",
+      "a_page_calendar_remove":"Видалити запис з календарю",
+      "a_page_event":"Доступ до сторінки івента (події)",
+      "a_page_event_create":"Створити івент",
+      "a_page_event_remove":"Видалити івент",
+      "a_page_event_add_plan":"Додати план івенту",
+      "a_page_event_add_feedback":"Додати зворотній зв'язок",
+      "a_page_event_add_media":"Додати медіа-файли до івенту",
+      "a_page_event_users":"Організатори івенту",
+      "a_page_event_cases":"Учасники івенту",
+      "a_page_event_edit":"Редагувати івент",
+      "a_page_event_plan":"План івенту",
+      "a_page_event_feedback":"Зворотній зв'язок до івенту",
+      "a_page_event_media":"Медіа-файли івенту",
+      "a_page_events":"Доступ до сторінки івенти (події)",
+      "a_page_user":"Доступ до сторінки профіль користувача",
+      "a_page_user_change_pass":"Дозволити користувачу змінювати пароль",
+      "a_page_user_users":"Доступ до профілів інших користувачів",
+      "a_page_user_add_history":"Додавати історії (звітність)",
+      "a_page_user_contact":"Контактні дані користувача",
+      "a_page_settings":"Доступ до сторінки налаштувань",
+      "a_page_settings_activate_users":"Активація користувачів",
+      "a_page_settings_deactivate_users":"Деактивація користувачів",
+      "a_page_settings_remove_user":"Видалення користувачів",
+      "a_page_settings_change_accesses":"Змінити налаштування прав користувачів",
+      "a_page_settings_case_categories":"Категорії кейсів",
+      "a_page_settings_phone_categories":"Категорії телефонної книги",
+      "a_page_settings_help_categories":"Категорії наданої допомоги",
+      "a_page_access":"Доступ до сторінки налаштування прав користувачів",
+      "a_page_access_create":"Створення шаблону прав користувачів",
+      "a_page_access_edit":"Редагування шаблону прав користувачів"
+    },
+    pages:{
+      case:"Кейс",
+      cases:"Кейси",
+      settings:"Налаштування",
+      users:"Користувачі",
+      resources:"Ресурси",
+      phonebook:"Телефонна книга",
+      calendar:"Календар",
+      event:"Івент (подія)",
+      events:"Івенти (події)",
+      user:"Користувач",
+      accesses:"Шаблони прав",
+    }, 
     documents:"Додані документи",
     giveHelp:{
       title:"Надано допомогу",
@@ -135,24 +234,42 @@ export const appConfig = {
           }
     },
     newAccess:{
-      access:[
+      access:{
+        yes_no:[
         "a_super",
         "a_administartor",
-        "a_blocked"
-      ],
-      accessCases:[
-        "a_page_cases_edit_id", 
-        "a_page_cases_look_id", 
-        "a_page_cases_category_edit_id", 
-        "a_page_cases_category_look_id"
-      ],
+        "a_blocked",
+        "a_update_program"
+        ],
+        view_edit:[]
+      },
+      accessCases:{
+        get:{
+          right:"a_cases_get",
+          options:{
+            0: LANG.access.get_options[0],
+            1: LANG.access.get_options[1],
+            2: LANG.access.get_options[2],
+            7: LANG.access.get_options[7],
+            8: LANG.access.get_options[8],
+          }
+        },
+        categories: [ 
+          "a_cases_category_edit_id", 
+          "a_cases_category_look_id"
+        ],
+        cases:[
+          "a_cases_edit_id", 
+          "a_cases_look_id", 
+        ]
+      },
       case: {
         yes_no:[
-          "a_page_case_export", 
+          "a_page_case_export_pdf", 
           "a_page_case_media_download",
         ],
         view_edit:[
-          "a_page_case", 
+          "a_page_case",
           "a_page_case_add", 
           "a_page_case_transfer", 
           "a_page_case_notes", 
@@ -162,9 +279,109 @@ export const appConfig = {
           "a_page_case_connection",
           "a_page_case_contact_info",
           "a_page_case_simple_info",
-          "a_page_case__info",
+          "a_page_case_info",
         ],
+      },
+      cases: {
+        yes_no: [
+          "a_page_cases",
+          "a_page_cases_print",
+          "a_page_cases_mask",
+          "a_page_cases_look_list",
+          "a_page_cases_sort",
+
+        ],
+        view_edit:[]
+      },
+      resources: {
+        yes_no:[
+          "a_page_resources",
+          "a_page_resources_upload",
+          "a_page_resources_download",
+          "a_page_resources_edit",
+          "a_page_resources_remove"
+        ],
+        view_edit: []
+      },
+      phonebook: {
+        yes_no:[
+          "a_page_phonebook",
+          "a_page_phonebook_remove"
+        ],
+        view_edit:[
+          "a_page_phonebook_contact"
+        ]
+      },
+      calendar:{
+        yes_no:[
+          "a_page_calendar",
+          "a_page_calendar_look_cases_HB",
+          "a_page_calendar_look_users_HB",
+          "a_page_calendar_add_event",
+          "a_page_calendar_edit",
+          "a_page_calendar_remove",
+        ],
+        view_edit:[]
+      },
+      event:{
+        yes_no:[
+          "a_page_event",
+          "a_page_event_create",
+          "a_page_event_remove",
+          "a_page_event_add_plan",
+          "a_page_event_add_feedback",
+          "a_page_event_add_media",
+
+        ],
+        view_edit:[
+          "a_page_event_users",
+          "a_page_event_cases",
+          "a_page_event_edit",
+          "a_page_event_plan",
+          "a_page_event_feedback",
+          "a_page_event_media",
+        ]
+      },
+      events:{
+        yes_no:[
+          "a_page_events"
+        ],
+        view_edit:[]
+      },
+      user:{
+        yes_no:[
+          "a_page_user",
+          "a_page_user_change_pass",
+          "a_page_user_users",
+          "a_page_user_add_history",
+        ],
+        view_edit:[
+          "a_page_user_contact",
+        ]
+      },
+      settings:{
+        yes_no:[
+          "a_page_settings",
+          "a_page_settings_activate_users",
+          "a_page_settings_deactivate_users",
+          "a_page_settings_remove_user",
+        ],
+        view_edit:[
+          "a_page_settings_change_accesses",
+          "a_page_settings_case_categories",
+          "a_page_settings_phone_categories",
+          "a_page_settings_help_categories",
+        ]
+      },
+      accesses:{
+        yes_no:[
+          "a_page_access",
+          "a_page_access_create",
+          "a_page_access_edit"
+        ],
+        view_edit:[]
       }
+
     },
     statusPlan:{
       0:{
@@ -195,5 +412,51 @@ export const appConfig = {
         title: LANG.status_plan[8],
         color: "#80ed99"
       },
+    },
+    pages:{
+      case:{
+        title:LANG.pages.case,
+        description:""
+      },
+      cases:{
+        title:LANG.pages.cases,
+        description:""
+      },
+      settings:{
+        title:LANG.pages.settings,
+        description:""
+      },
+      // users:{
+      //   title:LANG.pages.users,
+      //   description:""
+      // },
+      resources:{
+        title:LANG.pages.resources,
+        description:""
+      },
+      phonebook:{
+        title:LANG.pages.phonebook,
+        description:""
+      },
+      calendar:{
+        title:LANG.pages.calendar,
+        description:""
+      },
+      event:{
+        title:LANG.pages.event,
+        description:""
+      },
+      events:{
+        title:LANG.pages.events,
+        description:""
+      },
+      user:{
+        title:LANG.pages.user,
+        description:""
+      },
+      accesses:{
+        title:LANG.pages.accesses,
+        description:""
+      }
     }
 }

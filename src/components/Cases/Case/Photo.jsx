@@ -1,7 +1,6 @@
 import React from "react"
 import VideoPlayer from "react-video-js-player";
 const Photo = ({photos}) =>{
-    console.log(photos)
     function ext(name) {
         return name.match(/\.([^.]+)$|$/)[1];
       }
@@ -58,7 +57,6 @@ const Photo = ({photos}) =>{
     ):(
         <>
             <h1>Немає завантажених фото</h1>
-            {console.log(photos)}
         </>
     )
 }

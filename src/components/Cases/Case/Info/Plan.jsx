@@ -18,7 +18,6 @@ function elemPlanDelete(a){
         index:a.index,
         nameOfPlan: a.nameOfPlan,
     }
-    console.log(obj)
     axios({
         url: serverAddres("case/elem-plan-delete.php"),
         method: "POST",
@@ -26,7 +25,6 @@ function elemPlanDelete(a){
         data : JSON.stringify(obj),
     })
     .then((data)=>{ 
-        console.log(data)
       //  window.location.reload()        
     })
     .catch((error)=>console.log(error))  

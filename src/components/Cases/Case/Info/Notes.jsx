@@ -8,7 +8,6 @@ import edit from '../../../../img/icons/edit.svg'
 
 
 const Active = ({elem})=>{
-    console.log(elem)
     return(
          <div className="notes__viewer__line">
          <div className="notes__viewer__data">
@@ -52,7 +51,6 @@ const Notes = ({notes,level})=>{
             mess: mess,
             userName: localStorage.getItem("userName")
         }
-        console.log(obj)
         axios({
             url: serverAddres("case/add-note.php"),
             method: "POST",

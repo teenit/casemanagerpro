@@ -6,7 +6,6 @@ import { serverAddres } from "../Functions/serverAddres";
 export const Check = ()=>{
     const dispatch = useDispatch();
     const {isAuth, email, data, token, id} = useAuth();
-    console.log(isAuth, email, data, token, id)
     async function getUser(data){
         await fetch(serverAddres("check-auth.php"),{
             method:"POST",
@@ -15,7 +14,6 @@ export const Check = ()=>{
         })
             .then(res => res.json())
             .then((data) => {
-                console.log(data)
                 
                dispatch(setUser({
                     email:data.email,

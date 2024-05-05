@@ -38,7 +38,9 @@ if (isset($data->access) && isset($data->id_access)){
 
     // Виконання запиту
     if ($conn->query($sql) === TRUE) {
-        echo "Записи оновлено успішно.";
+        echo json_encode([
+            "status" => true
+        ]);
     } else {
         // echo "Помилка оновлення записів: " . $conn->error;
         echo $sql;

@@ -28,7 +28,6 @@ export const doneBells = (idBell)=>{
     data: JSON.stringify({...obj,idBell:idBell}),
   })
     .then((data) => {
-        console.log(data)
         return data.data;
     })
     .catch((error) => console.log(error))
@@ -40,8 +39,7 @@ export const fetchUser = () => {
     header: { "Content-Type": "application/json;charset=utf-8" },
     data: JSON.stringify(obj),
   }).then((response) => {
-    console.log(response.data)
-    console.log(obj)
+   
     if(response.data?.message){
       if(response.data.fail == "001"){
         return response.data;
@@ -50,7 +48,6 @@ export const fetchUser = () => {
       }
     }else{
       if(obj.userId == obj.id){
-        console.log(response)
         response.data.changePass = true;
       }
       return response.data
@@ -121,7 +118,6 @@ export const getUsers = ()=>{
     data : JSON.stringify(obj),
   })
   .then((data)=>{ 
-      console.log(data.data)
         return data.data;
   })
   .catch((error)=>console.log(error)) 

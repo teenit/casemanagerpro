@@ -8,7 +8,6 @@ const ModalPlanDone = ({active, plan, close})=>{
         let notgood = document.querySelector("#mod__not__good").checked
         if(!good && !notgood) return window.alert("Оберіть варіант завершення плану")
         let commentar = document.querySelector("#mod__commentar").value.replaceAll("'", "’").replace(/\n/g, "<br />");
-        console.log(good, notgood)
         let obj = {
             caseId:window.location.search.slice(1),
             id: localStorage.getItem("id"),
@@ -33,7 +32,6 @@ const ModalPlanDone = ({active, plan, close})=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-            console.log(data)
           //  window.location.reload()        
         })
         .catch((error)=>console.log(error))  

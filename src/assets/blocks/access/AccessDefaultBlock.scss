@@ -1,0 +1,31 @@
+.AccessDefaultBlock {
+    &-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        .line-yes {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &:hover {
+                background-color: $background-color;
+            }
+        }
+        .line {
+            display: grid;
+            grid-template-columns: 70% 15% 15%;
+            &:hover {
+                background-color: $background-color;
+            }
+            .show {
+                text-align: center;
+            }
+            .edit {
+                text-align: center;
+            }
+            .title {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}

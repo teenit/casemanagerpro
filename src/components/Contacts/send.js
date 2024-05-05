@@ -36,9 +36,7 @@ export class ContactForm extends Component {
 
   handleChangeTel = (event, index) => {
     const { name, value } = event.currentTarget;
-    console.log(index);
-    console.log(this.state.phones);
-    console.log(event.currentTarget);
+  
 
     this.setState((prevState) => ({
       phones: [{ ...prevState.phones[index], [name]: value }],

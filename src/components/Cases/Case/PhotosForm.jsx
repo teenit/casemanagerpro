@@ -45,7 +45,6 @@ const PhotosForm = ({show})=>{
             setLoading({active:""})
            // if(data.data?.message)
           //  window.location.reload()
-          console.log(data)
         })
         .catch((error)=>console.log(error))     
     } 
@@ -74,14 +73,11 @@ const PhotosForm = ({show})=>{
                         <label htmlFor="fileInput"><img src={add} alt="Завантажити файл" /></label>
                         <input style={{display:"none"}} id="fileInput" multiple type="file" onChange={(e)=>{
                             setData(e.target.files)
-                            console.log(imgData);
                             const newMas=[]
                             Object.values(e.target.files).map((item,index)=>{
-                                console.log(item);
                                 newMas.push(item.name)
                             })
                             setFilesData(newMas)
-                            console.log(newMas);
                         }}/>
                         <label htmlFor="submitInput"><img src={send} alt="Відправити файл" /></label>
                         <input style={{display:"none"}} type="submit" id="submitInput" />

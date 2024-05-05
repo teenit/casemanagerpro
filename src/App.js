@@ -28,7 +28,6 @@ class App extends Component {
 
   render() {
     const { auth } = this.props;
-    console.log(auth)
     return (
 
           auth.loading ? (

@@ -19,7 +19,6 @@ const ForgotPass = ()=>{
             setModalInfo(data.data)
             setEmail("")
             setModal(true)
-            console.log(data.data)
           // window.location.reload()        
         })
         .catch((error)=>console.log(error))  

@@ -37,12 +37,10 @@ const GetCases = ({posts,postsChange})=>{
         })
       }
       
-      console.log(posts)
     }
     return(
         <div className="wrap__cards">
           <div className={s.select__sort}><select name="" id="" onChange={(e)=>{
-            console.log(e.target.value)
             let a = [];
             if(e.target.value !== 'id'){
               posts.sort(sortMas(e.target.value,'string'))

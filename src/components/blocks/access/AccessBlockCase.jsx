@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SelectElem from "../../elements/Selects/Select";
+import SelectElem from "../../elements/Selects/SelectAccess";
 import { useLocation } from "react-router-dom";
 import { apiResponse } from "../../Functions/get_apiObj";
 import { appConfig } from "../../../services/config";
@@ -49,7 +49,6 @@ const getCategoriesByType = (type) => {
     const handleSelectChange = (value, key) => {
       setState({...state, [key]:{...state[key], value: value}})
       changeAccess(value, key)
-      console.log({...state, [key]:{...state[key], value: value}})
     };
 
     const handleCheckboxChange = (value, options, key) => {
@@ -81,7 +80,6 @@ const getCategoriesByType = (type) => {
                             if((elem.value == accesses[item.key]) && elem.ids) {
                               let options = [];
                               if (Array.isArray(JSON.parse(accesses[elem.key]))) options = JSON.parse(accesses[elem.key]);
-                              console.log(elem)
                               return <CheckboxListAccess 
                               allMas={()=>{return getCategoriesByType(elem.type)}} 
                               checkedMas={options}

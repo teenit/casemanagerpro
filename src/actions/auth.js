@@ -15,7 +15,6 @@ export const setUserAuth = (data) => ({
 export function loadUserAuth () {
     return dispatch => { // Додаємо параметр dispatch для відправки дії до редуктора
         apiResponse({},"check-auth.php").then((data)=>{
-            console.log(data)
             if (data.status) {
                 dispatch(setUserPerm(data));
             } else {

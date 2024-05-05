@@ -15,7 +15,6 @@ const sortedDayEvents = dayEvents.sort((a, b) => {
     const startTimeB = Number(b.value.start.slice(0, 2));
     return startTimeA - startTimeB;
 });
-console.log(sortedDayEvents);
 
     
     return (

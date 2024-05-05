@@ -9,7 +9,6 @@ import edit from '../../../../img/icons/edit.svg'
 import Input from '../../../elements/Inputs/Input'
 
 const Active = ({elem})=>{
-    console.log(elem)
     return(
          <div className="helpes__viewer__line">
          <div className="helpes__viewer__data">
@@ -55,7 +54,6 @@ const CaseGiveHelp = ({level})=>{
             whoHelp:whoHelp,
             userName: localStorage.getItem("userName")
         }
-        console.log(obj)
         axios({
             url: serverAddres("case/add-help.php"),
             method: "POST",
@@ -63,7 +61,6 @@ const CaseGiveHelp = ({level})=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-            console.log(data)
             setActHelp(data.data)  
             document.querySelector("#mess__help").value = ""
             document.querySelector("#date__help").value = ""
@@ -85,7 +82,6 @@ const CaseGiveHelp = ({level})=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-            console.log(data)
             setActHelp(data.data)  
         })
         .catch((error)=>console.log(error))  

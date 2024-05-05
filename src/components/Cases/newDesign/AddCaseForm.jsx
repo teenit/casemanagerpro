@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Input from "../../elements/Inputs/Input";
 import { changeAps, changeApsBr } from "../../Functions/translateString";
 import { apiResponse } from '../../Functions/get_apiObj'
-import CatCheckBoxes from "../../elements/CheckBoxes/CatCheckBoxes";
-import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import CheckboxForm from "./CheckboxForm";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
+import { useSelector } from "react-redux";
 const checkedMas = []
 const AddCaseForm = () => {
     const options = []
@@ -13,14 +12,7 @@ const AddCaseForm = () => {
     const [state, setState] = useState({
         general: true
     })
-    const [caseCategories, setCaseCategories] = useState([])
-    useEffect(() => {
-        apiResponse({ categoryKey: "case" }, "manage/get-categories.php").then((data) => {
-            setCaseCategories(data.data)
-            console.log(data)
-        })
-    }, [])
-
+    const caseCategories = useSelector(state => state.categories["case"]);
     const [stateGeneral, setStateGeneral] = useState({
         first_name: "",
         middle_name: "",

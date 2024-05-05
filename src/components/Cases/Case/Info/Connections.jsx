@@ -5,7 +5,6 @@ import { serverAddres } from "../../../Functions/serverAddres";
 import s from "./Settings/set.module.css";
 import Input from '../../../elements/Inputs/Input'
 const Connections = ({id,caseInfo})=>{
-    console.log(caseInfo)
     const [connect, setConnect] = useState({
         caseID:"",
         caseName:"",
@@ -56,7 +55,6 @@ const Connections = ({id,caseInfo})=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-           console.log(data.data)
         })
         .catch((error)=>console.log(error))   
 }
@@ -70,7 +68,6 @@ const Connections = ({id,caseInfo})=>{
                 }}/>
                 {openSearch && connect.search !== "" ?<div className={s.search__result}>
                     {search.map((item, index)=>{
-                       console.log(item)
                        if(item.id == id) return null;
                         return(
                             <div key={index} className={s.search__item} onClick={()=>{

@@ -51,7 +51,6 @@ const Registration = ()=>{
                 console.log(rejected);
             });
             reset()
-            console.log(data)
     }
     const {register,formState:{errors,isValid},handleSubmit,reset} = useForm({mode:'onChange'});
  

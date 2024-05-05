@@ -98,7 +98,7 @@ input[type=date],input[type=time]{
   width: calc(100% - 21px);
   padding: 5px 5px 5px 10px;
 }
-input[type=checkbox] {
+/* input[type=checkbox] {
   position: relative;
   cursor: pointer;
   width: 20px;
@@ -127,7 +127,7 @@ input[type=checkbox]:checked:after {
   position: absolute;
   top: 2px;
   left: 8px;
-}
+} */
 /* textarea{
   border: solid 3px #b399cb;
   border-radius: 7px;

@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 const Active = ({elem})=>{
-    console.log(elem)
     return(
         <div className="journal__line">
             <NavLink to={`/user?${elem.userId}`} className="journal__a">{"elem.user.name"}</NavLink>

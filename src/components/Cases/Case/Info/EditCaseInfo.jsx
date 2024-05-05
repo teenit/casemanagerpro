@@ -22,7 +22,6 @@ const EditCaseInfo = ({caseInfo,close})=>{
         for (var key in data) {
             if(typeof data[key] == 'string' && data[key] !== "") data[key] = data[key].replaceAll("'", "’").replaceAll(/\n/g, "<br />");
           }
-     //  return console.log(data);
         await fetch(serverAddres("case/save-infoCase.php"),{
             method:"POST",
             header : {'Content-Type': 'application/json;charset=utf-8'},
@@ -30,14 +29,12 @@ const EditCaseInfo = ({caseInfo,close})=>{
         })
             .then(res => res.text())
             .then(data => {
-                console.log(data)
                 alert("ОНОВЛЕНО")
             })
             .catch(rejected => {
                 console.log(rejected);
             });
     }
-   console.log(caseInfo.categories)
 
     const [addObj, setAddObj] = useState({
         surname: caseInfo.surname.replaceAll("<br />", '\n'),
@@ -97,7 +94,6 @@ const EditCaseInfo = ({caseInfo,close})=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-           console.log(data.data)
            setCategoriesCase(data.data.mas);       
         })
         .catch((error)=>console.log(error)) 
@@ -122,7 +118,6 @@ const EditCaseInfo = ({caseInfo,close})=>{
             <div className="add__case__item__inner__category__item">
                 <input className="checkbox__category" type="checkbox"
                     onChange={(e)=>{
-                        console.log(addObj)
                         addObj.categories[index] = {
                             value: category.value,
                             text: category.text,
@@ -165,7 +160,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <label htmlFor="phone1">Прізвище<span className="color__red">*</span></label>
                             <Input required value={addObj.surname} onChange={(e)=>{
                                 setAddObj({...addObj,surname:e.target.value})
-                                console.log(e.target.value)
+                                
                     }}/>
                         </div>
                     </div>
@@ -174,7 +169,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <label htmlFor="phone1">Ім'я<span className="color__red">*</span></label>
                             <Input required value={addObj.firstName} onChange={(e)=>{
                                 setAddObj({...addObj,firstName:e.target.value})
-                                console.log(e.target.value)
+                                
                     }}/>
                         </div>
                     </div>
@@ -183,7 +178,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <label htmlFor="phone1">По батькові <span className="color__red">*</span></label>
                             <Input required value={addObj.firstName} onChange={(e)=>{
                                 setAddObj({...addObj,firstName:e.target.value})
-                                console.log(e.target.value)
+                                
                     }}/>
                         </div>
                     </div>
@@ -197,7 +192,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Input type="text" id="phone1" name="phone1" value={addObj.phone1}
                             onChange={(e)=>{
                                 setAddObj({...addObj,phone1:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -207,7 +202,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Input type="text" id="phone2" name="phone2" value={addObj.phone2}
                             onChange={(e)=>{
                                 setAddObj({...addObj,phone2:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -217,7 +212,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Input type="text" id="email" name="email" value={addObj.email}
                             onChange={(e)=>{
                                 setAddObj({...addObj,email:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -253,7 +248,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Textarea name="addressPropiska" id="addressPropiska" cols="30" rows="10" value={addObj.addressPropiska}
                             onChange={(e)=>{
                                 setAddObj({...addObj,addressPropiska:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}></Textarea>
                         </div>
                     </div>
@@ -263,7 +258,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Textarea name="addressLive" id="addressLive" cols="30" rows="10" value={addObj.addressLive}
                             onChange={(e)=>{
                                 setAddObj({...addObj,addressLive:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}></Textarea>
                         </div>
                     </div>
@@ -277,7 +272,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Input type="text" id="chanelComunity" name="chanelComunity" value={addObj.chanelComunity}
                             onChange={(e)=>{
                                 setAddObj({...addObj,chanelComunity:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/> 
                         </div>
                     </div>
@@ -287,7 +282,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Input type="date" id="firstContact" name="firstContact" value={addObj.firstContact}
                             onChange={(e)=>{
                                 setAddObj({...addObj,firstContact:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -302,7 +297,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Textarea name="potreba" id="potreba" cols="30" rows="10" value={addObj.potreba}
                             onChange={(e)=>{
                                 setAddObj({...addObj,familyStan:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}></Textarea>
                         </div>
                     </div>
@@ -317,7 +312,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Textarea id="familyStan" name="familyStan" cols="30" rows="10" value={addObj.familyStan}
                             onChange={(e)=>{
                                 setAddObj({...addObj,familyStan:e.target.value})
-                                console.log(e.target.value)
+                                
                             }} ></Textarea>
                         </div>
                     </div>
@@ -331,7 +326,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Textarea id="familyHistory" name="familyHistory" cols="30" rows="10" value={addObj.familyHistory}
                             onChange={(e)=>{
                                 setAddObj({...addObj,familyHistory:e.target.value})
-                                console.log(e.target.value)
+                                
                             }} ></Textarea>
                         </div>
                     </div>
@@ -356,7 +351,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                                 <Input type="date" name="dateDogovir" id="dateDogovir" value={addObj.dateDogovir}
                                 onChange={(e)=>{
                                     setAddObj({...addObj,dateDogovir:e.target.value})
-                                    console.log(e.target.value)
+                                    
                                 }}/>
                             </div>
                             <div className="add__case__item__inner__input__item">
@@ -364,7 +359,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                                 <Input type="text" name="numberDogovir" id="numberDogovir" value={addObj.numberDogovir}
                                 onChange={(e)=>{
                                     setAddObj({...addObj,numberDogovir:e.target.value})
-                                    console.log(e.target.value)
+                                    
                                 }}/>
                             </div>
                         </div>
@@ -379,7 +374,7 @@ const EditCaseInfo = ({caseInfo,close})=>{
                             <Textarea name="commentar" id="commentar" cols="30" rows="10" value={addObj.commentar}
                             onChange={(e)=>{
                                 setAddObj({...addObj,commentar:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}></Textarea>
                         </div>
                     </div>

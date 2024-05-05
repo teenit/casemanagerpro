@@ -26,7 +26,6 @@ const Cases = ()=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-            console.log(data.data)
            // return console.log(data.data)
             if(data.data?.message){
                 setPage(
@@ -47,7 +46,6 @@ const Cases = ()=>{
             }else{
                 let pos = data.data.map(elem=>JSON.parse(elem))
                 setPosts(pos)  
-                console.log(pos)
                 setPage({
                     loading:false
                 })

@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
 
 export default function CheckboxListAccess({allMas, checkedMas, onChange}) {
-  const [checked, setChecked] = useState(checkedMas);
+  const [checked, setChecked] = useState([checkedMas]);
   const [allMasElements, setAllMasElements] = useState(allMas());
     // useEffect(()=>{
     //     console.log(allMas())
@@ -18,7 +18,6 @@ export default function CheckboxListAccess({allMas, checkedMas, onChange}) {
   const handleToggle = (value) => () => {
     //return console.log(value)
     onChange(value.id)
-   // setChecked(checkedMas)
     const currentIndex = checked.indexOf(value.id);
     const newChecked = [...checked];
 
@@ -28,13 +27,12 @@ export default function CheckboxListAccess({allMas, checkedMas, onChange}) {
       newChecked.splice(currentIndex, 1);
     }
 
-    setChecked(newChecked);
+    //setChecked(newChecked);
   };
 
-  useEffect(()=>{setChecked(checkedMas)},checkedMas)
+  useEffect(()=>{setChecked(checkedMas)},[checkedMas])
 
   const checkChecked = (val) =>{
-    console.log(val, checked)
     let check = false;
     checked.forEach(element => {
         if (element === val) check = true  
@@ -44,13 +42,12 @@ export default function CheckboxListAccess({allMas, checkedMas, onChange}) {
 
   return (
     <div className='CheckboxListAccess'>
-         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {allMasElements.map((item) => {
         const labelId = `checkbox-list-label-${item.id + 1}`;
-        console.log(item)
         return (
           <ListItem
-            key={item}
+            key={item.id + item.name}
             secondaryAction={
               <IconButton edge="end" aria-label="comments">
                 <CommentIcon />
@@ -68,7 +65,7 @@ export default function CheckboxListAccess({allMas, checkedMas, onChange}) {
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={item.name} />
+              <ListItemText id={labelId} primary={item.id + " " + item.name} />
             </ListItemButton>
           </ListItem>
         );

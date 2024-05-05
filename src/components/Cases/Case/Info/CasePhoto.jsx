@@ -33,7 +33,6 @@ const CasePhoto = (props)=>{
         })
         .then((data)=>{
             setImgCase(data.data);
-            console.log(data)
             setLoading("")
         })
         .catch((error)=>console.log(error))    
@@ -54,7 +53,6 @@ const CasePhoto = (props)=>{
             }
         })
         .then((data)=>{
-            console.log(data)
             setImgSave(false)
             setLoading("")
             

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SelectElem from "../../elements/Selects/Select";
+import SelectElem from "../../elements/Selects/SelectAccess";
 
 const AccessBlockCase = ({accesses}) => {
 

@@ -8,6 +8,8 @@ import hideImg from "./../../../img/icons/hide-50.png";
 import {serverAddres} from "./../../Functions/serverAddres";
 import ModalSimple from "../../Modals/ModalSimple";
 import Specification from "./Specification";
+import { apiResponse } from "../../Functions/get_apiObj";
+import { MenuItem, Select } from "@mui/material";
 let usersStr = "";
 
 
@@ -18,59 +20,70 @@ const SetUser = ({categories,categoriesCont})=>{
     const [level, setLevel]  = useState({"foo":"bar"})
     const [modal,setModal] = useState(false)
     const [modalInfo, setModalInfo] = useState(false)
+    const [access, setAccess] = useState([]);
     function activateUser(arg,userID, text,keyt){
-        let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token"),
+        apiResponse({
             activate: arg,
             userId:userID,
             text:text,
-            keyt:keyt
-        }
-        axios({
-            url: serverAddres("user/activate.php"),
-            method: "POST",
-            header : {'Content-Type': 'application/json;charset=utf-8'},
-            data : JSON.stringify(obj),
+            keyt:keyt}, "user/activate.php").then((res)=>{
+                if(res?.message){
+                    setModal(true);
+                    return setModalInfo({message:res.message});
+                }
+               window.location.reload()  
+            })
+    }
+    const loadData = () => {
+        apiResponse({},"user/get-users.php").then((res)=>{
+            setUsers(res);   
         })
-        .then((data)=>{ 
-            if(data.data?.message){
-                setModal(true);
-                return setModalInfo({message:data.data.message});
-            }
-           window.location.reload()        
+        apiResponse({},'access/get-list.php').then((res)=>{
+            setAccess(res)
         })
-        .catch((error)=>console.log(error)) 
     }
     useEffect(()=>{
-        let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token")
-        }
-        axios({
-            url: serverAddres("user/get-users.php") ,
-            method: "POST",
-            header : {'Content-Type': 'application/json;charset=utf-8'},
-            data : JSON.stringify(obj),
-        })
-        .then((data)=>{ 
-            setUsers(data.data);      
-        })
-        .catch((error)=>console.log(error)) 
-    },[])
+        loadData();
+    },[]);
 
-    const UsersData = ({user, index})=>{
+    const selectAccess = (user_id, access_id) => {
+        apiResponse({
+            user_id,
+            access_id
+        },"access/set-user-access.php").then((res)=>{
+            loadData();  
+        })
+    }
+    const UsersData = ({user, index, accessName})=>{
         return (
                 <div className={`set__users__data__line ${index%2 == 0 ? "arc" : ""}`}>
                     <div className={`set__user__wr ${user.active == "true" ? "arc":""}`}>
-                        <div className="set__user__name"><a href={`/user?${user.id}`}>{user.userName}</a></div>
-                        <div className="set__user__type"><span>{user.phone}</span></div>
+                        <div>
+                            <div className="set__user__name"><a href={`/user?${user.id}`}>{user.userName}</a></div>
+                            <div className=""><span>{user.phone}</span></div>
+
+                        </div>
+                        
+                            <Select
+                                value={user.access ? user.access : 0} 
+                                onChange={(e)=>{
+                                    selectAccess(user.id, e.target.value)
+                                }}
+                            >
+                                <MenuItem value={0}>{"Права не встановлено"}</MenuItem>
+                                {
+                                    access.map((item)=>{
+                                        return <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
+                                    })    
+                                }
+                            </Select>
                     </div>
                     
                     <div className="set__user__control__panel">
                         <div className={`set__user__control__panel__icons ${user.active == "true" ? "arc":""}`}>
                             <img id="deleteImg" src={deleteImg} alt="" />
                             {<img id="bookImg" src={bookImg} alt="" onClick={()=>{
+                                return;
                                if(user.id == localStorage.getItem("id") || user?.type == "root"){
                                 setModal(true); 
                                 setModalInfo({message: "Ви не можете змінювати права доступу для цього користувача"})
@@ -80,6 +93,7 @@ const SetUser = ({categories,categoriesCont})=>{
                                
                             }} />}
                             {user.active == "true" ? <img id="showImg" src={showImg} alt="" onClick={()=>{
+                                
                                 if(user.id == localStorage.getItem("id") || user?.type == "root"){
                                     setModal(true); 
                                     setModalInfo({message: "Ви не можете деактивувати даний обліковий запис"})
@@ -105,12 +119,7 @@ const SetUser = ({categories,categoriesCont})=>{
                 </div>
         )
     }
-    const UserMas = (pos)=>{
-        if(pos.length < 1) return;
-                usersStr =  pos.map((post,index)=>{
-                return <UsersData key={index} user={post} index={index}/>
-        })  
-    }    
+   
     function changeSpecification(arg){
       
         setSpecificate(arg)
@@ -129,7 +138,7 @@ const SetUser = ({categories,categoriesCont})=>{
                         <div className="set__users__data__title">
                             <div className="set__users__data__title__text">
                                 <div><span>ПІБ</span></div>
-                                <div><span>Телефон</span></div>              
+                                <div><span>Шаблон прав</span></div>              
                             </div>
 
                             <div className="set__users__data__title__panel">
@@ -137,8 +146,17 @@ const SetUser = ({categories,categoriesCont})=>{
                             </div>
                         </div>
                         <div className="set__users__data__lines">
-                            {UserMas(users)}
-                            {usersStr}
+                            {
+                                users.map((post,index)=>{
+                                    let accessName = ""
+                                    access.forEach((item)=>{
+                                        if (item.id == post.access) {
+                                            accessName = item.name;
+                                        }
+                                    })
+                                return <UsersData key={index} user={post} index={index} accessName={accessName}/>
+                                })  
+                            }
                         </div>
                     </div>
                 </div>

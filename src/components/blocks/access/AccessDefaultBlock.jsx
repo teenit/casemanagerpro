@@ -1,30 +1,77 @@
-import React, { useState } from "react";
-import { appConfig } from "../../../services/config";
+import React, { useEffect, useState } from "react";
+import { LANG, appConfig } from "../../../services/config";
+import Checkbox from '@mui/material/Checkbox';
+import { Switch } from "@mui/material";
 
 const AccessDefaultBlock = (props) => {
-    const [state, setState] = useState({
-        type: props.type,
-        accesses: props.accesses
-    })
+    const [state, setState] = useState(props)
    const access = appConfig.newAccess[state.type]
-
+    useEffect(()=>{
+        setState(props)
+    },[props])
     return (
         <div className="AccessDefaultBlock">
+            <hr />
             <div className="AccessDefaultBlock-container">
-                <div className="line">
-                    <div className="title">Назва</div>
+                {
+                    access.yes_no.map((item)=>{
+                        return(
+                            <div className="line-yes" key={item}>
+                                <div className="title">{LANG.access[item]}</div>
+                                <Switch checked={!!state.accesses[item]} onChange={(e)=>{
+                                    if (e.target.checked) {
+                                        state.changeAccess(1, item);
+                                    } else {
+                                        state.changeAccess(0, item);
+                                    }
+                                }}/>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+            <div className="AccessDefaultBlock-container">
+                {access.view_edit.length > 0 &&<div className="line">
+                    <div className="title"></div>
                     <div className="show">Відображати</div>
                     <div className="edit">Редагувати</div>
-                </div>
+                </div>}
                 {
-                    Object.values(access).map((item)=>{
-                        console.log(item)
-                        
+                    access.view_edit.map((item)=>{
+                        return (
+                            <div key={item} className="line">
+                                <div className="title">{LANG.access[item]}</div>
+                                <div className="show">
+                                    <Checkbox 
+                                    checked={state.accesses[item] == 1 || state.accesses[item] == 2}
+                                    onChange={(e)=>{
+                                        if (e.target.checked && state.accesses[item] !== 2) {
+                                            state.changeAccess(1, item);
+                                        } 
+                                        if (!e.target.checked && state.accesses[item] == 2) return;
+                                        if (!e.target.checked && state.accesses[item] !== 2) {
+                                            state.changeAccess(0, item);
+                                        }
+                                        
+                                    }}/>
+                                </div>
+                                <div className="edit">
+                                    <Checkbox 
+                                        checked={state.accesses[item] == 2}
+                                        onChange={(e)=>{
+                                            if (e.target.checked) {
+                                                state.changeAccess(2, item);
+                                            } else {
+                                                state.changeAccess(0, item);
+                                            }       
+                                    }}/>
+                                </div>
+                            </div>
+                        )
                     })
                 }
 
             </div>
-            <button onClick={()=>console.log(access, state)}>000000</button>
         </div>
     )
 }

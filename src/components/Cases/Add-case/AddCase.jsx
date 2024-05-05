@@ -12,7 +12,6 @@ const AddCase = ()=>{
     const send = async(data)=>{  
         data.userId = localStorage.getItem("id");
         data.token = localStorage.getItem("token");
-       // return console.log(data);
             axios({
                 url: serverAddres("add-first-case.php"),
                 method: "POST",
@@ -20,7 +19,6 @@ const AddCase = ()=>{
                 data : JSON.stringify(data),
             })
             .then((data)=>{ 
-               // return console.log(data.data)
                 if(data.data?.message) return alert(data.data.message)  
                 setToCase({
                     link:"/case?"+ data.data,
@@ -84,7 +82,6 @@ const AddCase = ()=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-           console.log(data.data)
            setCategoriesCase(data.data.mas);       
         })
         .catch((error)=>console.log(error)) 
@@ -100,7 +97,6 @@ const AddCase = ()=>{
             <div className="add__case__item__inner__category__item">
                 <input className="checkbox__category" type="checkbox"
                     onChange={(e)=>{
-                        console.log(addObj)
                         addObj.categories[index] = {
                             value: category.value,
                             text: category.text,
@@ -134,7 +130,7 @@ const AddCase = ()=>{
                             <input type="text" id="surname" name="surname"
                             onChange={(e)=>{
                                 setAddObj({...addObj,surname:e.target.value})
-                                console.log(e.target.value)
+                                
                             }} />
                         </div>
                     </div>
@@ -144,7 +140,7 @@ const AddCase = ()=>{
                             <input type="text" id="firstName" name="firstName"
                             onChange={(e)=>{
                                 setAddObj({...addObj,firstName:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -154,7 +150,7 @@ const AddCase = ()=>{
                             <input type="text" id="secondName" name="secondName"
                             onChange={(e)=>{
                                 setAddObj({...addObj,secondName:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -168,7 +164,7 @@ const AddCase = ()=>{
                             <input type="text" id="phone1" name="phone1"
                             onChange={(e)=>{
                                 setAddObj({...addObj,phone1:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -178,7 +174,7 @@ const AddCase = ()=>{
                             <input type="text" id="phone2" name="phone2"
                             onChange={(e)=>{
                                 setAddObj({...addObj,phone2:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -188,7 +184,7 @@ const AddCase = ()=>{
                             <input type="text" id="email" name="email"
                             onChange={(e)=>{
                                 setAddObj({...addObj,email:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -220,7 +216,7 @@ const AddCase = ()=>{
                             <textarea name="addressPropiska" id="addressPropiska" cols="30" rows="10"
                             onChange={(e)=>{
                                 setAddObj({...addObj,addressPropiska:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}></textarea>
                         </div>
                     </div>
@@ -230,7 +226,7 @@ const AddCase = ()=>{
                             <textarea name="addressLive" id="addressLive" cols="30" rows="10"
                             onChange={(e)=>{
                                 setAddObj({...addObj,addressLive:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}></textarea>
                         </div>
                     </div>
@@ -244,7 +240,7 @@ const AddCase = ()=>{
                             <input type="text" id="chanelComunity" name="chanelComunity" 
                             onChange={(e)=>{
                                 setAddObj({...addObj,chanelComunity:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/> 
                         </div>
                     </div>
@@ -254,7 +250,7 @@ const AddCase = ()=>{
                             <input type="date" id="firstContact" name="firstContact" 
                             onChange={(e)=>{
                                 setAddObj({...addObj,firstContact:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}/>
                         </div>
                     </div>
@@ -269,7 +265,7 @@ const AddCase = ()=>{
                             <textarea name="potreba" id="potreba" cols="30" rows="10"
                             onChange={(e)=>{
                                 setAddObj({...addObj,familyStan:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}></textarea>
                         </div>
                     </div>
@@ -284,7 +280,7 @@ const AddCase = ()=>{
                             <textarea id="familyStan" name="familyStan" cols="30" rows="10"
                             onChange={(e)=>{
                                 setAddObj({...addObj,familyStan:e.target.value})
-                                console.log(e.target.value)
+                                
                             }} ></textarea>
                         </div>
                     </div>
@@ -298,7 +294,7 @@ const AddCase = ()=>{
                             <textarea id="familyHistory" name="familyHistory" cols="30" rows="10"
                             onChange={(e)=>{
                                 setAddObj({...addObj,familyHistory:e.target.value})
-                                console.log(e.target.value)
+                                
                             }} ></textarea>
                         </div>
                     </div>
@@ -323,7 +319,7 @@ const AddCase = ()=>{
                                 <input type="date" name="dateDogovir" id="dateDogovir" 
                                 onChange={(e)=>{
                                     setAddObj({...addObj,dateDogovir:e.target.value})
-                                    console.log(e.target.value)
+                                    
                                 }}/>
                             </div>
                             <div className="add__case__item__inner__input__item">
@@ -331,7 +327,7 @@ const AddCase = ()=>{
                                 <input type="text" name="numberDogovir" id="numberDogovir" 
                                 onChange={(e)=>{
                                     setAddObj({...addObj,numberDogovir:e.target.value})
-                                    console.log(e.target.value)
+                                    
                                 }}/>
                             </div>
                         </div>
@@ -346,7 +342,7 @@ const AddCase = ()=>{
                             <textarea name="commentar" id="commentar" cols="30" rows="10"
                             onChange={(e)=>{
                                 setAddObj({...addObj,commentar:e.target.value})
-                                console.log(e.target.value)
+                                
                             }}></textarea>
                         </div>
                     </div>

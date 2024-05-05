@@ -15,7 +15,6 @@ const Card = (props)=>{
         )
     }
     const CategoriesMas = ({pos})=>{
-        console.log(Array.isArray(pos))
         if(!Array.isArray(pos) || pos == false) return;
         categoriesStr =  pos.map((post,index)=>{
         return <CategoriesData key={index} category={post} index={index}/>
