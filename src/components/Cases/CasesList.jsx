@@ -12,13 +12,13 @@ const handlerPrint = useReactToPrint({
     content: ()=>componentRef.current,
     pageStyle:pageStyle
 })
+    console.log(cases)
     return(
         <>
         <div className={s.wrap} ref={componentRef}>
             <table >
                 <thead>
                     <tr className={s.tr}>
-                        <td>№</td>
                         <td>№ кейсу</td>
                         <td>ПІБ</td>
                         <td>Телефон</td>
@@ -35,14 +35,13 @@ const handlerPrint = useReactToPrint({
                     return(
                        
                             <tr key={item.id} className={s.item}>
-                                <td>{index + 1}</td>
                                 <td>{item.id}</td>
-                                <td>{`${item.surname} ${item.firstName} ${item.secondName}`}</td>
+                                <td>{item.name}</td>
                                 <td>{`${item.phone1} ${item.phone2}`}</td>
                                 <td>{item.email}</td>
-                                <td style={{whiteSpace:"nowrap"}}>{item.happybd}</td>
+                                <td style={{whiteSpace:"nowrap"}}></td>
                                 <td><span dangerouslySetInnerHTML={{__html:item.addressLive}} /></td>
-                                <td>{
+                                <td>{item.categories &&
                                         item.categories.map((cat,ind)=>{
                                             return(
                                                 <span key={cat.value}>{cat.text} </span>

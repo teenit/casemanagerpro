@@ -33,7 +33,21 @@ const CaseShortInfo = ({ info, changeGeneral, changeData }) => {
         channel: info.data.channel,
         categories: info.data.categories
     });
-
+    useEffect(()=>{
+        setDataState({
+            phone1: info.general.phone1,
+            phone2: info.general.phone2,
+            email: info.general.email,
+            address_live: info.data.address_live,
+            date_created: info.general.date_created,
+            contract: {
+                date: info.data.contract_date,
+                number: info.data.contract_number
+            },
+            channel: info.data.channel,
+            categories: info.data.categories
+        });
+    },[info])
     // State for edit status
     const [editState, setEditState] = useState({
         phone1: false,

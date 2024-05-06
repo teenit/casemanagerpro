@@ -11,13 +11,17 @@ import { serverAddres } from "../../Functions/serverAddres";
 const SearchMenu = ()=>{
     const [active, setActive] = useState(false);
     const [load,setLoad] = useState(false);
-    const [results,setResults] = useState(null)
+    const [results,setResults] = useState(null);
+    const [searchStr, setSearchStr] = useState("")
     return(
         <div className={active ? `${s.search__wrap} ${s.active}` : s.search__wrap}>
             <div className={active ? `${s.search__inner} ${s.active}` : s.search__inner}>
                 <input className={s.search__inp} type="text" 
                 onChange={(val)=>{
-                    search(serverAddres("case/search.php"),val.target.value.trim(),setLoad,setResults)
+                    if (val.target.value.trim().length > 0) {
+                        search(serverAddres("case/search.php"),val.target.value.trim(),setLoad,setResults)
+                    }
+                    setSearchStr(val.target.value.trim());
                 }}/>
             </div>
             {load && active? 
@@ -26,7 +30,7 @@ const SearchMenu = ()=>{
                 setActive(!active)
             }} />}
             
-            {results && active ? <div className={s.results}>
+            {results && active && searchStr ? <div className={s.results}>
                 <SearchResult elems = {results} close = {()=>{
                 setActive(!active)}}/>
             </div>:null}

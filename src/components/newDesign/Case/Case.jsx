@@ -33,7 +33,6 @@ const Case = () => {
     const dispatch = useDispatch();
   const categories = useSelector(state => state.categories);
   const loading = useSelector(state => state.loading);
-console.log(categories)
     const [page, setPage] = useState({
         loading: true,
         cases: false,
@@ -55,7 +54,7 @@ console.log(categories)
     }
     useEffect(() => {
         getCaseInfo();
-    }, [])
+    }, [case_id])
     const handleDataChange = (key, value) => {
         setState({ ...state, data: { ...state.data, [key]: value } })
         apiResponse({[key]: value, case_id:case_id}, "case/update-case-data.php").then((data)=>{

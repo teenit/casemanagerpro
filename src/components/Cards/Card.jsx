@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {NavLink} from 'react-router-dom';
+import defaultImg from './../../img/default_profile.png';
 import './cards.css';
 let categoriesStr = "";
 
@@ -26,7 +27,7 @@ const Card = (props)=>{
         <div className="card">
             <div className="card__img">
                 <div className="card__img__img">
-                    <img src={`${ props.info.imgUrl}`} alt="" />
+                    <img src={`${ props.info.profileImg ? props.info.profileImg.link : defaultImg}`} alt="" />
                 </div>
                 <div className="card__categories">
                     <div className="card__categories__inner">
@@ -37,7 +38,7 @@ const Card = (props)=>{
             </div>
             <div className="card__info">
                 <div className="card__case__name">
-                    <h2><NavLink to={"/case?" + props.info.id}>{`${props.info.surname} ${props.info.firstName} ${props.info.secondName}`}</NavLink></h2>
+                    <h2><NavLink to={"/case/" + props.info.id}>{`${props.info.name}`}</NavLink></h2>
                 </div>
                 <div className="card__description">
                     <div className="card__description__phones">
@@ -53,7 +54,7 @@ const Card = (props)=>{
                 </div>
                 <div className="card__info__status">
                     <div>
-                        {props.info.numberDogovir.length > 0?<p>№ <b>{props.info.numberDogovir}</b></p>:""}
+                        {/* {props.info.numberDogovir.length > 0?<p>№ <b>{props.info.numberDogovir}</b></p>:""} */}
                     </div>
                     <div className="card__info__status__date">
                         <p>{props.info.createdDate}</p>

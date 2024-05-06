@@ -2,29 +2,39 @@
 require_once '../config.php';
 
 $data = json_decode(file_get_contents('php://input'));
-$val = $data->val;
 
-$msql = "SELECT * FROM cases";
-//$case = mysqli_query($conn, $msql);
+// Рядок пошуку
+$search = '%' . $data->val . '%';
 
-$mas = [];
-$res = mysqli_query($conn, $msql);
-while($row = mysqli_fetch_assoc($res)) {
-    $contact = json_decode($row['contact']);
+// Підготовка запиту SQL
+$sql = "SELECT id, name FROM cases_new WHERE id LIKE ? OR name LIKE ?";
+$mas = array();
 
-if (strripos($contact->surname, $val) === false && strripos($contact->firstName, $val) === false && strripos($contact->secondName, $val) === false && strripos($contact->phone1, $val) === false && strripos($contact->phone2, $val) === false) {
- 
-}else{
-    $obj = new StdClass();
-    $obj->{'surname'} = $contact->surname;
-    $obj->{'firstName'} = $contact->firstName;
-    $obj->{'secondName'} = $contact->secondName;
-    $obj->{'phone1'} = $contact->phone1;
-    $obj->{'phone2'} = $contact->phone2;
-    $obj->{'id'} = $row['id'];
-    $mas[] = $obj;
+// Підготовка і виконання підготовленого запиту
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ss", $search, $search);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Виведення результатів
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Додавання результатів до масиву
+        $mas[] = $row;
+    }
+    // Виведення успішної відповіді
+    echo json_encode([
+        "status" => true,
+        "mas" => $mas
+    ]);
+} else {
+    // Виведення неуспішної відповіді
+    echo json_encode([
+        "status" => false,
+        "mas" => $mas
+    ]);
 }
-}
 
-
-echo json_encode($mas); 
+// Закриття підключення до бази даних
+$conn->close();
+?>

@@ -2,7 +2,6 @@ import React from "react";
 import Login from "../Auth/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AddCase from '../Cases/Add-case/AddCase';
-import Cases from "../Cases/Cases";
 import Registration from "../Auth/Registration";
 import Home from "../Home/Home";
 import User from "../User/User";
@@ -22,6 +21,7 @@ import AccessPageRight from "../pages/AccessPageRight";
 import TestPage from "../pages/TestPage";
 import AddCaseForm from "../Cases/newDesign/AddCaseForm";
 import Case from "../newDesign/Case/Case";
+import Cases from "../newDesign/Cases/Cases";
 
 const localToken = localStorage.getItem("token");
 

@@ -24,12 +24,10 @@ const PlanElem = ({ plan }) => {
         setState({ ...state, editPlan: true })
     }
     const saveHandler = () => {
-        console.log(state)
         apiResponse({
             ...state,
             plan_id: state.id
         }, "case/update-plan-task.php").then((res) => {
-            console.log(res)
             setState({ ...state, editPlan: false })
         })
 
