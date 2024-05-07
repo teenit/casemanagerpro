@@ -10,13 +10,14 @@ const Card = (props)=>{
     const CategoriesData = ({category, index})=>{
         
         return (
-        <div className="category__circle" title={category.text} style={{backgroundColor: category.color}}>
+            <div></div>
+        // <div className="category__circle" title={category.text} style={{backgroundColor: category.color}}>
 
-        </div>
+        // </div>
         )
     }
     const CategoriesMas = ({pos})=>{
-        if(!Array.isArray(pos) || pos == false) return;
+        if(!Array.isArray(pos) || pos == false || pos == null) return;
         categoriesStr =  pos.map((post,index)=>{
         return <CategoriesData key={index} category={post} index={index}/>
         })  

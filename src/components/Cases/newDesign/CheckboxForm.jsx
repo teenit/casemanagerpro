@@ -11,28 +11,29 @@ import CommentIcon from '@mui/icons-material/Comment';
 export default function CheckboxForm({allMas, checkedMas, onChange}) {
   const [checked, setChecked] = useState([]);
   const [allMasElements, setAllMasElements] = useState([]);
-console.log(allMas);
   useEffect(() => {
-    setChecked(checkedMas);
+    setChecked([...checkedMas]);
   }, [checkedMas]);
 
   useEffect(() => {
-    setAllMasElements(allMas);
+    setAllMasElements([...allMas]);
   }, [allMas]);
 
   const handleToggle = (value) => () => {
-    const checkIndex = allMasElements.findIndex(item => item.value === value.value);
+    const checkIndex = allMasElements.findIndex(item => item.id === value.id);
     const isChecked = checked.includes(checkIndex);
+    console.log(checkIndex)
   
     const newChecked = isChecked ? checked.filter(index => index !== checkIndex) : [...checked, checkIndex]
     newChecked.sort((a, b) => a - b)
     setChecked(newChecked);
+    console.log(newChecked)
     onChange(newChecked);
   };
   
   
   const checkChecked = (value) => {
-    const checkIndex = allMasElements.findIndex(item => item.value === value.value)
+    const checkIndex = allMasElements.findIndex(item => item.id === value.id)
     return checked.includes(checkIndex);
   };
   
@@ -42,7 +43,7 @@ console.log(allMas);
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {allMasElements.map((item,index) => {
           const labelId = `checkbox-list-label-${item.id + 1}`;
-          return (
+            return (
             <ListItem
               key={index}
               // secondaryAction={
@@ -54,7 +55,7 @@ console.log(allMas);
             >
               
               <ListItemButton role={undefined} onClick={handleToggle(item)} dense>
-              <ListItemText id={labelId} primary={item.text} />
+              <ListItemText id={labelId} primary={item.name} />
                  <Checkbox
                     edge="start"
                     checked={checkChecked(item)}

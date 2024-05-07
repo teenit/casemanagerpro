@@ -7,23 +7,28 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import { useSelector } from "react-redux";
 import Textarea from "../../elements/Inputs/Textarea"
 import { Button } from "@mui/material";
-const checkedMas = []
+import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
+import { useNavigate } from "react-router-dom";
 const AddCaseForm = () => {
+    const navigate = useNavigate();
     const options = []
     const [alert, setAlert] = useState(false)
     const [errorAlert, setErrorAlert] = useState({
         status:false,
         text:""
     })
+    const categories = useSelector(state => state.categories.case);
+    console.log(categories)
     const [state, setState] = useState({
         general: true
     })
-    const [categories,setCategories] = useState(null)
-    useEffect(() => {
-        apiResponse({}, "manage/get-categories-case.php").then((res) => {
-            setCategories([...res.mas]);
-        });
-    }, []);
+    // const [categories,setCategories] = useState(null)
+    // useEffect(() => {
+    //     apiResponse({}, "manage/get-categories-case.php").then((res) => {
+    //         setCategories([...res.mas]);
+    //     });
+    // }, []);
+    const [checkedMas, setCheckedMas] = useState([])
     const [stateGeneral, setStateGeneral] = useState({
         first_name: "",
         middle_name: "",
@@ -47,13 +52,24 @@ const AddCaseForm = () => {
         family_info: "",
         history: ""
     })
-    const handleCheckboxChange = (val) => {
-        let categories = val.map(item => item.id);
-        setStateData(prevState => ({
-            ...prevState,
-            categories: categories
-        }));
-    };
+    // const handleCheckboxChange = (val) => {
+    //     setStateData(prevState => ({
+    //         ...prevState,
+    //         categories: val
+    //     }));
+    // };
+
+    const handleCheckboxChange = (value, options) => {
+        let categories = [];
+        if (options.includes(value)) {
+          categories = options.filter(element => element !== value);
+          
+        } else {
+          categories = [...options, value];
+        }
+       // setState({...state, [key]:{...state[key], value: value}})
+        setCheckedMas([...categories])
+      };
 
 
     const [switchData, setSwitchData] = useState({
@@ -83,17 +99,15 @@ const AddCaseForm = () => {
         })
     }
     function sendData() {
-        apiResponse({ ...stateData }, "case/insert-case-info.php").then(data => {
-            console.log(data)
+        if (checkedMas.length == 0) return setErrorAlert({...errorAlert,status:true,text:"Виберіть хоча б одну категорію кейсу"});
+        apiResponse({ ...stateData, categories: categories }, "case/insert-case-info.php").then(data => {
+            navigate("/case/" + stateData.case_id)
         })
         setAlert(true)
     }
     function saveHandler() {
-        if (stateData.categories.length > 0) {
-            sendData()
-        } else {
-           setErrorAlert({...errorAlert,status:true,text:"Виберіть хоча б одну категорію кейсу"})
-        }
+        
+        sendData()
     }
 
     return (
@@ -101,8 +115,8 @@ const AddCaseForm = () => {
             <h1>Додати кейс</h1>
             {switchData.general ?
                 <div className="AddCaseForm-inner">
-                    <div className="AddCaseForm-inner-line-three">
-                        <div>
+                    <div className="AddCaseForm-inner-line-three w100">
+                        <div >
                             <p>Ім'я <span className="required">*</span></p>
                             <Input
                                 value={stateGeneral.first_name}
@@ -130,7 +144,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                     </div>
-                    <div className="AddCaseForm-inner-line-two">
+                    <div className="AddCaseForm-inner-line-two w100">
                         <div>
                             <p>Номер телефону 1</p>
                             <Input
@@ -153,7 +167,7 @@ const AddCaseForm = () => {
                         </div>
                     </div>
 
-                    <div className="AddCaseForm-inner-line-two">
+                    <div className="AddCaseForm-inner-line-two w100">
                         <div>
                             <p>Електронна пошта</p>
                             <Input
@@ -178,8 +192,8 @@ const AddCaseForm = () => {
                 </div>
                 :
                 <div className="AddCaseForm-inner">
-                    <div className="AddCaseForm-inner-line-three">
-                        <div>
+                    <div className="AddCaseForm-inner-line-three w100">
+                        <div className="w100">
                             <p>Місце проживання по прописці</p>
                             <Input
                                 value={stateData.address_registered}
@@ -188,7 +202,7 @@ const AddCaseForm = () => {
                                 }}
                             />
                         </div>
-                        <div>
+                        <div className="w100">
                             <p>Фактичне місце проживання</p>
                             <Input
                                 value={stateData.address_live}
@@ -197,7 +211,7 @@ const AddCaseForm = () => {
                                 }}
                             />
                         </div>
-                        <div>
+                        <div className="w100">
                             <p>Канал комунікації</p>
                             <Input
                                 value={stateData.channel}
@@ -207,8 +221,8 @@ const AddCaseForm = () => {
                             />
                         </div>
                     </div>
-                    <div className="AddCaseForm-inner-line-three">
-                        <div>
+                    <div className="AddCaseForm-inner-line-three w100">
+                        <div className="w100">
                             <p>Дата першого контакту</p>
                             <Input
                                 type="date"
@@ -218,7 +232,7 @@ const AddCaseForm = () => {
                                 }}
                             />
                         </div>
-                        <div>
+                        <div className="w100">
                             <p>Дата укладення договору</p>
                             <Input
                                 type="date"
@@ -228,7 +242,7 @@ const AddCaseForm = () => {
                                 }}
                             />
                         </div>
-                        <div>
+                        <div className="w100">
                             <p>Номер договору</p>
                             <Input
                                 type="number"
@@ -240,7 +254,7 @@ const AddCaseForm = () => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className="w100">
                         <p>Потреба, запит</p>
                         <Textarea rows={10} cols={70}
                             value={stateData.potreba}
@@ -250,7 +264,7 @@ const AddCaseForm = () => {
                         />
                     </div>
 
-                    <div>
+                    <div className="w100">
                         <p>Сімейний стан, деталі про сім'ю, її склад</p>
                         <Textarea rows={10} cols={70}
                             value={stateData.family_info}
@@ -259,7 +273,7 @@ const AddCaseForm = () => {
                             }}
                         />
                     </div>
-                    <div>
+                    <div className="w100">
                         <p>Історія сім'ї / особи</p>
                         <Textarea rows={10} cols={70}
                             value={stateData.history}
@@ -268,19 +282,25 @@ const AddCaseForm = () => {
                             }}
                         />
                     </div>
-                    <div>
-                        <div>
+                    <div className="w100">
+
                             <p>Категорія кейсу<span className="required">*</span></p>
-                            <CheckboxForm allMas={categories} checkedMas={checkedMas} onChange={(value) => handleCheckboxChange(value)} />
-                        </div>
+                            {/* <CheckboxForm allMas={categories} checkedMas={checkedMas} onChange={(value) => handleCheckboxChange(value)} /> */}
+                            <CheckboxListAccess
+                                allMas={()=>{return categories}} 
+                                checkedMas={checkedMas}
+                                onChange={(value)=>{
+                                    handleCheckboxChange(value, checkedMas)}}
+                            />
+                        
 
                     </div>
-                    <div>
+                    <div className="w100">
                         <p>Коментар</p>
                         <Textarea rows={10} cols={70}
                             value={stateData.comment}
                             onChange={(e) => {
-                                changeHandlerData("comment", changeApsBr(e.target.value))
+                                changeHandlerData("comment", e.target.value)
                             }}
                         />
                     </div>
