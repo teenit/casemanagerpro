@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../elements/Inputs/Input";
 import { changeAps, changeApsBr } from "../../Functions/translateString";
 import { apiResponse } from '../../Functions/get_apiObj'
 import CheckboxForm from "./CheckboxForm";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import { useSelector } from "react-redux";
+import Textarea from "../../elements/Inputs/Textarea"
+import { Button } from "@mui/material";
 const checkedMas = []
 const AddCaseForm = () => {
     const options = []
     const [alert, setAlert] = useState(false)
+    const [errorAlert, setErrorAlert] = useState({
+        status:false,
+        text:""
+    })
     const [state, setState] = useState({
         general: true
     })
-    const caseCategories = useSelector(state => state.categories["case"]);
+    const [categories,setCategories] = useState(null)
+    useEffect(() => {
+        apiResponse({}, "manage/get-categories-case.php").then((res) => {
+            setCategories([...res.mas]);
+        });
+    }, []);
     const [stateGeneral, setStateGeneral] = useState({
         first_name: "",
         middle_name: "",
@@ -36,9 +47,12 @@ const AddCaseForm = () => {
         family_info: "",
         history: ""
     })
-    const handleCheckboxChange = (value, options) => {
-        let categories = value.map(item => item.id);
-        setStateData({ ...stateData, categories: categories })
+    const handleCheckboxChange = (val) => {
+        let categories = val.map(item => item.id);
+        setStateData(prevState => ({
+            ...prevState,
+            categories: categories
+        }));
     };
 
 
@@ -57,7 +71,7 @@ const AddCaseForm = () => {
             sendGeneral()
 
         } else {
-            alert("Будь ласка, введіть ім'я кейсу")
+            setErrorAlert({...alert,status:true,text:"Будь ласка, введіть ім'я кейсу"})
         }
     }
     function sendGeneral() {
@@ -78,7 +92,7 @@ const AddCaseForm = () => {
         if (stateData.categories.length > 0) {
             sendData()
         } else {
-            alert("Виберіть хоча б одну категорію кейсу")
+           setErrorAlert({...errorAlert,status:true,text:"Виберіть хоча б одну категорію кейсу"})
         }
     }
 
@@ -160,7 +174,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                     </div>
-                    <button className="primary__btn" onClick={handleSubmit}>Зберегти</button>
+                    <Button variant="contained" onClick={handleSubmit}>Зберегти</Button>
                 </div>
                 :
                 <div className="AddCaseForm-inner">
@@ -228,7 +242,7 @@ const AddCaseForm = () => {
 
                     <div>
                         <p>Потреба, запит</p>
-                        <textarea rows={10} cols={70}
+                        <Textarea rows={10} cols={70}
                             value={stateData.potreba}
                             onChange={(e) => {
                                 changeHandlerData("potreba", changeApsBr(e.target.value))
@@ -238,7 +252,7 @@ const AddCaseForm = () => {
 
                     <div>
                         <p>Сімейний стан, деталі про сім'ю, її склад</p>
-                        <textarea rows={10} cols={70}
+                        <Textarea rows={10} cols={70}
                             value={stateData.family_info}
                             onChange={(e) => {
                                 changeHandlerData("family_info", changeApsBr(e.target.value))
@@ -247,7 +261,7 @@ const AddCaseForm = () => {
                     </div>
                     <div>
                         <p>Історія сім'ї / особи</p>
-                        <textarea rows={10} cols={70}
+                        <Textarea rows={10} cols={70}
                             value={stateData.history}
                             onChange={(e) => {
                                 changeHandlerData("history", changeApsBr(e.target.value))
@@ -257,26 +271,31 @@ const AddCaseForm = () => {
                     <div>
                         <div>
                             <p>Категорія кейсу<span className="required">*</span></p>
-                            <CheckboxForm allMas={caseCategories} checkedMas={checkedMas} onChange={(value) => handleCheckboxChange(value, caseCategories)} />
+                            <CheckboxForm allMas={categories} checkedMas={checkedMas} onChange={(value) => handleCheckboxChange(value)} />
                         </div>
 
                     </div>
                     <div>
                         <p>Коментар</p>
-                        <textarea rows={10} cols={70}
+                        <Textarea rows={10} cols={70}
                             value={stateData.comment}
                             onChange={(e) => {
                                 changeHandlerData("comment", changeApsBr(e.target.value))
                             }}
                         />
                     </div>
-                    <button className="primary__btn" onClick={saveHandler}>Зберегти</button>
+                    <Button variant="contained" onClick={saveHandler}>Зберегти</Button>
                 </div>
             }
             {alert &&
                 <SmallNotification isSuccess={true} text="Дані збережено успішно" close={() => {
                         setAlert(false);
-                        console.log(alert);
+                    }}
+                />
+            }
+            {errorAlert.status &&
+                <SmallNotification isSuccess={false} text={errorAlert.text} close={() => {
+                        setErrorAlert({...alert,status:false})
                     }}
                 />
             }

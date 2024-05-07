@@ -76,9 +76,13 @@
     gap: 15px;
 }
 .add__form__f__line{
-    display: grid;
-    grid-template-columns: 1fr 40px;
+    display: flex;
+    align-items: center;
     gap: 10px;
+}
+.add__form__color{
+    width: 50px;
+    border-radius: 15px;
 }
 .add__form{
     width: 75%;
@@ -87,10 +91,7 @@
     flex-direction: column;
     gap: 10px;
 }
-.add__form textarea{
-    border: solid 3px var(--main-color);
-    width: 100%;
-}
+
 .add__title{
     display: flex;
     align-items: center;
