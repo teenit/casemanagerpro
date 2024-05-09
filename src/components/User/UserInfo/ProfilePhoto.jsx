@@ -10,84 +10,186 @@ import { ReactComponent as User } from "../../../img/icons/user.svg";
 import { removeUser } from "../../../store/Slices/userSlice";
 import { useDispatch } from "react-redux";
 import Input from '../../elements/Inputs/Input'
-const ProfilePhoto = ({ url, userName, email,changePass,phone }) => {
+import editImg from "../../../img/icons/edit.svg"
+import DoneIcon from '@mui/icons-material/Done';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import SmallNotification from "../../elements/Notifications/SmallNotification";
+import { Button } from "@mui/material";
+import { LANG } from "../../../services/config";
+import Modal from "../../Modals/Modal"
+import FilesUploader from "../../elements/Uploaders/FilesUploader";
+import PhotoUploader from "../../elements/Uploaders/PhotoUploader";
+const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
+  const [pass, setPass] = useState({
+    olderPass: "",
+    newPass: "",
+    newPassTo: "",
+    changeError: ""
+  })
   const [loading, setLoading] = useState("");
-  const [olderPass, setOlderPass] = useState("");
-  const [newPass, setNewPass] = useState("");
-  const [newPassTo, setNewPassTo] = useState("");
-  const [changeError, setChangeError] = useState("");
+  const [modal, setModal] = useState(false)
+  const [alert, setAlert] = useState({
+    success: false,
+    error: false,
+    errorPass: false
+  })
+  const [data, setData] = useState({
+    phone: {
+      edit: false,
+      value: ""
+    },
+    email: {
+      edit: false,
+      value: ""
+    }
+  })
+  useEffect(() => {
+    setData({
+      phone: {
+        edit: false,
+        value: phone
+      },
+      email: {
+        edit: false,
+        value: email
+      }
+    })
+  }, [phone, email])
+
   const dispatch = useDispatch();
   let passObj = {
     id: localStorage.getItem("id"),
     token: localStorage.getItem("token"),
-    pass: newPass,
-    olderPass: olderPass
+    pass: pass.newPass,
+    olderPass: pass.olderPass
   };
+  const hadnlePassObjChange = (key, value) => {
+    setPass(prevPass => ({ ...prevPass, [key]: value }))
+  }
+  const handleAlertChange = (key) => {
+    setAlert((prevAlert) => ({ ...prevAlert, [key]: !prevAlert[key] }))
+  }
+  const handleChangeEdit = (key) => {
+    setData((prevData) => ({
+      ...prevData,
+      [key]: { ...prevData[key], originalValue: prevData[key].value, edit: !prevData[key].edit }
+    }))
+  }
+  const handleChangeValue = (key, value) => {
+    setData((prevData) => ({
+      ...prevData,
+      [key]: { ...prevData[key], value: value }
+    }))
+  }
+  const handleSaveData = (key, value) => {
+    const originalValue = data[key].originalValue
+    if (value !== originalValue) {
+      handleAlertChange("success")
+    } else {
+      handleAlertChange("error")
+    }
+  };
+  const checkPass = () => {
+    if (pass.newPass !== pass.newPassTo) {
+      hadnlePassObjChange("changeError", "Паролі не збігаються")
+      handleAlertChange("errorPass")
+      return;
+    } else if (pass.newPass.length < 6) {
+      hadnlePassObjChange("changeError", "Довжина паролю повинна бути більше 6 символів")
+      handleAlertChange("errorPass")
 
-  const changePic = (data) => {
-    const formCaseEdit = document.getElementById(data);
-    const formData = new FormData();
-    let imagefile = document.getElementById("uploadbtn");
-    // return console.log(imagefile.files[0])
-    formData.append("image", imagefile.files[0]);
-    formData.append("id", window.location.search.slice(1));
-    formData.append("key", "user");
+      return;
+    }
     axios({
-      url: serverAddres("upload-case-img.php"),
+      url: serverAddres("user/change-pass.php"),
       method: "POST",
-      header: { "Content-Type": "multipart/form-data" },
-      data: formData,
-      onUploadProgress: (event) => {
-        setLoading("active");
-        console.log(Math.round((event.loaded * 100) / event.total));
-      },
+      header: { "Content-Type": "application/json;charset=utf-8" },
+      data: JSON.stringify(passObj),
     })
       .then((data) => {
-        localStorage.setItem("profilePhoto", data.data);
-        // return console.log(data.data)
-        window.location.reload();
-        setLoading("");
+        alert(data.data.message);
+        dispatch(removeUser())
+
       })
       .catch((error) => console.log(error));
-  };
+  }
+  // const changePic = (data) => {
+  //   const formCaseEdit = document.getElementById(data);
+  //   const formData = new FormData();
+  //   let imagefile = document.getElementById("uploadbtn");
+  //   // return console.log(imagefile.files[0])
+  //   formData.append("image", imagefile.files[0]);
+  //   formData.append("id", window.location.search.slice(1));
+  //   formData.append("key", "user");
+  //   axios({
+  //     url: serverAddres("upload-case-img.php"),
+  //     method: "POST",
+  //     header: { "Content-Type": "multipart/form-data" },
+  //     data: formData,
+  //     onUploadProgress: (event) => {
+  //       setLoading("active");
+  //       console.log(Math.round((event.loaded * 100) / event.total));
+  //     },
+  //   })
+  //     .then((data) => {
+  //       localStorage.setItem("profilePhoto", data.data);
+  //       // return console.log(data.data)
+  //       window.location.reload();
+  //       setLoading("");
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
   return (
     <div className="case__contact__info__img">
       <div className="case__contact__info__img__left">
-      <div className="case__contact__info__img__inner">
-        <img src={`${url}`} alt="" />
-        <Loadpic show={loading} />
-        {changePass ? <form id="caseImgEdit">
-          <label htmlFor="uploadbtn" className="case__edit__img">
-            Змінити
-          </label>
-          <Input
-            onChangeCapture={() => {
-              changePic("caseImgEdit");
-            }}
-            multiple
-            id="uploadbtn"
-            type="file"
-            name="uploadbtn"
-          />
-        </form>:""}
-      </div>
-      <div className="user_info">
-        <h1 className="user_info_name">{userName}</h1>
-        <div className="user_info_phone">
-          <Phone
-            width="20"
-            height="20"
-          />
-          {phone}
+        <div className="case__contact__info__img__inner">
+          <img src={`${url}`} alt="Фото профілю" />
+          <Loadpic show={loading} />
+          {changePass ? <form id="caseImgEdit">
+            <Button variant="contained" onClick={() => { setModal(true) }}>Завантажити фото</Button>
+          </form> : ""}
         </div>
-        <div className="user_info_mail">
-          <Email
-            width="20"
-            height="20"
-          />
-          {email}
+
+        <div className="user_info">
+          <h1 className="user_info_name">{userName}</h1>
+          {data.phone.edit ?
+            <div className="user_info_phone">
+              <Input type="number" onChange={(e) => { handleChangeValue("phone", e.target.value) }} label="Номер телефону" value={data.phone.value} />
+              <DoneIcon width="20" height="20" onClick={() => {
+                handleChangeEdit("phone")
+                handleSaveData("phone", data.phone.value)
+              }} />
+            </div>
+            :
+            <div className="user_info_phone">
+              <Phone
+                width="20"
+                height="20"
+              />
+              {data.phone.value}
+              <ModeEditIcon width="20" height="20" onClick={() => { handleChangeEdit("phone") }} />
+            </div>
+          }
+
+          {data.email.edit ?
+            <div className="user_info_phone">
+              <Input onChange={(e) => { handleChangeValue("email", e.target.value) }} label="Email" value={data.email.value} />
+              <DoneIcon width="20" height="20" onClick={() => {
+                handleChangeEdit("email")
+                handleSaveData("email", data.email.value)
+              }} />
+            </div>
+            :
+            <div className="user_info_phone">
+              <Email
+                width="20"
+                height="20"
+              />
+              {data.email.value}
+              <ModeEditIcon width="20" height="20" onClick={() => { handleChangeEdit("email") }} />
+            </div>
+          }
         </div>
-      </div>
       </div>
       {changePass ? <div className="change_password">
         <p>Змінити пароль</p>
@@ -96,64 +198,45 @@ const ProfilePhoto = ({ url, userName, email,changePass,phone }) => {
             label="Введіть старий пароль"
             type="password"
             id="change__pass__older"
-            value={olderPass}
+            value={pass.olderPass}
             onChange={(e) => {
-              setOlderPass(e.target.value);
+              hadnlePassObjChange("olderPass", e.target.value)
             }}
           />
           <Input
-          label="Введіть новий пароль"
+            label="Введіть новий пароль"
             type="password"
             id="change__pass"
-            value={newPass}
+            value={pass.newPass}
             onChange={(e) => {
-              setNewPass(e.target.value);
+              hadnlePassObjChange("newPass", e.target.value)
             }}
           />
           <Input
-          label="Повторіть пароль"
+            label="Повторіть пароль"
             type="password"
             id="change__passto"
-            value={newPassTo}
+            value={pass.newPassTo}
             onChange={(e) => {
-              setNewPassTo(e.target.value);
+              hadnlePassObjChange("newPassTo", e.target.value)
             }}
           />
-          <div className="error__changeovery">
-            <p>{changeError}</p>
-          </div>
           <div>
-            <button
-              className="primary__btn"
-              onClick={() => {
-                if (newPass !== newPassTo) {
-                  setChangeError("Паролі не збігаються");
-                  return;
-                } else if (newPass.length < 6) {
-                  setChangeError(
-                    "Довжина паролю повинна бути більше 6 символів"
-                  );
-                  return;
-                }
-                axios({
-                  url: serverAddres("user/change-pass.php"),
-                  method: "POST",
-                  header: { "Content-Type": "application/json;charset=utf-8" },
-                  data: JSON.stringify(passObj),
-                })
-                  .then((data) => {
-                    alert(data.data.message);
-                    dispatch(removeUser())
-                    
-                  })
-                  .catch((error) => console.log(error));
-              }}
-            >
-              Надіслати запит
-            </button>
+            <Button variant="contained" onClick={checkPass}>Надіслати запит</Button>
           </div>
         </div>
-      </div>:""}
+
+      </div> : ""}
+      {modal && <Modal header="Змінити фотографію" closeHandler={() => { setModal(false) }}>
+        <PhotoUploader close={() => { setModal(false) }} multiple={false} meta={{
+          key: "user_img_profile",
+          case_id: 11,
+          type: "user"
+        }} />
+      </Modal>}
+      {alert.success && <SmallNotification isSuccess={true} text={"Дані успішно оновлено"} close={() => { handleAlertChange("success") }} />}
+      {alert.error && <SmallNotification isSuccess={false} text="Нові дані повинні відрізнятися від старих" close={() => { handleAlertChange("error") }} />}
+      {alert.errorPass && <SmallNotification isSuccess={false} text={pass.changeError} close={() => { handleAlertChange("errorPass") }} />}
     </div>
   );
 };
