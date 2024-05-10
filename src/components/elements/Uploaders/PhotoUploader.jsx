@@ -66,17 +66,19 @@ function PhotoUploader({ multiple = true, successHandler = () => {}, meta = null
 
     const metaObject = { ...meta };
     formData.append('meta', JSON.stringify(metaObject));
-
+    console.log(meta)
     axios({
       url: serverAddres("upload-files.php"),
       method: "POST",
       headers: { 'Content-Type': 'multipart/form-data' },
       data: formData,
       onUploadProgress: event => {
+        console.log(formData)
         console.log(Math.round(event.loaded * 100 / event.total))
       }
     })
       .then((response) => {
+        console.log(response)
         setSelectedFiles([])
         successHandler(response.data)
       })

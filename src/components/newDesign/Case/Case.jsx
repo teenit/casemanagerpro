@@ -67,6 +67,7 @@ const Case = () => {
             console.log(data)
         })
     }
+    console.log(state)
     return state && state.general ? (
         <div className="case__wrap">
             <div className="set__case__ico">
@@ -91,7 +92,10 @@ const Case = () => {
 
 
             <div className="case__contact__info">
-                    {state.meta?.profileImg?.link && <CaseProfilePhoto profileImg={state.meta.profileImg.link} case_id={case_id}/>}
+                    {state.meta?.profileImg?.link ? 
+                    <CaseProfilePhoto profileImg={state.meta.profileImg.link.link} getCaseInfo={getCaseInfo} case_id={case_id}/>
+                    :
+                    <CaseProfilePhoto profileImg={null} getCaseInfo={getCaseInfo} case_id={case_id}/>}
                 <div>
                     <CaseShortInfo info={state} changeData = {(key,value)=>{handleDataChange(key,value)}} changeGeneral = {(key,value)=>{handleGeneralChange(key,value)}} />
                     <GetConnections id={state.general.id} />

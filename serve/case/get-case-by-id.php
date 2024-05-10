@@ -39,7 +39,7 @@ try {
                 break;
             case 'case_profile_img':
                 $obj = new stdClass();
-                $obj->{'link'} = $row_case_meta['meta_value'];
+                $obj->{'link'} = json_decode($row_case_meta['meta_value']);
                 $obj->{'meta_id'} = $row_case_meta['meta_id'];
                 $case_meta_obj->{'profileImg'} = $obj;
                 break;
