@@ -23,39 +23,49 @@ import CloseIcon from '@mui/icons-material/Close';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useSelector } from "react-redux";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
-
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 const ICONS = {
-    phone:PhoneAndroidIcon,
-    social:socialImg,
-    giving:givingImg,
+    phone: PhoneAndroidIcon,
+    social: socialImg,
+    giving: givingImg,
     email: emailImg,
     address: addressImg,
     date: dateImg,
     dateCreated: dateCreatedImg,
     categories: categoriesImg,
     channel: channelImg,
-    contact: contractImg,
+    contract: contractImg,
     edit: edit,
     save: save,
 }
 
-const Icons = ({icon}) => {
+const Icons = ({ icon }) => {
     let ico = "";
     switch (icon) {
-        case "phone" :
-           ico = <PhoneAndroidIcon />
+        case "phone":
+            ico = <PhoneAndroidIcon />
             break;
-        case "email" :
+        case "email":
             ico = <MailOutline />
             break;
-        case "location" :
+        case "location":
             ico = <LocationOnIcon />
+            break;
+        case "channel":
+            ico = <NotificationsIcon />
+            break;
+        case "contract_date":
+            ico = <AssignmentIcon />
+            break;
+        case "contract_number":
+            ico = <AssignmentIcon />
             break;
     }
     return (
         <>
             {
-               ico
+                ico
             }
         </>
     )
@@ -72,29 +82,25 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         email: info.general.email,
         address_live: info.data.address_live,
         date_created: info.general.date_created,
-        contract: {
-            date: info.data.contract_date,
-            number: info.data.contract_number
-        },
+        contract_date: info.data.contract_date,
+        contract_number: info.data.contract__date,
         channel: info.data.channel,
         categories: info.data.categories
     });
-    useEffect(()=>{
+    useEffect(() => {
         setDataState({
             phone1: info.general.phone1,
             phone2: info.general.phone2,
             email: info.general.email,
             address_live: info.data.address_live,
             date_created: info.general.date_created,
-            contract: {
-                date: info.data.contract_date,
-                number: info.data.contract_number
-            },
+            contract_date: info.data.contract_date,
+            contract_number: info.data.contract__date,
             channel: info.data.channel,
             categories: info.data.categories
         });
         setCheckedMas([...info.data.categories])
-    },[info])
+    }, [info])
     // State for edit status
     const [editState, setEditState] = useState({
         phone1: false,
@@ -115,15 +121,6 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         setEditState(prevState => ({ ...prevState, [key]: !prevState[key] }));
     };
 
-    const handleContractChange = (key, val) => {
-        setDataState(prevState => ({
-            ...prevState,
-            contract: {
-                ...prevState.contract,
-                [key]: val
-            }
-        }));
-    };
 
     const saveHandler = (key, value, type) => {
         const originalValue = type === "general" ? info.general[key] : info.data[key];
@@ -132,11 +129,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
             if (type === "general") {
                 changeGeneral(key, value);
             } else if (type === "data") {
-                if (key !== "contract") {
-                    changeData(key, value);
-                } else {
-                    changeData(key, { date: value.date, number: value.number });
-                }
+                changeData(key, value);
             }
             handleEditChange(key);
             setAlert(true);
@@ -148,43 +141,43 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
     const handleCheckboxChange = (value, options) => {
         let categories = [];
         if (options.includes(value)) {
-          categories = options.filter(element => element !== value);
-          
+            categories = options.filter(element => element !== value);
+
         } else {
-          categories = [...options, value];
+            categories = [...options, value];
         }
         setCheckedMas([...categories]);
-        setDataState({...dataState, categories: [...categories]});
-      };
+        setDataState({ ...dataState, categories: [...categories] });
+    };
 
-    const InputBlock = ({saveHandler, disabled = false,inputType = "text", value = "", onChange, link = null, title="", icon = null, label = ""}) => {
+    const InputBlock = ({ saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "" }) => {
         const [showEdit, setShowEdit] = useState(false)
         const [stateValue, setStateValue] = useState(value)
         return (
             <div className="InputBlock">
-                 {!showEdit &&<div className="InputBlock-default">
-                        {icon && <Icons icon={icon}/>}
-                        
-                        <div className="case-info-card-text">
-                            
-                            <div title={title}>
-                                {link ? <NavLink to={link}>{label}</NavLink>: label}
-                            </div>
-                          
+                {!showEdit && <div className="InputBlock-default">
+                    {icon && <Icons icon={icon} />}
+
+                    <div className="case-info-card-text">
+
+                        <div title={title}>
+                            {link ? <NavLink to={link}>{label}</NavLink> : label}
                         </div>
-                        {!disabled && <Edit className="edit-icon" onClick={()=>{setShowEdit(true)}}/>}
+
+                    </div>
+                    {!disabled && <Edit className="edit-icon" onClick={() => { setShowEdit(true) }} />}
                 </div>}
                 {showEdit && <div className="InputBlock-editer">
                     <div className="InputBlock-editer-withicon">
-                        {icon && <Icons icon={icon}/>}
-                        <Input type={inputType} value={stateValue} onChange={(e)=>{
+                        {icon && <Icons icon={icon} />}
+                        <Input type={inputType} value={stateValue} onChange={(e) => {
                             setStateValue(e.target.value)
                         }} />
                     </div>
-                    
+
                     <div>
-                        <CheckIcon onClick={()=>{saveHandler(stateValue)}}/>
-                        <CloseIcon onClick={()=>{setShowEdit(false)}}/>
+                        <CheckIcon onClick={() => { saveHandler(stateValue) }} />
+                        <CloseIcon onClick={() => { setShowEdit(false) }} />
                     </div>
                 </div>
 
@@ -197,7 +190,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         <div className="CaseInfoBlock">
             <div className="CaseInfoBlock-inner">
                 <div className="CaseInfoBlock-line">
-                    <InputBlock 
+                    <InputBlock
                         value={info.general.name}
                         // onChange={(e) => { handleDataChange("phone1", e.target.value) }}
                         title={info.general.name}
@@ -209,7 +202,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
-                    <InputBlock 
+                    <InputBlock
                         value={dataState.phone1}
                         onChange={(e) => { handleDataChange("phone1", e.target.value) }}
                         link={`tel:${dataState.phone1}`}
@@ -217,11 +210,11 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         icon={"phone"}
                         label={dataState.phone1}
                         inputType={"number"}
-                        saveHandler = {(val)=>saveHandler("phone1", val, "general")}
+                        saveHandler={(val) => saveHandler("phone1", val, "general")}
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
-                    <InputBlock 
+                    <InputBlock
                         value={dataState.phone2}
                         onChange={(e) => { handleDataChange("phone2", e.target.value) }}
                         link={`tel:${dataState.phone2}`}
@@ -229,11 +222,11 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         icon={"phone"}
                         label={dataState.phone2}
                         inputType={"number"}
-                        saveHandler = {(val)=>saveHandler("phone2", val, "general")}
+                        saveHandler={(val) => saveHandler("phone2", val, "general")}
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
-                    <InputBlock 
+                    <InputBlock
                         value={dataState.email}
                         onChange={(e) => { handleDataChange("email", e.target.value) }}
                         link={`mailto:${dataState.email}`}
@@ -241,29 +234,29 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         icon={"email"}
                         label={dataState.email}
                         inputType={"text"}
-                        saveHandler = {(val)=>saveHandler("email", val, "general")}
+                        saveHandler={(val) => saveHandler("email", val, "general")}
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
-                    <InputBlock 
+                    <InputBlock
                         value={dataState.address_live}
                         onChange={(e) => { handleDataChange("address_live", e.target.value) }}
                         title="Адреса проживання"
                         icon={"location"}
                         label={dataState.address_live}
                         inputType={"text"}
-                        saveHandler = {(val)=>saveHandler("address_live", val, "data")}
+                        saveHandler={(val) => saveHandler("address_live", val, "data")}
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
-                    <InputBlock 
+                    <InputBlock
                         value={dataState.address_registered}
                         onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
                         title="Адреса реєстрації"
                         icon={"location"}
                         label={dataState.address_registered}
                         inputType={"text"}
-                        saveHandler = {(val)=>saveHandler("address_registered", val, "data")}
+                        saveHandler={(val) => saveHandler("address_registered", val, "data")}
                     />
                 </div>
             </div>
@@ -279,56 +272,44 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         </div>
                     </span>
                 </div>
-                {(dataState.contract.date || dataState.contract.number) &&
-                    <div className="case-info-right-card">
-                        <span>
-                            <div className="case-info-card-img">
-                                <img src={contractImg} alt="" />
-                            </div>
-                            <div className="case-info-card-text">
-                                <span>Договір</span>
-                                {editState.contract ?
-                                    <div className="case-info-card-contract">
-                                        <Input type="date" value={dataState.contract.date} onChange={(e) => { handleContractChange("date", e.target.value) }} />
-                                        <p>№</p>
-                                        <Input type="number" value={dataState.contract.number} onChange={(e) => { handleContractChange("number", e.target.value) }} />
-                                    </div>
-                                    :
-                                    <div>
-                                        <p>{dataState.contract.date} № {dataState.contract.number}</p>
-                                    </div>
-                                }
-                            </div>
-                        </span>
-                        <div className="case-info-card-img" >
-                            {editState.contract ? <img src={save} alt="Зберегти" onClick={() => { saveHandler("contract", dataState.contract.date, "data") }} />
-                                :
-                                <img src={edit} alt="Редагувати" onClick={(() => { handleEditChange("contract") })} />
-                            }
-                        </div>
-                    </div>
-                }
-                {dataState.channel && <div className="case-info-right-card">
-                    <span>
-                        <div className="case-info-card-img">
-                            <img src={channelImg} alt="" />
-                        </div>
-                        <div className="case-info-card-text">
-                            <span>Канал комунікації</span>
-                            {editState.channel ?
-                                <Input type="text" value={dataState.channel} onChange={(e) => { handleDataChange("channel", e.target.value) }} />
-                                :
-                                <p title="Адреса">{dataState.channel}</p>
-                            }
-                        </div>
-                    </span>
-                    <div className="case-info-card-img" >
-                        {editState.channel ? <img src={save} alt="Зберегти" onClick={() => { saveHandler("channel", dataState.channel, "data") }} />
-                            :
-                            <img src={edit} alt="Редагувати" onClick={(() => { handleEditChange("channel") })} />
-                        }
-                    </div>
-                </div>}
+
+                <div className="case-info-right-card">
+                    <span>Дата створення контракту</span>
+                    <InputBlock
+                        value={dataState.contract_date}
+                        onChange={(e) => { handleDataChange("contract__date", e.target.value) }}
+                        title="Дата створення контракту"
+                        icon={"contract_date"}
+                        label={dataState.contract_date}
+                        inputType={"date"}
+                        saveHandler={(val) => saveHandler("contract__date", val, "data")}
+                    />
+                </div>
+                <div className="case-info-right-card">
+                    <span>Номер контракту</span>
+                    <InputBlock
+                        value={dataState.contract_number}
+                        onChange={(e) => { handleDataChange("contract__number", e.target.value) }}
+                        title="Номер контракту"
+                        icon={"contract_number"}
+                        label={dataState.contract_number}
+                        inputType={"number"}
+                        saveHandler={(val) => saveHandler("contract__number", val, "data")}
+                    />
+                </div>
+                <div className="case-info-right-card">
+                    <span>Канал комунікації</span>
+                    <InputBlock
+                        value={dataState.channel}
+                        onChange={(e) => { handleDataChange("channel", e.target.value) }}
+                        title="Канал комунікації"
+                        icon={"channel"}
+                        label={dataState.channel}
+                        inputType={"text"}
+                        saveHandler={(val) => saveHandler("channel", val, "data")}
+                    />
+                </div>
+
 
                 <div className="case-info-right-card">
                     <span>
@@ -340,37 +321,36 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                             {!editState.categories ?
                                 (categories && categories.length > 0 && info.data.categories && info.data.categories.length > 0 && categories.map((item, index) => {
                                     if (info.data.categories.indexOf(item.id) !== -1) return <p key={item.id}>{item.name}</p>
-                                    
+
                                 }))
                                 :
                                 <CheckboxListAccess
-                                    allMas={()=>{return categories}} 
+                                    allMas={() => { return categories }}
                                     checkedMas={checkedMas}
-                                    onChange={(value)=>{
-                                        handleCheckboxChange(value, checkedMas)}}
+                                    onChange={(value) => {
+                                        handleCheckboxChange(value, checkedMas)
+                                    }}
                                 />
-                               // (<CheckboxForm allMas={categories} checkedMas={info.data.categories} onChange={(value) => { handleCheckboxChange(value) }} />)
+                                // (<CheckboxForm allMas={categories} checkedMas={info.data.categories} onChange={(value) => { handleCheckboxChange(value) }} />)
                             }
+                        </div>
+                        <div className="case-info-card-img" >
+                            {editState.categories ?
+                                <>
+                                    <CheckIcon onClick={() => { saveHandler("categories", dataState.categories, "data") }} />
+                                    <CloseIcon onClick={() => { handleEditChange("categories") }} />
+                                </>
+
+                                :
+                                <>
+                                    <Edit className="edit-icon" onClick={() => { handleEditChange("categories") }} />
 
 
-
+                                </>
+                            }
                         </div>
                     </span>
-                    <div className="case-info-card-img" >
-                        {editState.categories ? 
-                        <>
-                         <img src={save} alt="Зберегти" onClick={() => { saveHandler("categories", dataState.categories, "data") }} />
-                         <img src={edit} alt="Редагувати" onClick={(() => { handleEditChange("categories") })} />
-                        </>
-                       
-                            :
-                            <>
-                            <img src={edit} alt="Редагувати" onClick={(() => { handleEditChange("categories") })} />
-                            
-                            
-                            </>
-                        }
-                    </div>
+
                 </div>
             </div>
             {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => {

@@ -1,4 +1,12 @@
 .CaseInfoBlock {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 25px;
+    &-inner{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
     .InputBlock {
         &-default {
             display: flex;
