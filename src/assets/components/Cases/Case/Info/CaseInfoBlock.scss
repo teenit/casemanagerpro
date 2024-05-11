@@ -1,0 +1,34 @@
+.CaseInfoBlock {
+    .InputBlock {
+        &-default {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            &-icon {
+                width: 20px;
+                &-img {
+                    width: 100%;
+                }
+            }
+            .edit-icon {
+                opacity: 0;
+            }
+            &:hover {
+                background-color: $background-color;
+                .edit-icon {
+                    opacity: 1;
+                }
+            }
+        }
+        &-editer {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            &-withicon {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+        }
+    }
+}

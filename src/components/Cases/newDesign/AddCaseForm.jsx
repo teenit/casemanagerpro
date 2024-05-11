@@ -17,8 +17,7 @@ const AddCaseForm = () => {
         status:false,
         text:""
     })
-    const categories = useSelector(state => state.categories.case);
-    console.log(categories)
+    const categories = useSelector(state => state.categories.case);  
     const [state, setState] = useState({
         general: true
     })

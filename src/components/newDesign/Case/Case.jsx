@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Gallery from "./Gallery";
 import GiveHelp from "./GiveHelp";
 import Notes from "./Notes";
+import CaseInfoBlock from "./CaseInfoBlock";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -67,7 +68,6 @@ const Case = () => {
             console.log(data)
         })
     }
-    console.log(state)
     return state && state.general ? (
         <div className="case__wrap">
             <div className="set__case__ico">
@@ -97,7 +97,7 @@ const Case = () => {
                     :
                     <CaseProfilePhoto profileImg={null} getCaseInfo={getCaseInfo} case_id={case_id}/>}
                 <div>
-                    <CaseShortInfo info={state} changeData = {(key,value)=>{handleDataChange(key,value)}} changeGeneral = {(key,value)=>{handleGeneralChange(key,value)}} />
+                    <CaseInfoBlock info={state} changeData = {(key,value)=>{handleDataChange(key,value)}} changeGeneral = {(key,value)=>{handleGeneralChange(key,value)}} />
                     <GetConnections id={state.general.id} />
                 </div>
             </div>
