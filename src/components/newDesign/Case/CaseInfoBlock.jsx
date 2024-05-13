@@ -81,9 +81,10 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         phone2: info.general.phone2,
         email: info.general.email,
         address_live: info.data.address_live,
+        address_registered: info.data.address_registered,
         date_created: info.general.date_created,
         contract_date: info.data.contract_date,
-        contract_number: info.data.contract__date,
+        contract_number: info.data.contract_number,
         channel: info.data.channel,
         categories: info.data.categories
     });
@@ -93,9 +94,10 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
             phone2: info.general.phone2,
             email: info.general.email,
             address_live: info.data.address_live,
+            address_registered: info.data.address_registered,
             date_created: info.general.date_created,
             contract_date: info.data.contract_date,
-            contract_number: info.data.contract__date,
+            contract_number: info.data.contract_number,
             channel: info.data.channel,
             categories: info.data.categories
         });
@@ -107,6 +109,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         phone2: false,
         email: false,
         address_live: false,
+        address_registered: false,
         date_created: false,
         contract: false,
         channel: false,
@@ -202,6 +205,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
+                    <span>Номер телефону</span>
                     <InputBlock
                         value={dataState.phone1}
                         onChange={(e) => { handleDataChange("phone1", e.target.value) }}
@@ -214,6 +218,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
+                    <span>Номер телефону</span>
                     <InputBlock
                         value={dataState.phone2}
                         onChange={(e) => { handleDataChange("phone2", e.target.value) }}
@@ -226,6 +231,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
+                    <span>Поштова адреса</span>
                     <InputBlock
                         value={dataState.email}
                         onChange={(e) => { handleDataChange("email", e.target.value) }}
@@ -238,6 +244,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
+                    <span>Адреса проживання</span>
                     <InputBlock
                         value={dataState.address_live}
                         onChange={(e) => { handleDataChange("address_live", e.target.value) }}
@@ -249,6 +256,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
+                    <span>Адреса реєстрації</span>
                     <InputBlock
                         value={dataState.address_registered}
                         onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
@@ -274,27 +282,27 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                 </div>
 
                 <div className="case-info-right-card">
-                    <span>Дата створення контракту</span>
+                    <span>Дата укладання договіру</span>
                     <InputBlock
                         value={dataState.contract_date}
-                        onChange={(e) => { handleDataChange("contract__date", e.target.value) }}
+                        onChange={(e) => { handleDataChange("contract_date", e.target.value) }}
                         title="Дата створення контракту"
                         icon={"contract_date"}
                         label={dataState.contract_date}
                         inputType={"date"}
-                        saveHandler={(val) => saveHandler("contract__date", val, "data")}
+                        saveHandler={(val) => saveHandler("contract_date", val, "data")}
                     />
                 </div>
                 <div className="case-info-right-card">
-                    <span>Номер контракту</span>
+                    <span>Номер договіру</span>
                     <InputBlock
                         value={dataState.contract_number}
-                        onChange={(e) => { handleDataChange("contract__number", e.target.value) }}
+                        onChange={(e) => { handleDataChange("contract_number", e.target.value) }}
                         title="Номер контракту"
                         icon={"contract_number"}
                         label={dataState.contract_number}
                         inputType={"number"}
-                        saveHandler={(val) => saveHandler("contract__number", val, "data")}
+                        saveHandler={(val) => saveHandler("contract_number", val, "data")}
                     />
                 </div>
                 <div className="case-info-right-card">
@@ -320,7 +328,10 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                             <span>Категорії</span>
                             {!editState.categories ?
                                 (categories && categories.length > 0 && info.data.categories && info.data.categories.length > 0 && categories.map((item, index) => {
-                                    if (info.data.categories.indexOf(item.id) !== -1) return <p key={item.id}>{item.name}</p>
+                                    if (info.data.categories.indexOf(item.id) !== -1) return <div className="cat">
+                                        <div className="cat-color" style={{backgroundColor:item.color}}></div>
+                                        <div className="cat-text"><span key={item.id}> {item.name} </span></div>
+                                    </div>
 
                                 }))
                                 :
@@ -331,7 +342,6 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                                         handleCheckboxChange(value, checkedMas)
                                     }}
                                 />
-                                // (<CheckboxForm allMas={categories} checkedMas={info.data.categories} onChange={(value) => { handleCheckboxChange(value) }} />)
                             }
                         </div>
                         <div className="case-info-card-img" >
@@ -344,8 +354,6 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                                 :
                                 <>
                                     <Edit className="edit-icon" onClick={() => { handleEditChange("categories") }} />
-
-
                                 </>
                             }
                         </div>

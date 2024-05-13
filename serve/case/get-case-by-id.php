@@ -59,6 +59,24 @@ try {
     }
 
     // Отримання даних з таблиці case_plans
+    $sql_case_notes = "SELECT * FROM case_notes WHERE case_id = ?";
+    $stmt_case_notes = $conn->prepare($sql_case_notes);
+    $stmt_case_notes->bind_param("i", $case_id);
+    $stmt_case_notes->execute();
+    $result_case_notes = $stmt_case_notes->get_result();
+    $case_notes_data = [];
+
+    while ($row_case_notes = $result_case_notes->fetch_assoc()) {
+        $case_notes_data[] = [
+            "note_id"=>$row_case_notes["id"],
+            "text"=>$row_case_notes["text"],
+            "color"=>$row_case_notes["color"],
+            "user_id"=>$row_case_notes["user_id"],
+            "date_created"=>$row_case_notes["date_created"]
+        ];
+    }
+
+    // Отримання даних з таблиці case_plans
     $sql_case_helps = "SELECT * FROM case_helps WHERE case_id = ?";
     $stmt_case_helps = $conn->prepare($sql_case_helps);
     $stmt_case_helps->bind_param("i", $case_id);
@@ -119,7 +137,8 @@ try {
         'meta' => $case_meta_obj,
         'plans' => $case_plans_data,
         'helps' => $case_helps_data,
-        'data' => $cases_data
+        'data' => $cases_data,
+        'notes' => $case_notes_data,
     ];
 
     echo json_encode($response);

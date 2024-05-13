@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -14,37 +14,39 @@ import { changeApsBr } from "../../Functions/translateString";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import saveImg from "./../../../img/icons/save-50.png";
 import Input from "../../elements/Inputs/Input";
+import { apiResponse } from "../../Functions/get_apiObj";
 
 const Active = ({ elem, handleEdit }) => {
     const [edit,setEdit] = useState(false)
-    const [activeMessage,setActiveMessage] = useState(elem.mess)
-
+    const [activeMessage,setActiveMessage] = useState(elem.text)
+    const [activeColor,setActiveColor] = useState(elem.color)
     return (
         <div className="Notes-viewer-line">
             
             <div className="Notes-viewer-line-data">
                     <div className="Notes-viewer-line-data-title">
-                    <NavLink to={`/user?${elem.userId}`} >{elem.userName}</NavLink>
+                    <NavLink to={`/user?${elem.user_id}`} >{elem.userName}</NavLink>
                     </div>
-                        <span>{elem.date}</span>
+                        <span>{elem.date_created}</span>
             </div>
             <div className="Notes-viewer-line-mess">
                 {edit?
-                <Textarea value={activeMessage} label="Текст запису" onChange={(e)=>{setActiveMessage(e.target.value)}}/>
+                <div>
+                    <Input type="color" value={activeColor} onChange={(e)=>{setActiveColor(e.target.value)}}/>
+                    <Textarea value={activeMessage} label="Текст запису" onChange={(e)=>{setActiveMessage(e.target.value)}}/>
+                </div>
                 :
                 <p>{activeMessage}</p>
 
                 }
-               
                     <div className="Notes-viewer-line-mess-edit">
-                            {edit? <img src={saveImg} alt="Зберегти зміни" onClick={()=>{
-                                setEdit(false)
-                                handleEdit(activeMessage)
-                            }}/>
-                            :
-                            <img src={editImg} alt="Редагувати нотатки" onClick={()=>{setEdit(true)}}/>
-                            }
-                            
+                        {edit? <img src={saveImg} alt="Зберегти зміни" onClick={()=>{
+                            setEdit(false)
+                            handleEdit(activeMessage,activeColor, elem)
+                        }}/>
+                        :
+                        <img src={editImg} alt="Редагувати нотатки" onClick={()=>{setEdit(true)}}/>
+                        }
                 </div>
             </div>
 
@@ -52,38 +54,28 @@ const Active = ({ elem, handleEdit }) => {
     )
 }
 
-const Notes = ({ notes, level }) => {
+const Notes = ({ notes, case_id, getCaseInfo }) => {
     const [noteMessage,setNoteMessage] = useState("")
+    const [noteColor,setNoteColor] = useState("")
     const [alert,setAlert] = useState({
         success:false,
         error:false
     })
+    
     function addNote() {
-        let mess = changeApsBr(noteMessage)
-        if (mess == ""){
-            handleAlertChange("error")
-        }
-        let obj = {
-            caseId: window.location.search.slice(1),
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token"),
-            mess: mess,
-            userName: localStorage.getItem("userName")
-        }
-        console.log(obj)
-        axios({
-            url: serverAddres("case/add-note.php"),
-            method: "POST",
-            header: { 'Content-Type': 'application/json;charset=utf-8' },
-            data: JSON.stringify(obj),
+        apiResponse({text:noteMessage, color:noteColor, case_id:case_id},"case/create-note.php").then((res)=>{
+            if (res.status)  {handleAlertChange("success"); getCaseInfo();}
+            else {handleAlertChange("error");}
+            
         })
-        .then((response) => {
-            setActNote([...actNote, response.data[0]])
-            setNoteMessage("");
-        })
-        
-            .catch((error) => console.log(error))
     }
+
+    function updateNote(text, color, elem) {
+       apiResponse({ ...elem, text:text, color:color, case_id:case_id},"case/update-note.php").then((res)=>{
+        if (res.status)  {handleAlertChange("success"); getCaseInfo();}
+        else {handleAlertChange("error");}
+       })
+   }
  
     const handleAlertChange = (key)=>{
         setAlert({...alert,[key]:!alert[key]})
@@ -91,25 +83,18 @@ const Notes = ({ notes, level }) => {
     const [actNote, setActNote] = useState(notes);
     const [modal, setModal] = useState(false)
 
-    const handleEdit = (value)=>{
+    const handleEdit = (value, color, elem)=>{
         if(value.length < 1){
             setAlert({...alert, error: true})
         } else {
-            const updatedActNote = actNote.map((item, index) => {
-                if (value !== item.mess) {
-                    return {
-                        ...item,
-                        mess: value
-                    };
-                }
-                return item;
-            });
-            setActNote(updatedActNote);
+            updateNote(value,color,elem)
         }
     }
-    
+    useEffect(()=>{
+        setActNote([...notes])
+    },[notes])
     const active = actNote.map((elem, index) => {
-        return <Active key={index} elem={elem} handleEdit={(value)=>{handleEdit(value)}}  />
+        return <Active key={index} elem={elem} handleEdit={(value,color)=>{handleEdit(value, color, elem)}}  />
     })
     return (
         <div className="Notes">
@@ -129,10 +114,11 @@ const Notes = ({ notes, level }) => {
                 }}  variant="contained">{LANG.save}</Button>
             </div>}>
                 <div className="Notes-modal">
+                    <Input type="color" value={noteColor} onChange={(e)=>{setNoteColor(e.target.value)}}/>
                     <Textarea value={noteMessage} label="Текст запису" onChange={(e)=>{setNoteMessage(e.target.value)}}/>
                 </div>
                 </Modal>}
-            {alert.success && <SmallNotification isSuccess={false} text="Будь ласка, введіть ваше повідомлення" close={()=>{handleAlertChange("error")}}/>}
+            {alert.error && <SmallNotification isSuccess={false} text="Будь ласка, введіть ваше повідомлення" close={()=>{handleAlertChange("error")}}/>}
             {alert.success && <SmallNotification isSuccess={true} text="Запис додано" close={()=>{handleAlertChange("success")}}/>}
         </div>
     )

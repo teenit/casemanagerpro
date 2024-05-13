@@ -73,7 +73,7 @@ const AddCalEventForm = ({ date, close }) => {
 
     }
     return (
-        <Modal header={"Додати подію"} handleClose={close} footer={<div className="Modal--footer">
+        <Modal header={"Додати подію"} closeHandler={close} footer={<div className="Modal--footer">
             <Button onClick={close} color="error" variant="contained">{LANG.cancel}</Button>
             <Button onClick={sendForm} variant="contained">{LANG.save}</Button>
         </div>}>

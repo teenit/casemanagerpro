@@ -1,0 +1,90 @@
+.Help {
+    display: grid;
+    grid-template-rows: 50px calc(100% - 100px) 50px;
+    background-color: $background-color;
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    gap: 25px;
+    &-title {
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        img{
+            cursor: pointer;
+        }
+    }
+    .content {
+        overflow-y: auto;
+        max-height: 400px;
+
+    }
+    &-content {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+
+        &-element {
+            border-radius: 10px;
+            background-color: #fff;
+            border: solid 3px $second-color;
+            padding: 15px;
+            .str {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .str-date {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                
+                .dates {
+                    &-start {
+                        display: flex;
+                        font-weight: bold;
+                        gap: 25px;
+                    }
+                }
+                .controls {
+                    img {
+                        width: 20px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .bottom {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                &-date{
+                    color: #bababa;
+                }
+            }
+        }
+    }
+    &-create {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        &-date {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        &-status {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            align-items: center;
+            gap: 24px;
+        }
+    }
+    &-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+    }
+}

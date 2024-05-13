@@ -5,15 +5,15 @@ require_once '../config.php';
 $data = json_decode(file_get_contents('php://input'), true);
 
 // SQL запит для оновлення даних в таблиці
-$sql = "UPDATE case_helps 
-        SET date_time = ?, text = ?, who = ?, user_id = ?, category = ? 
+$sql = "UPDATE case_notes 
+        SET text = ?, user_id = ?, color = ? 
         WHERE id = ?";
 
 // Підготовка запиту
 $stmt = $conn->prepare($sql);
 
 // Прив'язка параметрів та виконання запиту
-$stmt->bind_param("sssssi", $data['date_time'],  $data['text'], $data['who'], $data['user_id'], $data['category'], $data['help_id']);
+$stmt->bind_param("sisi",  $data['text'], $data['user_id'], $data['color'], $data['note_id']);
 $stmt->execute();
 
 // Перевірка успішності запиту та виведення відповідного повідомлення

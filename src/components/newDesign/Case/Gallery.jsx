@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { LANG } from '../../../services/config';
+import Modal from '../../Modals/Modal';
+import OpenPhoto from '../../Galery/OpenPhoto';
+import { NavLink } from 'react-router-dom';
+import GetAppIcon from '@mui/icons-material/GetApp';
 
 const Gallery = ({ photos }) => {
     const [imgRows, setImgRows] = useState(0);
     const [imagesAndVideos, setImagesAndVideos] = useState([]);
     const [otherFiles, setOtherFiles] = useState([]);
-
+    const [openedPhoto, setOpenedPhoto] = useState({
+        url:"",
+        show:false
+    })
     const handleRowsChange = (value) => {
         setImgRows(value)
     };
@@ -47,41 +54,52 @@ const Gallery = ({ photos }) => {
 
     return (
         <div className='Gallery'>
-            <h1>{LANG.gallery}</h1>
-            <div className='Gallery-grid' style={{
-                gridTemplateRows: `repeat(${imgRows},1fr)`
-            }}>
-                {imagesAndVideos.map((item, index) => {
-                    return (
-                        <div className='Gallery-grid-img-wrap' key={index}>
-                            <img src={item.link} alt="Фотографія" />
-                        </div>
-                    );
-                })}
-            </div>
-            <h1>{LANG.documents}</h1>
-            <table className='Gallery-documents'>
-                <thead>
-                    <tr>
-                        <td>Назва</td>
-                        <td>Тип</td>
-                        <td>Розмір</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {otherFiles.map((item, index) => {
+            {imagesAndVideos.length > 0 ?<>
+                <h1>{LANG.gallery}</h1>
+                <div className='Gallery-grid' style={{
+                    gridTemplateRows: `repeat(${imgRows},1fr)`
+                }}>
+                    {imagesAndVideos.map((item, index) => {
                         return (
-                            <tr key={index}>
-                                <td>{item.name}</td>
-                                <td>{getType(item.type)}</td>
-                                <td>{convertSize(item.size)}</td>
-                            </tr>
+                            <div className='Gallery-grid-img-wrap' key={index}>
+                                <img onClick={()=>{setOpenedPhoto({url:item.link, show:true})}} src={item.link} alt="Фотографія" />
+                            </div>
                         );
                     })}
+                </div>
+            </>:null}
+            {otherFiles.length > 0 ?<>
+                <h1>{LANG.documents}</h1>
+                <table className='Gallery-documents'>
+                    <thead>
+                        <tr>
+                            <td>Назва</td>
+                            <td>Тип</td>
+                            <td>Розмір</td>
+                            <td>Завантажити</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {otherFiles.map((item, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{item.name}</td>
+                                    <td>{getType(item.type)}</td>
+                                    <td>{convertSize(item.size)}</td>
+                                    <td><NavLink download={true} to={item.link}><GetAppIcon/></NavLink></td>
+                                </tr>
+                            );
+                        })}
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+            </>:null}
+            
+            {
+                openedPhoto.show && <OpenPhoto url={openedPhoto.url} close={()=>{setOpenedPhoto({url:"", show:false})}}/>
+            }
+            
         </div>
     );
 };

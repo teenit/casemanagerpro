@@ -203,7 +203,6 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
                                 value={state.start_time}
                                 variant="standard"
                                 onChange={(e) => {
-                                    console.log(e.target.value)
                                     changeHandler("start_time", e.target.value)
                                 }}
                             />
@@ -213,7 +212,6 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
                                 value={state.end_time}
                                 variant="standard"
                                 onChange={(e) => {
-                                    console.log(e.target.value)
                                     changeHandler("end_time", e.target.value)
                                 }}
                             />
@@ -227,7 +225,6 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
                                 label={LANG.task_plan}
                                 value={state.value}
                                 onChange={(e) => {
-                                    console.log(e)
                                     changeHandler("value", e.target.value)
                                 }}
                             />

@@ -5,13 +5,6 @@ import FilesUploader from "../../elements/Uploaders/FilesUploader";
 import CasePhoto from "../../Cases/Case/Info/CasePhoto";
 import CaseShortInfo from "./Caseshortinfo";
 import GetConnections from "../../Cases/Case/Info/GetConnections";
-import JournalActive from "../../Cases/Case/Info/JournalActive";
-import PlanActive from "../../Cases/Case/Info/PlanActive";
-import CaseGiveHelp from "../../Cases/Case/Info/CaseGiveHelp";
-import Galery from "../../Galery/Galery";
-import PhotosForm from "../../Cases/Case/PhotosForm";
-import EditCaseInfo from "../../Cases/Case/Info/EditCaseInfo";
-import SetCase from "../../Cases/Case/Info/SetCase";
 import setImg from "../../../img/icons/settings-50-black.png";
 import editImg from "../../../img/icons/edit-48-black.png";
 import cameraImg from "../../../img/icons/camera-48-black.png";
@@ -29,6 +22,7 @@ import Gallery from "./Gallery";
 import GiveHelp from "./GiveHelp";
 import Notes from "./Notes";
 import CaseInfoBlock from "./CaseInfoBlock";
+import GiveHelps from "./GiveHelps";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -82,12 +76,6 @@ const Case = () => {
                             }} />
                     </div>}
                 <img src={cameraImg} alt="" />
-                
-                {/* {editActive && <EditCaseInfo caseInfo = {state.general} close = {()=>{
-                setEditActive(null)
-            }}/>} */}
-                {/* {openSetting ? <SetCase id={post.id} caseInfo={post.contact} level={post.level} close={() => { setOpenSetting(!openSetting) }} /> : null} */}
-
             </div>
 
 
@@ -104,23 +92,17 @@ const Case = () => {
 
             <div className="container__grid__two">
                 <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo}/>
-                <GiveHelp level={checkRight(post.level, "helpesCase")} />
+                <GiveHelps helps={state.helps} case_id={case_id} getCaseInfo={getCaseInfo} />
             </div>
             <div className="container__grid__two">
-                <Notes level={8} notes={[{
-                    mess:"test note",
-                    usedId:9,
-                    userName:"nameys",
-                    date:"12-56-2023",
-                    time:"14:45"
-                }]}/>
+                <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes}/>
             </div>
 
             {/* <div className="media__content__">
                 <Galery media={post.newPhotos} title="Медіа фото" />
             </div> */}
             {/* <PhotosForm photos = {post.photos} show = {post.level?.loadCaseFiles == true || post.level?.root == "true" ? true : false}/> */}
-                <Gallery photos = {state.meta.files}/>
+                {state?.meta?.files?.length ? <Gallery photos = {state.meta.files}/> : null}
             <FilesUploader multiple={false} meta={{
                 key: "case_files",
                 case_id: case_id,

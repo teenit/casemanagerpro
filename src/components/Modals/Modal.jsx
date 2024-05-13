@@ -2,7 +2,6 @@ import React from "react";
 import RootPortal from "../Portals/RootPortal";
 
 const Modal = (props) => {
-    console.log(props)
     const closeHandler = () =>{
         props.closeHandler();
     }

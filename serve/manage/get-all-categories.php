@@ -34,9 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $case[] = $row;
                 }
                 if ($row['category_key'] == 'case_helps') {
-                    $case_helps[] = $row;
+                    $case_helps[$row["id"]] = $row;
                 }
-                $rows[] = $row;
+                //$rows[$row["id"]] = $row;
             }
             $response['status'] = true;
             $response['message'] = "Записи знайдено";

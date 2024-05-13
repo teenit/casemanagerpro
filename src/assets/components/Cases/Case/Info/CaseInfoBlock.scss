@@ -7,6 +7,33 @@
         flex-direction: column;
         gap: 10px;
     }
+    .case-info-card-text {
+        .cat {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            padding: 5px 0px;
+            &-color {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+            }
+        }
+    }
+    .case-info-right {
+        &-card {
+            .case-info-card-img {
+                .edit-icon {
+                    opacity: 0;
+                }
+            }
+            :hover {
+                .edit-icon {
+                    opacity: 1;
+                }
+            }
+        }
+    }
     .InputBlock {
         &-default {
             display: flex;

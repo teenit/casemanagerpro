@@ -8,9 +8,7 @@ import { LANG, appConfig } from '../../../services/config';
 const SelectStatusPlan = ({ value = 0, onChange}) => {
   const [selectedValue, setSelectedValue] = useState(value || 0);
   const statuses = appConfig.statusPlan;
-  const test = ()=> {
-    Object.values(statuses).map(item=>console.log(item))
-  }
+
   const handleChange = (e, child) => {
     const value = e.target.value;
     setSelectedValue(value);

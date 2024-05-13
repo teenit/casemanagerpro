@@ -2,6 +2,7 @@ export const LANG = {
     GLOBAL:{
       save: "Зберегти",
       cancel: "Відмінити",
+      date: "Дата",
     },
     settings_to_page: "Налаштування до сторінки",
     access_users_pages: "Права користувачів (Сторінки)",
@@ -145,10 +146,14 @@ export const LANG = {
       accesses:"Шаблони прав",
     }, 
     documents:"Додані документи",
-    giveHelp:{
+    give_help:{
       title:"Надано допомогу",
-      addHelp: "Додати запис"
-    }
+      add_help: "Додати запис",
+      who_give_help: "Хто надав допомогу",
+      details_help: "Деталі наданої допомоги",
+      helping: "Надано допомогу",
+    },
+    
   };
 export const appConfig = {
     access:{
