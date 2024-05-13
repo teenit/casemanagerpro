@@ -19,10 +19,10 @@ import add from '../../../img/icons/add-media.png';
 import {apiResponse} from '../../Functions/get_apiObj'
 import defaultImg from "../../../img/default_profile.png";
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import { Button, Icon } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import SendIcon from '@mui/icons-material/Send';
-
+import Icon from "../Icons/Icon"
+import SmalNotification from "../Notifications/SmallNotification"
 const FORMAT = {
   pdf: { imgUrl: pdfImg },
   doc: { imgUrl: docImg },
@@ -43,10 +43,16 @@ function ext(name) {
   return name.match(/\.([^.]+)$|$/)[1];
 }
 
-function PhotoUploader({ multiple = true, successHandler = () => {}, meta = null, close = ()=>{} }) {
+function PhotoUploader({ multiple = true, successHandler = () => {}, meta = null, close = ()=>{}, previousImg}) {
+  const [alert,setAlert] = useState({
+    success:false,
+    error:false
+  })
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
-
+const handleAlertChange = (key)=>{
+  setAlert({...alert,[key]:!alert[key]})
+}
   const handleFileChange = (event) => {
     const files = event.target.files;
     console.log(files)
@@ -81,8 +87,12 @@ function PhotoUploader({ multiple = true, successHandler = () => {}, meta = null
         console.log(response)
         setSelectedFiles([])
         successHandler(response.data)
+        handleAlertChange("success")
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error)
+        handleAlertChange("error")
+      })
   };
 
 
@@ -95,22 +105,24 @@ const handleDelete = (index)=>{
   return (
     <div className="PhotoUploader">
        <div className="PhotoUploader-buttons">
-        <label htmlFor="PhotoUploader"><Icon component={AttachFileIcon}/></label>
+        <label className='label' htmlFor="PhotoUploader"><Icon icon={"attach_file"} addClass={"default-icon"}/></label>
         <input style={{ display: "none" }} id="PhotoUploader" multiple type="file" onChange={handleFileChange} />
-        <label htmlFor="submitInput" onClick={handleUpload}><Icon component={SendIcon}/></label>
+        <label className='label' htmlFor="submitInput" onClick={handleUpload}><Icon icon={"send"} addClass={"default-icon"}/></label>
         <input style={{ display: "none" }} type="submit" id="submitInput" />
-        <Close onClick={close} sx={{color:"red"}}/>
+        <label className='label' htmlFor="" onClick={close}><Icon icon={"close"} addClass={"close-icon"}/></label>
+        
         
       </div>
       <div className='PhotoUploader-img'>
         {
-          !selectedFiles.length && <img className='img' src={defaultImg}/>
+          !selectedFiles.length && <img className='img' src={previousImg}/>
         }
         {selectedFiles.map((file, index) => (
           <img key={index} className='img' src={URL.createObjectURL(file)}/>
         ))} 
       </div>
-     
+     {alert.success && <SmalNotification isSuccess={true} text={"Фвйли додано успішно"} close={()=>{handleAlertChange("success")}}/>}
+     {alert.error && <SmalNotification isSuccess={false} text={"Помилка при завантаженні файлів"} close={()=>{handleAlertChange("error")}}/>}
     </div>
   );
 }

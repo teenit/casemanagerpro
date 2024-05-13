@@ -14,6 +14,7 @@ import plus from "../../../img/icons/plus.svg"
 import SelectStatus from "../../elements/Selects/SelectStatus";
 import { useSelector } from "react-redux";
 import HelpElem from "./HelpElem";
+import Icon from "../../elements/Icons/Icon";
 
 
 
@@ -58,7 +59,9 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
         <div className="Help">
             <div className="Help-title">
                 <h2>{LANG.give_help.helping}</h2>
-                <img onClick={() => changeHandler("create", true)} src={plus} alt="Додати план" />
+                <span onClick={() => changeHandler("create", true)}>
+                    <Icon icon={"add"} addClass={"add-icon"}/>
+                </span>
             </div>
             <div className="content">
                 <div className="Help-content">
@@ -85,7 +88,7 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
                         <div className="Help-create-date">
                             <Input
                                 type="datetime-local"
-                                label={LANG.GLOBAL.date}
+                                // label={LANG.GLOBAL.date}
                                 value={state.date_time}
                                 variant="standard"
                                 onChange={(e) => {

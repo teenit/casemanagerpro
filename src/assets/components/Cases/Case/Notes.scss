@@ -14,6 +14,11 @@
             cursor: pointer;
         }
     }
+    &-modal{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
     &-viewer{
         max-height: 400px;
         overflow-y: scroll;
@@ -40,6 +45,11 @@
                     display: flex;
                     flex-direction: column;
                 }
+                &-color{
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 100%;
+                }
             }
             &-mess{
                 width: 100%;
@@ -49,6 +59,11 @@
                     img{
                         cursor: pointer;
                     }
+                }
+                &-input{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
                 }
             }
         }

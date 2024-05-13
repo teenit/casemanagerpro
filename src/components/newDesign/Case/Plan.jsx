@@ -15,6 +15,7 @@ import Modal from "../../Modals/Modal";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import { appConfig } from "../../../services/config";
 import plus from "../../../img/icons/plus.svg"
+import Icon from "../../elements/Icons/Icon";
 const PlanElem = ({ plan }) => {
     const [state, setState] = useState({
         ...plan,
@@ -80,9 +81,13 @@ const PlanElem = ({ plan }) => {
                         {
                             state.editPlan
                                 ?
-                                <img src={saveImg} onClick={saveHandler} />
+                                <span onClick={saveHandler}>
+                                    <Icon icon={"save"} addClass={"save-icon"} />
+                                </span>
                                 :
-                                <img src={editImg} onClick={editHandler} />
+                                <span onClick={editHandler}>
+                                    <Icon icon={"edit"} addClass={"default-icon"} />
+                                </span>
                         }
                     </div>
                 </div>
@@ -172,7 +177,9 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
         <div className="Plan">
             <div className="Plan-title">
                 <h2>{LANG.planing}</h2>
-                <img onClick={() => changeHandler("create", true)} src={plus} alt="Додати план" />
+                <span onClick={() => changeHandler("create", true)}>
+                    <Icon icon={"add"} addClass={"add-icon"} />
+                </span>
             </div>
             <div className="content">
                 <div className="Plan-content">

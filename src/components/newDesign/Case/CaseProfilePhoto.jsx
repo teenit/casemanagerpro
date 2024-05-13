@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PhotoUploader from "../../elements/Uploaders/PhotoUploader";
 import defaultImg from "./../../../img/default_profile.png";
 import { Edit } from "@mui/icons-material";
+import Icon from "../../elements/Icons/Icon";
 
 const CaseProfilePhoto = (props)=>{
 
@@ -17,7 +18,9 @@ const CaseProfilePhoto = (props)=>{
         <div className="CaseProfilePhoto">
             {
                 !edit.show ? <div>
-                    <Edit onClick={()=>{setEdit({show:true})}}/>
+                    <span onClick={()=>{setEdit({show:true})}}>
+                        <Icon icon={"edit"} addClass={"default-icon"}/>
+                    </span>
                     <img className="CaseProfilePhoto-img" src={state.profileImg ? state.profileImg : defaultImg }/>
                 </div>
                 : <PhotoUploader close={()=>setEdit({...edit, show: false})} successHandler={(data)=>{
@@ -27,7 +30,8 @@ const CaseProfilePhoto = (props)=>{
                     key: "case_profile_img",
                     case_id: state.case_id,
                     type: "case"
-                }} />
+                }} previousImg = {state.profileImg}
+                />
             }
             
              

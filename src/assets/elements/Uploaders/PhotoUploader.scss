@@ -1,7 +1,7 @@
 .PhotoUploader {
    display: flex;
    flex-direction: column;
-   height: 100%;
+   gap: 10px;
    &-img {
     flex-grow: 1;
     .img {
@@ -9,6 +9,10 @@
     }
    }
    &-buttons {
-    height: 40px;
+    display: flex;
+    gap: 5px;
+    .label{
+        cursor: pointer;
+    }
    }
 }

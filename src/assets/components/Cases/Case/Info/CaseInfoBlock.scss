@@ -1,11 +1,36 @@
 .CaseInfoBlock {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: max-content 2fr;
     gap: 25px;
     &-inner{
         display: flex;
         flex-direction: column;
         gap: 10px;
+    }
+    &-line{
+        &-title{
+            font-weight: bold;
+            font-size: 28px;
+        }
+    }
+    &-categories{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        &-content{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .edit-icon{
+                opacity: 0;
+            }
+        }
+        :hover{
+            background-color: $background-color;
+            .edit-icon{
+                opacity: 1;
+            }
+        }
     }
     .case-info-card-text {
         .cat {

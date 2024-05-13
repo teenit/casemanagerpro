@@ -15,38 +15,51 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import saveImg from "./../../../img/icons/save-50.png";
 import Input from "../../elements/Inputs/Input";
 import { apiResponse } from "../../Functions/get_apiObj";
+import Icon from "../../elements/Icons/Icon";
 
 const Active = ({ elem, handleEdit }) => {
-    const [edit,setEdit] = useState(false)
-    const [activeMessage,setActiveMessage] = useState(elem.text)
-    const [activeColor,setActiveColor] = useState(elem.color)
+    const [edit, setEdit] = useState(false)
+    const [activeMessage, setActiveMessage] = useState(elem.text)
+    const [activeColor, setActiveColor] = useState(elem.color)
     return (
         <div className="Notes-viewer-line">
-            
+
             <div className="Notes-viewer-line-data">
-                    <div className="Notes-viewer-line-data-title">
+                <div className="Notes-viewer-line-data-title">
                     <NavLink to={`/user?${elem.user_id}`} >{elem.userName}</NavLink>
-                    </div>
-                        <span>{elem.date_created}</span>
+                </div>
+                <span>{elem.date_created}</span>
+                <div className="Notes-viewer-line-data-color" style={{ backgroundColor: `${activeColor}` }}></div>
             </div>
             <div className="Notes-viewer-line-mess">
-                {edit?
-                <div>
-                    <Input type="color" value={activeColor} onChange={(e)=>{setActiveColor(e.target.value)}}/>
-                    <Textarea value={activeMessage} label="Текст запису" onChange={(e)=>{setActiveMessage(e.target.value)}}/>
-                </div>
-                :
-                <p>{activeMessage}</p>
+                {edit ?
+                    <div className="Notes-viewer-line-mess-input">
+                        <Input type="color" value={activeColor} onChange={(e) => { setActiveColor(e.target.value) }} />
+                        <Textarea value={activeMessage} label="Текст запису" onChange={(e) => { setActiveMessage(e.target.value) }} />
+                    </div>
+                    :
+                    <p>{activeMessage}</p>
 
                 }
-                    <div className="Notes-viewer-line-mess-edit">
-                        {edit? <img src={saveImg} alt="Зберегти зміни" onClick={()=>{
-                            setEdit(false)
-                            handleEdit(activeMessage,activeColor, elem)
-                        }}/>
+                <div className="Notes-viewer-line-mess-edit">
+                    {edit ? <div>
+                        <span onClick={() => {
+                        setEdit(false)
+                        handleEdit(activeMessage, activeColor, elem)
+                    }}>
+                        <Icon icon={"save"} addClass={"save-icon"} />
+                    </span>
+                        <span onClick={() => {
+                        setEdit(false)
+                    }}>
+                        <Icon icon={"close"} addClass={"close-icon"} />
+                    </span>
+                    </div>
                         :
-                        <img src={editImg} alt="Редагувати нотатки" onClick={()=>{setEdit(true)}}/>
-                        }
+                        <span onClick={() => { setEdit(true) }}>
+                            <Icon icon={"edit"} addClass={"default-icon"} />
+                        </span>
+                    }
                 </div>
             </div>
 
@@ -55,71 +68,74 @@ const Active = ({ elem, handleEdit }) => {
 }
 
 const Notes = ({ notes, case_id, getCaseInfo }) => {
-    const [noteMessage,setNoteMessage] = useState("")
-    const [noteColor,setNoteColor] = useState("")
-    const [alert,setAlert] = useState({
-        success:false,
-        error:false
+    const [noteMessage, setNoteMessage] = useState("")
+    const [noteColor, setNoteColor] = useState("")
+    const [alert, setAlert] = useState({
+        success: false,
+        error: false
     })
-    
+
     function addNote() {
-        apiResponse({text:noteMessage, color:noteColor, case_id:case_id},"case/create-note.php").then((res)=>{
-            if (res.status)  {handleAlertChange("success"); getCaseInfo();}
-            else {handleAlertChange("error");}
-            
+        apiResponse({ text: noteMessage, color: noteColor, case_id: case_id }, "case/create-note.php").then((res) => {
+            if (res.status) { handleAlertChange("success"); getCaseInfo(); }
+            else { handleAlertChange("error"); }
+
         })
     }
 
     function updateNote(text, color, elem) {
-       apiResponse({ ...elem, text:text, color:color, case_id:case_id},"case/update-note.php").then((res)=>{
-        if (res.status)  {handleAlertChange("success"); getCaseInfo();}
-        else {handleAlertChange("error");}
-       })
-   }
- 
-    const handleAlertChange = (key)=>{
-        setAlert({...alert,[key]:!alert[key]})
+        apiResponse({ ...elem, text: text, color: color, case_id: case_id }, "case/update-note.php").then((res) => {
+            if (res.status) { handleAlertChange("success"); getCaseInfo(); }
+            else { handleAlertChange("error"); }
+        })
+    }
+
+    const handleAlertChange = (key) => {
+        setAlert({ ...alert, [key]: !alert[key] })
     }
     const [actNote, setActNote] = useState(notes);
     const [modal, setModal] = useState(false)
 
-    const handleEdit = (value, color, elem)=>{
-        if(value.length < 1){
-            setAlert({...alert, error: true})
+    const handleEdit = (value, color, elem) => {
+        if (value.length < 1) {
+            setAlert({ ...alert, error: true })
         } else {
-            updateNote(value,color,elem)
+            updateNote(value, color, elem)
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         setActNote([...notes])
-    },[notes])
+    }, [notes])
     const active = actNote.map((elem, index) => {
-        return <Active key={index} elem={elem} handleEdit={(value,color)=>{handleEdit(value, color, elem)}}  />
+        return <Active key={index} elem={elem} handleEdit={(value, color) => { handleEdit(value, color, elem) }} />
     })
     return (
         <div className="Notes">
             <div className="Notes-title">
                 <h2>Нотатки</h2>
-                <img src={plusImg} alt="Додати запис" onClick={() => { setModal(true) }} />
+                <span  onClick={() => { setModal(true) }}>
+                    <Icon icon={"add"} addClass={"add-icon"} />
+                </span>
             </div>
             <div className="Notes-viewer">
                 {active}
             </div>
+
             {modal && <Modal header="Додати запис" closeHandler={() => { setModal(false) }} footer={
-            <div className="Modal--footer">
-                <Button onClick={() => { setModal(false) }} color="error" variant="contained">{LANG.cancel}</Button>
-                <Button onClick={()=>{
-                    addNote()
-                    setModal(false)
-                }}  variant="contained">{LANG.save}</Button>
-            </div>}>
+                <div className="Modal--footer">
+                    <Button onClick={() => { setModal(false) }} color="error" variant="contained">{LANG.cancel}</Button>
+                    <Button onClick={() => {
+                        addNote()
+                        setModal(false)
+                    }} variant="contained">{LANG.save}</Button>
+                </div>}>
                 <div className="Notes-modal">
-                    <Input type="color" value={noteColor} onChange={(e)=>{setNoteColor(e.target.value)}}/>
-                    <Textarea value={noteMessage} label="Текст запису" onChange={(e)=>{setNoteMessage(e.target.value)}}/>
+                    <Input type="color" value={noteColor} onChange={(e) => { setNoteColor(e.target.value) }} />
+                    <Textarea value={noteMessage} label="Текст запису" onChange={(e) => { setNoteMessage(e.target.value) }} />
                 </div>
-                </Modal>}
-            {alert.error && <SmallNotification isSuccess={false} text="Будь ласка, введіть ваше повідомлення" close={()=>{handleAlertChange("error")}}/>}
-            {alert.success && <SmallNotification isSuccess={true} text="Запис додано" close={()=>{handleAlertChange("success")}}/>}
+            </Modal>}
+            {alert.error && <SmallNotification isSuccess={false} text="Помилка при додаванні запису" close={() => { handleAlertChange("error") }} />}
+            {alert.success && <SmallNotification isSuccess={true} text="Запис додано" close={() => { handleAlertChange("success") }} />}
         </div>
     )
 }

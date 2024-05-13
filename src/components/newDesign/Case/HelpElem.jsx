@@ -10,6 +10,7 @@ import SmallNotification from "../../elements/Notifications/SmallNotification"
 import editImg from "./../../../img/icons/edit.svg";
 import saveImg from "./../../../img/icons/save-50.png";
 import { LANG } from "../../../services/config"
+import Icon from "../../elements/Icons/Icon"
 
 const HelpElem = ({ help, categories, getCaseInfo }) => {
     const [state, setState] = useState({
@@ -22,7 +23,7 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
         status: null,
         message: null
     })
-   
+
     const saveHandler = () => {
         apiResponse({
             ...state,
@@ -86,9 +87,13 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                         {
                             state.editHelp
                                 ?
-                                <img src={saveImg} onClick={saveHandler} />
+                                <span onClick={saveHandler} >
+                                    <Icon icon={"save"} addClass={"save-icon"} />
+                                </span>
                                 :
-                                <img src={editImg} onClick={()=>{setState({...state, edit: true})}} />
+                                <span onClick={()=>{setState({...state, edit: true})}}  >
+                                <Icon icon={"edit"} addClass={"default-icon"}/>
+                            </span>
                         }
                     </div>
                 </div>
@@ -115,7 +120,7 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                 </div>
                 <div className="bottom">
                     <div className="bottom-date">
-                        {/* {moment(state.start_time).format("DD-MM-YYYY")} */}
+                        {moment(state.start_time).format("DD-MM-YYYY")}
                     </div>
                     <div className="bottom-status">
                         {

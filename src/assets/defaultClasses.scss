@@ -16,3 +16,18 @@
 .bold {
     font-weight: 900;
   }
+.default-icon{
+color: $main-color;
+}
+.close-icon{
+    color: red;
+    cursor: pointer;
+
+}
+.save-icon{
+    color: green;
+    cursor: pointer;
+}
+.add-icon{
+    cursor: pointer;
+}

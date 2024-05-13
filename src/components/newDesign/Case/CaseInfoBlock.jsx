@@ -1,81 +1,33 @@
 import React, { useEffect, useState } from "react";
-import phoneImg from "../../../img/icons/iphone.svg"
-import socialImg from "../../../img/icons/social-100.png"
-import givingImg from "../../../img/icons/giving-100.png"
-import emailImg from "../../../img/icons/email-100.png"
-import addressImg from "../../../img/icons/address-100.png"
-import dateImg from "../../../img/icons/date-100.png"
-import dateCreatedImg from '../../../img/icons/caseShortInfo/date-created.svg'
-import channelImg from '../../../img/icons/caseShortInfo/channel.svg'
-import categoriesImg from '../../../img/icons/caseShortInfo/categories.svg'
-import contractImg from '../../../img/icons/caseShortInfo/contract.svg'
-import edit from '../../../img/icons/edit.svg'
-import save from '../../../img/icons/save-50.png'
 import { apiResponse } from "../../Functions/get_apiObj"
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Input from "../../elements/Inputs/Input";
-import CheckboxForm from "../../Cases/newDesign/CheckboxForm"
 import { NavLink } from "react-router-dom";
-import { Edit, Email, MailOutline } from "@mui/icons-material";
-import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useSelector } from "react-redux";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-const ICONS = {
-    phone: PhoneAndroidIcon,
-    social: socialImg,
-    giving: givingImg,
-    email: emailImg,
-    address: addressImg,
-    date: dateImg,
-    dateCreated: dateCreatedImg,
-    categories: categoriesImg,
-    channel: channelImg,
-    contract: contractImg,
-    edit: edit,
-    save: save,
-}
+import Icon from "../../elements/Icons/Icon";
+// const ICONS = {
+//     phone: PhoneAndroidIcon,
+//     social: socialImg,
+//     giving: givingImg,
+//     email: emailImg,
+//     address: addressImg,
+//     date: dateImg,
+//     dateCreated: dateCreatedImg,
+//     categories: categoriesImg,
+//     channel: channelImg,
+//     contract: contractImg,
+//     edit: edit,
+//     save: save,
+// }
 
-const Icons = ({ icon }) => {
-    let ico = "";
-    switch (icon) {
-        case "phone":
-            ico = <PhoneAndroidIcon />
-            break;
-        case "email":
-            ico = <MailOutline />
-            break;
-        case "location":
-            ico = <LocationOnIcon />
-            break;
-        case "channel":
-            ico = <NotificationsIcon />
-            break;
-        case "contract_date":
-            ico = <AssignmentIcon />
-            break;
-        case "contract_number":
-            ico = <AssignmentIcon />
-            break;
-    }
-    return (
-        <>
-            {
-                ico
-            }
-        </>
-    )
-}
 
 const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
     const categories = useSelector(state => state.categories.case);
     const [checkedMas, setCheckedMas] = useState([])
     const [alert, setAlert] = useState(null)
-    // State for data
     const [dataState, setDataState] = useState({
         phone1: info.general.phone1,
         phone2: info.general.phone2,
@@ -101,9 +53,9 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
             channel: info.data.channel,
             categories: info.data.categories
         });
-        setCheckedMas([...info.data.categories])
+        if (info.data.categories) setCheckedMas([...info.data.categories])
+
     }, [info])
-    // State for edit status
     const [editState, setEditState] = useState({
         phone1: false,
         phone2: false,
@@ -159,7 +111,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         return (
             <div className="InputBlock">
                 {!showEdit && <div className="InputBlock-default">
-                    {icon && <Icons icon={icon} />}
+                    {icon && <Icon icon={icon} addClass={"default-icon"} />}
 
                     <div className="case-info-card-text">
 
@@ -168,19 +120,25 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         </div>
 
                     </div>
-                    {!disabled && <Edit className="edit-icon" onClick={() => { setShowEdit(true) }} />}
+                    {!disabled && <div className="edit-icon" onClick={() => { setShowEdit(true) }}>
+                        <Icon icon={"edit"} addClass={"default-icon"} />
+                    </div>}
                 </div>}
                 {showEdit && <div className="InputBlock-editer">
                     <div className="InputBlock-editer-withicon">
-                        {icon && <Icons icon={icon} />}
+                        {icon && <Icon icon={icon} addClass={"default-icon"} />}
                         <Input type={inputType} value={stateValue} onChange={(e) => {
                             setStateValue(e.target.value)
                         }} />
                     </div>
 
                     <div>
-                        <CheckIcon onClick={() => { saveHandler(stateValue) }} />
-                        <CloseIcon onClick={() => { setShowEdit(false) }} />
+                        <span onClick={() => { setShowEdit(false) }} >
+                            <Icon icon={"close"} addClass={"close-icon"} />
+                        </span>
+                        <span onClick={() => { saveHandler(stateValue) }} >
+                            <Icon icon={"save"} addClass={"save-icon"} />
+                        </span>
                     </div>
                 </div>
 
@@ -195,13 +153,12 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                 <div className="CaseInfoBlock-line">
                     <InputBlock
                         value={info.general.name}
-                        // onChange={(e) => { handleDataChange("phone1", e.target.value) }}
                         title={info.general.name}
                         addClass="title"
                         disabled={true}
-                        label={<>
+                        label={<div className="CaseInfoBlock-line-title">
                             {info.general.name} <span style={{ color: "var(--main-color)" }}>№{info.general.id}</span>
-                        </>}
+                        </div>}
                     />
                 </div>
                 <div className="CaseInfoBlock-line">
@@ -269,19 +226,17 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                 </div>
             </div>
             <div className="case-info-right">
-                <div className="case-info-right-card">
-                    <span>
-                        <div className="case-info-card-img">
-                            <img src={dateCreatedImg} alt="" />
-                        </div>
-                        <div className="case-info-card-text">
-                            <span>Дата створення</span>
-                            <p>{info.general.date_created}</p>
-                        </div>
-                    </span>
+                <div className="CaseInfoBlock-line">
+                    <span>Дата створення</span>
+                    <InputBlock
+                        value={dataState.date_created}
+                        title="Дата створення кейсу"
+                        icon={"date_created"}
+                        label={dataState.date_created}
+                        disabled={true}
+                    />
                 </div>
-
-                <div className="case-info-right-card">
+                <div className="CaseInfoBlock-line">
                     <span>Дата укладання договіру</span>
                     <InputBlock
                         value={dataState.contract_date}
@@ -293,7 +248,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         saveHandler={(val) => saveHandler("contract_date", val, "data")}
                     />
                 </div>
-                <div className="case-info-right-card">
+                <div className="CaseInfoBlock-line">
                     <span>Номер договіру</span>
                     <InputBlock
                         value={dataState.contract_number}
@@ -305,7 +260,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         saveHandler={(val) => saveHandler("contract_number", val, "data")}
                     />
                 </div>
-                <div className="case-info-right-card">
+                <div className="CaseInfoBlock-line">
                     <span>Канал комунікації</span>
                     <InputBlock
                         value={dataState.channel}
@@ -319,17 +274,16 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                 </div>
 
 
-                <div className="case-info-right-card">
-                    <span>
-                        <div className="case-info-card-img">
-                            <img src={categoriesImg} alt="" />
-                        </div>
+                <div className="CaseInfoBlock-categories">
+                    <span className="CaseInfoBlock-categories-title">Категорії</span>
+                    <span className="CaseInfoBlock-categories-content">
+                        <Icon icon="categories" addClass={"default-icon"}></Icon>
                         <div className="case-info-card-text">
-                            <span>Категорії</span>
+
                             {!editState.categories ?
                                 (categories && categories.length > 0 && info.data.categories && info.data.categories.length > 0 && categories.map((item, index) => {
                                     if (info.data.categories.indexOf(item.id) !== -1) return <div className="cat">
-                                        <div className="cat-color" style={{backgroundColor:item.color}}></div>
+                                        <div className="cat-color" style={{ backgroundColor: item.color }}></div>
                                         <div className="cat-text"><span key={item.id}> {item.name} </span></div>
                                     </div>
 
@@ -344,19 +298,21 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                                 />
                             }
                         </div>
-                        <div className="case-info-card-img" >
-                            {editState.categories ?
-                                <>
-                                    <CheckIcon onClick={() => { saveHandler("categories", dataState.categories, "data") }} />
-                                    <CloseIcon onClick={() => { handleEditChange("categories") }} />
-                                </>
+                        {editState.categories ?
+                            <>
+                            <span onClick={() => { saveHandler("categories", dataState.categories, "data") }}>
+                                <Icon icon={"save"} addClass={"save-icon"} />
+                            </span>
+                            <span onClick={() => { handleEditChange("categories") }}>
+                                <Icon icon={"close"} addClass={"close-icon"} />
+                            </span>
+                            </>
 
-                                :
-                                <>
-                                    <Edit className="edit-icon" onClick={() => { handleEditChange("categories") }} />
-                                </>
-                            }
-                        </div>
+                            :
+                            <div className="edit-icon" onClick={() => { handleEditChange("categories") }}>
+                                <Icon icon="edit" addClass="default-icon" />
+                            </div>
+                        }
                     </span>
 
                 </div>
