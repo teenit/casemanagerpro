@@ -54,7 +54,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
             categories: info.data.categories
         });
         if (info.data.categories) setCheckedMas([...info.data.categories])
-
+        
     }, [info])
     const [editState, setEditState] = useState({
         phone1: false,
@@ -75,7 +75,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
     const handleEditChange = (key) => {
         setEditState(prevState => ({ ...prevState, [key]: !prevState[key] }));
     };
-
+    
 
     const saveHandler = (key, value, type) => {
         const originalValue = type === "general" ? info.general[key] : info.data[key];
