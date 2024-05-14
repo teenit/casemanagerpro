@@ -4,10 +4,12 @@ import Modal from '../../Modals/Modal';
 import OpenPhoto from '../../Galery/OpenPhoto';
 import { NavLink } from 'react-router-dom';
 import GetAppIcon from '@mui/icons-material/GetApp';
+import VideoPlayer from "react-video-js-player";
 
 const Gallery = ({ photos }) => {
     const [imgRows, setImgRows] = useState(0);
     const [imagesAndVideos, setImagesAndVideos] = useState([]);
+    const [videos, setVideos] = useState([]);
     const [otherFiles, setOtherFiles] = useState([]);
     const [openedPhoto, setOpenedPhoto] = useState({
         url:"",
@@ -23,8 +25,13 @@ const Gallery = ({ photos }) => {
 
         const imgsAndVids = photos.filter(item => {
             const type = getType(item.type)
-            return type === 'image' || type === 'video'
+            return type === 'image'
         });
+        const vidos = photos.filter(item => {
+            const type = getType(item.type)
+            return type === 'video'
+        });
+        setVideos(vidos)
         setImagesAndVideos(imgsAndVids)
 
         const other = photos.filter(item => {
@@ -63,6 +70,13 @@ const Gallery = ({ photos }) => {
                         return (
                             <div className='Gallery-grid-img-wrap' key={index}>
                                 <img onClick={()=>{setOpenedPhoto({url:item.link, show:true})}} src={item.link} alt="Фотографія" />
+                            </div>
+                        );
+                    })}
+                    {videos.map((item, index) => {
+                        return (
+                            <div className='Gallery-grid-img-wrap' key={index}>
+                                <VideoPlayer className="video" src={item.link} />
                             </div>
                         );
                     })}
