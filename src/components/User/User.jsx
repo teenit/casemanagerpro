@@ -72,7 +72,7 @@ export class User extends Component {
 
     const { user } = this.state;
     return user && !user?.fail ? (
-      <div className="user__wrap">
+      <div className="User">
         <ProfilePhoto
           url={user.profileUrl}
           userName={user.userName}

@@ -23,6 +23,7 @@ const GetCases = ({posts,postsChange})=>{
     const [masPost,setMasPost] = useState([]);
     useEffect(()=>{
       test()
+      console.log(masPost);
     },[])
     function test(e){
       let countStart = cases.firstSlice;

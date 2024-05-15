@@ -4,8 +4,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { serverAddres } from "../../../Functions/serverAddres";
 import imgSend from "../../../../img/icons/send.png";
-import edit from '../../../../img/icons/edit.svg'
-
+import Icon from "../../../elements/Icons/Icon"
 
 const Active = ({elem})=>{
     return(
@@ -26,7 +25,7 @@ const Active = ({elem})=>{
             <div className="notes__viewer__mess__panel">
                 <div className="notes__viewer__mess__panel__edit">
                     <div className="notes__viewer__mess__panel__edit__ico__wrap">
-                        <img src={edit} alt="Редагувати нотатки" />
+                        <Icon icon={"edit"} addClass="default-icon"/>
                     </div>
                 </div>
                 <div className="notes__viewer__mess__panel__edit">
@@ -82,7 +81,9 @@ const Notes = ({notes,level})=>{
                         <div className="notes__mes__inner">
                              <div className="notes__field">
                                 <textarea name="" id="mess__note" cols="30" rows="3"></textarea>
-                                <img src={imgSend} onClick={addNote} alt="" />
+                                <span onClick={addNote}>
+                                    <Icon icon={"send"} addClass={"default-icon"}/>
+                                </span>
                             </div>
                         </div>
                     </div>:""}

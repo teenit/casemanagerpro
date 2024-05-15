@@ -6,6 +6,7 @@ import { ReactComponent as ChangeContact } from "../../../img/icons/change.svg";
 import { ReactComponent as Close } from "../../../img/icons/close.svg";
 import ContactForm from "../ContactForm/ContactForm";
 import Modal from "../Modal/Modal";
+import Icon from "../../elements/Icons/Icon"
 
 const ContactListItem = ({
   id,
@@ -105,19 +106,12 @@ const ContactListItem = ({
         )}
 
         <div className={style.contact_list_item_btn}>
-          <IconButton
-            onClick={() => handleDeleteContact(true)}
-            aria-label="Видалити"
-          >
-            <DeleteContact width="20" height="20" />
-          </IconButton>
-          <IconButton
-            id={id}
-            onClick={handleEditContact}
-            aria-label="Редагувати"
-          >
-            <ChangeContact width="20" height="20" />
-          </IconButton>
+          <span onClick={() => handleDeleteContact(true)}>
+            <Icon icon={"delete"} addClass={"default-icon"}/>
+          </span>
+          <span onClick={handleEditContact}>
+            <Icon icon={"edit"} addClass={"default-icon"}/>
+          </span>
         </div>
       </div>
     </>

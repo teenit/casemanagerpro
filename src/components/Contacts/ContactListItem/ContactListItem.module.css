@@ -41,13 +41,11 @@
 
 .contact_list_item_btn {
   display: flex;
-  margin-top: 28px;
+  gap: 10px;
 }
 
 .contact_list_item_btn div {
   right: 57px;
-  position: absolute;
-
   width: 35px;
   height: 35px;
   display: inline-flex;
