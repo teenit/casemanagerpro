@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import imgDelete from "./../../img/icons/delete-48.png";
 import axios from "axios";
 import { serverAddres } from "../Functions/serverAddres";
 import LoadingPage from "../Loading/LoadingPage";

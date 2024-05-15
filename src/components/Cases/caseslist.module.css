@@ -3,12 +3,12 @@
     margin: auto;
 }
 
-tbody tr:nth-child(odd) {
-    background-color: #ebe8ea;
+tbody tr:nth-child(even) {
+    background-color: #cfe5f6;
   }
   
-  tbody tr:nth-child(even) {
-    background-color: #f6f6f6;
+  tbody tr:nth-child(odd) {
+    background-color: var(--background-color);
   }
 table{
     text-align: center;
@@ -18,7 +18,7 @@ table{
 }
 thead{
     font-weight: 600;
-    background-color: #a9a6a8;
+    background-color: var(--main-color);
     border: 1px solid #000;
 }
 td{

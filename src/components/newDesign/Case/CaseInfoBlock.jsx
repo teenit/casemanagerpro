@@ -8,22 +8,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from "react-redux";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import Icon from "../../elements/Icons/Icon";
-// const ICONS = {
-//     phone: PhoneAndroidIcon,
-//     social: socialImg,
-//     giving: givingImg,
-//     email: emailImg,
-//     address: addressImg,
-//     date: dateImg,
-//     dateCreated: dateCreatedImg,
-//     categories: categoriesImg,
-//     channel: channelImg,
-//     contract: contractImg,
-//     edit: edit,
-//     save: save,
-// }
-
-
 const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
     const categories = useSelector(state => state.categories.case);
     const [checkedMas, setCheckedMas] = useState([])

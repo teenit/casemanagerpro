@@ -5,6 +5,7 @@ import axios from "axios";
 import { serverAddres } from "../../Functions/serverAddres";
 import LoadingPage from "../../Loading/LoadingPage";
 import { apiResponse } from "../../Functions/get_apiObj";
+import Icon from "../../elements/Icons/Icon";
 
 let categoriesStr = "";
 const SetCategories = ({cats})=>{
@@ -98,8 +99,8 @@ const SetCategories = ({cats})=>{
                 <div className="category__circle" style={{backgroundColor: category.color}}></div>
                 <span>{category.text}</span>
             </div>
-            <div className="set__categories__case__control">
-                <img src={imgDelete} alt="" onClick={()=>{deleteCategory(category)}}/>
+            <div className="set__categories__case__control" onClick={()=>{deleteCategory(category)}}>
+                <Icon icon={"delete"} addClass={"default-icon"}/>
             </div>
         </div>
         )

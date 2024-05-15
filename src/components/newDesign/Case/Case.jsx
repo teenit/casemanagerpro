@@ -23,11 +23,12 @@ import GiveHelp from "./GiveHelp";
 import Notes from "./Notes";
 import CaseInfoBlock from "./CaseInfoBlock";
 import GiveHelps from "./GiveHelps";
+import DetailedInfo from "./DetailedInfo";
 
 const Case = () => {
     const dispatch = useDispatch();
-  const categories = useSelector(state => state.categories);
-  const loading = useSelector(state => state.loading);
+    const categories = useSelector(state => state.categories);
+    const loading = useSelector(state => state.loading);
     const [page, setPage] = useState({
         loading: true,
         cases: false,
@@ -42,9 +43,9 @@ const Case = () => {
     const [editActive, setEditActive] = useState(null)
     const [openSetting, setOpenSetting] = useState(false)
 
-    const getCaseInfo = ()=> {
+    const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
-            setState({...res})
+            setState({ ...res })
         })
     }
     useEffect(() => {
@@ -52,13 +53,13 @@ const Case = () => {
     }, [case_id])
     const handleDataChange = (key, value) => {
         setState({ ...state, data: { ...state.data, [key]: value } })
-        apiResponse({[key]: value, case_id:case_id}, "case/update-case-data.php").then((data)=>{
+        apiResponse({ [key]: value, case_id: case_id }, "case/update-case-data.php").then((data) => {
             console.log(data)
         })
     }
     const handleGeneralChange = (key, value) => {
         setState({ ...state, general: { ...state.general, [key]: value } })
-        apiResponse({[key]: value, case_id:case_id}, "case/update-case.php").then((data)=>{
+        apiResponse({ [key]: value, case_id: case_id }, "case/update-case.php").then((data) => {
             console.log(data)
         })
     }
@@ -80,29 +81,30 @@ const Case = () => {
 
 
             <div className="case__contact__info">
-                    {state.meta?.profileImg?.link ? 
-                    <CaseProfilePhoto profileImg={state.meta.profileImg.link.link} getCaseInfo={getCaseInfo} case_id={case_id}/>
+                {state.meta?.profileImg?.link ?
+                    <CaseProfilePhoto profileImg={state.meta.profileImg.link.link} getCaseInfo={getCaseInfo} case_id={case_id} />
                     :
-                    <CaseProfilePhoto profileImg={null} getCaseInfo={getCaseInfo} case_id={case_id}/>}
+                    <CaseProfilePhoto profileImg={null} getCaseInfo={getCaseInfo} case_id={case_id} />}
                 <div>
-                    <CaseInfoBlock info={state} changeData = {(key,value)=>{handleDataChange(key,value)}} changeGeneral = {(key,value)=>{handleGeneralChange(key,value)}} />
+                    <CaseInfoBlock info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />
                     <GetConnections id={state.general.id} />
                 </div>
             </div>
 
             <div className="container__grid__two">
-                <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo}/>
-                <GiveHelps helps={state.helps} case_id={case_id} getCaseInfo={getCaseInfo} />
+                <DetailedInfo info={state.data} changeData={(key, value) => { handleDataChange(key, value) }}/>
+                <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo} />
             </div>
             <div className="container__grid__two">
-                <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes}/>
+                <GiveHelps helps={state.helps} case_id={case_id} getCaseInfo={getCaseInfo} />
+                <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
             </div>
 
             {/* <div className="media__content__">
                 <Galery media={post.newPhotos} title="Медіа фото" />
             </div> */}
             {/* <PhotosForm photos = {post.photos} show = {post.level?.loadCaseFiles == true || post.level?.root == "true" ? true : false}/> */}
-                {state?.meta?.files?.length ? <Gallery photos = {state.meta.files}/> : null}
+            {state?.meta?.files?.length ? <Gallery photos={state.meta.files} /> : null}
             <FilesUploader multiple={false} meta={{
                 key: "case_files",
                 case_id: case_id,

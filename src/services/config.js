@@ -53,6 +53,13 @@ export const LANG = {
     planing:"Планування",
     gallery:"Додані медіа файли",
     documents:"Додані документи",
+    detailedInfo:{
+      title:"Детальна інформація",
+      family_info:"Сімейний стан",
+      comment:"Коментар",
+      potreba:"Потреба, запит",
+      history:"Історія сім'ї / особи"
+    },
     access: {
       "a_cases_category_edit_id":"Доступні категорії кейсів для редагування", 
       "a_cases_category_look_id":"Доступні категорії кейсів для перегляду", 

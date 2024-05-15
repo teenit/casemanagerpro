@@ -11,12 +11,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 export default function CheckboxListAccess({allMas, checkedMas, onChange}) {
   const [checked, setChecked] = useState([checkedMas]);
   const [allMasElements, setAllMasElements] = useState(allMas());
-    // useEffect(()=>{
-    //     console.log(allMas())
-    //    // setAllMasElements()
-    // },[])
   const handleToggle = (value) => () => {
-    //return console.log(value)
     onChange(value.id)
     const currentIndex = checked.indexOf(value.id);
     const newChecked = [...checked];
@@ -26,8 +21,6 @@ export default function CheckboxListAccess({allMas, checkedMas, onChange}) {
     } else {
       newChecked.splice(currentIndex, 1);
     }
-
-    //setChecked(newChecked);
   };
 
   useEffect(()=>{setChecked(checkedMas)},[checkedMas])
