@@ -4,6 +4,7 @@ import axios from "axios";
 import { serverAddres } from "../Functions/serverAddres";
 import LoadingPage from "../Loading/LoadingPage";
 import { translateString } from "../Functions/translateString";
+import Icon from "../elements/Icons/Icon";
 
 let categoriesStr = "";
 const SetContactCategory = ({cats})=>{
@@ -81,9 +82,11 @@ const SetContactCategory = ({cats})=>{
                 <span>{category.text}</span>
             </div>
             <div className="set__categories__case__control">
-                <img src={imgDelete} alt="" onClick={()=>{
+                <span onClick={()=>{
                     if(page.effload) deleteCategory(category);
-                }}/>
+                }}>
+                    <Icon icon={"delete"} addClass={"close-icon"}/>
+                </span>
             </div>
         </div>
         )

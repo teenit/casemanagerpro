@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import AddEvent from "./AddEvent";
 import settingImg from "./../../img/icons/settings-50-black.png"
 import { apiResponse } from "../Functions/get_apiObj";
+import Icon from "../elements/Icons/Icon"
 const Events = ()=>{
     const [control, setControl] = useState(false)
     const [events, setEvents] = useState([]);
@@ -61,9 +62,11 @@ const Events = ()=>{
                     </div>
                     <div className={s.author}>Створив: {item.meta.userName}</div>
                     <div className={s.res__control}>
-                        <div className={s.delete}><img src={delImg} alt="" onClick={()=>{
+                        <span onClick={()=>{
                             removeEvent(item.id)
-                        }} /></div>
+                        }} >
+                            <Icon icon={"delete"} addClass={"default-icon"}/>
+                        </span>
                         <div className={s.date}>{item.meta.date}</div>
                     </div>
                 </div>)
