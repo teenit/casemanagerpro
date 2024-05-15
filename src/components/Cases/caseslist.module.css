@@ -13,7 +13,8 @@ tbody tr:nth-child(odd) {
 table{
     text-align: center;
     display: block;
-    border-collapse: collapse
+    border-collapse: collapse;
+    width: 100%;
 }
 thead{
     font-weight: 600;

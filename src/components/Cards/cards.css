@@ -49,9 +49,15 @@ border-radius: 10px;
 }
 .card__info__status{
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr;
     width: 90%;
     margin: auto;
+    padding-bottom: 5px;
+}
+.card__info__status__contract {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .card__description__phones{
     display: flex;

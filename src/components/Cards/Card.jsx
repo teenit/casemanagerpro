@@ -7,22 +7,19 @@ let categoriesStr = "";
   
 const Card = (props)=>{
 
-    const CategoriesData = ({category, index})=>{
+    const CategoriesData = ({categories})=>{
         
         return (
-            <div></div>
-        // <div className="category__circle" title={category.text} style={{backgroundColor: category.color}}>
+            <div>
+                {
+                    props.categories.map((item)=>{
+                        if (categories.indexOf(item.id) !== -1 )  return <div key={item.id} className="category__circle" title={item.name} style={{backgroundColor: item.color}} />
+                    })
+                }
+            </div>
 
-        // </div>
         )
     }
-    const CategoriesMas = ({pos})=>{
-        if(!Array.isArray(pos) || pos == false || pos == null) return;
-        categoriesStr =  pos.map((post,index)=>{
-        return <CategoriesData key={index} category={post} index={index}/>
-        })  
-        return categoriesStr;
-    } 
 
     return(
         <div className="card">
@@ -33,7 +30,9 @@ const Card = (props)=>{
                 <div className="card__categories">
                     <div className="card__categories__inner">
                         <span className="card__id">{props.info.id}</span>
-                        <CategoriesMas pos = {props.info.categories == undefined ? false : props.info.categories}/> 
+                        {
+                            props.info.categories && <CategoriesData categories={props.info.categories}/>
+                        }
                     </div>   
                 </div>
             </div>
@@ -54,11 +53,9 @@ const Card = (props)=>{
                     </div>
                 </div>
                 <div className="card__info__status">
-                    <div>
-                        {/* {props.info.numberDogovir.length > 0?<p>№ <b>{props.info.numberDogovir}</b></p>:""} */}
-                    </div>
-                    <div className="card__info__status__date">
-                        <p>{props.info.createdDate}</p>
+                    <div className="card__info__status__contract">
+                        {props.info.contractDate && <span>{props.info.contractDate}</span>}
+                        {props.info.contractNumber && <span>#{props.info.contractNumber}</span>}
                     </div>
                 </div>
             </div>

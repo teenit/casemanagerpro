@@ -10,3 +10,65 @@ function encryptData($data, $key) {
 function decryptData($encryptedData, $key) {
     return openssl_decrypt(base64_decode($encryptedData), "AES-256-CBC", $key, 0, substr($key, 0, 16));
 }
+
+function addEventToCalendar($conn, $data) {
+    $dateCreated = date("d-m-Y H:i:s");
+    $userID = $data->id;
+    $link = $data->link;
+    $day = $data->day;
+    $month = $data->month;
+    $year = $data->year;
+    $title = $data->title;
+    $text = $data->text;
+    $color = $data->color;
+    $start = $data->start;
+    $end = $data->end;
+
+    $key = $data->key;
+    $id = $data->id;
+
+    // Перевірка ключа
+    if($key !== 'myCalendar'){
+        $id = 0;
+    }
+
+    // Отримання поточної дати
+    $date = date("d-m-Y");
+
+    // Підготовка SQL запиту з використанням параметрів bind
+    $msql = "INSERT INTO calendar (user_id, meta_key, meta_value, date, month, year, day) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $obj = json_encode(array(
+        'dateCreated' => $dateCreated,
+        'userID' => $userID,
+        'link' => $link,
+        'day' => $day,
+        'month' => $month,
+        'year' => $year,
+        'title' => $title,
+        'text' => $text,
+        'color' => $color,
+        'start' => $start,
+        'end' => $end
+    ), JSON_UNESCAPED_UNICODE);
+    // Підготовка і виконання запиту з використанням параметрів bind
+    if ($stmt = mysqli_prepare($conn, $msql)) {
+  // Підготовка значення об'єкта в форматі JSON
+
+        mysqli_stmt_bind_param($stmt, "issssii", $id, $key, $obj, $date, $month, $year, $day);
+
+      
+
+        // Встановлення значень параметрів і виконання запиту
+        if (mysqli_stmt_execute($stmt)) {
+            return true;
+        } else {
+            return "Error: " . mysqli_stmt_error($stmt);
+        }
+
+        // Закриття підготовленого запиту
+        mysqli_stmt_close($stmt);
+    } else {
+        return "Error: " . mysqli_error($conn);
+    }
+}
+?>

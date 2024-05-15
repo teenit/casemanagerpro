@@ -1,7 +1,17 @@
 <?php
 require_once '../config.php';
-$data = json_decode(file_get_contents('php://input'));
+//require_once '../functions.php';
 
+$data = json_decode(file_get_contents('php://input'));
+// Виклик функції для додавання події до календаря
+// if(addEventToCalendar($conn, $data)) {
+//     echo "Event added successfully!";
+// } else {
+//     echo "Error adding event!";
+// }
+
+// Закриття підключення до бази даних
+mysqli_close($conn);
 $obj = new StdClass();
 $obj->{'dateCreated'} = date("d-m-Y H:i:s");
 $obj->{'userID'} = $data->id;

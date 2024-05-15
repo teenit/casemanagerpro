@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import s from "./caseslist.module.css";
 import { useReactToPrint } from "react-to-print";
 import printImg from './../../img/icons/print-black-50.png';
-const CasesList = ({cases})=>{
+const CasesList = ({cases, categories})=>{
 const componentRef = useRef();
 
 const pageStyle =`
@@ -12,7 +12,6 @@ const handlerPrint = useReactToPrint({
     content: ()=>componentRef.current,
     pageStyle:pageStyle
 })
-    console.log(cases)
     return(
         <>
         <div className={s.wrap} ref={componentRef}>
@@ -39,14 +38,12 @@ const handlerPrint = useReactToPrint({
                                 <td>{item.name}</td>
                                 <td>{`${item.phone1} ${item.phone2}`}</td>
                                 <td>{item.email}</td>
-                                <td style={{whiteSpace:"nowrap"}}></td>
+                                <td style={{whiteSpace:"nowrap"}}>{item.happyBD}</td>
                                 <td><span dangerouslySetInnerHTML={{__html:item.addressLive}} /></td>
-                                <td>{item.categories &&
-                                        item.categories.map((cat,ind)=>{
-                                            return(
-                                                <span key={cat.value}>{cat.text} </span>
-                                            )
-                                        })
+                                <td>{
+                                    categories.map((elem)=>{
+                                        if (item.categories.indexOf(elem.id) !== -1 )  return <span key={elem.id} >{elem.name}</span>
+                                    })
                                     }
                                 </td>
                             </tr>

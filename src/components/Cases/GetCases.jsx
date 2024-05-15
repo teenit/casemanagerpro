@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "../Cards/Card";
 import s from "./Cases.module.css";
 import CasesList from "./CasesList";
+import { useSelector } from "react-redux";
 function sortMas(field,type){
     if(type == "number"){
         return(a,b) => +a[field] > +b[field] ? 1 : -1;
@@ -10,6 +11,7 @@ function sortMas(field,type){
     } 
 }
 const GetCases = ({posts,postsChange})=>{
+  const categories = useSelector(state => state.categories.case);
     const [cases,setCases] = useState({
       totalCount: posts.length,
       firstSlice: 0,
@@ -64,14 +66,14 @@ const GetCases = ({posts,postsChange})=>{
           
             <div className="inner__cards" id="inner__cards">
                   {masPost.map((elem,ind)=>{
-                      return <Card info={elem} key={elem.id }/>
+                      return <Card info={elem} key={elem.id} categories={categories}/>
                   })}
               </div>
                   {cases.button ? <button className={s.look__more} onClick={test}>Показати ще...</button> : <h3 className={s.look__more__text}>
                     Немає більше доступних кейсів
               </h3>}
           
-          </div>:<CasesList cases={posts} />}
+          </div>:<CasesList cases={posts}  categories={categories} />}
 
             
         </div>

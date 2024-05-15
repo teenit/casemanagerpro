@@ -99,7 +99,7 @@ const AddCaseForm = () => {
     }
     function sendData() {
         if (checkedMas.length == 0) return setErrorAlert({...errorAlert,status:true,text:"Виберіть хоча б одну категорію кейсу"});
-        apiResponse({ ...stateData, categories: categories }, "case/insert-case-info.php").then(data => {
+        apiResponse({ ...stateData, categories: categories }, "case/update-case-data").then(data => {
             navigate("/case/" + stateData.case_id)
         })
         setAlert(true)

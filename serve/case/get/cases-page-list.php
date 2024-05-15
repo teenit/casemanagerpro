@@ -15,10 +15,14 @@ SELECT
     cn.name, 
     cn.phone1, 
     cn.phone2, 
+    cn.happy_bd, 
     cn.email, 
     cd.id AS data_id,
     cd.categories,
-    cm.meta_value AS profileImg
+    cd.contract_date,
+    cd.contract_number,
+    cd.address_live,
+    cm.meta_value AS case_profile_img
 FROM 
     cases_new cn 
 JOIN 
@@ -28,7 +32,7 @@ ON
 LEFT JOIN
     casemeta cm
 ON
-    cn.id = cm.case_id AND cm.meta_key = "profileImg"
+    cn.id = cm.case_id AND cm.meta_key = "case_profile_img"
 
 ';
 
@@ -47,8 +51,12 @@ while ($res = mysqli_fetch_assoc($access)) {
     $obj->{'phone2'} = decryptData($res['phone2'], $key);
     $obj->{'email'} = decryptData($res['email'], $key);
     $obj->{'data_id'} = $res['data_id'];
+    $obj->{'contractDate'} = $res['contract_date'];
+    $obj->{'contractNumber'} = $res['contract_number'];
+    $obj->{'addressLive'} = $res['address_live'];
+    $obj->{'happyBD'} = $res['happy_bd'];
     $obj->{'categories'} = json_decode($res['categories']);
-    $obj->{'profileImg'} = json_decode($res['profileImg']);
+    $obj->{'profileImg'} = json_decode($res['case_profile_img']);
 
    // Додавання об'єкта до масиву
    $mas[] = $obj;
