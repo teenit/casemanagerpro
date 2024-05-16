@@ -41,8 +41,8 @@
 .set__user__wr{
     display: flex;
     grid-template-columns: 2fr 1fr;
-    border: solid 3px var(--main-color);
-    padding: 5px 10px;
+    border: solid 1.5px var(--main-color);
+    padding: 10px 15px;
     border-radius: 20px;
     align-items: center;
     color: gray;
@@ -65,8 +65,7 @@
     justify-content: right;
 }
 .set__users__data__line.arc .set__user__wr{
-    border: solid 3px #dad5df;
-    background-color: #dad5df;
+    background-color: var(--background-color);
 }
 
 .settings__page{
@@ -85,13 +84,18 @@
     width: max-content;
     float: right;
     margin-right: 10px;
-    padding: 5px 10px;
+    padding: 10px 15px;
     border-radius: 20px;
-    border: solid 3px var(--main-color);
+    border: solid 1.5px var(--main-color);
+}
+.set__user__modal__wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 .set__users__data__line.arc .set__user__control__panel__icons{
-    border: solid 3px #dad5df;
-    background-color: #dad5df;
+    background-color: var(--background-color);
 }
 .set__user__control__panel__icons img{
     width: 20px;

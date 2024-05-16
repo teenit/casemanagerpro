@@ -3,7 +3,7 @@ import { MuiColorInput } from 'mui-color-input'
 
 const InputColor = ({value, onChange}) => {
 
-  return <input type='color'/>
+  return <MuiColorInput value={value} onChange={onChange}/>
 }
 
 export default InputColor;

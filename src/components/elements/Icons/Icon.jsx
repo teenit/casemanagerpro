@@ -2,19 +2,32 @@ import React, { useEffect, useState } from 'react';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Add, AttachFile, Check, Close, Delete, Edit, MailOutline, Search, Send } from '@mui/icons-material';
+import { Add, AttachFile, Check, Close, Delete, Edit, ExitToApp, MailOutline, MenuBook, Search, Send, Visibility, VisibilityOff } from '@mui/icons-material';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import EventIcon from '@mui/icons-material/Event';
+
 const Icon = ({ icon, addClass }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case "eye_off":
+                ico = <VisibilityOff fontSize='large' className={addClass} />
+                break;
+            case "eye":
+                ico = <Visibility fontSize='large' className={addClass} />
+                break;
+            case "book":
+                ico = <MenuBook fontSize='large' className={addClass} />
+                break;
+            case "exit":
+                ico = <ExitToApp fontSize='large' className={addClass} />
+                break;
             case "event":
                 ico = <EventIcon fontSize='large' className={addClass} />
                 break;
@@ -28,7 +41,7 @@ const Icon = ({ icon, addClass }) => {
                 ico = <Search fontSize='large' className={addClass} />
                 break;
             case "delete":
-                ico = <Delete className={addClass} />
+                ico = <Delete fontSize='large' className={addClass} />
                 break;
             case "add":
                 ico = <Add className={addClass} fontSize='large' />;

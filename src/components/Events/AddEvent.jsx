@@ -4,14 +4,21 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { serverAddres } from "../Functions/serverAddres";
 import s from "./events.module.css"
-
+import {changeAps, changeApsBr} from "../Functions/translateString"
+import Input from "../elements/Inputs/Input"
+import Textarea from "../elements/Inputs/Textarea"
+import { Button } from "@mui/material";
+import { MuiColorInput } from "mui-color-input";
+import InputColor from "../elements/Inputs/InputColor";
 const AddEvent = ({close,getEvents})=>{
     const [event,setEvent] = useState({
         title:"",
         description:"",
         color:"#b399cb"
     })
-    
+    const handleEventChange = (key,value)=>{
+        setEvent({...event,[key]:value})
+    }
     function transliterate(key){
         var a = {"Ё":"YO","Є":"E","є":"e","Й":"I","Ц":"TS","У":"U","К":"K","Е":"E","Н":"N","Г":"G","Ш":"SH","Щ":"SCH","З":"Z","Х":"H","Ъ":"","ё":"yo","й":"i","ц":"ts","у":"u","к":"k","е":"e","н":"n","г":"g","ш":"sh","щ":"sch","з":"z","х":"h","ъ":"","Ф":"F","Ы":"I","В":"V","А":"a","П":"P","Р":"R","О":"O","Л":"L","Д":"D","Ж":"ZH","Э":"E","ф":"f","ы":"i","в":"v","а":"a","п":"p","р":"r","о":"o","л":"l","д":"d","ж":"zh","э":"e","Я":"Ya","Ч":"CH","С":"S","М":"M","И":"I","Т":"T","Ь":"i","Б":"B","Ю":"YU","я":"ya","ч":"ch","с":"s","м":"m","и":"i","т":"t","ь":"i","ъ":"i","Ъ":"i","'":"i","б":"b","ю":"yu"," ":"-","`":"-","~":"-","'":"-","’":"-",")":"-","(":"-"};
         return key.split('').map(function (char) { 
@@ -23,8 +30,8 @@ const AddEvent = ({close,getEvents})=>{
         let obj = {
             id: localStorage.getItem("id"),
             token: localStorage.getItem("token"),
-            title:event.title,
-            description:event.description,
+            title:changeAps(event.title),
+            description: changeApsBr(event.description),
             color:event.color,
             link:link,
             userName: localStorage.getItem("userName")
@@ -52,23 +59,15 @@ const AddEvent = ({close,getEvents})=>{
                     <h2>Створення події</h2>
                 
                 <div className={s.item__two}>
-                    <input className={s.inp__title} type="text" placeholder="Введіть назву Події" onChange={(e)=>{
-                        setEvent({...event,title:e.target.value.replaceAll("'", "’").replaceAll(/\n/g, "<br />")})
-                    }} />
+                    <Input className={s.inp__title} type="text" label="Назва Події" onChange={(e)=>{handleEventChange("title",e.target.value)}} />
                     </div>
                     <div>
-                    <input defaultValue={event.color} type="color" className={s.inp__color} onChange={(e)=>{
-                        setEvent({...event,color:e.target.value})
-                    }} />
+                    <InputColor value={event.color} onChange={(e)=>{handleEventChange("color",e.target.value)}} />
                 </div>
                 <div className={s.wr__desc}>
-                    <textarea placeholder="Введіть опис Події" className={s.txt__description} name="" id="" cols="30" rows="10" onChange={(e)=>{
-                        setEvent({...event,description:e.target.value.replaceAll("'", "’").replaceAll(/\n/g, "<br />")})
-                    }}></textarea>
+                    <Textarea label="Опис Події" className={s.txt__description} name="" id="" cols="30" rows="10" onChange={(e)=>{handleEventChange("description",e.target.value)}}/>
                 </div>
-                <div className={s.wr__btn}>
-                    <button disabled={event.title !== "" && event.description !== "" ? false : true} onClick={createEvent} className="primary__btn padding20px">Створити подію</button>
-                </div>
+                    <Button disabled={event.title !== "" && event.description !== "" ? false : true} onClick={createEvent}>Створити подію</Button>
             </div>
         </div>
         </div>

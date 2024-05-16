@@ -5,6 +5,12 @@ import delImg from "./../../../img/icons/delete-48.png";
 import axios from "axios";
 import { serverAddres } from "../../Functions/serverAddres";
 import { NavLink } from "react-router-dom";
+import Input from "../../elements/Inputs/Input";
+import Textarea from "../../elements/Inputs/Textarea"
+import { Button } from "@mui/material";
+import { changeAps, changeApsBr } from "../../Functions/translateString"
+import { MuiColorInput } from "mui-color-input";
+import Icon from "../../elements/Icons/Icon";
 const SetEvent = ()=>{
     function transliterate(key){
         var a = {"Ё":"YO","Є":"E","є":"e","Й":"I","Ц":"TS","У":"U","К":"K","Е":"E","Н":"N","Г":"G","Ш":"SH","Щ":"SCH","З":"Z","Х":"H","Ъ":"","ё":"yo","й":"i","ц":"ts","у":"u","к":"k","е":"e","н":"n","г":"g","ш":"sh","щ":"sch","з":"z","х":"h","ъ":"","Ф":"F","Ы":"I","В":"V","А":"a","П":"P","Р":"R","О":"O","Л":"L","Д":"D","Ж":"ZH","Э":"E","ф":"f","ы":"i","в":"v","а":"a","п":"p","р":"r","о":"o","л":"l","д":"d","ж":"zh","э":"e","Я":"Ya","Ч":"CH","С":"S","М":"M","И":"I","Т":"T","Ь":"i","Б":"B","Ю":"YU","я":"ya","ч":"ch","с":"s","м":"m","и":"i","т":"t","ь":"i","ъ":"i","Ъ":"i","'":"i","б":"b","ю":"yu"," ":"-","`":"-","~":"-","'":"-","’":"-",")":"-","(":"-"};
@@ -18,6 +24,9 @@ const SetEvent = ()=>{
         description:"",
         color:"#b399cb"
     })
+    const handleEventChange = (key,value)=>{
+        setEvent({...event,[key]:value})
+    }
     const [events,setEvents] = useState([])
 
     useEffect(()=>{
@@ -44,8 +53,8 @@ const SetEvent = ()=>{
         let obj = {
             id: localStorage.getItem("id"),
             token: localStorage.getItem("token"),
-            title:event.title,
-            description:event.description,
+            title:changeApsBr(event.title),
+            description:changeApsBr(event.description),
             color:event.color,
             link:link,
             userName: localStorage.getItem("userName")
@@ -69,20 +78,15 @@ const SetEvent = ()=>{
                     <h2>Створення події</h2>
                 </div>
                 <div className={s.item__two}>
-                    <input className={s.inp__title} type="text" placeholder="Введіть назву Події" onChange={(e)=>{
-                        setEvent({...event,title:e.target.value.replaceAll("'", "’").replaceAll(/\n/g, "<br />")})
-                    }} />
-                    <input defaultValue={event.color} type="color" className={s.inp__color} onChange={(e)=>{
-                        setEvent({...event,color:e.target.value})
-                    }} />
+                    <Input className={s.inp__title} type="text" label="Введіть назву Події" onChange={(e)=>{handleEventChange("title",e.target.value)}}/>
+                    <MuiColorInput className='w50' format="hex" value={event.color} onChange={(e)=>{handleEventChange("color",e)}} />
                 </div>
                 <div className={s.wr__desc}>
-                    <textarea placeholder="Введіть опис Події" className={s.txt__description} name="" id="" cols="30" rows="10" onChange={(e)=>{
-                        setEvent({...event,description:e.target.value.replaceAll("'", "’").replaceAll(/\n/g, "<br />")})
-                    }}></textarea>
+                    <Textarea label="Введіть опис Події" className={s.txt__description} name="" id="" cols="30" rows="10" onChange={(e)=>{handleEventChange("description",e.target.value)}}></Textarea>
                 </div>
+
                 <div className={s.wr__btn}>
-                    <button disabled={event.title !== "" && event.description !== "" ? false : true} onClick={createEvent} className="primary__btn padding20px">Створити подію</button>
+                    <Button variant="contained" disabled={event.title !== "" && event.description !== "" ? false : true} onClick={createEvent} >Створити подію</Button>
                 </div>
             </div>
             <div className={s.results}>
@@ -97,7 +101,9 @@ const SetEvent = ()=>{
                     </div>
                     <div className={s.author}>Створив: {item.meta.userName}</div>
                     <div className={s.res__control}>
-                        <div className={s.delete}><img src={delImg} alt="" /></div>
+                        <div className={s.delete}>
+                            <Icon icon={"delete"} addClass={"default-icon"}/>
+                        </div>
                         <div className={s.date}>{item.meta.date}</div>
                     </div>
                 </div>)

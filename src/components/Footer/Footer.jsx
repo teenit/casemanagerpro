@@ -67,11 +67,11 @@ const Footer = () => {
             <div className="footer">
                 <div className="footer__top">
                     <div className="footer__top__line">
-                        <p className="footer__contact">Якшо виникли проблеми, пропозиції - пишіть на поштову скриньку </p>
+                        <p className="footer__contact">Якщо виникли проблеми, пропозиції - пишіть на поштову скриньку </p>
                         <a href="mailto:teenitclub@gmail.com">teenitclub@gmail.com</a>
                     </div>
                     <div className="footer__top__line">
-                        <p className="footer__contact">Якшо питання супер термінове дзвоніть за номером</p>
+                        <p className="footer__contact">Якщо питання супер термінове дзвоніть за номером</p>
                         <a href="tel:+380932080760">+380932080760</a>
                     </div>
                 </div>
@@ -84,7 +84,7 @@ const Footer = () => {
                     }}>Оновити програму</button> : ""}
                     </span>
                     
-                    <p className="copyright">© Case Manager | 2022 | powered by <a href="https://studio.itclub.in.ua">Studio IT Club</a></p>
+                    <p className="copyright">© Case Manager | 2024 | powered by <a href="https://studio.itclub.in.ua">Studio IT Club</a></p>
 
                 </div>
             </div>
