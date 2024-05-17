@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { LANG } from '../../../services/config';
-import Modal from '../../Modals/Modal';
 import OpenPhoto from '../../Galery/OpenPhoto';
 import { NavLink } from 'react-router-dom';
 import GetAppIcon from '@mui/icons-material/GetApp';

@@ -6,7 +6,7 @@ import bookImg from "./../../../img/icons/book-50.png";
 import showImg from "./../../../img/icons/show-50.png";
 import hideImg from "./../../../img/icons/hide-50.png";
 import { serverAddres } from "./../../Functions/serverAddres";
-import ModalSimple from "../../Modals/ModalSimple";
+import ModalMessage from "../../Modals/ModalMessage";
 import Specification from "./Specification";
 import { apiResponse } from "../../Functions/get_apiObj";
 import { Button, MenuItem, Select } from "@mui/material";
@@ -176,12 +176,12 @@ const SetUser = ({ categories, categoriesCont }) => {
                     user={specificate} /> : null}
             </div>
 
-            {modal && <ModalSimple>
+            {modal && <ModalMessage>
                 <div className="set__user__modal__wrap">
                     <p>{modalInfo.message}</p>
                     <Button variant="contained"onClick={() => { setModal(false) }}>Зрозумів</Button>
                 </div>
-            </ModalSimple>}
+            </ModalMessage>}
         </>
     )
 }

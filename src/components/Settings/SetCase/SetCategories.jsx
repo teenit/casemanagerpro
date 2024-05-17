@@ -63,28 +63,6 @@ const SetCategories = ({cats})=>{
         .catch((error)=>console.log(error)) 
     }
     function addNewCategory(id){
-        // if(document.querySelector("#" + id).value == "") return alert("Заповніть поле");
-        // let category = {
-        //     value: "catCase" + transliterate(document.querySelector("#" + id).value),
-        //     text:document.querySelector("#" + id).value.replace("'", "’"),
-        //     color:document.querySelector("#colorBackground").value
-        // }
-        // let obj = {
-        //     id: localStorage.getItem("id"),
-        //     token: localStorage.getItem("token"),
-        //     category:category
-        // }
-        // axios({
-        //     url: serverAddres("manage/add-categories-case.php"),
-        //     method: "POST",
-        //     header : {'Content-Type': 'application/json;charset=utf-8'},
-        //     data : JSON.stringify(obj),
-        // })
-        // .then((data)=>{ 
-        //     document.querySelector("#" + id).value = ""
-        //     setCategoriesCase(data.data);
-        // })
-        // .catch((error)=>console.log(error)) 
         apiResponse({
             text: state.nameOfCategory.trim().replaceAll("'", "’"),
             color: state.colorOfCategory

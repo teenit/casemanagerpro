@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import './Registration.css';
 import { serverAddres } from "../Functions/serverAddres";
-import ModalSimple from "../Modals/ModalSimple";
+import ModalMessage from "../Modals/ModalMessage";
 
 
 const Registration = ()=>{
@@ -104,10 +104,10 @@ const Registration = ()=>{
                     <label></label>
                     <button className={`primary__btn ${!isValid ? 'active' : ""}`} disabled={!isValid}>Реєстрація</button>
                 </div>
-                {modal ? <ModalSimple>
+                {modal ? <ModalMessage>
                     <p>{modalInfo.message}</p>
                     <button className="primary__btn padding20px" onClick={()=>{setModal(false)}}>ОК</button>
-                </ModalSimple> : ""}
+                </ModalMessage> : ""}
             </form>
          
     )

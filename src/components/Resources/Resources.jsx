@@ -4,21 +4,31 @@ import AddResources from "./AddResources";
 import GetResources from "./GetResources";
 
 import s from './Resources.module.css';
+import Modal from "../Modals/Modal";
+import { LANG } from "../../services/config";
+import { Button } from "@mui/material";
 
-const Resources = ()=>{
+const Resources = () => {
     const [form, setForm] = useState(false)
-    return(
+    return (
         <div className={s.wrapper}>
             <div className={s.title}>
                 <h1>Ресурси</h1>
                 <span className={s.plus} onClick={
-                    ()=>{
+                    () => {
                         setForm(!form)
                     }
-                }>{form ? "-" :"+"}</span>
+                }>{form ? "-" : "+"}</span>
             </div>
             <div className={s.control}>
-                {form ? <AddResources /> : ""}
+                {form && <Modal closeHandler={() => { setForm(false) }} header="Додати ресурс" footer={
+                    <div className="Modal--footer">
+                        <Button variant="contained">{LANG.save}</Button>
+                        <Button onClick={() => { setForm(false) }} color="error" variant="contained">{LANG.cancel}</Button>
+                    </div>
+                }>
+                <AddResources/>
+                </Modal>}
             </div>
             <div className={s.get__resources}>
                 <GetResources />

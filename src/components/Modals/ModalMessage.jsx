@@ -5,19 +5,20 @@ import s from "./Modal.module.css";
 const modalRoot = document.querySelector('#modal-root');
 
 
-export class ModalSimple extends Component {
+export class ModalMessage extends Component {
     render()
     {
      return createPortal(
-         <div className={s.modal__wrap}>
-             <div className={s.modal__inner}>
+         <div className="ModalMessage">
+             <div className="ModalMessage-inner">
                  <div className={`${s.info}`}>
                         {this.props.children}
                  </div>
+                 <div className="ModalMessage-inner-footer"></div>
              </div>
          </div>,
          modalRoot
      )
     } 
   }
-  export default ModalSimple;
+  export default ModalMessage;

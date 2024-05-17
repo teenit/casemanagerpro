@@ -60,6 +60,7 @@ export const LANG = {
       potreba:"Потреба, запит",
       history:"Історія сім'ї / особи"
     },
+    addEvent:"Створення події",
     access: {
       "a_cases_category_edit_id":"Доступні категорії кейсів для редагування", 
       "a_cases_category_look_id":"Доступні категорії кейсів для перегляду", 

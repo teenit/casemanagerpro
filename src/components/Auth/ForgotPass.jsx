@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { serverAddres } from "../Functions/serverAddres";
-import ModalSimple from "../Modals/ModalSimple";
+import ModalMessage from "../Modals/ModalMessage";
 
 const ForgotPass = ()=>{
     const [email,setEmail] = useState("")
@@ -39,10 +39,10 @@ const ForgotPass = ()=>{
                     forgotPass(email)
             }}>Відновити</button>
         </div>
-        {modal ? <ModalSimple>
+        {modal ? <ModalMessage>
             <p>{modalInfo.message}</p>
             <button className="primary__btn padding20px" onClick={()=>{setModal(false)}}>Зрозумів</button>
-        </ModalSimple> : ""}
+        </ModalMessage> : ""}
         </>
         
     )

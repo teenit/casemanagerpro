@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../store/Slices/userSlice";
 import './Registration.css';
 import { serverAddres } from "../Functions/serverAddres";
-import ModalSimple from "../Modals/ModalSimple";
+import ModalMessage from "../Modals/ModalMessage";
 const LoginForm = ({show})=>{
     const [modal, setModal] = useState(false);
     const [modalInfo, setModalInfo] = useState(false);
@@ -64,10 +64,10 @@ const LoginForm = ({show})=>{
                     <button className={`primary__btn ${!isValid ? 'active' : ""}`} disabled={!isValid}>Авторизація</button>
                 </div>
             </form>
-            {modal ? <ModalSimple>
+            {modal ? <ModalMessage>
                 <p>{modalInfo.message}</p>
                 <button className="primary__btn padding20px" onClick={()=>{setModal(false)}}>ОК</button>
-            </ModalSimple> : ""}
+            </ModalMessage> : ""}
         </>
        
     )

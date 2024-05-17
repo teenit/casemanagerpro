@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./recovery.css";
-import ModalSimple from "../Modals/ModalSimple";
+import ModalMessage from "../Modals/ModalMessage";
 
 
 const Recovery = ()=>{
@@ -91,11 +91,11 @@ const Recovery = ()=>{
                     .catch((error)=>console.log(error))  
             }}>Надіслати запит</button>
             </div>
-            {modal ? <ModalSimple>
+            {modal ? <ModalMessage>
                 <p>{modalInfo.message}</p>
                 <NavLink to = "/login">Перейти до авторизації</NavLink>
                 <button className="primary__btn padding20px" onClick={()=>{setModal(false)}}>ОК</button>
-            </ModalSimple> : ""}
+            </ModalMessage> : ""}
         </div>
     )
 }

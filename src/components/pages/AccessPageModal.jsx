@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ModalSimple from '../Modals/ModalSimple'
+import ModalMessage from '../Modals/ModalMessage'
 import { apiResponse } from '../Functions/get_apiObj'
 const AccessPageModal = ({ close }) => {
     const [data,setData] = useState({
@@ -14,7 +14,7 @@ const AccessPageModal = ({ close }) => {
     },[
     ])
     return (
-        <ModalSimple>
+        <ModalMessage>
             <div className='AccessPage-modal'>
                 <div className='AccessPage-modal-cross' onClick={close}>
                     <div className='AccessPage-modal-cross-c1'></div>
@@ -41,7 +41,7 @@ const AccessPageModal = ({ close }) => {
                     }
                 }}>Зберегти</button>
             </div>
-        </ModalSimple>
+        </ModalMessage>
     )
 }
 
