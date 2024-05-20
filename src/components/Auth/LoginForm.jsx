@@ -6,6 +6,9 @@ import { setUser } from "../../store/Slices/userSlice";
 import './Registration.css';
 import { serverAddres } from "../Functions/serverAddres";
 import ModalMessage from "../Modals/ModalMessage";
+import { LANG } from "../../services/config";
+import { Button } from '@mui/material';
+
 const LoginForm = ({show})=>{
     const [modal, setModal] = useState(false);
     const [modalInfo, setModalInfo] = useState(false);
@@ -51,23 +54,22 @@ const LoginForm = ({show})=>{
         <>
             <form action="" className="reg__form" onSubmit={handleSubmit(getUser)}>
                 <div className="reg__block">
-                    <label>E-mail {errors?.login && <span className="error__mes">{errors?.login?.message || "Обов'язково до заповнення"}</span>}</label>
-                    <input type="email" {...register("login",{required:true,minLength:{value:5,message:"Мінімум 5 символа"}})} />
+                    <label>E-mail{errors?.login && <span className="error__mes">{errors?.login?.message || LANG.loginForm.required}</span>}</label>
+                    <input type="email" {...register("login",{required:true,minLength:{value:5,message:LANG.loginForm.emailMinLengthMessage}})} />
                 </div>
                 <div className="reg__block">
-                    <label>Пароль {errors?.password && <span className="error__mes">{errors?.password?.message || "Обов'язково до заповнення"}</span>}</label>
-                    <input type="password" {...register("password",{required:true,minLength:{value:5,message:"Мінімум 5 символа"}})} />
+                    <label>{LANG.loginForm.passwordLabel}{errors?.password && <span className="error__mes">{errors?.password?.message || LANG.loginForm.required}</span>}</label>
+                    <input type="password" {...register("password",{required:true,minLength:{value:5,message:LANG.loginForm.passwordMinLengthMessage}})} />
                 </div>
                 
                 <div className="reg__block">
                     <label></label>
-                    <button className={`primary__btn ${!isValid ? 'active' : ""}`} disabled={!isValid}>Авторизація</button>
+                    <button className={`primary__btn ${!isValid ? 'active' : ""}`} disabled={!isValid}>{LANG.buttonTexts.auth}</button>
                 </div>
             </form>
-            {modal ? <ModalMessage>
-                <p>{modalInfo.message}</p>
-                <button className="primary__btn padding20px" onClick={()=>{setModal(false)}}>ОК</button>
-            </ModalMessage> : ""}
+            {modal && <ModalMessage header={modalInfo.message}>
+                <Button variant="contained" onClick={()=>{setModal(false)}}>{LANG.buttonTexts.ok}</Button>
+            </ModalMessage>}
         </>
        
     )

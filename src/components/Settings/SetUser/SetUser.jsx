@@ -176,11 +176,9 @@ const SetUser = ({ categories, categoriesCont }) => {
                     user={specificate} /> : null}
             </div>
 
-            {modal && <ModalMessage>
-                <div className="set__user__modal__wrap">
-                    <p>{modalInfo.message}</p>
-                    <Button variant="contained"onClick={() => { setModal(false) }}>Зрозумів</Button>
-                </div>
+            {modal && <ModalMessage header={modalInfo.message} footer={
+                <Button variant="contained" onClick={() => { setModal(false) }}>Зрозумів</Button>
+            }>
             </ModalMessage>}
         </>
     )

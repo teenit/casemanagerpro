@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import s from "./caseslist.module.css";
 import { useReactToPrint } from "react-to-print";
 import printImg from './../../img/icons/print-black-50.png';
+import { LANG } from "../../services/config";
 const CasesList = ({ cases, categories }) => {
     const componentRef = useRef();
 
@@ -19,7 +20,7 @@ const caseCategories = (catMas) => {
         console.log(mas);
         return mas.join(", ");
     } else {
-        return "Немає";
+        return LANG.cases;
     }
 };
 
@@ -34,13 +35,13 @@ const caseCategories = (catMas) => {
                 <table >
                     <thead>
                         <tr className={s.tr}>
-                            <td>№ кейсу</td>
-                            <td>ПІБ</td>
-                            <td>Телефон</td>
-                            <td>Пошта</td>
-                            <td>Дата нар-ня</td>
-                            <td>Адреса (факт)</td>
-                            <td>Категорія</td>
+                            <td>{LANG.casesList.caseNumber}</td>
+                            <td>{LANG.casesList.pib}</td>
+                            <td>{LANG.casesList.phone}</td>
+                            <td>{LANG.casesList.email}</td>
+                            <td>{LANG.casesList.birthday}</td>
+                            <td>{LANG.casesList.address}</td>
+                            <td>{LANG.casesList.categories}</td>
                         </tr>
                     </thead>
                     <tbody>

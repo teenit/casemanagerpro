@@ -13,7 +13,7 @@ const Recovery = ()=>{
    const [recoveryPass, setRecoveryPass] = useState("")
    const [recoveryPassto, setRecoveryPassto] = useState("")
    const [recoveryError, setRecoveryError] = useState("")
-   const [modal, setModal] = useState(false)
+   const [modal, setModal] = useState(true)
    const [modalInfo, setModalInfo] = useState(false);
     const [showForm, setShowForm] = useState(false);
     useEffect(()=>{

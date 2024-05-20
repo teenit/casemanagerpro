@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import './Registration.css';
 import { serverAddres } from "../Functions/serverAddres";
 import ModalMessage from "../Modals/ModalMessage";
+import { LANG } from "../../services/config";
+import { Button } from '@mui/material';
 
 
 const Registration = ()=>{
@@ -104,10 +106,9 @@ const Registration = ()=>{
                     <label></label>
                     <button className={`primary__btn ${!isValid ? 'active' : ""}`} disabled={!isValid}>Реєстрація</button>
                 </div>
-                {modal ? <ModalMessage>
-                    <p>{modalInfo.message}</p>
-                    <button className="primary__btn padding20px" onClick={()=>{setModal(false)}}>ОК</button>
-                </ModalMessage> : ""}
+                {modal && <ModalMessage header={modalInfo.message}>
+                    <Button variant="contained" onClick={()=>{setModal(false)}}>{LANG.buttonTexts.ok}</Button>
+                </ModalMessage>}
             </form>
          
     )

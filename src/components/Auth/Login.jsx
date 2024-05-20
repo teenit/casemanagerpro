@@ -4,6 +4,7 @@ import LoginForm from "./LoginForm";
 import Registration from "./Registration";
 
 import './Registration.css';
+import { LANG } from "../../services/config";
 
 
 const Login = ()=>{
@@ -21,23 +22,23 @@ const Login = ()=>{
                            register: false,
                            auth: true,
                            forgot: false
-                })}}>Авторизація</div>
+                })}}>{LANG.login.auth}</div>
                 <div className="reg__menu__item__znak">|</div>
                 <div className={`reg__menu__item ${selected.register ? "active" : ""}`} onClick={()=>{setSelected({
                            register: true,
                            auth: false,
                            forgot: false
-                })}}>Реєстрація</div>
+                })}}>{LANG.login.signup}</div>
             </div>
             {selected.auth ? <LoginForm /> : ""}
             {selected.register ? <Registration /> : ""}
             {selected.forgot ? <ForgotPass /> : ""}
             <div className="reg__form__recovery">
-                <p>Забули пароль - <b className={`reg__form__recovery__btn ${selected.forgot ? "active" : ""}`} onClick={()=>{setSelected({
+                <p>{LANG.login.forgetPass} <b className={`reg__form__recovery__btn ${selected.forgot ? "active" : ""}`} onClick={()=>{setSelected({
                            register: false,
                            auth: false,
                            forgot: true
-                })}}>Відновити</b></p>
+                })}}>{LANG.buttonTexts.recover}</b></p>
             </div>
         </div>
     )
