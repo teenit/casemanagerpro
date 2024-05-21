@@ -3,7 +3,7 @@ import { useState } from "react";
 import { get_apiObj } from "../../Functions/get_apiObj";
 import AddCalEventForm from "./AddCalEventForm";
 import s from "./cal.module.css"
-const AddCalEvent = ({ close, addEvent, events, keys }) => {
+const AddCalEvent = ({ close, addEvent, events, keys, getCalendarList }) => {
     const [form, setForm] = useState(false)
     const dayEvents = events.filter(item => item.day == addEvent.date.format('D') && item.month == addEvent.date.month());
     const dayEventsWithoutFull = dayEvents.filter(item=> item.value.start!=="0:00"&&item.value.end!=="23:59")
@@ -29,7 +29,7 @@ const sortedDayEvents = dayEvents.sort((a, b) => {
                         </div>
                         <span className={s.plus__add} onClick={() => { setForm(!form) }}>{form ? "-" : "+"}</span>
                     </div>
-                    {form ? <AddCalEventForm close={() => { setForm(false) }} date={addEvent.date} /> : null}
+                    {form ? <AddCalEventForm getCalendarList = {getCalendarList} close={() => { setForm(false) }} date={addEvent.date} /> : null}
                     <div className={s.inner__content}>
                         <div className={s.timetable}>
                             {timeMas.map((item, index) => {

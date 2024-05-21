@@ -4,11 +4,11 @@ import { changeAps, changeApsBr } from "../../Functions/translateString";
 import s from "./cal.module.css"
 import Input from '../../elements/Inputs/Input'
 import { LANG } from "../../../services/config";
-import { Button } from "@mui/material";
+import { Button, Checkbox } from "@mui/material";
 import Modal from "../../Modals/Modal"
 import Textarea from "../../elements/Inputs/Textarea"
 import SmallNotification from "../../elements/Notifications/SmallNotification"
-const AddCalEventForm = ({ date, close }) => {
+const AddCalEventForm = ({ date, close, getCalendarList }) => {
     const [form, setForm] = useState({
         color: {
             requare: true,
@@ -43,30 +43,33 @@ const AddCalEventForm = ({ date, close }) => {
         day: date.format('D'),
         month: date.month(),
         year: date.year(),
-        key: 'myCalendar'
+        key: 'myCalendar',
+        every_year: 0
     })
     const [alert,setAlert] = useState({
         success:false,
         error:false
     })
+    const saveHandler = () => {
+        apiResponse({
+            title: form.title.value,
+            text: changeApsBr(form.text.value),
+            color: form.color.value,
+            link: form.link.value,
+            start: form.start.value,
+            end: form.end.value,
+            day: form.day,
+            month: form.month,
+            year: form.year,
+            key: form.key,
+            every_year: form.every_year
+        },"user/add-calendar.php").then((res)=>{getCalendarList(); close();})
+    }
     function sendForm() {
         if (form.title.error || form.color.error || form.link.error || form.text.error) {
             setAlert({...alert,error:true})
         }else{
-            apiResponse((data) => {
-            }, "user/add-calendar.php", {
-                title: form.title.value,
-                text: changeApsBr(form.text.value),
-                color: form.color.value,
-                link: form.link.value,
-                start: form.start.value,
-                end: form.end.value,
-                day: form.day,
-                month: form.month,
-                year: form.year,
-                key: form.key
-            })
-            close()
+            saveHandler()
             setAlert({...alert,success:true})
         }
 
@@ -155,6 +158,15 @@ const AddCalEventForm = ({ date, close }) => {
                             setForm({
                                 ...form,
                                 key: e.target.checked ? 'forAll' : 'myCalendar'
+                            })
+                        }} /></label>
+                </div>
+                <div className={s.add__form__line}>
+                    <label htmlFor="forAll">Повторювати кожного року<Checkbox type="checkbox"
+                        onChange={(e) => {
+                            setForm({
+                                ...form,
+                                every_year: e.target.checked ? 1 : 0
                             })
                         }} /></label>
                 </div>

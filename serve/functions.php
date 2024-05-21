@@ -34,9 +34,10 @@ function addEventToCalendar($conn, $data) {
 
     // Отримання поточної дати
     $date = date("d-m-Y");
-
+    $case_id = $data->case_id ? $data->case_id : 0;
+    $every_year = $data->every_year ? $data->every_year : 0;
     // Підготовка SQL запиту з використанням параметрів bind
-    $msql = "INSERT INTO calendar (user_id, meta_key, meta_value, date, month, year, day) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $msql = "INSERT INTO calendar (user_id, meta_key, meta_value, date, month, year, day, case_id, every_year) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $obj = json_encode(array(
         'dateCreated' => $dateCreated,
         'userID' => $userID,
@@ -51,10 +52,10 @@ function addEventToCalendar($conn, $data) {
         'end' => $end
     ), JSON_UNESCAPED_UNICODE);
     // Підготовка і виконання запиту з використанням параметрів bind
-    if ($stmt = mysqli_prepare($conn, $msql)) {
+    if ($stmt = mysqli_prepare($GLOBALS['conn'], $msql)) {
   // Підготовка значення об'єкта в форматі JSON
 
-        mysqli_stmt_bind_param($stmt, "issssii", $id, $key, $obj, $date, $month, $year, $day);
+        mysqli_stmt_bind_param($stmt, "issssssis", $id, $key, $obj, $date, $month, $year, $day, $case_id, $every_year);
 
       
 
@@ -68,7 +69,8 @@ function addEventToCalendar($conn, $data) {
         // Закриття підготовленого запиту
         mysqli_stmt_close($stmt);
     } else {
-        return "Error: " . mysqli_error($conn);
+        return "Error: 000" . mysqli_error($conn);
     }
 }
+
 ?>

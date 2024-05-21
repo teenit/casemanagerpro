@@ -26,6 +26,7 @@ export async function apiResponse(objTo, url){
 
     objTo.id = obj.id;
     objTo.token = obj.token;
+    console.log(objTo)
    return await axios({
          url: serverAddres(url),
          method: "POST",

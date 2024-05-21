@@ -3,7 +3,7 @@ import s from "./cal.module.css"
 import moment from "moment";
 import AddCalEvent from "./AddCalEvent";
 import { useState } from "react";
-const CalGrid =({keys,startDay,today,events})=>{
+const CalGrid =({keys,startDay,today,events,getCalendarList})=>{
     const day = startDay.clone()
     const [addEvent, setAddEvent] = useState({
         open:false,
@@ -15,7 +15,7 @@ const CalGrid =({keys,startDay,today,events})=>{
    
     return(
         <div className={s.wrap}>
-         {addEvent.open ? <AddCalEvent keys = {keys} events = {events} addEvent = {addEvent} close = {()=>{setAddEvent({...addEvent,open:false})}}/> : null}    
+         {addEvent.open ? <AddCalEvent getCalendarList = {getCalendarList} keys = {keys} events = {events} addEvent = {addEvent} close = {()=>{setAddEvent({...addEvent,open:false})}}/> : null}    
             <div className={s.cal}>
                 {
                 arrayDays.map((item,i)=>{
