@@ -1,0 +1,10 @@
+.ContactForm{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    &-split{
+        display: flex;
+        width: 100%;
+        gap: 25px;
+    }
+}

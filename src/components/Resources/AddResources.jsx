@@ -2,10 +2,9 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { serverAddres } from "../Functions/serverAddres";
-
+import FilesUploader from "../elements/Uploaders/FilesUploader"
 import s from './Resources.module.css';
-
-
+import Input from "../elements/Inputs/Input"
 
 const AddResources = ()=>{
 function sendResources(){
@@ -50,60 +49,30 @@ function sendResources(){
         description:"",
         file:null
     })
+    const handleMetaChange = (key,value)=>{
+        setMeta({...meta,[key]:value})
+    }
     const [bload, setBload] = useState(false)
     const [loaderProgress, setLoaderProgress] = useState(0)
     return(
-        <div className={s.add__form__wrap}>
-            <div className={s.add__form__back}>
-                <div className={s.add__form}>
-                    <div className={s.add__form__title}>
-                        <input type="text" 
-                                placeholder="Назва Ресурсу"
+                <div className="AddResources">
+                    <div className="AddResources-split">
+                        <Input type="text" 
+                                label="Назва Ресурсу"
                                 value={meta.title}
-                                onChange={(e)=>{
-                                    setMeta({...meta,title:e.target.value})
-                                }}/>
-                    </div>
-                    <div className={s.add__form__desc}>
-                        <input type="text" 
-                                placeholder="Опис Ресурсу"
+                                onChange={(e)=>{handleMetaChange("title",e.target.value)}}/>
+                        <Input type="text" 
+                                label="Опис Ресурсу"
                                 value={meta.description}
-                                onChange={(e)=>{
-                                    setMeta({...meta,description:e.target.value})
-                                }}/>
+                                onChange={(e)=>{handleMetaChange("description",e.target.value)}}/>
                     </div>
-                    <div className={s.add__form__file}>
-                        <div className={s.res__file__wrap}>
-                            <div className={s.hidden__btn}>Обрати файл</div>
-                            <input type="file" 
-                                id="resId"
-                                multiple
-                                onChange={(e)=>{
-                                    setMeta({...meta,file:e.target})
-                                    setHiddenText(e.target.files[0].name)
-                                }}/>
-                                
-                        </div>
-                        <div className={s.hidden__text}>{hiddenText}</div>
-                    </div>
-                    <div className={s.add__form__btn}>
-                        <button
-                        className={`primary__btn ${bload ? s.b__load : ''}`}
-
-                        onClick={()=>{
-                            if(bload) return;
-                            if(meta.file == null) return window.alert("Оберіть файл")
-                            if(meta.title == "") return window.alert("Введіть назву файлу")
-                            sendResources()
-                            setBload(true)
-                        }}>{bload ? "Завантажую" : "Додати ресурс" }</button>
-                        <div className={s.load__progress} style={{
-                            "width": loaderProgress + "%"
-                        }}></div>
-                    </div>
+                    <FilesUploader multiple={true} successHandler={sendResources} meta={{
+                        key:"resouces_files",
+                        type:"event",
+                        event_id:11
+                        
+                    }}/>
                 </div>
-            </div>
-        </div>
     )
     
 }

@@ -76,7 +76,6 @@ const Case = () => {
                                 setEditActive(true)
                             }} />
                     </div>}
-                <img src={cameraImg} alt="" />
             </div>
 
 

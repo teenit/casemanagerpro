@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { serverAddres } from "../Functions/serverAddres";
 import LoadingPage from "../Loading/LoadingPage";
 import GetCases from "./GetCases";
+import { LANG } from "../../services/config";
 
 const Cases = ()=>{
     const [posts, setPosts] = useState("");
@@ -39,7 +40,7 @@ const Cases = ()=>{
                 setPage(
                     {
                         effload:false,
-                        message: "Немає доступних кейсів",
+                        message: LANG.cases,
                         loading:true
                     }
                 ) 

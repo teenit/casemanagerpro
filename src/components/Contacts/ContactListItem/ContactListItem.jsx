@@ -7,6 +7,8 @@ import { ReactComponent as Close } from "../../../img/icons/close.svg";
 import ContactForm from "../ContactForm/ContactForm";
 import Modal from "../Modal/Modal";
 import Icon from "../../elements/Icons/Icon"
+import ModalMessage from "../../Modals/ModalMessage";
+import { Button } from "@mui/material";
 
 const ContactListItem = ({
   id,
@@ -40,18 +42,19 @@ const ContactListItem = ({
       )}
 
       {deleteContact && (
-        <Modal onClose={toggleEditContact}>
-          <p>Ви дійсно бажаєте видалити контакт?</p>
-          <IconButton onClick={() => onDeleteContact(id)} aria-label="Видалити">
-            <span>Так</span>
-          </IconButton>
-          <IconButton
-            onClick={() => handleDeleteContact(false)}
-            aria-label="Видалити"
-          >
-            <span>Ні</span>
-          </IconButton>
-        </Modal>
+        <ModalMessage header="Ви дійсно бажаєте видалити контакт?" footer={
+          <>
+            <Button variant="contained" onClick={() => onDeleteContact(id)} aria-label="Видалити">
+              <span>Так</span>
+            </Button>
+            <Button color="error" variant="contained"
+              onClick={() => handleDeleteContact(false)}
+              aria-label="Видалити"
+            >
+              <span>Ні</span>
+            </Button>
+            </>
+        }/>
       )}
 
       <div className={style.contact_list} key={"kard" + id}>
@@ -107,10 +110,10 @@ const ContactListItem = ({
 
         <div className={style.contact_list_item_btn}>
           <span onClick={() => handleDeleteContact(true)}>
-            <Icon icon={"delete"} addClass={"default-icon"}/>
+            <Icon icon={"delete"} addClass={"default-icon"} />
           </span>
           <span onClick={handleEditContact}>
-            <Icon icon={"edit"} addClass={"default-icon"}/>
+            <Icon icon={"edit"} addClass={"default-icon"} />
           </span>
         </div>
       </div>
