@@ -24,10 +24,10 @@ import {
     Legend,
     ArcElement
   )
-  const DoughnutB = ({data,options})=>{
+  const DoughnutB = ({data,options,title})=>{
     return(
         <div className="test">
-             <h2 className={s.title__graph}>Доступне місце на сервері</h2>
+             <h2 className={s.title__graph}>{title}</h2>
             <Doughnut
                 data={data}
                 options={options}

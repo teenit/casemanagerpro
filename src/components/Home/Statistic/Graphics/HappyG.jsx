@@ -30,22 +30,22 @@ import moment from "moment";
   )
   const HappyG = ({data,options})=>{
     const [mas,setMas] = useState(Array(12).fill(0))
-    data.map((item)=>{
-      mas[moment(item.happybd).format('M') - 1] += 1;
-    })
-    const [bib,setBib] = useState( {
-      labels: ["Січень","Лютий","Березень","Квітень","Травень","Червень","Липень","Серпень","Вересень","Жовтень","Листопад","Грудень"],
-      datasets: [{
-          label: 'Дні народження кейсів',
-          data: mas,
-          borderWidth: 1,
-          backgroundColor: ["#93baf4","#83a6dc","#91f5a9","#7fd693","#71bd83","#c4f091","#aed681","#96b96e","#f0d98d","#dbc680","#b7a569","#7595c5"],
-        }]
-    })
+    // data.map((item)=>{
+    //   mas[moment(item.happybd).format('M') - 1] += 1;
+    // })
+    // const [bib,setBib] = useState( {
+    //   labels: ["Січень","Лютий","Березень","Квітень","Травень","Червень","Липень","Серпень","Вересень","Жовтень","Листопад","Грудень"],
+    //   datasets: [{
+    //       label: 'Дні народження кейсів',
+    //       data: mas,
+    //       borderWidth: 1,
+    //       backgroundColor: ["#93baf4","#83a6dc","#91f5a9","#7fd693","#71bd83","#c4f091","#aed681","#96b96e","#f0d98d","#dbc680","#b7a569","#7595c5"],
+    //     }]
+    // })
     return(
         <div>
             <h2 className={s.title__graph}>Дні народження кейсів по місяцях</h2>
-            <Bar data={bib} options={options}></Bar>
+            <Bar data={data} options={options}></Bar>
         </div>
     )
   }

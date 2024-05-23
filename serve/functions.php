@@ -56,9 +56,6 @@ function addEventToCalendar($conn, $data) {
   // Підготовка значення об'єкта в форматі JSON
 
         mysqli_stmt_bind_param($stmt, "issssssis", $id, $key, $obj, $date, $month, $year, $day, $case_id, $every_year);
-
-      
-
         // Встановлення значень параметрів і виконання запиту
         if (mysqli_stmt_execute($stmt)) {
             return true;

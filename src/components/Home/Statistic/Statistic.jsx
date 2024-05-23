@@ -9,6 +9,9 @@ import Circle from "./Graphics/Circle";
 import s from "./statistics.module.css"
 import DoughnutB from "./Graphics/DoughnutB";
 import HappyG from "./Graphics/HappyG";
+import { apiResponse } from "../../Functions/get_apiObj";
+import { LANG, appConfig } from "../../../services/config";
+import { useSelector } from "react-redux";
 const bib =  {
   labels: [],
   datasets: [{
@@ -45,24 +48,27 @@ const Statistic = () =>{
     const [amountCases, setAmountCases] = useState(null);
     const [amountHappy, setAmountHappy] = useState(null);
     const [size, setSize] = useState(null);
+    const [happy, setHappy] = useState(null)
+    const [caseCategiries, setCaseCategories] = useState(null)
+    const categories = useSelector(state => state.categories);
     useEffect(()=>{
-        AmountCases().then((res) => {
-            if(res?.message) return
-            var arr = res.mas;
-            var result = {};
-            var texts = {}
-            arr.forEach(function(a){
-                result[a.value] = result[a.value] + 1 || 1;        
-                texts[a.value] = {
-                  text : a.text,
-                  value : a.value,
-                  color : a.color,
-                  count : result[a.value]
-                }           
-            });
-            dadaFunction(texts)
-            setAmountCases(res.count);
-            });
+        // AmountCases().then((res) => {
+        //     if(res?.message) return
+        //     var arr = res.mas;
+        //     var result = {};
+        //     var texts = {}
+        //     arr.forEach(function(a){
+        //         result[a.value] = result[a.value] + 1 || 1;        
+        //         texts[a.value] = {
+        //           text : a.text,
+        //           value : a.value,
+        //           color : a.color,
+        //           count : result[a.value]
+        //         }           
+        //     });
+        //     dadaFunction(texts)
+        //    // setAmountCases(res.count);
+        //     });
         getSize().then((res) =>{
           if(res?.message) return 
           setSize( {
@@ -75,24 +81,70 @@ const Statistic = () =>{
               }]
           })
         })
-        getCategoriesStat().then((data) => {
-         // console.log(data)
-        });
-        getCasesHappy().then((data) => {
-         // return console.log(data)
-          setAmountHappy(data)
-        });
+        // getCategoriesStat().then((data) => {
+        //  // console.log(data)
+        // });
+        // getCasesHappy().then((data) => {
+        //  // return console.log(data)
+        //   setAmountHappy(data)
+        // });
+        apiResponse({},"statistics/count-cases.php").then((res)=>{
+          setAmountCases({
+            labels: ['Створено','Доступно'],
+            datasets: [{
+                label: 'Доступних кейсів',
+                data: [+res.count, 100 - +res.count],
+                borderWidth: 1,
+                backgroundColor: ["#f99c9c","#9ccef9"],
+              }]
+          });
+          let labels = [], data = [], bgColors = [];
+          categories.case.forEach((item)=>{
+            labels.push(item.name)
+            data.push(res.category_counts[item.id] ? res.category_counts[item.id] : 0)
+            bgColors.push(item.color);
+          })
+          setCaseCategories({
+            labels: labels,
+            datasets: [{
+                label: LANG.categories_case,
+                data: data,
+                borderWidth: 1,
+                backgroundColor: bgColors,
+              }]
+          })
+        })
+        apiResponse({},"statistics/get-cases-happy-bd.php").then((res)=>{
+          let labels = [], data = [], bgColors = [];
+          Object.keys(res).forEach((item)=>{
+            labels.push(appConfig.mounths[item].title)
+            data.push(res[item].count)
+            bgColors.push(appConfig.mounths[item].color)
+          })
+          setHappy({
+            labels: labels,
+            datasets: [{
+                label: LANG.happy_days_cases,
+                data: data,
+                borderWidth: 1,
+                backgroundColor: bgColors,
+              }]
+          })
+        })
+       
     },[])
-   
+ 
     return (
         <div className={s.home__statistic}>
             <div className={s.amount__cases__wr}>
-                <h2>Кількість унікальних кейсів у програмі <span className={s.amount}>{amountCases}</span></h2>
+                {/* <h2>Кількість унікальних кейсів у програмі <span className={s.amount}>{amountCases}</span></h2> */}
                 <div className={s.stats__grid}>
-                   {size == null ? "":<DoughnutB data={size} options={options}/>}
-                    {amountCases == null ? "":<LineG data={bib} options = {options}/>}
-                    {amountCases == null ? "":<Circle data={bib} options = {options}/>}
-                    {amountHappy == null ? "":<HappyG data={amountHappy} options = {options}/>}
+                {caseCategiries == null ? "":<Circle data={caseCategiries} options = {options}/>}
+                    {happy == null ? "":<HappyG data={happy} options = {options}/>}
+                   {size == null ? "":<DoughnutB title="Доступне місце на сервері" data={size} options={options}/>}
+                   {amountCases == null ? "":<DoughnutB title="Доступних кейсів" data={amountCases} options={options}/>}
+                    {/* {caseCategiries == null ? "":<LineG data={caseCategiries} options = {options}/>} */}
+                    
                     
                 </div>          
             </div>

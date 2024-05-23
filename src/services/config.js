@@ -198,7 +198,22 @@ export const LANG = {
     details_help: "Деталі наданої допомоги",
     helping: "Надано допомогу",
   },
-
+  mounths: {
+    jan:"Січень",
+    feb:"Лютий",
+    march:"Березень",
+    april:"Квітень",
+    may:"Травень",
+    june:"Червень",
+    july:"Липень",
+    aug:"Серпень",
+    sep:"Вересень",
+    okt:"Жовтень",
+    nov:"Листопад",
+    dec:"Грудень"
+  },
+  happy_days_cases:"Дні народження кейсів",
+  categories_case:"Категорії кейсів"
 };
 export const appConfig = {
   access: {
@@ -512,5 +527,55 @@ export const appConfig = {
       title: LANG.pages.accesses,
       description: ""
     }
+  },
+  mounths: {
+    1: {
+      title: LANG.mounths.jan,
+      color: "#93baf4"
+    },
+    2: {
+      title: LANG.mounths.feb,
+      color: "#83a6dc"
+    },
+    3: {
+      title: LANG.mounths.march,
+      color: "#91f5a9"
+    },
+    4: {
+      title: LANG.mounths.april,
+      color: "#7fd693"
+    },
+    5: {
+      title: LANG.mounths.may,
+      color: "#71bd83"
+    },
+    6: {
+      title: LANG.mounths.june,
+      color: "#c4f091"
+    },
+    7: {
+      title: LANG.mounths.july,
+      color: "#aed681"
+    },
+    8: {
+      title: LANG.mounths.aug,
+      color: "#96b96e"
+    },
+    9: {
+      title: LANG.mounths.sep,
+      color: "#f0d98d"
+    },
+    10: {
+      title: LANG.mounths.okt,
+      color: "#dbc680"
+    },
+    11: {
+      title: LANG.mounths.nov,
+      color: "#b7a569"
+    },
+    12: {
+      title: LANG.mounths.dec,
+      color: "#7595c5"
+    },
   }
 }
