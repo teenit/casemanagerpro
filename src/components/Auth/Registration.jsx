@@ -1,18 +1,90 @@
-import React, {useState} from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 import './Registration.css';
-import { serverAddres } from "../Functions/serverAddres";
-import ModalMessage from "../Modals/ModalMessage";
-import { LANG } from "../../services/config";
-import { Button } from '@mui/material';
 
+import { Button, MenuItem, Select } from '@mui/material';
+import Input from '../elements/Inputs/Input'
+import SmallNotification from "../elements/Notifications/SmallNotification"
+import Textarea from "../elements/Inputs/Textarea"
+import { apiResponse } from "../Functions/get_apiObj";
 
-const Registration = ()=>{
-    const [modal, setModal] = useState(false)
-    const [modalInfo, setModalInfo] = useState(false);
+const Registration = () => {
+    const alertMessages = {
+        required: "Обов'язково до заповнення",
+        pib: "ПІБ повинен бути довжиною мінімум 3 символа",
+        phone: "Номер телефону повинен бути довжиною мінімум 10 символів",
+        email: "Пошта повинна бути довжиною мінімум 5 символів",
+        adress: "Адреса повинна бути довжиною мінімум 5 символів",
+        work: "Назва роботи повиннна бути довжиною мінімум 3 символа",
+        pass: "Пароль повинен бути довжиною мінімум 6 символів"
+    };
 
-    async function saveUser(data){
-        let levelObj = {
+    const selectOptions = [
+        { name: "Волонтер", value: "volunteer" },
+        { name: "Менеджер", value: "manager" },
+        { name: "Залучений спеціаліст", value: "expert" },
+        { name: "ФСР", value: "fsr" },
+        { name: "Працівник", value: "worker" },
+        { name: "Адміністратор", value: "administrator" }
+    ];
+
+    const [formData, setFormData] = useState({
+        userName: '',
+        userPhone: '',
+        userEmail: '',
+        userAddress: '',
+        userType: 'volunteer',
+        userWork: '',
+        userAnotherData: '',
+        pass: ''
+    });
+
+    const [alert, setAlert] = useState({
+        success:false,
+        error:false,
+        message: ""
+    });
+
+    const validate = () => {
+        let valid = true;
+        if (!formData.userName || formData.userName.length < 3) {
+            setAlert({ error: true, message: alertMessages.pib });
+            valid = false;
+        }
+        else if (!formData.userPhone || formData.userPhone.length < 10) {
+            setAlert({ error: true, message: alertMessages.phone });
+            valid = false;
+        }
+        else if (!formData.userEmail || formData.userEmail.length < 5) {
+            setAlert({ error: true, message: alertMessages.email });
+            valid = false;
+        }
+        else if (formData.userAddress && formData.userAddress.length < 5) {
+            setAlert({ error: true, message: alertMessages.adress });
+            valid = false;
+        }
+        else if (!formData.userWork || formData.userWork.length < 3) {
+            setAlert({ error: true, message: alertMessages.work });
+            valid = false;
+        }
+        else if (!formData.pass || formData.pass.length < 6) {
+            setAlert({ error: true, message: alertMessages.pass });
+            valid = false;
+        }
+        return valid;
+    };
+
+    const handleChange = (key, value) => {
+        setFormData({...formData, [key]:value})
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!validate()) {
+            return;
+        }
+
+        const levelObj = {
             activeNewUser: false,
             addCase: false,
             addEditCategoriesCase: false,
@@ -34,83 +106,56 @@ const Registration = ()=>{
             settings: false,
             specificationUsers: false,
             statistics: false
-        }
-        data.level = levelObj;
+        };
 
-        await fetch(serverAddres("user-register.php"),{
-            method:"POST",
-            header : {'Content-Type': 'application/json;charset=utf-8'},
-            body:  JSON.stringify(data)
+        const data = { ...formData, level: levelObj };
+        apiResponse(data, "user-register.php").then((response)=>{
+                let isSuccess = response.marker=="red" ? "error":"success"
+                setAlert({ [isSuccess]: true, message: response.message });
+                // setFormData({
+                //     userName: '',
+                //     userPhone: '',
+                //     userEmail: '',
+                //     userAddress: '',
+                //     userType: 'volunteer',
+                //     userWork: '',
+                //     userAnotherData: '',
+                //     pass: ''
+                // });
+        }).catch((error)=>{
+            console.log(error);
         })
-            .then(res => res.json())
-            .then(data => {
-                if(Object.keys(data).includes("message")){
-                    setModal(true)
-                    setModalInfo(data)
-                }
-            })
-            .catch(rejected => {
-                console.log(rejected);
-            });
-            reset()
     }
-    const {register,formState:{errors,isValid},handleSubmit,reset} = useForm({mode:'onChange'});
- 
-    return(
-            <form action="" className="reg__form" onSubmit={handleSubmit(saveUser)}>
-                
-                <div className="reg__block">
-                    <label>ПІБ {errors?.userName && <span className="error__mes">{errors?.userName?.message || "Обов'язково до заповнення"}</span>}</label>
-                    <input type="text" {...register("userName" ,{required:true,minLength:{value:3,message:"Мінімум 3 символа"}})}/>
-                    
-                </div>
-                <div className="reg__block">
-                    <label>Номер телефону {errors?.userPhone && <span className="error__mes">{errors?.userPhone?.message || "Обов'язково до заповнення"}</span>}</label>
-                    <input type="text" {...register("userPhone", {value:"+380"} ,{required:"",minLength:{value:10,message:"Мінімум 10 символа"}})} />
-        
-                </div>
-                <div className="reg__block">
-                    <label>E-mail {errors?.userEmail && <span className="error__mes">{errors?.userEmail?.message || "Обов'язково до заповнення"}</span>}</label>
-                    <input type="email" {...register("userEmail",{required:true,minLength:{value:5,message:"Мінімум 5 символа"}})} />
-                    
-                </div>
-                <div className="reg__block">
-                    <label>Адреса {errors?.userAddress && <span className="error__mes">{errors?.userAddress?.message || "Обов'язково до заповнення"}</span>}</label>
-                    <input type="text" {...register("userAddress",{required:false,minLength:{value:5,message:"Мінімум 5 символа"}})} />
-                    
-                </div>
-                <div className="reg__block">
-                    <label>Тип користувача</label>
-                    <select {...register("userType")}>
-                        <option key={"volunteer"} value={"volunteer"}>Волонтер</option>
-                        <option key={"manager"} value={"manager"}>Менеджер</option>
-                        <option key={"expert"} value={"expert"}>Залучений спеціаліст</option>
-                        <option key={"worker"} value={"worker"}>Працівник</option>
-                        <option key={"fsr"} value={"fsr"}>ФСР</option>
-                        <option key={"administrator"} value={"administrator"}>Адміністратор</option>
-                    </select>
-                </div>
-                <div className="reg__block">
-                    <label>Спеціалізація / Робота {errors?.userWork && <span className="error__mes">{errors?.userWork?.message || "Обов'язково до заповнення"}</span>}</label>
-                    <input type="text" {...register("userWork",{required:true,minLength:{value:3,message:"Мінімум 3 символа"}})} />
-                </div>
-                <div className="reg__block">
-                    <label>Розкажіть про себе (хобі, сім'я, цікаві факти) {errors?.userAnotherData && <span className="error__mes">{errors?.userAnotherData?.message || "Обов'язково до заповнення"}</span>}</label>
-                    <textarea cols="30" rows="10" {...register("userAnotherData",{required:false,minLength:{value:3,message:"Мінімум 3 символа"}})}></textarea>
-                    </div>
-                    <div className="reg__block">
-                    <label>Пароль {errors?.pass && <span className="error__mes">{errors?.pass?.message || "Обов'язково до заповнення"}</span>}</label>
-                    <input type="password" {...register("pass",{required:true,minLength:{value:6,message:"Мінімум 6 символа"}})} />
-                </div>
-                <div className="reg__block">
-                    <label></label>
-                    <button className={`primary__btn ${!isValid ? 'active' : ""}`} disabled={!isValid}>Реєстрація</button>
-                </div>
-                {modal && <ModalMessage header={modalInfo.message}>
-                    <Button variant="contained" onClick={()=>{setModal(false)}}>{LANG.buttonTexts.ok}</Button>
-                </ModalMessage>}
-            </form>
-         
-    )
-}
+    return (
+        <form className="reg__form" onSubmit={handleSubmit}>
+            <div className="reg__split">
+                <Input type="text" label="ПІБ" name="userName" value={formData.userName} onChange={(e)=>{handleChange("userName", e.target.value)}} />
+                <Input type="number" label="Номер телефону" name="userPhone" value={formData.userPhone} onChange={(e)=>{handleChange("userPhone", e.target.value)}} />
+            </div>
+            <div className="reg__split">
+                <Input type="text" label="E-mail" name="userEmail" value={formData.userEmail} onChange={(e)=>{handleChange("userEmail", e.target.value)}} />
+                <Input type="text" label="Адреса" name="userAddress" value={formData.userAddress} onChange={(e)=>{handleChange("userAddress", e.target.value)}} />
+            </div>
+            <div className="reg__block">
+                <label>Тип користувача</label>
+                <Select name="userType" value={formData.userType} onChange={(e)=>{handleChange("userType", e.target.value)}}>
+                    {selectOptions.map((item, index) => (
+                        <MenuItem key={index} value={item.value}>{item.name}</MenuItem>
+                    ))}
+                </Select>
+            </div>
+            <div className="reg__split">
+                <Input type="text" label="Спеціалізація / Робота" name="userWork" value={formData.userWork} onChange={(e)=>{handleChange("userWork", e.target.value)}} />
+                <Input type="password" label="Пароль" name="pass" value={formData.pass} onChange={(e)=>{handleChange("pass", e.target.value)}} />
+            </div>
+            <div className="input__wrap">
+                <Textarea label="Розкажіть про себе" name="userAnotherData" value={formData.userAnotherData} onChange={(e)=>{handleChange("userAnotherData", e.target.value)}} />
+            </div>
+            <Button variant="contained" type="submit">Реєстрація</Button>
+            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { setAlert({ ...alert, alert: false }) }} />}
+            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { setAlert({ ...alert, alert: false }) }} />}
+        </form>
+    );
+};
+
 export default Registration;

@@ -1,52 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useState } from "react";
 import { serverAddres } from "../Functions/serverAddres";
-import ModalMessage from "../Modals/ModalMessage";
 import { LANG } from "../../services/config";
 import { Button } from '@mui/material';
-
+import Input from "../elements/Inputs/Input";
+import SmallNotification from "../elements/Notifications/SmallNotification";
+import { apiResponse } from "../Functions/get_apiObj";
 const ForgotPass = () => {
-    const [email, setEmail] = useState("")
-    const [modal, setModal] = useState(false)
-    const [modalInfo, setModalInfo] = useState(false)
-    function forgotPass(mail) {
-        axios({
-            url: serverAddres("user/forget-pass.php"),
-            method: "POST",
-            header: { 'Content-Type': 'application/json;charset=utf-8' },
-            data: JSON.stringify({ email: mail }),
+    const [email, setEmail] = useState("");
+    const [modalInfo, setModalInfo] = useState("");
+    const [alert, setAlert] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const forgotPass = (email) => {
+        apiResponse({email:email},"user/forget-pass.php").then((response) => {
+            console.log(response);
+            setModalInfo(response.data.message);
+            setEmail("");
+            setAlert(true);
+            setIsSuccess(true);
         })
-            .then((data) => {
-                setModalInfo(data.data)
-                setEmail("")
-                setModal(true)
-                // window.location.reload()        
-            })
-            .catch((error) => console.log(error))
-    }
+        .catch((error) => {
+            setModalInfo("Виникла помилка, перевірте дані або спробуйте пізніше");
+            setAlert(true);
+            setIsSuccess(false);
+        });
+        
+    };
 
     return (
         <>
             <div className="forget__form">
                 <h2>{LANG.forgotPass.title}</h2>
-                <input type="text"
-                    placeholder={LANG.placeholders.email}
-                    value={email}
-                    onChange={(e) => {
-                        setEmail(e.target.value)
-                    }} />
-                <button className="primary__btn"
-                    onClick={() => {
-                        forgotPass(email)
-                    }}>{LANG.buttonTexts.recover}</button>
+                <div className="input__wrap">
+                    <Input 
+                        type="text" 
+                        value={email} 
+                        label={LANG.placeholders.email} 
+                        onChange={(e) => setEmail(e.target.value)} 
+                    />
+                </div>
+                <Button variant="contained" onClick={() => forgotPass(email)}>
+                    {LANG.buttonTexts.recover}
+                </Button>
             </div>
-            {modal && <ModalMessage header={modalInfo.message} footer={
-                <Button variant="contained" onClick={() => { setModal(false) }}>{LANG.buttonTexts.recover}</Button>
-            }>
-            </ModalMessage>}
+            {alert && (
+                <SmallNotification 
+                    isSuccess={isSuccess} 
+                    text={modalInfo} 
+                    close={() => setAlert(false)} 
+                />
+            )}
         </>
+    );
+};
 
-    )
-}
 export default ForgotPass;

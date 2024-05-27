@@ -26,7 +26,6 @@ $emailSql = mysqli_query($conn, $sql);
 
 
 $res = mysqli_fetch_assoc($emailSql);
-
 if($res == null){
       $msql = "INSERT INTO users (userName, address, phone, type, work, datas, active, password,email, level) VALUES ('$userName','$userAddress','$userPhone','$userType','$userWork','$userAnotherData','$active','$password','$userEmail','$level')";
             if (mysqli_query($conn, $msql)) {

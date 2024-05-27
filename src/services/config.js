@@ -77,11 +77,10 @@ export const LANG = {
     forgetPass: "Забули пароль -"
   },
   loginForm: {
-    emailLabel: "E-mail",
-    required: "Обов'язково до заповнення",
-    emailMinLengthMessage: "Мінімум 5 символа",
+    emailLabel: "Логін",
+    emailMinLengthMessage: "Логін повинен бути довжиною більше ніж 8 символів",
     passwordLabel: "Пароль",
-    passwordMinLengthMessage: "Мінімум 5 символа",
+    passwordMinLengthMessage: "Пароль повинен бути довжиною більше ніж 5 символів",
   },
     addEvent: "Створення події",
     cases:"Немає доступних кейсів",

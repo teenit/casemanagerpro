@@ -1,25 +1,33 @@
 .reg__container{
     width: 50%;
-   display: block;
-    row-gap: 30px;
-    margin: auto;
-    margin-top: 50px;
-    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 25px;
+    border-radius: 20px;
+    background-color: var(--background-color);
+    margin: 50px auto;
 }
 
 .reg__container  h1{
     text-align: center;
 }
-.reg__container{
-    border-radius: 20px;
-    box-shadow: 0 0 10px #000;
-}
 .reg__block{
-    width: 80%;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.reg__split{
     display: grid;
-    grid-template-columns: 1fr;
-    margin: auto;
-    margin-top: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+.reg__form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 .error__mes{
     color: red;
@@ -46,12 +54,17 @@
     cursor: pointer;
     transform: scale(1.1);
 }
+.input__wrap{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+}
 .forget__form{
     width: 80%;
-    margin: auto;
-    display: grid;
-    margin-top: 30px;
-    row-gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 .forget__form h2{
     text-align: center;

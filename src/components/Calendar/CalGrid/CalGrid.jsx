@@ -9,7 +9,7 @@ const CalGrid =({keys,startDay,today,events,getCalendarList})=>{
         open:false,
         date:''
     })
-    const arrayDays = [...Array(42)].map(()=> day.add(1,'day').clone());
+    const arrayDays = [...Array(42)].map((item,index)=> index!==0 ? day.add(1,'day').clone():day.clone());
     const currentDay = (day)=> moment().isSame(day,'day')
     const currentMonth = (day)=> today.isSame(day,'month')
    
