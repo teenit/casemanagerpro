@@ -1,286 +1,203 @@
-import React, { Component } from "react";
-
+import React, { useState, useEffect } from "react";
 import style from "./ContactForm.module.css";
 import { fetchCategories } from "../../../services/contacts-api";
-import IconButton from "../IconButton/IconButton";
-import { ReactComponent as Add } from "../../../img/icons/add.svg";
-import { ReactComponent as Close } from "../../../img/icons/close.svg";
-
-export class ContactForm extends Component {
-  state = {
+import Icon from "../../elements/Icons/Icon";
+import Input from "../../elements/Inputs/Input";
+import Textarea from "../../elements/Inputs/Textarea";
+import { Button, MenuItem, Select } from "@mui/material";
+import SmallNotification from "../../elements/Notifications/SmallNotification"
+const ContactForm = ({ editContact, onSubmit, contact, showModal, toggleModal }) => {
+  
+  const initialState = {
     categori: [],
-    category: [{ text: "" }],
+    category: "",
     pib: "",
     phones: [{ title: "", number: "" }],
     info: { email: "", work: "", whoisit: "", site: "", info: "" },
-
-    ...this.props.contact,
+    ...contact,
   };
+const [alert,setAlert] = useState({
+  success:false,
+  message:""
+})
+  const [state, setState] = useState(initialState);
 
-  componentDidMount() {
+  useEffect(() => {
     fetchCategories()
-      .then((data) => this.setState({ categori: data }))
+      .then((data) =>
+        setState((prevState) => ({ ...prevState, categori: data }))
+      )
       .catch((error) => console.log(error));
-  }
-
-  handleChangePib = (event) => {
-    const { name, value } = event.currentTarget;
-
-    this.setState({
-      [name]: value,
-    });
+  }, []);
+  const handleChangePib = (value) => {
+    setState({...state,pib:value})
   };
 
-  handleChangeInfo = (event) => {
-    const { name, value } = event.currentTarget;
-
-    this.setState((prevState) => ({
+  const handleChangeInfo = (key, value) => {
+    setState((prevState) => ({
       ...prevState,
-      info: { ...prevState.info, [name]: value },
+      info: { ...prevState.info, [key]: value },
     }));
   };
 
-  handleChangeSelect = (event) => {
-    const { value } = event.currentTarget;
-
-    this.setState((prevState) => ({
-      ...prevState,
-      category: [{ text: value }],
-    }));
+  const handleChangeSelect = (e) => {
+    let catText = state.categori.find((item,index)=>item.value==e.target.value)
+    setState({...state, category: [{text:catText.text, value:e.target.value}]})
   };
 
-  handleChangeText = (event) => {
-    const { value } = event.currentTarget;
-
-    this.setState((prevState) => ({
-      ...prevState,
-      info: { ...prevState.info, info: value },
-    }));
-  };
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    if (this.state.id) {
-      const { category, pib, info, phones, id } = this.state;
-      const sendData = { category, pib, phones, info, id };
+    const { category, pib, info, phones, id } = state;
+    const sendData = { category, pib, phones, info, id };
 
-      this.props.editContact(sendData);
-      // this.props.onSubmit("");
-      this.reset();
+    if (id) {
+      editContact(sendData);
+      setAlert({...alert, success:true, message:"Дані успішно оновлено"})
     } else {
-      const { category, pib, info, phones } = this.state;
-      const sendData = { category, pib, phones, info };
+      onSubmit(sendData);
+      setAlert({...alert, success:true, message:"Контакт успішно додано"})
 
-      this.props.onSubmit(sendData);
-      this.reset();
     }
+    reset();
   };
 
-  reset = () => {
-    this.setState({
-      category: [],
-      pib: "",
-      info: { email: "", work: "", whoisit: "", site: "", info: "" },
-      inputPhone: { title: "", number: "" },
-      inputPhone2: { title: "", number: "" },
-    });
+  const reset = () => {
+    setState(initialState);
   };
 
-  handleChangeTel = ({
-    target: {
-      value,
-      name,
-      dataset: { index },
-    },
-  }) => {
-    this.setState(({ phones }) => ({
-      phones: phones.map((n, i) =>
-        +index === i ? { ...n, [name]: value } : n
+  const handleChangeTel = (key, value, index) => {
+    setState((prevState) => ({
+      ...prevState,
+      phones: prevState.phones.map((phone, i) =>
+        i === index ? { ...phone, [key]: value } : phone
       ),
     }));
   };
 
-  addPhone = () => {
-    this.setState(({ phones }) => ({
-      phones: [
-        ...phones,
-        {
-          // id: 1 + Math.max(...phones.map((n) => n.id)),
-          title: "",
-          number: "",
-        },
-      ],
+  const addPhone = () => {
+    setState((prevState) => ({
+      ...prevState,
+      phones: [...prevState.phones, { title: "", number: "" }],
     }));
   };
 
-  delPhone = ({
-    target: {
-      dataset: { index },
-    },
-  }) => {
-    this.setState(({ phones }) => ({
-      phones: phones.filter((n, i) => i !== +index),
+  const deletePhone = (index) => {
+    setState((prevState) => ({
+      ...prevState,
+      phones: prevState.phones.filter((item, i) => i !== index),
     }));
   };
 
-  render() {
-    const {
-      category,
-      categori,
-      pib,
-      info: { email, work, whoisit, site, info },
-      phones,
-    } = this.state;
-
-    return (
-      <form className={style.form_contact} onSubmit={this.handleSubmit}>
-        <IconButton
-          showModal={this.props.showModal}
-          onClick={this.props.toggleModal}
-          aria-label="Закрити"
-        >
-          <Close width="20" height="20" />
-        </IconButton>
-
-        <label>
-          <div>Прізвище Ім'я По батькові</div>
-          <input
-            className={style.input_contact}
-            placeholder="ПІБ"
-            type="text"
-            value={pib}
-            onChange={this.handleChangePib}
-            name="pib"
-            required
-          />
-        </label>
-
-        <label>
-          <div>Категорія</div>
-          <select
-            className={style.select_contact}
-            value={category.map(({ text }) => text).toString()}
-            onChange={this.handleChangeSelect}
-            required
-          >
-            <option value="">Виберіть одне із значень</option>
-            {categori.map(({ text }, index) => (
-              <option key={index} value={text}>
-                {text}
-              </option>
+  return (
+    <form className="ContactForm" onSubmit={handleSubmit}>
+      <span onClick={toggleModal}>
+        <Icon icon={"close"} addClass={"default-icon"} />
+      </span>
+      <div className="ContactForm-split">
+        <Input
+          label="ПІБ"
+          type="text"
+          value={state.pib}
+          onChange={(e) => handleChangePib(e.target.value)}
+          name="pib"
+          required
+        />
+        <label className="ContactForm-split-flex">
+          {/* <div>Категорія</div> */}
+          <Select value={state.id && state.category[0].value} onChange={handleChangeSelect} required>
+            {state.categori.map((item) => (
+              <MenuItem key={item.value} value={item.value}>
+                {item.text}
+              </MenuItem>
             ))}
-          </select>
+          </Select>
         </label>
+      </div>
 
-        {phones.map((phone, i) => (
-          <label key={i}>
-            <div>
-              Телефон
-              {i ? (
-                <button
-                  className={style.btnClose}
-                  data-index={i}
-                  onClick={this.delPhone}
-                >
-                  -
-                </button>
-              ) : null}
-            </div>
-            <div className={style.wraper_phone} key={phone.i}>
-              <input
-                className={style.input_contact}
-                name="number"
-                placeholder="Номер телефону"
-                data-index={i}
-                value={phone.number}
-                onChange={this.handleChangeTel}
-                required
-              />
-              <input
-                className={style.input_contact}
-                name="title"
-                placeholder="Мобільний, робочий..."
-                data-index={i}
-                value={phone.title}
-                onChange={this.handleChangeTel}
-                required
-              />
-            </div>
-          </label>
-        ))}
-        <div className={style.positionBtn}>
-          <IconButton onClick={this.addPhone} aria-label="Додати">
-            <Add width="20" height="20" />
-          </IconButton>
-        </div>
-
-        <label>
-          <div>Пошта</div>
-          <input
-            className={style.input_contact}
-            placeholder="Email"
-            type="text"
-            name="email"
-            value={email}
-            onChange={this.handleChangeInfo}
-          />
+      {state.phones.map((phone, i) => (
+        <label key={i}>
+          <div className="ContactForm-split-flex">
+            <p>Телефон</p>
+            {i ? (
+              <span onClick={() => deletePhone(i)}>
+                <Icon icon={"close"} addClass={"default-icon"} />
+              </span>
+            ) : (
+              <span onClick={addPhone}>
+                <Icon icon={"add"} addClass={"default-icon"} />
+              </span>
+            )}
+          </div>
+          <div className="ContactForm-split">
+            <Input
+              type="number"
+              label="Номер телефону"
+              data-index={i}
+              value={phone.number}
+              onChange={(e) => handleChangeTel("number", e.target.value, i)}
+              required
+            />
+            <Input
+              type="text"
+              label="Мобільний, робочий..."
+              data-index={i}
+              value={phone.title}
+              onChange={(e) => handleChangeTel("title", e.target.value, i)}
+              required
+            />
+          </div>
         </label>
+      ))}
 
-        <label>
-          <div>Місце роботи</div>
-          <input
-            className={style.input_contact}
-            type="text"
-            placeholder="Місце роботи"
-            name="work"
-            value={work}
-            onChange={this.handleChangeInfo}
-          />
-        </label>
+      <div className="ContactForm-split">
+        <Input
+          className={style.Input_contact}
+          label="Email"
+          type="email"
+          name="email"
+          value={state.info.email}
+          onChange={(e) => handleChangeInfo("email", e.target.value)}
+        />
+        <Input
+          className={style.Input_contact}
+          type="text"
+          label="Місце роботи"
+          name="work"
+          value={state.info.work}
+          onChange={(e) => handleChangeInfo("work", e.target.value)}
+        />
+      </div>
 
-        <label>
-          <div>Хто це?</div>
-          <input
-            className={style.input_contact}
-            placeholder="Президент, працівник ССД..."
-            type="text"
-            name="whoisit"
-            value={whoisit}
-            onChange={this.handleChangeInfo}
-            required
-          />
-        </label>
+      <div className="ContactForm-split">
+        <Input
+          className={style.Input_contact}
+          label="Хто це?"
+          type="text"
+          name="whoisit"
+          value={state.info.whoisit}
+          onChange={(e) => handleChangeInfo("whoisit", e.target.value)}
+          required
+        />
+        <Input
+          label="Сайт"
+          type="text"
+          name="site"
+          value={state.info.site}
+          onChange={(e) => handleChangeInfo("site", e.target.value)}
+        />
+      </div>
 
-        <label>
-          <div>Сайт</div>
-          <input
-            className={style.input_contact}
-            placeholder="Сайт"
-            type="text"
-            name="site"
-            value={site}
-            onChange={this.handleChangeInfo}
-          />
-        </label>
-
-        <div className={style.wraper_dop_info}>
-          <label>
-            <div>Додаткова інформація</div>
-            <textarea
-                placeholder="Важлива інфо про контакт..."
-              className={style.textarea_contact}
-              value={info}
-              onChange={this.handleChangeText}
-            ></textarea>
-          </label>
-
-          <button type="submit">
-            {this.state.id ? "Редагувати" : "Зберегти"}
-          </button>
-        </div>
-      </form>
-    );
-  }
-}
+        <Textarea
+          label="Інформація про контакт"
+          value={state.info.info}
+          onChange={(e) => handleChangeInfo("info", e.target.value)}
+        />
+      <Button variant="contained" type="submit">
+          {state.id ? "Редагувати" : "Зберегти"}
+        </Button>
+        {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={()=>{setAlert({...alert, success:false})}}/>}
+    </form>
+  );
+};
 
 export default ContactForm;

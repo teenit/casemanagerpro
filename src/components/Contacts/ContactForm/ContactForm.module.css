@@ -49,10 +49,7 @@
   border-radius: 15px !important;
 }
 
-label div {
-  font-size: 20px;
-  text-align: center;
-}
+
 
 .wraper_phone {
   position: relative;
@@ -65,26 +62,6 @@ label div {
   left: 230px;
 }
 
-.wraper_dop_info button {
-  width: 356px;
-  max-width: 100%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: white;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.positionBtn {
-  position: absolute;
-  top: 90px;
-  left: 225px;
-}
 
 .btnClose {
   width: 30px;

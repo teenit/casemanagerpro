@@ -147,7 +147,6 @@ export class Contacts extends Component {
     editContact(editedContact)
       .then((data) => {
         this.setState({ isEditContact: "" });
-        alert(data.text);
       })
       .catch((error) => console.log(error))
       .finally(this.toggleLoading);
