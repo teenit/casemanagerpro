@@ -1,3 +1,43 @@
 .Groups {
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    &-title{
+        font-size: 25px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    &-list{
+        width: 80%;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 25px;
+    }
+}
+.GroupCard{
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: $background-color;
+    &-split{
+        font-weight: bold;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+        &-date{
+            color: #bababa;
+        }
+        &-color{
+            min-width: 25px;
+            height: 25px;
+            border-radius: 50%;
+        }
+    }
 }
