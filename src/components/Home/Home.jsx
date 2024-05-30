@@ -48,6 +48,9 @@ const Home = ()=>{
                     <li className={s.li}>
                         <NavLink className={s.a} to="/access">Access</NavLink>
                     </li>
+                    <li className={s.li}>
+                        <NavLink className={s.a} to="/groups">Groups</NavLink>
+                    </li>
                 </ul>
                 </div>
             </div>

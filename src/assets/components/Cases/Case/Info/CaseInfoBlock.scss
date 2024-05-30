@@ -1,6 +1,6 @@
 .CaseInfoBlock {
     display: grid;
-    grid-template-columns: max-content 2fr;
+    grid-template-columns: max-content auto;
     gap: 25px;
     &-inner{
         display: flex;

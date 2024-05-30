@@ -1,8 +1,12 @@
+
 export const LANG = {
   GLOBAL: {
     save: "Зберегти",
     cancel: "Відмінити",
     date: "Дата",
+    title: "Назва",
+    description: "Опис",
+    color: "Колір"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Права користувачів (Сторінки)",
@@ -576,5 +580,8 @@ export const appConfig = {
       title: LANG.mounths.dec,
       color: "#7595c5"
     },
+  },
+  default: {
+    color: "#42a5f5"
   }
 }

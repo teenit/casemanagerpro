@@ -22,6 +22,7 @@ import TestPage from "../pages/TestPage";
 import AddCaseForm from "../Cases/newDesign/AddCaseForm";
 import Case from "../newDesign/Case/Case";
 import Cases from "../newDesign/Cases/Cases";
+import Groups from "../Groups/Groups";
 
 const localToken = localStorage.getItem("token");
 
@@ -46,6 +47,7 @@ const MainContent = ()=>{
             <Route path='events/:link' element={<Event />} />
             <Route path='calendar' element={<Calendar />} />
             <Route path='cooperation' element={<Cooperation />} />
+            <Route path='groups' element={<Groups />} />
             <Route path='task' element={<Task />} />
             <Route path='test' element={<TestPage />} />
             <Route index element={<Home />} />

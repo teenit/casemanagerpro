@@ -16,8 +16,10 @@ import xlsImg from "./../../../img/resources/xls.png";
 import xlsxImg from "./../../../img/resources/xlsx.png";
 import send from '../../../img/icons/send-media.png';
 import add from '../../../img/icons/add-media.png';
+import loadImg from '../../../img/loading_3.gif';
 import {apiResponse} from '../../Functions/get_apiObj'
 import SmallNotification from '../Notifications/SmallNotification';
+import { useSelector } from 'react-redux';
 
 const FORMAT = {
   pdf: { imgUrl: pdfImg },
@@ -39,10 +41,19 @@ function ext(name) {
   return name.match(/\.([^.]+)$|$/)[1];
 }
 
-function FilesUploader({ multiple = true, successHandler = () => {}, meta = null }) {
+function FilesUploader({ multiple = true, successHandler = () => {}, meta = null, type = "case" }) {
   const [alert,setAlert] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const {id,token}= useSelector(state => state.user)
+  const getFromType = () => {
+    if (type === "case") {
+      return "upload-files.php";
+    }
+    if (type == "resource") {
+      return "upload-resource-files.php";
+    }
+  }
 
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -53,6 +64,7 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
   };
 
   const handleUpload = async () => {
+    
     if (!meta) return console.log("meta object is required");
     setUploading(true);
     const formData = new FormData();
@@ -60,11 +72,11 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
       formData.append(`files[${i}]`, selectedFiles[i]);
     }
 
-    const metaObject = { ...meta };
+    const metaObject = { ...meta, id, token };
     formData.append('meta', JSON.stringify(metaObject));
 
     axios({
-      url: serverAddres("upload-files.php"),
+      url: serverAddres(getFromType()),
       method: "POST",
       headers: { 'Content-Type': 'multipart/form-data' },
       data: formData,
@@ -76,6 +88,7 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
         setSelectedFiles([])
         successHandler(response.data)
         setAlert(true)
+        setUploading(false);
       })
       .catch((error) => console.log(error))
   };
@@ -103,7 +116,7 @@ const handleDelete = (index)=>{
       <div className="FilesUploader-buttons">
         <label htmlFor="fileInput"><img src={add} alt="Завантажити файл" /></label>
         <input style={{ display: "none" }} id="fileInput" multiple type="file" onChange={handleFileChange} />
-        <label htmlFor="submitInput" onClick={handleUpload}><img src={send} alt="Відправити файл" /></label>
+        {!uploading ? <label htmlFor="submitInput" onClick={handleUpload}><img src={send} alt="Відправити файл" /></label> : <img style={{width:"30px"}} src={loadImg}/>}
         <input disabled={uploading} style={{ display: "none" }} type="submit" id="submitInput" />
       </div>
       {alert&&<SmallNotification isSuccess={true} text="Файли завантажено успішно" close = {()=>{setAlert(false)}}/>}
