@@ -8,6 +8,8 @@ import InputColor from "../../elements/Inputs/InputColor";
 import { apiResponse } from "../../Functions/get_apiObj";
 import { MuiColorInput } from "mui-color-input";
 import ListCategories from "./ListCategories";
+import Modal from "../../Modals/Modal";
+import Icon from "../../elements/Icons/Icon";
 
 const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "", categoryColor = "", categoryKey = null}) => {
     const [state, setState] = useState({
@@ -16,10 +18,11 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
         categoryColor:categoryColor,
         categoryKey:categoryKey,
     })
+    const [addModal, setAddModal] = useState(false)
+    const [showList, setShowList] = useState(false)
     const [categories, setCategories]  = useState([]);
     const getCategories = (key) => {
         apiResponse({categoryKey:key},"manage/get-categories.php").then((data)=>{
-            console.log(data.data)
             setCategories([...data.data])
         })
     }
@@ -30,8 +33,8 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
         let value = changeAps(val);
         setState({...state, [key]:value})
     }
+
     const clickHandler = () => {
-        //return console.log(state)
         apiResponse({...state}, "manage/add-categories.php").then((data)=>{
             getCategories(state.categoryKey);
             setState({
@@ -40,39 +43,59 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
                 categoryColor:categoryColor,
                 categoryKey:categoryKey, 
             })
+            setAddModal(false)
         })
     }
 
     return (
         <div className="SettingsCategory">
-            <h2>{title}</h2>
-            {
-                state.categoryKey && (
-                <div className="SettingsCategory--form">
-                    <div className="SettingsCategory--form-inputs">
-                        <Input
-                            label={LANG.SETTINGS.title_category}
-                            value={state.categoryName}
-                            onChange={(e)=>changeHandler(e.target.value, "categoryName")}
-                        />
-                        <MuiColorInput className='w50' format="hex" value={state.categoryColor} onChange={(e)=>{console.log(e); changeHandler(e, 'categoryColor')}} />
-                    </div>
-                    <div className="SettingsCategory--form-textarea">
-
-                        <Textarea
-                            label={LANG.SETTINGS.description_category}
-                            value={state.categoryDescription}
-                            onChange={(e)=>changeHandler(e.target.value, "categoryDescription")}
-                            minRows={3}
-                        />
-                    </div>
-                    <div className="SettingsCategory--form-button">
-                        <Button disabled = {state.categoryName == "" && true} variant="contained" onClick={clickHandler}>Зберегти</Button>
-                    </div>
+            <div className="SettingsCategory--title">
+                <div onClick={()=>setShowList(!showList)} className="flex SettingsCategory--title-withicon">
+                    <div className={showList ? "active" : ""}><Icon addClass={'fs16'} icon={'arrow_down'}/></div>
+                    <div>{title} ({categories.length})</div>
                 </div>
-                )
+                
+                <div className="add" onClick={()=>setAddModal(true)}><Icon icon={'add'}/></div>
+            </div>
+            {
+                showList && <ListCategories categories={categories}/>
             }
-            <ListCategories categories={categories}/>
+            
+            {
+                addModal &&
+                <Modal 
+                    header={title}
+                    closeHandler={()=>setAddModal(false)}
+                    footer={<div className="SettingsCategory--form-button">
+                <Button disabled = {state.categoryName == "" && true} variant="contained" onClick={clickHandler}>Зберегти</Button>
+            </div>}
+                >
+                {
+                    state.categoryKey && (
+                        <div className="SettingsCategory--form">
+                            <div className="SettingsCategory--form-inputs">
+                                <Input
+                                    label={LANG.SETTINGS.title_category}
+                                    value={state.categoryName}
+                                    onChange={(e)=>changeHandler(e.target.value, "categoryName")}
+                                />
+                                <MuiColorInput className='w50' format="hex" value={state.categoryColor} onChange={(e)=>{ changeHandler(e, 'categoryColor')}} />
+                            </div>
+                            <div className="SettingsCategory--form-textarea">
+        
+                                <Textarea
+                                    label={LANG.SETTINGS.description_category}
+                                    value={state.categoryDescription}
+                                    onChange={(e)=>changeHandler(e.target.value, "categoryDescription")}
+                                    minRows={3}
+                                />
+                            </div>
+                            
+                        </div>
+                        )
+                }
+                </Modal>
+            }
         </div>
     )
 }

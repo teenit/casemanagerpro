@@ -5,6 +5,7 @@ require_once '../config.php';
 $response = array();
 $case = [];
 $case_helps = [];
+$groups = [];
 // Перевіряємо, чи отримане значення categoryKey
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -36,6 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($row['category_key'] == 'case_helps') {
                     $case_helps[$row["id"]] = $row;
                 }
+                if ($row['category_key'] == 'groups') {
+                    $groups[$row["id"]] = $row;
+                }
                 //$rows[$row["id"]] = $row;
             }
             $response['status'] = true;
@@ -43,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['data'] = $rows;
             $response['case'] = $case;
             $response['help'] = $case_helps;  
+            $response['groups'] = $groups;  
         } else {
             $response['status'] = false;
             $response['message'] = "Записи не знайдено";

@@ -9,12 +9,15 @@ import InputColor from "../elements/Inputs/InputColor";
 import { apiResponse } from "../Functions/get_apiObj";
 import SmallNotification from "../elements/Notifications/SmallNotification";
 import { rgbToHex } from "../Functions/rgbToHex";
+import { useSelector } from "react-redux";
 
-const AddGroup = ({ action, data, id, close }) => {
+const AddGroup = ({ action, data, id, close, loadGroups }) => {
+    const categories = useSelector(state => state.categories);
     const [state, setState] = useState({
         name: "",
         description: "",
-        color: appConfig.default.color
+        color: appConfig.default.color,
+        selectedGroupCategories: []
     });
 
     useEffect(() => {
@@ -47,13 +50,13 @@ const AddGroup = ({ action, data, id, close }) => {
     const successHandler = () => {
         if (action === "add") {
             apiResponse({ ...state }, "groups/add-group.php").then((res) => {
-                console.log(res);
+                loadGroups()
                 close()
                 alertHandler("success");
             });
         }else{
             apiResponse({ ...state, group_id:id }, "groups/edit-group.php").then((res) => {
-                console.log(res);
+                loadGroups()
                 close();
                 alertHandler("success");
             });

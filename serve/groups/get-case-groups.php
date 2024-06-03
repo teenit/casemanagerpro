@@ -6,11 +6,11 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 // SQL-запит
 $sql = "
-SELECT g.id, g.name, g.description, g.color, g.date_created, COALESCE(COUNT(gc.group_id), 0) AS connect_count
+SELECT g.id, g.name, g.description, g.color, g.date_created, g.categories, COALESCE(COUNT(gc.group_id), 0) AS connect_count
 FROM groups g
 LEFT JOIN group_connect gc ON g.id = gc.group_id
 WHERE g.status = 1
-GROUP BY g.id, g.name, g.description, g.color, g.date_created
+GROUP BY g.id, g.name, g.description, g.color, g.date_created, g.categories
 ";
 
 // Виконання запиту

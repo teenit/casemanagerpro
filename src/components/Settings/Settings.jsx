@@ -60,16 +60,16 @@ const Settings = ()=>{
                     categoryColor = "#1976d2" 
                     categoryKey = "case"
                 />
-               
-            </div>
-
-            <div>
                 <SettingsCategory 
                     title={LANG.SETTINGS.title_category_case_helps} 
                     categoryColor = "#1976d2" 
                     categoryKey = "case_helps"
                 />
-             
+                <SettingsCategory 
+                    title={LANG.SETTINGS.title_category_groups} 
+                    categoryColor = "#1976d2" 
+                    categoryKey = "groups"
+                />
             </div>
 
             {/* <SetCategories cats = {(arg)=>{

@@ -10,4 +10,29 @@
         }
         
     }
+    &--title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $background-color;
+        padding: 5px;
+        border-radius: 8px 8px 0 0;
+        
+        &-withicon {
+            cursor: pointer;
+            width: max-content;
+            padding: 5px;
+            border-radius: 8px;
+            &:hover {
+                background-color: #fff;
+            }
+        }
+        .add {
+            &:hover {
+                cursor: pointer;
+                background-color: #fff;
+                border-radius: 8px;
+            }
+        }
+    }
 }

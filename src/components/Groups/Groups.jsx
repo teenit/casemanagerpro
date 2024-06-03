@@ -4,8 +4,9 @@ import { apiResponse } from "../Functions/get_apiObj";
 import Icon from "../elements/Icons/Icon";
 import { rgbToHex } from "../Functions/rgbToHex";
 import Input from "../elements/Inputs/Input";
-const GroupCard = ({ item }) => {
-    console.log(item);
+import { useSelector } from "react-redux";
+const GroupCard = ({ item, loadGroups }) => {
+    
     const [edit, setEdit] = useState(false)
     const [data, setData] = useState({
         name: item.name,
@@ -29,20 +30,24 @@ const GroupCard = ({ item }) => {
                     <Icon icon={"edit"} addClass={"default-icon"} />
                 </span>
             </div>
-            {edit && <AddGroup action={"edit"} data={data} id={item.id} close={()=>{setEdit(false)}} />}
+            {edit && <AddGroup loadGroups={loadGroups} action={"edit"} data={data} id={item.id} close={()=>{setEdit(false)}} />}
         </div>
     )
 }
 const Groups = () => {
+    
     const [add,setAdd] = useState(false)
     const [groups, setGroups] = useState([])
     useEffect(() => {
+        loadGroups();
+    }, [])
+    const loadGroups = () => {
         apiResponse({}, "groups/get-case-groups.php").then((res) => {
             setGroups([...res])
+            console.log(res)
         })
-    }, [])
-    console.log(groups);
-
+       
+    }
     return (
         <div className="Groups">
             <div className="Groups-title">
@@ -52,13 +57,13 @@ const Groups = () => {
                         <Icon icon={"add"} />
                     </div>
                 </div>
-                {add && <AddGroup action={"add"} close={()=>{setAdd(false)}} />}
+                {add && <AddGroup loadGroups={loadGroups} action={"add"} close={()=>{setAdd(false)}} />}
                     
                 </div>
                 <div className="Groups-list">
                     {groups.map((item, index) => {
                         return (
-                            <GroupCard key={index} item={item} />
+                            <GroupCard loadGroups={loadGroups} key={index} item={item} />
                         )
                     })}
                 </div>

@@ -4,8 +4,8 @@ require_once '../config.php';
 $data = json_decode(file_get_contents('php://input'), true);
 
 // Підготовка SQL-запиту для вставки даних
-$sql = "INSERT INTO groups (user_id, name, description, color) 
-        VALUES (?, ?, ?, ?)";
+$sql = "INSERT INTO groups (user_id, name, description, color, categories) 
+        VALUES (?, ?, ?, ?, ?)";
 
 // Підготовка запиту
 $stmt = $conn->prepare($sql);
@@ -16,7 +16,7 @@ if ($stmt === false) {
 }
 
 // Прив'язка параметрів та виконання запиту
-$stmt->bind_param("isss", $data['id'], $data['name'], $data['description'], $data['color']);
+$stmt->bind_param("issss", $data['id'], $data['name'], $data['description'], $data['color'], $data['categories']);
 
 // Виконання запиту
 if ($stmt->execute() === TRUE) {

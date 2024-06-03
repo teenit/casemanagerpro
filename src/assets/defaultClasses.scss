@@ -1,6 +1,7 @@
 .flex {
     display: flex;
     width: 100%;
+    align-items: center;
     &.space {
         align-items: center;
         justify-content: space-between;
@@ -47,4 +48,7 @@ color: $main-color;
     height: 100%;
     width: 100%;
     border-radius: 15px;
+}
+.fs16{
+    font-size: 26px;
 }
