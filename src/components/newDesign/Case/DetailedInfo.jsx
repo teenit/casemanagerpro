@@ -40,7 +40,6 @@ const DetailedInfo = ({ info, changeData }) => {
     }
     const InfoBlock = ({ itemKey }) => {
         const [value, setValue] = useState(dataState[itemKey])
-        console.log(itemKey);
         return itemKey && (
             <div className='DetailedInfo-InfoBlock'>
                 <div className='DetailedInfo-InfoBlock-title'>

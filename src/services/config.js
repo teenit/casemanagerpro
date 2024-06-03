@@ -97,6 +97,13 @@ export const LANG = {
       address:"Адреса (факт)",
       categories:"Категорія",
     },
+    categories:{
+      category:"Категорія",
+      noCategory:"Без категорії"
+    },
+    groups:{
+      amount:"Кількість об'єктів"
+    },
   access: {
     "a_cases_category_edit_id": "Доступні категорії кейсів для редагування",
     "a_cases_category_look_id": "Доступні категорії кейсів для перегляду",
@@ -192,6 +199,7 @@ export const LANG = {
     events: "Івенти (події)",
     user: "Користувач",
     accesses: "Шаблони прав",
+    groups:"Групи"
   },
   documents: "Додані документи",
   give_help: {
@@ -529,6 +537,10 @@ export const appConfig = {
     accesses: {
       title: LANG.pages.accesses,
       description: ""
+    },
+    groups:{
+      title:LANG.pages.groups,
+      description:""
     }
   },
   mounths: {

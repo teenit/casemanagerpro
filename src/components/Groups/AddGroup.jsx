@@ -10,19 +10,35 @@ import { apiResponse } from "../Functions/get_apiObj";
 import SmallNotification from "../elements/Notifications/SmallNotification";
 import { rgbToHex } from "../Functions/rgbToHex";
 import { useSelector } from "react-redux";
+import CheckboxListAccess from "../elements/CheckBoxes/CheckboxListAccess";
 
 const AddGroup = ({ action, data, id, close, loadGroups }) => {
     const categories = useSelector(state => state.categories);
+    const [groupCategories, setGroupCategories] = useState({...categories.groups})
+    console.log(groupCategories);
     const [state, setState] = useState({
         name: "",
         description: "",
         color: appConfig.default.color,
-        selectedGroupCategories: []
+        categories: []
     });
+    const getGroupsCategories = ()=>{
+        return Object.values(categories.groups)
+    }
+    const handleCheckboxChange = (value) => {
+        let categories = [];
+        if (state.categories.includes(value)) {
+            categories = state.categories.filter(element => element !== value);
 
+        } else {
+            categories = [...state.categories, value];
+        }
+        console.log(state);
+        setState({ ...state, categories: [...categories] });
+    };
     useEffect(() => {
         if (action === "add") {
-            setState({ name: "", description: "", color: appConfig.default.color });
+            setState({ name: "", description: "", color: appConfig.default.color, categories:[] });
         } else {
             setState(data);
         }
@@ -79,6 +95,10 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
                         <InputColor value={state.color} onChange={(color) => changeHandler("color", rgbToHex(color))} />
                     </div>
                     <Textarea value={state.description} label={LANG.GLOBAL.description} onChange={(e) => changeHandler("description", e.target.value)} />
+                    <div>
+                        <span>{LANG.categories.category}</span>
+                        <CheckboxListAccess allMas={getGroupsCategories} checkedMas={state.categories} onChange={(value)=>{handleCheckboxChange(value)}}/>
+                    </div>
                 </Modal>
         
 

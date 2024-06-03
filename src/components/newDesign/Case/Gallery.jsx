@@ -44,7 +44,6 @@ const Gallery = ({ photos }) => {
         let newStr = ''
         let slashIndex = str.indexOf("/")
         newStr = str.slice(0,slashIndex)
-        console.log(newStr);
         return newStr;
     };
 

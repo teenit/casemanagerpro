@@ -24,6 +24,7 @@ import Notes from "./Notes";
 import CaseInfoBlock from "./CaseInfoBlock";
 import GiveHelps from "./GiveHelps";
 import DetailedInfo from "./DetailedInfo";
+import GroupConnections from "./GroupConnections";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -86,7 +87,7 @@ const Case = () => {
                     <CaseProfilePhoto profileImg={null} getCaseInfo={getCaseInfo} case_id={case_id} />}
                 <div>
                     <CaseInfoBlock info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />
-                    <GetConnections id={state.general.id} />
+                    <GroupConnections/>
                 </div>
             </div>
 

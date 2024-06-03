@@ -50,7 +50,11 @@ const Nav = ({ close }) => {
         {
             title: LANG.pages.cooperation,
             link: "/cooperation"
-        }
+        },
+        {
+            title: LANG.pages.groups,
+            link: "/groups"
+        },
     ];
 
     const dispatch = useDispatch();

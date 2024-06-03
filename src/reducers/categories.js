@@ -4,7 +4,8 @@ import { SET_CATEGORIES } from '../actions/categories';
 const initialState = {
   categories: [],
   case:[],
-  help:{}
+  help:{},
+  groups:{}
 };
 
 const categoriesReducer = (state = initialState, action) => {
@@ -14,6 +15,7 @@ const categoriesReducer = (state = initialState, action) => {
         ...state,
         case: [...state.case, ...action.payload.case],
         help: {...state.help, ...action.payload.help},
+        groups:{...state.groups, ...action.payload.groups}
       };
     default:
       return state;
