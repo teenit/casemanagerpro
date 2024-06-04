@@ -58,7 +58,8 @@ export const LANG = {
   gallery: "Додані медіа файли",
   documents: "Додані документи",
   placeholders: {
-    email: "Ваш Email..."
+    email: "Ваш Email...",
+    connect:"Як кейс пов'язан з групою"
   },
   buttonTexts: {
     recover: "Відновити",
@@ -102,7 +103,11 @@ export const LANG = {
       noCategory:"Без категорії"
     },
     groups:{
-      amount:"Кількість об'єктів"
+      amount:"Кількість об'єктів",
+      alertMessages:{
+        error:"Оберіть групу, яку хочете додати",
+        success:"Зв'язок створено"
+      }
     },
   access: {
     "a_cases_category_edit_id": "Доступні категорії кейсів для редагування",
