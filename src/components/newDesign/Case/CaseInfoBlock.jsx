@@ -261,12 +261,12 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                 <div className="CaseInfoBlock-categories">
                     <span className="CaseInfoBlock-categories-title">Категорії</span>
                     <span className="CaseInfoBlock-categories-content">
-                        <Icon icon="categories" addClass={"default-icon"}></Icon>
+                        <Icon icon="categories" addClass={"default-icon"}/>
                         <div className="case-info-card-text">
 
                             {!editState.categories ?
                                 (categories && categories.length > 0 && info.data.categories && info.data.categories.length > 0 && categories.map((item, index) => {
-                                    if (info.data.categories.indexOf(item.id) !== -1) return <div className="cat">
+                                    if (info.data.categories.indexOf(item.id) !== -1) return <div className="cat" key={index}>
                                         <div className="cat-color" style={{ backgroundColor: item.color }}></div>
                                         <div className="cat-text"><span key={item.id}> {item.name} </span></div>
                                     </div>

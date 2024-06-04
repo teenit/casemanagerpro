@@ -4,7 +4,6 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import FilesUploader from "../../elements/Uploaders/FilesUploader";
 import CasePhoto from "../../Cases/Case/Info/CasePhoto";
 import CaseShortInfo from "./Caseshortinfo";
-import GetConnections from "../../Cases/Case/Info/GetConnections";
 import setImg from "../../../img/icons/settings-50-black.png";
 import editImg from "../../../img/icons/edit-48-black.png";
 import cameraImg from "../../../img/icons/camera-48-black.png";
@@ -24,7 +23,7 @@ import Notes from "./Notes";
 import CaseInfoBlock from "./CaseInfoBlock";
 import GiveHelps from "./GiveHelps";
 import DetailedInfo from "./DetailedInfo";
-import GroupConnections from "./GroupConnections";
+import GroupConnections from "../../Groups/Connect/GroupConnections";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -87,7 +86,7 @@ const Case = () => {
                     <CaseProfilePhoto profileImg={null} getCaseInfo={getCaseInfo} case_id={case_id} />}
                 <div>
                     <CaseInfoBlock info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />
-                    <GroupConnections/>
+                    <GroupConnections case_id={case_id} type={"case"}/>
                 </div>
             </div>
 
