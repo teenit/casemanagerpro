@@ -4,8 +4,8 @@ require_once '../config.php';
 $data = json_decode(file_get_contents('php://input'), true);
 
 // Підготовка SQL-запиту для вставки даних
-$sql = "INSERT INTO group_connect (user_id, type, client_id, group_id) 
-        VALUES (?, ?, ?, ?)";
+$sql = "INSERT INTO group_connect (user_id, type, client_id, group_id, why) 
+        VALUES (?, ?, ?, ?, ?)";
 
 // Підготовка запиту
 $stmt = $conn->prepare($sql);
@@ -16,7 +16,7 @@ if ($stmt === false) {
 }
 
 // Прив'язка параметрів та виконання запиту
-$stmt->bind_param("isii", $data['id'], $data['type'], $data['client_id'], $data['group_id']);
+$stmt->bind_param("isiis", $data['id'], $data['type'], $data['client_id'], $data['group_id'], $data['why']);
 
 // Виконання запиту
 if ($stmt->execute() === TRUE) {

@@ -13,7 +13,7 @@ $sql = "UPDATE groups
 $stmt = $conn->prepare($sql);
 
 // Прив'язка параметрів та виконання запиту
-$stmt->bind_param("ssssi", $data['name'], $data['description'], $data['color'], $data['categories'], $data['group_id']);
+$stmt->bind_param("ssssi", $data['name'], $data['description'], $data['color'], json_encode($data['categories']), $data['group_id']);
 $stmt->execute();
 
 // Перевірка успішності запиту та виведення відповідного повідомлення

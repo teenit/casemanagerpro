@@ -16,7 +16,7 @@ if ($stmt === false) {
 }
 
 // Прив'язка параметрів та виконання запиту
-$stmt->bind_param("issss", $data['id'], $data['name'], $data['description'], $data['color'], $data['categories']);
+$stmt->bind_param("issss", $data['id'], $data['name'], $data['description'], $data['color'], json_encode($data['categories']));
 
 // Виконання запиту
 if ($stmt->execute() === TRUE) {

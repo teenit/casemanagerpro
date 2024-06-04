@@ -22,7 +22,14 @@ if ($result->num_rows > 0) {
     
     // Отримання результатів
     while ($row = $result->fetch_assoc()) {
-        $response[] = $row;
+        $response[] = [
+            'id' => $row['id'],
+            'name' => $row['name'],
+            'description' => $row['description'],
+            'color' => $row['color'],
+            'date_created' => $row['date_created'],
+            'categories' => $row['categories'] ? json_decode($row['categories']) : []
+        ];
     }
     
     // Відправка результатів у форматі JSON
