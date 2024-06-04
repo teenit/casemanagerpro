@@ -9,12 +9,61 @@ $mas = [];
 $monthplus = $month + 1;
 $monthminus = $month - 1;
 
-if ($monthplus > 11) {
+if ($monthplus > 12) {
     $monthplus = 0;
 }
 if ($monthminus < 0) {
-    $monthminus = 11;
+    $monthminus = 12;
 }
+$testCal = new StdClass();
+
+// SQL-запит
+$sql = "SELECT *
+        FROM cases_new
+        WHERE 
+            MONTH(happy_bd) = $monthplus OR
+            MONTH(happy_bd) = $monthminus OR
+            MONTH(happy_bd) = $month";
+
+$result = $conn->query($sql);
+$masHappy = [];
+// Перевірка та виведення результатів
+if ($result->num_rows > 0) {
+    // Виведення даних кожного рядка
+    while ($row = $result->fetch_assoc()) {
+        $case = new StdClass();
+        $caseValue = new StdClass();
+    
+        $caseValue->{'userID'} = $row['user_id'];
+        $caseValue->{'link'} = 'case/' . $row['id'];
+    
+        // Перетворення поля 'happy_bd' на об'єкт DateTime, якщо це необхідно
+        $happyBd = new DateTime($row['happy_bd']);
+    
+        $caseValue->{'day'} = $happyBd->format('d');
+        $caseValue->{'month'} = $happyBd->format('m');
+        $caseValue->{'year'} = $happyBd->format('Y');
+        $caseValue->{'title'} = "День народження " . $row['name'];
+        $caseValue->{'text'} = "Сьогодні у " . $row['name'] . " день народження, не забудьте привітати";
+        $caseValue->{'color'} = "#eba422";
+        $caseValue->{'start'} = "00:00";
+        $caseValue->{'end'} = "23:59";
+    
+        $case->{"id"} = $row['id'];
+        $case->{"value"} = $caseValue;
+        $case->{"date"} = $row['happy_bd']; // або $happyBd->format('Y-m-d'), якщо потрібно форматування
+        $case->{'day'} = $happyBd->format('d');
+        $case->{'month'} = $happyBd->format('m');
+        $case->{'year'} = $happyBd->format('Y');
+        $case->{'key'} = "happyCase";
+    
+        $mas[] = $case;
+    }
+    
+}
+
+
+
 // Підготовлений запит з параметрами
 $msql = "SELECT * FROM calendar WHERE (user_id=? OR user_id=0) AND (((month=? OR month=? OR month=?) AND year=?) OR ((month=? OR month=? OR month=?) AND every_year=1) OR ((month=? OR month=? OR month=?) AND meta_key='happyCase'))"; 
 
@@ -36,8 +85,6 @@ if ($stmt = mysqli_prepare($conn, $msql)) {
             $user->{'year'} = $res['year'];
             $mas[] = $user;
         }
-
-        echo json_encode($mas);
     } else {
         // Обробка помилок, якщо запит не вдалося виконати
         echo json_encode(["error" => mysqli_error($conn)]);
@@ -48,6 +95,8 @@ if ($stmt = mysqli_prepare($conn, $msql)) {
 } else {
     echo json_encode(["error" => mysqli_error($conn)]);
 }
+//$testCal->{'happy'} = $masHappy;
+echo json_encode($mas);
 
 mysqli_close($conn);
 exit;

@@ -28,7 +28,7 @@ const CalGrid =({keys,startDay,today,events,getCalendarList})=>{
                             <div className={s.events__wrap}>
                             {events.map((eve,ind)=>{    
                                 if(keys.happyCase == eve.key || keys.myCalendar == eve.key || keys.forAll == eve.key){
-                                    if(eve.day == item.format('D') && eve.month == item.month()){
+                                    if(eve.day == item.format('D') && eve.month == item.month() + 1){
                                         return(
                                             <div onClick={()=>{setAddEvent({...addEvent,open:true,date:item})}}
                                             key={item.unix() + ind} className={s.event__day} style={{

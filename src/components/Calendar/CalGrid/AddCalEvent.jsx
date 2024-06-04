@@ -5,7 +5,7 @@ import AddCalEventForm from "./AddCalEventForm";
 import s from "./cal.module.css"
 const AddCalEvent = ({ close, addEvent, events, keys, getCalendarList }) => {
     const [form, setForm] = useState(false)
-    const dayEvents = events.filter(item => item.day == addEvent.date.format('D') && item.month == addEvent.date.month());
+    const dayEvents = events.filter(item => item.day == addEvent.date.format('D') && item.month == addEvent.date.month() + 1);
     const dayEventsWithoutFull = dayEvents.filter(item=> item.value.start!=="0:00"&&item.value.end!=="23:59")
     const endDay = Math.min(...dayEventsWithoutFull.map(item => Number(item.value.start.slice(0, 2))), 8);
     const startDay = Math.max(...dayEventsWithoutFull.map(item => Number(item.value.end.slice(0, 2))), 20);
@@ -60,7 +60,7 @@ const sortedDayEvents = dayEvents.sort((a, b) => {
                         <div className={s.events}>
                             {sortedDayEvents.map((item, index) => {
                                 if (keys.happyCase == item.key || keys.myCalendar == item.key || keys.forAll == item.key) {
-                                    if (item.day == addEvent.date.format('D') && item.month == addEvent.date.month()) {
+                                    if (item.day == addEvent.date.format('D') && item.month == addEvent.date.month() + 1 ) {
                                         return (
                                             <div key={item.id} className={s.event__line}>
                                                 <div className={s.event__color__line} style={{ backgroundColor: item.value.color }}></div>
