@@ -1,10 +1,25 @@
 .AccessPage {
-    width: max-content;
+    width: 75%;
+    margin: auto;
     display: flex;
-    gap: 50px;
+    flex-direction: column;
+    gap: 25px;
     &-title{
-        color: $main-color;
-        background-color: $second-color;
+        margin: auto;
+        font-size: 33px;
+        font-weight: bold;
+    }
+    &-templates{
+        display: flex;
+        gap: 15px;
+        &-row{
+            font-size: 28px;
+            transition: all .3s;
+            >span:hover{
+                background-color: $background-color;
+                cursor: pointer;
+            }
+        }
     }
     &-button{
         padding: 12.5px 17.5px;
@@ -14,6 +29,8 @@
         color: #fff;
         font-size: 18px;
         cursor: pointer;
+        width: max-content;
+        margin: auto;
     }
     &-modal{
         h2{

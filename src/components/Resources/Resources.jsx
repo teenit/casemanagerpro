@@ -2,14 +2,11 @@ import React from "react";
 import { useState } from "react";
 import AddResources from "./AddResources";
 import GetResources from "./GetResources";
-
 import s from './Resources.module.css';
-import Modal from "../Modals/Modal";
-import { LANG } from "../../services/config";
-import { Button } from "@mui/material";
 
 const Resources = () => {
     const [form, setForm] = useState(false)
+
     return (
         <div className={s.wrapper}>
             <div className={s.title}>
@@ -21,14 +18,7 @@ const Resources = () => {
                 }>{form ? "-" : "+"}</span>
             </div>
             <div className={s.control}>
-                {form && <Modal closeHandler={() => { setForm(false) }} header="Додати ресурс" footer={
-                    <div className="Modal--footer">
-                        <Button variant="contained">{LANG.save}</Button>
-                        <Button onClick={() => { setForm(false) }} color="error" variant="contained">{LANG.cancel}</Button>
-                    </div>
-                }>
-                <AddResources/>
-                </Modal>}
+                {form && <AddResources close={()=>{setForm(false)}}/>}
             </div>
             <div className={s.get__resources}>
                 <GetResources />

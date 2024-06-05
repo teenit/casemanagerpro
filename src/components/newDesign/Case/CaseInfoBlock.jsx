@@ -178,7 +178,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         value={dataState.happy_bd}
                         onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
                         title="Дата народження"
-                        icon={"phone"}
+                        icon={"birthday"}
                         label={dataState.happy_bd}
                         inputType={"date"}
                         saveHandler={(val) => saveHandler("happy_bd", val, "general")}
