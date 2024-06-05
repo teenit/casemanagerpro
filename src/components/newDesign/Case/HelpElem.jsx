@@ -112,9 +112,12 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                             </div>
                             :
                             <div className="task-value">
+                                <pre>
                                 {
                                     state.text
                                 }
+                                </pre>
+                                
                             </div>
                     }
                 </div>
