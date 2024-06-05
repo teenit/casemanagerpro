@@ -28,7 +28,8 @@ if ($result->num_rows > 0) {
             'description' => $row['description'],
             'color' => $row['color'],
             'date_created' => $row['date_created'],
-            'categories' => $row['categories'] ? json_decode($row['categories']) : []
+            'categories' => $row['categories'] ? json_decode($row['categories']) : [],
+            'connect_count' => $row['connect_count']
         ];
     }
     

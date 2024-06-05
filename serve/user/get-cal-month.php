@@ -10,9 +10,9 @@ $monthplus = $month + 1;
 $monthminus = $month - 1;
 
 if ($monthplus > 12) {
-    $monthplus = 0;
+    $monthplus = 1;
 }
-if ($monthminus < 0) {
+if ($monthminus < 1) {
     $monthminus = 12;
 }
 $testCal = new StdClass();

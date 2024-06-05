@@ -28,6 +28,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         setDataState({
             phone1: info.general.phone1,
             phone2: info.general.phone2,
+            happy_bd: info.general.happy_bd,
             email: info.general.email,
             address_live: info.data.address_live,
             address_registered: info.data.address_registered,
@@ -43,6 +44,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
     const [editState, setEditState] = useState({
         phone1: false,
         phone2: false,
+        happy_bd: false,
         email: false,
         address_live: false,
         address_registered: false,
@@ -63,7 +65,6 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
 
     const saveHandler = (key, value, type) => {
         const originalValue = type === "general" ? info.general[key] : info.data[key];
-        console.log(originalValue)
         if (originalValue !== value) {
             if (type === "general") {
                 changeGeneral(key, value);
@@ -169,6 +170,18 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         label={dataState.phone2}
                         inputType={"number"}
                         saveHandler={(val) => saveHandler("phone2", val, "general")}
+                    />
+                </div>
+                <div className="CaseInfoBlock-line">
+                    <span>Дата народження</span>
+                    <InputBlock
+                        value={dataState.happy_bd}
+                        onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
+                        title="Дата народження"
+                        icon={"phone"}
+                        label={dataState.happy_bd}
+                        inputType={"date"}
+                        saveHandler={(val) => saveHandler("happy_bd", val, "general")}
                     />
                 </div>
                 <div className="CaseInfoBlock-line">

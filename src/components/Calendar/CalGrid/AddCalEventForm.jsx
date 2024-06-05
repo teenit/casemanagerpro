@@ -41,7 +41,7 @@ const AddCalEventForm = ({ date, close, getCalendarList }) => {
             error: false
         },
         day: date.format('D'),
-        month: date.month(),
+        month: date.month() + 1,
         year: date.year(),
         key: 'myCalendar',
         every_year: 0

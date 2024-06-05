@@ -3,6 +3,7 @@ import { useState } from "react";
 import { get_apiObj } from "../../Functions/get_apiObj";
 import AddCalEventForm from "./AddCalEventForm";
 import s from "./cal.module.css"
+import { NavLink } from "react-router-dom";
 const AddCalEvent = ({ close, addEvent, events, keys, getCalendarList }) => {
     const [form, setForm] = useState(false)
     const dayEvents = events.filter(item => item.day == addEvent.date.format('D') && item.month == addEvent.date.month() + 1);
@@ -65,9 +66,9 @@ const sortedDayEvents = dayEvents.sort((a, b) => {
                                             <div key={item.id} className={s.event__line}>
                                                 <div className={s.event__color__line} style={{ backgroundColor: item.value.color }}></div>
                                                 <div className={s.event__title}>
-                                                    <a href={item.value.link} target="_blank" style={{
+                                                    <NavLink to={"/" + item.value.link} style={{
                                                         color: item.value.color
-                                                    }}>{item.value.title}</a>
+                                                    }}>{item.value.title}</NavLink>
                                                     {
                                                         item?.value.start ?
                                                             <div className={s.event__time}>
