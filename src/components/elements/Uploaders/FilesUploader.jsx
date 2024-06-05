@@ -20,7 +20,7 @@ import loadImg from '../../../img/loading_3.gif';
 import {apiResponse} from '../../Functions/get_apiObj'
 import SmallNotification from '../Notifications/SmallNotification';
 import { useSelector } from 'react-redux';
-
+import Icon from "../Icons/Icon"
 const FORMAT = {
   pdf: { imgUrl: pdfImg },
   doc: { imgUrl: docImg },
@@ -73,6 +73,7 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
     }
 
     const metaObject = { ...meta, id, token };
+    console.log(metaObject);
     formData.append('meta', JSON.stringify(metaObject));
 
     axios({
@@ -106,9 +107,9 @@ const handleDelete = (index)=>{
           <div key={index}>
             <p style={{ textDecoration: "underline" }}>{file.name}</p>
             {FORMAT[ext(file.name)] && <img className='FilesUploader-files-preview' src={FORMAT[ext(file.name)].imgUrl} alt={`File type: ${ext(file.name)}`} />}
-            <div className="FilesUploader-files-delete" onClick={()=>{
-              handleDelete(index)
-            }}></div>
+            <span onClick={()=>{handleDelete(index)}}>
+            <Icon icon={"close"} addClass={"close-icon"}/>
+            </span>
           </div>
         ))}
       </div>}

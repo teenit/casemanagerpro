@@ -33,9 +33,12 @@ export const LANG = {
   a_page_case_transfer: "Передати кейс іншому користувачу",
   a_page_case_add_notes: "Додавати нотатки до кейсу",
   a_page_case_hidden: "Приховати інформацію",
-  access: {
+  access_text: {
+    title:"Шаблони прав",
+    add_template: "Додати права",
     add_name: "Назва нового права",
     add_description: "Опис нового права",
+    modal_header:"Додати новий шаблон прав"
   },
   status_plan: {
     0: "Задачу створено",

@@ -32,27 +32,33 @@ const AccessPage = () => {
 
     return (
         <div className="AccessPage">
+            <div className="AccessPage-title">
+                <span>{LANG.access_text.title}</span>
+            </div>
+            <div className="AccessPage-templates">
             {state.map((item) => {
-                return <NavLink key={item.id} state={item} to={item.id} className="AccessPage-title">{item.name}</NavLink>
+                return <NavLink key={item.id} state={item} to={item.id} className="AccessPage-templates-row"><span>{item.name}</span></NavLink>
             })}
+            </div>
+
             {
                 modal && <Modal closeHandler={() => { setModal(false) }}
                     header={
-                        <h3 className="">Додати новий шаблон прав</h3>
+                        <h3>{LANG.access_text.modal_header}</h3>
                     }
                     footer={
-                            <Button variant="contained" className="button" onClick={addNewAccess}>Зберегти</Button>
+                            <Button variant="contained" className="button" onClick={addNewAccess}>{LANG.save}</Button>
                     }
                 >
-                    <Input value={addAccess.name} className="input" onChange={e => setAccess({ ...addAccess, name: e.target.value })} label={LANG.access.add_name} type="text" />
-                    <Textarea value={addAccess.description} onChange={e => setAccess({ ...addAccess, description: e.target.value })} label={LANG.access.add_description} />
+                    <Input value={addAccess.name} onChange={e => setAccess({ ...addAccess, name: e.target.value })} label={LANG.access_text.add_name} type="text" />
+                    <Textarea value={addAccess.description} onChange={e => setAccess({ ...addAccess, description: e.target.value })} label={LANG.access_text.add_description} />
 
                 </Modal>
             }
 
             <button className="AccessPage-button" onClick={() => {
                 setModal(true)
-            }}>Додати права</button>
+            }}>{LANG.access_text.add_template}</button>
 
         </div>
 
