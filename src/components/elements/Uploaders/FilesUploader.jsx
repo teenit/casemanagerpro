@@ -53,6 +53,9 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
     if (type == "resource") {
       return "upload-resource-files.php";
     }
+    if (type == "event") {
+      return "event/upload.php";
+    }
   }
 
   const handleFileChange = (event) => {

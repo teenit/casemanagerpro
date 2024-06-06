@@ -1,142 +1,98 @@
 <?php
 require_once '../config.php';
-$mas = [];
-$id = $_POST["id"];
-$userId = $_POST['userId'];
-$token = $_POST['token'];
-$title = $_POST['title'];
-$description = $_POST['description'];
 
-$userName = $_POST['userName'];
-$eventID = $_POST['eventID'];
-$keyF = $_POST['keyF'];
-$linkF = $_POST['link'];
-
-
-function getExtension($filename) {
-    return end(explode(".", $filename));
-}
-function getFilesize($filesize)
-{
-    if ($filesize > 1024) {
-        $filesize = ($filesize / 1024);
-        if ($filesize > 1024) {
-            $filesize = ($filesize / 1024);
-            if ($filesize > 1024) {
-                $filesize = ($filesize / 1024);
-                $filesize = round($filesize, 1);
-                return $filesize . " GB";
-            } else {
-                $filesize = round($filesize, 1);
-                return $filesize . " MB";
-            }
-        } else {
-            $filesize = round($filesize, 1);
-            return $filesize . " KB";
-        }
+// Перевірка, чи було надіслано файли
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
+    // Перевірка, чи надійшли значення case_id та key
+    $metaData = json_decode($_POST['meta'], true);
+    $user_id = $metaData['id'];
+    $key = $metaData['key'];
+    $title = $metaData['title'];
+    $description = $metaData['description'];
+    $eventID = $metaData['eventID'];
+    if (isset($user_id) && isset($key)) {
+        $user_id = intval($user_id); // Захист від SQL-ін'єкцій
+        $metaKey = $conn->real_escape_string($key); // Захист від SQL-ін'єкцій
     } else {
-        $filesize = round($filesize, 1);
-        return $filesize . " bytes";
+        echo "Помилка: Немає значень case_id або key";
+        exit();
     }
-}
-$obj = new StdClass();
-if(!checkRight($userId, 'loadEventDocs', $token, true)) exit;
 
-$url = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 's' : '') . '://';
+    // Перевірка, чи надійшли файли
+    if (isset($_FILES['files']) && is_array($_FILES['files']['name'])) {
+        // Директорія для зберігання завантажених файлів
+        $uploadDir = 'uploads/';
 
-$time = time();
-        $tmp_name = $_FILES["fileResource"]["tmp_name"];
-        // basename() может спасти от атак на файловую систему;
-        // может понадобиться дополнительная проверка/очистка имени файла
-        $name = basename($_FILES["fileResource"]["name"]);
-        $check = strtolower(getExtension($name));
-        if($check == 'doc' || $check == 'docx' || $check == 'xls' || $check == 'xlsx' || $check == 'jpeg' || $check == 'jpg' || $check == 'png' || $check == 'mp3' || $check == 'mp4' || $check == 'mov' || $check == 'ppt' || $check == 'pptx' || $check == 'pdf'){
-        }else{
-            $obj->{'message'} = "Заборонено завантаження файла формату ".$check;
-            echo json_encode($obj, JSON_UNESCAPED_UNICODE);
-            exit;
-        }
-        $obj->{'size'} = getFilesize(filesize($tmp_name));
-        move_uploaded_file($tmp_name, "uploads/".$linkF.$time.'.'.getExtension($name));
-        ///////////////////////////
-            if($check == 'jpg'){
-                
-          
-            $filename= $tmp_name;
-            list($w, $h, $type, $attr) = getimagesize($filename);
-            $src_im = imagecreatefromjpeg($filename);
-            
-            $src_x = '0';   // начальная позиция x
-            $src_y = '0';   // начальная позиция y
-            $src_w = '100'; // ширина
-            $src_h = '100'; // высота
-            $dst_x = '0';   // координата результирующего изображения x
-            $dst_y = '0';   // координата результирующего изображения y
-            
-            $dst_im = imagecreatetruecolor($src_w, $src_h);
-            $white = imagecolorallocate($dst_im, 255, 255, 255);
-            imagefill($dst_im, 0, 0, $white);
-            
-            imagecopy($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
-            
-            header("Content-type: image/png");
-            imagepng($dst_im);
-            imagedestroy($dst_im);
+        // Масив для зберігання посилань на файли
+        $fileLinks = array();
+
+        // Початок транзакції
+        $conn->begin_transaction();
+
+        // Перебираємо кожен завантажений файл
+        foreach ($_FILES['files']['name'] as $index => $name) {
+            // Отримання тимчасового імені та інших властивостей файлу
+            $tmpName = $_FILES['files']['tmp_name'][$index];
+            $type = $_FILES['files']['type'][$index];
+            $error = $_FILES['files']['error'][$index];
+            $size = $_FILES['files']['size'][$index];
+
+            // Перевірка, чи є помилка при завантаженні файлу
+            if ($error !== UPLOAD_ERR_OK) {
+                echo "Помилка завантаження файлу: $name\n";
+                continue;
             }
-        
-        
-        
-        
-        
-        
-        //////////////////////////
-        $link = "https://".$_SERVER['SERVER_NAME']."/serve/event/uploads/".$linkF.$time.'.'.getExtension($name);
-        $obj->{'link'} = $link;
-        $obj->{'title'} = $title;
-        $obj->{'description'} = $description;
-        $obj->{'format'} = getExtension($name);
-        $obj->{'date'} = date("Y.m.d");
-        $obj->{'time'} = date("H:m:s");
-        $obj->{'deleted'} = false;
-        
-        $obj->{'userName'} = false;
-        $obj->{'deleted'} = false;
-        $obj->{'deleted'} = false;
-        
 
-        $msql = "SELECT * FROM users WHERE id='$userId'";
-        
-        $user = mysqli_query($conn, $msql);
+            // Генеруємо унікальне ім'я для файлу
+            $fileName = $uploadDir . uniqid() . '_' . $name;
 
-        $user = mysqli_fetch_assoc($user);
-
-        $obj->{'userName'} = $user['userName'];
-        $obj->{'userID'} = $userId;
-    
-        $metaKey = $keyF;
-                    $msql = "SELECT meta_value FROM eventsmeta WHERE user_id=1 AND meta_key='$metaKey' AND event_id='$eventID'";
-                $result = $conn->query($msql);
-                $row = $result->fetch_assoc();
-                if($row == null){
-                    $mas[] = $obj;
-                    $resource = json_encode($mas, JSON_UNESCAPED_UNICODE);
-                    $sql = "INSERT INTO eventsmeta (event_id, meta_key, meta_value, user_id) VALUES ('$eventID', '$metaKey', '$resource',1)";
-                }else{
-                    //$sql = "UPDATE usermeta SET meta_value = '$link' WHERE user_id = $id AND meta_key='$prf'";
-                    $oldRes = json_decode($row['meta_value']);
-                    
-                    $oldRes[] = $obj;
-                    $oldMas = json_encode($oldRes, JSON_UNESCAPED_UNICODE);
-                    $sql = "UPDATE eventsmeta SET meta_value = '$oldMas' WHERE user_id =1 AND meta_key='$metaKey' AND event_id='$eventID'";
-                }
+            // Переміщуємо файл з тимчасового місця розташування в директорію для зберігання
+            if (move_uploaded_file($tmpName, $fileName)) {
+                
+            } else {
+                echo "Помилка переміщення файлу: $fileName\n";
+                echo "Останній код помилки: " . error_get_last()['message'];
+                continue; // Перейти до наступного файлу
+            }
+            $link = new stdClass();
+            $link->{'link'} = "https://".$_SERVER['SERVER_NAME']."/serve/event/".$fileName;
+            $link->{'type'} = $type; 
+            $link->{'size'} = $size; 
+            $link->{'name'} = $name; 
+            $link->{'title'} = $title; 
+            $link->{'description'} = $description; 
             
-                if (mysqli_query($conn, $sql)) {
-                    echo json_encode($obj);
-                } else {
-                    $obj = new StdClass();
-                    $obj->{'message'} = "Помилка завантаження, спробуйте пізніше";
-                    $obj->{'marker'} = "red";
-                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-              }
-              mysqli_close($conn);
-     
+            // Вставляємо запис в БД
+            $stmt = $conn->prepare("INSERT INTO eventsmeta (user_id, event_id, meta_key, meta_value) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("iiss", $user_id, $eventID, $metaKey, json_encode($link, JSON_UNESCAPED_UNICODE)); // Використання підготовленого зв'язування параметрів
+
+            // Виконання запиту до бази даних
+            if (!$stmt->execute()) {
+                // Відкат транзакції у випадку помилки
+                $conn->rollback();
+                echo "Помилка вставки запису в БД: " . $stmt->error;
+                exit();
+            }
+
+            // Додаємо посилання на файл до масиву
+            $fileLinks[] = $link;
+        }
+
+        // Закінчення транзакції
+        $conn->commit();
+
+        // // Повертаємо посилання на файли у вигляді JSON
+        // $fileLinks = array_map(function($fileName) {
+        //     return 'https://' . $_SERVER['HTTP_HOST'] . '/serve/'.$fileName; // Додаємо базову URL
+        // }, $fileLinks);
+        echo json_encode($fileLinks, JSON_UNESCAPED_UNICODE);
+    } else {
+        echo "Помилка: Немає файлів для завантаження";
+    }
+} else {
+    echo "Помилка: Неправильний метод запиту або немає файлів для завантаження";
+}
+
+// Закриття з'єднання
+$conn->close();
+?>

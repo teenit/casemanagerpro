@@ -91,11 +91,17 @@ const UploadEventDocs = ({eventID})=>{
                             </div>
                             <div className={s.hidden__text}>{hiddenText}</div>
                         </div> */}
-                        <FilesUploader multiple={true} meta={{
-                            key:"event_files",
-                            case_id:11,
-                            type:"event"
-                        }}/>
+                        <FilesUploader 
+                            multiple={true} 
+                            meta={{
+                                key:"event_files",
+                                type:"event",
+                                title:meta.title,
+                                description:meta.description,
+                                eventID:eventID
+                            }}
+                            type="event"
+                        />
                         <div className={s.add__form__btn}>
                             <button
                             className={`primary__btn ${bload ? s.b__load : ''}`}
