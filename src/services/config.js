@@ -35,7 +35,7 @@ export const LANG = {
   a_page_case_hidden: "Приховати інформацію",
   access_text: {
     title:"Шаблони прав",
-    add_template: "Додати права",
+    add_template: "Додати шаблон прав",
     add_name: "Назва нового права",
     add_description: "Опис нового права",
     modal_header:"Додати новий шаблон прав"

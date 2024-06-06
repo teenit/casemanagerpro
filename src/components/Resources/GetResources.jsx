@@ -15,13 +15,11 @@ import pptxImg from "./../../img/resources/pptx.png";
 import xlsImg from "./../../img/resources/xls.png";
 import xlsxImg from "./../../img/resources/xlsx.png";
 import { Button } from "@mui/material";
+import { apiResponse } from "../Functions/get_apiObj";
 
-const GetResources = () => {
-    const [files, setFiles] = useState([]);
-    const [show, setShow] = useState(false);
+const GetResources = ({docFiles, mediaFiles, show, loadGroups}) => {
     const [info, setInfo] = useState({});
-    const [docFiles, setDocFiles] = useState([]);
-    const [mediaFiles, setMediaFiles] = useState([]);
+
 
     const InfoModal = () => {
         document.addEventListener("keydown", (e) => {
@@ -128,29 +126,7 @@ const GetResources = () => {
     });
 
     useEffect(() => {
-        getResourcesBD().then((res) => {
-            setFiles(res);
-            setShow(true);
-
-            const docTypes = [
-                "application/msword",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "application/vnd.ms-powerpoint",
-                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                "application/pdf"
-            ];
-            const mediaTypes = [
-                "image/png",
-                "image/jpeg",
-                "image/jpg",
-                "video/mp4",
-                "video/quicktime"
-            ];
-            setDocFiles(res.filter(file => docTypes.includes(file.type)));
-            setMediaFiles(res.filter(file => mediaTypes.includes(file.type)));
-        });
+        loadGroups()
     }, []);
 
     return show && (

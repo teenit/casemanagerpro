@@ -46,10 +46,10 @@ const Home = ()=>{
                         <NavLink className={s.a} to="/cooperation">Коаліція</NavLink>
                     </li>
                     <li className={s.li}>
-                        <NavLink className={s.a} to="/access">Access</NavLink>
+                        <NavLink className={s.a} to="/access">Шаблони прав</NavLink>
                     </li>
                     <li className={s.li}>
-                        <NavLink className={s.a} to="/groups">Groups</NavLink>
+                        <NavLink className={s.a} to="/groups">Групи</NavLink>
                     </li>
                 </ul>
                 </div>

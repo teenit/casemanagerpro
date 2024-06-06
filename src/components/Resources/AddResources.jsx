@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import { apiResponse } from "../Functions/get_apiObj";
 import { LANG } from "../../services/config";
 
-const AddResources = ({ close }) => {
+const AddResources = ({ close, loadGroups }) => {
     const [alert, setAlert] = useState({
         success: false,
         error: false
@@ -29,6 +29,7 @@ const AddResources = ({ close }) => {
     const successHandler = () => {
         close();
         handleAlertChange("success");
+        loadGroups()
     };
 
     return (

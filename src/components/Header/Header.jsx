@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import logo from "../../img/logo.png";
+import logo from "../../img/logo.svg";
 import addCaseImg from "./../../img/icons/add-user-64.png";
 import calendarImg from "./../../img/icons/calendar-day-white-64.png";
 import eventImg from "./../../img/icons/calendar-64-white.png"

@@ -76,14 +76,13 @@
     cursor: pointer;
 }
 .wrap__cards{
+    height: max-content;
     display: flex;
     flex-direction: column;
-    text-align: center;
-    gap: 10px;
     border: solid 1px var(--main-color);
 }
 .inner__cards{
-    padding: 0px 50px;
+    padding: 10px 50px;
 
 }
 .wrap__cards__list{
