@@ -53,13 +53,8 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
     if (type == "resource") {
       return "upload-resource-files.php";
     }
-<<<<<<< HEAD
-    if(type=="event"){
-      return "event/upload.php"
-=======
     if (type == "event") {
       return "event/upload.php";
->>>>>>> 8d0dcf672d09603ef111fc5aeab69b947b5c6c9f
     }
   }
 
