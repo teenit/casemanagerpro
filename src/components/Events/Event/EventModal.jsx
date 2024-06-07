@@ -29,7 +29,7 @@ const EventModal = ({close,info,getUsers,getPlans})=>{
                         getPlans(id,key)
                     }} eventID = {info.id} />
                     <UploadEventDocs eventID={info.id}/>
-                    <UploadEventMedia eventID={info.id}/>
+                    {/* <UploadEventMedia eventID={info.id}/> */}
                 </div>
                 
             </div>
