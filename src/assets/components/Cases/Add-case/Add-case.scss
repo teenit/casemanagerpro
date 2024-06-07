@@ -22,7 +22,10 @@
             font-weight: bold;
             padding-bottom: 10px;
         }
-        
+        &-line-buttons{
+            display: flex;
+            gap: 25px;
+        }
         &-line-three{
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;

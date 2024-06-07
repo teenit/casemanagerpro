@@ -2,15 +2,12 @@ import React, {useState, useEffect} from "react";
 import {NavLink} from 'react-router-dom';
 import defaultImg from './../../img/default_profile.png';
 import './cards.css';
-let categoriesStr = "";
-
-  
 const Card = (props)=>{
 
     const CategoriesData = ({categories})=>{
         
         return (
-            <div>
+            <div className="categories__data">
                 {
                     props.categories.map((item)=>{
                         if (categories.indexOf(item.id) !== -1 )  return <div key={item.id} className="category__circle" title={item.name} style={{backgroundColor: item.color}} />
@@ -55,7 +52,7 @@ const Card = (props)=>{
                 <div className="card__info__status">
                     <div className="card__info__status__contract">
                         {props.info.contractDate && <span>{props.info.contractDate}</span>}
-                        {props.info.contractNumber && <span>#{props.info.contractNumber}</span>}
+                        {props.info.contractNumber && <span><b>#{props.info.contractNumber}</b></span>}
                     </div>
                 </div>
             </div>

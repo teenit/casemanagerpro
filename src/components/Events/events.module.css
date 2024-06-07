@@ -25,6 +25,9 @@
     grid-template-columns: 1fr;
     gap: 10px;
 }
+.date{
+    color: #bababa;
+}
 .res__control{
     display: flex;
     align-items: center;

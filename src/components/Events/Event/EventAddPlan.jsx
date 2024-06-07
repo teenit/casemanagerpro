@@ -4,7 +4,8 @@ import { useState } from "react";
 import { serverAddres } from "../../Functions/serverAddres";
 import s from "./modal.module.css"
 import Input from '../../elements/Inputs/Input'
-
+import Textarea from "../../elements/Inputs/Textarea"
+import { Button } from "@mui/material";
 const EventAddPlan = ({eventID,getPlans})=>{
     const [plan,setPlan]  = useState({
         title:"",
@@ -80,16 +81,11 @@ const EventAddPlan = ({eventID,getPlans})=>{
                         }} value={plan.timeEnd}  type="time" />
                     </label>
                 </div>
-                <div className={s.item__textarea} >
-                    <label htmlFor="">
-                        План
-                    </label>
-                    <textarea placeholder="Що буде?" onChange={(e)=>{
+                    <Textarea label="Що буде відбуватися?" onChange={(e)=>{
                         setPlan({...plan,description:e.target.value})
-                    }} value={plan.description} name="" id="" cols="30" rows="10" label="Саме план... Що буде?"></textarea>
-                </div>
+                    }} value={plan.description}></Textarea>
                 <div className={s.add__plan__item__single}>
-                    <button onClick={addPlan} className="primary__btn">Створити план</button>
+                    <Button variant="contained" onClick={addPlan}>Створити план</Button>
                 </div>
             </div>
         </div>

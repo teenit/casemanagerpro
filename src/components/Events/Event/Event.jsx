@@ -34,6 +34,7 @@ const Event = ()=>{
             
             if(!data.data?.docs) return;
             if(key == "docs"){
+                console.log(data);
                 setDocs(data.data.docs)
             }else{
                 setMediaFile(data.data.docs)

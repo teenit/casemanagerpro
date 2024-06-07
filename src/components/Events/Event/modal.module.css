@@ -87,14 +87,15 @@
     padding: 5px 0;
 }
 .add__user__item:hover{
-    background-color: #00000033;
+    background-color: var(--main-color);
+    color: #fff;
 }
 .add__user__item:nth-child(2n+1){
-    background-color: rgb(225, 220, 220);
+    background-color: var(--background-color);
 }
 .add__user__item:nth-child(2n+1):hover{
-    background-color: #00000033;
-}
+    background-color: var(--main-color);
+    color: #fff;}
 .modal__info{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -125,7 +126,9 @@
 .add__plan__item label {
     display: block;
 }
-
+.button__wrap{
+    margin: auto;
+}
 
 
 

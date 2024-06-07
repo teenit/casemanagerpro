@@ -1,4 +1,5 @@
 .show__cal{
+    width: max-content;
     display: flex;
     flex-direction: column;
     gap: 5px;

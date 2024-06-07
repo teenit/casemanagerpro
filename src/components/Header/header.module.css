@@ -10,10 +10,6 @@
 }
 .logo__img{
     width: 50px;
-    transition: .7s;
-}
-.logo__img:hover{
-    transform: rotate(1080deg);
 }
 .logout{
     transition: all .3s;

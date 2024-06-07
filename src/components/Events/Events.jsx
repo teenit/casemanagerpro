@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { serverAddres } from "../Functions/serverAddres";
 import s from "./events.module.css";
-import delImg from "./../../img/icons/delete-48.png"
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import AddEvent from "./AddEvent";
 import settingImg from "./../../img/icons/settings-50-black.png"
 import { apiResponse } from "../Functions/get_apiObj";
-import Icon from "../elements/Icons/Icon"
 const Events = ()=>{
     const [control, setControl] = useState(false)
     const [events, setEvents] = useState([]);
@@ -31,13 +29,13 @@ const Events = ()=>{
     useEffect(()=>{
         getEvents()
     },[])
-    const removeEvent = (eventID)=>{
-        console.log(eventID)
-        apiResponse({eventID:eventID},'event/deactivate-event-by-id.php').then((responce)=>{
-            alert(responce);
-            getEvents();
-        }).catch(err=>console.log(err))
-    }
+    // const removeEvent = (eventID)=>{
+    //     console.log(eventID)
+    //     apiResponse({eventID:eventID},'event/deactivate-event-by-id.php').then((responce)=>{
+    //         alert(responce);
+    //         getEvents();
+    //     }).catch(err=>console.log(err))
+    // }
     return(
     <div className={s.wrap}>
         <div className={s.control}>
@@ -62,11 +60,6 @@ const Events = ()=>{
                     </div>
                     <div className={s.author}>Створив: {item.meta.userName}</div>
                     <div className={s.res__control}>
-                        <span onClick={()=>{
-                            removeEvent(item.id)
-                        }} >
-                            <Icon icon={"delete"} addClass={"default-icon"}/>
-                        </span>
                         <div className={s.date}>{item.meta.date}</div>
                     </div>
                 </div>)

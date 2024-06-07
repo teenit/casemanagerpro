@@ -53,6 +53,9 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
     if (type == "resource") {
       return "upload-resource-files.php";
     }
+    if(type=="event"){
+      return "event/upload.php"
+    }
   }
 
   const handleFileChange = (event) => {
@@ -73,7 +76,6 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
     }
 
     const metaObject = { ...meta, id, token };
-    console.log(metaObject);
     formData.append('meta', JSON.stringify(metaObject));
 
     axios({
@@ -86,6 +88,7 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
       }
     })
       .then((response) => {
+        console.log(response);
         setSelectedFiles([])
         successHandler(response.data)
         setAlert(true)

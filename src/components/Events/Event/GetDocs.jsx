@@ -6,7 +6,6 @@ import { serverAddres } from "../../Functions/serverAddres";
 import downloadImg from "./../../../img/icons/downloading-50.png"
 import s from "./get-media.module.css";
 const GetDocs = ({id,docs})=>{
-    
     return(
         <div className={s.file__wrap}>
             <h2>Завантажені документи</h2>

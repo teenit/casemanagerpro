@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import Input from "../../elements/Inputs/Input";
 import { changeAps, changeApsBr } from "../../Functions/translateString";
 import { apiResponse } from '../../Functions/get_apiObj'
-import CheckboxForm from "./CheckboxForm";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import { useSelector } from "react-redux";
 import Textarea from "../../elements/Inputs/Textarea"
 import { Button } from "@mui/material";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 const AddCaseForm = () => {
     const navigate = useNavigate();
     const options = []
@@ -82,11 +81,12 @@ const AddCaseForm = () => {
         setStateData({ ...stateData, [key]: val })
     }
     function handleSubmit() {
-        if (stateGeneral.first_name.length > 0) {
-            sendGeneral()
-
-        } else {
+        if (stateGeneral.first_name.length < 1) {
             setErrorAlert({...alert,status:true,text:"Будь ласка, введіть ім'я кейсу"})
+        } else if (stateGeneral.phone1.length < 10 || stateGeneral.phone1.length > 13) {
+            setErrorAlert({...alert,status:true,text:"Будь ласка, введіть номер телефону кейсу"})
+        }else{
+            sendGeneral()
         }
     }
     function sendGeneral() {
@@ -104,11 +104,10 @@ const AddCaseForm = () => {
         })
         setAlert(true)
     }
+
     function saveHandler() {
-        
         sendData()
     }
-
     return (
         <div className="AddCaseForm">
             <h1>Додати кейс</h1>
@@ -145,7 +144,7 @@ const AddCaseForm = () => {
                     </div>
                     <div className="AddCaseForm-inner-line-two w100">
                         <div>
-                            <p>Номер телефону 1</p>
+                            <p>Номер телефону 1 <span className="required">*</span></p>
                             <Input
                                 type="number"
                                 value={stateGeneral.phone1}
@@ -284,7 +283,6 @@ const AddCaseForm = () => {
                     <div className="w100">
 
                             <p>Категорія кейсу<span className="required">*</span></p>
-                            {/* <CheckboxForm allMas={categories} checkedMas={checkedMas} onChange={(value) => handleCheckboxChange(value)} /> */}
                             <CheckboxListAccess
                                 allMas={()=>{return categories}} 
                                 checkedMas={checkedMas}
@@ -303,7 +301,13 @@ const AddCaseForm = () => {
                             }}
                         />
                     </div>
+                    <div>
+
+                    </div>
+                    <div className="AddCaseForm-inner-line-buttons">
+                    <Button variant="contained" color="error" onClick={()=>{navigate("/case/" + stateData.case_id)}}>Пропустити</Button>
                     <Button variant="contained" onClick={saveHandler}>Зберегти</Button>
+                    </div>
                 </div>
             }
             {alert &&
