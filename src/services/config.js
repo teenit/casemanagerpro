@@ -90,6 +90,12 @@ export const LANG = {
     passwordLabel: "Пароль",
     passwordMinLengthMessage: "Пароль повинен бути довжиною більше ніж 5 символів",
   },
+  galleryBlock:{
+    name:"Назва",
+    type:"Тип",
+    size:"Розмір",
+    download:"Завантажити"
+  },
     addEvent: "Створення події",
     cases:"Немає доступних кейсів",
     casesList:{
@@ -191,8 +197,8 @@ export const LANG = {
     "a_page_access_create": "Створення шаблону прав користувачів",
     "a_page_access_edit": "Редагування шаблону прав користувачів",
     "a_page_groups":"Доступ до сторінки груп",
-    "a_page_groups_create":"Створення нової групи",
-    "a_page_groups_connect":"Створення зв'язків між об'єктами і групою"
+    "a_group_create":"Створення нової групи",
+    "a_page_case_connection":"Створення зв'язків між об'єктами і групою"
   },
   pages: {
     case: "Кейс",
@@ -471,8 +477,8 @@ export const appConfig = {
     groups:{
       yes_no:[
         "a_page_groups",
-        "a_page_groups_create",
-        "a_page_groups_connect"
+        "a_group_create",
+        "a_page_case_connection"
       ],
       view_edit: []
     }

@@ -7,6 +7,7 @@ import s from "./upload.module.css";
 import Input from '../../elements/Inputs/Input'
 import FilesUploader from "../../elements/Uploaders/FilesUploader";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
+import Textarea from "../../elements/Inputs/Textarea";
 
 
 const UploadEventDocs = ({ eventID }) => {
@@ -43,7 +44,7 @@ const UploadEventDocs = ({ eventID }) => {
                         }} />
                 </div>
                 <div className={s.add__form__desc}>
-                    <Input type="text"
+                    <Textarea
                         label="Опис Документу"
                         value={meta.description}
                         onChange={(e) => {

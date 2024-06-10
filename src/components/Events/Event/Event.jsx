@@ -11,26 +11,23 @@ import GetDocs from "./GetDocs";
 import BigPhoto from "./BigPhoto";
 import Galery from "../../Galery/Galery";
 import { apiResponse } from "../../Functions/get_apiObj";
+import GalleryBlock from "../../blocks/GalleryBlock";
 
 const Event = ()=>{
     const [usersMemC, setUsersMemC] = useState([])
     const [plans,setPlans] = useState([])
-    const [docs,setDocs] = useState([])
-    const [mediaFile,setMediaFile] = useState([])
+    const [files,setFiles] = useState([])
     const [lookPhoto,setLookPhoto] = useState({look:false,link:""})
+
     function getFiles(id,key){
         let obj = {
             key:key,
             eventID:id
         }
         apiResponse({...obj},"event/get-files.php").then((data)=>{ 
-            console.log(data);
-            if(!data.data?.docs) return;
-            if(key == "docs"){
-                setDocs(data.data.docs)
-            }else{
-                setMediaFile(data.data.docs)
-            }
+            let mas = data.map(item=>{return item.fileInfo})
+            setFiles([...mas])
+            console.log([...files]);
         })
         .catch((error)=>console.log(error)) 
     }
@@ -93,8 +90,7 @@ const Event = ()=>{
                 getUsers(data.data.id,"eventMemberUser")
                 getUsers(data.data.id,"eventMemberCase")
                 getPlans(data.data.id,"eventPlan")
-                getFiles(data.data.id,"docs")
-                getFiles(data.data.id,"media")
+                getFiles(data.data.id,"event_files")
             }
 
         })
@@ -143,14 +139,7 @@ const Event = ()=>{
                 <div className={s.plans}>
                         <GetPlans id={event.id} plans = {plans}/>
                 </div>
-                <div className={s.docs}>
-                        <GetDocs id={event.id} docs = {docs}/>
-                </div>
-                <div className={s.media}>
-                        <Galery id={event.id} media = {mediaFile} title = "Завантажені медіа файли"/>
-                        
-                </div>
-               
+                <GalleryBlock data = {files}/>
             </div>
             {lookPhoto.look?<BigPhoto link = {lookPhoto.link} close = {()=>{setLookPhoto({...lookPhoto,look:false})}}/>:null}
             {control ? <EventModal getPlans = {(id,key)=>{

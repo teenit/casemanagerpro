@@ -11,12 +11,13 @@
     }
     &-templates{
         display: flex;
+        flex-direction: column;
         gap: 15px;
         &-row{
             font-size: 28px;
             transition: all .3s;
             >span:hover{
-                background-color: $background-color;
+                color: $main-color;
                 cursor: pointer;
             }
         }
