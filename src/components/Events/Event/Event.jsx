@@ -10,6 +10,7 @@ import GetPlans from "./GetPlans";
 import GetDocs from "./GetDocs";
 import BigPhoto from "./BigPhoto";
 import Galery from "../../Galery/Galery";
+import { apiResponse } from "../../Functions/get_apiObj";
 
 const Event = ()=>{
     const [usersMemC, setUsersMemC] = useState([])
@@ -19,22 +20,13 @@ const Event = ()=>{
     const [lookPhoto,setLookPhoto] = useState({look:false,link:""})
     function getFiles(id,key){
         let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token"),
             key:key,
             eventID:id
         }
-        axios({
-            url: serverAddres("event/get-files.php") ,
-            method: "POST",
-            header : {'Content-Type': 'application/json;charset=utf-8'},
-            data : JSON.stringify(obj),
-        })
-        .then((data)=>{ 
-            
+        apiResponse({...obj},"event/get-files.php").then((data)=>{ 
+            console.log(data);
             if(!data.data?.docs) return;
             if(key == "docs"){
-                console.log(data);
                 setDocs(data.data.docs)
             }else{
                 setMediaFile(data.data.docs)

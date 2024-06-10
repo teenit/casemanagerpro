@@ -91,7 +91,7 @@ const [alert,setAlert] = useState({
   return (
     <form className="ContactForm" onSubmit={handleSubmit}>
       <span onClick={toggleModal}>
-        <Icon icon={"close"} addClass={"default-icon"} />
+        <Icon icon={"close"} />
       </span>
       <div className="ContactForm-split">
         <Input
@@ -103,7 +103,6 @@ const [alert,setAlert] = useState({
           required
         />
         <label className="ContactForm-split-flex">
-          {/* <div>Категорія</div> */}
           <Select value={state.id && state.category[0].value} onChange={handleChangeSelect} required>
             {state.categori.map((item) => (
               <MenuItem key={item.value} value={item.value}>

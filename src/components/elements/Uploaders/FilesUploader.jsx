@@ -17,7 +17,7 @@ import xlsxImg from "./../../../img/resources/xlsx.png";
 import send from '../../../img/icons/send-media.png';
 import add from '../../../img/icons/add-media.png';
 import loadImg from '../../../img/loading_3.gif';
-import {apiResponse} from '../../Functions/get_apiObj'
+import { apiResponse } from '../../Functions/get_apiObj'
 import SmallNotification from '../Notifications/SmallNotification';
 import { useSelector } from 'react-redux';
 import Icon from "../Icons/Icon"
@@ -41,11 +41,11 @@ function ext(name) {
   return name.match(/\.([^.]+)$|$/)[1];
 }
 
-function FilesUploader({ multiple = true, successHandler = () => {}, meta = null, type = "case" }) {
-  const [alert,setAlert] = useState(false)
+function FilesUploader({ multiple = true, successHandler = () => { }, meta = null, type = "case" }) {
+  const [alert, setAlert] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const {id,token}= useSelector(state => state.user)
+  const { id, token } = useSelector(state => state.user)
   const getFromType = () => {
     if (type === "case") {
       return "upload-files.php";
@@ -67,7 +67,7 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
   };
 
   const handleUpload = async () => {
-    
+
     if (!meta) return console.log("meta object is required");
     setUploading(true);
     const formData = new FormData();
@@ -98,32 +98,35 @@ function FilesUploader({ multiple = true, successHandler = () => {}, meta = null
   };
 
 
-const handleDelete = (index)=>{
-  const newMas = [...selectedFiles]
-  newMas.splice(index,1)
-  setSelectedFiles(newMas)
-}
+  const handleDelete = (index) => {
+    const newMas = [...selectedFiles]
+    newMas.splice(index, 1)
+    setSelectedFiles(newMas)
+  }
+  const cutTitle = (str) => {
+    return str.length > 20 ? str.substring(0, 20) + "..." : str
+  }
   return (
     <div className="FilesUploader">
-      {selectedFiles.length>0&&<div className="FilesUploader-files">
+      {selectedFiles.length > 0 && <div className="FilesUploader-files">
         {selectedFiles.map((file, index) => (
           <div key={index}>
-            <p style={{ textDecoration: "underline" }}>{file.name}</p>
+            <p style={{ textDecoration: "underline" }}>{cutTitle(file.name)}</p>
             {FORMAT[ext(file.name)] && <img className='FilesUploader-files-preview' src={FORMAT[ext(file.name)].imgUrl} alt={`File type: ${ext(file.name)}`} />}
-            <span onClick={()=>{handleDelete(index)}}>
-            <Icon icon={"close"} addClass={"close-icon"}/>
+            <span onClick={() => { handleDelete(index) }}>
+              <Icon icon={"close"} addClass={"close-icon"} />
             </span>
           </div>
         ))}
       </div>}
-      
+
       <div className="FilesUploader-buttons">
         <label htmlFor="fileInput"><img src={add} alt="Завантажити файл" /></label>
         <input style={{ display: "none" }} id="fileInput" multiple type="file" onChange={handleFileChange} />
-        {!uploading ? <label htmlFor="submitInput" onClick={handleUpload}><img src={send} alt="Відправити файл" /></label> : <img style={{width:"30px"}} src={loadImg}/>}
+        {!uploading ? <label htmlFor="submitInput" onClick={handleUpload}><img src={send} alt="Відправити файл" /></label> : <img style={{ width: "30px" }} src={loadImg} />}
         <input disabled={uploading} style={{ display: "none" }} type="submit" id="submitInput" />
       </div>
-      {alert&&<SmallNotification isSuccess={true} text="Файли завантажено успішно" close = {()=>{setAlert(false)}}/>}
+      {alert && <SmallNotification isSuccess={true} text="Файли завантажено успішно" close={() => { setAlert(false) }} />}
     </div>
   );
 }

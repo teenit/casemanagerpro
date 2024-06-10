@@ -7,7 +7,7 @@ import Textarea from "../elements/Inputs/Textarea";
 import { Button } from "@mui/material";
 import { LANG } from "../../services/config";
 import { changeAps, changeApsBr } from "../Functions/translateString";
-
+import SmallNotification from "../elements/Notifications/SmallNotification"
 const AccessPage = () => {
 
     const [modal, setModal] = useState(false)
@@ -16,17 +16,26 @@ const AccessPage = () => {
         description: "",
         name: ""
     })
-    useEffect(()=>{
-        apiResponse({},'access/get-list.php').then((res)=>{
+    const [alert, setAlert] = useState({
+        success: false,
+        error: false
+    })
+    const alertHandler = (key) => {
+        setAlert({ ...alert, [key]: !alert[key] })
+    }
+    useEffect(() => {
+        apiResponse({}, 'access/get-list.php').then((res) => {
             console.log(res)
-            setState(res)})
-    },[]);
+            setState(res)
+        })
+    }, []);
 
     const addNewAccess = () => {
         console.log(state)
-        if (addAccess.name.length < 1) return alert("Помилка: Ви не ввели назву шаблону права");
-        apiResponse({name: changeAps(addAccess.name), description: changeApsBr(addAccess.description)}, "access/add-access.php").then((res)=>{
+        if (addAccess.name.length < 1) return alertHandler("error")
+        apiResponse({ name: changeAps(addAccess.name), description: changeApsBr(addAccess.description) }, "access/add-access.php").then((res) => {
             console.log(res)
+            alertHandler("success")
         })
     }
 
@@ -36,9 +45,9 @@ const AccessPage = () => {
                 <span>{LANG.access_text.title}</span>
             </div>
             <div className="AccessPage-templates">
-            {state.map((item) => {
-                return <NavLink key={item.id} state={item} to={item.id} className="AccessPage-templates-row"><span>{item.name}</span></NavLink>
-            })}
+                {state.map((item) => {
+                    return <NavLink key={item.id} state={item} to={item.id} className="AccessPage-templates-row"><span>{item.name}</span></NavLink>
+                })}
             </div>
 
             {
@@ -47,7 +56,7 @@ const AccessPage = () => {
                         <h3>{LANG.access_text.modal_header}</h3>
                     }
                     footer={
-                            <Button variant="contained" className="button" onClick={addNewAccess}>{LANG.save}</Button>
+                        <Button variant="contained" className="button" onClick={addNewAccess}>{LANG.save}</Button>
                     }
                 >
                     <Input value={addAccess.name} onChange={e => setAccess({ ...addAccess, name: e.target.value })} label={LANG.access_text.add_name} type="text" />
@@ -59,7 +68,8 @@ const AccessPage = () => {
             <button className="AccessPage-button" onClick={() => {
                 setModal(true)
             }}>{LANG.access_text.add_template}</button>
-
+            {alert.error && <SmallNotification isSuccess={false} text="Введіть назву шаблону права" close={() => { alertHandler("error") }} />}
+            {alert.success && <SmallNotification isSuccess={true} text="Шаблон прав додано" close={() => { alertHandler("success") }} />}
         </div>
 
     )

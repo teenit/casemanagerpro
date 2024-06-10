@@ -189,7 +189,10 @@ export const LANG = {
     "a_page_settings_help_categories": "Категорії наданої допомоги",
     "a_page_access": "Доступ до сторінки налаштування прав користувачів",
     "a_page_access_create": "Створення шаблону прав користувачів",
-    "a_page_access_edit": "Редагування шаблону прав користувачів"
+    "a_page_access_edit": "Редагування шаблону прав користувачів",
+    "a_page_groups":"Доступ до сторінки груп",
+    "a_page_groups_create":"Створення нової групи",
+    "a_page_groups_connect":"Створення зв'язків між об'єктами і групою"
   },
   pages: {
     case: "Кейс",
@@ -462,6 +465,14 @@ export const appConfig = {
         "a_page_access",
         "a_page_access_create",
         "a_page_access_edit"
+      ],
+      view_edit: []
+    },
+    groups:{
+      yes_no:[
+        "a_page_groups",
+        "a_page_groups_create",
+        "a_page_groups_connect"
       ],
       view_edit: []
     }

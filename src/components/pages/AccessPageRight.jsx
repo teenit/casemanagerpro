@@ -80,7 +80,6 @@ const AccessPageRight = () => {
               return <div className={`AccessPageRight-left-options-option ${item === state.selectedPage && "active"}`} key={item} onClick={()=>{
                 filterSelectedRights(item)
               }}>
-              <span></span>
               <p>{PAGES[item].title}</p>
             </div>
             })

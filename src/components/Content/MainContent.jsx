@@ -23,6 +23,7 @@ import AddCaseForm from "../Cases/newDesign/AddCaseForm";
 import Case from "../newDesign/Case/Case";
 import Cases from "../newDesign/Cases/Cases";
 import Groups from "../Groups/Groups";
+import Search from "../Search/Search";
 
 const localToken = localStorage.getItem("token");
 
@@ -50,6 +51,7 @@ const MainContent = ()=>{
             <Route path='groups' element={<Groups />} />
             <Route path='task' element={<Task />} />
             <Route path='test' element={<TestPage />} />
+            <Route path='search' element={<Search />} />
             <Route index element={<Home />} />
           </Routes>
         </div>
