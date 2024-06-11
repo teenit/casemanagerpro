@@ -5,7 +5,7 @@ import UserPagination from "./UserPagination/UserPagination";
 import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
 
-const UserCasesList = ({ id: userAddId }) => {
+const UserCasesList = ({ userAddId }) => {
   const [cases, setCases] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(12);
@@ -23,7 +23,7 @@ const UserCasesList = ({ id: userAddId }) => {
     setSelected(pageNumber);
   };
 
-  const addCases = cases.filter(c => c.userId === userAddId);
+  const addCases = cases.filter(item => item.userId === userAddId);
 
   // Pagination
   const lastCaseIndex = currentPage * casesPerPage;
@@ -40,12 +40,11 @@ const UserCasesList = ({ id: userAddId }) => {
           </Button>
         </div>
         <ul className="added_contact_list">
-          {addCases.map(({ id, firstName, surname }) => (
+          {addCases.map(({ id, name }) => (
             <li className="added_contact_list_item" key={id}>
               <UserCasesListItem
                 id={id}
-                firstName={firstName}
-                surname={surname}
+                name={name}
               />
             </li>
           ))}

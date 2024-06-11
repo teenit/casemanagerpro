@@ -17,13 +17,13 @@ import Plan from "./Plan";
 import CaseProfilePhoto from "./CaseProfilePhoto";
 import { loadCategories } from "../../../actions/categories";
 import { useDispatch, useSelector } from "react-redux";
-import Gallery from "./Gallery";
 import GiveHelp from "./GiveHelp";
 import Notes from "./Notes";
 import CaseInfoBlock from "./CaseInfoBlock";
 import GiveHelps from "./GiveHelps";
 import DetailedInfo from "./DetailedInfo";
 import GroupConnections from "../../Groups/Connect/GroupConnections";
+import GalleryBlock from "../../blocks/GalleryBlock";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -103,7 +103,7 @@ const Case = () => {
                 <Galery media={post.newPhotos} title="Медіа фото" />
             </div> */}
             {/* <PhotosForm photos = {post.photos} show = {post.level?.loadCaseFiles == true || post.level?.root == "true" ? true : false}/> */}
-            {state?.meta?.files?.length ? <Gallery photos={state.meta.files} /> : null}
+            {state?.meta?.files?.length && <GalleryBlock data={state.meta.files} />}
             <FilesUploader multiple={false} meta={{
                 key: "case_files",
                 case_id: case_id,
