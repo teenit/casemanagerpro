@@ -31,10 +31,8 @@ const AccessPage = () => {
     }, []);
 
     const addNewAccess = () => {
-        console.log(state)
         if (addAccess.name.length < 1) return alertHandler("error")
         apiResponse({ name: changeAps(addAccess.name), description: changeApsBr(addAccess.description) }, "access/add-access.php").then((res) => {
-            console.log(res)
             alertHandler("success")
         })
     }

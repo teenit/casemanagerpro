@@ -21,12 +21,13 @@ const SearchCase = ({ eventID, getUsers }) => {
     }, [searchVal]);
 
     function search() {
-        apiResponse({ searchVal }, "case/search.php")
+        apiResponse({ val:searchVal }, "case/search.php")
             .then((data) => {
-                const filteredResults = data.mas.filter(item =>
-                    item.name.toLowerCase().includes(searchVal.toLowerCase())
-                );
-                setSearchRes(filteredResults)
+                // const filteredResults = data.mas.filter(item =>
+                //     item.name.toLowerCase().includes(searchVal.toLowerCase())
+                // );
+                console.log(data.mas)
+                setSearchRes(data.mas)
             })
             .catch((error) => console.log(error))
     }
@@ -83,9 +84,10 @@ const SearchCase = ({ eventID, getUsers }) => {
                     />
                     <div className={s.add__case__results}>
                         <div className={s.add__user__result}>
-                            {searchRes.map((item, index) => (
-                                <div
-                                    key={index}
+                            {searchRes.map((item, index) => {
+                                console.log(item)
+                               return <div
+                                    key={item.id}
                                     className={s.add__user__item}
                                     onClick={() => {
                                         let pib = item.name.trim()
@@ -95,7 +97,7 @@ const SearchCase = ({ eventID, getUsers }) => {
                                 >
                                     <p className={s.add__user__item__p}>{item.name}</p>
                                 </div>
-                            ))}
+                            })}
                         </div>
                     </div>
                 </div>

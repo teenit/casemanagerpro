@@ -46,10 +46,22 @@ const Case = () => {
     const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
             setState({ ...res })
+            getUserNameById(res.responsible_id)
         })
+    }
+    const getUsersName = () => {
+        apiResponse({}, "user/get-all-users-name.php").then(res => {
+            console.log(res)
+        })
+    }
+    const getUserNameById = () => {
+        // apiResponse({user_id:1}, "user/get-user-name-by-id.php").then(res => {
+        //     console.log(res)
+        // })
     }
     useEffect(() => {
         getCaseInfo();
+        getUsersName();
     }, [case_id])
     const handleDataChange = (key, value) => {
         setState({ ...state, data: { ...state.data, [key]: value } })

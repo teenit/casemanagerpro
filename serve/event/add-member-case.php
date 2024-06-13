@@ -1,7 +1,6 @@
 <?php
 require_once '../config.php';
 $data = json_decode(file_get_contents('php://input'));
-if(!checkRight($data->id, 'addEventMemberCase', $data->token,true)) exit;
 
 $obj = new StdClass();
 $obj->{'date'} = date("d-m-Y");
@@ -24,8 +23,4 @@ if (mysqli_query($conn, $msql)) {
 } else {
       echo "Error: " . $msql . "<br>" . mysqli_error($conn);
 }
-
-
-
-
 mysqli_close($conn);

@@ -16,13 +16,15 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         phone1: info.general.phone1,
         phone2: info.general.phone2,
         email: info.general.email,
+        responsible_id: info.general.responsible_id,
         address_live: info.data.address_live,
         address_registered: info.data.address_registered,
         date_created: info.general.date_created,
         contract_date: info.data.contract_date,
         contract_number: info.data.contract_number,
         channel: info.data.channel,
-        categories: info.data.categories
+        categories: info.data.categories,
+        responsible_name: info.general.responsible_name
     });
     useEffect(() => {
         setDataState({
@@ -36,7 +38,9 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
             contract_date: info.data.contract_date,
             contract_number: info.data.contract_number,
             channel: info.data.channel,
-            categories: info.data.categories
+            categories: info.data.categories,
+            responsible_id: info.general.responsible_id,
+            responsible_name: info.general.responsible_name
         });
         if (info.data.categories) setCheckedMas([...info.data.categories])
         
@@ -51,7 +55,8 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         date_created: false,
         contract: false,
         channel: false,
-        categories: false
+        categories: false,
+        responsible_id: false
     });
 
     const handleDataChange = (key, val) => {
@@ -313,6 +318,14 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                     </span>
 
                 </div>
+                <div className="CaseInfoBlock-line">
+                    <span>Відповідальний за кейс</span>
+                    <Icon icon="categories" addClass={"default-icon"}/>
+                        <div className="case-info-card-text">
+                            {dataState.responsible_name}
+                        </div>
+                </div>
+
             </div>
             {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => {
                 setAlert(false);

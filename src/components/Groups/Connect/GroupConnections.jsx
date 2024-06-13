@@ -26,6 +26,8 @@ const GroupConnections = ({ case_id, type }) => {
         success: false,
         error: false
     })
+
+    const [showList, setShowList] = useState(false);
     
     useEffect(() => {
         apiResponse({}, "groups/get-case-groups.php").then((res) => {
@@ -85,6 +87,16 @@ const GroupConnections = ({ case_id, type }) => {
         setSelectedGroup(group);
         modalHandler('info');
     }
+
+    const deleteGroupConnect = (id) => {
+        apiResponse({
+            connect_id: id
+        },"groups/delete-group-connect.php").then((res)=>{
+            apiResponse({ ...data, client_id: case_id, type: type }, "groups/get-group-connect-by-case-id.php").then((res) => {
+                setConnections([...res])
+            });
+        })
+    }
     
     return (
         <div className='GroupConnections'>
@@ -93,14 +105,21 @@ const GroupConnections = ({ case_id, type }) => {
                 <span onClick={() => modalHandler("add")}>
                     <Icon icon={"add"} />
                 </span>
+                <span onClick={()=>setShowList(!showList)}>
+                    <Icon icon={'arrow_down'}/>
+                </span>
             </div>
-            {connections.map((item, index) => {
+            {showList && <>
+                {connections.map((item, index) => {
                 return (
                     <div key={index} className='GroupConnections-item'>
                         <span><b onClick={() => item.status === 1 && showGroupInfo(item)}>{item.name}</b>: {item.why}</span>
+                        <span onClick={()=>deleteGroupConnect(item.id)}><Icon icon={'delete'} /></span>
                     </div>
                 )
-            })}
+                })}
+            </>}
+            
 
             {modal.add && (
                 <Modal header="Додати групу для кейсу" closeHandler={() => modalHandler("add")}

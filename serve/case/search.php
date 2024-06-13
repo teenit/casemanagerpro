@@ -7,7 +7,7 @@ $data = json_decode(file_get_contents('php://input'));
 $search = '%' . $data->val . '%';
 
 // Підготовка запиту SQL
-$sql = "SELECT id, name FROM cases_new WHERE id LIKE ? OR name LIKE ?";
+$sql = "SELECT id, name, phone1 FROM cases_new WHERE id LIKE ? OR name LIKE ?";
 $mas = array();
 
 // Підготовка і виконання підготовленого запиту
