@@ -4,7 +4,6 @@
     margin-top: 25px;
     border: solid 1px $second-color;
     display: flex;
-    align-items: center;
     flex-direction: column;
     &-title{
         width: 100%;
@@ -15,20 +14,45 @@
         font-weight: bold;
         border-radius: 5px;
         padding: 0px 15px;
+        position: relative;
+        right: 15px;
+        &-panel{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0px 10px;
+            &:hover{
+                background-color: #fff;
+                border-radius: 15px;
+                cursor: pointer;
+            }
+        }
     }
     &-select{
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
-    &-item{
-        width: 100%;
-        padding: 10px 0px;
-        background-color: #fff;
+    &-list{
+        width: max-content;
+        &-item{
+            width: 100%;
+            padding: 10px 0px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+            &-delete, a{
+                cursor: pointer;
+            }
+        }
     }
+
     &-modal{
         display: flex;
         flex-direction: column;
         gap: 15px;
     }
+    
 }

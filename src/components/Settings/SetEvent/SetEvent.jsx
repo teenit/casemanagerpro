@@ -6,8 +6,12 @@ import { serverAddres } from "../../Functions/serverAddres";
 import { NavLink } from "react-router-dom";
 import Icon from "../../elements/Icons/Icon";
 import AddEventBlock from "../../blocks/AddEventBlock";
+import { LANG } from "../../../services/config";
+import Modal from "../../Modals/Modal"
+import { Button } from "@mui/material";
 const SetEvent = ()=>{
     const [events,setEvents] = useState([])
+    const [modal, setModal] = useState(false)
     useEffect(()=>{
         let obj = {
             id: localStorage.getItem("id"),
@@ -27,7 +31,15 @@ const SetEvent = ()=>{
     },[])
     return(
         <div className={s.wrap}>
+            <div className={s.title}>
+                <h2>{LANG.addEvent}</h2>
+                <span onClick={()=>{setModal(true)}}>
+                    <Icon icon={"add"}/>
+                </span>
+            </div>
+            {modal&&<Modal closeHandler = {()=>{setModal(false)}}>
                 <AddEventBlock/>
+                </Modal>}
             <div className={s.results}>
                 {events.map((item,index)=>{
                     return(<div key={index} className={s.result}>
@@ -39,12 +51,7 @@ const SetEvent = ()=>{
                         <p>{item.description.replaceAll("<br />"," ")}</p>
                     </div>
                     <div className={s.author}>Створив: {item.meta.userName}</div>
-                    <div className={s.res__control}>
-                        <div className={s.delete}>
-                            <Icon icon={"delete"} addClass={"default-icon"}/>
-                        </div>
-                        <div className={s.date}>{item.meta.date}</div>
-                    </div>
+                    <div className={s.date}>{item.meta.date}</div>
                 </div>)
                 })}
                 

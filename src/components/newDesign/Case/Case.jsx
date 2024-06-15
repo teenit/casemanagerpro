@@ -46,6 +46,7 @@ const Case = () => {
     const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
             setState({ ...res })
+            console.log(res);
             getUserNameById(res.responsible_id)
         })
     }

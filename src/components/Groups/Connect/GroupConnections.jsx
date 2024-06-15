@@ -4,7 +4,6 @@ import Modal from '../../Modals/Modal';
 import { Button, MenuItem, Select } from '@mui/material';
 import { LANG } from '../../../services/config';
 import { apiResponse } from '../../Functions/get_apiObj';
-import CheckboxListAccess from '../../elements/CheckBoxes/CheckboxListAccess';
 import Textarea from '../../elements/Inputs/Textarea';
 import SmallNotification from '../../elements/Notifications/SmallNotification';
 import { useSelector } from 'react-redux';
@@ -28,29 +27,31 @@ const GroupConnections = ({ case_id, type }) => {
     })
 
     const [showList, setShowList] = useState(false);
-    
+    const loadConnections = () => {
+        apiResponse({ ...data, client_id: case_id, type: type }, "groups/get-group-connect-by-case-id.php").then((res) => {
+            setConnections([...res])
+        });
+    }
     useEffect(() => {
         apiResponse({}, "groups/get-case-groups.php").then((res) => {
             setAllGroups([...res]);
         });
-        apiResponse({ ...data, client_id: case_id, type: type }, "groups/get-group-connect-by-case-id.php").then((res) => {
-            setConnections([...res])
-        });
-    }, [case_id, type, data])
-    
+        loadConnections()
+    }, [])
+
     const dataHandler = (key, value) => {
         let val = key === "group_id" ? Number(value) : value
         setData({ ...data, [key]: val })
     }
-    
+
     const alertHandler = (key) => {
         setAlert({ ...alert, [key]: !alert[key] })
     }
-    
+
     const modalHandler = (key) => {
         setModal({ ...modal, [key]: !modal[key] })
     }
-    
+
     const checkForm = () => {
         if (data.group_id === "") {
             alertHandler("error")
@@ -58,22 +59,25 @@ const GroupConnections = ({ case_id, type }) => {
             successHandler()
         }
     }
-    
+
     const successHandler = () => {
         apiResponse({ ...data, client_id: case_id, type: type }, "groups/add-group-connect.php").then((res) => {
             alertHandler("success")
+            modalHandler("add")
+            dataHandler("why", "")
+            loadConnections()
         })
     }
-    
+
     const getUnusedGroups = () => {
         return allGroups.filter(item => !connections.some(conn => item.name === conn.name))
     }
-    
+
     const getCategoryName = (id) => {
         const category = Object.values(categories.groups).find(category => category.id === id);
         return category ? category.name : '';
     }
-    
+
     const getString = (cat) => {
         if (cat) {
             let mas = JSON.parse(cat).map(id => getCategoryName(id))
@@ -82,7 +86,7 @@ const GroupConnections = ({ case_id, type }) => {
             return null
         }
     }
-    
+
     const showGroupInfo = (group) => {
         setSelectedGroup(group);
         modalHandler('info');
@@ -91,35 +95,36 @@ const GroupConnections = ({ case_id, type }) => {
     const deleteGroupConnect = (id) => {
         apiResponse({
             connect_id: id
-        },"groups/delete-group-connect.php").then((res)=>{
+        }, "groups/delete-group-connect.php").then((res) => {
             apiResponse({ ...data, client_id: case_id, type: type }, "groups/get-group-connect-by-case-id.php").then((res) => {
                 setConnections([...res])
             });
         })
     }
-    
+
     return (
         <div className='GroupConnections'>
             <div className="GroupConnections-title">
-                <span>Групи кейсу</span>
+                <div className='GroupConnections-title-panel' onClick={() => setShowList(!showList)}>
+                    <span>Групи кейсу</span>
+                        <Icon addClass={`fs16 ${showList && "rotate90-icon"}`} icon={'arrow_down'} />
+                </div>
                 <span onClick={() => modalHandler("add")}>
                     <Icon icon={"add"} />
                 </span>
-                <span onClick={()=>setShowList(!showList)}>
-                    <Icon icon={'arrow_down'}/>
-                </span>
             </div>
-            {showList && <>
+            {showList && <div className='GroupConnections-list'>
                 {connections.map((item, index) => {
-                return (
-                    <div key={index} className='GroupConnections-item'>
-                        <span><b onClick={() => item.status === 1 && showGroupInfo(item)}>{item.name}</b>: {item.why}</span>
-                        <span onClick={()=>deleteGroupConnect(item.id)}><Icon icon={'delete'} /></span>
-                    </div>
-                )
+                    return (
+                        <div key={index} className='GroupConnections-list-item'>
+                            <span><a onClick={() => item.status === 1 && showGroupInfo(item)}>{item.name}</a>: {item.why}</span>
+                            <span className='GroupConnections-list-item-delete' onClick={() => deleteGroupConnect(item.id)}><Icon addClass={"default-icon"} icon={'delete'} /></span>
+                        </div>
+                    )
                 })}
-            </>}
-            
+            </div>}
+
+
 
             {modal.add && (
                 <Modal header="Додати групу для кейсу" closeHandler={() => modalHandler("add")}

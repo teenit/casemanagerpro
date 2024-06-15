@@ -8,6 +8,21 @@
         gap: 10px;
     }
     &-line{
+        &-select{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .edit-icon{
+                opacity: 0;
+                cursor: pointer;
+            }
+        }
+        :hover{
+            background-color: $background-color;
+            .edit-icon{
+                opacity: 1;
+            }
+        }
         &-title{
             font-weight: bold;
             font-size: 28px;

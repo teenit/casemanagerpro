@@ -8,9 +8,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from "react-redux";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import Icon from "../../elements/Icons/Icon";
+import { MenuItem, Select } from "@mui/material";
 const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
     const categories = useSelector(state => state.categories.case);
     const [checkedMas, setCheckedMas] = useState([])
+    const [userNames, setUserNames] = useState(null)
     const [alert, setAlert] = useState(null)
     const [dataState, setDataState] = useState({
         phone1: info.general.phone1,
@@ -24,6 +26,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         contract_number: info.data.contract_number,
         channel: info.data.channel,
         categories: info.data.categories,
+        responsible_id: info.general.responsible_id,
         responsible_name: info.general.responsible_name
     });
     useEffect(() => {
@@ -40,11 +43,13 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
             channel: info.data.channel,
             categories: info.data.categories,
             responsible_id: info.general.responsible_id,
-            responsible_name: info.general.responsible_name
+            responsible_name: info.general.responsible_name,
         });
-        if (info.data.categories) setCheckedMas([...info.data.categories])
-        
-    }, [info])
+        if (info.data.categories) setCheckedMas([...info.data.categories]);
+        apiResponse({}, "user/get-all-users-name.php").then((res) => {
+            setUserNames(res);
+        });
+    }, [info]);
     const [editState, setEditState] = useState({
         phone1: false,
         phone2: false,
@@ -60,13 +65,20 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
     });
 
     const handleDataChange = (key, val) => {
-        setDataState(prevState => ({ ...prevState, [key]: val }));
+        
+        if(key=="responsible_id"){
+            setDataState(prevState => ({ ...prevState, [key]: +val }));
+        }else{
+            setDataState(prevState => ({ ...prevState, [key]: val }));
+        }
+
     };
 
     const handleEditChange = (key) => {
         setEditState(prevState => ({ ...prevState, [key]: !prevState[key] }));
     };
-    
+
+
 
     const saveHandler = (key, value, type) => {
         const originalValue = type === "general" ? info.general[key] : info.data[key];
@@ -82,6 +94,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
             handleEditChange(key);
         }
     };
+
 
     const handleCheckboxChange = (value, options) => {
         let categories = [];
@@ -136,7 +149,6 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
             </div>
         )
     }
-
     return (
         <div className="CaseInfoBlock">
             <div className="CaseInfoBlock-inner">
@@ -279,7 +291,7 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                 <div className="CaseInfoBlock-categories">
                     <span className="CaseInfoBlock-categories-title">Категорії</span>
                     <span className="CaseInfoBlock-categories-content">
-                        <Icon icon="categories" addClass={"default-icon"}/>
+                        <Icon icon="categories" addClass={"default-icon"} />
                         <div className="case-info-card-text">
 
                             {!editState.categories ?
@@ -302,12 +314,12 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                         </div>
                         {editState.categories ?
                             <>
-                            <span onClick={() => { saveHandler("categories", dataState.categories, "data") }}>
-                                <Icon icon={"save"} addClass={"save-icon"} />
-                            </span>
-                            <span onClick={() => { handleEditChange("categories") }}>
-                                <Icon icon={"close"} addClass={"close-icon"} />
-                            </span>
+                                <span onClick={() => { saveHandler("categories", dataState.categories, "data") }}>
+                                    <Icon icon={"save"} addClass={"save-icon"} />
+                                </span>
+                                <span onClick={() => { handleEditChange("categories") }}>
+                                    <Icon icon={"close"} addClass={"close-icon"} />
+                                </span>
                             </>
 
                             :
@@ -320,10 +332,44 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                 </div>
                 <div className="CaseInfoBlock-line">
                     <span>Відповідальний за кейс</span>
-                    <Icon icon="categories" addClass={"default-icon"}/>
-                        <div className="case-info-card-text">
-                            {dataState.responsible_name}
-                        </div>
+                    <div className="CaseInfoBlock-line-select">
+                        <Icon icon="categories" addClass={"default-icon"} />
+                        {editState.responsible_id ? (
+                            <Select
+                                value={dataState.responsible_id}
+                                onChange={(e) => {
+                                    handleDataChange("responsible_id", e.target.value);
+                                }}
+                            >
+                                {Object.values(userNames).map((item, index) => (
+                                    <MenuItem key={index} value={item.id}>
+                                        {item.userName}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        ) : (
+                            <div className="case-info-card-text">
+                                {userNames && userNames[dataState.responsible_id].userName}
+
+                            </div>
+                        )}
+                        {editState.responsible_id ? (
+                            <>
+                                <span onClick={() => { saveHandler("responsible_id", dataState.responsible_id, "general") }}>
+                                    <Icon icon={"save"} addClass={"save-icon"} />
+                                </span>
+                                <span onClick={() => { handleEditChange("responsible_id") }}>
+                                    <Icon icon={"close"} addClass={"close-icon"} />
+                                </span>
+                            </>
+                        ) : (
+                            <div className="edit-icon" onClick={() => { handleEditChange("responsible_id") }}>
+                                <Icon icon="edit" addClass="default-icon" />
+                            </div>
+                        )}
+                    </div>
+
+
                 </div>
 
             </div>

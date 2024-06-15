@@ -99,7 +99,6 @@
     position: sticky;
     z-index: 999;
     top: 0;
-    background: #fff;
 }
 .plus__add{
     width: 30px;
@@ -128,6 +127,7 @@
     align-items: center;
     gap: 15px;
     font-weight: 600;
+    background-color: #fff;
 }
 .inner__content{
     display: grid;

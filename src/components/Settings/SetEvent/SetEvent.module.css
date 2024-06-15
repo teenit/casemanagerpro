@@ -3,6 +3,11 @@
     grid-template-columns: 1fr 20%;
     gap: 25px;
 }
+.title{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 .inner{
     display: grid;
     grid-template-columns: 1fr;
@@ -20,10 +25,8 @@
     border-radius: 10px;
     background-color: red;
 }
-.res__control{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.date{
+    color: #bababa;
 }
 .result{
     display: grid;
