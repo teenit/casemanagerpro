@@ -23,7 +23,7 @@ $phone1_encrypted = isset($data['phone1']) ? encryptData($data['phone1'], $key) 
 $phone2_encrypted = isset($data['phone2']) ? encryptData($data['phone2'], $key) : null;
 $email_encrypted = isset($data['email']) ? encryptData($data['email'], $key) : null;
 $name = isset($data['last_name']) && isset($data['first_name']) && isset($data['middle_name']) ? $data["last_name"]." ".$data["first_name"]." ".$data["middle_name"] : null;
-
+$responsible_id = isset($data['responsible_id']) ?  $data['responsible_id'] : null;
 // Підготовка SQL-запиту для оновлення даних
 $sql = "UPDATE cases_new SET";
 $set_values = array();
@@ -45,6 +45,10 @@ if ($phone2_encrypted !== null) {
 if ($email_encrypted !== null) {
     $sql .= " email = ?,";
     $set_values[] = $email_encrypted;
+}
+if ($responsible_id !== null) {
+    $sql .= " responsible_id = ?,";
+    $set_values[] = $responsible_id;
 }
 // Додавання умови WHERE для визначення, який запис оновити
 $sql .= " happy_bd = ? WHERE id = ?";
