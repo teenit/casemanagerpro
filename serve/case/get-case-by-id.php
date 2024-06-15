@@ -13,9 +13,8 @@ try {
 
     // Отримання даних з таблиці cases_new
     $sql_cases_new = "
-    SELECT cases_new.*, users.userName AS responsible_name
+    SELECT *
     FROM cases_new
-    JOIN users ON cases_new.responsible_id = users.id
     WHERE cases_new.id = ?";
     $stmt_cases_new = $conn->prepare($sql_cases_new);
     $stmt_cases_new->bind_param("i", $case_id);

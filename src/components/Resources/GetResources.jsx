@@ -16,10 +16,10 @@ import xlsImg from "./../../img/resources/xls.png";
 import xlsxImg from "./../../img/resources/xlsx.png";
 import { Button } from "@mui/material";
 import { apiResponse } from "../Functions/get_apiObj";
+import GetDocumentBlock from "./GetDocumentBlock";
 
-const GetResources = ({docFiles, mediaFiles, show, loadGroups}) => {
+const GetResources = ({docFiles, mediaFiles, show, loadGroups, files}) => {
     const [info, setInfo] = useState({});
-
 
     const InfoModal = () => {
         document.addEventListener("keydown", (e) => {
@@ -129,9 +129,12 @@ const GetResources = ({docFiles, mediaFiles, show, loadGroups}) => {
         loadGroups()
     }, []);
 
+    console.log(files)
+
     return show && (
         <div className={s.wrap__cards__list}>
             {info.open ? <InfoModal /> : ""}
+            <GetDocumentBlock resources = {docFiles} />
             <div className={s.wrap__cards}>
                 <div className={s.cards__header}>
                     <p>Документи</p>

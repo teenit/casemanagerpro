@@ -14,7 +14,7 @@ const Resources = () => {
 
     const loadGroups = ()=>{
         apiResponse({}, "resources/get-resource.php").then((res)=>{
-            setFiles(res);
+            setFiles(sortFiles(res));
             setShow(true);
             const docTypes = [
                 "application/msword",
@@ -37,6 +37,25 @@ const Resources = () => {
         });
         
     }
+
+    const sortFiles = (arg) => {
+        const images = [];
+        const videos = [];
+        const others = [];
+    
+        arg.forEach(file => {
+            if (file.type.startsWith('image/')) {
+                images.push(file);
+            } else if (file.type.startsWith('video/')) {
+                videos.push(file);
+            } else {
+                others.push(file);
+            }
+        });
+    
+        return { images, videos, others };
+    }
+
     return (
         <div className={s.wrapper}>
             <div className={s.title}>
@@ -51,7 +70,7 @@ const Resources = () => {
                 {form && <AddResources close={()=>{setForm(false)}} loadGroups={loadGroups}/>}
             </div>
             <div className={s.get__resources}>
-                <GetResources docFiles = {docFiles} mediaFiles={mediaFiles} show={show} loadGroups = {loadGroups} />
+                <GetResources files={files} docFiles = {docFiles} mediaFiles={mediaFiles} show={show} loadGroups = {loadGroups} />
             </div>
         </div>
     )
