@@ -82,10 +82,8 @@ const Statistic = () =>{
           })
         })
         // getCategoriesStat().then((data) => {
-        //  // console.log(data)
         // });
         // getCasesHappy().then((data) => {
-        //  // return console.log(data)
         //   setAmountHappy(data)
         // });
         apiResponse({},"statistics/count-cases.php").then((res)=>{

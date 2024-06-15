@@ -8,7 +8,6 @@ import s from "./get-media.module.css";
 const GetDocs = ({id,docs})=>{
 
     let data = docs.map((item,index)=>item.fileInfo)
-    console.log(docs);
     return(
         <div className={s.file__wrap}>
             <h2>Завантажені документи</h2>

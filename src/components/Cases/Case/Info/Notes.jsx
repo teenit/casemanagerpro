@@ -57,7 +57,6 @@ const Notes = ({notes,level})=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-            console.log(data)
             setActNote(data.data)  
             document.querySelector("#mess__note").value = "";
         })

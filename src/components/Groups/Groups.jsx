@@ -3,7 +3,7 @@ import AddGroup from "./AddGroup";
 import { apiResponse } from "../Functions/get_apiObj";
 import Icon from "../elements/Icons/Icon";
 import { useSelector } from "react-redux";
-import { LANG } from "../../services/config";
+import { LANG, appConfig } from "../../services/config";
 
 const GroupCard = ({ item, loadGroups }) => {
     const categories = useSelector(state => state.categories);
@@ -55,20 +55,18 @@ const Groups = () => {
 
     useEffect(() => {
         loadGroups();
-        console.log(categories);
     }, [categories]);
 
     const loadGroups = () => {
         apiResponse({}, "groups/get-case-groups.php").then((res) => {
             setGroups([...res]);
-            // console.log(res);
         });
     };
 
     return (
         <div className="Groups">
             <div className="Groups-title">
-                <p>Groups</p>
+                <p>{appConfig.pages.groups.title}</p>
                 <div className="AddGroup">
                     <div className="AddGroup-plus" onClick={() => setAdd(true)}>
                         <Icon icon={"add"} />

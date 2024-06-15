@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-
 import style from "./Contacts.module.css";
 import ContactList from "./ContactList/ContactList";
 import ContactForm from "./ContactForm/ContactForm";
-import Modal from "./Modal/Modal";
-import IconButton from "./IconButton/IconButton";
-// import { ReactComponent as Close } from "../../img/icons/close.svg";
-import { ReactComponent as Add } from "../../img/icons/add.svg";
 import {
   fetchContscts,
   addContact,
@@ -15,7 +10,8 @@ import {
 } from "../../services/contacts-api";
 import Loadpic from "../Loading/Interactive/Loadpic";
 import LoadingPage from "../Loading/LoadingPage";
-
+import Icon from "../elements/Icons/Icon";
+import Modal from "../Modals/Modal"
 export class Contacts extends Component {
   state = {
     contacts: [],
@@ -37,7 +33,6 @@ export class Contacts extends Component {
           return 0;
         });
 
-        console.log(arreyContact);
 
         this.setState({
           contacts: arreyContact,
@@ -177,16 +172,13 @@ export class Contacts extends Component {
       <>
         {isLoading && <Loadpic show={"active"} />}
         <section className={`${style.section_contact} ${style.responsive}`}>
-          <h2>Контакти</h2>
+          <div className={style.title}>
+          <span>Контакти</span>
+            <span onClick={this.toggleModal}>
+              <Icon icon={"add"}/>
+            </span>
+          </div>
 
-          <IconButton
-            onClick={this.toggleModal}
-            color={"#fcaf1d"}
-            position={true}
-            aria-label="Додати контакт"
-          >
-            <Add width="50" height="50" />
-          </IconButton>
 
           <ContactList
             isEditContact={isEditContact}
@@ -198,7 +190,7 @@ export class Contacts extends Component {
           />
 
           {showModal && (
-            <Modal onClose={this.toggleModal}>
+            <Modal closeHandler={this.toggleModal}>
               <ContactForm
                 onSubmit={this.addContact}
                 toggleModal={this.toggleModal}

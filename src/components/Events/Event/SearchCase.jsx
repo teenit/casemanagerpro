@@ -26,7 +26,6 @@ const SearchCase = ({ eventID, getUsers }) => {
                 // const filteredResults = data.mas.filter(item =>
                 //     item.name.toLowerCase().includes(searchVal.toLowerCase())
                 // );
-                console.log(data.mas)
                 setSearchRes(data.mas)
             })
             .catch((error) => console.log(error))
@@ -85,7 +84,6 @@ const SearchCase = ({ eventID, getUsers }) => {
                     <div className={s.add__case__results}>
                         <div className={s.add__user__result}>
                             {searchRes.map((item, index) => {
-                                console.log(item)
                                return <div
                                     key={item.id}
                                     className={s.add__user__item}

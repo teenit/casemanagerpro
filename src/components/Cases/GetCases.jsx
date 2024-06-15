@@ -56,7 +56,6 @@ const GetCases = ({ posts, postsChange }) => {
     setSelectFilter(value)
     setMasPost(sortedPosts.slice(0, cases.lastSlice))
     postsChange(sortedPosts)
-    console.log(value)
   };
 
   return (

@@ -109,7 +109,7 @@ if(!$too){
     $obj->{'email'} = null;
     $obj->{'token'} = null;
     $obj->{'profilePhoto'} = null;
-    $obj->{'message'} = "Не правильний логін, або пароль або користувача деактивовано";
+    $obj->{'message'} = "Не правильний логін чи пароль або у користувача недостатьно прав";
     echo json_encode($obj);
     exit;
 }

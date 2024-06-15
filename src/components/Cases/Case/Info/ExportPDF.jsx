@@ -43,7 +43,6 @@ const ExportPDF = ()=>{
             media:objData.media,
             help:objData.help
         }
-        //return console.log(obj)
         axios({
             url: serverAddres("mpdf/print.php"),
             method: "POST",

@@ -84,8 +84,6 @@ const getCategoriesByType = (type) => {
                               allMas={()=>{return getCategoriesByType(elem.type)}} 
                               checkedMas={options}
                               onChange={(value)=>{
-
-                                //return console.log(value, options, elem.key)
                                 handleCheckboxChange(value, options, elem.key)}}/>
                             }
                           })
@@ -96,7 +94,6 @@ const getCategoriesByType = (type) => {
                    
               })
             }
-          <button onClick={()=>console.log(state,accesses)}>polp</button>
         </div>
     )
 }

@@ -13,8 +13,6 @@ let fetchObj = {
       header: { "Content-Type": "application/json;charset=utf-8" },
       data: JSON.stringify(fetchObj),
     }).then((response) => {
-        console.log(fetchObj)
-        console.log(response.data)
         return response.data
     });
   };

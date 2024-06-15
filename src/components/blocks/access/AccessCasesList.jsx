@@ -47,7 +47,6 @@ const AccessCasesList = (props) => {
                                 allMas={()=>{return categoriesCase}} 
                                 checkedMas={typeof state.accesses[item] === "string" ? JSON.parse(state.accesses[item]) : []}
                                 onChange={(value)=>{
-                                    //return console.log(value, options, elem.key)
                                     handleCheckboxChange(value, typeof state.accesses[item] === "string" ? JSON.parse(state.accesses[item]) : [], item)}}
                         />
                         </div>

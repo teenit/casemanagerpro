@@ -46,18 +46,15 @@ const Case = () => {
     const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
             setState({ ...res })
-            console.log(res);
             getUserNameById(res.responsible_id)
         })
     }
     const getUsersName = () => {
         apiResponse({}, "user/get-all-users-name.php").then(res => {
-            console.log(res)
         })
     }
     const getUserNameById = () => {
         // apiResponse({user_id:1}, "user/get-user-name-by-id.php").then(res => {
-        //     console.log(res)
         // })
     }
     useEffect(() => {
@@ -67,13 +64,11 @@ const Case = () => {
     const handleDataChange = (key, value) => {
         setState({ ...state, data: { ...state.data, [key]: value } })
         apiResponse({ [key]: value, case_id: case_id }, "case/update-case-data.php").then((data) => {
-            console.log(data)
         })
     }
     const handleGeneralChange = (key, value) => {
         setState({ ...state, general: { ...state.general, [key]: value } })
         apiResponse({ [key]: value, case_id: case_id }, "case/update-case.php").then((data) => {
-            console.log(data)
         })
     }
     return state && state.general ? (
@@ -117,7 +112,7 @@ const Case = () => {
             </div> */}
             {/* <PhotosForm photos = {post.photos} show = {post.level?.loadCaseFiles == true || post.level?.root == "true" ? true : false}/> */}
             {state?.meta?.files?.length && <GalleryBlock data={state.meta.files} />}
-            <FilesUploader multiple={false} meta={{
+            <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
                 key: "case_files",
                 case_id: case_id,
                 type: "case"

@@ -523,10 +523,10 @@ export const appConfig = {
       title: LANG.pages.cases,
       description: ""
     },
-    addCase: {
-      title: LANG.pages.addCase,
-      description: ""
-    },
+    // addCase: {
+    //   title: LANG.pages.addCase,
+    //   description: ""
+    // },
     settings: {
       title: LANG.pages.settings,
       description: ""

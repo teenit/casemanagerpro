@@ -30,7 +30,6 @@ const Events = ()=>{
         getEvents()
     },[])
     // const removeEvent = (eventID)=>{
-    //     console.log(eventID)
     //     apiResponse({eventID:eventID},'event/deactivate-event-by-id.php').then((responce)=>{
     //         alert(responce);
     //         getEvents();

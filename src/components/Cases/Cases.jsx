@@ -27,7 +27,6 @@ const Cases = ()=>{
             data : JSON.stringify(obj),
         })
         .then((data)=>{ 
-           // return console.log(data.data)
             if(data.data?.message){
                 setPage(
                     {

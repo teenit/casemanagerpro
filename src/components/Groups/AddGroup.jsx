@@ -15,7 +15,6 @@ import CheckboxListAccess from "../elements/CheckBoxes/CheckboxListAccess";
 const AddGroup = ({ action, data, id, close, loadGroups }) => {
     const categories = useSelector(state => state.categories);
     const [groupCategories, setGroupCategories] = useState({...categories.groups})
-    console.log(groupCategories);
     const [state, setState] = useState({
         name: "",
         description: "",
@@ -33,7 +32,6 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
         } else {
             categories = [...state.categories, value];
         }
-        console.log(state);
         setState({ ...state, categories: [...categories] });
     };
     useEffect(() => {

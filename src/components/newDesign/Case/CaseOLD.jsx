@@ -50,7 +50,6 @@ const CaseOLD = () => {
         .then((data)=>{ 
 
             let res = data.data;
-            console.log(data.data)
             if(res?.message){
                 setPage({...page,message:res.message})
                 return console.log(res.message)
@@ -60,10 +59,8 @@ const CaseOLD = () => {
                 if(res.plan.length !== 0){
                  res.plan = JSON.parse(res.plan);
                 }
-               // return console.log(res.photos)
                 if(res.photos !== null && res.photos !== ""){
                  res.photos = JSON.parse(res.photos);
-                // return console.log(res.photos)
                  res.newPhotos = giveGoodPhotosCase(res.photos);
                 }else{
                  res.photos = [];
@@ -81,9 +78,9 @@ const CaseOLD = () => {
     useEffect(()=>{
         apiResponse({
             case_id:case_id
-        },"case/get-full-info.php").then((res)=>console.log(res))
+        },"case/get-full-info.php")
         successHandler()
-        apiResponse({case_id:case_id}, "case/get-case-by-id.php").then(res=>console.log(res))
+        apiResponse({case_id:case_id}, "case/get-case-by-id.php")
     },[])
     function saveInfoDogovir(){
         let dateDogovir = document.getElementById("dogovirDate");
@@ -100,10 +97,6 @@ const CaseOLD = () => {
             method: "POST",
             header : {'Content-Type': 'application/json;charset=utf-8'},
             data : JSON.stringify(obj)
-        })
-        .then((data)=>{ 
-            console.log(data)
-          // window.location.reload()        
         })
         .catch((error)=>console.log(error))  
     }

@@ -1,5 +1,8 @@
 .section_contact {
   position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   min-width: 320px;
   margin: 65px auto;
 }
@@ -9,6 +12,12 @@
 }
 
 .section_contact h2 {
-  font-size: 40px;
   text-align: center;
+}
+.title{
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
 }

@@ -14,11 +14,13 @@ const Login = ()=>{
         forgot: false
     });
     
- 
+ const switchForms = ()=>{
+    setSelected({...selected,register:false,auth:true, forgot:false})
+ }
     return (
         <div className="reg__container">
             <div className="reg__menu">
-                <div className={`reg__menu__item ${selected.auth ? "active" : ""}`} onClick={()=>{setSelected({
+                <div className={`reg__menu__item ${selected.auth ? "active" : ""}`} switchForms={switchForms} onClick={()=>{setSelected({
                            register: false,
                            auth: true,
                            forgot: false

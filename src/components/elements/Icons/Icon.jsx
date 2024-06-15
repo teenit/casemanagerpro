@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Add, ArrowDownward, ArrowDownwardOutlined, ArrowDownwardSharp, ArrowDropDown, ArrowDropDownCircleTwoTone, ArrowDropDownRounded, AttachFile, Cake, Check, Close, Delete, Edit, ExitToApp, MailOutline, MenuBook, Search, Send, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Add, ArrowDownwardOutlined, AttachFile, Cake, Check, Close, Delete, Edit, ExitToApp, MailOutline, MenuBook, Search, Send, Visibility, VisibilityOff } from '@mui/icons-material';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
@@ -16,6 +16,9 @@ const Icon = ({ icon, addClass }) => {
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case "search":
+                ico = <Search className={addClass}/>
+                break;
             case "birthday":
                 ico = <Cake className={addClass} />
                 break;
@@ -39,9 +42,6 @@ const Icon = ({ icon, addClass }) => {
                 break;
             case "calendar":
                 ico = <CalendarMonthIcon fontSize='large' className={addClass} />
-                break;
-            case "search":
-                ico = <Search fontSize='large' className={addClass} />
                 break;
             case "delete":
                 ico = <Delete fontSize='large' className={addClass} />

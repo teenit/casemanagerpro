@@ -40,7 +40,6 @@ const LoginForm = ({ show }) => {
         apiResponse(data, "login.php")
         .then((data) => {
             if ("message" in data) {
-                console.log(data);
                 setAlert({ ...alert, alert: true, message: data.message });
             } else {
                 localStorage.setItem("token", data.token);

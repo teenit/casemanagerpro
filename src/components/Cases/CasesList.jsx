@@ -17,7 +17,6 @@ const caseCategories = (catMas) => {
                 mas.push(item.name);
             }
         });
-        console.log(mas);
         return mas.join(", ");
     } else {
         return LANG.cases;

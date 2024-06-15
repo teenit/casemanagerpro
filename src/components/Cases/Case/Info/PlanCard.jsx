@@ -44,7 +44,6 @@ const PlanCard = ({ item, index, plan, onChange }) => {
                             <div className="notes__viewer__mess__panel__edit__option" onClick={() => {
                                 setEdit(false)
                                 onChange(copyObj)
-                                console.log(copyObj);
                             }}></div>
                             <div className="notes__viewer__mess__panel__edit__option notes__delete" onClick={() => {
                                 setEdit(false)

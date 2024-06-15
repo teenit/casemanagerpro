@@ -95,7 +95,6 @@ const CaseShortInfo = ({ info, changeGeneral, changeData }) => {
 
     const saveHandler = (key, value, type) => {
         const originalValue = type === "general" ? info.general[key] : info.data[key];
-        console.log(originalValue)
         if (originalValue !== value) {
             if (type === "general") {
                 changeGeneral(key, value);
