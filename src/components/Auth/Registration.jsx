@@ -7,7 +7,7 @@ import SmallNotification from "../elements/Notifications/SmallNotification"
 import Textarea from "../elements/Inputs/Textarea"
 import { apiResponse } from "../Functions/get_apiObj";
 
-const Registration = () => {
+const Registration = ({switchForms}) => {
     const alertMessages = {
         required: "Обов'язково до заповнення",
         pib: "ПІБ повинен бути довжиною мінімум 3 символа",
@@ -110,18 +110,19 @@ const Registration = () => {
 
         const data = { ...formData, level: levelObj };
         apiResponse(data, "user-register.php").then((response)=>{
+                switchForms()
                 let isSuccess = response.marker=="red" ? "error":"success"
                 setAlert({ [isSuccess]: true, message: response.message });
-                // setFormData({
-                //     userName: '',
-                //     userPhone: '',
-                //     userEmail: '',
-                //     userAddress: '',
-                //     userType: 'volunteer',
-                //     userWork: '',
-                //     userAnotherData: '',
-                //     pass: ''
-                // });
+                setFormData({
+                    userName: '',
+                    userPhone: '',
+                    userEmail: '',
+                    userAddress: '',
+                    userType: 'volunteer',
+                    userWork: '',
+                    userAnotherData: '',
+                    pass: ''
+                });
         }).catch((error)=>{
             console.log(error);
         })
@@ -152,8 +153,8 @@ const Registration = () => {
                 <Textarea label="Розкажіть про себе" name="userAnotherData" value={formData.userAnotherData} onChange={(e)=>{handleChange("userAnotherData", e.target.value)}} />
             </div>
             <Button variant="contained" type="submit">Реєстрація</Button>
-            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { setAlert({ ...alert, alert: false }) }} />}
-            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { setAlert({ ...alert, alert: false }) }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { setAlert({ ...alert, error: false }) }} />}
+            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { setAlert({ ...alert, success: false }) }} />}
         </form>
     );
 };

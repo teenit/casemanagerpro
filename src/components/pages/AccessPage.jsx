@@ -25,7 +25,6 @@ const AccessPage = () => {
     }
     useEffect(() => {
         apiResponse({}, 'access/get-list.php').then((res) => {
-            console.log(res)
             setState(res)
         })
     }, []);

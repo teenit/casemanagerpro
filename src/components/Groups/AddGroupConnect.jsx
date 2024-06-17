@@ -22,7 +22,6 @@ const AddGroup = ({client_id, type}) => {
     const [form, setForm] = useState(false)
     const successHandler = () => {
         apiResponse({...state},"groups/add-group-connect.php").then((res)=>{
-            console.log(res);
         })
     }
     const changeHandler = (key, value) => {

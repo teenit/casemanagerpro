@@ -99,7 +99,6 @@ const religion = [
 
 
 const handleClose = ()=>{
-  console.log(state);
 }
 
 
@@ -258,7 +257,7 @@ const handleClose = ()=>{
                                 value={state.religion.value}
                                 name={state.religion.title}
 
-                                onChange={(e,t)=>{console.log(t);setState({...state,religion:{value:e.target.value,title:t.props.children}})}}
+                                onChange={(e,t)=>{setState({...state,religion:{value:e.target.value,title:t.props.children}})}}
                                 variant="standard"
                                 >
                                     {

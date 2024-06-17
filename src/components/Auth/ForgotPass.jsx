@@ -14,7 +14,6 @@ const ForgotPass = () => {
 
     const forgotPass = (email) => {
         apiResponse({email:email},"user/forget-pass.php").then((response) => {
-            console.log(response);
             setModalInfo(response.data.message);
             setEmail("");
             setAlert(true);

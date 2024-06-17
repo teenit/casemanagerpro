@@ -67,7 +67,6 @@ const SetCategories = ({cats})=>{
             text: state.nameOfCategory.trim().replaceAll("'", "’"),
             color: state.colorOfCategory
         },"manage/add-categories-case.php").then((data)=>{
-            console.log(data)
         })
     }
     const CategoriesData = ({category, index})=>{

@@ -117,7 +117,6 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     const handleSave = () => {
         setShowEdit(false)
         handleSaveData(icon,stateValue)
-        console.log(icon,stateValue);
     };
 
     return (

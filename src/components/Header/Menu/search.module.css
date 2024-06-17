@@ -12,28 +12,32 @@
     border-radius: 50%;
 }
 .search__inner{
+    display: flex;
     width: 0px;
     overflow: hidden;
+    transition: all .3s;
+}
+.search__inner__active{
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    border-radius: 10px;
     transition: all .3s;
 }
 .active{
     width: 100%;
 }
 .search__wrap .search__inp{
-    height: 40px;
     border: none;
     padding: 0;
     outline: none;
-    border-radius: 20px;
+    border-radius: 10px;
     width: 100%;
-    padding-left: 15px;
     font-size: 22px;
 }
-.search__wrap.active .search__img{
-    border-radius: 0 50% 50% 0;
-    background-color: #fff;
+.search__icon{
+    cursor: pointer;
 }
-
 .search__inner:has(.search__inp:focus) {
     background-color: rgb(255, 255, 255);    
 }

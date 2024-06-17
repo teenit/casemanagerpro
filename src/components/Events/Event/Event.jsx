@@ -27,7 +27,6 @@ const Event = ()=>{
         apiResponse({...obj},"event/get-files.php").then((data)=>{ 
             let mas = data.map(item=>{return item.fileInfo})
             setFiles([...mas])
-            console.log([...files]);
         })
         .catch((error)=>console.log(error)) 
     }

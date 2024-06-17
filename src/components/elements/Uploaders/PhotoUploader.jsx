@@ -55,7 +55,6 @@ const handleAlertChange = (key)=>{
 }
   const handleFileChange = (event) => {
     const files = event.target.files;
-    console.log(files)
     if (files) {
       const filesArray = Array.from(files);
       setSelectedFiles(filesArray);
@@ -63,7 +62,7 @@ const handleAlertChange = (key)=>{
   };
 
   const handleUpload = async () => {
-    if (!meta) return console.log("meta object is required");
+    if (!meta) return ("meta object is required");
     setUploading(true);
     const formData = new FormData();
     for (let i = 0; i < selectedFiles.length; i++) {
@@ -72,19 +71,16 @@ const handleAlertChange = (key)=>{
 
     const metaObject = { ...meta };
     formData.append('meta', JSON.stringify(metaObject));
-    console.log(meta)
     axios({
       url: serverAddres("upload-files.php"),
       method: "POST",
       headers: { 'Content-Type': 'multipart/form-data' },
       data: formData,
       onUploadProgress: event => {
-        console.log(formData)
         console.log(Math.round(event.loaded * 100 / event.total))
       }
     })
       .then((response) => {
-        console.log(response)
         setSelectedFiles([])
         successHandler(response.data)
         handleAlertChange("success")

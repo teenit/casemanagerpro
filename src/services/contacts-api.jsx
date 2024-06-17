@@ -23,8 +23,6 @@ export const fetchCategories = () => {
     data: JSON.stringify(fetchObj),
   }).then((response) => {
    if(response.data?.message){
-    ///
-    console.log(response.data)
     return response.data.mas
    }else{
     return response.data.mas

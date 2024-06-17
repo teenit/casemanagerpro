@@ -9,7 +9,6 @@ import { serverAddres } from "../../../Functions/serverAddres";
 import PlanCard from "./PlanCard";
 let ind;
 function elemPlanDelete(a){
-   // return console.log(a)
 
     let obj = {
         caseId:window.location.search.slice(1),
@@ -41,16 +40,11 @@ function elemPlanDone(a){
         start: a.start,
         end: a.end
     }
-    console.log(obj)
     axios({
         url: serverAddres("case/elem-plan-done.php"),
         method: "POST",
         header : {'Content-Type': 'application/json;charset=utf-8'},
         data : JSON.stringify(obj),
-    })
-    .then((data)=>{ 
-        console.log(data)
-      //  window.location.reload()        
     })
     .catch((error)=>console.log(error))  
 }
@@ -58,10 +52,7 @@ function elemPlanDone(a){
 let pty = -1;
 const Plan = ({plan,index,level,testData,onChange})=>{
     const [activeModalPlan, setActiveModalPlan] = useState(false);
-    function planIsDone(){
-        setActiveModalPlan(true)
-    }
-    console.log(level)
+
     let part = ""
     const ElemPlan = ({planis, index})=>{
         return planis.show ? (
@@ -91,7 +82,6 @@ const Plan = ({plan,index,level,testData,onChange})=>{
                         {level ? <div className="part__plan__control">
                             <input disabled defaultChecked={planis.done} type="checkbox" name={`goodPlan${index}`} id={`goodPlan${index}`} />
                            {plan.donePlan.done ? "" : <img src={editImg} className="editPlan active" alt="Редагувати" id={`editPlan${index}`} title="Редагувати" onClick={()=>{
-                                console.log("hello")
                                 document.querySelector(`#goodPlan${index}`).disabled = false;
                                 document.querySelector(`#start__planID${index}`).disabled = false;
                                 document.querySelector(`#end__planID${index}`).disabled = false;
@@ -143,7 +133,6 @@ const Plan = ({plan,index,level,testData,onChange})=>{
             return <ElemPlan key={index} planis={planis} index = {pty}/>
     })
     }
-    console.log(plan.plans)
 
     return(
             // <div className={`wrap__plan ${plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__good" : !plan.donePlan.good &&  plan.donePlan.done ? "__done__plan__notgood" : ""}`}>

@@ -129,7 +129,6 @@ const GetResources = ({docFiles, mediaFiles, show, loadGroups, files}) => {
         loadGroups()
     }, []);
 
-    console.log(files)
 
     return show && (
         <div className={s.wrap__cards__list}>

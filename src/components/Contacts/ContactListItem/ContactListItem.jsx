@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import style from "./ContactListItem.module.css";
 import ContactForm from "../ContactForm/ContactForm";
-import Modal from "../Modal/Modal";
+import Modal from "../../Modals/Modal";
 import Icon from "../../elements/Icons/Icon";
 import ModalMessage from "../../Modals/ModalMessage";
 import { Button } from "@mui/material";
@@ -39,7 +39,7 @@ const ContactListItem = ({
   return (
     <>
       {isEditContact === id && (
-        <Modal onClose={toggleEditContact}>
+        <Modal closeHandler={toggleEditContact}>
           <ContactForm
             editContact={editContact}
             onSubmit={handleEditContact}

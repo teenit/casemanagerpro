@@ -16,7 +16,6 @@ function removeModalLine(){
     number--;
 }
 function sendNewPlan(){
-    console.log(objNewPlan,number)
     let obj = {
         caseId:window.location.search.slice(1),
         id: localStorage.getItem("id"),
@@ -30,7 +29,6 @@ function sendNewPlan(){
         data : JSON.stringify(obj),
     })
     .then((data)=>{ 
-        console.log(data)
         window.location.reload()        
     })
     .catch((error)=>console.log(error))  
@@ -54,7 +52,6 @@ function saveNewPlan(){
             if(document.querySelectorAll(".modal__plan__line")[i].classList.contains("good")){
                 document.querySelectorAll(".modal__plan__line")[i].classList.remove("good");
             }
-            console.log(i)
             return;
         }else{
             document.querySelectorAll(".modal__plan__line")[i].classList.remove("error");
@@ -80,7 +77,6 @@ function saveNewPlan(){
         },
         donePlanDate: ""
     }
-   // return console.log(objNewPlan)
     sendNewPlan(objNewPlan)
 }
 function addModalLine(){
@@ -118,7 +114,6 @@ const PlanActive = ({info,level})=>{
         value:"test etstettst",
         status:0
     })
-    console.log(info)
 
 const WindowCreate = ()=>{
     return openWindowCreate ?(
@@ -175,7 +170,6 @@ const WindowCreate = ()=>{
 }
     function addOptions(){
         if(boolPlan){
-            console.log("good")
             let selectPlan = document.querySelector("#selectPlan");
             selectPlan.innerHTML = ""
             for(let i = 0; i < info.length; i++){
@@ -184,13 +178,11 @@ const WindowCreate = ()=>{
             }
             boolPlan = false;
         }else{
-            console.log("NOTgood")
             return ;
         }
     }
     function changePlan(){
         let selectPlan = document.querySelector("#selectPlan");
-        console.log(selectPlan.value)
         setPlan(selectPlan.value)
     }
     function handleTestChange(obj){

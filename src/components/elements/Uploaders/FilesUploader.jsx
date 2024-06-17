@@ -40,9 +40,14 @@ const FORMAT = {
 function ext(name) {
   return name.match(/\.([^.]+)$|$/)[1];
 }
-
 function FilesUploader({ multiple = true, successHandler = () => { }, meta = null, type = "case" }) {
-  const [alert, setAlert] = useState(false)
+  const [alert, setAlert] = useState({
+    error:false,
+    success:false
+  })
+  const alertHandler = (key)=>{
+    setAlert({...alert, [key]:!alert[key]})
+  }
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const { id, token } = useSelector(state => state.user)
@@ -68,7 +73,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
 
   const handleUpload = async () => {
 
-    if (!meta) return console.log("meta object is required");
+    if (!meta) return alertHandler("error")
     setUploading(true);
     const formData = new FormData();
     for (let i = 0; i < selectedFiles.length; i++) {
@@ -88,10 +93,9 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
       }
     })
       .then((response) => {
-        console.log(response);
         setSelectedFiles([])
         successHandler(response.data)
-        setAlert(true)
+        alertHandler("success")
         setUploading(false);
       })
       .catch((error) => console.log(error))
@@ -126,7 +130,8 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
         {!uploading ? <label htmlFor="submitInput" onClick={handleUpload}><img src={send} alt="Відправити файл" /></label> : <img style={{ width: "30px" }} src={loadImg} />}
         <input disabled={uploading} style={{ display: "none" }} type="submit" id="submitInput" />
       </div>
-      {alert && <SmallNotification isSuccess={true} text="Файли завантажено успішно" close={() => { setAlert(false) }} />}
+      {alert.success && <SmallNotification isSuccess={true} text="Файли завантажено успішно" close={() => { alertHandler("success") }} />}
+      {alert.error && <SmallNotification isSuccess={false} text="Неправильні дані" close={() => { alertHandler("error") }} />}
     </div>
   );
 }

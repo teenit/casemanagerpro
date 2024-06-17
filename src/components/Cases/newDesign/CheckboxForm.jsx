@@ -22,12 +22,10 @@ export default function CheckboxForm({allMas, checkedMas, onChange}) {
   const handleToggle = (value) => () => {
     const checkIndex = allMasElements.findIndex(item => item.id === value.id);
     const isChecked = checked.includes(checkIndex);
-    console.log(checkIndex)
   
     const newChecked = isChecked ? checked.filter(index => index !== checkIndex) : [...checked, checkIndex]
     newChecked.sort((a, b) => a - b)
     setChecked(newChecked);
-    console.log(newChecked)
     onChange(newChecked);
   };
   

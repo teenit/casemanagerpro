@@ -5,32 +5,40 @@ import Icon from "../../elements/Icons/Icon";
 import Input from "../../elements/Inputs/Input";
 import Textarea from "../../elements/Inputs/Textarea";
 import { Button, MenuItem, Select } from "@mui/material";
-import SmallNotification from "../../elements/Notifications/SmallNotification"
+import SmallNotification from "../../elements/Notifications/SmallNotification";
+
 const ContactForm = ({ editContact, onSubmit, contact, showModal, toggleModal }) => {
-  
   const initialState = {
     categori: [],
-    category: "",
-    pib: "",
-    phones: [{ title: "", number: "" }],
-    info: { email: "", work: "", whoisit: "", site: "", info: "" },
-    ...contact,
+    category: contact?.category || "",
+    pib: contact?.pib || "",
+    phones: contact?.phones || [{ title: "", number: "" }],
+    info: contact?.info || { email: "", work: "", whoisit: "", site: "", info: "" },
+    id: contact?.id || null,
   };
-const [alert,setAlert] = useState({
-  success:false,
-  message:""
-})
+
+  const [alert, setAlert] = useState({
+    success: false,
+    message: ""
+  });
+
   const [state, setState] = useState(initialState);
 
   useEffect(() => {
     fetchCategories()
-      .then((data) =>
-        setState((prevState) => ({ ...prevState, categori: data }))
-      )
+      .then((data) => {
+        const initialCategory = contact ? contact.category[0].value : data[0]?.value;
+        setState((prevState) => ({
+          ...prevState,
+          categori: data,
+          category: initialCategory
+        }));
+      })
       .catch((error) => console.log(error));
-  }, []);
+  }, [contact]);
+
   const handleChangePib = (value) => {
-    setState({...state,pib:value})
+    setState({ ...state, pib: value });
   };
 
   const handleChangeInfo = (key, value) => {
@@ -41,8 +49,7 @@ const [alert,setAlert] = useState({
   };
 
   const handleChangeSelect = (e) => {
-    let catText = state.categori.find((item,index)=>item.value==e.target.value)
-    setState({...state, category: [{text:catText.text, value:e.target.value}]})
+    setState({ ...state, category: e.target.value });
   };
 
   const handleSubmit = (event) => {
@@ -52,11 +59,10 @@ const [alert,setAlert] = useState({
 
     if (id) {
       editContact(sendData);
-      setAlert({...alert, success:true, message:"Дані успішно оновлено"})
+      setAlert({ ...alert, success: true, message: "Дані успішно оновлено" });
     } else {
       onSubmit(sendData);
-      setAlert({...alert, success:true, message:"Контакт успішно додано"})
-
+      setAlert({ ...alert, success: true, message: "Контакт успішно додано" });
     }
     reset();
   };
@@ -90,9 +96,6 @@ const [alert,setAlert] = useState({
 
   return (
     <form className="ContactForm" onSubmit={handleSubmit}>
-      <span onClick={toggleModal}>
-        <Icon icon={"close"} />
-      </span>
       <div className="ContactForm-split">
         <Input
           label="ПІБ"
@@ -103,7 +106,7 @@ const [alert,setAlert] = useState({
           required
         />
         <label className="ContactForm-split-flex">
-          <Select value={state.id && state.category[0].value} onChange={handleChangeSelect} required>
+          <Select value={state.category} onChange={handleChangeSelect} required>
             {state.categori.map((item) => (
               <MenuItem key={item.value} value={item.value}>
                 {item.text}
@@ -186,15 +189,15 @@ const [alert,setAlert] = useState({
         />
       </div>
 
-        <Textarea
-          label="Інформація про контакт"
-          value={state.info.info}
-          onChange={(e) => handleChangeInfo("info", e.target.value)}
-        />
+      <Textarea
+        label="Інформація про контакт"
+        value={state.info.info}
+        onChange={(e) => handleChangeInfo("info", e.target.value)}
+      />
       <Button variant="contained" type="submit">
-          {state.id ? "Редагувати" : "Зберегти"}
-        </Button>
-        {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={()=>{setAlert({...alert, success:false})}}/>}
+        {state.id ? "Редагувати" : "Зберегти"}
+      </Button>
+      {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => {setAlert({ ...alert, success: false })}} />}
     </form>
   );
 };

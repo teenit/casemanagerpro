@@ -14,7 +14,6 @@ const UserCasesList = ({ userAddId }) => {
   useEffect(() => {
     apiResponse({}, "case/get/cases-page-list.php").then((res) => {
       setCases([...res])
-      console.log(cases);
     })
   }, []);
 
@@ -24,8 +23,6 @@ const UserCasesList = ({ userAddId }) => {
   };
 
   const addCases = cases.filter(item => item.userId === userAddId);
-
-  // Pagination
   const lastCaseIndex = currentPage * casesPerPage;
   const firstCaseIndex = lastCaseIndex - casesPerPage;
   const currentCase = cases.slice(firstCaseIndex, lastCaseIndex);

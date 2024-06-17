@@ -55,7 +55,6 @@ const PlanElem = ({ plan }) => {
                                             value={state.start_time}
                                             variant="standard"
                                             onChange={(e) => {
-                                                console.log(e.target.value)
                                                 changeHandler("start_time", e.target.value)
                                             }}
                                         />
@@ -100,7 +99,6 @@ const PlanElem = ({ plan }) => {
                                     label={LANG.task_plan}
                                     value={state.value}
                                     onChange={(e) => {
-                                        console.log(e)
                                         changeHandler("value", e.target.value)
                                     }}
                                 />

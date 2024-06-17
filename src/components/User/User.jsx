@@ -71,7 +71,6 @@ export class User extends Component {
     );
 
     const { user } = this.state;
-    console.log(user);
     return user && !user?.fail ? (
       <div className="User">
         <ProfilePhoto

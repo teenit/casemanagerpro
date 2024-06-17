@@ -16,8 +16,6 @@ const CasePhoto = (props)=>{
         const formCaseEdit = document.getElementById(data)
         const formData = new FormData();
         let imagefile = document.getElementById("uploadbtn");
-       // return console.log(imagefile.files[0])
-        formData.append("image", imagefile.files[0]);
         formData.append("id",window.location.search.slice(1));
         formData.append("key","case");
         axios({
@@ -28,7 +26,6 @@ const CasePhoto = (props)=>{
             onUploadProgress: event => {
                 setLoading("active")
                 setImgSave(true)
-                console.log(Math.round(event.loaded * 100 / event.total))
             }
         })
         .then((data)=>{

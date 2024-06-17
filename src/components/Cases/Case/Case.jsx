@@ -49,17 +49,14 @@ const Case = ()=>{
             let res = data.data;
             if(res?.message){
                 setPage({...page,message:res.message})
-                return console.log(res.message)
                 }
                 res.contact = JSON.parse(res.contact);
                 res.activity = JSON.parse(res.activity);
                 if(res.plan.length !== 0){
                  res.plan = JSON.parse(res.plan);
                 }
-               // return console.log(res.photos)
                 if(res.photos !== null && res.photos !== ""){
                  res.photos = JSON.parse(res.photos);
-                // return console.log(res.photos)
                  res.newPhotos = giveGoodPhotosCase(res.photos);
                 }else{
                  res.photos = [];

@@ -77,7 +77,6 @@ const EditCaseInfo = ({caseInfo,close})=>{
         if(ers.length > 0) return setErrors(ers)
 
         addObj.categories = cats;
-       // return console.log(addObj)
         send(addObj)
     }
     const [categoriesCase, setCategoriesCase] = useState(false)

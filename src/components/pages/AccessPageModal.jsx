@@ -10,7 +10,6 @@ const AccessPageModal = ({ close }) => {
     useEffect(()=>{
         
          apiResponse ({},'access/filename.php').then((res)=>setState(res))
-        console.log("test")
     },[
     ])
     return (

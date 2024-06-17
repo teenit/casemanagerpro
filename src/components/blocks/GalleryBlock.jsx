@@ -35,7 +35,6 @@ const GalleryBlock = ({ data }) => {
         let sortedFiles = sortFiles(data);
         setImagesAndVideos([...sortedFiles.media]);
         setOtherFiles([...sortedFiles.docs]);
-        console.log(data);
     }, [data]);
 
     const getType = (str) => {
