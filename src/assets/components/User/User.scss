@@ -234,8 +234,19 @@ ul {
 .btn__active {
     background-color: rgb(126, 160, 223) !important;
 }
-
-@media (max-width:700px) {
+// .title__white{
+//     background-color: #fff;
+// }
+@media (max-width:720px) {
+    .ProfilePhoto{
+       grid-template-columns: none;
+       grid-template-rows: max-content 1fr;
+       &-left{
+        grid-template-columns: none;
+        grid-template-rows: 1fr max-content;
+        gap: 25px;
+       }
+    }
     .case__contact__info__img {
         position: relative;
         margin-top: 50px;
@@ -255,25 +266,31 @@ ul {
         margin: auto;
     }
 
-    .added_all_contact {
-        width: 95%;
-        margin: auto;
-        padding: 20px 0;
-    }
 
     .added_contact_wrap {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
+        position: sticky;
+        top: 0;
+        width: 90%;
+        margin: auto;
+        display: flex;
+        gap: 15px;
     }
 
-    .added_contact,
-    .added_report {
-        margin-bottom: 20px;
+    .added_contact, .added_all_contact{
+        max-height: 250px;
+        overflow-y: scroll;
         border: solid 3px var(--main-color);
         border-radius: 15px;
         padding: 20px 0;
         width: 100%;
         margin: auto;
+    }
+    .added_contact_title{
+        text-align: center;
+    }
+}
+@media screen and (max-width:500px){
+    .added_contact_list{
+        grid-template-columns: 1fr;
     }
 }

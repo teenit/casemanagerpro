@@ -11,6 +11,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 const AddCaseForm = () => {
     const navigate = useNavigate();
     const options = []
+    const [width, setWidth] = useState(window.innerWidth)
     const [alert, setAlert] = useState(false)
     const [errorAlert, setErrorAlert] = useState({
         status:false,

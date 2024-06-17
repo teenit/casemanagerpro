@@ -49,3 +49,18 @@
     }
     
 }
+@media screen and (max-width:720px) {
+.AddCaseForm{
+    &-inner{
+        &-line-three{
+            grid-template-rows: repeat(3,1fr);
+            grid-template-columns: none;
+        }
+        &-line-two{
+            grid-template-rows: repeat(2,1fr);
+            grid-template-columns: none;
+        }
+
+    }
+}
+}

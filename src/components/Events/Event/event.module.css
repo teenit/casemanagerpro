@@ -52,7 +52,7 @@
     border: solid 5px var(--main-color);
     border-radius: 15px;
 }
-@media screen and (max-width:600px) {
+@media screen and (max-width:720px) {
     .members__inner{
         grid-template-columns: 1fr;   
     }

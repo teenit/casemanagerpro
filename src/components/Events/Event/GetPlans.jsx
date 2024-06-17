@@ -25,15 +25,6 @@ const GetPlans = ({ id, plans }) => {
                             </div>
                             <div className={s.result__inner}>
                                 <div className={s.result__inner__90}>
-                            {/* <div className={s.time__line}><span className={s.plan__time__date}>
-                                <span className={s.plan__time}>{item.timeStart}</span>
-                                <span className={s.plan__date}>{item.dateStart}</span>
-                            </span>
-                                <span className={s.plan__time__date}>
-                                    <span className={s.plan__time}>{item.timeEnd}</span>
-                                    <span className={s.plan__date}>{item.dateEnd}</span>
-                                </span>
-                            </div> */}
                             <p dangerouslySetInnerHTML={{ __html: item.description }}></p>
 
                             </div>

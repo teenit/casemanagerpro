@@ -52,7 +52,7 @@ const UserCasesList = ({ userAddId }) => {
         <h4 className="added_contact_title">Доступні кейси</h4>
 
         <ul className="added_contact_list">
-          {cases.map(({ id, name }) => (
+          {currentCase.map(({ id, name }) => (
             <li className="added_contact_list_item" key={id}>
               <UserCasesListItem
                 id={id}

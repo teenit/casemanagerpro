@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import ProfilePhoto from "./UserInfo/ProfilePhoto";
-import "./user.css";
-
 import { fetchUser, fetchReport, fetchHistory } from "../../services/user-api";
 
 import UserReportHistory from "./UserReport/UserReportHistory";

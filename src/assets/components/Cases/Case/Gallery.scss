@@ -42,3 +42,13 @@
         }
     }
 }
+@media screen and (max-width:720px){
+    .Gallery-grid{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media screen and (max-width:520px){
+    .Gallery-grid{
+        grid-template-columns: 1fr;
+    }
+}

@@ -3,7 +3,8 @@ import React from "react"
 import { useState } from "react";
 import { serverAddres } from "../../Functions/serverAddres";
 import s from "./plan.module.css";
-
+import Textarea from "../../elements/Inputs/Textarea"
+import { Button } from "@mui/material";
 const ModalPlan = ({modalInfo,close})=>{
     const [feed,setFeed] = useState({title:""})
     function addFeed(){
@@ -34,7 +35,7 @@ const ModalPlan = ({modalInfo,close})=>{
                     <span className={s.s}></span>
                 </div>
                 <div className={s.form}>
-                <div className={s.result}>
+                <div className={s.result__modal}>
                             <h3 className={s.title}>{modalInfo.item.title}</h3>
                             <div className={s.time__line}><span className={s.plan__time__date}>
                                     <span className={s.plan__time}>{modalInfo.item.timeStart}</span>
@@ -50,12 +51,11 @@ const ModalPlan = ({modalInfo,close})=>{
                                 <b>Залишити зворотній зв'язок</b>
                             </div>
                             <div className={s.feed__back__line}>
-                                <textarea defaultValue={feed.title} name="feed" id="feed" cols="30" rows="10" onChange={(e)=>{
+                                <Textarea value={feed.title} name="feed" id="feed" cols="30" rows="10" onChange={(e)=>{
                                     setFeed({...feed,title:e.target.value})
-                                }}></textarea>
+                                }}></Textarea>
                             </div>
-                            
-                            <button onClick={addFeed} className={s.btn__feed}>Додати відгук</button>
+                                <Button variant="contained" onClick={"addFeed"}>Додати зв'язок</Button>
                         </div>
                 </div>
             </div>
