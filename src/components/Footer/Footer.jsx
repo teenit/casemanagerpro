@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { serverAddres } from "../Functions/serverAddres";
 import "./footer.css";
+import { apiResponse } from "../Functions/get_apiObj";
 
 
 const Footer = () => {
@@ -11,6 +12,7 @@ const Footer = () => {
     const [version, setVersion] = useState(false)
     const [newVersion, setNewVersion] = useState(false)
     const [right, setRight] = useState(false)
+    const [disBtn, setDisBtn] = useState(false)
     function checkVersion() {
         let obj = {
             id: localStorage.getItem("id"),
@@ -48,19 +50,25 @@ const Footer = () => {
 
 
     function updateCaseManager() {
-        axios({
-            url: serverAddres("manage/update-download.php"),
-            method: "POST",
-            header: { 'Content-Type': 'application/json;charset=utf-8' },
-            data: JSON.stringify({
-                link: `https://update.people-ua.org/version/${newVersion}.zip`,
-                newVersion: newVersion
-            }),
+        apiResponse({
+            link: `https://update.people-ua.org/version/${newVersion}.zip`,
+            newVersion: newVersion
+        },"manage/update-download.php").then(()=>{
+            window.location.reload()
         })
-            .then((data) => {
-                // window.location.reload()
-            })
-            .catch((error) => console.log(error))
+        // axios({
+        //     url: serverAddres("manage/update-download.php"),
+        //     method: "POST",
+        //     header: { 'Content-Type': 'application/json;charset=utf-8' },
+        //     data: JSON.stringify({
+        //         link: `https://update.people-ua.org/version/${newVersion}.zip`,
+        //         newVersion: newVersion
+        //     }),
+        // })
+        //     .then((data) => {
+        //         // window.location.reload()
+        //     })
+        //     .catch((error) => console.log(error))
     }
     return (
         <footer>
@@ -79,7 +87,8 @@ const Footer = () => {
                     <span>
                     <p className="footer__contact"><b>Version - {version}</b></p>
                     {newVersion > version ? <p>Доступне оновлення {newVersion}</p> : <p>У вас остання версія програми</p>}
-                    {newVersion > version && right ? <button onClick={() => {
+                    {newVersion > version && right ? <button disabled={disBtn} onClick={() => {
+                        setDisBtn(true)
                         updateCaseManager();
                     }}>Оновити програму</button> : ""}
                     </span>

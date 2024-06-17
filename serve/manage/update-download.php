@@ -2,7 +2,7 @@
 require_once '../config.php';
 
 $data = json_decode(file_get_contents('php://input'));
-if(!checkRight($data->id, 'apiUpdateProgram', $token,true)) exit;
+//if(!checkRight($data->id, 'apiUpdateProgram', $token,true)) exit;
 $userId = $data->id;
 $token = $data->token;
 $link = $data->link;

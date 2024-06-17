@@ -5,9 +5,9 @@ $data = json_decode(file_get_contents('php://input'));
 $userId = $data->id;
 $token = $data->token;
 $obj = new StdClass();
-if(!checkRight($userId, 'apiUpdateProgram', $token,false)){
-    $obj->{'message'} = "Немає прав доступу";
-};
+// if(!checkRight($userId, 'apiUpdateProgram', $token,false)){
+//     $obj->{'message'} = "Немає прав доступу";
+// };
 $msql = "SELECT meta_value FROM usermeta WHERE user_id=1 AND meta_key='version'";
 
 
