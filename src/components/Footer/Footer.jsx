@@ -93,7 +93,7 @@ const Footer = () => {
                     }}>Оновити програму</button> : ""}
                     </span>
                     
-                    <p className="copyright">© Case Manager | 2024 | powered by <a href="https://studio.itclub.in.ua">Studio IT Club</a></p>
+                    <p className="copyright">© Case Manager | 2024 | powered by <a href="https://studio.itclub.in.ua" target="_blank">Studio IT Club</a></p>
 
                 </div>
             </div>

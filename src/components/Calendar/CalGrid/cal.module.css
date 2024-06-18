@@ -61,7 +61,7 @@
 }
 .inner{
     box-sizing: border-box;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
     background-color: #fff;
     box-shadow: 0 0 10px 0 var(--main-color);
     border-radius: 10px;
@@ -99,6 +99,7 @@
     position: sticky;
     z-index: 999;
     top: 0;
+    padding-top: 20px;
 }
 .plus__add{
     width: 30px;
@@ -226,10 +227,17 @@ width: 100%;
 .inp__time{
     width: max-content!important;
 }
-@media screen and (max-width:600px) {
+@media screen and (max-width:720px) {
     .inner{
         min-width: 80%;
         max-width: 90%;
+    }
+    .inner__content{
+        grid-template-rows: 1.5fr max-content;
+        grid-template-columns: none;
+    }
+    .add__title{
+        background-color: #fff;
     }
     
 }

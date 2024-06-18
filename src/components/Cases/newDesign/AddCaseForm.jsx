@@ -11,6 +11,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 const AddCaseForm = () => {
     const navigate = useNavigate();
     const options = []
+    const [width, setWidth] = useState(window.innerWidth)
     const [alert, setAlert] = useState(false)
     const [errorAlert, setErrorAlert] = useState({
         status:false,
@@ -98,7 +99,7 @@ const AddCaseForm = () => {
         })
     }
     function sendData() {
-        if (checkedMas.length == 0) return setErrorAlert({...errorAlert,status:true,text:"Виберіть хоча б одну категорію кейсу"});
+        // if (checkedMas.length == 0) return setErrorAlert({...errorAlert,status:true,text:"Виберіть хоча б одну категорію кейсу"});
         apiResponse({ ...stateData, categories: categories }, "case/update-case-data").then(data => {
             navigate("/case/" + stateData.case_id)
         })
@@ -282,7 +283,7 @@ const AddCaseForm = () => {
                     </div>
                     <div className="w100">
 
-                            <p>Категорія кейсу<span className="required">*</span></p>
+                            <p>Категорія кейсу</p>
                             <CheckboxListAccess
                                 allMas={()=>{return categories}} 
                                 checkedMas={checkedMas}

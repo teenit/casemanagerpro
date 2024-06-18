@@ -118,7 +118,7 @@ border-radius: 10px;
     font-weight: bold;
     font-size: 22px;
 }
-@media (max-width:600px){
+@media (max-width:720px){
     .inner__cards {
         width: 80%;
         margin: auto;

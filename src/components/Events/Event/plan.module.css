@@ -38,15 +38,17 @@
     margin-left: 5px;
 }
 
-.result{
-
+.result, .result__modal{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border: solid 2px var(--main-color);
     border-radius: 10px;
     position: relative;
+}
+.result{
     padding-bottom: 40px;
+    border: solid 2px var(--main-color);
+    
 }
 .result__inner{
     max-height: 300px;
@@ -149,7 +151,7 @@
     right: 3px;
     margin: 0;
 }
-@media screen and (max-width:600px) {
+@media screen and (max-width:720px) {
     .plan{
         grid-template-columns: 1fr;   
     }

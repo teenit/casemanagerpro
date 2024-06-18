@@ -35,3 +35,8 @@ footer{
     color: #fff;
     text-decoration: underline;
 }
+@media screen and (max-width:720px){
+    .footer__top__line{
+        flex-direction: column;
+    }
+}

@@ -1,126 +1,106 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import ProfilePhoto from "./UserInfo/ProfilePhoto";
-import "./user.css";
-
 import { fetchUser, fetchReport, fetchHistory } from "../../services/user-api";
-
 import UserReportHistory from "./UserReport/UserReportHistory";
 import UserCasesList from "./UserCasesList/UserCasesList";
 import LoadingPage from "../Loading/LoadingPage";
+import { apiResponse } from "../Functions/get_apiObj";
 
-export class User extends Component {
-  state = {
-    user: {},
-    report: [],
-    history: [],
-    currentPageReport: 1,
-    casesPerPageReport: 6,
-    currentPageHistory: 1,
-    casesPerPageHistory: 6,
-    selectedReport: 1,
-    selectedHistory: 1,
-  };
+const User = () => {
+  const [user, setUser] = useState({});
+  const [report, setReport] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [currentPageReport, setCurrentPageReport] = useState(1);
+  const [casesPerPageReport] = useState(6);
+  const [currentPageHistory, setCurrentPageHistory] = useState(1);
+  const [casesPerPageHistory] = useState(6);
+  const [selectedReport, setSelectedReport] = useState(1);
+  const [selectedHistory, setSelectedHistory] = useState(1);
+  const [changePass, setChangePass] = useState(false)
 
-  componentDidMount() {
-    fetchUser().then((data) => {
-      this.setState({ user: data });
+  useEffect(() => {
+    let userId = window.location.href.charAt(window.location.href.indexOf("?")+1)
+    apiResponse({userId:userId}, "user/get-user.php").then((data) => {
+      if(userId==localStorage.getItem("id")){
+        setChangePass(true)
+      }
+      setUser(data);
+      console.log(user);
     });
 
-    // fetchReport().then();
-    //fetchHistory().then();
-  }
-
-  paginateReport = (pageNumber) => {
-    this.setState({
-      currentPageReport: pageNumber,
-      selectedReport: pageNumber,
-    });
+    // fetchReport().then(setReport);
+    // fetchHistory().then(setHistory);
+  }, []);
+console.log(user);
+  const paginateReport = (pageNumber) => {
+    setCurrentPageReport(pageNumber);
+    setSelectedReport(pageNumber);
   };
 
-  paginateHistory = (pageNumber) => {
-    this.setState({
-      currentPageHistory: pageNumber,
-      selectedHistory: pageNumber,
-    });
+  const paginateHistory = (pageNumber) => {
+    setCurrentPageHistory(pageNumber);
+    setSelectedHistory(pageNumber);
   };
 
-  render() {
-    const {
-      currentPageReport,
-      casesPerPageReport,
-      currentPageHistory,
-      casesPerPageHistory,
-      report,
-      history,
-      selectedReport,
-      selectedHistory,
-    } = this.state;
-    const lastCaseIndexReport = currentPageReport * casesPerPageReport;
-    const firstCaseIndexReport = lastCaseIndexReport - casesPerPageReport;
+  const lastCaseIndexReport = currentPageReport * casesPerPageReport;
+  const firstCaseIndexReport = lastCaseIndexReport - casesPerPageReport;
+  const currentReport = report.slice(firstCaseIndexReport, lastCaseIndexReport);
 
-    const lastCaseIndexHistory = currentPageHistory * casesPerPageHistory;
-    const firstCaseIndexHistory = lastCaseIndexHistory - casesPerPageHistory;
+  const lastCaseIndexHistory = currentPageHistory * casesPerPageHistory;
+  const firstCaseIndexHistory = lastCaseIndexHistory - casesPerPageHistory;
+  const currentHistory = history.slice(firstCaseIndexHistory, lastCaseIndexHistory);
 
-    const currentReport = report.slice(
-      firstCaseIndexReport,
-      lastCaseIndexReport
-    );
-    const currentHistory = history.slice(
-      firstCaseIndexHistory,
-      lastCaseIndexHistory
-    );
+  return user && !user?.fail ? (
+    <div className="User">
+      <ProfilePhoto
+        url={user.profileUrl}
+        userName={user.userName}
+        email={user.email}
+        changePass={changePass}
+        phone={user.phone}
+      />
+      <UserCasesList />
 
-    const { user } = this.state;
-    return user && !user?.fail ? (
-      <div className="User">
-        <ProfilePhoto
-          url={user.profileUrl}
-          userName={user.userName}
-          email={user.email}
-          changePass = {user?.changePass}
-          phone = {user.phone}
+      <div>
+        <h4>Подані звіти</h4>
+        <UserReportHistory
+          currentArray={currentReport}
+          casesPerPage={casesPerPageReport}
+          arrey={report}
+          paginate={paginateReport}
+          activeKey={selectedReport}
         />
-        <UserCasesList id={user.id} />
-
-        <div>
-          <h4>Подані звіти</h4>
-          <UserReportHistory
-            currentArray={currentReport}
-            casesPerPage={casesPerPageReport}
-            arrey={report}
-            paginate={this.paginateReport}
-            activeKey={selectedReport}
-          />
-        </div>
-
-        <div>
-          <h4>Подані історії</h4>
-          <UserReportHistory
-            currentArray={currentHistory}
-            casesPerPage={casesPerPageHistory}
-            arrey={history}
-            paginate={this.paginateHistory}
-            activeKey={selectedHistory}
-          />
-        </div>
       </div>
-    ):(
-       <div>
-        {user?.userName ?
+
+      <div>
+        <h4>Подані історії</h4>
+        <UserReportHistory
+          currentArray={currentHistory}
+          casesPerPage={casesPerPageHistory}
+          arrey={history}
+          paginate={paginateHistory}
+          activeKey={selectedHistory}
+        />
+      </div>
+    </div>
+  ) : (
+    <div>
+      {user?.userName ? (
         <ProfilePhoto
           url={user.profileUrl}
           userName={user.userName}
           email={user.email}
-          phone = {user.phone}
-        /> : <div>
+          phone={user.phone}
+        />
+      ) : (
+        <div>
           <div className="page__loading">
-          <LoadingPage effload={false} message = {"Доступ обмежено"} />
-
+            <LoadingPage effload={false} message={"Доступ обмежено"} />
           </div>
-          </div>}
         </div>
-    )
-  }
-}
+      )}
+    </div>
+  );
+};
 
 export default User;

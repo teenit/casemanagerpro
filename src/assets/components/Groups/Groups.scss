@@ -39,10 +39,19 @@
             height: 25px;
             border-radius: 50%;
         }
-        // &-categories{
-        //     display: flex;
-        //     flex-direction: column;
-        //     gap: 10px;
-        // }
     }
+}
+@media screen and (max-width:720px){
+.Groups{
+    &-list{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+}
+@media screen and (max-width:600px){
+.Groups{
+    &-list{
+        grid-template-columns: none;
+    }
+}
 }

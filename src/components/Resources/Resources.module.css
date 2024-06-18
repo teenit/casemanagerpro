@@ -181,6 +181,11 @@ font-weight: bold;
 .titleH2{
     font-size: 14px;
 }
+@media  screen and (max-width:720px) {
+    .wrap__cards__list{
+        grid-template-columns: 1fr;
+    }
+}
 @media screen and (max-width:500px){
     .wrap__cards{
         grid-template-columns: 1fr;

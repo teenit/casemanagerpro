@@ -6,7 +6,7 @@
     gap: 50px;
     &-grid{
         display: grid;
-        grid-template-columns: repeat(3,1fr);
+        // grid-template-columns: repeat(3,1fr);
         gap: 25px;
         
         &-img-wrap{
@@ -42,3 +42,13 @@
         }
     }
 }
+// @media screen and (max-width:720px){
+//     .Gallery-grid{
+//         grid-template-columns: 1fr 1fr;
+//     }
+// }
+// @media screen and (max-width:520px){
+//     .Gallery-grid{
+//         grid-template-columns: 1fr;
+//     }
+// }

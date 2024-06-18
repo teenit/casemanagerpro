@@ -103,6 +103,15 @@ const GetResources = ({docFiles, mediaFiles, links, show, loadGroups, files, con
     }
 
     const File = (elems) => elems.map((elem, ind) => {
+        function convertSize(size) {
+            if (size < 1024 * 1024) {
+                let sizeInKB = size / 1024;
+                return sizeInKB.toFixed(2) + " KB";
+            } else {
+                let sizeInMB = size / (1024 * 1024);
+                return sizeInMB.toFixed(2) + " MB";
+            }
+        }
         const imgUrl = getImageByType(elem.type);
 
         return (
@@ -121,7 +130,7 @@ const GetResources = ({docFiles, mediaFiles, links, show, loadGroups, files, con
                     <img src={imgUrl} alt="" />
                     <p className={s.titleH2}>{cutTitle(elem.title)}</p>
                 </div>
-                <p>{elem.size}</p>
+                <p>{convertSize(elem.size)}</p>
             </div>
         );
     });

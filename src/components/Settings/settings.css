@@ -271,7 +271,7 @@ input[type="color"]{
     column-gap: 10px;
     align-items: center;
 }
-@media (max-width:600px) {
+@media (max-width:720px) {
     .settings__page{
         grid-template-columns: 1fr;
     }
@@ -291,5 +291,11 @@ input[type="color"]{
     }
     .set__users__data{
         margin-top: 15px;
+    }
+    .set__user__wr{
+        flex-direction: column;
+    }
+    .set__users__data__title{
+        display: none;
     }
 }

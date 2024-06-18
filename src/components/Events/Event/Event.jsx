@@ -135,9 +135,10 @@ const Event = ()=>{
                     </div>
                     </div>
                 </div>
-                <div className={s.plans}>
+                {plans.length>0 && <div className={s.plans}>
                         <GetPlans id={event.id} plans = {plans}/>
-                </div>
+                </div>}
+                
                 <GalleryBlock data = {files}/>
             </div>
             {lookPhoto.look?<BigPhoto link = {lookPhoto.link} close = {()=>{setLookPhoto({...lookPhoto,look:false})}}/>:null}

@@ -7,6 +7,9 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
 }
 .inner{
     display: grid;
@@ -32,4 +35,9 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
+}
+@media screen and (max-width:720px){
+    .results{
+        grid-template-columns: 1fr;
+    }
 }
