@@ -186,6 +186,10 @@ font-weight: bold;
         grid-template-columns: 1fr;
         gap: 15px;
     }
+    .wrap__cards__list{
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
     .file__card{
         display: flex;
         align-items: center;

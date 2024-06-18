@@ -17,7 +17,11 @@ $sql = "SELECT * FROM resources";
         
         // Отримання результатів
         while ($row = $result->fetch_assoc()) {
-            $response[] = json_decode($row['meta_value']);
+            $resource = json_decode($row['meta_value']);
+            $resource->{'resource_id'} = $row['id'];
+            $resource->{'user_id'} = $row['user_id'];
+
+            $response[] = $resource;
                 
         }
         

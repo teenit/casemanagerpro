@@ -17,8 +17,9 @@ import xlsxImg from "./../../img/resources/xlsx.png";
 import { Button } from "@mui/material";
 import { apiResponse } from "../Functions/get_apiObj";
 import GetDocumentBlock from "./GetDocumentBlock";
+import GetLinksBlock from "./GetLinksBlock";
 
-const GetResources = ({docFiles, mediaFiles, show, loadGroups, files}) => {
+const GetResources = ({docFiles, mediaFiles, links, show, loadGroups, files, confirmDelete}) => {
     const [info, setInfo] = useState({});
 
     const InfoModal = () => {
@@ -133,7 +134,7 @@ const GetResources = ({docFiles, mediaFiles, show, loadGroups, files}) => {
     return show && (
         <div className={s.wrap__cards__list}>
             {info.open ? <InfoModal /> : ""}
-            <GetDocumentBlock resources = {docFiles} />
+            <GetLinksBlock confirmDelete={confirmDelete} links={files.links}/>
             <div className={s.wrap__cards}>
                 <div className={s.cards__header}>
                     <p>Документи</p>

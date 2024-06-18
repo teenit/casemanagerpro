@@ -6,7 +6,9 @@ export const LANG = {
     date: "Дата",
     title: "Назва",
     description: "Опис",
-    color: "Колір"
+    color: "Колір",
+    confirm_title: "Підтвердити дію",
+    delete: "Видалити"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Права користувачів (Сторінки)",
@@ -117,6 +119,10 @@ export const LANG = {
         error:"Оберіть групу, яку хочете додати",
         success:"Зв'язок створено"
       }
+    },
+    resources:{
+      link_title: "Корисні посилання",
+      confirm_delete: "Ви впевнені, що хочете видалити ресурс - "
     },
   access: {
     "a_cases_category_edit_id": "Доступні категорії кейсів для редагування",

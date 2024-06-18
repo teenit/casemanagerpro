@@ -96,7 +96,7 @@ const Icon = ({ icon, addClass }) => {
     }, [icon]);
 
     return (
-        <div>{state}</div>
+        <>{state}</>
     );
 };
 
