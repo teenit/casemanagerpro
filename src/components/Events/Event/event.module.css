@@ -4,8 +4,8 @@
 .inner{
     width: 80%;
     margin: auto;
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 30px;
 }
 .title__wrap{

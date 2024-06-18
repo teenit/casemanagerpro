@@ -12,14 +12,9 @@
 .result p{
     margin: 0;
 }
-.result:hover{
-    background-color: #00000033;
-}
+
 .result:nth-child(2n+1){
     background-color: var(--second-color);
-}
-.result:nth-child(2n+1):hover{
-    background-color: #00000033;
 }
 .result__left{
     display: flex;
@@ -31,11 +26,12 @@
     gap: 10px;
 }
 .users__inner{
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 5px;
+    
 }
 @media screen and (max-width:720px) {
+    .users__inner{
+        width: 100%;
+    }
     .result{
         flex-direction: column;
         align-items: center;

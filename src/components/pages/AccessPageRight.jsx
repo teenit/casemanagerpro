@@ -14,6 +14,9 @@ const AccessPageRight = () => {
   const [width, setWidth] = useState(window.innerWidth)
   window.addEventListener('resize', (e)=>{
     setWidth(window.innerWidth)
+    if(window.innerWidth>720){
+      setShowPages(true)
+    }
   })
   let params = useParams();
   const access_id = params.id;

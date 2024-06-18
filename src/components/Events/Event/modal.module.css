@@ -142,8 +142,12 @@
     border: solid 2px var(--main-color);
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:720px) {
     .inner{
         grid-template-columns: 1fr 3fr;
+    }
+    .add__plan__item{
+        grid-template-columns: 1fr;
+        gap: 0px;
     }
 }

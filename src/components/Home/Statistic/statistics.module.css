@@ -7,7 +7,7 @@
     color: #f99c9c;
     margin-top: 50px;
 }
-@media screen and (max-width:600px) {
+@media screen and (max-width:1020px) {
     .stats__grid{
         grid-template-columns: 1fr;
     }

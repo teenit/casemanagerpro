@@ -6,11 +6,14 @@ import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
 
 const UserCasesList = ({ userAddId }) => {
+  const [width, setWidth] = useState(window.innerWidth)
   const [cases, setCases] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(12);
   const [selected, setSelected] = useState(1);
-
+window.addEventListener("resize", ()=>{
+  setWidth(window.innerWidth)
+})
   useEffect(() => {
     apiResponse({}, "case/get/cases-page-list.php").then((res) => {
       setCases([...res])
@@ -62,12 +65,12 @@ const UserCasesList = ({ userAddId }) => {
           ))}
         </ul>
 
-        <UserPagination
+        {width>720&&<UserPagination
           casesPerPage={casesPerPage}
           totalCases={cases.length}
           paginate={paginate}
           activeKey={selected}
-        />
+        />}
       </div>
     </>
   );

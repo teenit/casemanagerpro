@@ -170,6 +170,10 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
       hadnlePassObjChange("changeError", "Довжина паролю повинна бути більше 6 символів")
       handleAlertChange("errorPass")
       return;
+    } else if (pass.olderPass.length < 1) {
+      hadnlePassObjChange("changeError", "Введіть свій старий пароль для підтвердження особистості")
+      handleAlertChange("errorPass")
+      return;
     }
     axios({
       url: serverAddres("user/change-pass.php"),
@@ -218,7 +222,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
         />
         </div>
       </div>
-      {changePass ? <div className="User-pass">
+      {changePass && <div className="User-pass">
         <p>Змінити пароль</p>
         <div className="User-pass-form">
           <Input
@@ -253,7 +257,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
           </div>
         </div>
 
-      </div> : ""}
+      </div>}
 
       {alert.success && <SmallNotification isSuccess={true} text={"Дані успішно оновлено"} close={() => { handleAlertChange("success") }} />}
       {alert.error && <SmallNotification isSuccess={false} text="Нові дані повинні відрізнятися від старих" close={() => { handleAlertChange("error") }} />}
