@@ -115,10 +115,10 @@ const ContactListItem = ({
 
         <div className={style.contact_list_item_btn}>
           <span onClick={handleDeleteConfirmation}>
-            <Icon icon={"delete"} addClass={"default-icon"} />
+            <Icon icon={"delete"} addClass={"header-icon fs16"} />
           </span>
           <span onClick={handleEditContact}>
-            <Icon icon={"edit"} addClass={"default-icon"} />
+            <Icon icon={"edit"} addClass={"header-icon fs16"} />
           </span>
         </div>
       </div>

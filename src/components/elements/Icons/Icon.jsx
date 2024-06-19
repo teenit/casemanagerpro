@@ -44,7 +44,7 @@ const Icon = ({ icon, addClass }) => {
                 ico = <CalendarMonthIcon fontSize='large' className={addClass} />
                 break;
             case "delete":
-                ico = <Delete fontSize='large' className={addClass} />
+                ico = <Delete className={addClass} />
                 break;
             case "add":
                 ico = <Add className={addClass} fontSize='large' />;

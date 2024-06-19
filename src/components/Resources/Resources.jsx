@@ -6,16 +6,23 @@ import s from './Resources.module.css';
 import { apiResponse } from "../Functions/get_apiObj";
 import ModalConfirm from "../Modals/ModalConfirm";
 import { LANG } from "../../services/config";
+import SmallNotification from "../elements/Notifications/SmallNotification";
 
 const Resources = () => {
     const [form, setForm] = useState(false)
     const [docFiles, setDocFiles] = useState([]);
     const [mediaFiles, setMediaFiles] = useState([]);
-    
+    const [alert, setAlert] = useState({
+        success:false,
+        error:false
+    })
     const [files, setFiles] = useState([]);
     const [show, setShow] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false)
     const [activeResource, setActiveResource] = useState(null)
+    const alertHandler = (key)=>{
+        setAlert({...alert, [key]:!alert[key]})
+    }
     const loadGroups = ()=>{
         apiResponse({}, "resources/get-resource.php").then((res)=>{
             setFiles(sortFiles(res));
@@ -56,6 +63,9 @@ const Resources = () => {
             console.log(res)
             setDeleteModal(false)
             loadGroups()
+            alertHandler("success")
+        }).catch((error)=>{
+            alertHandler("error")
         })
     }
     const sortFiles = (arg) => {
@@ -64,7 +74,6 @@ const Resources = () => {
         const others = [];
         const links = []
         arg.forEach(file => {
-            console.log(file)
             if (file.type.startsWith('image/')) {
                 images.push(file);
             } else if (file.type.startsWith('video/')) {
@@ -94,13 +103,15 @@ const Resources = () => {
                 {form && <AddResources close={()=>{setForm(false)}} loadGroups={loadGroups}/>}
             </div>
             <div className={s.get__resources}>
-                <GetResources confirmDelete={confirmDelete} files={files} docFiles = {docFiles} mediaFiles={mediaFiles} show={show} loadGroups = {loadGroups} />
+                <GetResources confirmDelete={confirmDelete} links={files.links} docFiles = {docFiles} mediaFiles={mediaFiles} show={show} loadGroups = {loadGroups} />
             </div>
             {deleteModal && <ModalConfirm 
                 closeHandler={()=>{setDeleteModal(false)}} 
                 successHandler={deleteResource}
-                text={LANG.resources.confirm_delete + activeResource.title}
+                text={LANG.resources.confirm_delete + activeResource.title+"?"}
                 />}
+                {alert.success && <SmallNotification isSuccess={true} text={"Ресурс видалено"} close={()=>{alertHandler("success")}}/>}
+                {alert.error && <SmallNotification isSuccess={false} text={"Виникла помилка"} close={()=>{alertHandler("error")}}/>}
         </div>
     )
 }
