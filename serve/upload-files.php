@@ -5,13 +5,11 @@ require_once 'config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
     // Перевірка, чи надійшли значення case_id та key
     $metaData = json_decode($_POST['meta'], true);
-    $caseId = $metaData['case_id'];
-    $key = $metaData['key'];
-    if (isset($caseId) && isset($key)) {
-        $caseId = intval($caseId); // Захист від SQL-ін'єкцій
-        $metaKey = $conn->real_escape_string($key); // Захист від SQL-ін'єкцій
+    if (isset($metaData['case_id']) && isset($metaData['key'])) {
+        $caseId = intval($metaData['case_id']); // Захист від SQL-ін'єкцій
+        $metaKey = $conn->real_escape_string($metaData['key']); // Захист від SQL-ін'єкцій
     } else {
-        echo "Помилка: Немає значень case_id або key";
+        echo json_encode(["error" => "Немає значень case_id або key"]);
         exit();
     }
 
@@ -21,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
         $uploadDir = 'uploads/case/';
 
         // Масив для зберігання посилань на файли
-        $fileLinks = array();
+        $fileLinks = [];
 
         // Початок транзакції
         $conn->begin_transaction();
@@ -36,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
 
             // Перевірка, чи є помилка при завантаженні файлу
             if ($error !== UPLOAD_ERR_OK) {
-                echo "Помилка завантаження файлу: $name\n";
+                echo json_encode(["error" => "Помилка завантаження файлу: $name"]);
                 continue;
             }
 
@@ -45,47 +43,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
 
             // Переміщуємо файл з тимчасового місця розташування в директорію для зберігання
             if (move_uploaded_file($tmpName, $fileName)) {
-                
+                // Створення об'єкта посилання на файл
+                $link = new stdClass();
+                $link->link = "https://" . $_SERVER['SERVER_NAME'] . "/serve/" . $fileName;
+                $link->type = $type;
+                $link->size = $size;
+                $link->name = $name;
+
+                // Перевірка наявності запису в БД
+                $checkStmt = $conn->prepare("SELECT COUNT(*) FROM casemeta WHERE case_id = ? AND meta_key = 'case_profile_img'");
+                $checkStmt->bind_param("i", $caseId);
+                $checkStmt->execute();
+                $checkStmt->bind_result($count);
+                $checkStmt->fetch();
+                $checkStmt->close();
+
+                if ($count > 0) {
+                    // Оновлення запису в БД
+                    $updateStmt = $conn->prepare("UPDATE casemeta SET meta_value = ? WHERE case_id = ? AND meta_key = ?");
+                    $jsonLink = json_encode($link, JSON_UNESCAPED_UNICODE);
+                    $updateStmt->bind_param("sis", $jsonLink, $caseId, $metaKey);
+                    if (!$updateStmt->execute()) {
+                        // Відкат транзакції у випадку помилки
+                        $conn->rollback();
+                        echo json_encode(["error" => "Помилка оновлення запису в БД: " . $updateStmt->error]);
+                        exit();
+                    }
+                    $updateStmt->close();
+                } else {
+                    // Вставка запису в БД
+                    $insertStmt = $conn->prepare("INSERT INTO casemeta (case_id, meta_key, meta_value) VALUES (?, ?, ?)");
+                    $jsonLink = json_encode($link, JSON_UNESCAPED_UNICODE);
+                    $insertStmt->bind_param("iss", $caseId, $metaKey, $jsonLink);
+                    if (!$insertStmt->execute()) {
+                        // Відкат транзакції у випадку помилки
+                        $conn->rollback();
+                        echo json_encode(["error" => "Помилка вставки запису в БД: " . $insertStmt->error]);
+                        exit();
+                    }
+                    $insertStmt->close();
+                }
+
+                // Додаємо посилання на файл до масиву
+                $fileLinks[] = $link;
             } else {
-                echo "Помилка переміщення файлу: $fileName\n";
-                echo "Останній код помилки: " . error_get_last()['message'];
+                echo json_encode(["error" => "Помилка переміщення файлу: $fileName. " . error_get_last()['message']]);
                 continue; // Перейти до наступного файлу
             }
-            $link = new stdClass();
-            $link->{'link'} = "https://".$_SERVER['SERVER_NAME']."/serve/".$fileName;
-            $link->{'type'} = $type; 
-            $link->{'size'} = $size; 
-            $link->{'name'} = $name; 
-            
-            // Вставляємо запис в БД
-            $stmt = $conn->prepare("INSERT INTO casemeta (case_id, meta_key, meta_value) VALUES (?, ?, ?)");
-            $stmt->bind_param("iss", $caseId, $metaKey, json_encode($link, JSON_UNESCAPED_UNICODE)); // Використання підготовленого зв'язування параметрів
-
-            // Виконання запиту до бази даних
-            if (!$stmt->execute()) {
-                // Відкат транзакції у випадку помилки
-                $conn->rollback();
-                echo "Помилка вставки запису в БД: " . $stmt->error;
-                exit();
-            }
-
-            // Додаємо посилання на файл до масиву
-            $fileLinks[] = $link;
         }
 
         // Закінчення транзакції
         $conn->commit();
 
-        // // Повертаємо посилання на файли у вигляді JSON
-        // $fileLinks = array_map(function($fileName) {
-        //     return 'https://' . $_SERVER['HTTP_HOST'] . '/serve/'.$fileName; // Додаємо базову URL
-        // }, $fileLinks);
+        // Повертаємо посилання на файли у вигляді JSON
         echo json_encode($fileLinks, JSON_UNESCAPED_UNICODE);
     } else {
-        echo "Помилка: Немає файлів для завантаження";
+        echo json_encode(["error" => "Немає файлів для завантаження"]);
     }
 } else {
-    echo "Помилка: Неправильний метод запиту або немає файлів для завантаження";
+    echo json_encode(["error" => "Неправильний метод запиту або немає файлів для завантаження"]);
 }
 
 // Закриття з'єднання
