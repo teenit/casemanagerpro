@@ -18,22 +18,41 @@ import { Button } from "@mui/material";
 import { apiResponse } from "../Functions/get_apiObj";
 import GetDocumentBlock from "./GetDocumentBlock";
 import GetLinksBlock from "./GetLinksBlock";
+import Icon from "../elements/Icons/Icon";
 
-const GetResources = ({docFiles, mediaFiles, links, show, loadGroups, files, confirmDelete}) => {
+const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDelete }) => {
     const [info, setInfo] = useState({});
+    const [showList, setShowList] = useState({
+        docs: false,
+        media: false
+    });
+
+    const showHandler = (key) => {
+        setShowList({ ...showList, [key]: !showList[key] });
+    };
 
     const InfoModal = () => {
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                setInfo({ ...info, open: false });
-            }
-        });
+        useEffect(() => {
+            const handleKeyDown = (e) => {
+                if (e.key === "Escape") {
+                    setInfo({ ...info, open: false });
+                }
+            };
+            document.addEventListener("keydown", handleKeyDown);
+            return () => {
+                document.removeEventListener("keydown", handleKeyDown);
+            };
+        }, [info]);
 
         return (
             <div className={s.modal__file}>
-                <div className={s.modal__file__black} id="modal__file__black" onClick={(e) => {
-                    if (e.target.id === "modal__file__black") setInfo({ ...info, open: false });
-                }}>
+                <div
+                    className={s.modal__file__black}
+                    id="modal__file__black"
+                    onClick={(e) => {
+                        if (e.target.id === "modal__file__black") setInfo({ ...info, open: false });
+                    }}
+                >
                     <div className={s.modal__file__inner}>
                         <div className={s.modal__file__img}>
                             <img src={info.img} alt="" />
@@ -63,30 +82,21 @@ const GetResources = ({docFiles, mediaFiles, links, show, loadGroups, files, con
                     </div>
                 </div>
             </div>
-        )
-    }
+        );
+    };
 
     const cutTitle = (title) => {
         return title.length > 40 ? title.substring(0, 40) + "..." : title;
-    }
+    };
 
     const getImageByType = (type) => {
         switch (type) {
-            case "image/png":
-                return pngImg;
-            case "image/jpeg":
-            case "image/jpg":
-                return jpegImg;
             case "application/msword":
                 return docImg;
             case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
                 return docxImg;
-            case "video/quicktime":
-                return movImg;
             case "audio/mpeg":
                 return mp3Img;
-            case "video/mp4":
-                return mp4Img;
             case "application/pdf":
                 return pdfImg;
             case "application/vnd.ms-powerpoint":
@@ -100,68 +110,85 @@ const GetResources = ({docFiles, mediaFiles, links, show, loadGroups, files, con
             default:
                 return "";
         }
-    }
+    };
+
+    const getPreview = (file) => {
+        const type = file.type.split('/')[0]
+        if (type == 'image') {
+            return file.link
+        } else if (type == 'video') {
+            return `${file.link}#t=0.5`
+        } else {
+            return getImageByType(file.type)
+        }
+    };
 
     const File = (elems) => elems.map((elem, ind) => {
         function convertSize(size) {
             if (size < 1024 * 1024) {
-                let sizeInKB = size / 1024;
-                return sizeInKB.toFixed(2) + " KB";
+                let sizeInKB = size / 1024
+                return sizeInKB.toFixed(2) + " KB"
             } else {
-                let sizeInMB = size / (1024 * 1024);
-                return sizeInMB.toFixed(2) + " MB";
+                let sizeInMB = size / (1024 * 1024)
+                return sizeInMB.toFixed(2) + " MB"
             }
         }
-        const imgUrl = getImageByType(elem.type);
-
+        const previewUrl = getPreview(elem)
+        const open = ()=>{
+            setInfo({
+                open: true,
+                title: elem.title,
+                description: elem.description,
+                size: elem.size,
+                link: elem.link,
+                date: elem.date,
+                img: previewUrl
+            });
+        }
         return (
-            <div className={s.file__card} key={ind} onClick={() => {
-                setInfo({
-                    open: true,
-                    title: elem.title,
-                    description: elem.description,
-                    size: elem.size,
-                    link: elem.link,
-                    date: elem.date,
-                    img: imgUrl
-                });
-            }}>
-                <div className={s.card__row__left}>
-                    <img src={imgUrl} alt="" />
-                    <p className={s.titleH2}>{cutTitle(elem.title)}</p>
-                </div>
+            <div className={s.file__card} key={ind}>
+                <img src={previewUrl} alt="" onClick={open}/>
+                <p className={s.titleH2} onClick={open}>{cutTitle(elem.title)}</p>
                 <p>{convertSize(elem.size)}</p>
+                <span onClick={() => { confirmDelete(elem) }}>
+                    <Icon icon={"delete"} addClass={"close-icon fs16"} />
+                </span>
             </div>
         );
     });
 
     useEffect(() => {
-        loadGroups()
+        loadGroups();
     }, []);
-
 
     return show && (
         <div className={s.wrap__cards__list}>
             {info.open ? <InfoModal /> : ""}
-            <GetLinksBlock confirmDelete={confirmDelete} links={files.links}/>
+            <GetLinksBlock confirmDelete={confirmDelete} links={links} />
             <div className={s.wrap__cards}>
                 <div className={s.cards__header}>
-                    <p>Документи</p>
+                    <div className={s.cards__title} onClick={() => { showHandler("docs") }}>
+                        <p>Документи</p>
+                        <Icon icon={"arrow_down"} />
+                    </div>
                 </div>
                 <div className={s.inner__cards}>
-                    {File(docFiles)}
+                    {showList.docs && File(docFiles)}
                 </div>
             </div>
             <div className={s.wrap__cards}>
                 <div className={s.cards__header}>
-                    <p>Фото та Відео</p>
+                    <div className={s.cards__title} onClick={() => { showHandler("media") }}>
+                        <p>Фото та Відео</p>
+                        <Icon icon={"arrow_down"} />
+                    </div>
                 </div>
                 <div className={s.inner__cards}>
-                    {File(mediaFiles)}
+                    {showList.media && File(mediaFiles)}
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default GetResources;

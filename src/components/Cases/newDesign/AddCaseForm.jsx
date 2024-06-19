@@ -10,23 +10,17 @@ import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import { NavLink, useNavigate } from "react-router-dom";
 const AddCaseForm = () => {
     const navigate = useNavigate();
-    const options = []
-    const [width, setWidth] = useState(window.innerWidth)
+    const [isDataEmpty, setIsDataEmpty] = useState({
+        data:true,
+        categories:true
+    })
+    const [id,setId] = useState(0)
     const [alert, setAlert] = useState(false)
     const [errorAlert, setErrorAlert] = useState({
         status:false,
         text:""
     })
     const categories = useSelector(state => state.categories.case);  
-    const [state, setState] = useState({
-        general: true
-    })
-    // const [categories,setCategories] = useState(null)
-    // useEffect(() => {
-    //     apiResponse({}, "manage/get-categories-case.php").then((res) => {
-    //         setCategories([...res.mas]);
-    //     });
-    // }, []);
     const [checkedMas, setCheckedMas] = useState([])
     const [stateGeneral, setStateGeneral] = useState({
         first_name: "",
@@ -37,8 +31,8 @@ const AddCaseForm = () => {
         email: "",
         happy_bd: "",
     })
-    const [stateData, setStateData] = useState({
-        case_id: 0,
+    const initialStateData = {
+        case_id: id,
         address_registered: "",
         address_live: "",
         categories: [],
@@ -50,14 +44,13 @@ const AddCaseForm = () => {
         potreba: "",
         family_info: "",
         history: ""
-    })
-    // const handleCheckboxChange = (val) => {
-    //     setStateData(prevState => ({
-    //         ...prevState,
-    //         categories: val
-    //     }));
-    // };
-
+    }
+    const [stateData, setStateData] = useState({...initialStateData})
+    function checkChanges(obj){
+        const hasChanges = (JSON.stringify(initialStateData) !== JSON.stringify(obj));
+        console.log(JSON.stringify(initialStateData), JSON.stringify(obj));
+        setIsDataEmpty({...isDataEmpty,data:!hasChanges});
+    }
     const handleCheckboxChange = (value, options) => {
         let categories = [];
         if (options.includes(value)) {
@@ -66,8 +59,12 @@ const AddCaseForm = () => {
         } else {
           categories = [...options, value];
         }
-       // setState({...state, [key]:{...state[key], value: value}})
         setCheckedMas([...categories])
+        if(JSON.stringify(categories)===JSON.stringify([])){
+            setIsDataEmpty({...isDataEmpty, categories:true})
+        }else{
+            setIsDataEmpty({...isDataEmpty, categories:false})
+        }
       };
 
 
@@ -78,9 +75,12 @@ const AddCaseForm = () => {
     function changeHandlerGeneral(key, val) {
         setStateGeneral({ ...stateGeneral, [key]: val })
     }
+
     function changeHandlerData(key, val) {
-        setStateData({ ...stateData, [key]: val })
+        setStateData({ ...stateData, [key]: val });
+        checkChanges({ ...stateData, [key]: val })
     }
+    
     function handleSubmit() {
         if (stateGeneral.first_name.length < 1) {
             setErrorAlert({...alert,status:true,text:"Будь ласка, введіть ім'я кейсу"})
@@ -95,6 +95,7 @@ const AddCaseForm = () => {
             if (data.id) {
                 setStateData({ ...stateData, case_id: data.id });
                 setSwitchData({ ...switchData, general: false, data: true });
+                setId(data.id)
             };
         })
     }
@@ -307,7 +308,7 @@ const AddCaseForm = () => {
                     </div>
                     <div className="AddCaseForm-inner-line-buttons">
                     <Button variant="contained" color="error" onClick={()=>{navigate("/case/" + stateData.case_id)}}>Пропустити</Button>
-                    <Button variant="contained" onClick={saveHandler}>Зберегти</Button>
+                    <Button variant="contained" disabled={isDataEmpty.data && isDataEmpty.categories} onClick={saveHandler}>Зберегти</Button>
                     </div>
                 </div>
             }

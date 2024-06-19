@@ -83,7 +83,7 @@ const SetUser = ({ categories, categoriesCont }) => {
 
                 <div className="set__user__control__panel">
                     <div className={`set__user__control__panel__icons ${user.active == "true" ? "arc" : ""}`}>
-                        <Icon icon={"delete"} addClass={"default-icon"} />
+                        <Icon icon={"delete"} addClass={"default-icon fs40"} />
                         <span onClick={() => {
                             return;
                             if (user.id == localStorage.getItem("id") || user?.type == "root") {

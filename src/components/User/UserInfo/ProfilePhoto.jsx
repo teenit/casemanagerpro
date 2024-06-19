@@ -65,7 +65,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     pass: pass.newPass,
     olderPass: pass.olderPass
   };
-  const hadnlePassObjChange = (key, value) => {
+  const handlePassObjChange = (key, value) => {
     setPass(prevPass => ({ ...prevPass, [key]: value }))
   }
   const handleAlertChange = (key) => {
@@ -93,7 +93,6 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
         olderPass: pass.olderPass
       };
       handleChangeValue(key,value)
-      handleAlertChange("success")
       axios({
         url: serverAddres("user/change-pass.php"),
         method: "POST",
@@ -101,7 +100,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
         data: JSON.stringify(obj),
       })
         .then((data) => {
-          alert(data.data.message);
+          handleAlertChange("success")
           dispatch(removeUser())
   
         })
@@ -163,15 +162,15 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
 
   const checkPass = () => {
     if (pass.newPass !== pass.newPassTo) {
-      hadnlePassObjChange("changeError", "Паролі не збігаються")
+      handlePassObjChange("changeError", "Паролі не збігаються")
       handleAlertChange("errorPass")
       return;
     } else if (pass.newPass.length < 6) {
-      hadnlePassObjChange("changeError", "Довжина паролю повинна бути більше 6 символів")
+      handlePassObjChange("changeError", "Довжина паролю повинна бути більше 6 символів")
       handleAlertChange("errorPass")
       return;
     } else if (pass.olderPass.length < 1) {
-      hadnlePassObjChange("changeError", "Введіть свій старий пароль для підтвердження особистості")
+      handlePassObjChange("changeError", "Введіть свій старий пароль для підтвердження особистості")
       handleAlertChange("errorPass")
       return;
     }
@@ -182,7 +181,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
       data: JSON.stringify(passObj),
     })
       .then((data) => {
-        alert(data.data.message);
+        handleAlertChange("success")
         dispatch(removeUser())
 
       })
@@ -231,7 +230,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
             id="change__pass__older"
             value={pass.olderPass}
             onChange={(e) => {
-              hadnlePassObjChange("olderPass", e.target.value)
+              handlePassObjChange("olderPass", e.target.value)
             }}
           />
           <Input
@@ -240,7 +239,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
             id="change__pass"
             value={pass.newPass}
             onChange={(e) => {
-              hadnlePassObjChange("newPass", e.target.value)
+              handlePassObjChange("newPass", e.target.value)
             }}
           />
           <Input
@@ -249,7 +248,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
             id="change__passto"
             value={pass.newPassTo}
             onChange={(e) => {
-              hadnlePassObjChange("newPassTo", e.target.value)
+              handlePassObjChange("newPassTo", e.target.value)
             }}
           />
           <div>

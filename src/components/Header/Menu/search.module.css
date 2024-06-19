@@ -34,6 +34,7 @@
     border-radius: 10px;
     width: 100%;
     font-size: 22px;
+    padding-left: 10px;
 }
 .search__icon{
     cursor: pointer;

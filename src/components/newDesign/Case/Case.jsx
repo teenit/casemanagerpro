@@ -107,11 +107,7 @@ const Case = () => {
                 <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
             </div>
 
-            {/* <div className="media__content__">
-                <Galery media={post.newPhotos} title="Медіа фото" />
-            </div> */}
-            {/* <PhotosForm photos = {post.photos} show = {post.level?.loadCaseFiles == true || post.level?.root == "true" ? true : false}/> */}
-            {state?.meta?.files?.length && <GalleryBlock data={state.meta.files} />}
+            {!!state?.meta?.files?.length && <GalleryBlock data={state.meta.files} />}
             <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
                 key: "case_files",
                 case_id: case_id,

@@ -77,7 +77,7 @@ const SetCategories = ({cats})=>{
                 <span>{category.text}</span>
             </div>
             <div className="set__categories__case__control" onClick={()=>{deleteCategory(category)}}>
-                <Icon icon={"delete"} addClass={"default-icon"}/>
+                <Icon icon={"delete"} addClass={"default-icon fs40"}/>
             </div>
         </div>
         )
