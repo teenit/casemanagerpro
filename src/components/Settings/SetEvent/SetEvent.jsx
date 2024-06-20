@@ -12,7 +12,7 @@ import { Button } from "@mui/material";
 const SetEvent = ()=>{
     const [events,setEvents] = useState([])
     const [modal, setModal] = useState(false)
-    useEffect(()=>{
+    const load = ()=>{
         let obj = {
             id: localStorage.getItem("id"),
             token: localStorage.getItem("token"),
@@ -28,6 +28,9 @@ const SetEvent = ()=>{
             setEvents(data.data)   
         })
         .catch((error)=>console.log(error)) 
+    }
+    useEffect(()=>{
+       load()
     },[])
     return(
         <div className={s.wrap}>
@@ -38,7 +41,7 @@ const SetEvent = ()=>{
                 </span>
             </div>
             {modal&&<Modal closeHandler = {()=>{setModal(false)}}>
-                <AddEventBlock/>
+                <AddEventBlock successHandler={load}/>
                 </Modal>}
             <div className={s.results}>
                 {events.map((item,index)=>{

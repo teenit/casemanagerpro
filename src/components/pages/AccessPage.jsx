@@ -23,16 +23,21 @@ const AccessPage = () => {
     const alertHandler = (key) => {
         setAlert({ ...alert, [key]: !alert[key] })
     }
-    useEffect(() => {
+    const loadList = () => {
         apiResponse({}, 'access/get-list.php').then((res) => {
             setState(res)
         })
+    }
+    useEffect(() => {
+        loadList()
     }, []);
 
     const addNewAccess = () => {
         if (addAccess.name.length < 1) return alertHandler("error")
         apiResponse({ name: changeAps(addAccess.name), description: changeApsBr(addAccess.description) }, "access/add-access.php").then((res) => {
             alertHandler("success")
+            loadList()
+            setModal(false)
         })
     }
 

@@ -8,7 +8,8 @@ import InputColor from '../elements/Inputs/InputColor';
 import Input from '../elements/Inputs/Input';
 import SmallNotification from "../elements/Notifications/SmallNotification"
 import { LANG } from '../../services/config';
-const AddEventBlock = () => {
+import { apiResponse } from "../Functions/get_apiObj"
+const AddEventBlock = ({successHandler}) => {
     const [event, setEvent] = useState({
         title: "",
         description: "",
@@ -44,22 +45,15 @@ const AddEventBlock = () => {
         if (event.title !== "") {
             let link = translateStringToLink(event.title.replace(/ +/g, ' ').trim());
             let obj = {
-                id: localStorage.getItem("id"),
-                token: localStorage.getItem("token"),
                 title: changeAps(event.title),
                 description: changeApsBr(event.description),
                 color: event.color,
                 link: link,
                 userName: localStorage.getItem("userName")
             }
-            axios({
-                url: serverAddres("event/add-event.php"),
-                method: "POST",
-                header: { 'Content-Type': 'application/json;charset=utf-8' },
-                data: JSON.stringify(obj),
-            })
-                .then(() => {
+            apiResponse({...obj}, "event/add-event.php").then(() => {
                     handleAlertChange("success")
+                    successHandler()
                 })
                 .catch((error) => console.log(error))
         } else {

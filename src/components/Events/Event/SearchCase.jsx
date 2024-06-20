@@ -5,13 +5,20 @@ import s from "./modal.module.css";
 import Input from '../../elements/Inputs/Input';
 import { apiResponse } from "../../Functions/get_apiObj";
 import { Button } from "@mui/material";
+import SmallNotification from "../../elements/Notifications/SmallNotification";
 
 const SearchCase = ({ eventID, getUsers }) => {
     const [sCase, setSCase] = useState({ userName: "", phone: "", id: 0 });
     const [searchVal, setSearchVal] = useState("");
     const [userInSystem, setSCaseInSystem] = useState(true);
     const [searchRes, setSearchRes] = useState([]);
-
+    const [alert, setAlert] = useState({
+        success:false,
+        error:false
+    })
+    const alertHandler = (key)=>{
+        setAlert({...alert, [key]:!alert[key]})
+    }
     useEffect(() => {
         if (searchVal.trim()) {
             search()
@@ -33,23 +40,16 @@ const SearchCase = ({ eventID, getUsers }) => {
 
     function addUser() {
         if (sCase.userName === "" || sCase.phone === "") {
-            return window.alert("Заповніть всі поля");
+            return alertHandler("error")
         }
         let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token"),
             userName: sCase.userName,
             phone: sCase.phone,
             userID: sCase.id,
             eventID: eventID
         };
-        axios({
-            url: serverAddres("event/add-member-case.php"),
-            method: "POST",
-            headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            data: JSON.stringify(obj),
-        })
-            .then((data) => {
+        apiResponse({...obj}, "event/add-member-case.php").then((data) => {
+            alertHandler("success")
                 if (data.data === true) {
                     getUsers(eventID, "eventMemberCase")
                 }
@@ -73,6 +73,7 @@ const SearchCase = ({ eventID, getUsers }) => {
             {userInSystem ?
                 <div className={s.add__user__search}>
                     <Input
+                        label="Пошук учасника..."
                         value={sCase.userName}
                         className={s.search__inp}
                         type="text"
@@ -122,6 +123,8 @@ const SearchCase = ({ eventID, getUsers }) => {
             <div className={s.button__wrap}>
                 <Button variant="contained" onClick={addUser}>Додати учасника</Button>
             </div>
+            {alert.error&&<SmallNotification isSuccess={false} text={"Заповніть дані про учасника події"} close={()=>{alertHandler("error")}}/>}
+            {alert.success&&<SmallNotification isSuccess={true} text={"Учасника додано. Оновіть сторінку для правильного показу інформації"} close={()=>{alertHandler("success")}}/>}
         </div>
     )
 }

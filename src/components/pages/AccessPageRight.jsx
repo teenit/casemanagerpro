@@ -23,6 +23,7 @@ const AccessPageRight = () => {
   useEffect(() => {
     apiResponse({ access_id: access_id }, "access/get-by-id.php").then((data) => {
       setState({ ...state, rights: data.access })
+      console.log(state);
     })
 
   }, [])
@@ -55,13 +56,13 @@ const AccessPageRight = () => {
       if (res.status) {
         setNotif({
           show: true,
-          text: "Success",
+          text: "Права оновлено",
           isSuccess: true
         })
       } else {
         setNotif({
           show: true,
-          text: "Fail",
+          text: "Сталася помилка, спробуйте пізніше",
           isSuccess: false
         })
       }
@@ -91,7 +92,9 @@ const AccessPageRight = () => {
             showPages && Object.keys(PAGES).map((item) => {
               return <div className={`AccessPageRight-left-options-option ${item === state.selectedPage && "active"}`} key={item} onClick={() => {
                 filterSelectedRights(item)
-                setShowPages(false)
+                if(width<720){
+                  setShowPages(false)
+                }
               }}>
                 <p>{PAGES[item].title}</p>
               </div>

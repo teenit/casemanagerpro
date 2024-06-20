@@ -33,7 +33,9 @@ export async function apiResponse(objTo, url){
          } 
      })
      .then((data)=>{
+        console.log("Recieved data: ", data.data);
          return (data.data)
+
      })
      .catch((error)=>{
          throw error;
