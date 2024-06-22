@@ -27,44 +27,55 @@ import Search from "../Search/Search";
 import AccessCheck from "../Functions/AccessCheck";
 import NotFound from "../pages/NotFound";
 
-const MainContent = ()=>{
+const MainContent = () => {
   const dispatch = useDispatch();
   const categories = useSelector(state => state.user);
   const access = {
-    add_case: AccessCheck('page', 'a_page_case_add')
+    add_case: AccessCheck('page', 'a_page_case_add'),
+    cases: AccessCheck('page', "a_cases_get"),
+    case: AccessCheck('page', "a_page_case"),
+    calendar: AccessCheck('page', "a_page_calendar"),
+    access: AccessCheck('page', "a_page_access"),
+    event: AccessCheck('page', "a_page_event"),
+    events: AccessCheck('page', "a_page_events"),
+    groups: AccessCheck('page', "a_page_groups"),
+    resources: AccessCheck('page', "a_page_resources"),
+    settings: AccessCheck('page', "a_page_settings"),
+    user: AccessCheck('page', "a_page_user"),
+    phonebook: AccessCheck('page', "a_page_phonebook"),
   }
-  const {isAuth} = useAuth();
-    return isAuth ?(
-        <div className='wrap__content'>
-          <Routes >
-            <Route path='/add-case' element={access.add_case ? <AddCaseForm /> : <NotFound />} />
-            <Route path='/cases' element={<Cases />} />
-            <Route path='/case/:id' element={<Case />} />
-            <Route path='/user' element={<User />} />
-            <Route path='settings' element={<Settings />} />
-            <Route path='/contacts' element={<Contacts/>} />
-            <Route path="/resources" element = {<Resources />} />
-            <Route path="/access" element = {<AccessPage />} />
-            <Route path="/access/:id" element = {<AccessPageRight />} />
-            <Route path='events' element={<Events />} />
-            <Route path='events/:link' element={<Event />} />
-            <Route path='calendar' element={<Calendar />} />
-            <Route path='cooperation' element={<Cooperation />} />
-            <Route path='groups' element={<Groups />} />
-            <Route path='task' element={<Task />} />
-            <Route path='test' element={<TestPage />} />
-            <Route path='search' element={<Search />} />
-            <Route index element={<Home />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-    ):(
+  const { isAuth } = useAuth();
+  return isAuth ? (
+    <div className='wrap__content'>
       <Routes>
-         <Route path='/login' element={<Login />} />
-         <Route path='/recovery' element={<Recovery />} />
+        <Route path='/add-case' element={access.add_case ? <AddCaseForm /> : <NotFound />} />
+        <Route path='/cases' element={access.cases ? <Cases /> : <NotFound />} />
+        <Route path='/case/:id' element={access.case ? <Case /> : <NotFound />} />
+        <Route path='/user' element={access.user ? <User /> : <NotFound />} />
+        <Route path='/settings' element={access.settings ? <Settings /> : <NotFound />} />
+        <Route path='/contacts' element={access.phonebook ? <Contacts /> : <NotFound />} />
+        <Route path="/resources" element={access.resources ? <Resources /> : <NotFound />} />
+        <Route path="/access" element={access.access ? <AccessPage /> : <NotFound />} />
+        <Route path="/access/:id" element={access.access ? <AccessPageRight /> : <NotFound />} />
+        <Route path='/events' element={access.events ? <Events /> : <NotFound />} />
+        <Route path='/events/:link' element={access.event ? <Event /> : <NotFound />} />
+        <Route path='/calendar' element={access.calendar ? <Calendar /> : <NotFound />} />
+        <Route path='/cooperation' element={<Cooperation />} />
+        <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
+        <Route path='/task' element={<Task />} />
+        <Route path='/test' element={<TestPage />} />
+        <Route path='/search' element={<Search />} />
+        <Route index element={<Home />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
-       
-    )
+    </div>
+  ) : (
+    <Routes>
+      <Route path='/login' element={<Login />} />
+      <Route path='/recovery' element={<Recovery />} />
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
+  );
 }
 
 export default MainContent;

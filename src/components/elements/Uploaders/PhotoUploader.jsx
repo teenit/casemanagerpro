@@ -117,7 +117,7 @@ const handleDelete = (index)=>{
           <img key={index} className='img' src={URL.createObjectURL(file)}/>
         ))} 
       </div>
-     {alert.success && <SmalNotification isSuccess={true} text={"Фвйли додано успішно"} close={()=>{handleAlertChange("success")}}/>}
+     {alert.success && <SmalNotification isSuccess={true} text={"Файли додано успішно"} close={()=>{handleAlertChange("success")}}/>}
      {alert.error && <SmalNotification isSuccess={false} text={"Помилка при завантаженні файлів"} close={()=>{handleAlertChange("error")}}/>}
     </div>
   );
