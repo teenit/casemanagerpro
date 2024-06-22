@@ -222,7 +222,8 @@ export const LANG = {
     events: "Івенти (події)",
     user: "Користувач",
     accesses: "Шаблони прав",
-    groups:"Групи"
+    groups:"Групи",
+    access: "Інше"
   },
   documents: "Додані документи",
   give_help: {
@@ -366,10 +367,11 @@ export const appConfig = {
       yes_no: [
         "a_page_case_export_pdf",
         "a_page_case_media_download",
+        "a_page_case_add",
       ],
       view_edit: [
         "a_page_case",
-        "a_page_case_add",
+        
         "a_page_case_transfer",
         "a_page_case_notes",
         "a_page_case_plan",
@@ -572,7 +574,11 @@ export const appConfig = {
     groups:{
       title:LANG.pages.groups,
       description:""
-    }
+    },
+    access:{
+      title:LANG.pages.access,
+      description:""
+    },
   },
   mounths: {
     1: {

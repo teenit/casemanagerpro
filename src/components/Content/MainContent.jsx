@@ -9,7 +9,7 @@ import Settings from "../Settings/Settings";
 import Recovery from "../Recovery/Recovery";
 import Contacts from "../Contacts/Contacts";
 import Resources from "../Resources/Resources";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../hooks/use-auth";
 import Events from "../Events/Events";
 import Event from "../Events/Event/Event";
@@ -24,20 +24,22 @@ import Case from "../newDesign/Case/Case";
 import Cases from "../newDesign/Cases/Cases";
 import Groups from "../Groups/Groups";
 import Search from "../Search/Search";
-
-const localToken = localStorage.getItem("token");
+import AccessCheck from "../Functions/AccessCheck";
+import NotFound from "../pages/NotFound";
 
 const MainContent = ()=>{
   const dispatch = useDispatch();
+  const categories = useSelector(state => state.user);
+  const access = {
+    add_case: AccessCheck('page', 'a_page_case_add')
+  }
   const {isAuth} = useAuth();
     return isAuth ?(
         <div className='wrap__content'>
           <Routes >
-            <Route path='/add-case' element={<AddCaseForm />} />
+            <Route path='/add-case' element={access.add_case ? <AddCaseForm /> : <NotFound />} />
             <Route path='/cases' element={<Cases />} />
             <Route path='/case/:id' element={<Case />} />
-            <Route path='/registration' element={<Registration />} />
-            <Route path='/login' element={<Login />} />
             <Route path='/user' element={<User />} />
             <Route path='settings' element={<Settings />} />
             <Route path='/contacts' element={<Contacts/>} />
@@ -53,6 +55,7 @@ const MainContent = ()=>{
             <Route path='test' element={<TestPage />} />
             <Route path='search' element={<Search />} />
             <Route index element={<Home />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
     ):(
