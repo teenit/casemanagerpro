@@ -103,7 +103,7 @@ const handleDelete = (index)=>{
        <div className="PhotoUploader-buttons">
         <label className='label' htmlFor="PhotoUploader"><Icon icon={"attach_file"} addClass={"default-icon"}/></label>
         <input style={{ display: "none" }} id="PhotoUploader" multiple type="file" onChange={handleFileChange} />
-        <label className='label' htmlFor="submitInput" onClick={handleUpload}><Icon icon={"send"} addClass={"default-icon"}/></label>
+        <label className='label' htmlFor="submitInput" onClick={handleUpload}><Icon icon={"save"} addClass={"save-icon"}/></label>
         <input style={{ display: "none" }} type="submit" id="submitInput" />
         <label className='label' htmlFor="" onClick={close}><Icon icon={"close"} addClass={"close-icon"}/></label>
         

@@ -5,7 +5,7 @@ import SearchCase from "./SearchCase";
 import SearchUsers from "./SearchUsers";
 import UploadEventDocs from "./UploadEventDocs";
 import UploadEventMedia from "./UploadEventMedia";
-const EventModal = ({close,info,getUsers,getPlans})=>{
+const EventModal = ({close,info,getUsers,getPlans, getFiles})=>{
     return(
         <div className={s.modal}>
             <div className={s.inner}>
@@ -28,7 +28,7 @@ const EventModal = ({close,info,getUsers,getPlans})=>{
                     <EventAddPlan getPlans = {(id,key)=>{
                         getPlans(id,key)
                     }} eventID = {info.id} />
-                    <UploadEventDocs eventID={info.id}/>
+                    <UploadEventDocs getFiles={getFiles} eventID={info.id}/>
                     {/* <UploadEventMedia eventID={info.id}/> */}
                 </div>
                 

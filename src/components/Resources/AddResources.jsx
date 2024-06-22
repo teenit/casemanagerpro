@@ -9,7 +9,7 @@ import { apiResponse } from "../Functions/get_apiObj";
 import { LANG } from "../../services/config";
 import { Label } from "@mui/icons-material";
 
-const AddResources = ({ close, loadGroups }) => {
+const AddResources = ({ close, loadResources }) => {
     const [alert, setAlert] = useState({
         success: false,
         error: false
@@ -31,9 +31,9 @@ const AddResources = ({ close, loadGroups }) => {
     };
 
     const successHandler = () => {
-        close();
         handleAlertChange("success");
-        loadGroups()
+        close();
+        loadResources()
     };
 
     const addLinkResource = () => {

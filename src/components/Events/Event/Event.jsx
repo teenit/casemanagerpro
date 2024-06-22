@@ -18,7 +18,7 @@ const Event = ()=>{
     const [plans,setPlans] = useState([])
     const [files,setFiles] = useState([])
     const [lookPhoto,setLookPhoto] = useState({look:false,link:""})
-
+    const [id, setId] = useState(0)
     function getFiles(id,key){
         let obj = {
             key:key,
@@ -90,6 +90,7 @@ const Event = ()=>{
                 getUsers(data.data.id,"eventMemberCase")
                 getPlans(data.data.id,"eventPlan")
                 getFiles(data.data.id,"event_files")
+                setId(data.data.id)
             }
 
         })
@@ -146,6 +147,8 @@ const Event = ()=>{
                 getPlans(id,key)
             }} getUsers = {(id,key)=>{
                 getUsers(id,key)
+            }} getFiles = {()=>{
+                getFiles(id, "event_files")
             }} info={event} close={()=>{setControl(!control)}}/>:null}
         </div>
         

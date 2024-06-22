@@ -3,6 +3,9 @@ import s from "./caseslist.module.css";
 import { useReactToPrint } from "react-to-print";
 import printImg from './../../img/icons/print-black-50.png';
 import { LANG } from "../../services/config";
+import { Button } from "@mui/material";
+import Icon from "../elements/Icons/Icon"
+import { NavLink } from "react-router-dom";
 const CasesList = ({ cases, categories }) => {
     const componentRef = useRef();
 
@@ -50,7 +53,7 @@ const caseCategories = (catMas) => {
 
                                     <tr key={item.id} className={s.item}>
                                         <td>{item.id}</td>
-                                        <td>{item.name}</td>
+                                        <td><NavLink to={"/case/" + item.id}>{item.name}</NavLink></td>
                                         <td>{`${item.phone1} ${item.phone2}`}</td>
                                         <td>{item.email}</td>
                                         <td style={{ whiteSpace: "nowrap" }}>{item.happyBD}</td>
@@ -65,7 +68,7 @@ const caseCategories = (catMas) => {
                 </table>
 
             </div>
-            <button className={s.btn__print} onClick={handlerPrint}> <img className={s.print__img} src={printImg} /> Друк</button></>
+            <Button variant="contained" className="btn__print" onClick={handlerPrint}> <Icon icon={"print"}/><span>Друк</span></Button></>
     )
 }
 export default CasesList;

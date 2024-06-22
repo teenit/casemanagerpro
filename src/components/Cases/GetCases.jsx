@@ -5,6 +5,7 @@ import CasesList from "./CasesList";
 import { useSelector } from "react-redux";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { Button } from "@mui/material";
 
 function sortMas(field, type) {
   if (type === "number") {
@@ -68,9 +69,9 @@ const GetCases = ({ posts, postsChange }) => {
           <MenuItem value="createdDate">Сортувати за датою створення</MenuItem>
           <MenuItem value="id">Сортувати за номером</MenuItem>
         </Select>
-        <button onClick={() => setLikeShow(!likeShow)} className={s.like__btn}>
+        <Button variant="contained" onClick={() => setLikeShow(!likeShow)}>
           {!likeShow ? "Як картки" : "Як список"}
-        </button>
+        </Button>
       </div>
       {likeShow ? (
         <div className={s.like__cards}>
@@ -80,7 +81,7 @@ const GetCases = ({ posts, postsChange }) => {
             ))}
           </div>
           {cases.button ? (
-            <button className={s.look__more} onClick={loadMoreCases}>Показати ще...</button>
+            <Button variant="contained" onClick={loadMoreCases}>Показати ще</Button>
           ) : (
             <h3 className={s.look__more__text}>Немає більше доступних кейсів</h3>
           )}

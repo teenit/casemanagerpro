@@ -27,26 +27,7 @@ td{
 }
 .btn__print{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    font-size: 16px;
-    text-transform: uppercase;
-    margin: auto;
-    margin-top: 30px;
-    padding: 5px 20px;
-    border: solid 3px var(--main-color);
-    border-radius: 10px;
-    background-color: #fff;
-    transition: all .3s;
-    cursor: pointer;
-}
-.btn__print:hover{
-    box-shadow: 0 0 5px 0 var(--main-color);
-    border-radius: 5px;
-}
-.print__img{
-    width: 25px;
+    gap: 15px;
 }
 @media screen and (max-width:1024px) {
     table{

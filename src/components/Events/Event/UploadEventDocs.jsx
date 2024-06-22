@@ -10,7 +10,7 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Textarea from "../../elements/Inputs/Textarea";
 
 
-const UploadEventDocs = ({ eventID }) => {
+const UploadEventDocs = ({ eventID, getFiles }) => {
     const [alert, setAlert] = useState({
         success: false,
     })
@@ -20,6 +20,7 @@ const UploadEventDocs = ({ eventID }) => {
 
     function sendResources() {
         alertHandler("success")
+        getFiles()
     };
 
 
@@ -52,6 +53,7 @@ const UploadEventDocs = ({ eventID }) => {
                         }} />
                 </div>
                 <FilesUploader 
+                            successHandler={sendResources}
                             multiple={true} 
                             meta={{
                                 key:"event_files",

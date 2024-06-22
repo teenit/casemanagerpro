@@ -23,7 +23,7 @@ const Resources = () => {
     const alertHandler = (key)=>{
         setAlert({...alert, [key]:!alert[key]})
     }
-    const loadGroups = ()=>{
+    const loadResources = ()=>{
         apiResponse({}, "resources/get-resource.php").then((res)=>{
             setFiles(sortFiles(res));
             setShow(true);
@@ -62,7 +62,7 @@ const Resources = () => {
         },"resources/delete-resource.php").then((res)=>{
             console.log(res)
             setDeleteModal(false)
-            loadGroups()
+            loadResources()
             alertHandler("success")
         }).catch((error)=>{
             alertHandler("error")
@@ -100,10 +100,10 @@ const Resources = () => {
                 }>{form ? "-" : "+"}</span>
             </div>
             <div className={s.control}>
-                {form && <AddResources close={()=>{setForm(false)}} loadGroups={loadGroups}/>}
+                {form && <AddResources close={()=>{setForm(false)}} loadResources={loadResources}/>}
             </div>
             <div className={s.get__resources}>
-                <GetResources confirmDelete={confirmDelete} links={files.links} docFiles = {docFiles} mediaFiles={mediaFiles} show={show} loadGroups = {loadGroups} />
+                <GetResources confirmDelete={confirmDelete} links={files.links} docFiles = {docFiles} mediaFiles={mediaFiles} show={show} loadGroups = {loadResources} />
             </div>
             {deleteModal && <ModalConfirm 
                 closeHandler={()=>{setDeleteModal(false)}} 
