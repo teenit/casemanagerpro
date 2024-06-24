@@ -9,11 +9,12 @@ import { useSelector } from "react-redux";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import Icon from "../../elements/Icons/Icon";
 import { MenuItem, Select } from "@mui/material";
-const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
+const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }) => {
     const categories = useSelector(state => state.categories.case);
     const [checkedMas, setCheckedMas] = useState([])
     const [userNames, setUserNames] = useState(null)
     const [alert, setAlert] = useState(null)
+    const [editName, setEditName] = useState(false) 
     const [dataState, setDataState] = useState({
         phone1: info.general.phone1,
         phone2: info.general.phone2,
@@ -27,7 +28,11 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         channel: info.data.channel,
         categories: info.data.categories,
         responsible_id: info.general.responsible_id,
-        responsible_name: info.general.responsible_name
+        responsible_name: info.general.responsible_name,
+        name: info.general.name,
+        first_name: info.general.first_name,
+        middle_name: info.general.middle_name,
+        last_name: info.general.last_name,
     });
     useEffect(() => {
         setDataState({
@@ -44,6 +49,10 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
             categories: info.data.categories,
             responsible_id: info.general.responsible_id,
             responsible_name: info.general.responsible_name,
+            name: info.general.name,
+            first_name: info.general.first_name,
+            middle_name: info.general.middle_name,
+            last_name: info.general.last_name,
         });
         if (info.data.categories) setCheckedMas([...info.data.categories]);
         apiResponse({}, "user/get-all-users-name.php").then((res) => {
@@ -65,10 +74,10 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
     });
 
     const handleDataChange = (key, val) => {
-        
-        if(key=="responsible_id"){
+
+        if (key == "responsible_id") {
             setDataState(prevState => ({ ...prevState, [key]: +val }));
-        }else{
+        } else {
             setDataState(prevState => ({ ...prevState, [key]: val }));
         }
 
@@ -108,6 +117,19 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         setDataState({ ...dataState, categories: [...categories] });
     };
 
+    const changeName = () => {
+        apiResponse({
+            case_id: case_id,
+            first_name: dataState.first_name,
+            last_name: dataState.last_name,
+            middle_name: dataState.middle_name,
+        }, "case/update-case-name.php").then((res)=>{
+
+            getCaseInfo();
+            setEditName(false);
+        })
+    }
+
     const InputBlock = ({ saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "" }) => {
         const [showEdit, setShowEdit] = useState(false)
         const [stateValue, setStateValue] = useState(value)
@@ -130,17 +152,16 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
                 {showEdit && <div className="InputBlock-editer">
                     <div className="InputBlock-editer-withicon">
                         {icon && <Icon icon={icon} addClass={"default-icon"} />}
-                        <Input type={inputType} value={stateValue} onChange={(e) => {
+                        <Input label={title} type={inputType} value={stateValue} onChange={(e) => {
                             setStateValue(e.target.value)
                         }} />
                     </div>
-
-                    <div>
-                        <span onClick={() => { setShowEdit(false) }} >
-                            <Icon icon={"close"} addClass={"close-icon"} />
-                        </span>
+                    <div className="InputBlock-editer-icons">
                         <span onClick={() => { saveHandler(stateValue) }} >
                             <Icon icon={"save"} addClass={"save-icon"} />
+                        </span>
+                        <span onClick={() => { setShowEdit(false) }} >
+                            <Icon icon={"close"} addClass={"close-icon"} />
                         </span>
                     </div>
                 </div>
@@ -150,233 +171,273 @@ const CaseInfoBlock = ({ info, changeGeneral, changeData }) => {
         )
     }
     return (
-        <div className="CaseInfoBlock">
-            <div className="CaseInfoBlock-inner">
-                <div className="CaseInfoBlock-line">
-                    <InputBlock
-                        value={info.general.name}
-                        title={info.general.name}
-                        addClass="title"
-                        disabled={true}
-                        label={<div className="CaseInfoBlock-line-title">
-                            {info.general.name} <span style={{ color: "var(--main-color)" }}>№{info.general.id}</span>
+        <>
+            <div className="CaseInfoBlock name-block">
+                <div className="CaseInfoBlock-inner">
+                    <div className="InputBlock">
+                        {!editName && <div className="InputBlock-default">
+                            <div className="CaseInfoBlock-line-title">
+                                {info.general.name} <span style={{ color: "var(--main-color)" }}>№{info.general.id}</span>
+                            </div>
+                            <div>
+                                <div className="edit-icon" onClick={() => { setEditName(true)}}>
+                                    <Icon icon={"edit"} addClass={"default-icon"} />
+                                </div>
+                            </div>
                         </div>}
-                    />
-                </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Номер телефону</span>
-                    <InputBlock
-                        value={dataState.phone1}
-                        onChange={(e) => { handleDataChange("phone1", e.target.value) }}
-                        link={`tel:${dataState.phone1}`}
-                        title="Номер телефону 1"
-                        icon={"phone"}
-                        label={dataState.phone1}
-                        inputType={"number"}
-                        saveHandler={(val) => saveHandler("phone1", val, "general")}
-                    />
-                </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Номер телефону</span>
-                    <InputBlock
-                        value={dataState.phone2}
-                        onChange={(e) => { handleDataChange("phone2", e.target.value) }}
-                        link={`tel:${dataState.phone2}`}
-                        title="Номер телефону 2"
-                        icon={"phone"}
-                        label={dataState.phone2}
-                        inputType={"number"}
-                        saveHandler={(val) => saveHandler("phone2", val, "general")}
-                    />
-                </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Дата народження</span>
-                    <InputBlock
-                        value={dataState.happy_bd}
-                        onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
-                        title="Дата народження"
-                        icon={"birthday"}
-                        label={dataState.happy_bd}
-                        inputType={"date"}
-                        saveHandler={(val) => saveHandler("happy_bd", val, "general")}
-                    />
-                </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Поштова адреса</span>
-                    <InputBlock
-                        value={dataState.email}
-                        onChange={(e) => { handleDataChange("email", e.target.value) }}
-                        link={`mailto:${dataState.email}`}
-                        title="Email"
-                        icon={"email"}
-                        label={dataState.email}
-                        inputType={"text"}
-                        saveHandler={(val) => saveHandler("email", val, "general")}
-                    />
-                </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Адреса проживання</span>
-                    <InputBlock
-                        value={dataState.address_live}
-                        onChange={(e) => { handleDataChange("address_live", e.target.value) }}
-                        title="Адреса проживання"
-                        icon={"location"}
-                        label={dataState.address_live}
-                        inputType={"text"}
-                        saveHandler={(val) => saveHandler("address_live", val, "data")}
-                    />
-                </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Адреса реєстрації</span>
-                    <InputBlock
-                        value={dataState.address_registered}
-                        onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
-                        title="Адреса реєстрації"
-                        icon={"location"}
-                        label={dataState.address_registered}
-                        inputType={"text"}
-                        saveHandler={(val) => saveHandler("address_registered", val, "data")}
-                    />
+                        {
+                            editName && 
+                            <>
+                            <Input
+                            type="text"
+                            label="First name"
+                            value={dataState.first_name} 
+                            onChange={(e) => {
+                                setDataState({ ...dataState, first_name: e.target.value.trim() });
+                            }}
+                        />
+                         <Input
+                            type="text"
+                            label="Last name"
+                            value={dataState.last_name} 
+                            onChange={(e) => {
+                                setDataState({ ...dataState, last_name: e.target.value.trim() });
+                            }}
+                        />
+                         <Input
+                            type="text"
+                            label="Middle name"
+                            value={dataState.middle_name} 
+                            onChange={(e) => {
+                                setDataState({ ...dataState, middle_name: e.target.value.trim() });
+                            }}
+                        />
+                         <div className="InputBlock-editer-icons">
+                        <span onClick={() => { changeName() }} >
+                            <Icon icon={"save"} addClass={"save-icon"} />
+                        </span>
+                        <span onClick={() => { setEditName(false) }} >
+                            <Icon icon={"close"} addClass={"close-icon"} />
+                        </span>
+                    </div>
+                            </>
+                        }
+                        
+                    </div>
                 </div>
             </div>
-            <div className="case-info-right">
-                <div className="CaseInfoBlock-line">
-                    <span>Дата створення</span>
-                    <InputBlock
-                        value={dataState.date_created}
-                        title="Дата створення кейсу"
-                        icon={"date_created"}
-                        label={dataState.date_created}
-                        disabled={true}
-                    />
+            <div className="CaseInfoBlock">
+                <div className="CaseInfoBlock-inner">
+                    <div className="CaseInfoBlock-line">
+
+
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Номер телефону</span>
+                        <InputBlock
+                            value={dataState.phone1}
+                            onChange={(e) => { handleDataChange("phone1", e.target.value) }}
+                            link={`tel:${dataState.phone1}`}
+                            icon={"phone"}
+                            label={dataState.phone1}
+                            inputType={"number"}
+                            saveHandler={(val) => saveHandler("phone1", val, "general")}
+                        />
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Номер телефону</span>
+                        <InputBlock
+                            value={dataState.phone2}
+                            onChange={(e) => { handleDataChange("phone2", e.target.value) }}
+                            link={`tel:${dataState.phone2}`}
+                            icon={"phone"}
+                            label={dataState.phone2}
+                            inputType={"number"}
+                            saveHandler={(val) => saveHandler("phone2", val, "general")}
+                        />
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Дата народження</span>
+                        <InputBlock
+                            value={dataState.happy_bd}
+                            onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
+                            icon={"birthday"}
+                            label={dataState.happy_bd}
+                            inputType={"date"}
+                            saveHandler={(val) => saveHandler("happy_bd", val, "general")}
+                        />
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Поштова адреса</span>
+                        <InputBlock
+                            value={dataState.email}
+                            onChange={(e) => { handleDataChange("email", e.target.value) }}
+                            link={`mailto:${dataState.email}`}
+                            icon={"email"}
+                            label={dataState.email}
+                            inputType={"text"}
+                            saveHandler={(val) => saveHandler("email", val, "general")}
+                        />
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Адреса проживання</span>
+                        <InputBlock
+                            value={dataState.address_live}
+                            onChange={(e) => { handleDataChange("address_live", e.target.value) }}
+                            icon={"location"}
+                            label={dataState.address_live}
+                            inputType={"text"}
+                            saveHandler={(val) => saveHandler("address_live", val, "data")}
+                        />
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Адреса реєстрації</span>
+                        <InputBlock
+                            value={dataState.address_registered}
+                            onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
+                            icon={"location"}
+                            label={dataState.address_registered}
+                            inputType={"text"}
+                            saveHandler={(val) => saveHandler("address_registered", val, "data")}
+                        />
+                    </div>
                 </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Дата укладання договіру</span>
-                    <InputBlock
-                        value={dataState.contract_date}
-                        onChange={(e) => { handleDataChange("contract_date", e.target.value) }}
-                        title="Дата створення контракту"
-                        icon={"contract_date"}
-                        label={dataState.contract_date}
-                        inputType={"date"}
-                        saveHandler={(val) => saveHandler("contract_date", val, "data")}
-                    />
-                </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Номер договіру</span>
-                    <InputBlock
-                        value={dataState.contract_number}
-                        onChange={(e) => { handleDataChange("contract_number", e.target.value) }}
-                        title="Номер контракту"
-                        icon={"contract_number"}
-                        label={dataState.contract_number}
-                        inputType={"number"}
-                        saveHandler={(val) => saveHandler("contract_number", val, "data")}
-                    />
-                </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Канал комунікації</span>
-                    <InputBlock
-                        value={dataState.channel}
-                        onChange={(e) => { handleDataChange("channel", e.target.value) }}
-                        title="Канал комунікації"
-                        icon={"channel"}
-                        label={dataState.channel}
-                        inputType={"text"}
-                        saveHandler={(val) => saveHandler("channel", val, "data")}
-                    />
-                </div>
-
-
-                <div className="CaseInfoBlock-categories">
-                    <span className="CaseInfoBlock-categories-title">Категорії</span>
-                    <span className="CaseInfoBlock-categories-content">
-                        <Icon icon="categories" addClass={"default-icon"} />
-                        <div className="case-info-card-text">
-
-                            {!editState.categories ?
-                                (categories && categories.length > 0 && info.data.categories && info.data.categories.length > 0 && categories.map((item, index) => {
-                                    if (info.data.categories.indexOf(item.id) !== -1) return <div className="cat" key={index}>
-                                        <div className="cat-color" style={{ backgroundColor: item.color }}></div>
-                                        <div className="cat-text"><span key={item.id}> {item.name} </span></div>
-                                    </div>
-
-                                }))
-                                :
-                                <CheckboxListAccess
-                                    allMas={() => { return categories }}
-                                    checkedMas={checkedMas}
-                                    onChange={(value) => {
-                                        handleCheckboxChange(value, checkedMas)
-                                    }}
-                                />
-                            }
-                        </div>
-                        {editState.categories ?
-                            <>
-                                <span onClick={() => { saveHandler("categories", dataState.categories, "data") }}>
-                                    <Icon icon={"save"} addClass={"save-icon"} />
-                                </span>
-                                <span onClick={() => { handleEditChange("categories") }}>
-                                    <Icon icon={"close"} addClass={"close-icon"} />
-                                </span>
-                            </>
-
-                            :
-                            <div className="edit-icon" onClick={() => { handleEditChange("categories") }}>
-                                <Icon icon="edit" addClass="default-icon" />
-                            </div>
-                        }
-                    </span>
-
-                </div>
-                <div className="CaseInfoBlock-line">
-                    <span>Відповідальний за кейс</span>
-                    <div className="CaseInfoBlock-line-select">
-                        <Icon icon="categories" addClass={"default-icon"} />
-                        {editState.responsible_id ? (
-                            <Select
-                                value={dataState.responsible_id}
-                                onChange={(e) => {
-                                    handleDataChange("responsible_id", e.target.value);
-                                }}
-                            >
-                                {Object.values(userNames).map((item, index) => (
-                                    <MenuItem key={index} value={item.id}>
-                                        {item.userName}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        ) : (
-                            <div className="case-info-card-text">
-                                {userNames && userNames[dataState.responsible_id].userName}
-
-                            </div>
-                        )}
-                        {editState.responsible_id ? (
-                            <>
-                                <span onClick={() => { saveHandler("responsible_id", dataState.responsible_id, "general") }}>
-                                    <Icon icon={"save"} addClass={"save-icon"} />
-                                </span>
-                                <span onClick={() => { handleEditChange("responsible_id") }}>
-                                    <Icon icon={"close"} addClass={"close-icon"} />
-                                </span>
-                            </>
-                        ) : (
-                            <div className="edit-icon" onClick={() => { handleEditChange("responsible_id") }}>
-                                <Icon icon="edit" addClass="default-icon" />
-                            </div>
-                        )}
+                <div className="case-info-right">
+                    <div className="CaseInfoBlock-line">
+                        <span>Дата створення</span>
+                        <InputBlock
+                            value={dataState.date_created}
+                            icon={"date_created"}
+                            label={dataState.date_created}
+                            disabled={true}
+                        />
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Дата укладання договіру</span>
+                        <InputBlock
+                            value={dataState.contract_date}
+                            onChange={(e) => { handleDataChange("contract_date", e.target.value) }}
+                            icon={"contract_date"}
+                            label={dataState.contract_date}
+                            inputType={"date"}
+                            saveHandler={(val) => saveHandler("contract_date", val, "data")}
+                        />
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Номер договіру</span>
+                        <InputBlock
+                            value={dataState.contract_number}
+                            onChange={(e) => { handleDataChange("contract_number", e.target.value) }}
+                            icon={"contract_number"}
+                            label={dataState.contract_number}
+                            inputType={"number"}
+                            saveHandler={(val) => saveHandler("contract_number", val, "data")}
+                        />
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Канал комунікації</span>
+                        <InputBlock
+                            value={dataState.channel}
+                            onChange={(e) => { handleDataChange("channel", e.target.value) }}
+                            icon={"channel"}
+                            label={dataState.channel}
+                            inputType={"text"}
+                            saveHandler={(val) => saveHandler("channel", val, "data")}
+                        />
                     </div>
 
 
-                </div>
+                    <div className="CaseInfoBlock-categories">
+                        <span className="CaseInfoBlock-categories-title">Категорії</span>
+                        <span className="CaseInfoBlock-categories-content">
+                            <Icon icon="categories" addClass={"default-icon"} />
+                            <div className="case-info-card-text">
 
+                                {!editState.categories ?
+                                    (categories && categories.length > 0 && info.data.categories && info.data.categories.length > 0 && categories.map((item, index) => {
+                                        if (info.data.categories.indexOf(item.id) !== -1) return <div className="cat" key={index}>
+                                            <div className="cat-color" style={{ backgroundColor: item.color }}></div>
+                                            <div className="cat-text"><span key={item.id}> {item.name} </span></div>
+                                        </div>
+
+                                    }))
+                                    :
+                                    <CheckboxListAccess
+                                        allMas={() => { return categories }}
+                                        checkedMas={checkedMas}
+                                        onChange={(value) => {
+                                            handleCheckboxChange(value, checkedMas)
+                                        }}
+                                    />
+                                }
+                            </div>
+                            {editState.categories ?
+                                <>
+                                    <span onClick={() => { saveHandler("categories", dataState.categories, "data") }}>
+                                        <Icon icon={"save"} addClass={"save-icon"} />
+                                    </span>
+                                    <span onClick={() => { handleEditChange("categories") }}>
+                                        <Icon icon={"close"} addClass={"close-icon"} />
+                                    </span>
+                                </>
+
+                                :
+                                <div className="edit-icon" onClick={() => { handleEditChange("categories") }}>
+                                    <Icon icon="edit" addClass="default-icon" />
+                                </div>
+                            }
+                        </span>
+
+                    </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>Відповідальний за кейс</span>
+                        <div className="CaseInfoBlock-line-select">
+                            <Icon icon="categories" addClass={"default-icon"} />
+                            {editState.responsible_id ? (
+                                <Select
+                                    value={dataState.responsible_id}
+                                    onChange={(e) => {
+                                        handleDataChange("responsible_id", e.target.value);
+                                    }}
+                                >
+                                    {Object.values(userNames).map((item, index) => (
+                                        <MenuItem key={index} value={item.id}>
+                                            {item.userName}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            ) : (
+                                <div className="case-info-card-text">
+                                    {userNames && userNames[dataState.responsible_id].userName}
+
+                                </div>
+                            )}
+                            {editState.responsible_id ? (
+                                <>
+                                    <span onClick={() => { saveHandler("responsible_id", dataState.responsible_id, "general") }}>
+                                        <Icon icon={"save"} addClass={"save-icon"} />
+                                    </span>
+                                    <span onClick={() => { handleEditChange("responsible_id") }}>
+                                        <Icon icon={"close"} addClass={"close-icon"} />
+                                    </span>
+                                </>
+                            ) : (
+                                <div className="edit-icon" onClick={() => { handleEditChange("responsible_id") }}>
+                                    <Icon icon="edit" addClass="default-icon" />
+                                </div>
+                            )}
+                        </div>
+
+
+                    </div>
+
+                </div>
+                {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => {
+                    setAlert(false);
+                }} />}
             </div>
-            {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => {
-                setAlert(false);
-            }} />}
-        </div>
+        </>
+
 
     )
 }

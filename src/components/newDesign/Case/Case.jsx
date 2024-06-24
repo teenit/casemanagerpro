@@ -93,7 +93,7 @@ const Case = () => {
                     :
                     <CaseProfilePhoto profileImg={null} getCaseInfo={getCaseInfo} case_id={case_id} />}
                 <div>
-                    <CaseInfoBlock info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />
+                    <CaseInfoBlock case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />
                     <GroupConnections case_id={case_id} type={"case"}/>
                 </div>
             </div>

@@ -63,16 +63,14 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
                     <Icon icon={"add"} addClass={"add-icon"}/>
                 </span>
             </div>
-            <div className="content">
+            {helps.length > 0 &&<div className="content">
                 <div className="Help-content">
                     {
                         helps.map(help => <HelpElem getCaseInfo={getCaseInfo} categories={categories} key={help.id} help={help} />)
                     }
                 </div>
 
-            </div>
-            <div className="Help-bottom">
-            </div>
+            </div>}
             {
                 state.create && <Modal
                     header={LANG.give_help.add_help}

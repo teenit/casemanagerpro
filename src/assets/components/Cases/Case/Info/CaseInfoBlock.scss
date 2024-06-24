@@ -1,13 +1,21 @@
 .CaseInfoBlock {
     display: grid;
-    grid-template-columns: max-content auto;
+    grid-template-columns: 1fr 1fr;
     gap: 25px;
+    &.name-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     &-inner{
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
     &-line{
+        display: flex;
+        flex-direction: column;
+        gap: 5px; 
         &-select{
             display: flex;
             align-items: center;
@@ -25,7 +33,8 @@
         }
         &-title{
             font-weight: bold;
-            font-size: 28px;
+            font-size: 20px;
+            padding: 10px;
         }
     }
     &-categories{
@@ -103,6 +112,11 @@
                 display: flex;
                 align-items: center;
                 gap: 5px;
+            }
+            &-icons {
+                display: flex;
+                align-items: center;
+                gap: 10px;
             }
         }
     }

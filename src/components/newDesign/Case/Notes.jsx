@@ -106,9 +106,7 @@ const Notes = ({ notes, case_id, getCaseInfo }) => {
     useEffect(() => {
         setActNote([...notes])
     }, [notes])
-    const active = actNote.map((elem, index) => {
-        return <Active key={index} elem={elem} handleEdit={(value, color) => { handleEdit(value, color, elem) }} />
-    })
+
     return (
         <div className="Notes">
             <div className="Notes-title">
@@ -117,9 +115,13 @@ const Notes = ({ notes, case_id, getCaseInfo }) => {
                     <Icon icon={"add"} addClass={"add-icon"} />
                 </span>
             </div>
-            <div className="Notes-viewer">
-                {active}
-            </div>
+          { actNote.length > 0 && <div className="Notes-viewer">
+                {
+                    actNote.map((elem, index) => {
+                        return <Active key={index} elem={elem} handleEdit={(value, color) => { handleEdit(value, color, elem) }} />
+                    })
+                }
+            </div>}
 
             {modal && <Modal header="Додати запис" closeHandler={() => { setModal(false) }} footer={
                 <div className="Modal--footer">

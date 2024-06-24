@@ -179,16 +179,15 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
                     <Icon icon={"add"} addClass={"add-icon"} />
                 </span>
             </div>
-            <div className="content">
+            {plans.length > 0 && <div className="content">
                 <div className="Plan-content">
                     {
                         plans.map(plan => <PlanElem key={plan.id} plan={plan} />)
                     }
                 </div>
 
-            </div>
-            <div className="Plan-bottom">
-            </div>
+            </div>}
+
             {
                 state.create && <Modal
                     header={LANG.create_plan}

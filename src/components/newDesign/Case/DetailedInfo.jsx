@@ -43,7 +43,7 @@ const DetailedInfo = ({ info, changeData }) => {
         return itemKey && (
             <div className='DetailedInfo-InfoBlock'>
                 <div className='DetailedInfo-InfoBlock-title'>
-                    <h2>{LANG.detailedInfo[itemKey]}</h2>
+                    <div className='DetailedInfo-InfoBlock-title-block'>{LANG.detailedInfo[itemKey]}</div>
                     {editState[itemKey] ?
                         <div className='DetailedInfo-InfoBlock-panel'>
                             <span onClick={() => { handleSave(itemKey, value) }}>
