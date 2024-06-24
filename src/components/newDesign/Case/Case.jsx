@@ -94,10 +94,10 @@ const Case = () => {
                     <CaseProfilePhoto profileImg={null} getCaseInfo={getCaseInfo} case_id={case_id} />}
                 <div>
                     <CaseInfoBlock case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />
-                    <GroupConnections case_id={case_id} type={"case"}/>
                 </div>
             </div>
 
+                    <GroupConnections case_id={case_id} type={"case"}/>
             <div className="container__grid__two">
                 <DetailedInfo info={state.data} changeData={(key, value) => { handleDataChange(key, value) }}/>
                 <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo} />

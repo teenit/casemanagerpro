@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import editImg from "./../../../img/icons/edit.svg";
 import saveImg from "./../../../img/icons/save-50.png";
 import Input from "../../elements/Inputs/Input";
@@ -17,6 +17,7 @@ import { appConfig } from "../../../services/config";
 import plus from "../../../img/icons/plus.svg"
 import Icon from "../../elements/Icons/Icon";
 const PlanElem = ({ plan }) => {
+
     const [state, setState] = useState({
         ...plan,
         editPlan: false
@@ -138,6 +139,23 @@ const PlanElem = ({ plan }) => {
 
 
 const Plan = ({ plans, case_id, getCaseInfo }) => {
+    const [open, setOpen] = useState(false)
+    const openHandler = () => {
+        localStorage.setItem("page_case_plan", !open)
+        setOpen(!open)
+    }
+    useEffect(() => {
+        let item = localStorage.getItem("page_case_plan")
+        if (item) {
+            if (item == "true") {
+                setOpen(true)
+            } else {
+                setOpen(false)
+            }
+        } else {
+            setOpen(false)
+        }
+    }, [])
     const [state, setState] = useState({
         end_time: " ",
         start_time: " ",
@@ -174,12 +192,15 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
     return (
         <div className="Plan">
             <div className="Plan-title">
-                <h2>{LANG.planing}</h2>
+                <div className="Plan-title-panel" onClick={openHandler}>
+                    <div>{LANG.planing}</div>
+                        <Icon icon={"arrow_down"} addClass={"fs35"}/>
+                </div>
                 <span onClick={() => changeHandler("create", true)}>
-                    <Icon icon={"add"} addClass={"add-icon"} />
+                    <Icon icon={"add"}/>
                 </span>
             </div>
-            {plans.length > 0 && <div className="content">
+            {plans.length > 0 && open && <div className="content">
                 <div className="Plan-content">
                     {
                         plans.map(plan => <PlanElem key={plan.id} plan={plan} />)

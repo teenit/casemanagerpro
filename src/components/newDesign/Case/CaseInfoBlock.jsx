@@ -124,7 +124,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
             last_name: dataState.last_name,
             middle_name: dataState.middle_name,
         }, "case/update-case-name.php").then((res)=>{
-
+            setAlert(true)
             getCaseInfo();
             setEditName(false);
         })
@@ -187,10 +187,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         </div>}
                         {
                             editName && 
-                            <>
+                            <div className="InputBlock-pib">
                             <Input
                             type="text"
-                            label="First name"
+                            label="Ім'я"
                             value={dataState.first_name} 
                             onChange={(e) => {
                                 setDataState({ ...dataState, first_name: e.target.value.trim() });
@@ -198,7 +198,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                          <Input
                             type="text"
-                            label="Last name"
+                            label="По батькові"
                             value={dataState.last_name} 
                             onChange={(e) => {
                                 setDataState({ ...dataState, last_name: e.target.value.trim() });
@@ -206,7 +206,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                          <Input
                             type="text"
-                            label="Middle name"
+                            label="Прізвище"
                             value={dataState.middle_name} 
                             onChange={(e) => {
                                 setDataState({ ...dataState, middle_name: e.target.value.trim() });
@@ -220,7 +220,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             <Icon icon={"close"} addClass={"close-icon"} />
                         </span>
                     </div>
-                            </>
+                            </div>
                         }
                         
                     </div>

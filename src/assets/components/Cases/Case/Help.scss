@@ -7,12 +7,24 @@
     box-sizing: border-box;
     gap: 25px;
     &-title {
-        font-weight: 600;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        img{
-            cursor: pointer;
+        &-panel {
+            font-size: 24px;
+            width: max-content;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0px 10px;
+
+            &:hover {
+                background-color: #fff;
+                border-radius: 15px;
+                cursor: pointer;
+            }
+
         }
     }
     .content {
@@ -86,5 +98,15 @@
         align-items: center;
         justify-content: center;
         gap: 24px;
+    }
+}
+@media screen and (max-width:500px){
+    .Help{
+        padding: 10px 0px;
+    }
+    .Help-title-panel{
+        div{
+            font-size: 16px;
+        }
     }
 }

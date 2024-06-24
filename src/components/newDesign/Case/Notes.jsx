@@ -68,6 +68,23 @@ const Active = ({ elem, handleEdit }) => {
 }
 
 const Notes = ({ notes, case_id, getCaseInfo }) => {
+    const [open, setOpen] = useState(false)
+    const openHandler = () => {
+        localStorage.setItem("page_case_notes", !open)
+        setOpen(!open)
+    }
+    useEffect(() => {
+        let item = localStorage.getItem("page_case_notes")
+        if (item) {
+            if (item == "true") {
+                setOpen(true)
+            } else {
+                setOpen(false)
+            }
+        } else {
+            setOpen(false)
+        }
+    }, [])
     const [noteMessage, setNoteMessage] = useState("")
     const [noteColor, setNoteColor] = useState("")
     const [alert, setAlert] = useState({
@@ -110,12 +127,15 @@ const Notes = ({ notes, case_id, getCaseInfo }) => {
     return (
         <div className="Notes">
             <div className="Notes-title">
-                <h2>Нотатки</h2>
+                <div className="Notes-title-panel" onClick={openHandler}>
+                <div>Нотатки</div>
+                <Icon icon={"arrow_down"} addClass={"fs35"}/>
+                </div>
                 <span  onClick={() => { setModal(true) }}>
-                    <Icon icon={"add"} addClass={"add-icon"} />
+                    <Icon icon={"add"}/>
                 </span>
             </div>
-          { actNote.length > 0 && <div className="Notes-viewer">
+          { actNote.length > 0 && open && <div className="Notes-viewer">
                 {
                     actNote.map((elem, index) => {
                         return <Active key={index} elem={elem} handleEdit={(value, color) => { handleEdit(value, color, elem) }} />

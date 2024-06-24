@@ -10,6 +10,23 @@ import { useSelector } from 'react-redux';
 
 const GroupConnections = ({ case_id, type }) => {
     const categories = useSelector(state => state.categories)
+    const [open, setOpen] = useState(false)
+    const openHandler = ()=>{
+        localStorage.setItem("page_case_connections", !open)
+        setOpen(!open)
+    }
+    useEffect(()=>{
+        let item = localStorage.getItem("page_case_connections")
+        if(item){
+            if(item=="true"){
+                setOpen(true)
+            }else{
+                setOpen(false)
+            }
+        }else{
+            setOpen(false)
+        }
+    },[])
     const [modal, setModal] = useState({
         add: false,
         info: false
@@ -26,7 +43,6 @@ const GroupConnections = ({ case_id, type }) => {
         error: false
     })
 
-    const [showList, setShowList] = useState(false);
     const loadConnections = () => {
         apiResponse({ ...data, client_id: case_id, type: type }, "groups/get-group-connect-by-case-id.php").then((res) => {
             setConnections([...res])
@@ -105,15 +121,15 @@ const GroupConnections = ({ case_id, type }) => {
     return (
         <div className='GroupConnections'>
             <div className="GroupConnections-title">
-                <div className='GroupConnections-title-panel' onClick={() => setShowList(!showList)}>
+                <div className='GroupConnections-title-panel' onClick={openHandler}>
                     <span>Групи кейсу</span>
-                        <Icon addClass={`fs16 ${showList && "rotate90-icon"}`} icon={'arrow_down'} />
+                        <Icon addClass={`fs16 ${open && "rotate90-icon"}`} icon={'arrow_down'} />
                 </div>
                 <span onClick={() => modalHandler("add")}>
                     <Icon icon={"add"} />
                 </span>
             </div>
-            {showList && <div className='GroupConnections-list'>
+            {open && <div className='GroupConnections-list'>
                 {connections.map((item, index) => {
                     return (
                         <div key={index} className='GroupConnections-list-item'>

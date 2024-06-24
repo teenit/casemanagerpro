@@ -751,7 +751,7 @@ border: solid 2px green;
   }
 /*_______________END Copy text_______________*/
 
-@media (max-width:600px){
+@media (max-width:720px){
     .connections__form {
         grid-template-columns: 1fr;
         row-gap: 10px;

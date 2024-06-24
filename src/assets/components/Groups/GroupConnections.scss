@@ -17,6 +17,7 @@
         position: relative;
         right: 15px;
         &-panel{
+            font-size: 24px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -55,4 +56,9 @@
         gap: 15px;
     }
     
+}
+@media screen and (max-width:500px){
+    .GroupConnections-title-panel{
+            font-size: 16px;
+    }
 }

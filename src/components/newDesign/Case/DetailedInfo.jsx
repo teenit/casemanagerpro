@@ -8,6 +8,23 @@ const DetailedInfo = ({ info, changeData }) => {
         success: false,
         error: false
     })
+    const [open, setOpen] = useState(false)
+    const openHandler = ()=>{
+        localStorage.setItem("page_case_detailed", !open)
+        setOpen(!open)
+    }
+    useEffect(()=>{
+        let item = localStorage.getItem("page_case_detailed")
+        if(item){
+            if(item=="true"){
+                setOpen(true)
+            }else{
+                setOpen(false)
+            }
+        }else{
+            setOpen(false)
+        }
+    },[])
     const [dataState, setDataState] = useState({
         family_info: info.family_info,
         history: info.history,
@@ -38,6 +55,7 @@ const DetailedInfo = ({ info, changeData }) => {
         }
         handleEditChange(key)
     }
+
     const InfoBlock = ({ itemKey }) => {
         const [value, setValue] = useState(dataState[itemKey])
         return itemKey && (
@@ -67,17 +85,19 @@ const DetailedInfo = ({ info, changeData }) => {
     }
     return (
         <div className='DetailedInfo'>
-            <div className='DetailedInfo-title'>
-                <h2>{LANG.detailedInfo.title}</h2>
+            <div className='DetailedInfo-title' onClick={openHandler}>
+                <div>{LANG.detailedInfo.title}</div>
+                    <Icon icon={"arrow_down"} addClass={"fs35"}/>
             </div>
-            <div className='content'>
+            {open && <div className='content'>
                 {Object.keys(dataState).map((item, index) => {
                     return (
                         <InfoBlock key={index} itemKey={item} />
                     )
                 })}
                 <InfoBlock />
-            </div>
+            </div>}
+           
             {alert.success && <SmallNotification isSuccess={true} text={"Дані успішно оновлено"} close={() => { handleAlertChange("success") }} />}
             {alert.error && <SmallNotification isSuccess={false} text={""} close={() => { handleAlertChange("error") }} />}
         </div>

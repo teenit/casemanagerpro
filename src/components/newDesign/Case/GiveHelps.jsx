@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import editImg from "./../../../img/icons/edit.svg";
 import saveImg from "./../../../img/icons/save-50.png";
 import Input from "../../elements/Inputs/Input";
@@ -19,8 +19,25 @@ import Icon from "../../elements/Icons/Icon";
 
 
 const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
-    const categories = useSelector(state => state.categories.help);
 
+    const categories = useSelector(state => state.categories.help);
+    const [open, setOpen] = useState(false)
+    const openHandler = () => {
+        localStorage.setItem("page_case_help", !open)
+        setOpen(!open)
+    }
+    useEffect(() => {
+        let item = localStorage.getItem("page_case_help")
+        if (item) {
+            if (item == "true") {
+                setOpen(true)
+            } else {
+                setOpen(false)
+            }
+        } else {
+            setOpen(false)
+        }
+    }, [])
     const [state, setState] = useState({
         date_time: "",
         text: "",
@@ -58,12 +75,15 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
     return (
         <div className="Help">
             <div className="Help-title">
-                <h2>{LANG.give_help.helping}</h2>
+                <div className="Help-title-panel" onClick={openHandler}>
+                <div>{LANG.give_help.helping}</div>
+                    <Icon icon={"arrow_down"} addClass={"fs35"}/>
+                </div>
                 <span onClick={() => changeHandler("create", true)}>
-                    <Icon icon={"add"} addClass={"add-icon"}/>
+                    <Icon icon={"add"}/>
                 </span>
             </div>
-            {helps.length > 0 &&<div className="content">
+            {helps.length > 0 && open && <div className="content">
                 <div className="Help-content">
                     {
                         helps.map(help => <HelpElem getCaseInfo={getCaseInfo} categories={categories} key={help.id} help={help} />)

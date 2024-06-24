@@ -204,6 +204,13 @@ input[type=color]::-moz-color-swatch {
   width: 100%;
   height: auto;
 }
+pre{
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: auto;
+  max-width: 100%;
+  box-sizing: border-box;  
+}
 @media (max-width:720px){
   .wrap__content{
     width: 90%;
