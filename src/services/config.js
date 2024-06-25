@@ -27,6 +27,7 @@ export const LANG = {
   almost_all_hidden: "Майже все приховано",
   average: "Середньо",
   low: "Низько",
+  no_records:"Немає доступних записів",
   add_record_about_provided_assistance: "Додати запис про надану допомогу",
   a_page_case_add: "Створити кейс",
   a_page_case_look: "Переглядати кейс",
@@ -54,8 +55,6 @@ export const LANG = {
   status_task: "Статус задачі",
   start_time: "Дата початку",
   end_time: "Дата кінця",
-  task_plan: "Задача плану",
-  create_plan: "Створити план",
   cancel: "Відмінити",
   save: "Зберегти",
   status: "Статус",
@@ -70,6 +69,18 @@ export const LANG = {
     recover: "Відновити",
     ok: "Добре",
     auth: "Авторизація",
+  },
+  plan:{
+    task: "Задача плану",
+    create: "Створити план",
+    error:"Оберіть дату початку та кінця дати"
+  },
+  notes:{
+    add:"Додати запис",
+    text:"Текст запису",
+    error:"Помилка при додаванні запису",
+    error_data:"Введіть текст запису",
+    success:"Запис додано"
   },
   detailedInfo: {
     title: "Детальна інформація",
@@ -109,12 +120,38 @@ export const LANG = {
       address:"Адреса (факт)",
       categories:"Категорія",
     },
+    case_data:{
+      first_name:"Ім'я",
+      middle_name:"Прізвище",
+      last_name:"По батькові",
+      phone:"Номер телефону",
+      email:"Електронна пошта",
+      birthday:"Дата народження",
+      address_registered:"Місце проживання по прописці",
+      address_live:"Фактичне місце проживання",
+      channel:"Канал комунікації",
+      first_contact:"Дата першого контакту",
+      contract_date:"Дата укладення договору",
+      contract_number:"Номер договору",
+      potreba:"Потреба, запит",
+      family:"Сімейний стан, деталі про сім'ю, її склад",
+      history:"Історія сім'ї / особи",
+      category:"Категорія кейсу",
+      comment:"Коментар",
+      date_created:"Дата створення",
+      responsible:"Відповідальний за кейс"
+    },
     categories:{
       category:"Категорія",
       noCategory:"Без категорії"
     },
     groups:{
       amount:"Кількість об'єктів",
+      desc:"Опис групи:",
+      date_created:"Дата створення групи:",
+      info:"Інформація про групу",
+      add:"Додати групу для кейсу",
+      title_case:"Групи кейсу",
       alertMessages:{
         error:"Оберіть групу, яку хочете додати",
         success:"Зв'язок створено"
@@ -232,6 +269,8 @@ export const LANG = {
     who_give_help: "Хто надав допомогу",
     details_help: "Деталі наданої допомоги",
     helping: "Надано допомогу",
+    error_data:"Оберіть дату, статус, опис та надавача допомоги",
+    error:"Помилка при додаванні допомоги"
   },
   mounths: {
     jan:"Січень",

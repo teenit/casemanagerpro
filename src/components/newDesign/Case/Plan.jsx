@@ -174,20 +174,26 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
             [key]: value
         })
     }
-    const createPlan = () => {
 
-        apiResponse({
-            ...state,
-            case_id: case_id,
-        }, "case/create-plan-task.php").then((res) => {
-            setState({ ...state, create: false })
-            setNotification({
-                show: true,
-                status: res.status,
-                message: res.message
+    const createPlan = () => {
+        if(state.end_time.length<=1 || state.start_time.length<=1){
+            return setNotification({...notification, show:true, status:false, message:LANG.plan.error})
+        }else{
+
+            apiResponse({
+                ...state,
+                case_id: case_id,
+            }, "case/create-plan-task.php").then((res) => {
+                setState({ ...state, create: false })
+                setNotification({
+                    show: true,
+                    status: res.status,
+                    message: res.message
+                })
+                openHandler()
+                getCaseInfo();
             })
-            getCaseInfo();
-        })
+        }
     }
     return (
         <div className="Plan">
@@ -200,18 +206,18 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
                     <Icon icon={"add"}/>
                 </span>
             </div>
-            {plans.length > 0 && open && <div className="content">
-                <div className="Plan-content">
+            {open && <div className="content">
+                {plans.length > 0 ? <div className="Plan-content">
                     {
                         plans.map(plan => <PlanElem key={plan.id} plan={plan} />)
                     }
-                </div>
+                </div>:<p>{LANG.no_records}</p>}
 
             </div>}
 
             {
                 state.create && <Modal
-                    header={LANG.create_plan}
+                    header={LANG.plan.create}
                     closeHandler={() => changeHandler("create", false)}
                     footer={
                         <div className="Modal--footer">
@@ -247,7 +253,7 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
                         </div>
                         <div className="Plan-create-value">
                             <Textarea
-                                label={LANG.task_plan}
+                                label={LANG.plan.task}
                                 value={state.value}
                                 onChange={(e) => {
                                     changeHandler("value", e.target.value)

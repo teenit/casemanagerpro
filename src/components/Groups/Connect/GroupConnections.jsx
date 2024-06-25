@@ -81,6 +81,7 @@ const GroupConnections = ({ case_id, type }) => {
             alertHandler("success")
             modalHandler("add")
             dataHandler("why", "")
+            openHandler()
             loadConnections()
         })
     }
@@ -122,28 +123,28 @@ const GroupConnections = ({ case_id, type }) => {
         <div className='GroupConnections'>
             <div className="GroupConnections-title">
                 <div className='GroupConnections-title-panel' onClick={openHandler}>
-                    <span>Групи кейсу</span>
-                        <Icon addClass={`fs16 ${open && "rotate90-icon"}`} icon={'arrow_down'} />
+                    <span>{LANG.groups.title_case}</span>
+                    <Icon addClass={`fs16`} icon={'arrow_down'} />
                 </div>
                 <span onClick={() => modalHandler("add")}>
                     <Icon icon={"add"} />
                 </span>
             </div>
             {open && <div className='GroupConnections-list'>
-                {connections.map((item, index) => {
+                {connections.length>0 ? connections.map((item, index) => {
                     return (
                         <div key={index} className='GroupConnections-list-item'>
                             <span><a onClick={() => item.status === 1 && showGroupInfo(item)}>{item.name}</a>: {item.why}</span>
                             <span className='GroupConnections-list-item-delete' onClick={() => deleteGroupConnect(item.id)}><Icon addClass={"default-icon"} icon={'delete'} /></span>
                         </div>
                     )
-                })}
+                }):<p style={{margin:"15px 0px"}}>{LANG.no_records}</p>}
             </div>}
 
 
 
             {modal.add && (
-                <Modal header="Додати групу для кейсу" closeHandler={() => modalHandler("add")}
+                <Modal header={LANG.groups.add} closeHandler={() => modalHandler("add")}
                     footer={<Button variant='contained' onClick={checkForm}>{LANG.save}</Button>}>
                     <div className='GroupConnections-select'>
                         <span>Групи</span>
@@ -157,11 +158,11 @@ const GroupConnections = ({ case_id, type }) => {
                 </Modal>
             )}
             {modal.info && selectedGroup && (
-                <Modal header={`Інформація про групу ${selectedGroup.name}`} closeHandler={() => modalHandler("info")}
+                <Modal header={`${LANG.groups.info} ${selectedGroup.name}`} closeHandler={() => modalHandler("info")}
                     footer={<Button variant='contained' onClick={() => modalHandler("info")}>{LANG.buttonTexts.ok}</Button>}>
                     <div className='GroupConnections-modal'>
-                        <span><b>Опис групи:</b> {selectedGroup.description}</span>
-                        <span><b>Дата створення групи:</b> {selectedGroup.date_created}</span>
+                        <span><b>{LANG.groups.desc}</b> {selectedGroup.description}</span>
+                        <span><b>{LANG.groups.date_created}</b> {selectedGroup.date_created}</span>
                         {getString(selectedGroup.categories) ? <span><b>{LANG.categories.category}</b>: {getString(selectedGroup.categories)}</span>
                             : <span>{LANG.categories.noCategory}</span>}
                     </div>

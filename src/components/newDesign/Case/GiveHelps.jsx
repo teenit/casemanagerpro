@@ -1,104 +1,129 @@
 import React, { useEffect, useState } from "react";
-import editImg from "./../../../img/icons/edit.svg";
-import saveImg from "./../../../img/icons/save-50.png";
-import Input from "../../elements/Inputs/Input";
-import 'moment/locale/uk';
-import moment from "moment";
-import { LANG } from "../../../services/config";
-import Textarea from "../../elements/Inputs/Textarea";
+import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
-import { apiResponse } from "../../Functions/get_apiObj";
+import Input from "../../elements/Inputs/Input";
+import Textarea from "../../elements/Inputs/Textarea";
+import Icon from "../../elements/Icons/Icon";
 import Modal from "../../Modals/Modal";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
-import plus from "../../../img/icons/plus.svg"
 import SelectStatus from "../../elements/Selects/SelectStatus";
-import { useSelector } from "react-redux";
 import HelpElem from "./HelpElem";
-import Icon from "../../elements/Icons/Icon";
-
-
+import { LANG } from "../../../services/config";
+import { apiResponse } from "../../Functions/get_apiObj";
 
 const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
-
     const categories = useSelector(state => state.categories.help);
-    const [open, setOpen] = useState(false)
-    const openHandler = () => {
-        localStorage.setItem("page_case_help", !open)
-        setOpen(!open)
-    }
-    useEffect(() => {
-        let item = localStorage.getItem("page_case_help")
-        if (item) {
-            if (item == "true") {
-                setOpen(true)
-            } else {
-                setOpen(false)
-            }
-        } else {
-            setOpen(false)
-        }
-    }, [])
+    const [open, setOpen] = useState(false);
     const [state, setState] = useState({
         date_time: "",
         text: "",
         category: "",
         who: "",
-        date_created:"",
+        date_created: "",
         create: false
-    })
+    });
     const [notification, setNotification] = useState({
         show: false,
         status: null,
         message: null
-    })
+    });
+
+    const openHandler = () => {
+        const newState = !open;
+        localStorage.setItem("page_case_help", newState);
+        setOpen(newState);
+    };
+
+    useEffect(() => {
+        const item = localStorage.getItem("page_case_help");
+        setOpen(item === "true");
+    }, []);
+
     const changeHandler = (key, value) => {
         setState({
             ...state,
             [key]: value
-        })
-    }
+        });
+    };
+
     const createHelp = () => {
-       
-        apiResponse({
-            ...state,
-            case_id: case_id,
-        }, "case/create-help.php").then((res) => {
-            setState({ ...state, create: false })
+        const { date_time, text, category, who } = state;
+
+        if (!date_time || !text || !category || !who) {
             setNotification({
                 show: true,
-                status: res.status,
-                message: res.message
+                status: false,
+                message: LANG.give_help.error_data
+            });
+            return;
+        }
+
+        apiResponse({ ...state, case_id }, "case/create-help.php")
+            .then((res) => {
+                setState({ ...state, create: false });
+                setNotification({
+                    show: true,
+                    status: res.status,
+                    message: res.message
+                });
+                openHandler()
+                if (res.status) getCaseInfo();
             })
-            getCaseInfo();
-        })
-    }
+            .catch((error) => {
+                console.error("Error creating help:", error);
+                setNotification({
+                    show: true,
+                    status: false,
+                    message: LANG.give_help.error
+                });
+            });
+    };
+
     return (
         <div className="Help">
             <div className="Help-title">
                 <div className="Help-title-panel" onClick={openHandler}>
-                <div>{LANG.give_help.helping}</div>
-                    <Icon icon={"arrow_down"} addClass={"fs35"}/>
+                    <div>{LANG.give_help.helping}</div>
+                    <Icon icon="arrow_down" addClass="fs35" />
                 </div>
                 <span onClick={() => changeHandler("create", true)}>
-                    <Icon icon={"add"}/>
+                    <Icon icon="add" />
                 </span>
             </div>
-            {helps.length > 0 && open && <div className="content">
-                <div className="Help-content">
-                    {
-                        helps.map(help => <HelpElem getCaseInfo={getCaseInfo} categories={categories} key={help.id} help={help} />)
-                    }
+            {open && (
+                <div className="content">
+                    {helps.length > 0 ? (
+                        <div className="Help-content">
+                            {helps.map(help => (
+                                <HelpElem
+                                    getCaseInfo={getCaseInfo}
+                                    categories={categories}
+                                    key={help.id}
+                                    help={help}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <p>{LANG.no_records}</p>
+                    )}
                 </div>
-
-            </div>}
-            {
-                state.create && <Modal
+            )}
+            {state.create && (
+                <Modal
                     header={LANG.give_help.add_help}
                     closeHandler={() => changeHandler("create", false)}
                     footer={
                         <div className="Modal--footer">
-                            <Button onClick={() => changeHandler("create", false)} color="error" variant="contained">{LANG.cancel}</Button>
-                            <Button onClick={createHelp} variant="contained">{LANG.save}</Button>
+                            <Button
+                                onClick={() => changeHandler("create", false)}
+                                color="error"
+                                variant="contained"
+                            >
+                                {LANG.cancel}
+                            </Button>
+                            <Button onClick={createHelp} variant="contained">
+                                {LANG.save}
+                            </Button>
                         </div>
                     }
                 >
@@ -106,45 +131,45 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
                         <div className="Help-create-date">
                             <Input
                                 type="datetime-local"
-                                // label={LANG.GLOBAL.date}
                                 value={state.date_time}
                                 variant="standard"
-                                onChange={(e) => {
-                                    changeHandler("date_time", e.target.value)
-                                }}
+                                onChange={(e) => changeHandler("date_time", e.target.value)}
                             />
                             <Input
                                 type="text"
                                 label={LANG.give_help.who_give_help}
                                 value={state.who}
                                 variant="standard"
-                                onChange={(e) => {
-                                    changeHandler("who", e.target.value)
-                                }}
+                                onChange={(e) => changeHandler("who", e.target.value)}
                             />
                         </div>
                         <div className="Help-create-status">
                             <div className="bold">{LANG.status}</div>
-                            <SelectStatus statuses={categories} value={state.category} onChange={(e) => changeHandler("category", e)} />
+                            <SelectStatus
+                                statuses={categories}
+                                value={state.category}
+                                onChange={(e) => changeHandler("category", e)}
+                            />
                         </div>
                         <div className="Help-create-value">
                             <Textarea
                                 label={LANG.give_help.details_help}
                                 value={state.text}
-                                onChange={(e) => {
-                                    changeHandler("text", e.target.value)
-                                }}
+                                onChange={(e) => changeHandler("text", e.target.value)}
                             />
                         </div>
-
                     </div>
                 </Modal>
-            }
-            {
-                notification.show && <SmallNotification isSuccess={notification.status} text={notification.message} close={() => setNotification({ show: false })} />
-            }
+            )}
+            {notification.show && (
+                <SmallNotification
+                    isSuccess={notification.status}
+                    text={notification.message}
+                    close={() => setNotification({ show: false })}
+                />
+            )}
         </div>
-    )
+    );
+};
 
-}
-export default GiveHelps
+export default GiveHelps;

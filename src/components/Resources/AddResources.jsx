@@ -37,8 +37,7 @@ const AddResources = ({ close, loadResources }) => {
     };
 
     const addLinkResource = () => {
-        console.log(meta.title.length)
-        if (meta.title.length < 1) {return handleAlertChange('error')}
+        if (meta.title.length < 1 || (typeResource=="link" && meta.link.length<1)) {return handleAlertChange('error')}
         apiResponse({
             resource: {
                 title: meta.title,
@@ -104,7 +103,7 @@ const AddResources = ({ close, loadResources }) => {
                 </div>
             </Modal>
             {alert.success && <SmallNotification isSuccess={true} text={"Ресурс додано"} close={() => { handleAlertChange("success") }} />}
-            {alert.error && <SmallNotification isSuccess={false} text={"Введіть назву ресурсу"} close={() => { handleAlertChange("error") }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={"Введіть назву та посилання(якщо треба) на ресурс"} close={() => { handleAlertChange("error") }} />}
 
         </>
 

@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import Icon from "../../elements/Icons/Icon";
 import { MenuItem, Select } from "@mui/material";
+import { LANG } from "../../../services/config";
 const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }) => {
     const categories = useSelector(state => state.categories.case);
     const [checkedMas, setCheckedMas] = useState([])
@@ -190,7 +191,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             <div className="InputBlock-pib">
                             <Input
                             type="text"
-                            label="Ім'я"
+                            label={LANG.case_data.name}
                             value={dataState.first_name} 
                             onChange={(e) => {
                                 setDataState({ ...dataState, first_name: e.target.value.trim() });
@@ -198,7 +199,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                          <Input
                             type="text"
-                            label="По батькові"
+                            label={LANG.case_data.last_name}
                             value={dataState.last_name} 
                             onChange={(e) => {
                                 setDataState({ ...dataState, last_name: e.target.value.trim() });
@@ -206,7 +207,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                          <Input
                             type="text"
-                            label="Прізвище"
+                            label={LANG.case_data.middle_name}
                             value={dataState.middle_name} 
                             onChange={(e) => {
                                 setDataState({ ...dataState, middle_name: e.target.value.trim() });
@@ -233,7 +234,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
 
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Номер телефону</span>
+                        <span>{LANG.case_data.phone}</span>
                         <InputBlock
                             value={dataState.phone1}
                             onChange={(e) => { handleDataChange("phone1", e.target.value) }}
@@ -245,7 +246,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Номер телефону</span>
+                        <span>{LANG.case_data.phone}</span>
                         <InputBlock
                             value={dataState.phone2}
                             onChange={(e) => { handleDataChange("phone2", e.target.value) }}
@@ -257,7 +258,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Дата народження</span>
+                        <span>{LANG.case_data.birthday}</span>
                         <InputBlock
                             value={dataState.happy_bd}
                             onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
@@ -268,7 +269,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Поштова адреса</span>
+                        <span>{LANG.case_data.email}</span>
                         <InputBlock
                             value={dataState.email}
                             onChange={(e) => { handleDataChange("email", e.target.value) }}
@@ -280,7 +281,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Адреса проживання</span>
+                        <span>{LANG.case_data.address_live}</span>
                         <InputBlock
                             value={dataState.address_live}
                             onChange={(e) => { handleDataChange("address_live", e.target.value) }}
@@ -291,7 +292,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Адреса реєстрації</span>
+                        <span>{LANG.case_data.address_registered}</span>
                         <InputBlock
                             value={dataState.address_registered}
                             onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
@@ -304,7 +305,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                 </div>
                 <div className="case-info-right">
                     <div className="CaseInfoBlock-line">
-                        <span>Дата створення</span>
+                        <span>{LANG.case_data.date_created}</span>
                         <InputBlock
                             value={dataState.date_created}
                             icon={"date_created"}
@@ -313,7 +314,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Дата укладання договіру</span>
+                        <span>{LANG.case_data.contract_date}</span>
                         <InputBlock
                             value={dataState.contract_date}
                             onChange={(e) => { handleDataChange("contract_date", e.target.value) }}
@@ -324,7 +325,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Номер договіру</span>
+                        <span>{LANG.case_data.contract_number}</span>
                         <InputBlock
                             value={dataState.contract_number}
                             onChange={(e) => { handleDataChange("contract_number", e.target.value) }}
@@ -335,7 +336,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         />
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Канал комунікації</span>
+                        <span>{LANG.case_data.channel}</span>
                         <InputBlock
                             value={dataState.channel}
                             onChange={(e) => { handleDataChange("channel", e.target.value) }}
@@ -348,7 +349,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
 
 
                     <div className="CaseInfoBlock-categories">
-                        <span className="CaseInfoBlock-categories-title">Категорії</span>
+                        <span className="CaseInfoBlock-categories-title">{LANG.case_data.category}</span>
                         <span className="CaseInfoBlock-categories-content">
                             <Icon icon="categories" addClass={"default-icon"} />
                             <div className="case-info-card-text">
@@ -390,7 +391,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
 
                     </div>
                     <div className="CaseInfoBlock-line">
-                        <span>Відповідальний за кейс</span>
+                        <span>{LANG.case_data.responsible}</span>
                         <div className="CaseInfoBlock-line-select">
                             <Icon icon="categories" addClass={"default-icon"} />
                             {editState.responsible_id ? (
