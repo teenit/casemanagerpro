@@ -97,9 +97,9 @@ const Case = () => {
                 </div>
             </div>
 
-                    <GroupConnections case_id={case_id} type={"case"}/>
+            <GroupConnections case_id={case_id} type={"case"} />
             <div className="container__grid__two">
-                <DetailedInfo info={state.data} changeData={(key, value) => { handleDataChange(key, value) }}/>
+                <DetailedInfo info={state.data} changeData={(key, value) => { handleDataChange(key, value) }} />
                 <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo} />
             </div>
             <div className="container__grid__two">
@@ -108,11 +108,14 @@ const Case = () => {
             </div>
 
             {!!state?.meta?.files?.length && <GalleryBlock data={state.meta.files} />}
-            <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
-                key: "case_files",
-                case_id: case_id,
-                type: "case"
-            }} />
+            <div className="uploader_wrap">
+                <p>Завантажити файл</p>
+                <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
+                    key: "case_files",
+                    case_id: case_id,
+                    type: "case"
+                }} />
+            </div>
         </div>
     ) : (
         <>

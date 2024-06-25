@@ -19,6 +19,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
     const [dataState, setDataState] = useState({
         phone1: info.general.phone1,
         phone2: info.general.phone2,
+        happy_bd: info.general.happy_bd,
         email: info.general.email,
         responsible_id: info.general.responsible_id,
         address_live: info.data.address_live,
@@ -39,7 +40,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
         setDataState({
             phone1: info.general.phone1,
             phone2: info.general.phone2,
-            happy_bd: info.general.happy_bd,
+            happy_bd: info.general.happy_bd === "0000-00-00" ? "" : info.general.happy_bd,
             email: info.general.email,
             address_live: info.data.address_live,
             address_registered: info.data.address_registered,
@@ -59,7 +60,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
         apiResponse({}, "user/get-all-users-name.php").then((res) => {
             setUserNames(res);
         });
+        console.log(info.general.happy_bd);
     }, [info]);
+    
+    
     const [editState, setEditState] = useState({
         phone1: false,
         phone2: false,

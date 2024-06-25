@@ -17,7 +17,6 @@ import xlsxImg from "./../../../img/resources/xlsx.png";
 import send from '../../../img/icons/send-media.png';
 import add from '../../../img/icons/add-media.png';
 import loadImg from '../../../img/loading_3.gif';
-import { apiResponse } from '../../Functions/get_apiObj'
 import SmallNotification from '../Notifications/SmallNotification';
 import { useSelector } from 'react-redux';
 import Icon from "../Icons/Icon"
@@ -116,7 +115,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
         {selectedFiles.map((file, index) => (
           <div key={index}>
             <p style={{ textDecoration: "underline" }}>{cutTitle(file.name)}</p>
-            {FORMAT[ext(file.name)] && <img className='FilesUploader-files-preview' src={FORMAT[ext(file.name)].imgUrl} alt={`File type: ${ext(file.name)}`} />}
+            {/* {FORMAT[ext(file.name)] && <img className='FilesUploader-files-preview' src={FORMAT[ext(file.name)].imgUrl} alt={`File type: ${ext(file.name)}`} />} */}
             <span onClick={() => { handleDelete(index) }}>
               <Icon icon={"close"} addClass={"close-icon"} />
             </span>

@@ -29,7 +29,7 @@ const AddCaseForm = () => {
         phone1: "",
         phone2: "",
         email: "",
-        happy_bd: "",
+        happy_bd: " ",
     })
     const initialStateData = {
         case_id: id,
