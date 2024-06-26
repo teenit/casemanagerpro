@@ -70,6 +70,13 @@ export const LANG = {
     ok: "Добре",
     auth: "Авторизація",
   },
+  selects:{
+    sex:{
+      male:"Чоловік",
+      female:"Жінка",
+      none:"Не обрано",
+    },
+  },
   plan:{
     task: "Задача плану",
     create: "Створити план",
@@ -125,6 +132,7 @@ export const LANG = {
       middle_name:"Прізвище",
       last_name:"По батькові",
       phone:"Номер телефону",
+      sex:"Стать",
       email:"Електронна пошта",
       birthday:"Дата народження",
       address_registered:"Місце проживання по прописці",
@@ -152,6 +160,9 @@ export const LANG = {
       info:"Інформація про групу",
       add:"Додати групу для кейсу",
       title_case:"Групи кейсу",
+      group:{
+        members:"Учасники групи"
+      },
       alertMessages:{
         error:"Оберіть групу, яку хочете додати",
         success:"Зв'язок створено"

@@ -5,9 +5,10 @@ import { apiResponse } from '../../Functions/get_apiObj'
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import { useSelector } from "react-redux";
 import Textarea from "../../elements/Inputs/Textarea"
-import { Button } from "@mui/material";
+import { Button, MenuItem, Select } from "@mui/material";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import { NavLink, useNavigate } from "react-router-dom";
+import { LANG } from "../../../services/config";
 const AddCaseForm = () => {
     const navigate = useNavigate();
     const [isDataEmpty, setIsDataEmpty] = useState({
@@ -28,6 +29,7 @@ const AddCaseForm = () => {
         last_name: "",
         phone1: "",
         phone2: "",
+        sex:"",
         email: "",
         happy_bd: " ",
     })
@@ -144,7 +146,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                     </div>
-                    <div className="AddCaseForm-inner-line-two w100">
+                    <div className="AddCaseForm-inner-line-three w100">
                         <div>
                             <p>Номер телефону 1 <span className="required">*</span></p>
                             <Input
@@ -164,6 +166,14 @@ const AddCaseForm = () => {
                                     changeHandlerGeneral("phone2", changeAps(e.target.value))
                                 }}
                             />
+                        </div>
+                        <div>
+                        <p>Стать</p>
+                        <Select value={stateGeneral.sex} onChange={(e)=>{changeHandlerGeneral("sex", e.target.value)}}>
+                                <MenuItem value="male">{LANG.selects.sex.male}</MenuItem>
+                                <MenuItem value="female">{LANG.selects.sex.female}</MenuItem>
+                                <MenuItem value="none">{LANG.selects.sex.none}</MenuItem>
+                        </Select>
                         </div>
                     </div>
 

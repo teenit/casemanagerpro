@@ -28,6 +28,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     newPassTo: "",
     changeError: ""
   })
+  const [file, setFile] = useState(null)
   const [loading, setLoading] = useState("");
   const [editPhoto, setEditPhoto] = useState(false)
   const [alert, setAlert] = useState({
@@ -187,21 +188,25 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
       })
       .catch((error) => console.log(error));
   }
-
+  const handleFileChange = (value) => {
+    setEditPhoto(true);
+    setFile(value[0])
+};
   return (
     <div className="ProfilePhoto">
       <div className="ProfilePhoto-left">
         {editPhoto ?
-          <PhotoUploader previousImg={`${url}`} close={() => { setEditPhoto(false) }} multiple={false} meta={{
+          <PhotoUploader file={file} close={() => { setEditPhoto(false) }} multiple={false} meta={{
             key: "user_img_profile",
             case_id: 11,
             type: "user"
           }} />
           :
           <div className="ProfilePhoto-inner">
-            {changePass && <span onClick={() => { setEditPhoto(true) }}>
+            {changePass && <label htmlFor="fileInput">
               <Icon icon={"edit"} addClass={"default-icon"} />
-            </span>}
+            </label>}
+            <input type="file" name="fileInput" id="fileInput" style={{ display: "none" }} multiple={false} onChange={(e)=>{handleFileChange(e.target.files)}}/>
             <img src={`${url}`} alt="Фото профілю" />
             <Loadpic show={loading} />
           </div>

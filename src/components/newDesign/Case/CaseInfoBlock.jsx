@@ -56,11 +56,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
             middle_name: info.general.middle_name,
             last_name: info.general.last_name,
         });
-        if (info.data.categories) setCheckedMas([...info.data.categories]);
+        console.log(info.general.sex);
         apiResponse({}, "user/get-all-users-name.php").then((res) => {
             setUserNames(res);
         });
-        console.log(info.general.happy_bd);
     }, [info]);
     
     

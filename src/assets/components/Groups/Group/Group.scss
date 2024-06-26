@@ -1,0 +1,73 @@
+.Group {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    &-settings {
+        position: fixed;
+        top: 125px;
+        right: 125px;
+    }
+
+    &-title {
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        &-desc {
+            font-size: 16px;
+            font-weight: normal;
+        }
+    }
+
+    &-members {
+        padding: 15px;
+        border: solid 3px $main-color;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        &-title {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        &-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+
+            &-column {
+                display: flex;
+                flex-direction: column;
+                gap: 7.5px;
+            }
+        }
+    }
+
+    &-member {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        border-radius: 15px;
+        padding: 7.5px;
+        font-weight: bold;
+        background-color: $main-color;
+
+        &:nth-child(even) {
+            background-color: $second-color;
+        }
+        >span{
+            display: flex;
+            align-items: center;
+        }
+    }
+}
