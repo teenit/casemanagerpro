@@ -28,7 +28,11 @@ const GroupCard = ({ item, loadGroups }) => {
     return (
         <div className="GroupCard">
             <div className="GroupCard-split">
-                <div>{item.name}</div>
+                <div onClick={()=>{
+                    apiResponse({group_id: item.id},'groups/get-group-by-id.php').then((res)=>{
+                        console.log(res)
+                    })
+                }}>{item.name}</div>
                 <div className="GroupCard-split-color" style={{ backgroundColor: item.color }}></div>
             </div>
             <div>{item.description}</div>
