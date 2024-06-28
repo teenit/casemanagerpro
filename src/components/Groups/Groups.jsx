@@ -4,6 +4,7 @@ import { apiResponse } from "../Functions/get_apiObj";
 import Icon from "../elements/Icons/Icon";
 import { useSelector } from "react-redux";
 import { LANG, appConfig } from "../../services/config";
+import { NavLink } from "react-router-dom";
 
 const GroupCard = ({ item, loadGroups }) => {
     const categories = useSelector(state => state.categories);
@@ -28,24 +29,18 @@ const GroupCard = ({ item, loadGroups }) => {
     return (
         <div className="GroupCard">
             <div className="GroupCard-split">
-                <div onClick={()=>{
-                    apiResponse({group_id: item.id},'groups/get-group-by-id.php').then((res)=>{
-                        console.log(res)
-                    })
-                }}>{item.name}</div>
+                <NavLink to={`/group/${item.id}`}>{item.name}</NavLink>
                 <div className="GroupCard-split-color" style={{ backgroundColor: item.color }}></div>
             </div>
             <div>{item.description}</div>
             <div>{LANG.groups.amount}: {item.connect_count}</div>
             <div>
                 {getString() ? <span>{LANG.categories.category}: <b>{getString()}</b></span>
-                :<span>{LANG.categories.noCategory}</span>}
+                    : <span>{LANG.categories.noCategory}</span>}
             </div>
             <div className="GroupCard-split">
                 <div className="GroupCard-split-date">{item.date_created}</div>
-                <span onClick={() => { setEdit(!edit) }}>
-                    <Icon icon={"edit"} addClass={"default-icon"} />
-                </span>
+                    <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEdit(!edit) }}/>
             </div>
             {edit && <AddGroup loadGroups={loadGroups} action={"edit"} data={data} id={item.id} close={() => { setEdit(false) }} />}
         </div>
@@ -71,11 +66,7 @@ const Groups = () => {
         <div className="Groups">
             <div className="Groups-title">
                 <p>{appConfig.pages.groups.title}</p>
-                <div className="AddGroup">
-                    <div className="AddGroup-plus" onClick={() => setAdd(true)}>
-                        <Icon icon={"add"} />
-                    </div>
-                </div>
+                <Icon icon={"add"} onClick={() => setAdd(true)} />
                 {add && <AddGroup loadGroups={loadGroups} action={"add"} close={() => { setAdd(false) }} />}
             </div>
             <div className="Groups-list">

@@ -26,6 +26,7 @@ import Groups from "../Groups/Groups";
 import Search from "../Search/Search";
 import AccessCheck from "../Functions/AccessCheck";
 import NotFound from "../pages/NotFound";
+import Group from "../Groups/Group/Group";
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const MainContent = () => {
         <Route path='/calendar' element={access.calendar ? <Calendar /> : <NotFound />} />
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
+        <Route path='/group/:id' element={<Group />} />
         <Route path='/task' element={<Task />} />
         <Route path='/test' element={<TestPage />} />
         <Route path='/search' element={<Search />} />
