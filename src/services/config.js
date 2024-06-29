@@ -8,7 +8,8 @@ export const LANG = {
     description: "Опис",
     color: "Колір",
     confirm_title: "Підтвердити дію",
-    delete: "Видалити"
+    delete: "Видалити",
+    skip:"Пропустити"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Права користувачів (Сторінки)",
@@ -61,6 +62,7 @@ export const LANG = {
   planing: "Планування",
   gallery: "Додані медіа файли",
   documents: "Додані документи",
+  years:"років",
   placeholders: {
     email: "Ваш Email...",
     connect:"Як кейс пов'язан з групою"
@@ -74,7 +76,7 @@ export const LANG = {
     sex:{
       male:"Чоловік",
       female:"Жінка",
-      none:"Не обрано",
+      other:"Інші",
     },
   },
   plan:{
@@ -95,6 +97,13 @@ export const LANG = {
     comment: "Коментар",
     potreba: "Потреба, запит",
     history: "Історія сім'ї / особи"
+  },
+  add_case:{
+    title:"Додати кейс",
+    alertMessages:{
+      name:"Будь ласка, введіть ім'я кейсу",
+      phone:"Будь ласка, введіть номер телефону кейсу"
+    }
   },
   forgotPass: {
     title: "Форма відновлення"
@@ -161,7 +170,8 @@ export const LANG = {
       add:"Додати групу для кейсу",
       title_case:"Групи кейсу",
       group:{
-        members:"Учасники групи"
+        members:"Учасники групи",
+        confirm:"Ви впевнені, що хочете видалити зі списку учасників користувача"
       },
       alertMessages:{
         error:"Оберіть групу, яку хочете додати",
