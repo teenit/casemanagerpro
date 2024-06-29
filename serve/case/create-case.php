@@ -11,8 +11,8 @@ $email_encrypted = encryptData($data['email'], $key);
 $name = $data["last_name"]." ".$data["first_name"]." ".$data["middle_name"];
 
 // Підготовка SQL-запиту для вставки даних
-$sql = "INSERT INTO cases_new (name, first_name, middle_name, last_name, phone1, phone2, email, happy_bd, user_id, responsible_id) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO cases_new (name, first_name, middle_name, last_name, phone1, phone2, email, happy_bd, user_id, responsible_id, sex) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 // Підготовка запиту
 $stmt = $conn->prepare($sql);
@@ -24,7 +24,7 @@ if ($stmt === false) {
 
 // Прив'язка параметрів та виконання запиту
 $stmt->bind_param("ssssssssii", $name, $data['first_name'], $data['middle_name'], $data['last_name'], 
-                            $phone1_encrypted, $phone2_encrypted, $email_encrypted, $data['happy_bd'], $data['id'], $data['id']);
+                            $phone1_encrypted, $phone2_encrypted, $email_encrypted, $data['happy_bd'], $data['id'], $data['id'], $data['sex']);
 
 // Виконання запиту
 if ($stmt->execute() === TRUE) {

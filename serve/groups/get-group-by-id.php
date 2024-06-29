@@ -40,10 +40,10 @@ if (isset($data['group_id'])) {
         echo json_encode($response);
     } else {
         // Помилка підготовки запиту
-        echo json_encode(['error' => 'Failed to prepare the SQL query.']);
+        echo json_encode(['error' => 'Failed to prepare the SQL query.', 'status' => false]);
     }
 } else {
     // Помилка відсутності id групи
-    echo json_encode(['error' => 'Group ID not provided.']);
+    echo json_encode(['error' => 'Group ID not provided.', 'status' => false]);
 }
 ?>
