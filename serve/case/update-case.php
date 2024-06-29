@@ -24,7 +24,7 @@ $phone2_encrypted = isset($data['phone2']) ? encryptData($data['phone2'], $key) 
 $email_encrypted = isset($data['email']) ? encryptData($data['email'], $key) : null;
 $name = isset($data['last_name']) && isset($data['first_name']) && isset($data['middle_name']) ? $data["last_name"]." ".$data["first_name"]." ".$data["middle_name"] : null;
 $responsible_id = isset($data['responsible_id']) ?  $data['responsible_id'] : null;
-$responsible_id = isset($data['sex']) ?  $data['sex'] : null;
+$sex = isset($data['sex']) ?  $data['sex'] : null;
 // Підготовка SQL-запиту для оновлення даних
 $sql = "UPDATE cases_new SET";
 $set_values = array();

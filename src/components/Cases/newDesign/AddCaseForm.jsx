@@ -29,7 +29,7 @@ const AddCaseForm = () => {
         last_name: "",
         phone1: "",
         phone2: "",
-        sex:"",
+        sex:"male",
         email: "",
         happy_bd: " ",
     })

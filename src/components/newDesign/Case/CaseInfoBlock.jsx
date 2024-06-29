@@ -3,8 +3,6 @@ import { apiResponse } from "../../Functions/get_apiObj"
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Input from "../../elements/Inputs/Input";
 import { NavLink } from "react-router-dom";
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from "react-redux";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import Icon from "../../elements/Icons/Icon";
@@ -95,7 +93,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
 
 
 
-    const saveHandler = (key, value, type, displayValue = value) => {
+    const saveHandler = (key, value, type) => {
         const originalValue = type === "general" ? info.general[key] : info.data[key];
         if (originalValue !== value) {
             if (type === "general") {
