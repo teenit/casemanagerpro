@@ -16,24 +16,30 @@ const Group = () => {
     const modalHandler = (key)=>{
         setModal({...modal, [key]:!modal[key]})
     }
-    const mas = [{ name: "skdiei" }, { name: "skdusiei" }, { name: "ggrgrhhdiei" }]
+const deleteHandler = (index)=>{
+    const newMas = [...data]
+    newMas.splice(index,1)
+    setData(newMas)
+    modalHandler("delete")
+}    
     const params = useParams()
     useEffect(() => {
         setId(params.id)
-        apiResponse({ ...id }, "groups/get-group-by-id.php").then((res) => {
-            setData([...res])
+        apiResponse({ group_id: id }, "groups/get-group-by-id.php").then((res) => {
+            console.log(res);
+            setData(res)
         })
-    }, [])
-    const Member = ({ item }) => {
+    }, [id])
+    const Member = ({ item, index }) => {
         const [editMember, setEditMember] = useState(0)
         return (
             <div className='Group-member' onMouseEnter={() => { setEditMember(1) }} onMouseLeave={() => { setEditMember(0) }}>
-                <NavLink to={`/case/${params.id}`}>{item.name}</NavLink>
+                <NavLink to={`/case/${item.case_id}`}>{item.name}</NavLink>
                 <span style={{ opacity: editMember }}>
                     <Icon icon={"delete"} addClass={"close-icon"} onClick={()=>{modalHandler("delete")}}/>
                 </span>
-                {modal.delete && <ModalConfirm closeHandler={()=>{modalHandler("delete")}} 
-                text={"Ви впевнені, що хочете видалити зі списку учасників користувача  ?"}/>}
+                {modal.delete && <ModalConfirm successHandler={()=>{deleteHandler(index)}} closeHandler={()=>{modalHandler("delete")}} 
+                text={`${LANG.groups.group.confirm} ${item.name}?`}/>}
             </div>
         )
     }
@@ -54,8 +60,8 @@ const Group = () => {
                 <div className='Group-members-inner'>
                     <div className='Group-members-inner-column'>
                         <div>Зареєстровані</div>
-                        {mas.map((item, index) => {
-                            return <Member key={index} item={item} />
+                        {data && data.map((item, index) => {
+                            return <Member key={index} item={item} index={index} />
                         })}
                     </div>
                     <div className='Group-members-inner-column'>

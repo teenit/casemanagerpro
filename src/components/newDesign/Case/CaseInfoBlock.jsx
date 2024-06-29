@@ -15,7 +15,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
     const [checkedMas, setCheckedMas] = useState([])
     const [userNames, setUserNames] = useState(null)
     const [alert, setAlert] = useState(null)
-    const [editName, setEditName] = useState(false) 
+    const [editName, setEditName] = useState(false)
     const [dataState, setDataState] = useState({
         phone1: info.general.phone1,
         phone2: info.general.phone2,
@@ -35,6 +35,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
         first_name: info.general.first_name,
         middle_name: info.general.middle_name,
         last_name: info.general.last_name,
+        sex: info.general.sex
     });
     useEffect(() => {
         setDataState({
@@ -55,14 +56,14 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
             first_name: info.general.first_name,
             middle_name: info.general.middle_name,
             last_name: info.general.last_name,
+            sex: info.general.sex
         });
-        console.log(info.general.sex);
         apiResponse({}, "user/get-all-users-name.php").then((res) => {
             setUserNames(res);
         });
     }, [info]);
-    
-    
+
+
     const [editState, setEditState] = useState({
         phone1: false,
         phone2: false,
@@ -74,7 +75,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
         contract: false,
         channel: false,
         categories: false,
-        responsible_id: false
+        responsible_id: false,
+        sex: false
     });
 
     const handleDataChange = (key, val) => {
@@ -93,7 +95,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
 
 
 
-    const saveHandler = (key, value, type) => {
+    const saveHandler = (key, value, type, displayValue = value) => {
         const originalValue = type === "general" ? info.general[key] : info.data[key];
         if (originalValue !== value) {
             if (type === "general") {
@@ -107,6 +109,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
             handleEditChange(key);
         }
     };
+
 
 
     const handleCheckboxChange = (value, options) => {
@@ -127,53 +130,96 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
             first_name: dataState.first_name,
             last_name: dataState.last_name,
             middle_name: dataState.middle_name,
-        }, "case/update-case-name.php").then((res)=>{
+        }, "case/update-case-name.php").then((res) => {
             setAlert(true)
             getCaseInfo();
             setEditName(false);
         })
     }
 
-    const InputBlock = ({ saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "" }) => {
-        const [showEdit, setShowEdit] = useState(false)
-        const [stateValue, setStateValue] = useState(value)
+    const howOldIsCase = (birthday) => {
+        if (!birthday) return ""
+        const birthDate = new Date(birthday)
+        const today = new Date()
+        let ageYears = today.getFullYear() - birthDate.getFullYear()
+        let ageMonths = today.getMonth() - birthDate.getMonth()
+        if (ageMonths < 0 || (ageMonths === 0 && today.getDate() < birthDate.getDate())) {
+            ageYears--
+            ageMonths += 12
+        }
+        if (today.getDate() < birthDate.getDate()) {
+            ageMonths--
+        }
+
+        return `, ${ageYears} років ${ageMonths} місяці`;
+    };
+
+
+    const InputBlock = ({ select = false, age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "" }) => {
+        const [showEdit, setShowEdit] = useState(false);
+        const [stateValue, setStateValue] = useState(value);
+
+        const handleSave = () => {
+            const displayValue = select ? LANG.selects.sex[stateValue] : stateValue;
+            saveHandler(stateValue, displayValue);
+            setShowEdit(false);
+        };
+
         return (
             <div className="InputBlock">
-                {!showEdit && <div className="InputBlock-default">
-                    {icon && <Icon icon={icon} addClass={"default-icon"} />}
-
-                    <div className="case-info-card-text">
-
-                        <div title={title}>
-                            {link ? <NavLink to={link}>{label}</NavLink> : label}
-                        </div>
-
-                    </div>
-                    {!disabled && <div className="edit-icon" onClick={() => { setShowEdit(true) }}>
-                        <Icon icon={"edit"} addClass={"default-icon"} />
-                    </div>}
-                </div>}
-                {showEdit && <div className="InputBlock-editer">
-                    <div className="InputBlock-editer-withicon">
+                {!showEdit && (
+                    <div className="InputBlock-default">
                         {icon && <Icon icon={icon} addClass={"default-icon"} />}
-                        <Input label={title} type={inputType} value={stateValue} onChange={(e) => {
-                            setStateValue(e.target.value)
-                        }} />
+                        <div className="case-info-card-text">
+                            <div title={title}>
+                                {link ? (
+                                    <NavLink to={link}>
+                                        {label} {age && howOldIsCase(stateValue)}
+                                    </NavLink>
+                                ) : (
+                                    <>
+                                        {label} {age && howOldIsCase(stateValue)}
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                        {!disabled && (
+                            <div className="edit-icon" onClick={() => { setShowEdit(true) }}>
+                                <Icon icon={"edit"} addClass={"default-icon"} />
+                            </div>
+                        )}
                     </div>
-                    <div className="InputBlock-editer-icons">
-                        <span onClick={() => { saveHandler(stateValue) }} >
-                            <Icon icon={"save"} addClass={"save-icon"} />
-                        </span>
-                        <span onClick={() => { setShowEdit(false) }} >
-                            <Icon icon={"close"} addClass={"close-icon"} />
-                        </span>
+                )}
+                {showEdit && (
+                    <div className="InputBlock-editer">
+                        <div className="InputBlock-editer-withicon">
+                            {icon && <Icon icon={icon} addClass={"default-icon"} />}
+                            {select ? <Select value={stateValue} onChange={(e) => {
+                                setStateValue(e.target.value);
+                            }}>
+                                <MenuItem value="male">{LANG.selects.sex.male}</MenuItem>
+                                <MenuItem value="female">{LANG.selects.sex.female}</MenuItem>
+                                <MenuItem value="other">{LANG.selects.sex.other}</MenuItem>
+                            </Select>
+                                : <Input label={title} type={inputType} value={stateValue} onChange={(e) => {
+                                    setStateValue(e.target.value)
+                                }} />}
+                        </div>
+                        <div className="InputBlock-editer-icons">
+                            <span onClick={handleSave}>
+                                <Icon icon={"save"} addClass={"save-icon"} />
+                            </span>
+                            <span onClick={() => { setShowEdit(false) }}>
+                                <Icon icon={"close"} addClass={"close-icon"} />
+                            </span>
+                        </div>
                     </div>
-                </div>
-
-                }
+                )}
             </div>
-        )
+        );
     }
+
+
     return (
         <>
             <div className="CaseInfoBlock name-block">
@@ -184,49 +230,49 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                                 {info.general.name} <span style={{ color: "var(--main-color)" }}>№{info.general.id}</span>
                             </div>
                             <div>
-                                <div className="edit-icon" onClick={() => { setEditName(true)}}>
+                                <div className="edit-icon" onClick={() => { setEditName(true) }}>
                                     <Icon icon={"edit"} addClass={"default-icon"} />
                                 </div>
                             </div>
                         </div>}
                         {
-                            editName && 
+                            editName &&
                             <div className="InputBlock-pib">
-                            <Input
-                            type="text"
-                            label={LANG.case_data.name}
-                            value={dataState.first_name} 
-                            onChange={(e) => {
-                                setDataState({ ...dataState, first_name: e.target.value.trim() });
-                            }}
-                        />
-                         <Input
-                            type="text"
-                            label={LANG.case_data.last_name}
-                            value={dataState.last_name} 
-                            onChange={(e) => {
-                                setDataState({ ...dataState, last_name: e.target.value.trim() });
-                            }}
-                        />
-                         <Input
-                            type="text"
-                            label={LANG.case_data.middle_name}
-                            value={dataState.middle_name} 
-                            onChange={(e) => {
-                                setDataState({ ...dataState, middle_name: e.target.value.trim() });
-                            }}
-                        />
-                         <div className="InputBlock-editer-icons">
-                        <span onClick={() => { changeName() }} >
-                            <Icon icon={"save"} addClass={"save-icon"} />
-                        </span>
-                        <span onClick={() => { setEditName(false) }} >
-                            <Icon icon={"close"} addClass={"close-icon"} />
-                        </span>
-                    </div>
+                                <Input
+                                    type="text"
+                                    label={LANG.case_data.name}
+                                    value={dataState.first_name}
+                                    onChange={(e) => {
+                                        setDataState({ ...dataState, first_name: e.target.value.trim() });
+                                    }}
+                                />
+                                <Input
+                                    type="text"
+                                    label={LANG.case_data.last_name}
+                                    value={dataState.last_name}
+                                    onChange={(e) => {
+                                        setDataState({ ...dataState, last_name: e.target.value.trim() });
+                                    }}
+                                />
+                                <Input
+                                    type="text"
+                                    label={LANG.case_data.middle_name}
+                                    value={dataState.middle_name}
+                                    onChange={(e) => {
+                                        setDataState({ ...dataState, middle_name: e.target.value.trim() });
+                                    }}
+                                />
+                                <div className="InputBlock-editer-icons">
+                                    <span onClick={() => { changeName() }} >
+                                        <Icon icon={"save"} addClass={"save-icon"} />
+                                    </span>
+                                    <span onClick={() => { setEditName(false) }} >
+                                        <Icon icon={"close"} addClass={"close-icon"} />
+                                    </span>
+                                </div>
                             </div>
                         }
-                        
+
                     </div>
                 </div>
             </div>
@@ -264,6 +310,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         <span>{LANG.case_data.birthday}</span>
                         <InputBlock
                             value={dataState.happy_bd}
+                            age={true}
                             onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
                             icon={"birthday"}
                             label={dataState.happy_bd}
@@ -271,6 +318,18 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             saveHandler={(val) => saveHandler("happy_bd", val, "general")}
                         />
                     </div>
+                    <div className="CaseInfoBlock-line">
+                        <span>{LANG.case_data.sex}</span>
+                        <InputBlock
+                            value={dataState.sex}
+                            select={true}
+                            onChange={(e) => { handleDataChange("sex", e.target.value) }}
+                            icon={"sex"}
+                            label={LANG.selects.sex[dataState.sex]}
+                            saveHandler={(val, displayVal) => saveHandler("sex", val, "general", displayVal)}
+                        />
+                    </div>
+
                     <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.email}</span>
                         <InputBlock

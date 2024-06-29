@@ -85,9 +85,9 @@ const AddCaseForm = () => {
     
     function handleSubmit() {
         if (stateGeneral.first_name.length < 1) {
-            setErrorAlert({...alert,status:true,text:"Будь ласка, введіть ім'я кейсу"})
+            setErrorAlert({...alert,status:true,text:LANG.add_case.alertMessages.name})
         } else if (stateGeneral.phone1.length < 10 || stateGeneral.phone1.length > 13) {
-            setErrorAlert({...alert,status:true,text:"Будь ласка, введіть номер телефону кейсу"})
+            setErrorAlert({...alert,status:true,text:LANG.add_case.alertMessages.phone})
         }else{
             sendGeneral()
         }
@@ -114,12 +114,12 @@ const AddCaseForm = () => {
     }
     return (
         <div className="AddCaseForm">
-            <h1>Додати кейс</h1>
+            <h1>{LANG.add_case.title}</h1>
             {switchData.general ?
                 <div className="AddCaseForm-inner">
                     <div className="AddCaseForm-inner-line-three w100">
                         <div >
-                            <p>Ім'я <span className="required">*</span></p>
+                            <p>{LANG.case_data.first_name} <span className="required">*</span></p>
                             <Input
                                 value={stateGeneral.first_name}
                                 onChange={(e) => {
@@ -128,7 +128,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div>
-                            <p>Прізвище</p>
+                            <p>{LANG.case_data.middle_name}</p>
                             <Input
                                 value={stateGeneral.middle_name}
                                 onChange={(e) => {
@@ -137,7 +137,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div>
-                            <p>По батькові</p>
+                            <p>{LANG.case_data.last_name}</p>
                             <Input
                                 value={stateGeneral.last_name}
                                 onChange={(e) => {
@@ -148,7 +148,7 @@ const AddCaseForm = () => {
                     </div>
                     <div className="AddCaseForm-inner-line-three w100">
                         <div>
-                            <p>Номер телефону 1 <span className="required">*</span></p>
+                            <p>{LANG.case_data.phone} 1<span className="required">*</span></p>
                             <Input
                                 type="number"
                                 value={stateGeneral.phone1}
@@ -158,7 +158,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div>
-                            <p>Номер телефону 2</p>
+                            <p>{LANG.case_data.phone} 2</p>
                             <Input
                                 type="number"
                                 value={stateGeneral.phone2}
@@ -168,18 +168,18 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div>
-                        <p>Стать</p>
+                        <p>{LANG.case_data.sex}</p>
                         <Select value={stateGeneral.sex} onChange={(e)=>{changeHandlerGeneral("sex", e.target.value)}}>
                                 <MenuItem value="male">{LANG.selects.sex.male}</MenuItem>
                                 <MenuItem value="female">{LANG.selects.sex.female}</MenuItem>
-                                <MenuItem value="none">{LANG.selects.sex.none}</MenuItem>
+                                <MenuItem value="other">{LANG.selects.sex.other}</MenuItem>
                         </Select>
                         </div>
                     </div>
 
                     <div className="AddCaseForm-inner-line-two w100">
                         <div>
-                            <p>Електронна пошта</p>
+                            <p>{LANG.case_data.email}</p>
                             <Input
                                 value={stateGeneral.email}
                                 onChange={(e) => {
@@ -188,7 +188,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div>
-                            <p>Дата народження</p>
+                            <p>{LANG.case_data.birthday}</p>
                             <Input
                                 type="date"
                                 value={stateGeneral.happy_bd}
@@ -204,7 +204,7 @@ const AddCaseForm = () => {
                 <div className="AddCaseForm-inner">
                     <div className="AddCaseForm-inner-line-three w100">
                         <div className="w100">
-                            <p>Місце проживання по прописці</p>
+                            <p>{LANG.case_data.address_registered}</p>
                             <Input
                                 value={stateData.address_registered}
                                 onChange={(e) => {
@@ -213,7 +213,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div className="w100">
-                            <p>Фактичне місце проживання</p>
+                            <p>{LANG.case_data.address_live}</p>
                             <Input
                                 value={stateData.address_live}
                                 onChange={(e) => {
@@ -222,7 +222,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div className="w100">
-                            <p>Канал комунікації</p>
+                            <p>{LANG.case_data.channel}</p>
                             <Input
                                 value={stateData.channel}
                                 onChange={(e) => {
@@ -233,7 +233,7 @@ const AddCaseForm = () => {
                     </div>
                     <div className="AddCaseForm-inner-line-three w100">
                         <div className="w100">
-                            <p>Дата першого контакту</p>
+                            <p>{LANG.case_data.first_contact}</p>
                             <Input
                                 type="date"
                                 value={stateData.date_first_contact}
@@ -243,7 +243,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div className="w100">
-                            <p>Дата укладення договору</p>
+                            <p>{LANG.case_data.contract_date}</p>
                             <Input
                                 type="date"
                                 value={stateData.contract_date}
@@ -253,7 +253,7 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div className="w100">
-                            <p>Номер договору</p>
+                            <p>{LANG.case_data.contract_number}</p>
                             <Input
                                 type="number"
                                 value={stateData.contract_number}
@@ -265,7 +265,7 @@ const AddCaseForm = () => {
                     </div>
 
                     <div className="w100">
-                        <p>Потреба, запит</p>
+                        <p>{LANG.case_data.potreba}</p>
                         <Textarea rows={10} cols={70}
                             value={stateData.potreba}
                             onChange={(e) => {
@@ -275,7 +275,7 @@ const AddCaseForm = () => {
                     </div>
 
                     <div className="w100">
-                        <p>Сімейний стан, деталі про сім'ю, її склад</p>
+                        <p>{LANG.case_data.family}</p>
                         <Textarea rows={10} cols={70}
                             value={stateData.family_info}
                             onChange={(e) => {
@@ -284,7 +284,7 @@ const AddCaseForm = () => {
                         />
                     </div>
                     <div className="w100">
-                        <p>Історія сім'ї / особи</p>
+                        <p>{LANG.case_data.history}</p>
                         <Textarea rows={10} cols={70}
                             value={stateData.history}
                             onChange={(e) => {
@@ -293,8 +293,7 @@ const AddCaseForm = () => {
                         />
                     </div>
                     <div className="w100">
-
-                            <p>Категорія кейсу</p>
+                            <p>{LANG.case_data.category}</p>
                             <CheckboxListAccess
                                 allMas={()=>{return categories}} 
                                 checkedMas={checkedMas}
@@ -305,7 +304,7 @@ const AddCaseForm = () => {
 
                     </div>
                     <div className="w100">
-                        <p>Коментар</p>
+                        <p>{LANG.case_data.comment}</p>
                         <Textarea rows={10} cols={70}
                             value={stateData.comment}
                             onChange={(e) => {
@@ -317,8 +316,8 @@ const AddCaseForm = () => {
 
                     </div>
                     <div className="AddCaseForm-inner-line-buttons">
-                    <Button variant="contained" color="error" onClick={()=>{navigate("/case/" + stateData.case_id)}}>Пропустити</Button>
-                    <Button variant="contained" disabled={isDataEmpty.data && isDataEmpty.categories} onClick={saveHandler}>Зберегти</Button>
+                    <Button variant="contained" color="error" onClick={()=>{navigate("/case/" + stateData.case_id)}}>{LANG.GLOBAL.skip}</Button>
+                    <Button variant="contained" disabled={isDataEmpty.data && isDataEmpty.categories} onClick={saveHandler}>{LANG.save}</Button>
                     </div>
                 </div>
             }
