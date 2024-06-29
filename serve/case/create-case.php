@@ -23,7 +23,7 @@ if ($stmt === false) {
 }
 
 // Прив'язка параметрів та виконання запиту
-$stmt->bind_param("ssssssssii", $name, $data['first_name'], $data['middle_name'], $data['last_name'], 
+$stmt->bind_param("ssssssssiis", $name, $data['first_name'], $data['middle_name'], $data['last_name'], 
                             $phone1_encrypted, $phone2_encrypted, $email_encrypted, $data['happy_bd'], $data['id'], $data['id'], $data['sex']);
 
 // Виконання запиту
