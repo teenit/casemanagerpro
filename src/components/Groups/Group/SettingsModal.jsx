@@ -6,9 +6,9 @@ const SettingsModal = ({close}) => {
     <div className='SettingsModal' onClick={close}>
         <div className='SettingsModal-inner'>
             <div className='SettingsModal-inner-title'>Group</div>
-            <div className='SettingsModal-inner-option'>
+            {/* <div className='SettingsModal-inner-option'>
                 <div>Додати учасника групи</div>
-            </div>
+            </div> */}
         </div>
     </div>
   )

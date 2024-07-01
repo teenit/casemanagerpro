@@ -97,9 +97,11 @@ const ContactListItem = ({
           </div>
         )}
 
-        <div className={style.contact_list_item} key={`whoisit-${id}`}>
-          {info.whoisit}
-        </div>
+        {info.whoisit && (
+          <div className={style.contact_list_item} key={`whoisit-${id}`}>
+            {info.whoisit}
+          </div>
+        )}
 
         {info.site && (
           <div className={style.contact_list_item} key={`site-${id}`}>

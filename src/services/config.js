@@ -9,7 +9,10 @@ export const LANG = {
     color: "Колір",
     confirm_title: "Підтвердити дію",
     delete: "Видалити",
-    skip:"Пропустити"
+    skip:"Пропустити",
+    start:"Початок",
+    end:"Кінець",
+    link:"Посилання"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Права користувачів (Сторінки)",
@@ -105,6 +108,7 @@ export const LANG = {
       phone:"Будь ласка, введіть номер телефону кейсу"
     }
   },
+  
   forgotPass: {
     title: "Форма відновлення"
   },
@@ -161,6 +165,47 @@ export const LANG = {
     categories:{
       category:"Категорія",
       noCategory:"Без категорії"
+    },
+    calendar:{
+      weekDays:{
+        Monday: "ПН",
+        Tuesday: "ВТ",
+        Wednesday: "СР",
+        Thursday: "ЧТ",
+        Friday: "ПТ",
+        Saturday: "СБ",
+        Sunday: "НД"
+      },
+      month:{
+        January: "Січень",
+        February: "Лютий",
+        March: "Березень",
+        April: "Квітень",
+        May: "Травень",
+        June: "Червень",
+        July: "Липень",
+        August: "Серпень",
+        September: "Вересень",
+        October: "Жовтень",
+        November: "Листопад",
+        December: "Грудень"
+      },
+      today:"Сьогодні",
+      filter:{
+        title:"Відобразити у календарі",
+        my_calendar:"Мій календар",
+        notes_for_all:"Записи для всіх",
+        birthdays:"Дні народження кейсів"
+      },
+      add_event:{
+        title:"Додати подію",
+        for_all:"Для всіх",
+        repeat:"Повторювати кожного року",
+        alertMessages:{
+          success:"Подію додано",
+          error:"Введіть назву та опис події"
+        },
+      }
     },
     groups:{
       amount:"Кількість об'єктів",

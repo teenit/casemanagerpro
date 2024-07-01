@@ -19,6 +19,7 @@ const ContactForm = ({ editContact, onSubmit, contact, showModal, toggleModal })
 
   const [alert, setAlert] = useState({
     success: false,
+    error: false,
     message: ""
   });
 
@@ -51,8 +52,11 @@ const ContactForm = ({ editContact, onSubmit, contact, showModal, toggleModal })
   const handleChangeSelect = (e) => {
     setState({ ...state, category: e.target.value });
   };
-
+  const alertHandler = (key, message) =>{
+    setAlert({...alert, [key]:!alert[key], message:message})
+  }
   const handleSubmit = (event) => {
+    if(state.pib.length<1 || state.phones[0].number.length==10)return alertHandler("error", "Введіть ім'я та телефон контакту")
     event.preventDefault();
     const { category, pib, info, phones, id } = state;
     const sendData = { category, pib, phones, info, id };
@@ -95,7 +99,7 @@ const ContactForm = ({ editContact, onSubmit, contact, showModal, toggleModal })
   };
 
   return (
-    <form className="ContactForm" onSubmit={handleSubmit}>
+    <div className="ContactForm">
       <div className="ContactForm-split">
         <Input
           label="ПІБ"
@@ -194,11 +198,12 @@ const ContactForm = ({ editContact, onSubmit, contact, showModal, toggleModal })
         value={state.info.info}
         onChange={(e) => handleChangeInfo("info", e.target.value)}
       />
-      <Button variant="contained" type="submit">
+      <Button variant="contained" onClick={handleSubmit}>
         {state.id ? "Редагувати" : "Зберегти"}
       </Button>
       {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => {setAlert({ ...alert, success: false })}} />}
-    </form>
+      {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => {setAlert({ ...alert, error: false })}} />}
+    </div>
   );
 };
 
