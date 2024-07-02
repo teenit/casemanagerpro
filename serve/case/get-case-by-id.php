@@ -46,6 +46,10 @@ try {
                 $obj->{'meta_id'} = $row_case_meta['meta_id'];
                 $case_meta_obj->{'profileImg'} = $obj;
                 break;
+            case 'case_view_info':
+
+                $case_meta_obj->{'viewInfo'} = json_decode($row_case_meta['meta_value']);
+                break;
         }
     }
 
@@ -89,6 +93,22 @@ try {
 
     while ($row_case_helps = $result_case_helps->fetch_assoc()) {
         $case_helps_data[] = $row_case_helps;
+    }
+
+    // Отримання даних з таблиці case_plans
+    $sql_user_meta = "SELECT * FROM usermeta WHERE user_id = ? AND meta_key = 'case_view_info'";
+    $stmt_user_meta = $conn->prepare($sql_user_meta);
+    $stmt_user_meta->bind_param("i", $data->id);
+    $stmt_user_meta->execute();
+    $result_user_meta = $stmt_user_meta->get_result();
+    $user_meta = [];
+
+    while ($row_user_meta = $result_user_meta->fetch_assoc()) {
+        $user_meta[] = [
+            'meta_id' => $row_user_meta['id'],
+            'key' => $row_user_meta['meta_key'],
+            'value' => json_decode($row_case_meta['meta_value'])
+        ];
     }
 
     // Отримання даних з таблиці cases_data
@@ -142,6 +162,7 @@ try {
         'helps' => $case_helps_data,
         'data' => $cases_data,
         'notes' => $case_notes_data,
+        'userMeta' => $user_meta,
     ];
 
     echo json_encode($response);

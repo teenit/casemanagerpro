@@ -308,7 +308,17 @@ export const LANG = {
     dec:"Грудень"
   },
   happy_days_cases:"Дні народження кейсів",
-  categories_case:"Категорії кейсів"
+  categories_case:"Категорії кейсів",
+  case_view_settings: {
+      "view_ProfilePhoto":"Відобразити фото профілю",
+      "view_GroupConnection":"Відобразити блок групи кейсу",
+      "view_Plan":"Відобразити блок плану",
+      "view_Help":"Відобразити блок наданої допомоги",
+      "view_Notes":"Відобразити блок нотатків",
+      "view_Gallery":"Відобразити блок галерея",
+      "view_FileUploader":"Відобразити блок завантаження медіа",
+      "view_DetailedInfo":"Відобразити блок детальної інформації"
+  }
 };
 export const appConfig = {
   access: {
@@ -692,5 +702,15 @@ export const appConfig = {
   },
   default: {
     color: "#42a5f5"
-  }
+  },
+  caseViewSettings: [
+      "view_ProfilePhoto",
+      "view_GroupConnection",
+      "view_Plan",
+      "view_Help",
+      "view_Notes",
+      "view_Gallery",
+      "view_FileUploader",
+      "view_DetailedInfo"
+  ]
 }

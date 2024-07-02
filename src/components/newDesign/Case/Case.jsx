@@ -24,6 +24,7 @@ import GiveHelps from "./GiveHelps";
 import DetailedInfo from "./DetailedInfo";
 import GroupConnections from "../../Groups/Connect/GroupConnections";
 import GalleryBlock from "../../blocks/GalleryBlock";
+import CaseSettings from "./CaseSettings";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const Case = () => {
 
     const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
-            setState({ ...res })
+            setState({ ...res, viewInfoActive: res.viewInfo ? false : true });
             getUserNameById(res.responsible_id)
         })
     }
@@ -73,6 +74,9 @@ const Case = () => {
     }
     return state && state.general ? (
         <div className="case__wrap">
+            {
+                openSetting && <CaseSettings views={state.viewInfoActive ? {} : state.viewInfo}/>
+            }
             <div className="set__case__ico">
                 <img className="setImg" src={setImg} alt=""
                     onClick={() => { setOpenSetting(!openSetting) }} />
@@ -88,26 +92,36 @@ const Case = () => {
 
 
             <div className="case__contact__info">
-                {state.meta?.profileImg?.link ?
-                    <CaseProfilePhoto profileImg={state.meta.profileImg.link.link} getCaseInfo={getCaseInfo} case_id={case_id} />
-                    :
-                    <CaseProfilePhoto profileImg={null} getCaseInfo={getCaseInfo} case_id={case_id} />}
+                { (state.viewInfoActive || state.viewInfo?.view_ProfilePhoto) &&
+                    <CaseProfilePhoto profileImg={state.meta?.profileImg?.link ? state.meta.profileImg.link.link : null} getCaseInfo={getCaseInfo} case_id={case_id} />
+                }
                 <div>
+                
                     <CaseInfoBlock case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />
-                </div>
+                    </div>
             </div>
-
-            <GroupConnections case_id={case_id} type={"case"} />
+            { (state.viewInfoActive || state.viewInfo?.view_GroupConnection) &&
+                <GroupConnections case_id={case_id} type={"case"} />
+            }
             <div className="container__grid__two">
+            { (state.viewInfoActive || state.viewInfo?.view_DetailedInfo) &&
                 <DetailedInfo info={state.data} changeData={(key, value) => { handleDataChange(key, value) }} />
+            }
+            { (state.viewInfoActive || state.viewInfo?.view_Plan) &&
                 <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo} />
+            }
             </div>
             <div className="container__grid__two">
+            { (state.viewInfoActive || state.viewInfo?.view_Help) &&
                 <GiveHelps helps={state.helps} case_id={case_id} getCaseInfo={getCaseInfo} />
+            }
+            { (state.viewInfoActive || state.viewInfo?.view_Notes) &&
                 <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
+            }
             </div>
 
-            {!!state?.meta?.files?.length && <GalleryBlock data={state.meta.files} />}
+            {!!state?.meta?.files?.length && (state.viewInfoActive || state.viewInfo?.view_Gallery) && <GalleryBlock data={state.meta.files} />}
+            { state.viewInfoActive || state.viewInfo?.view_FileUploader &&
             <div className="uploader_wrap">
                 <p>Завантажити файл</p>
                 <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
@@ -116,6 +130,7 @@ const Case = () => {
                     type: "case"
                 }} />
             </div>
+            }
         </div>
     ) : (
         <>
