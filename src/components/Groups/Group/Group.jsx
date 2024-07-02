@@ -59,16 +59,9 @@ const deleteHandler = (index)=>{
                 </div>
                 <div className='Group-members-inner'>
                     <div className='Group-members-inner-column'>
-                        <div>Зареєстровані</div>
                         {data && data.map((item, index) => {
                             return <Member key={index} item={item} index={index} />
                         })}
-                    </div>
-                    <div className='Group-members-inner-column'>
-                        <div>Не зареєстровані</div>
-                        {/* {mas.map((item, index) => {
-                            return <Member key={index} item={item} />
-                        })} */}
                     </div>
                 </div>
             </div>

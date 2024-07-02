@@ -104,7 +104,7 @@ const GalleryBlock = ({ data }) => {
                     <thead>
                         <tr>
                             <td>{LANG.galleryBlock.name}</td>
-                            <td>{LANG.galleryBlock.name}</td>
+                            <td>{LANG.galleryBlock.type}</td>
                             <td>{LANG.galleryBlock.size}</td>
                             <td>{LANG.galleryBlock.download}</td>
                         </tr>

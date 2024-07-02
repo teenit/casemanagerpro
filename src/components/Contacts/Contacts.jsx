@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./Contacts.module.css";
 import ContactList from "./ContactList/ContactList";
 import ContactForm from "./ContactForm/ContactForm";
@@ -11,21 +11,20 @@ import {
 import Loadpic from "../Loading/Interactive/Loadpic";
 import LoadingPage from "../Loading/LoadingPage";
 import Icon from "../elements/Icons/Icon";
-import Modal from "../Modals/Modal"
-export class Contacts extends Component {
-  state = {
-    contacts: [],
-    showModal: false,
-    isEditContact: "",
-    isLoading: false,
-    elementHeight: 0,
-  };
+import Modal from "../Modals/Modal";
+import SmallNotification from "../elements/Notifications/SmallNotification";
 
-  componentDidMount() {
-    this.toggleLoading();
+const Contacts = () => {
+  const [contacts, setContacts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [isEditContact, setIsEditContact] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    toggleLoading();
     fetchContscts()
       .then((data) => {
-        let arreyContact = data.sort(function (a, b) {
+        let sortedContacts = data.sort((a, b) => {
           let nameA = a.pib.toLowerCase(),
             nameB = b.pib.toLowerCase();
           if (nameA < nameB) return -1;
@@ -33,39 +32,30 @@ export class Contacts extends Component {
           return 0;
         });
 
-
-        this.setState({
-          contacts: arreyContact,
-        });
+        setContacts(sortedContacts);
       })
       .catch((error) => console.log(error))
-      .finally(this.toggleLoading);
+      .finally(toggleLoading);
 
+    // Uncomment if you want to load contacts from localStorage
     // const contacts = localStorage.getItem("contacts");
     // const parsedContacts = JSON.parse(contacts);
     // if (parsedContacts) {
-    //   this.setState({
-    //     contacts: parsedContacts,
-    //   });
+    //   setContacts(parsedContacts);
     // }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
+  const [alert, setAlert] = useState({
+    success: false,
+    error: false,
+  })
+  const alertHandler = (key) => {
+    setAlert({ ...alert, [key]: !alert[key] })
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    // Перевірка чі є щось в Локал
-    if (this.setState.contacts !== prevState.contacts) {
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
-    }
-
-    // Перевірка чі додалась новий контакт
-    // if (
-    //   this.state.contacts.length > prevState.contacts.length &&
-    //   prevState.contacts.length !== 0
-    // ) {
-    //   this.toggleModal();
-    // }
-  }
-
-  addContact = ({ category, pib, phones, info }) => {
+  const addContactHandler = ({ category, pib, phones, info }) => {
     const contact = {
       id: localStorage.getItem("id"),
       token: localStorage.getItem("token"),
@@ -75,11 +65,11 @@ export class Contacts extends Component {
       category,
     };
 
-    this.toggleLoading();
+    toggleLoading();
 
     addContact(contact)
       .then((data) => {
-        let arreyContact = data.sort(function (a, b) {
+        let sortedContacts = data.sort((a, b) => {
           let nameA = a.pib.toLowerCase(),
             nameB = b.pib.toLowerCase();
           if (nameA < nameB) return -1;
@@ -87,46 +77,37 @@ export class Contacts extends Component {
           return 0;
         });
 
-        this.setState(() => ({
-          contacts: arreyContact,
-        }));
-
-        this.toggleModal();
+        setContacts(sortedContacts);
+        toggleModal();
       })
       .catch((error) => console.log(error))
-      .finally(this.toggleLoading);
-
-    // this.toggleModal();
+      .finally(toggleLoading);
   };
 
-  toggleModal = () => {
-    this.setState((state) => ({
-      showModal: !state.showModal,
-    }));
+  const toggleModal = () => {
+    setShowModal((prevShowModal) => !prevShowModal);
   };
 
-  deleteContact = (contactId) => {
-    let deleteСontact = {
+  const deleteContactHandler = (contactId) => {
+    const deleteСontact = {
       id: localStorage.getItem("id"),
       token: localStorage.getItem("token"),
       contactID: contactId,
     };
 
-    this.toggleLoading();
+    toggleLoading();
 
     deleteContact(deleteСontact)
-      .then((data) => alert(data.text))
-      .catch((error) => console.log(error))
-      .finally(this.toggleLoading);
+      .then((data) => alertHandler("success"))
+      .catch((error) => {console.log(error); alertHandler("error")})
+      .finally(toggleLoading);
 
-    this.setState((prevState) => ({
-      contacts: prevState.contacts.filter(
-        (contact) => contact.id !== contactId
-      ),
-    }));
+    setContacts((prevContacts) =>
+      prevContacts.filter((contact) => contact.id !== contactId)
+    );
   };
 
-  editContact = ({ category, pib, phones, info, id }) => {
+  const editContactHandler = ({ category, pib, phones, info, id }) => {
     const editedContact = {
       id: localStorage.getItem("id"),
       token: localStorage.getItem("token"),
@@ -137,75 +118,71 @@ export class Contacts extends Component {
       contactID: id,
     };
 
-    this.toggleLoading();
+    toggleLoading();
 
     editContact(editedContact)
       .then((data) => {
-        this.setState({ isEditContact: "" });
+        setIsEditContact("");
       })
       .catch((error) => console.log(error))
-      .finally(this.toggleLoading);
+      .finally(toggleLoading);
 
-    this.setState((prevState) => ({
-      contacts: [
-        ...prevState.contacts.map((item) =>
-          item.id === id ? { category, pib, phones, info, id } : item
-        ),
-      ],
-    }));
-  };
-
-  toggleEditContact = (id) => {
-    this.setState({ isEditContact: id });
-  };
-
-  toggleLoading = () => {
-    this.setState((prevState) => ({
-      isLoading: !prevState.isLoading,
-    }));
-  };
-
-  render() {
-    const { contacts, showModal, isEditContact, isLoading } = this.state;
-
-    return true ? (
-      <>
-        {isLoading && <Loadpic show={"active"} />}
-        <section className={`${style.section_contact} ${style.responsive}`}>
-          <div className={style.title}>
-          <span>Контакти</span>
-            <span onClick={this.toggleModal}>
-              <Icon icon={"add"}/>
-            </span>
-          </div>
-
-
-          <ContactList
-            isEditContact={isEditContact}
-            contacts={contacts}
-            onDeleteContact={this.deleteContact}
-            toggleEditContact={this.toggleEditContact}
-            editContact={this.editContact}
-            toggleModal={this.toggleModal}
-          />
-
-          {showModal && (
-            <Modal closeHandler={this.toggleModal}>
-              <ContactForm
-                onSubmit={this.addContact}
-                toggleModal={this.toggleModal}
-                showModal={showModal}
-              />
-            </Modal>
-          )}
-        </section>
-      </>
-    ):(
-      <div className="page__loading">
-        <LoadingPage effload={false} message = {"Даний розділ ТЕЛЕФОННА КНИГА у процесі розробки (найближчим часом буде зроблено)"} />
-      </div>
+    setContacts((prevContacts) =>
+      prevContacts.map((item) =>
+        item.id === id ? { category, pib, phones, info, id } : item
+      )
     );
-  }
-}
+  };
+
+  const toggleEditContact = (id) => {
+    setIsEditContact(id);
+  };
+
+  const toggleLoading = () => {
+    setIsLoading((prevIsLoading) => !prevIsLoading);
+  };
+
+  return true ? (
+    <>
+      {isLoading && <Loadpic show={"active"} />}
+      <section className={`${style.section_contact} ${style.responsive}`}>
+        <div className={style.title}>
+          <span>Контакти</span>
+          <span onClick={toggleModal}>
+            <Icon icon={"add"} />
+          </span>
+        </div>
+
+        <ContactList
+          isEditContact={isEditContact}
+          contacts={contacts}
+          onDeleteContact={deleteContactHandler}
+          toggleEditContact={toggleEditContact}
+          editContact={editContactHandler}
+          toggleModal={toggleModal}
+        />
+
+        {showModal && (
+          <Modal closeHandler={toggleModal}>
+            <ContactForm
+              onSubmit={addContactHandler}
+              toggleModal={toggleModal}
+              showModal={showModal}
+            />
+          </Modal>
+        )}
+      </section>
+      {alert.success && <SmallNotification isSuccess={true} text={"Контакт видалено успішно"} close={()=>{alertHandler("success")}}/>}
+      {alert.error && <SmallNotification isSuccess={false} text={"Виникла помилка. Спробуйте пізніше"} close={()=>{alertHandler("error")}}/>}
+    </>
+  ) : (
+    <div className="page__loading">
+      <LoadingPage
+        effload={false}
+        message={"Даний розділ ТЕЛЕФОННА КНИГА у процесі розробки (найближчим часом буде зроблено)"}
+      />
+    </div>
+  );
+};
 
 export default Contacts;

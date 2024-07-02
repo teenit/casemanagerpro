@@ -1,5 +1,6 @@
 import React from "react";
 import s from "./style.module.css"
+import { LANG } from "../../../services/config";
 const CalMonitor = ({today,prevHandler,nextHandler,nowHandler,weekArray})=>{
     return (
         <div className={s.inner}>
@@ -10,7 +11,7 @@ const CalMonitor = ({today,prevHandler,nextHandler,nowHandler,weekArray})=>{
             </div>
             <div className={s.control}>
                 <button className={s.control__btn} onClick={prevHandler}>{'<'}</button>
-                <button className={s.control__btn} onClick={nowHandler}>{'Сьогодні'}</button>
+                <button className={s.control__btn} onClick={nowHandler}>{LANG.calendar.today}</button>
                 <button className={s.control__btn} onClick={nextHandler}>{'>'}</button>
             </div>
         </div>

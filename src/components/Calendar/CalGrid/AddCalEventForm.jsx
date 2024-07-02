@@ -8,192 +8,160 @@ import { Button, Checkbox } from "@mui/material";
 import Modal from "../../Modals/Modal"
 import Textarea from "../../elements/Inputs/Textarea"
 import SmallNotification from "../../elements/Notifications/SmallNotification"
+
 const AddCalEventForm = ({ date, close, getCalendarList }) => {
     const [form, setForm] = useState({
-        color: {
-            requare: true,
-            value: "#f5b914",
-            error: false
-        },
-        title: {
-            requare: true,
-            value: "",
-            error: true
-        },
-        text: {
-            requare: true,
-            value: "",
-            error: true
-        },
-        link: {
-            requare: false,
-            value: "",
-            error: false
-        },
-        start: {
-            requare: false,
-            value: "12:00",
-            error: false
-        },
-        end: {
-            requare: false,
-            value: "13:00",
-            error: false
-        },
+        color: "#f5b914",
+        title: "",
+        text: "",
+        link: "",
+        start: "12:00",
+        end: "13:00",
         day: date.format('D'),
         month: date.month() + 1,
         year: date.year(),
         key: 'myCalendar',
         every_year: 0
-    })
-    const [alert,setAlert] = useState({
-        success:false,
-        error:false
-    })
+    });
+
+    const [alert, setAlert] = useState({
+        success: false,
+        error: false
+    });
+
+    const handleChange = (field, value) => {
+        setForm(prevForm => ({ ...prevForm, [field]: value }));
+    };
+
+    const validateForm = () => {
+        return form.title.trim().length > 1 && form.text.trim().length > 1;
+    };
+
     const saveHandler = () => {
         apiResponse({
-            title: form.title.value,
-            text: changeApsBr(form.text.value),
-            color: form.color.value,
-            link: form.link.value,
-            start: form.start.value,
-            end: form.end.value,
+            title: form.title,
+            text: changeApsBr(form.text),
+            color: form.color,
+            link: form.link,
+            start: form.start,
+            end: form.end,
             day: form.day,
             month: form.month,
             year: form.year,
             key: form.key,
             every_year: form.every_year
-        },"user/add-calendar.php").then((res)=>{getCalendarList(); close();})
-    }
-    function sendForm() {
-        if (form.title.error || form.color.error || form.link.error || form.text.error) {
-            setAlert({...alert,error:true})
-        }else{
-            saveHandler()
-            setAlert({...alert,success:true})
+        }, "user/add-calendar.php").then((res) => {
+            getCalendarList();
+            close();
+        });
+    };
+
+    const sendForm = () => {
+        if (validateForm()) {
+            saveHandler();
+            setAlert({ success: true, error: false });
+        } else {
+            setAlert({ success: false, error: true });
         }
+    };
 
-
-    }
     return (
-        <Modal header={"Додати подію"} closeHandler={close} footer={<div className="Modal--footer">
-            <Button onClick={close} color="error" variant="contained">{LANG.cancel}</Button>
-            <Button onClick={sendForm} variant="contained">{LANG.save}</Button>
-        </div>}>
+        <Modal header={LANG.calendar.add_event.title} closeHandler={close} footer={
+            <div className="Modal--footer">
+                <Button onClick={close} color="error" variant="contained">{LANG.cancel}</Button>
+                <Button onClick={sendForm} variant="contained">{LANG.save}</Button>
+            </div>
+        }>
             <div className={s.add__form}>
                 <div className={s.add__form__line}>
                     <div className={s.add__form__f__line}>
                         <div className={s.add__form__title}>
-                            <Input value={form.title.value} label="Назва *" type="text"
-                                onChange={(e) => {
-                                    let error = true;
-                                    if (form.title.requare && changeAps(e.target.value).length > 1) error = false;
-                                    setForm({
-                                        ...form,
-                                        title: {
-                                            ...form.title,
-                                            value: changeAps(e.target.value),
-                                            error: error
-                                        }
-                                    })
-                                }} />
+                            <Input 
+                                value={form.title} 
+                                label={LANG.GLOBAL.title}
+                                type="text"
+                                onChange={(e) => handleChange('title', changeAps(e.target.value))}
+                            />
                         </div>
                         <div className={s.add__form__color}>
-                            <input value={form.color.value} title="Колір івенту" className={s.add__form__color__inp} type="color"
-                                onChange={(e) => {
-                                    setForm({
-                                        ...form,
-                                        color: {
-                                            ...form.color,
-                                            value: e.target.value
-                                        }
-                                    })
-                                }} />
+                            <input 
+                                value={form.color} 
+                                title={LANG.GLOBAL.color} 
+                                className={s.add__form__color__inp} 
+                                type="color"
+                                onChange={(e) => handleChange('color', e.target.value)}
+                            />
                         </div>
                     </div>
                 </div>
                 <div className={s.add__form__line}>
                     <div className={s.add__form__row}>
-                        <label htmlFor="">Початок<Input value={form.start.value} type="time" name="" id=""
-                            onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    start: {
-                                        ...form.start,
-                                        value: e.target.value
-                                    }
-                                })
-                            }} /></label>
-
-                        <label htmlFor="">Кінець<Input value={form.end.value} type="time" name="" id=""
-                            onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    end: {
-                                        ...form.end,
-                                        value: e.target.value
-                                    }
-                                })
-                            }} /></label>
+                        <label>{LANG.GLOBAL.start}
+                            <Input 
+                                value={form.start} 
+                                type="time" 
+                                onChange={(e) => handleChange('start', e.target.value)}
+                            />
+                        </label>
+                        <label>{LANG.GLOBAL.end}
+                            <Input 
+                                value={form.end} 
+                                type="time" 
+                                onChange={(e) => handleChange('end', e.target.value)}
+                            />
+                        </label>
                     </div>
                 </div>
                 <div className={s.add__form__line}>
-                        <Textarea value={form.text.value} label="Введіть текст події *" cols="30" rows="10"
-                            onChange={(e) => {
-                                let error = true;
-                                if (form.text.requare && e.target.value.length > 5) error = false;
-                                setForm({
-                                    ...form,
-                                    text: {
-                                        ...form.text,
-                                        value: e.target.value,
-                                        error: error
-                                    }
-                                })
-                            }}></Textarea>
+                    <Textarea 
+                        value={form.text} 
+                        label={LANG.GLOBAL.description} 
+                        cols="30" 
+                        rows="10"
+                        onChange={(e) => handleChange('text', e.target.value)}
+                    />
                 </div>
                 <div className={s.add__form__line}>
-                    <label htmlFor="forAll">Для всіх<input type="checkbox" name="forAll" id="forAll"
-                        onChange={(e) => {
-                            setForm({
-                                ...form,
-                                key: e.target.checked ? 'forAll' : 'myCalendar'
-                            })
-                        }} /></label>
+                    <label>{LANG.calendar.add_event.for_all}
+                        <Checkbox 
+                            onChange={(e) => handleChange('key', e.target.checked ? 'forAll' : 'myCalendar')}
+                        />
+                    </label>
                 </div>
                 <div className={s.add__form__line}>
-                    <label htmlFor="forAll">Повторювати кожного року<Checkbox type="checkbox"
-                        onChange={(e) => {
-                            setForm({
-                                ...form,
-                                every_year: e.target.checked ? 1 : 0
-                            })
-                        }} /></label>
+                    <label>{LANG.calendar.add_event.repeat}
+                        <Checkbox 
+                            onChange={(e) => handleChange('every_year', e.target.checked ? 1 : 0)}
+                        />
+                    </label>
                 </div>
                 <div className={s.add__form__line}>
                     <div className={s.add__form__link}>
-                        <Input value={form.link.value} type="text" label="Додати посилання"
-                            onChange={(e) => {
-                                let error = true;
-                                if (changeAps(e.target.value).length > 1) error = false;
-                                setForm({
-                                    ...form,
-                                    link: {
-                                        ...form.link,
-                                        value: changeAps(e.target.value),
-                                        error: error
-                                    }
-                                })
-                            }} />
+                        <Input 
+                            value={form.link} 
+                            type="text" 
+                            label={LANG.GLOBAL.link}
+                            onChange={(e) => handleChange('link', changeAps(e.target.value))}
+                        />
                     </div>
-                    {alert.success && <SmallNotification isSuccess={true} text={"Подію додано"} close={()=>{setAlert({...alert,success:false})}}/>}
-            {alert.error && <SmallNotification isSuccess={false} text={"Перевірте правильність введених даних"} close={()=>{setAlert({...alert,error:false})}}/>}
-
+                    {alert.success && 
+                        <SmallNotification 
+                            isSuccess={true} 
+                            text={LANG.calendar.add_event.alertMessages.success} 
+                            close={() => setAlert({ ...alert, success: false })}
+                        />
+                    }
+                    {alert.error && 
+                        <SmallNotification 
+                            isSuccess={false} 
+                            text={LANG.calendar.add_event.alertMessages.error} 
+                            close={() => setAlert({ ...alert, error: false })}
+                        />
+                    }
                 </div>
-                
             </div>
         </Modal>
-    )
-}
+    );
+};
 
 export default AddCalEventForm;
