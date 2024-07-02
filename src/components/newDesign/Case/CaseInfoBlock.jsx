@@ -136,21 +136,22 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
     }
 
     const howOldIsCase = (birthday) => {
-        if (!birthday) return ""
-        const birthDate = new Date(birthday)
-        const today = new Date()
-        let ageYears = today.getFullYear() - birthDate.getFullYear()
-        let ageMonths = today.getMonth() - birthDate.getMonth()
-        if (ageMonths < 0 || (ageMonths === 0 && today.getDate() < birthDate.getDate())) {
+        if (!birthday) return "";
+
+        const birthDate = new Date(birthday);
+        const today = new Date();
+        let ageYears = today.getFullYear() - birthDate.getFullYear();
+        const isBirthdayPassed = (
+            today.getMonth() > birthDate.getMonth() ||
+            (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate())
+        )
+        if (!isBirthdayPassed) {
             ageYears--
-            ageMonths += 12
-        }
-        if (today.getDate() < birthDate.getDate()) {
-            ageMonths--
         }
 
-        return `, ${ageYears} років ${ageMonths} місяці`;
+        return `, ${ageYears} років`;
     };
+
 
 
     const InputBlock = ({ select = false, age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "" }) => {

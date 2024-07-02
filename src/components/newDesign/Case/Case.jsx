@@ -40,14 +40,16 @@ const Case = () => {
     }
     let params = useParams();
     const case_id = params.id;
-    const [state, setState] = useState(null)
+    const [state, setState] = useState()
     const [editActive, setEditActive] = useState(null)
     const [openSetting, setOpenSetting] = useState(false)
 
     const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
-            setState({ ...res, viewInfoActive: res.viewInfo ? false : true });
+            const viewInfo = JSON.parse(localStorage.getItem("page_case_settings"))
+            setState({ ...res, viewInfoActive: res.viewInfo ? false : true , viewInfo: viewInfo});
             getUserNameById(res.responsible_id)
+            console.log(state);
         })
     }
     const getUsersName = () => {
@@ -62,6 +64,11 @@ const Case = () => {
         getCaseInfo();
         getUsersName();
     }, [case_id])
+    const settingsHandler = (value)=>{
+            setState({...state, viewInfo:value})
+            localStorage.setItem("page_case_settings", JSON.stringify(state))
+            setOpenSetting(false)
+    }
     const handleDataChange = (key, value) => {
         setState({ ...state, data: { ...state.data, [key]: value } })
         apiResponse({ [key]: value, case_id: case_id }, "case/update-case-data.php").then((data) => {
@@ -75,15 +82,15 @@ const Case = () => {
     return state && state.general ? (
         <div className="case__wrap">
             {
-                openSetting && <CaseSettings views={state.viewInfoActive ? {} : state.viewInfo}/>
+                openSetting && <CaseSettings successHandler={(value)=>{settingsHandler(value)}} views={state.viewInfoActive ? {} : state.viewInfo}/>
             }
             <div className="set__case__ico">
                 <img className="setImg" src={setImg} alt=""
                     onClick={() => { setOpenSetting(!openSetting) }} />
                 {
-                    (checkRight(post.level, "editOwnCase") || checkRight(post.level, "editSomeonesCase")) &&
+                    (checkRight(post.level, "editOwnCase") || checkRight(post.level, "")) &&
                     <div>
-                        <img className="editImg" src={editImg} alt=""
+                        <img className="editImg" src={editImg} alt=""editSomeonesCase
                             onClick={() => {
                                 setEditActive(true)
                             }} />
