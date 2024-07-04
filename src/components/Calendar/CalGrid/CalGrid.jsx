@@ -3,6 +3,7 @@ import s from "./cal.module.css"
 import moment from "moment";
 import AddCalEvent from "./AddCalEvent";
 import { useState } from "react";
+import AccessCheck from "../../Functions/AccessCheck";
 const CalGrid =({keys,startDay,today,events,getCalendarList})=>{
     const day = startDay.clone()
     const [addEvent, setAddEvent] = useState({
@@ -12,7 +13,7 @@ const CalGrid =({keys,startDay,today,events,getCalendarList})=>{
     const arrayDays = [...Array(42)].map((item,index)=> index!==0 ? day.add(1,'day').clone():day.clone());
     const currentDay = (day)=> moment().isSame(day,'day')
     const currentMonth = (day)=> today.isSame(day,'month')
-   
+   const happyCase = AccessCheck('yes_no', 'a_page_calendar_look_cases_HB')
     return(
         <div className={s.wrap}>
          {addEvent.open ? <AddCalEvent getCalendarList = {getCalendarList} keys = {keys} events = {events} addEvent = {addEvent} close = {()=>{setAddEvent({...addEvent,open:false})}}/> : null}    
@@ -27,7 +28,7 @@ const CalGrid =({keys,startDay,today,events,getCalendarList})=>{
                             </div>
                             <div className={s.events__wrap}>
                             {events.map((eve,ind)=>{    
-                                if(keys.happyCase == eve.key || keys.myCalendar == eve.key || keys.forAll == eve.key){
+                                if((keys.happyCase == eve.key && happyCase) || keys.myCalendar == eve.key || keys.forAll == eve.key){
                                     if(eve.day == item.format('D') && eve.month == item.month() + 1){
                                         return(
                                             <div onClick={()=>{setAddEvent({...addEvent,open:true,date:item})}}

@@ -5,7 +5,7 @@ import VideoPlayer from "react-video-js-player";
 import OpenPhoto from '../Galery/OpenPhoto';
 import { LANG } from '../../services/config';
 
-const GalleryBlock = ({ data }) => {
+const GalleryBlock = ({ data, check }) => {
     const [width, setWidth] = useState(window.innerWidth);
     const [imgRows, setImgRows] = useState(0);
     const [imgColumns, setImgColumns] = useState(3)
@@ -106,7 +106,8 @@ const GalleryBlock = ({ data }) => {
                             <td>{LANG.galleryBlock.name}</td>
                             <td>{LANG.galleryBlock.type}</td>
                             <td>{LANG.galleryBlock.size}</td>
-                            <td>{LANG.galleryBlock.download}</td>
+                            {check && <td>{LANG.galleryBlock.download}</td>}
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -116,7 +117,8 @@ const GalleryBlock = ({ data }) => {
                                     <td>{item.name}</td>
                                     <td>{getType(item.type)}</td>
                                     <td>{convertSize(item.size)}</td>
-                                    <td><NavLink download={true} to={item.link}><GetAppIcon /></NavLink></td>
+                                    {check && <td><NavLink download={true} to={item.link}><GetAppIcon /></NavLink></td>}
+                                    
                                 </tr>
                             );
                         })}

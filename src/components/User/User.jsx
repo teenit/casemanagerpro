@@ -5,6 +5,7 @@ import UserReportHistory from "./UserReport/UserReportHistory";
 import UserCasesList from "./UserCasesList/UserCasesList";
 import LoadingPage from "../Loading/LoadingPage";
 import { apiResponse } from "../Functions/get_apiObj";
+import AccessCheck from "../Functions/AccessCheck";
 
 const User = () => {
   const [user, setUser] = useState({});
@@ -21,7 +22,7 @@ const User = () => {
   useEffect(() => {
     let userId = window.location.href.charAt(window.location.href.indexOf("?")+1)
     apiResponse({userId:userId}, "user/get-user.php").then((data) => {
-      if(userId==localStorage.getItem("id")){
+      if(userId==localStorage.getItem("id") && AccessCheck('yes_no', 'a_page_user_change_pass')){
         setChangePass(true)
       }
       setUser(data);

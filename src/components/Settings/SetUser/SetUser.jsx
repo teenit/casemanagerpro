@@ -11,6 +11,7 @@ import Specification from "./Specification";
 import { apiResponse } from "../../Functions/get_apiObj";
 import { Button, MenuItem, Select } from "@mui/material";
 import Icon from "../../elements/Icons/Icon";
+import AccessCheck from "../../Functions/AccessCheck"
 let usersStr = "";
 
 
@@ -83,7 +84,8 @@ const SetUser = ({ categories, categoriesCont }) => {
 
                 <div className="set__user__control__panel">
                     <div className={`set__user__control__panel__icons ${user.active == "true" ? "arc" : ""}`}>
-                        <Icon icon={"delete"} addClass={"default-icon fs40"} />
+                        {AccessCheck('yes_no', 'a_page_settings_remove_user') && <Icon icon={"delete"} addClass={"default-icon fs40"} />}
+
                         <span onClick={() => {
                             return;
                             if (user.id == localStorage.getItem("id") || user?.type == "root") {
@@ -96,30 +98,30 @@ const SetUser = ({ categories, categoriesCont }) => {
                         }} >
                             <Icon icon={"book"} addClass={"default-icon"} />
                         </span>
-                        {user.active == "true" ? <span onClick={() => {
+                        {user.active === "true" && AccessCheck('yes_no', 'a_page_settings_deactivate_users') ? (
+                            <span onClick={() => {
+                                if (user.id === localStorage.getItem("id") || user?.type === "root") {
+                                    setModal(true);
+                                    setModalInfo({ message: "Ви не можете деактивувати даний обліковий запис" });
+                                } else {
+                                    activateUser("false", user.id, "Деактивовано", "deactivateUsers");
+                                }
+                            }}>
+                                <Icon icon={"eye"} addClass={"default-icon"} />
+                            </span>
+                        ) : AccessCheck('yes_no', 'a_page_settings_activate_users') ? (
+                            <span onClick={() => {
+                                if (user.id === localStorage.getItem("id") || user?.type === "root") {
+                                    setModal(true);
+                                    setModalInfo({ message: "Ви не можете активувати даний обліковий запис" });
+                                } else {
+                                    activateUser("true", user.id, "Активовано", "activeNewUser");
+                                }
+                            }}>
+                                <Icon icon={"eye_off"} addClass={"default-icon"} />
+                            </span>
+                        ) : null}
 
-                            if (user.id == localStorage.getItem("id") || user?.type == "root") {
-                                setModal(true);
-                                setModalInfo({ message: "Ви не можете деактивувати даний обліковий запис" })
-                            } else {
-                                activateUser("false", user.id, "Деактивовано", "deactivateUsers")
-                            }
-                        }
-                        }>
-                            <Icon icon={"eye"} addClass={"default-icon"} />
-                        </span> : <span onClick={() => {
-
-                            if (user.id == localStorage.getItem("id") || user?.type == "root") {
-                                setModal(true);
-                                setModalInfo({ message: "Ви не можете активувати даний обліковий запис" })
-                            } else {
-                                activateUser("true", user.id, "Активовано", "activeNewUser")
-                            }
-
-
-                        }}>
-                            <Icon icon={"eye_off"} addClass={"default-icon"} />
-                        </span>}
 
                     </div>
 

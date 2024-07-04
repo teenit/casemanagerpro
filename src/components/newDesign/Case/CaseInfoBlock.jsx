@@ -173,11 +173,11 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             <div title={title}>
                                 {link ? (
                                     <NavLink to={link}>
-                                        {label} {age && howOldIsCase(stateValue)}
+                                        {label}{age && howOldIsCase(stateValue)}
                                     </NavLink>
                                 ) : (
                                     <>
-                                        {label} {age && howOldIsCase(stateValue)}
+                                        {label}{age && howOldIsCase(stateValue)}
                                     </>
                                 )}
                             </div>

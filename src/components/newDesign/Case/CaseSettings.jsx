@@ -31,7 +31,6 @@ const BlueButton = withStyles({
 const CaseSettings = ({ views, successHandler }) => {
     const VIEWS = appConfig.caseViewSettings;
     const [state, setState] = useState({});
-    const [alert, setAlert] = useState(false)
     useEffect(() => {
        setState({...views})
     }, []);
@@ -41,8 +40,7 @@ const CaseSettings = ({ views, successHandler }) => {
         setState({ ...state, [key]: value });
     };
     const saveHandler = ()=>{
-        saveHandler()
-        setAlert(true)
+        successHandler()
     }
 
     return (
@@ -61,7 +59,6 @@ const CaseSettings = ({ views, successHandler }) => {
                 );
             })}
             <BlueButton variant="contained" onClick={saveHandler}>{LANG.GLOBAL.save}</BlueButton>
-            {alert && <SmallNotification isSuccess={true} text={"Показ елементів оновлено"} close={()=>{setAlert(false)}}/>}
         </div>
     );
 }

@@ -19,6 +19,7 @@ import { apiResponse } from "../Functions/get_apiObj";
 import GetDocumentBlock from "./GetDocumentBlock";
 import GetLinksBlock from "./GetLinksBlock";
 import Icon from "../elements/Icons/Icon";
+import AccessCheck from "../Functions/AccessCheck";
 
 const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDelete }) => {
     const [info, setInfo] = useState({});
@@ -26,7 +27,7 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
         docs: false,
         media: false
     });
-
+const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
     const showHandler = (key) => {
         setShowList({ ...showList, [key]: !showList[key] });
     };
@@ -74,10 +75,10 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
                                 <p className={s.modal__file__title}>Опис файлу:</p>
                                 <p>{info.description}</p>
                             </span>
-
-                            <Button variant="contained">
+                            {AccessCheck('yes_no', 'a_page_resources_download') && <Button variant="contained">
                                 <a target="_blank" href={info.link} download={true}>Завантажити</a>
-                            </Button>
+                            </Button>}
+
                         </div>
                     </div>
                 </div>
@@ -134,7 +135,7 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
             }
         }
         const previewUrl = getPreview(elem)
-        const open = ()=>{
+        const open = () => {
             setInfo({
                 open: true,
                 title: elem.title,
@@ -147,12 +148,11 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
         }
         return (
             <div className={s.file__card} key={ind}>
-                <img src={previewUrl} alt="" onClick={open}/>
+                <img src={previewUrl} alt="" onClick={open} />
                 <p className={s.titleH2} onClick={open}>{cutTitle(elem.title)}</p>
                 <p>{convertSize(elem.size)}</p>
-                <span onClick={() => { confirmDelete(elem) }}>
-                    <Icon icon={"delete"} addClass={"close-icon fs16"} />
-                </span>
+                {canDelete && <Icon icon={"delete"} addClass={"close-icon fs16"} onClick={() => { confirmDelete(elem) }}/>}
+                    
             </div>
         );
     });

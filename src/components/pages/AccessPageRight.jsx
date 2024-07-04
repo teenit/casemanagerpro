@@ -8,6 +8,7 @@ import { LANG, appConfig } from '../../services/config'
 import SelectAccess from '../elements/Selects/SelectAccess'
 import SmallNotification from '../elements/Notifications/SmallNotification'
 import Icon from "../elements/Icons/Icon"
+import AccessCheck from '../Functions/AccessCheck'
 const PAGES = appConfig.pages;
 
 const AccessPageRight = () => {
@@ -108,10 +109,11 @@ const AccessPageRight = () => {
             <span></span>
             <p>{LANG.settings_to_page} {PAGES[state.selectedPage].title}</p>
           </div>
-          <div className='AccessPageRight-right-head-buttons'>
+          {AccessCheck('yes_no', 'a_page_accesse_edit') &&    <div className='AccessPageRight-right-head-buttons'>
             <button className='AccessPageRight-right-head-buttons-CancelButton'>{LANG.GLOBAL.cancel}</button>
             <button className='AccessPageRight-right-head-buttons-SaveButton' onClick={updateRights}>{LANG.GLOBAL.save}</button>
-          </div>
+          </div>}
+       
         </div>
 
         <div className='AccessPageRight-right-block'>

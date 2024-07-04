@@ -9,6 +9,7 @@ import { Button, MenuItem, Select } from "@mui/material";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LANG } from "../../../services/config";
+import AccessCheck from "../../Functions/AccessCheck";
 const AddCaseForm = () => {
     const navigate = useNavigate();
     const [isDataEmpty, setIsDataEmpty] = useState({
@@ -198,7 +199,8 @@ const AddCaseForm = () => {
                             />
                         </div>
                     </div>
-                    <Button variant="contained" onClick={handleSubmit}>Зберегти</Button>
+                    {AccessCheck('yes_no', 'a_page_case_add') && <Button variant="contained" onClick={handleSubmit}>Зберегти</Button>}
+                    
                 </div>
                 :
                 <div className="AddCaseForm-inner">

@@ -4,6 +4,7 @@ import { get_apiObj } from "../../Functions/get_apiObj";
 import AddCalEventForm from "./AddCalEventForm";
 import s from "./cal.module.css"
 import { NavLink } from "react-router-dom";
+import AccessCheck from "../../Functions/AccessCheck";
 const AddCalEvent = ({ close, addEvent, events, keys, getCalendarList }) => {
     const [form, setForm] = useState(false)
     const dayEvents = events.filter(item => item.day == addEvent.date.format('D') && item.month == addEvent.date.month() + 1);
@@ -16,6 +17,7 @@ const sortedDayEvents = dayEvents.sort((a, b) => {
     const startTimeB = Number(b.value.start.slice(0, 2));
     return startTimeA - startTimeB;
 });
+const add = AccessCheck('yes_no', 'a_page_calendar_add_event')
 
     
     return (
@@ -28,7 +30,8 @@ const sortedDayEvents = dayEvents.sort((a, b) => {
                         <div className={s.form__title}>
                             <span>{`${addEvent.date.format("DD")} ${addEvent.date.format("MMMM")}, ${addEvent.date.format("dddd")}`}</span>
                         </div>
-                        <span className={s.plus__add} onClick={() => { setForm(!form) }}>{form ? "-" : "+"}</span>
+                        {add && <span className={s.plus__add} onClick={() => { setForm(!form) }}>+</span>}
+                        
                     </div>
                     {form ? <AddCalEventForm getCalendarList = {getCalendarList} close={() => { setForm(false) }} date={addEvent.date} /> : null}
                     <div className={s.inner__content}>

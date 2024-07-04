@@ -7,6 +7,7 @@ import { apiResponse } from "../Functions/get_apiObj";
 import ModalConfirm from "../Modals/ModalConfirm";
 import { LANG } from "../../services/config";
 import SmallNotification from "../elements/Notifications/SmallNotification";
+import AccessCheck from "../Functions/AccessCheck";
 
 const Resources = () => {
     const [form, setForm] = useState(false)
@@ -93,11 +94,7 @@ const Resources = () => {
         <div className={s.wrapper}>
             <div className={s.title}>
                 <h1>Ресурси</h1>
-                <span className={s.plus} onClick={
-                    () => {
-                        setForm(!form)
-                    }
-                }>{form ? "-" : "+"}</span>
+                {AccessCheck('yes_no', 'a_page_resources_upload') && <span className={s.plus} onClick={() => {setForm(!form)}}>+</span>}
             </div>
             <div className={s.control}>
                 {form && <AddResources close={()=>{setForm(false)}} loadResources={loadResources}/>}

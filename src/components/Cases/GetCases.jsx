@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Button } from "@mui/material";
+import AccessCheck from "../Functions/AccessCheck";
 
 function sortMas(field, type) {
   if (type === "number") {
@@ -34,7 +35,7 @@ const GetCases = ({ posts, postsChange }) => {
   function loadMoreCases() {
     let countStart = cases.firstSlice;
     let countEnd = cases.lastSlice;
-    
+
     setMasPost(prevMasPost => [...prevMasPost, ...posts.slice(countStart, countEnd)]);
     if (countEnd > cases.totalCount) {
       setCases(prevCases => ({ ...prevCases, button: false }));
@@ -61,17 +62,18 @@ const GetCases = ({ posts, postsChange }) => {
 
   return (
     <div className="wrap__cards">
+      {AccessCheck('yes_no', 'a_page_cases_sort') && <Select value={selectFilter} onChange={(e) => { handleSelect(e.target.value) }}>
+        <MenuItem value="default">Сортувати за</MenuItem>
+        <MenuItem value="surname">Сортувати за прізвище</MenuItem>
+        <MenuItem value="firstName">Сортувати за ім'ям</MenuItem>
+        <MenuItem value="createdDate">Сортувати за датою створення</MenuItem>
+        <MenuItem value="id">Сортувати за номером</MenuItem>
+      </Select>}
       <div className={s.select__sort}>
-        <Select value={selectFilter}  onChange={(e) => { handleSelect(e.target.value) }}>
-          <MenuItem value="default">Сортувати за</MenuItem>
-          <MenuItem value="surname">Сортувати за прізвище</MenuItem>
-          <MenuItem value="firstName">Сортувати за ім'ям</MenuItem>
-          <MenuItem value="createdDate">Сортувати за датою створення</MenuItem>
-          <MenuItem value="id">Сортувати за номером</MenuItem>
-        </Select>
-        <Button variant="contained" onClick={() => setLikeShow(!likeShow)}>
+
+        {AccessCheck('yes_no', 'a_page_cases_look_list') && <Button variant="contained" onClick={() => setLikeShow(!likeShow)}>
           {!likeShow ? "Як картки" : "Як список"}
-        </Button>
+        </Button>}
       </div>
       {likeShow ? (
         <div className={s.like__cards}>

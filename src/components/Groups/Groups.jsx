@@ -5,6 +5,7 @@ import Icon from "../elements/Icons/Icon";
 import { useSelector } from "react-redux";
 import { LANG, appConfig } from "../../services/config";
 import { NavLink } from "react-router-dom";
+import AccessCheck from "../Functions/AccessCheck";
 
 const GroupCard = ({ item, loadGroups }) => {
     const categories = useSelector(state => state.categories);
@@ -66,7 +67,8 @@ const Groups = () => {
         <div className="Groups">
             <div className="Groups-title">
                 <p>{appConfig.pages.groups.title}</p>
-                <Icon icon={"add"} onClick={() => setAdd(true)} />
+                {AccessCheck('yes_no', 'a_groups_create') && <Icon icon={"add"} onClick={() => setAdd(true)} />}
+                
                 {add && <AddGroup loadGroups={loadGroups} action={"add"} close={() => { setAdd(false) }} />}
             </div>
             <div className="Groups-list">

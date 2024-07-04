@@ -4,12 +4,14 @@ import { NavLink } from "react-router-dom";
 import { serverAddres } from "../../Functions/serverAddres";
 import ModalPlan from "./ModalPlan";
 import s from "./plan.module.css";
+import AccessCheck from "../../Functions/AccessCheck";
 
 const GetPlans = ({ id, plans }) => {
 
     const [modal, setModal] = useState(false);
     const [modalInfo, setModalInfo] = useState({})
     const [feed, setFeed] = useState({ title: "" })
+    const canWriteFeedback = AccessCheck('yes_no', 'a_page_event_add_feedback')
     return (
         <div className={s.users__wrap}>
             <h2>Планування</h2>
@@ -28,7 +30,7 @@ const GetPlans = ({ id, plans }) => {
                             <p dangerouslySetInnerHTML={{ __html: item.description }}></p>
 
                             </div>
-                            <div className={s.feed__back__wrap}>
+                            {canWriteFeedback && <div className={s.feed__back__wrap}>
                             <div className={s.feed__back__line}>
                                 <b>Зворотній зв'язок</b>
                             </div>
@@ -41,7 +43,8 @@ const GetPlans = ({ id, plans }) => {
                                         </div>
                                     )
                                 })}
-                            </div>
+                            </div>}
+                           
                             <button onClick={() => {
                                 setModalInfo({
                                     item: item

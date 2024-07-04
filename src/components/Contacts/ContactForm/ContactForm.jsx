@@ -28,12 +28,14 @@ const ContactForm = ({ editContact, onSubmit, contact, showModal, toggleModal })
   useEffect(() => {
     fetchCategories()
       .then((data) => {
-        const initialCategory = contact ? contact.category[0].value : data[0]?.value;
+        const hasCategory = contact?.category[0]?.value ? contact?.category[0]?.value : data[0]?.value
+        const initialCategory = contact ? hasCategory : data[0]?.value;
         setState((prevState) => ({
           ...prevState,
           categori: data,
           category: initialCategory
         }));
+        console.log(initialCategory);
       })
       .catch((error) => console.log(error));
   }, [contact]);
@@ -56,7 +58,7 @@ const ContactForm = ({ editContact, onSubmit, contact, showModal, toggleModal })
     setAlert({...alert, [key]:!alert[key], message:message})
   }
   const handleSubmit = (event) => {
-    if(state.pib.length<1 || state.phones[0].number.length==10)return alertHandler("error", "Введіть ім'я та телефон контакту")
+    if(state.pib.length<1 || state.phones[0].number.length!==10)return alertHandler("error", "Введіть ім'я та телефон контакту")
     event.preventDefault();
     const { category, pib, info, phones, id } = state;
     const sendData = { category, pib, phones, info, id };

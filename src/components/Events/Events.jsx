@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import Icon from "../elements/Icons/Icon"
 import Modal from "../Modals/Modal"
 import AddEventBlock from "../blocks/AddEventBlock";
+import AccessCheck from "../Functions/AccessCheck";
 const Events = () => {
     const [control, setControl] = useState(false)
     const [events, setEvents] = useState([]);
@@ -39,11 +40,8 @@ const Events = () => {
         <div className={s.wrap}>
             <div className={s.title}>
                 <h1>Івенти</h1>
-                <span onClick={() => {
-                    setControl(!control)
-                }}>
-                    <Icon icon={"add"} addClass={"fs40"} />
-                </span>
+                {AccessCheck('yes_no', 'a_page_event_create') && <Icon icon={"add"} addClass={"fs40"} onClick={() => {setControl(!control)}}/>}
+                
             </div>
             <div className={s.inner}>
                 {events.map((item, index) => {

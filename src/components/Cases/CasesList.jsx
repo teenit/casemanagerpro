@@ -6,6 +6,7 @@ import { LANG } from "../../services/config";
 import { Button } from "@mui/material";
 import Icon from "../elements/Icons/Icon"
 import { NavLink } from "react-router-dom";
+import AccessCheck from "../Functions/AccessCheck";
 const CasesList = ({ cases, categories }) => {
     const componentRef = useRef();
 
@@ -68,7 +69,8 @@ const caseCategories = (catMas) => {
                 </table>
 
             </div>
-            <Button variant="contained" className="btn__print" onClick={handlerPrint}> <Icon icon={"print"}/><span>Друк</span></Button></>
+            {AccessCheck('yes_no', 'a_page_cases_print') && <Button variant="contained" className="btn__print" onClick={handlerPrint}> <Icon icon={"print"}/><span>Друк</span></Button>}
+            </>
     )
 }
 export default CasesList;

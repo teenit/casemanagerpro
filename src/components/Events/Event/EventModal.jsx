@@ -5,6 +5,7 @@ import SearchCase from "./SearchCase";
 import SearchUsers from "./SearchUsers";
 import UploadEventDocs from "./UploadEventDocs";
 import UploadEventMedia from "./UploadEventMedia";
+import AccessCheck from "../../Functions/AccessCheck";
 const EventModal = ({close,info,getUsers,getPlans, getFiles})=>{
     return(
         <div className={s.modal}>
@@ -25,10 +26,12 @@ const EventModal = ({close,info,getUsers,getPlans, getFiles})=>{
                     <SearchCase getUsers = {(id,key)=>{
                         getUsers(id,key)
                     }} eventID = {info.id}/>
-                    <EventAddPlan getPlans = {(id,key)=>{
+                    {AccessCheck('yes_no', 'a_page_event_add_plan') && <EventAddPlan getPlans = {(id,key)=>{
                         getPlans(id,key)
-                    }} eventID = {info.id} />
-                    <UploadEventDocs getFiles={getFiles} eventID={info.id}/>
+                    }} eventID = {info.id} />}
+                    
+                    {AccessCheck('yes_no', 'a_page_event_add_media') && <UploadEventDocs getFiles={getFiles} eventID={info.id}/>}
+                    
                     {/* <UploadEventMedia eventID={info.id}/> */}
                 </div>
                 

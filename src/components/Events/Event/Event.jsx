@@ -12,6 +12,7 @@ import BigPhoto from "./BigPhoto";
 import Galery from "../../Galery/Galery";
 import { apiResponse } from "../../Functions/get_apiObj";
 import GalleryBlock from "../../blocks/GalleryBlock";
+import AccessCheck from "../../Functions/AccessCheck";
 
 const Event = ()=>{
     const [usersMemC, setUsersMemC] = useState([])
@@ -140,7 +141,7 @@ const Event = ()=>{
                         <GetPlans id={event.id} plans = {plans}/>
                 </div>}
                 
-                <GalleryBlock data = {files}/>
+                <GalleryBlock data = {files} check={()=>{AccessCheck('yes_no', 'a_page_event_media')}}/>
             </div>
             {lookPhoto.look?<BigPhoto link = {lookPhoto.link} close = {()=>{setLookPhoto({...lookPhoto,look:false})}}/>:null}
             {control ? <EventModal getPlans = {(id,key)=>{

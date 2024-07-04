@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import { LANG } from "../../services/config";
 import { changeAps, changeApsBr } from "../Functions/translateString";
 import SmallNotification from "../elements/Notifications/SmallNotification"
+import AccessCheck from "../Functions/AccessCheck";
 const AccessPage = () => {
 
     const [modal, setModal] = useState(false)
@@ -66,10 +67,10 @@ const AccessPage = () => {
 
                 </Modal>
             }
-
-            <button className="AccessPage-button" onClick={() => {
+            {AccessCheck('yes_no', 'a_page_access_create') && <button className="AccessPage-button" onClick={() => {
                 setModal(true)
-            }}>{LANG.access_text.add_template}</button>
+            }}>{LANG.access_text.add_template}</button>}
+            
             {alert.error && <SmallNotification isSuccess={false} text="Введіть назву шаблону права" close={() => { alertHandler("error") }} />}
             {alert.success && <SmallNotification isSuccess={true} text="Шаблон прав додано" close={() => { alertHandler("success") }} />}
         </div>

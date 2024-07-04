@@ -5,6 +5,7 @@ import Modal from "../../Modals/Modal";
 import Icon from "../../elements/Icons/Icon";
 import ModalMessage from "../../Modals/ModalMessage";
 import { Button } from "@mui/material";
+import AccessCheck from "../../Functions/AccessCheck";
 
 const ContactListItem = ({
   id,
@@ -116,12 +117,9 @@ const ContactListItem = ({
         )}
 
         <div className={style.contact_list_item_btn}>
-          <span onClick={handleDeleteConfirmation}>
-            <Icon icon={"delete"} addClass={"header-icon fs16"} />
-          </span>
-          <span onClick={handleEditContact}>
-            <Icon icon={"edit"} addClass={"header-icon fs16"} />
-          </span>
+          {AccessCheck('yes_no', 'a_page_phonebook_remove') && <Icon icon={"delete"} addClass={"header-icon fs16"} onClick={handleDeleteConfirmation}/>}
+            
+            <Icon icon={"edit"} addClass={"header-icon fs16"} onClick={handleEditContact}/>
         </div>
       </div>
     </>
