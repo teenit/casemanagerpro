@@ -9,10 +9,10 @@ export const LANG = {
     color: "Колір",
     confirm_title: "Підтвердити дію",
     delete: "Видалити",
-    skip:"Пропустити",
-    start:"Початок",
-    end:"Кінець",
-    link:"Посилання"
+    skip: "Пропустити",
+    start: "Початок",
+    end: "Кінець",
+    link: "Посилання"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Права користувачів (Сторінки)",
@@ -31,7 +31,7 @@ export const LANG = {
   almost_all_hidden: "Майже все приховано",
   average: "Середньо",
   low: "Низько",
-  no_records:"Немає доступних записів",
+  no_records: "Немає доступних записів",
   add_record_about_provided_assistance: "Додати запис про надану допомогу",
   a_page_case_add: "Створити кейс",
   a_page_case_look: "Переглядати кейс",
@@ -41,11 +41,11 @@ export const LANG = {
   a_page_case_add_notes: "Додавати нотатки до кейсу",
   a_page_case_hidden: "Приховати інформацію",
   access_text: {
-    title:"Шаблони прав",
+    title: "Шаблони прав",
     add_template: "Додати шаблон прав",
     add_name: "Назва нового права",
     add_description: "Опис нового права",
-    modal_header:"Додати новий шаблон прав"
+    modal_header: "Додати новий шаблон прав"
   },
   status_plan: {
     0: "Задачу створено",
@@ -65,34 +65,34 @@ export const LANG = {
   planing: "Планування",
   gallery: "Додані медіа файли",
   documents: "Додані документи",
-  years:"років",
+  years: "років",
   placeholders: {
     email: "Ваш Email...",
-    connect:"Як кейс пов'язан з групою"
+    connect: "Як кейс пов'язан з групою"
   },
   buttonTexts: {
     recover: "Відновити",
     ok: "Добре",
     auth: "Авторизація",
   },
-  selects:{
-    sex:{
-      male:"Чоловік",
-      female:"Жінка",
-      other:"Інші",
+  selects: {
+    sex: {
+      male: "Чоловік",
+      female: "Жінка",
+      other: "Інші",
     },
   },
-  plan:{
+  plan: {
     task: "Задача плану",
     create: "Створити план",
-    error:"Оберіть дату початку та кінця дати"
+    error: "Оберіть дату початку та кінця дати"
   },
-  notes:{
-    add:"Додати запис",
-    text:"Текст запису",
-    error:"Помилка при додаванні запису",
-    error_data:"Введіть текст запису",
-    success:"Запис додано"
+  notes: {
+    add: "Додати запис",
+    text: "Текст запису",
+    error: "Помилка при додаванні запису",
+    error_data: "Введіть текст запису",
+    success: "Запис додано"
   },
   detailedInfo: {
     title: "Детальна інформація",
@@ -101,14 +101,14 @@ export const LANG = {
     potreba: "Потреба, запит",
     history: "Історія сім'ї / особи"
   },
-  add_case:{
-    title:"Додати кейс",
-    alertMessages:{
-      name:"Будь ласка, введіть ім'я кейсу",
-      phone:"Будь ласка, введіть номер телефону кейсу"
+  add_case: {
+    title: "Додати кейс",
+    alertMessages: {
+      name: "Будь ласка, введіть ім'я кейсу",
+      phone: "Будь ласка, введіть номер телефону кейсу"
     }
   },
-  
+
   forgotPass: {
     title: "Форма відновлення"
   },
@@ -123,110 +123,110 @@ export const LANG = {
     passwordLabel: "Пароль",
     passwordMinLengthMessage: "Пароль повинен бути довжиною більше ніж 5 символів",
   },
-  galleryBlock:{
-    name:"Назва",
-    type:"Тип",
-    size:"Розмір",
-    download:"Завантажити"
+  galleryBlock: {
+    name: "Назва",
+    type: "Тип",
+    size: "Розмір",
+    download: "Завантажити"
   },
-    addEvent: "Створення події",
-    cases:"Немає доступних кейсів",
-    casesList:{
-      caseNumber:"№ кейсу",
-      pib:"ПІБ",
-      phone:"Телефон",
-      email:"Пошта",
-      birthday:"Дата нар-ня",
-      address:"Адреса (факт)",
-      categories:"Категорія",
+  addEvent: "Створення події",
+  cases: "Немає доступних кейсів",
+  casesList: {
+    caseNumber: "№ кейсу",
+    pib: "ПІБ",
+    phone: "Телефон",
+    email: "Пошта",
+    birthday: "Дата нар-ня",
+    address: "Адреса (факт)",
+    categories: "Категорія",
+  },
+  case_data: {
+    first_name: "Ім'я",
+    middle_name: "Прізвище",
+    last_name: "По батькові",
+    phone: "Номер телефону",
+    sex: "Стать",
+    email: "Електронна пошта",
+    birthday: "Дата народження",
+    address_registered: "Місце проживання по прописці",
+    address_live: "Фактичне місце проживання",
+    channel: "Канал комунікації",
+    first_contact: "Дата першого контакту",
+    contract_date: "Дата укладення договору",
+    contract_number: "Номер договору",
+    potreba: "Потреба, запит",
+    family: "Сімейний стан, деталі про сім'ю, її склад",
+    history: "Історія сім'ї / особи",
+    category: "Категорія кейсу",
+    comment: "Коментар",
+    date_created: "Дата створення",
+    responsible: "Відповідальний за кейс"
+  },
+  categories: {
+    category: "Категорія",
+    noCategory: "Без категорії"
+  },
+  calendar: {
+    weekDays: {
+      Monday: "ПН",
+      Tuesday: "ВТ",
+      Wednesday: "СР",
+      Thursday: "ЧТ",
+      Friday: "ПТ",
+      Saturday: "СБ",
+      Sunday: "НД"
     },
-    case_data:{
-      first_name:"Ім'я",
-      middle_name:"Прізвище",
-      last_name:"По батькові",
-      phone:"Номер телефону",
-      sex:"Стать",
-      email:"Електронна пошта",
-      birthday:"Дата народження",
-      address_registered:"Місце проживання по прописці",
-      address_live:"Фактичне місце проживання",
-      channel:"Канал комунікації",
-      first_contact:"Дата першого контакту",
-      contract_date:"Дата укладення договору",
-      contract_number:"Номер договору",
-      potreba:"Потреба, запит",
-      family:"Сімейний стан, деталі про сім'ю, її склад",
-      history:"Історія сім'ї / особи",
-      category:"Категорія кейсу",
-      comment:"Коментар",
-      date_created:"Дата створення",
-      responsible:"Відповідальний за кейс"
+    month: {
+      January: "Січень",
+      February: "Лютий",
+      March: "Березень",
+      April: "Квітень",
+      May: "Травень",
+      June: "Червень",
+      July: "Липень",
+      August: "Серпень",
+      September: "Вересень",
+      October: "Жовтень",
+      November: "Листопад",
+      December: "Грудень"
     },
-    categories:{
-      category:"Категорія",
-      noCategory:"Без категорії"
+    today: "Сьогодні",
+    filter: {
+      title: "Відобразити у календарі",
+      my_calendar: "Мій календар",
+      notes_for_all: "Записи для всіх",
+      birthdays: "Дні народження кейсів"
     },
-    calendar:{
-      weekDays:{
-        Monday: "ПН",
-        Tuesday: "ВТ",
-        Wednesday: "СР",
-        Thursday: "ЧТ",
-        Friday: "ПТ",
-        Saturday: "СБ",
-        Sunday: "НД"
+    add_event: {
+      title: "Додати подію",
+      for_all: "Для всіх",
+      repeat: "Повторювати кожного року",
+      alertMessages: {
+        success: "Подію додано",
+        error: "Введіть назву та опис події"
       },
-      month:{
-        January: "Січень",
-        February: "Лютий",
-        March: "Березень",
-        April: "Квітень",
-        May: "Травень",
-        June: "Червень",
-        July: "Липень",
-        August: "Серпень",
-        September: "Вересень",
-        October: "Жовтень",
-        November: "Листопад",
-        December: "Грудень"
-      },
-      today:"Сьогодні",
-      filter:{
-        title:"Відобразити у календарі",
-        my_calendar:"Мій календар",
-        notes_for_all:"Записи для всіх",
-        birthdays:"Дні народження кейсів"
-      },
-      add_event:{
-        title:"Додати подію",
-        for_all:"Для всіх",
-        repeat:"Повторювати кожного року",
-        alertMessages:{
-          success:"Подію додано",
-          error:"Введіть назву та опис події"
-        },
-      }
+    }
+  },
+  groups: {
+    amount: "Кількість об'єктів",
+    desc: "Опис групи:",
+    date_created: "Дата створення групи:",
+    info: "Інформація про групу",
+    add: "Додати групу для кейсу",
+    title_case: "Групи кейсу",
+    group: {
+      members: "Учасники групи",
+      confirm: "Ви впевнені, що хочете видалити зі списку учасників користувача"
     },
-    groups:{
-      amount:"Кількість об'єктів",
-      desc:"Опис групи:",
-      date_created:"Дата створення групи:",
-      info:"Інформація про групу",
-      add:"Додати групу для кейсу",
-      title_case:"Групи кейсу",
-      group:{
-        members:"Учасники групи",
-        confirm:"Ви впевнені, що хочете видалити зі списку учасників користувача"
-      },
-      alertMessages:{
-        error:"Оберіть групу, яку хочете додати",
-        success:"Зв'язок створено"
-      }
-    },
-    resources:{
-      link_title: "Корисні посилання",
-      confirm_delete: "Ви впевнені, що хочете видалити ресурс - "
-    },
+    alertMessages: {
+      error: "Оберіть групу, яку хочете додати",
+      success: "Зв'язок створено"
+    }
+  },
+  resources: {
+    link_title: "Корисні посилання",
+    confirm_delete: "Ви впевнені, що хочете видалити ресурс - "
+  },
   access: {
     "a_cases_category_edit_id": "Доступні категорії кейсів для редагування",
     "a_cases_category_look_id": "Доступні категорії кейсів для перегляду",
@@ -305,17 +305,17 @@ export const LANG = {
     "a_page_access": "Доступ до сторінки налаштування прав користувачів",
     "a_page_access_create": "Створення шаблону прав користувачів",
     "a_page_access_edit": "Редагування шаблону прав користувачів",
-    "a_page_groups":"Доступ до сторінки груп",
-    "a_group_create":"Створення нової групи",
-    "a_page_case_connection":"Створення зв'язків між об'єктами і групою"
+    "a_page_groups": "Доступ до сторінки груп",
+    "a_group_create": "Створення нової групи",
+    "a_page_case_connection": "Створення зв'язків між об'єктами і групою"
   },
   pages: {
     case: "Кейс",
     cases: "Кейси",
-    addCase:"Додати кейс",
-    search:"Розширений пошук",
-    contacts:"Телефонна книга",
-    cooperation:"Коаліція",
+    addCase: "Додати кейс",
+    search: "Розширений пошук",
+    contacts: "Телефонна книга",
+    cooperation: "Коаліція",
     settings: "Налаштування",
     users: "Користувачі",
     resources: "Ресурси",
@@ -325,7 +325,7 @@ export const LANG = {
     events: "Івенти (події)",
     user: "Користувач",
     accesses: "Шаблони прав",
-    groups:"Групи",
+    groups: "Групи",
     access: "Інше"
   },
   documents: "Додані документи",
@@ -335,35 +335,48 @@ export const LANG = {
     who_give_help: "Хто надав допомогу",
     details_help: "Деталі наданої допомоги",
     helping: "Надано допомогу",
-    error_data:"Оберіть дату, статус, опис та надавача допомоги",
-    error:"Помилка при додаванні допомоги"
+    error_data: "Оберіть дату, статус, опис та надавача допомоги",
+    error: "Помилка при додаванні допомоги"
   },
   mounths: {
-    jan:"Січень",
-    feb:"Лютий",
-    march:"Березень",
-    april:"Квітень",
-    may:"Травень",
-    june:"Червень",
-    july:"Липень",
-    aug:"Серпень",
-    sep:"Вересень",
-    okt:"Жовтень",
-    nov:"Листопад",
-    dec:"Грудень"
+    jan: "Січень",
+    feb: "Лютий",
+    march: "Березень",
+    april: "Квітень",
+    may: "Травень",
+    june: "Червень",
+    july: "Липень",
+    aug: "Серпень",
+    sep: "Вересень",
+    okt: "Жовтень",
+    nov: "Листопад",
+    dec: "Грудень"
   },
-  happy_days_cases:"Дні народження кейсів",
-  categories_case:"Категорії кейсів",
+  happy_days_cases: "Дні народження кейсів",
+  categories_case: "Категорії кейсів",
   case_view_settings: {
-      "view_ProfilePhoto":"Відобразити фото профілю",
-      "view_GroupConnection":"Відобразити блок групи кейсу",
-      "view_Plan":"Відобразити блок плану",
-      "view_Help":"Відобразити блок наданої допомоги",
-      "view_Notes":"Відобразити блок нотатків",
-      "view_Gallery":"Відобразити блок галерея",
-      "view_FileUploader":"Відобразити блок завантаження медіа",
-      "view_DetailedInfo":"Відобразити блок детальної інформації"
+    "view_ProfilePhoto": "Відобразити фото профілю",
+    "view_GroupConnection": "Відобразити блок групи кейсу",
+    "view_Plan": "Відобразити блок плану",
+    "view_Help": "Відобразити блок наданої допомоги",
+    "view_Notes": "Відобразити блок нотатків",
+    "view_Gallery": "Відобразити блок галерея",
+    "view_FileUploader": "Відобразити блок завантаження медіа",
+    "view_DetailedInfo": "Відобразити блок детальної інформації",
+    "view_InfoBlock": "Відобразити інформацію про кейс",
+    "view_name": "Відобразити повне ім'я кейсу",
+    "view_phone": "Відобразити номери телефону кейсу",
+    "view_email": "Відобразити електронну пошту кейсу",
+    "view_birthday": "Відобразити дату народження кейсу",
+    "view_address": "Відобразити адресу кейсу",
+    "view_sex": "Відобразити стать кейсу",
+    "view_date_created": "Відобразити дату створення кейсу",
+    "view_contract": "Відобразити договір",
+    "view_channel": "Відобразити канал комунікації кейсу",
+    "view_categories": "Відобразити категорії кейсу",
+    "view_responsible": "Відобразити відповідального за кейс"
   }
+
 };
 export const appConfig = {
   access: {
@@ -486,7 +499,7 @@ export const appConfig = {
       ],
       view_edit: [
         "a_page_case",
-        
+
         "a_page_case_transfer",
         "a_page_case_notes",
         "a_page_case_plan",
@@ -597,8 +610,8 @@ export const appConfig = {
       ],
       view_edit: []
     },
-    groups:{
-      yes_no:[
+    groups: {
+      yes_no: [
         "a_page_groups",
         "a_group_create",
         "a_page_case_connection"
@@ -686,13 +699,13 @@ export const appConfig = {
       title: LANG.pages.accesses,
       description: ""
     },
-    groups:{
-      title:LANG.pages.groups,
-      description:""
+    groups: {
+      title: LANG.pages.groups,
+      description: ""
     },
-    access:{
-      title:LANG.pages.access,
-      description:""
+    access: {
+      title: LANG.pages.access,
+      description: ""
     },
   },
   mounths: {
@@ -749,13 +762,32 @@ export const appConfig = {
     color: "#42a5f5"
   },
   caseViewSettings: [
-      "view_ProfilePhoto",
-      "view_GroupConnection",
-      "view_Plan",
-      "view_Help",
-      "view_Notes",
-      "view_Gallery",
-      "view_FileUploader",
-      "view_DetailedInfo"
+    "view_ProfilePhoto",
+    "view_GroupConnection",
+    "view_Plan",
+    "view_Help",
+    "view_Notes",
+    "view_Gallery",
+    "view_FileUploader",
+    "view_DetailedInfo",
+    
+  ],
+  caseViewSettingsLists: [
+    {
+      primary: "view_InfoBlock", 
+      options: [
+        "view_name",
+        "view_phone",
+        "view_email",
+        "view_birthday",
+        "view_address",
+        "view_sex",
+        "view_date_created",
+        "view_contract",
+        "view_channel",
+        "view_categories",
+        "view_responsible",
+      ]
+    }
   ]
 }

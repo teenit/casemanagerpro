@@ -30,7 +30,7 @@ const GroupCard = ({ item, loadGroups }) => {
     return (
         <div className="GroupCard">
             <div className="GroupCard-split">
-                <NavLink to={`/group/${item.id}`}>{item.name}</NavLink>
+                {item.connect_count>0 ?<NavLink to={`/group/${item.id}`}>{item.name}</NavLink>: <span>{item.name}</span>}
                 <div className="GroupCard-split-color" style={{ backgroundColor: item.color }}></div>
             </div>
             <div>{item.description}</div>

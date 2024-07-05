@@ -223,7 +223,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
         <>
             <div className="CaseInfoBlock name-block">
                 <div className="CaseInfoBlock-inner">
-                    <div className="InputBlock">
+                    {(info.viewInfoActive || info.viewInfo?.view_name) && <div className="InputBlock">
                         {!editName && <div className="InputBlock-default">
                             <div className="CaseInfoBlock-line-title">
                                 {info.general.name} <span style={{ color: "var(--main-color)" }}>№{info.general.id}</span>
@@ -272,7 +272,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             </div>
                         }
 
-                    </div>
+                    </div>}
+
                 </div>
             </div>
             <div className="CaseInfoBlock">
@@ -281,7 +282,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
 
 
                     </div>
-                    <div className="CaseInfoBlock-line">
+                    {(info.viewInfoActive || info.viewInfo?.view_phone) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.phone}</span>
                         <InputBlock
                             value={dataState.phone1}
@@ -292,8 +293,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             inputType={"number"}
                             saveHandler={(val) => saveHandler("phone1", val, "general")}
                         />
-                    </div>
-                    <div className="CaseInfoBlock-line">
+                    </div>}
+                    {(info.viewInfoActive || info.viewInfo?.view_phone) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.phone}</span>
                         <InputBlock
                             value={dataState.phone2}
@@ -304,8 +305,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             inputType={"number"}
                             saveHandler={(val) => saveHandler("phone2", val, "general")}
                         />
-                    </div>
-                    <div className="CaseInfoBlock-line">
+                    </div>}
+                    {(info.viewInfoActive || info.viewInfo?.view_birthday) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.birthday}</span>
                         <InputBlock
                             value={dataState.happy_bd}
@@ -316,8 +317,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             inputType={"date"}
                             saveHandler={(val) => saveHandler("happy_bd", val, "general")}
                         />
-                    </div>
-                    <div className="CaseInfoBlock-line">
+                    </div>}
+                    {(info.viewInfoActive || info.viewInfo?.view_sex) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.sex}</span>
                         <InputBlock
                             value={dataState.sex}
@@ -328,8 +329,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             saveHandler={(val, displayVal) => saveHandler("sex", val, "general", displayVal)}
                         />
                     </div>
-
-                    <div className="CaseInfoBlock-line">
+                    }
+                    {(info.viewInfoActive || info.viewInfo?.view_email) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.email}</span>
                         <InputBlock
                             value={dataState.email}
@@ -340,8 +341,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             inputType={"text"}
                             saveHandler={(val) => saveHandler("email", val, "general")}
                         />
-                    </div>
-                    <div className="CaseInfoBlock-line">
+                    </div>}
+                    {(info.viewInfoActive || info.viewInfo?.view_address) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.address_live}</span>
                         <InputBlock
                             value={dataState.address_live}
@@ -351,8 +352,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             inputType={"text"}
                             saveHandler={(val) => saveHandler("address_live", val, "data")}
                         />
-                    </div>
-                    <div className="CaseInfoBlock-line">
+                    </div>}
+                    {(info.viewInfoActive || info.viewInfo?.view_address) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.address_registered}</span>
                         <InputBlock
                             value={dataState.address_registered}
@@ -362,10 +363,11 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             inputType={"text"}
                             saveHandler={(val) => saveHandler("address_registered", val, "data")}
                         />
-                    </div>
+                    </div>}
+
                 </div>
                 <div className="case-info-right">
-                    <div className="CaseInfoBlock-line">
+                    {(info.viewInfoActive || info.viewInfo?.view_date_created) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.date_created}</span>
                         <InputBlock
                             value={dataState.date_created}
@@ -373,8 +375,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             label={dataState.date_created}
                             disabled={true}
                         />
-                    </div>
-                    <div className="CaseInfoBlock-line">
+                    </div>}
+                    {(info.viewInfoActive || info.viewInfo?.view_contract) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.contract_date}</span>
                         <InputBlock
                             value={dataState.contract_date}
@@ -384,8 +386,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             inputType={"date"}
                             saveHandler={(val) => saveHandler("contract_date", val, "data")}
                         />
-                    </div>
-                    <div className="CaseInfoBlock-line">
+                    </div>}
+                    {(info.viewInfoActive || info.viewInfo?.view_contract) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.contract_number}</span>
                         <InputBlock
                             value={dataState.contract_number}
@@ -395,8 +397,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             inputType={"number"}
                             saveHandler={(val) => saveHandler("contract_number", val, "data")}
                         />
-                    </div>
-                    <div className="CaseInfoBlock-line">
+                    </div>}
+                    {(info.viewInfoActive || info.viewInfo?.view_channel) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.channel}</span>
                         <InputBlock
                             value={dataState.channel}
@@ -406,10 +408,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             inputType={"text"}
                             saveHandler={(val) => saveHandler("channel", val, "data")}
                         />
-                    </div>
+                    </div>}
 
 
-                    <div className="CaseInfoBlock-categories">
+                    {(info.viewInfoActive || info.viewInfo?.view_categories) && <div className="CaseInfoBlock-categories">
                         <span className="CaseInfoBlock-categories-title">{LANG.case_data.category}</span>
                         <span className="CaseInfoBlock-categories-content">
                             <Icon icon="categories" addClass={"default-icon"} />
@@ -450,8 +452,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                             }
                         </span>
 
-                    </div>
-                    <div className="CaseInfoBlock-line">
+                    </div>}
+                    {(info.viewInfoActive || info.viewInfo?.view_responsible) && <div className="CaseInfoBlock-line">
                         <span>{LANG.case_data.responsible}</span>
                         <div className="CaseInfoBlock-line-select">
                             <Icon icon="categories" addClass={"default-icon"} />
@@ -491,7 +493,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo }
                         </div>
 
 
-                    </div>
+                    </div>}
+
 
                 </div>
                 {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => {

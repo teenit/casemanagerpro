@@ -18,11 +18,11 @@ const User = () => {
   const [selectedReport, setSelectedReport] = useState(1);
   const [selectedHistory, setSelectedHistory] = useState(1);
   const [changePass, setChangePass] = useState(false)
-
+const accessCheckPass = ()=>{AccessCheck('yes_no', 'a_page_user_change_pass')}
   useEffect(() => {
     let userId = window.location.href.charAt(window.location.href.indexOf("?")+1)
     apiResponse({userId:userId}, "user/get-user.php").then((data) => {
-      if(userId==localStorage.getItem("id") && AccessCheck('yes_no', 'a_page_user_change_pass')){
+      if(userId==localStorage.getItem("id") && accessCheckPass){
         setChangePass(true)
       }
       setUser(data);

@@ -96,7 +96,7 @@ const Icon = ({ icon, addClass, onClick }) => {
                 ico = <Check style={{cursor:"pointer"}} className={addClass} onClick={onClick} />;
                 break;
             case "arrow_down":
-                ico = <ArrowDownwardOutlined className={addClass} onClick={onClick} />;
+                ico = <ArrowDownwardOutlined style={{cursor:"pointer"}} className={addClass} onClick={onClick} />;
                 break;
             default:
                 ico = null;

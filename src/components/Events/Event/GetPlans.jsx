@@ -30,7 +30,7 @@ const GetPlans = ({ id, plans }) => {
                             <p dangerouslySetInnerHTML={{ __html: item.description }}></p>
 
                             </div>
-                            {canWriteFeedback && <div className={s.feed__back__wrap}>
+                            <div className={s.feed__back__wrap}>
                             <div className={s.feed__back__line}>
                                 <b>Зворотній зв'язок</b>
                             </div>
@@ -43,16 +43,16 @@ const GetPlans = ({ id, plans }) => {
                                         </div>
                                     )
                                 })}
-                            </div>}
-                           
-                            <button onClick={() => {
+                            </div>
+                           {canWriteFeedback && <button onClick={() => {
                                 setModalInfo({
                                     item: item
                                 })
                                 setModal(!modal)
                             }
 
-                            } className={s.btn__feed}>Написати</button>
+                            } className={s.btn__feed}>Написати</button>}
+                            
                             </div>
                         </div>
                     )

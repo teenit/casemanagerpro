@@ -30,6 +30,7 @@ import AccessCheck from "../../Functions/AccessCheck";
 
 const Case = () => {
     const dispatch = useDispatch();
+    const downloadGallery = AccessCheck('yes_no', 'a_page_case_media_download')
     const categories = useSelector(state => state.categories);
     const loading = useSelector(state => state.loading);
     const [page, setPage] = useState({
@@ -51,7 +52,7 @@ const Case = () => {
             const viewInfo = JSON.parse(localStorage.getItem("page_case_settings"))
             setState({ ...res, viewInfoActive: res.viewInfo ? false : true, viewInfo: viewInfo });
             getUserNameById(res.responsible_id)
-            console.log(state);
+            console.log(localStorage.getItem("page_case_settings"));
         })
     }
     const getUsersName = () => {
@@ -68,7 +69,7 @@ const Case = () => {
     }, [case_id])
     const settingsHandler = (value) => {
         setState({ ...state, viewInfo: value })
-        localStorage.setItem("page_case_settings", JSON.stringify(state))
+        localStorage.setItem("page_case_settings", JSON.stringify(value))
         setOpenSetting(false)
         setSettingsAlert(true)
     }
@@ -106,8 +107,7 @@ const Case = () => {
                     <CaseProfilePhoto profileImg={state.meta?.profileImg?.link ? state.meta.profileImg.link.link : null} getCaseInfo={getCaseInfo} case_id={case_id} />
                 }
                 <div>
-
-                    <CaseInfoBlock case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />
+                    {(state.viewInfoActive || state.viewInfo?.view_InfoBlock) && <CaseInfoBlock case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
                 </div>
             </div>
             {(state.viewInfoActive || state.viewInfo?.view_GroupConnection) &&
@@ -129,9 +129,8 @@ const Case = () => {
                     <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
                 }
             </div>
-
-            {!!state?.meta?.files?.length && (state.viewInfoActive || state.viewInfo?.view_Gallery) && 
-            <GalleryBlock check={()=>{AccessCheck('yes_no', 'a_page_case_media_download')}} data={state.meta.files} />}
+            {!!state?.meta?.files?.length && (state.viewInfoActive || state.viewInfo?.view_Gallery) &&
+                <GalleryBlock check={downloadGallery} data={state.meta.files} />}
             {state.viewInfoActive || state.viewInfo?.view_FileUploader &&
                 <div className="uploader_wrap">
                     <p>Завантажити файл</p>

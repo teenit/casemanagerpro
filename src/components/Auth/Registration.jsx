@@ -7,7 +7,7 @@ import SmallNotification from "../elements/Notifications/SmallNotification"
 import Textarea from "../elements/Inputs/Textarea"
 import { apiResponse } from "../Functions/get_apiObj";
 
-const Registration = ({switchForms}) => {
+const Registration = ({ switchForms }) => {
     const alertMessages = {
         required: "Обов'язково до заповнення",
         pib: "ПІБ повинен бути довжиною мінімум 3 символа",
@@ -39,8 +39,8 @@ const Registration = ({switchForms}) => {
     });
 
     const [alert, setAlert] = useState({
-        success:false,
-        error:false,
+        success: false,
+        error: false,
         message: ""
     });
 
@@ -74,9 +74,8 @@ const Registration = ({switchForms}) => {
     };
 
     const handleChange = (key, value) => {
-        setFormData({...formData, [key]:value})
+        setFormData({ ...formData, [key]: value })
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -109,48 +108,49 @@ const Registration = ({switchForms}) => {
         };
 
         const data = { ...formData, level: levelObj };
-        apiResponse(data, "user-register.php").then((response)=>{
-                switchForms()
-                let isSuccess = response.marker=="red" ? "error":"success"
-                setAlert({ [isSuccess]: true, message: response.message });
-                setFormData({
-                    userName: '',
-                    userPhone: '',
-                    userEmail: '',
-                    userAddress: '',
-                    userType: 'volunteer',
-                    userWork: '',
-                    userAnotherData: '',
-                    pass: ''
-                });
-        }).catch((error)=>{
+        apiResponse(data, "user-register.php").then((response) => {
+            let isSuccess = response.marker == "red" ? "error" : "success"
+            setAlert({ [isSuccess]: true, message: response.message });
+            // switchForms()
+            // setFormData({
+            //     userName: '',
+            //     userPhone: '',
+            //     userEmail: '',
+            //     userAddress: '',
+            //     userType: 'volunteer',
+            //     userWork: '',
+            //     userAnotherData: '',
+            //     pass: ''
+            // });
+        }).catch((error) => {
             console.log(error);
         })
     }
+
     return (
         <form className="reg__form" onSubmit={handleSubmit}>
             <div className="reg__split">
-                <Input type="text" label="ПІБ" name="userName" value={formData.userName} onChange={(e)=>{handleChange("userName", e.target.value)}} />
-                <Input type="number" label="Номер телефону" name="userPhone" value={formData.userPhone} onChange={(e)=>{handleChange("userPhone", e.target.value)}} />
+                <Input type="text" label="ПІБ" name="userName" value={formData.userName} onChange={(e) => { handleChange("userName", e.target.value) }} />
+                <Input type="number" label="Номер телефону" name="userPhone" value={formData.userPhone} onChange={(e) => { handleChange("userPhone", e.target.value) }} />
             </div>
             <div className="reg__split">
-                <Input type="text" label="E-mail" name="userEmail" value={formData.userEmail} onChange={(e)=>{handleChange("userEmail", e.target.value)}} />
-                <Input type="text" label="Адреса" name="userAddress" value={formData.userAddress} onChange={(e)=>{handleChange("userAddress", e.target.value)}} />
+                <Input type="text" label="E-mail" name="userEmail" value={formData.userEmail} onChange={(e) => { handleChange("userEmail", e.target.value) }} />
+                <Input type="text" label="Адреса" name="userAddress" value={formData.userAddress} onChange={(e) => { handleChange("userAddress", e.target.value) }} />
             </div>
             <div className="reg__block">
                 <label>Тип користувача</label>
-                <Select name="userType" value={formData.userType} onChange={(e)=>{handleChange("userType", e.target.value)}}>
+                <Select name="userType" value={formData.userType} onChange={(e) => { handleChange("userType", e.target.value) }}>
                     {selectOptions.map((item, index) => (
                         <MenuItem key={index} value={item.value}>{item.name}</MenuItem>
                     ))}
                 </Select>
             </div>
             <div className="reg__split">
-                <Input type="text" label="Спеціалізація / Робота" name="userWork" value={formData.userWork} onChange={(e)=>{handleChange("userWork", e.target.value)}} />
-                <Input type="password" label="Пароль" name="pass" value={formData.pass} onChange={(e)=>{handleChange("pass", e.target.value)}} />
+                <Input type="text" label="Спеціалізація / Робота" name="userWork" value={formData.userWork} onChange={(e) => { handleChange("userWork", e.target.value) }} />
+                <Input type="password" label="Пароль" name="pass" value={formData.pass} onChange={(e) => { handleChange("pass", e.target.value) }} />
             </div>
             <div className="input__wrap">
-                <Textarea label="Розкажіть про себе" name="userAnotherData" value={formData.userAnotherData} onChange={(e)=>{handleChange("userAnotherData", e.target.value)}} />
+                <Textarea label="Розкажіть про себе" name="userAnotherData" value={formData.userAnotherData} onChange={(e) => { handleChange("userAnotherData", e.target.value) }} />
             </div>
             <Button variant="contained" type="submit">Реєстрація</Button>
             {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { setAlert({ ...alert, error: false }) }} />}

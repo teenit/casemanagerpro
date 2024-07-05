@@ -15,6 +15,7 @@ import GalleryBlock from "../../blocks/GalleryBlock";
 import AccessCheck from "../../Functions/AccessCheck";
 
 const Event = ()=>{
+    const downloadGallery =AccessCheck('yes_no', 'a_page_event_media')
     const [usersMemC, setUsersMemC] = useState([])
     const [plans,setPlans] = useState([])
     const [files,setFiles] = useState([])
@@ -141,7 +142,7 @@ const Event = ()=>{
                         <GetPlans id={event.id} plans = {plans}/>
                 </div>}
                 
-                <GalleryBlock data = {files} check={()=>{AccessCheck('yes_no', 'a_page_event_media')}}/>
+                <GalleryBlock data = {files} check={downloadGallery}/>
             </div>
             {lookPhoto.look?<BigPhoto link = {lookPhoto.link} close = {()=>{setLookPhoto({...lookPhoto,look:false})}}/>:null}
             {control ? <EventModal getPlans = {(id,key)=>{

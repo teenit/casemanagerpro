@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { LANG, appConfig } from "../../../services/config";
 import { Button, Checkbox } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { apiResponse } from "../../Functions/get_apiObj";
-import SmallNotification from "../../elements/Notifications/SmallNotification";
+import Icon from "../../elements/Icons/Icon";
 
 const BlueCheckbox = withStyles({
     root: {
@@ -29,38 +28,99 @@ const BlueButton = withStyles({
 })(Button);
 
 const CaseSettings = ({ views, successHandler }) => {
-    const VIEWS = appConfig.caseViewSettings;
+    const { caseViewSettings, caseViewSettingsLists } = appConfig;
     const [state, setState] = useState({});
-    useEffect(() => {
-       setState({...views})
-    }, []);
+    const [lists, setLists] = useState([]);
 
+    useEffect(() => {
+        setState({ ...views });
+
+        const initialLists = caseViewSettingsLists.map(item => {
+            const options = item.options.reduce((acc, option) => {
+                acc[option] = false;
+                return acc;
+            }, {});
+            return { [item.primary]: options };
+        });
+
+        setLists(initialLists);
+    }, [views]);
 
     const changeHandler = (key, value) => {
-        setState({ ...state, [key]: value });
+        setState(prevState => ({
+            ...prevState,
+            [key]: value
+        }));
     };
-    const saveHandler = ()=>{
-        successHandler()
-    }
+
+    const listChangeHandler = (parentKey, key, value) => {
+        setLists(prevLists => prevLists.map(list => {
+            if (list[parentKey]) {
+                return {
+                    [parentKey]: {
+                        ...list[parentKey],
+                        [key]: value
+                    }
+                };
+            }
+            return list;
+        }));
+    };
+
+    const List = ({ parentKey, listItems }) => {
+        const [show, setShow] = useState(true);
+        const parentState = state[parentKey] ?? {};
+
+        return (
+            <div>
+                <div className="CaseSettings-list">
+                    <label>
+                        <BlueCheckbox
+                            onChange={(e) => { changeHandler(parentKey, e.target.checked); }}
+                            checked={parentState === undefined ? true : parentState}
+                        />
+                        {LANG.case_view_settings[parentKey]}
+                    </label>
+                    {/* <Icon icon={"arrow_down"} onClick={() => { setShow(!show); }} /> */}
+                </div>
+                {show && <div className="CaseSettings" style={{ paddingLeft: '20px' }}>
+                    {listItems.map((listItem, listIndex) => (
+                        <label key={listItem}>
+                            <BlueCheckbox
+                                onChange={(e) => { listChangeHandler(parentKey, listItem, e.target.checked); }}
+                                checked={parentState[listItem] === undefined ? true : parentState[listItem]}
+                            />
+                            {LANG.case_view_settings[listItem]}
+                        </label>
+                    ))}
+                </div>}
+            </div>
+        );
+    };
+
+    const handleSave = () => {
+        successHandler(lists.push(state));
+    };
 
     return (
-        <div>
-            {VIEWS.map((item) => {
-                return (
-                    <div key={item}>
-                        <label>
-                            <BlueCheckbox 
-                                onChange={(e) => { changeHandler(item, e.target.checked); }}
-                                checked={state[item] === undefined ? true : state[item]} 
-                            />
-                            {LANG.case_view_settings[item]}
-                        </label>
-                    </div>
-                );
+        <div className="CaseSettings">
+            {caseViewSettings.map((item, index) => (
+                <label key={item}>
+                    <BlueCheckbox
+                        onChange={(e) => { changeHandler(item, e.target.checked); }}
+                        checked={state[item] === undefined ? true : state[item]}
+                    />
+                    {LANG.case_view_settings[item]}
+                </label>
+            ))}
+            {caseViewSettingsLists.map((item, index) => {
+                const parentKey = item.primary;
+                const listItems = item.options;
+                return <List key={parentKey} parentKey={parentKey} listItems={listItems} />;
             })}
-            <BlueButton variant="contained" onClick={saveHandler}>{LANG.GLOBAL.save}</BlueButton>
+            <BlueButton variant="contained" onClick={handleSave}>{LANG.GLOBAL.save}</BlueButton>
         </div>
     );
-}
+};
 
 export default CaseSettings;
