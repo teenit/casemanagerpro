@@ -40,7 +40,7 @@ const CaseSettings = ({ views, successHandler }) => {
                 acc[option] = false;
                 return acc;
             }, {});
-            return { [item.primary]: options };
+            return { [item]: options };
         });
 
         setLists(initialLists);
@@ -105,19 +105,33 @@ const CaseSettings = ({ views, successHandler }) => {
     return (
         <div className="CaseSettings">
             {caseViewSettings.map((item, index) => (
-                <label key={item}>
+                <>
+                <label key={item.primary}>
                     <BlueCheckbox
-                        onChange={(e) => { changeHandler(item, e.target.checked); }}
-                        checked={state[item] === undefined ? true : state[item]}
+                        onChange={(e) => { changeHandler(item.primary, e.target.checked); }}
+                        checked={state[item.primary] === undefined ? true : state[item.primary]}
                     />
-                    {LANG.case_view_settings[item]}
+                    {LANG.case_view_settings[item.primary]}
                 </label>
+                {
+                    item?.options && item.options.map((option)=>{
+                   return <label style={{paddingLeft:"40px"}} key={option}>
+                        <BlueCheckbox
+                            onChange={(e) => { changeHandler(option, e.target.checked); }}
+                            checked={state[option] === undefined ? true : state[option]}
+                        />
+                        {LANG.case_view_settings[option]}
+                    </label>
+                    })
+                }
+                </>
             ))}
-            {caseViewSettingsLists.map((item, index) => {
+
+            {/* {caseViewSettingsLists.map((item, index) => {
                 const parentKey = item.primary;
                 const listItems = item.options;
                 return <List key={parentKey} parentKey={parentKey} listItems={listItems} />;
-            })}
+            })} */}
             <BlueButton variant="contained" onClick={handleSave}>{LANG.GLOBAL.save}</BlueButton>
         </div>
     );

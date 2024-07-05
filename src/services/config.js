@@ -762,15 +762,46 @@ export const appConfig = {
     color: "#42a5f5"
   },
   caseViewSettings: [
-    "view_ProfilePhoto",
-    "view_GroupConnection",
-    "view_Plan",
-    "view_Help",
-    "view_Notes",
-    "view_Gallery",
-    "view_FileUploader",
-    "view_DetailedInfo",
-    
+    {
+      primary: "view_ProfilePhoto"
+    },
+    {
+      primary: "view_GroupConnection"
+    },
+    {
+      primary: "view_Plan"
+    },
+    {
+      primary: "view_Help"
+    },
+    {
+      primary: "view_Notes"
+    },
+    {
+      primary: "view_Gallery"
+    },
+    {
+      primary: "view_FileUploader"
+    },
+    {
+      primary: "view_DetailedInfo"
+    },
+    {
+      primary: "view_InfoBlock", 
+      options: [
+        "view_name",
+        "view_phone",
+        "view_email",
+        "view_birthday",
+        "view_address",
+        "view_sex",
+        "view_date_created",
+        "view_contract",
+        "view_channel",
+        "view_categories",
+        "view_responsible",
+      ]
+    }
   ],
   caseViewSettingsLists: [
     {
