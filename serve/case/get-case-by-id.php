@@ -96,7 +96,7 @@ try {
     }
 
     // Отримання даних з таблиці case_plans
-    $sql_user_meta = "SELECT * FROM usermeta WHERE user_id = ? AND meta_key = 'case_view_info'";
+    $sql_user_meta = "SELECT * FROM usermeta WHERE user_id = ?";
     $stmt_user_meta = $conn->prepare($sql_user_meta);
     $stmt_user_meta->bind_param("i", $data->id);
     $stmt_user_meta->execute();
@@ -104,11 +104,16 @@ try {
     $user_meta = [];
 
     while ($row_user_meta = $result_user_meta->fetch_assoc()) {
-        $user_meta[] = [
-            'meta_id' => $row_user_meta['id'],
-            'key' => $row_user_meta['meta_key'],
-            'value' => json_decode($row_case_meta['meta_value'])
-        ];
+        if ($row_user_meta['meta_key'] == 'case_view_info') {
+            $user_meta = [
+                "case_view_info" => [
+                    'meta_id' => $row_user_meta['meta_id'],
+                    'key' => $row_user_meta['meta_key'],
+                    'value' => json_decode($row_user_meta['meta_value'])
+                ]
+            ];
+        }
+
     }
 
     // Отримання даних з таблиці cases_data

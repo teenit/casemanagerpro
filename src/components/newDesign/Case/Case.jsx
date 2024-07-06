@@ -49,10 +49,13 @@ const Case = () => {
     const [settingsAlert, setSettingsAlert] = useState(false)
     const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
-            const viewInfo = JSON.parse(localStorage.getItem("page_case_settings"))
-            setState({ ...res, viewInfoActive: res.viewInfo ? false : true, viewInfo: viewInfo });
-            getUserNameById(res.responsible_id)
-            console.log(localStorage.getItem("page_case_settings"));
+            
+            const viewInfo = res.userMeta?.case_view_info ? res.userMeta.case_view_info.value : {};
+            console.log(viewInfo)
+            setState({ ...res, viewInfoActive: res.userMeta?.case_view_info ? false : true, viewInfo: viewInfo
+                 });
+           // getUserNameById(res.responsible_id)
+          
         })
     }
     const getUsersName = () => {
@@ -86,7 +89,7 @@ const Case = () => {
     return state && state.general ? (
         <div className="case__wrap">
             {
-                openSetting && <CaseSettings successHandler={(value) => { settingsHandler(value) }} views={state.viewInfoActive ? {} : state.viewInfo} />
+               openSetting && <CaseSettings successHandler={getCaseInfo} views={state.viewInfoActive ? {} : state.viewInfo} />
             }
             <div className="set__case__ico">
                 <img className="setImg" src={setImg} alt=""
