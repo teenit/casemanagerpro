@@ -13,7 +13,7 @@ const CaseSettings = ({ views, successHandler }) => {
     };
 
     const handleSave = () => {
-        console.log(state)
+    //  return  console.log(state)
         apiResponse({
             value: JSON.stringify(state),
             key: "case_view_info"
@@ -21,6 +21,7 @@ const CaseSettings = ({ views, successHandler }) => {
             console.log(res)
         })
         successHandler();
+        window.location.reload();
     };
 
     return (
@@ -29,8 +30,8 @@ const CaseSettings = ({ views, successHandler }) => {
                return <div key={item.primary}>
                 <label >
                     <Checkbox
-                        onChange={(e) => { console.log(item.primary, e.target.checked); changeHandler(item.primary, e.target.checked); }}
-                        checked={!state[item.primary] ? !!state[item.primary] : true}
+                        onChange={(e) => { changeHandler(item.primary, e.target.checked); }}
+                        checked={(state[item.primary] === undefined || state[item.primary]) ? true : state[item.primary]}
                     />
                     {LANG.case_view_settings[item.primary]}
                 </label>
@@ -39,7 +40,7 @@ const CaseSettings = ({ views, successHandler }) => {
                    return <label style={{paddingLeft:"40px", display:"block"}} key={option}>
                         <Checkbox
                             onChange={(e) => { changeHandler(option, e.target.checked); }}
-                            checked={!state[option] ? !!state[option] : true}
+                            checked={(state[option] === undefined || state[option]) ? true : state[option]}
                         />
                         {LANG.case_view_settings[option]}
                     </label>

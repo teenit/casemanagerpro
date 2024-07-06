@@ -27,6 +27,7 @@ import GalleryBlock from "../../blocks/GalleryBlock";
 import CaseSettings from "./CaseSettings";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import AccessCheck from "../../Functions/AccessCheck";
+import { appConfig } from "../../../services/config";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -41,6 +42,18 @@ const Case = () => {
     const post = {
         level: 8
     }
+    const generateViews = (views = {}) => {
+        let obj = {}
+        let viewConfig = appConfig.caseViewSettings;
+        viewConfig.forEach(item => {
+            console.log(item)
+            obj[item.primary] = true;
+            if (item?.options) {
+                item.options.forEach(option => obj[option] = option)
+            }
+        })
+        return {...obj, ...views};
+    }
     let params = useParams();
     const case_id = params.id;
     const [state, setState] = useState()
@@ -50,9 +63,9 @@ const Case = () => {
     const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
             
-            const viewInfo = res.userMeta?.case_view_info ? res.userMeta.case_view_info.value : {};
+            const viewInfo = generateViews(res.userMeta?.case_view_info ? res.userMeta.case_view_info.value : {});
             console.log(viewInfo)
-            setState({ ...res, viewInfoActive: res.userMeta?.case_view_info ? false : true, viewInfo: viewInfo
+            setState({ ...res, viewInfo: viewInfo
                  });
            // getUserNameById(res.responsible_id)
           
@@ -106,35 +119,36 @@ const Case = () => {
 
 
             <div className="case__contact__info">
-                {(state.viewInfoActive || state.viewInfo?.view_ProfilePhoto) &&
+                {(state.viewInfo.view_ProfilePhoto) &&
                     <CaseProfilePhoto profileImg={state.meta?.profileImg?.link ? state.meta.profileImg.link.link : null} getCaseInfo={getCaseInfo} case_id={case_id} />
                 }
                 <div>
-                    {(state.viewInfoActive || state.viewInfo?.view_InfoBlock) && <CaseInfoBlock case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
+                    {(state.viewInfo.view_InfoBlock) && <CaseInfoBlock case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
                 </div>
             </div>
-            {(state.viewInfoActive || state.viewInfo?.view_GroupConnection) &&
+            {(state.viewInfo.view_InfoBlock) && <CaseInfoBlock rightBlock={true} case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
+            {(state.viewInfo.view_GroupConnection) &&
                 <GroupConnections case_id={case_id} type={"case"} />
             }
             <div className="container__grid__two">
-                {(state.viewInfoActive || state.viewInfo?.view_DetailedInfo) &&
+                {(state.viewInfo.view_DetailedInfo) &&
                     <DetailedInfo info={state.data} changeData={(key, value) => { handleDataChange(key, value) }} />
                 }
-                {(state.viewInfoActive || state.viewInfo?.view_Plan) &&
+                {(state.viewInfo.view_Plan) &&
                     <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo} />
                 }
             </div>
             <div className="container__grid__two">
-                {(state.viewInfoActive || state.viewInfo?.view_Help) &&
+                {(state.viewInfo.view_Help) &&
                     <GiveHelps helps={state.helps} case_id={case_id} getCaseInfo={getCaseInfo} />
                 }
-                {(state.viewInfoActive || state.viewInfo?.view_Notes) &&
+                {(state.viewInfo.view_Notes) &&
                     <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
                 }
             </div>
-            {!!state?.meta?.files?.length && (state.viewInfoActive || state.viewInfo?.view_Gallery) &&
+            {!!state?.meta?.files?.length && (state.viewInfo.view_Gallery) &&
                 <GalleryBlock check={downloadGallery} data={state.meta.files} />}
-            {state.viewInfoActive || state.viewInfo?.view_FileUploader &&
+            {state.viewInfo.view_FileUploader &&
                 <div className="uploader_wrap">
                     <p>Завантажити файл</p>
                     <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
