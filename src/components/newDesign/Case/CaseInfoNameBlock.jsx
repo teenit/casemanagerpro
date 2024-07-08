@@ -1,5 +1,6 @@
 import React from "react";
 
-const CaseInfoNameBlock = () => {
-    return <></>
+const CaseInfoNameBlock = ({title}) => {
+    return <>{title}</>
 }
+export default CaseInfoNameBlock;

@@ -2,37 +2,17 @@ import React, { useState } from "react";
 import Icon from "../Icons/Icon";
 import { NavLink } from "react-router-dom";
 import { MenuItem, Select } from "@mui/material";
-import Input from "./Input";
 import { LANG } from "../../../services/config";
 
-
-
-
-const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
+const SelectBlock = ({ saveHandler, disabled = false, value = "", onChange, link = null, icon = null, label = "", titleDefault = "", selectOptions = [] }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
 
     const handleSave = () => {
-        const displayValue = stateValue;
-        saveHandler(stateValue, displayValue);
+        saveHandler(stateValue, selectOptions.find(option => option.value === stateValue)?.label);
         setShowEdit(false);
     };
-    const howOldIsCase = (birthday) => {
-        if (!birthday) return "";
 
-        const birthDate = new Date(birthday);
-        const today = new Date();
-        let ageYears = today.getFullYear() - birthDate.getFullYear();
-        const isBirthdayPassed = (
-            today.getMonth() > birthDate.getMonth() ||
-            (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate())
-        )
-        if (!isBirthdayPassed) {
-            ageYears--
-        }
-
-        return `, ${ageYears} років`;
-    };
     return (
         <div className="InputBlock">
             {!showEdit && (
@@ -46,7 +26,7 @@ const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "t
                                 </NavLink>
                             ) : (
                                 <>
-                                    {label == "" || label == null ? <span className="InputBlock-title-default">{titleDefault}</span> : <span className="InputBlock-title-main">{label}</span>}
+                                    {label === "" || label === null ? <span className="InputBlock-title-default">{titleDefault}</span> : <span className="InputBlock-title-main">{label}</span>}
                                 </>
                             )}
                         </div>
@@ -62,9 +42,19 @@ const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "t
                 <div className="InputBlock-editer">
                     <div className="InputBlock-editer-withicon">
                         {icon && <Icon icon={icon} addClass={"default-icon"} />}
-                        <Input label={title} type={inputType} value={stateValue} onChange={(e) => {
-                            setStateValue(e.target.value)
-                        }} />
+                        <Select
+                            value={stateValue}
+                            onChange={(e) => {
+                                setStateValue(e.target.value);
+                                onChange(e.target.value);
+                            }}
+                        >
+                            {selectOptions.map((option, index) => (
+                                <MenuItem key={index} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
                     </div>
                     <div className="InputBlock-editer-icons">
                         <span onClick={handleSave}>
@@ -78,6 +68,6 @@ const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "t
             )}
         </div>
     );
-}
+};
 
-export default InputBlock;
+export default SelectBlock;
