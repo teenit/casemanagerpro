@@ -84,32 +84,55 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
             handleEditChange(key);
         }
     };
-
-    const infoBlocks = [
-        { view: info.viewInfo.view_date_created, key: "date_created", icon: "date_created", type: "text", title: LANG.case_data.date_created, typeData: "general", disabled: true },
-        { view: info.viewInfo.view_contract, key: "contract_date", icon: "contract_date", type: "date", title: LANG.case_data.contract_date, typeData: "data" },
-        { view: info.viewInfo.view_contract, key: "contract_number", icon: "contract_number", type: "number", title: LANG.case_data.contract_number, typeData: "data" },
-        { view: info.viewInfo.view_channel, key: "channel", icon: "channel", type: "text", title: LANG.case_data.channel, typeData: "data" },
-    ];
-
     return (
         <div className="PersonalInfo">
-            {infoBlocks.map((block, index) => (
-                block.view && (
-                    <div key={index} className="PersonalInfo-line">
-                        <InputBlock
-                            value={dataState[block.key]}
-                            onChange={(e) => handleDataChange(block.key, e.target.value)}
-                            icon={block.icon}
-                            label={dataState[block.key]}
-                            inputType={block.type}
-                            saveHandler={(val) => saveHandler(block.key, val, block.typeData)}
-                            titleDefault={block.title}
-                            disabled={block.disabled}
-                        />
-                    </div>
-                )
-            ))}
+             {(info.viewInfo.view_date_created) && <div className="PersonalInfo-line">
+            {/* <span>{LANG.case_data.date_created}</span> */}
+            <InputBlock
+                value={dataState.date_created}
+                icon={"date_created"}
+                label={dataState.date_created}
+                disabled={true}
+                titleDefault={LANG.case_data.date_created}
+            />
+        </div>}
+        {(info.viewInfo.view_contract) && <div className="PersonalInfo-line">
+            {/* <span>{LANG.case_data.contract_date}</span> */}
+            <InputBlock
+                value={dataState.contract_date}
+                onChange={(e) => { handleDataChange("contract_date", e.target.value) }}
+                icon={"contract_date"}
+                label={dataState.contract_date}
+                inputType={"date"}
+                saveHandler={(val) => saveHandler("contract_date", val, "data")}
+                titleDefault={LANG.case_data.contract_date}
+            />
+        </div>}
+        {(info.viewInfo.view_contract) && <div className="PersonalInfo-line">
+            {/* <span>{LANG.case_data.contract_number}</span> */}
+            <InputBlock
+                value={dataState.contract_number}
+                onChange={(e) => { handleDataChange("contract_number", e.target.value) }}
+                icon={"contract_number"}
+                label={dataState.contract_number}
+                inputType={"number"}
+                saveHandler={(val) => saveHandler("contract_number", val, "data")}
+                titleDefault={LANG.case_data.contract_number}
+            />
+        </div>}
+        {(info.viewInfo.view_channel) && <div className="PersonalInfo-line">
+            {/* <span>{LANG.case_data.channel}</span> */}
+            <InputBlock
+                value={dataState.channel}
+                onChange={(e) => { handleDataChange("channel", e.target.value) }}
+                icon={"channel"}
+                label={dataState.channel}
+                inputType={"text"}
+                saveHandler={(val) => saveHandler("channel", val, "data")}
+                titleDefault={LANG.case_data.channel}
+            />
+        </div>}
+
             {info.viewInfo.view_categories && (
                 <div className="PersonalInfo-categories">
                     {/* <span className="PersonalInfo-categories-title">{LANG.case_data.category}</span> */}

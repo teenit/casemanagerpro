@@ -1,5 +1,15 @@
 .CaseProfilePhoto {
     background-size: 100%;
+    position: relative;
+    &-hover{
+        width: 100%;
+        height: 100%;
+        background-color: #00000077;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+       }
     &-img {
         width: 100%;
         max-width: 250px;

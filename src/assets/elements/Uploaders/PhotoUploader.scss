@@ -1,7 +1,7 @@
 .PhotoUploader {
    display: flex;
    flex-direction: column;
-   gap: 10px;
+  
    &-img {
     flex-grow: 1;
     .img {
@@ -10,9 +10,15 @@
    }
    &-buttons {
     display: flex;
+    justify-content: center;
+    background-color:#00000077 ;
     gap: 5px;
+    position: relative;
+    z-index: 1;
     .label{
         cursor: pointer;
+        position: relative;
+        z-index: 2;
     }
    }
 }
