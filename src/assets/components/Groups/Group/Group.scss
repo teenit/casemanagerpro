@@ -41,15 +41,9 @@
         }
 
         &-inner {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-
-            &-column {
                 display: flex;
                 flex-direction: column;
                 gap: 7.5px;
-            }
         }
     }
 

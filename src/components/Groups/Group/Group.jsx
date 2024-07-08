@@ -35,6 +35,7 @@ const deleteHandler = (index)=>{
         return (
             <div className='Group-member' onMouseEnter={() => { setEditMember(1) }} onMouseLeave={() => { setEditMember(0) }}>
                 <NavLink to={`/case/${item.case_id}`}>{item.name}</NavLink>
+                <span><a href={`tel:${item.phone1}`}>{item.phone1}</a></span>
                 <span style={{ opacity: editMember }}>
                     <Icon icon={"delete"} addClass={"close-icon"} onClick={()=>{modalHandler("delete")}}/>
                 </span>
@@ -45,24 +46,22 @@ const deleteHandler = (index)=>{
     }
     return (
         <div className='Group'>
-            {settings ? <SettingsModal close={() => { setSettings(!settings) }} /> : <div className='Group-settings'>
+            {/* {settings ? <SettingsModal close={() => { setSettings(!settings) }} /> : <div className='Group-settings'>
                 <Icon icon={"settings"} onClick={() => { setSettings(!settings) }} />
-            </div>}
+            </div>} */}
 
             <div className='Group-title'>
-                <div>Group {id}</div>
-                <div className="Group-title-desc">jkdhjcsj</div>
+                <div>{data.group.groupName}</div>
+                <div className="Group-title-desc">{data.group.groupDescription}</div>
             </div>
             <div className="Group-members">
                 <div className='Group-members-title'>
                     <div>{LANG.groups.group.members}</div>
                 </div>
                 <div className='Group-members-inner'>
-                    <div className='Group-members-inner-column'>
-                        {data && data.map((item, index) => {
+                        {data?.members && data.members.map((item, index) => {
                             return <Member key={index} item={item} index={index} />
                         })}
-                    </div>
                 </div>
             </div>
         </div>
