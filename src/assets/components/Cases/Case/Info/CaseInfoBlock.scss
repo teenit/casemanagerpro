@@ -2,6 +2,13 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    &-column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
     &.name-block {
         display: flex;
         align-items: center;
@@ -37,25 +44,7 @@
             padding: 10px;
         }
     }
-    &-categories{
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        &-content{
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            .edit-icon{
-                opacity: 0;
-            }
-        }
-        :hover{
-            background-color: $background-color;
-            .edit-icon{
-                opacity: 1;
-            }
-        }
-    }
+    
     .case-info-card-text {
         .cat {
             display: flex;
@@ -80,48 +69,6 @@
                 .edit-icon {
                     opacity: 1;
                 }
-            }
-        }
-    }
-    .InputBlock {
-        &-pib{
-            display: flex;
-            gap: 25px;
-            padding: 15px 0px;
-        }
-        &-default {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-            &-icon {
-                width: 20px;
-                &-img {
-                    width: 100%;
-                }
-            }
-            .edit-icon {
-                opacity: 0;
-            }
-            &:hover {
-                background-color: $background-color;
-                .edit-icon {
-                    opacity: 1;
-                }
-            }
-        }
-        &-editer {
-            display: flex;
-            gap: 50px;
-            align-items: center;
-            &-withicon {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-            }
-            &-icons {
-                display: flex;
-                align-items: center;
-                gap: 10px;
             }
         }
     }

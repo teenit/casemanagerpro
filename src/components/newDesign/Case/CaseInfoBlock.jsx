@@ -8,7 +8,9 @@ import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import Icon from "../../elements/Icons/Icon";
 import { MenuItem, Select } from "@mui/material";
 import { LANG } from "../../../services/config";
-const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, rightBlock = false }) => {
+import InputBlock from "../../elements/Inputs/InputBlock";
+import CaseProfilePhoto from "./CaseProfilePhoto";
+const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, rightBlock = false, profileImg }) => {
     const categories = useSelector(state => state.categories.case);
     const [checkedMas, setCheckedMas] = useState([])
     const [userNames, setUserNames] = useState(null)
@@ -151,77 +153,9 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
 
         return `, ${ageYears} років`;
     };
-
-
-
-    const InputBlock = ({ select = false, age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "" }) => {
-        const [showEdit, setShowEdit] = useState(false);
-        const [stateValue, setStateValue] = useState(value);
-
-        const handleSave = () => {
-            const displayValue = select ? LANG.selects.sex[stateValue] : stateValue;
-            saveHandler(stateValue, displayValue);
-            setShowEdit(false);
-        };
-
-        return (
-            <div className="InputBlock">
-                {!showEdit && (
-                    <div className="InputBlock-default">
-                        {icon && <Icon icon={icon} addClass={"default-icon"} />}
-                        <div className="case-info-card-text">
-                            <div title={title}>
-                                {link ? (
-                                    <NavLink to={link}>
-                                        {label}{age && howOldIsCase(stateValue)}
-                                    </NavLink>
-                                ) : (
-                                    <>
-                                        {label}{age && howOldIsCase(stateValue)}
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                        {!disabled && (
-                            <div className="edit-icon" onClick={() => { setShowEdit(true) }}>
-                                <Icon icon={"edit"} addClass={"default-icon"} />
-                            </div>
-                        )}
-                    </div>
-                )}
-                {showEdit && (
-                    <div className="InputBlock-editer">
-                        <div className="InputBlock-editer-withicon">
-                            {icon && <Icon icon={icon} addClass={"default-icon"} />}
-                            {select ? <Select value={stateValue} onChange={(e) => {
-                                setStateValue(e.target.value);
-                            }}>
-                                <MenuItem value="male">{LANG.selects.sex.male}</MenuItem>
-                                <MenuItem value="female">{LANG.selects.sex.female}</MenuItem>
-                                <MenuItem value="other">{LANG.selects.sex.other}</MenuItem>
-                            </Select>
-                                : <Input label={title} type={inputType} value={stateValue} onChange={(e) => {
-                                    setStateValue(e.target.value)
-                                }} />}
-                        </div>
-                        <div className="InputBlock-editer-icons">
-                            <span onClick={handleSave}>
-                                <Icon icon={"save"} addClass={"save-icon"} />
-                            </span>
-                            <span onClick={() => { setShowEdit(false) }}>
-                                <Icon icon={"close"} addClass={"close-icon"} />
-                            </span>
-                        </div>
-                    </div>
-                )}
-            </div>
-        );
-    }
-
-
     return (
-        <>
-            {!rightBlock && <div className="CaseInfoBlock name-block">
+        <div className="CaseInfoBlock-name-block">
+            <div className="name-block">
                 <div className="CaseInfoBlock-inner">
                     {(info.viewInfo.view_name) && <div className="InputBlock">
                         {!editName && <div className="InputBlock-default">
@@ -275,15 +209,14 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                     </div>}
 
                 </div>
-            </div>}
+            </div>
             <div className="CaseInfoBlock">
-                {!rightBlock && <div className="CaseInfoBlock-inner">
-                    <div className="CaseInfoBlock-line">
-
-
-                    </div>
-                    {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.phone}</span>
+            {(info.viewInfo.view_ProfilePhoto) &&
+                <CaseProfilePhoto profileImg={profileImg} getCaseInfo={getCaseInfo} case_id={case_id} />
+            }
+                <div className="CaseInfoBlock-column">
+                {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
+                        {/* <span>{LANG.case_data.phone}</span> */}
                         <InputBlock
                             value={dataState.phone1}
                             onChange={(e) => { handleDataChange("phone1", e.target.value) }}
@@ -292,10 +225,11 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             label={dataState.phone1}
                             inputType={"number"}
                             saveHandler={(val) => saveHandler("phone1", val, "general")}
+                            titleDefault={LANG.case_data.phone}
                         />
                     </div>}
                     {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.phone}</span>
+                        {/* <span>{LANG.case_data.phone}</span> */}
                         <InputBlock
                             value={dataState.phone2}
                             onChange={(e) => { handleDataChange("phone2", e.target.value) }}
@@ -304,34 +238,11 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             label={dataState.phone2}
                             inputType={"number"}
                             saveHandler={(val) => saveHandler("phone2", val, "general")}
+                            titleDefault={LANG.case_data.phone}
                         />
                     </div>}
-                    {(info.viewInfo.view_birthday) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.birthday}</span>
-                        <InputBlock
-                            value={dataState.happy_bd}
-                            age={true}
-                            onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
-                            icon={"birthday"}
-                            label={dataState.happy_bd}
-                            inputType={"date"}
-                            saveHandler={(val) => saveHandler("happy_bd", val, "general")}
-                        />
-                    </div>}
-                    {(info.viewInfo.view_sex) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.sex}</span>
-                        <InputBlock
-                            value={dataState.sex}
-                            select={true}
-                            onChange={(e) => { handleDataChange("sex", e.target.value) }}
-                            icon={"sex"}
-                            label={LANG.selects.sex[dataState.sex]}
-                            saveHandler={(val, displayVal) => saveHandler("sex", val, "general", displayVal)}
-                        />
-                    </div>
-                    }
                     {(info.viewInfo.view_email) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.email}</span>
+                        {/* <span>{LANG.case_data.email}</span> */}
                         <InputBlock
                             value={dataState.email}
                             onChange={(e) => { handleDataChange("email", e.target.value) }}
@@ -340,10 +251,40 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             label={dataState.email}
                             inputType={"text"}
                             saveHandler={(val) => saveHandler("email", val, "general")}
+                            titleDefault={LANG.case_data.email}
                         />
                     </div>}
-                    {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.address_live}</span>
+                    {(info.viewInfo.view_birthday) && <div className="CaseInfoBlock-line">
+                        {/* <span>{LANG.case_data.birthday}</span> */}
+                        <InputBlock
+                            value={dataState.happy_bd}
+                            age={true}
+                            onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
+                            icon={"birthday"}
+                            label={dataState.happy_bd}
+                            inputType={"date"}
+                            saveHandler={(val) => saveHandler("happy_bd", val, "general")}
+                            titleDefault={LANG.case_data.birthday}
+                        />
+                    </div>}
+                    {(info.viewInfo.view_sex) && <div className="CaseInfoBlock-line">
+                        {/* <span>{LANG.case_data.sex}</span> */}
+                        <InputBlock
+                            value={dataState.sex}
+                            select={true}
+                            onChange={(e) => { handleDataChange("sex", e.target.value) }}
+                            icon={"sex"}
+                            label={LANG.selects.sex[dataState.sex]}
+                            saveHandler={(val, displayVal) => saveHandler("sex", val, "general", displayVal)}
+                            titleDefault={LANG.case_data.sex}
+                        />
+                    </div>
+                    }
+                   
+                </div>
+                <div className="CaseInfoBlock-column">
+                {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
+                        {/* <span>{LANG.case_data.address_live}</span> */}
                         <InputBlock
                             value={dataState.address_live}
                             onChange={(e) => { handleDataChange("address_live", e.target.value) }}
@@ -351,10 +292,11 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             label={dataState.address_live}
                             inputType={"text"}
                             saveHandler={(val) => saveHandler("address_live", val, "data")}
+                            titleDefault={LANG.case_data.address_live}
                         />
                     </div>}
                     {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.address_registered}</span>
+                        {/* <span>{LANG.case_data.address_registered}</span> */}
                         <InputBlock
                             value={dataState.address_registered}
                             onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
@@ -362,146 +304,17 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             label={dataState.address_registered}
                             inputType={"text"}
                             saveHandler={(val) => saveHandler("address_registered", val, "data")}
+                            titleDefault={LANG.case_data.address_registered}
                         />
                     </div>}
-
-                </div>}
-                {rightBlock && <div className="case-info-right">
-                    {(info.viewInfo.view_date_created) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.date_created}</span>
-                        <InputBlock
-                            value={dataState.date_created}
-                            icon={"date_created"}
-                            label={dataState.date_created}
-                            disabled={true}
-                        />
-                    </div>}
-                    {(info.viewInfo.view_contract) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.contract_date}</span>
-                        <InputBlock
-                            value={dataState.contract_date}
-                            onChange={(e) => { handleDataChange("contract_date", e.target.value) }}
-                            icon={"contract_date"}
-                            label={dataState.contract_date}
-                            inputType={"date"}
-                            saveHandler={(val) => saveHandler("contract_date", val, "data")}
-                        />
-                    </div>}
-                    {(info.viewInfo.view_contract) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.contract_number}</span>
-                        <InputBlock
-                            value={dataState.contract_number}
-                            onChange={(e) => { handleDataChange("contract_number", e.target.value) }}
-                            icon={"contract_number"}
-                            label={dataState.contract_number}
-                            inputType={"number"}
-                            saveHandler={(val) => saveHandler("contract_number", val, "data")}
-                        />
-                    </div>}
-                    {(info.viewInfo.view_channel) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.channel}</span>
-                        <InputBlock
-                            value={dataState.channel}
-                            onChange={(e) => { handleDataChange("channel", e.target.value) }}
-                            icon={"channel"}
-                            label={dataState.channel}
-                            inputType={"text"}
-                            saveHandler={(val) => saveHandler("channel", val, "data")}
-                        />
-                    </div>}
-
-
-                    {(info.viewInfo.view_categories) && <div className="CaseInfoBlock-categories">
-                        <span className="CaseInfoBlock-categories-title">{LANG.case_data.category}</span>
-                        <span className="CaseInfoBlock-categories-content">
-                            <Icon icon="categories" addClass={"default-icon"} />
-                            <div className="case-info-card-text">
-
-                                {!editState.categories ?
-                                    (categories && categories.length > 0 && info.data.categories && info.data.categories.length > 0 && categories.map((item, index) => {
-                                        if (info.data.categories.indexOf(item.id) !== -1) return <div className="cat" key={index}>
-                                            <div className="cat-color" style={{ backgroundColor: item.color }}></div>
-                                            <div className="cat-text"><span key={item.id}> {item.name} </span></div>
-                                        </div>
-
-                                    }))
-                                    :
-                                    <CheckboxListAccess
-                                        allMas={() => { return categories }}
-                                        checkedMas={checkedMas}
-                                        onChange={(value) => {
-                                            handleCheckboxChange(value, checkedMas)
-                                        }}
-                                    />
-                                }
-                            </div>
-                            {editState.categories ?
-                                <>
-                                    <span onClick={() => { saveHandler("categories", dataState.categories, "data") }}>
-                                        <Icon icon={"save"} addClass={"save-icon"} />
-                                    </span>
-                                    <span onClick={() => { handleEditChange("categories") }}>
-                                        <Icon icon={"close"} addClass={"close-icon"} />
-                                    </span>
-                                </>
-
-                                :
-                                <div className="edit-icon" onClick={() => { handleEditChange("categories") }}>
-                                    <Icon icon="edit" addClass="default-icon" />
-                                </div>
-                            }
-                        </span>
-
-                    </div>}
-                    {(info.viewInfo.view_responsible) && <div className="CaseInfoBlock-line">
-                        <span>{LANG.case_data.responsible}</span>
-                        <div className="CaseInfoBlock-line-select">
-                            <Icon icon="categories" addClass={"default-icon"} />
-                            {editState.responsible_id ? (
-                                <Select
-                                    value={dataState.responsible_id}
-                                    onChange={(e) => {
-                                        handleDataChange("responsible_id", e.target.value);
-                                    }}
-                                >
-                                    {Object.values(userNames).map((item, index) => (
-                                        <MenuItem key={index} value={item.id}>
-                                            {item.userName}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            ) : (
-                                <div className="case-info-card-text">
-                                    {userNames && userNames[dataState.responsible_id].userName}
-
-                                </div>
-                            )}
-                            {editState.responsible_id ? (
-                                <>
-                                    <span onClick={() => { saveHandler("responsible_id", dataState.responsible_id, "general") }}>
-                                        <Icon icon={"save"} addClass={"save-icon"} />
-                                    </span>
-                                    <span onClick={() => { handleEditChange("responsible_id") }}>
-                                        <Icon icon={"close"} addClass={"close-icon"} />
-                                    </span>
-                                </>
-                            ) : (
-                                <div className="edit-icon" onClick={() => { handleEditChange("responsible_id") }}>
-                                    <Icon icon="edit" addClass="default-icon" />
-                                </div>
-                            )}
-                        </div>
-
-
-                    </div>}
-
-
-                </div>}
+                </div>
+       
+                
                 {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => {
                     setAlert(false);
                 }} />}
             </div>
-        </>
+        </div>
 
 
     )
