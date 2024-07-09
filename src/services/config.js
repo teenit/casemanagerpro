@@ -12,7 +12,8 @@ export const LANG = {
     skip: "Пропустити",
     start: "Початок",
     end: "Кінець",
-    link: "Посилання"
+    link: "Посилання",
+    years:"років"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Права користувачів (Сторінки)",

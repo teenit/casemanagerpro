@@ -18,34 +18,67 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-
+        padding-bottom: 5px;
         &-desc {
             font-size: 16px;
             font-weight: normal;
         }
     }
 
-    &-members {
-        padding: 15px;
-        border: solid 3px $main-color;
-        border-radius: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+    &-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
 
         &-title {
             display: flex;
             align-items: center;
             font-size: 18px;
             font-weight: bold;
+            
         }
 
         &-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 7.5px;
+        }
+        &-members {
+            padding: 15px;
+            border: solid 3px $main-color;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            >.Group-info-inner{
+                max-height: 150px;
+                overflow-y: scroll;
+            }
+        }
+
+        &-stats{
+            // background-color: $main-color;
+            border: solid 3px $main-color;
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            &-item{
                 display: flex;
-                flex-direction: column;
-                gap: 7.5px;
+                align-items: center;
+                gap: 10px;
+                &-text{
+                    display: flex;
+                    flex-direction: column;
+                    >span{
+                        font-weight: bold;
+                    }
+                }
+            }
         }
     }
+
 
     &-member {
         display: flex;
@@ -59,7 +92,8 @@
         &:nth-child(even) {
             background-color: $second-color;
         }
-        >span{
+
+        >span {
             display: flex;
             align-items: center;
         }

@@ -4,34 +4,22 @@ import { NavLink } from "react-router-dom";
 import { MenuItem, Select } from "@mui/material";
 import Input from "./Input";
 import { LANG } from "../../../services/config";
-
+import moment from 'moment';
 
 
 
 const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
-
     const handleSave = () => {
         const displayValue = stateValue;
         saveHandler(stateValue, displayValue);
         setShowEdit(false);
     };
     const howOldIsCase = (birthday) => {
-        if (!birthday) return "";
-
-        const birthDate = new Date(birthday);
-        const today = new Date();
-        let ageYears = today.getFullYear() - birthDate.getFullYear();
-        const isBirthdayPassed = (
-            today.getMonth() > birthDate.getMonth() ||
-            (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate())
-        )
-        if (!isBirthdayPassed) {
-            ageYears--
-        }
-
-        return `, ${ageYears} років`;
+        const birthDate = moment(birthday);
+        const age = moment().diff(birthDate, 'years');
+        return `, ${age} ${LANG.GLOBAL.years}`;
     };
     return (
         <div className="InputBlock">
@@ -46,7 +34,8 @@ const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "t
                                 </NavLink>
                             ) : (
                                 <>
-                                    {label == "" || label == null ? <span className="InputBlock-title-default">{titleDefault}</span> : <span className="InputBlock-title-main">{label}</span>}
+                                    {label == "" || label == null ? <span className="InputBlock-title-default">{titleDefault}</span> : 
+                                    <span className="InputBlock-title-main">{`${label}${inputType=="date" ? howOldIsCase(value):""}`}</span>}
                                 </>
                             )}
                         </div>

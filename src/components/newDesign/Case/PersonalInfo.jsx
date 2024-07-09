@@ -4,14 +4,13 @@ import InputBlock from "../../elements/Inputs/InputBlock";
 import { LANG } from "../../../services/config";
 import Icon from "../../elements/Icons/Icon";
 import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
-import { MenuItem, Select } from "@mui/material";
+import SelectBlock from "../../elements/Selects/SelectBlock";
 import { apiResponse } from "../../Functions/get_apiObj";
-import SelectBlock from "../../elements/Selects/SelectBlock"
+import SmallNotification from "../../elements/Notifications/SmallNotification";
 
 const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo }) => {
     const [alert, setAlert] = useState(null);
     const categories = useSelector(state => state.categories.case);
-    const [checkedMas, setCheckedMas] = useState([]);
     const [userNames, setUserNames] = useState(null);
 
     const [dataState, setDataState] = useState({
@@ -34,11 +33,13 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
             responsible_id: info.general.responsible_id,
             responsible_name: info.general.responsible_name,
         });
+        setCheckedMas(info.data.categories);
         apiResponse({}, "user/get-all-users-name.php").then((res) => {
             setUserNames(res);
         });
     }, [info]);
 
+    const [checkedMas, setCheckedMas] = useState(info.data.categories || []);
     const [editState, setEditState] = useState({
         date_created: false,
         contract: false,
@@ -84,58 +85,53 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
             handleEditChange(key);
         }
     };
+
     return (
         <div className="PersonalInfo">
-             {(info.viewInfo.view_date_created) && <div className="PersonalInfo-line">
-            {/* <span>{LANG.case_data.date_created}</span> */}
-            <InputBlock
-                value={dataState.date_created}
-                icon={"date_created"}
-                label={dataState.date_created}
-                disabled={true}
-                titleDefault={LANG.case_data.date_created}
-            />
-        </div>}
-        {(info.viewInfo.view_contract) && <div className="PersonalInfo-line">
-            {/* <span>{LANG.case_data.contract_date}</span> */}
-            <InputBlock
-                value={dataState.contract_date}
-                onChange={(e) => { handleDataChange("contract_date", e.target.value) }}
-                icon={"contract_date"}
-                label={dataState.contract_date}
-                inputType={"date"}
-                saveHandler={(val) => saveHandler("contract_date", val, "data")}
-                titleDefault={LANG.case_data.contract_date}
-            />
-        </div>}
-        {(info.viewInfo.view_contract) && <div className="PersonalInfo-line">
-            {/* <span>{LANG.case_data.contract_number}</span> */}
-            <InputBlock
-                value={dataState.contract_number}
-                onChange={(e) => { handleDataChange("contract_number", e.target.value) }}
-                icon={"contract_number"}
-                label={dataState.contract_number}
-                inputType={"number"}
-                saveHandler={(val) => saveHandler("contract_number", val, "data")}
-                titleDefault={LANG.case_data.contract_number}
-            />
-        </div>}
-        {(info.viewInfo.view_channel) && <div className="PersonalInfo-line">
-            {/* <span>{LANG.case_data.channel}</span> */}
-            <InputBlock
-                value={dataState.channel}
-                onChange={(e) => { handleDataChange("channel", e.target.value) }}
-                icon={"channel"}
-                label={dataState.channel}
-                inputType={"text"}
-                saveHandler={(val) => saveHandler("channel", val, "data")}
-                titleDefault={LANG.case_data.channel}
-            />
-        </div>}
-
+            {info.viewInfo.view_date_created && <div className="PersonalInfo-line">
+                <InputBlock
+                    value={dataState.date_created}
+                    icon={"date_created"}
+                    label={dataState.date_created}
+                    disabled={true}
+                    titleDefault={LANG.case_data.date_created}
+                />
+            </div>}
+            {info.viewInfo.view_contract && <div className="PersonalInfo-line">
+                <InputBlock
+                    value={dataState.contract_date}
+                    onChange={(e) => handleDataChange("contract_date", e.target.value)}
+                    icon={"contract_date"}
+                    label={dataState.contract_date}
+                    inputType={"date"}
+                    saveHandler={(val) => saveHandler("contract_date", val, "data")}
+                    titleDefault={LANG.case_data.contract_date}
+                />
+            </div>}
+            {info.viewInfo.view_contract && <div className="PersonalInfo-line">
+                <InputBlock
+                    value={dataState.contract_number}
+                    onChange={(e) => handleDataChange("contract_number", e.target.value)}
+                    icon={"contract_number"}
+                    label={dataState.contract_number}
+                    inputType={"number"}
+                    saveHandler={(val) => saveHandler("contract_number", val, "data")}
+                    titleDefault={LANG.case_data.contract_number}
+                />
+            </div>}
+            {info.viewInfo.view_channel && <div className="PersonalInfo-line">
+                <InputBlock
+                    value={dataState.channel}
+                    onChange={(e) => handleDataChange("channel", e.target.value)}
+                    icon={"channel"}
+                    label={dataState.channel}
+                    inputType={"text"}
+                    saveHandler={(val) => saveHandler("channel", val, "data")}
+                    titleDefault={LANG.case_data.channel}
+                />
+            </div>}
             {info.viewInfo.view_categories && (
                 <div className="PersonalInfo-categories">
-                    {/* <span className="PersonalInfo-categories-title">{LANG.case_data.category}</span> */}
                     <span className="PersonalInfo-categories-content">
                         <Icon icon="categories" addClass={"default-icon"} />
                         <div className="case-info-card-text">
@@ -175,7 +171,6 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
             )}
             {info.viewInfo.view_responsible && (
                 <div className="PersonalInfo-line">
-                    {/* <span>{LANG.case_data.responsible}</span> */}
                     <div className="PersonalInfo-line-select">
                         <Icon icon="categories" addClass={"default-icon"} />
                         <SelectBlock
@@ -190,6 +185,7 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
                     </div>
                 </div>
             )}
+            {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />}
         </div>
     );
 };

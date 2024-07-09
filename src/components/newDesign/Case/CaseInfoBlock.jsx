@@ -11,9 +11,6 @@ import CaseInfoNameBlock from "./CaseInfoNameBlock";
 import SelectBlock from "../../elements/Selects/SelectBlock";
 
 const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, profileImg }) => {
-    const categories = useSelector(state => state.categories.case);
-    const [checkedMas, setCheckedMas] = useState([]);
-    const [userNames, setUserNames] = useState(null);
     const [alert, setAlert] = useState(null);
     const [editName, setEditName] = useState(false);
     const [dataState, setDataState] = useState({
@@ -58,9 +55,6 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
             middle_name: info.general.middle_name,
             last_name: info.general.last_name,
             sex: info.general.sex
-        });
-        apiResponse({}, "user/get-all-users-name.php").then((res) => {
-            setUserNames(res);
         });
     }, [info]);
 
@@ -119,22 +113,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         });
     };
 
-    const howOldIsCase = (birthday) => {
-        if (!birthday) return "";
 
-        const birthDate = new Date(birthday);
-        const today = new Date();
-        let ageYears = today.getFullYear() - birthDate.getFullYear();
-        const isBirthdayPassed = (
-            today.getMonth() > birthDate.getMonth() ||
-            (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate())
-        );
-        if (!isBirthdayPassed) {
-            ageYears--;
-        }
-
-        return `, ${ageYears} років`;
-    };
     const selectOptions = [
         { value: "male", label: LANG.selects.sex.male },
         { value: "female", label: LANG.selects.sex.female },
@@ -162,7 +141,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                 <div className="InputBlock-pib">
                                     <Input
                                         type="text"
-                                        label={LANG.case_data.name}
+                                        label={LANG.case_data.first_name}
                                         value={dataState.first_name}
                                         onChange={(e) => setDataState({ ...dataState, first_name: e.target.value.trim() })}
                                     />
@@ -198,7 +177,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                 )}
                 <div className="CaseInfoBlock-column">
                     {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
-                        <CaseInfoNameBlock title={LANG.case_data.phone} />
+                        {/* <CaseInfoNameBlock title={LANG.case_data.phone} /> */}
                         <InputBlock
                             value={dataState.phone1}
                             onChange={(e) => { handleDataChange("phone1", e.target.value) }}
@@ -294,9 +273,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                    
                 </div>
 
-                {alert && (
-                    <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />
-                )}
+                {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />}
             </div>
         </div>
     );
