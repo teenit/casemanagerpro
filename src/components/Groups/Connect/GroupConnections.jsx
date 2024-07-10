@@ -128,7 +128,7 @@ const GroupConnections = ({ case_id, type }) => {
                 <Modal header={LANG.groups.add} closeHandler={() => modalHandler("add")}
                     footer={<Button variant='contained' onClick={checkForm}>{LANG.save}</Button>}>
                     <div className='GroupConnections-select'>
-                        <span>Групи</span>
+                        <span>{LANG.groups.title_case}</span>
                         <Select value={data.group_id} onChange={(e) => dataHandler("group_id", e.target.value)}>
                             {getUnusedGroups().map((item, index) => {
                                 return <MenuItem key={index} value={item.id}>{item.name}</MenuItem>

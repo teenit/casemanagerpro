@@ -74,11 +74,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
     });
 
     const handleDataChange = (key, val) => {
-        if (key === "responsible_id") {
-            setDataState(prevState => ({ ...prevState, [key]: +val }));
-        } else {
-            setDataState(prevState => ({ ...prevState, [key]: val }));
-        }
+        setDataState(prevState => ({ ...prevState, [key]: val }));
     };
 
     const handleEditChange = (key) => {
@@ -270,7 +266,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             titleDefault={LANG.case_data.address_registered}
                         />
                     </div>}
-                   
+
                 </div>
 
                 {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />}

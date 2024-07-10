@@ -4,6 +4,7 @@ import { serverAddres } from '../../Functions/serverAddres';
 import defaultImg from "../../../img/default_profile.png";
 import Icon from "../Icons/Icon";
 import SmallNotification from "../Notifications/SmallNotification";
+import { LANG } from '../../../services/config';
 
 
 function PhotoUploader({ multiple = false, successHandler = () => { }, meta = null, close = () => { }, file }) {
@@ -68,21 +69,21 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
       {alert.success && (
         <SmallNotification
           isSuccess={true}
-          text={"Файли додано успішно"}
+          text={LANG.uploaders.PhotoUploader.sucess}
           close={() => { handleAlertChange("success"); }}
         />
       )}
       {alert.error && (
         <SmallNotification
           isSuccess={false}
-          text={"Помилка при завантаженні файлів"}
+          text={LANG.uploaders.PhotoUploader.error}
           close={() => { handleAlertChange("error"); }}
         />
       )}
       {alert.invalidFile && (
         <SmallNotification
           isSuccess={false}
-          text={"Файл не є зображенням"}
+          text={LANG.uploaders.PhotoUploader.notAnImg}
           close={() => { handleAlertChange("invalidFile"); }}
         />
       )}

@@ -12,7 +12,7 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
     const [alert, setAlert] = useState(null);
     const categories = useSelector(state => state.categories.case);
     const [userNames, setUserNames] = useState(null);
-
+    const [checkedMas, setCheckedMas] = useState(null);
     const [dataState, setDataState] = useState({
         date_created: info.general.date_created,
         contract_date: info.data.contract_date,
@@ -33,13 +33,12 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
             responsible_id: info.general.responsible_id,
             responsible_name: info.general.responsible_name,
         });
-        setCheckedMas(info.data.categories);
+        setCheckedMas(info.data.categories?info.data.categories:[]);
         apiResponse({}, "user/get-all-users-name.php").then((res) => {
             setUserNames(res);
         });
     }, [info]);
 
-    const [checkedMas, setCheckedMas] = useState(info.data.categories || []);
     const [editState, setEditState] = useState({
         date_created: false,
         contract: false,
@@ -136,21 +135,31 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
                         <Icon icon="categories" addClass={"default-icon"} />
                         <div className="case-info-card-text">
                             {!editState.categories ? (
-                                categories && categories.length > 0 && info.data.categories && info.data.categories.length > 0 && categories.map((item, index) => {
-                                    if (info.data.categories.indexOf(item.id) !== -1) return (
-                                        <div className="cat" key={index}>
-                                            <div className="cat-color" style={{ backgroundColor: item.color }}></div>
-                                            <div className="cat-text"><span key={item.id}> {item.name} </span></div>
-                                        </div>
-                                    );
-                                })
-                            ) : (
-                                <CheckboxListAccess
-                                    allMas={() => categories}
-                                    checkedMas={checkedMas}
-                                    onChange={(value) => handleCheckboxChange(value, checkedMas)}
-                                />
-                            )}
+                                    categories && categories.length > 0 && info.data.categories && info.data.categories.length > 0 ? (
+                                        categories.map((item, index) => {
+                                            if (info.data.categories.indexOf(item.id) !== -1) {
+                                                return (
+                                                    <div className="cat" key={index}>
+                                                        <div className="cat-color" style={{ backgroundColor: item.color }}></div>
+                                                        <div className="cat-text"><span key={item.id}> {item.name} </span></div>
+                                                    </div>
+                                                );
+                                            } else {
+                                                return null;
+                                            }
+                                        })
+                                    ) : (
+                                        <span>{LANG.case_data.category}</span>
+                                    )
+                                ) : (
+                                    <CheckboxListAccess
+                                        allMas={() => categories}
+                                        checkedMas={checkedMas}
+                                        onChange={(value) => handleCheckboxChange(value, checkedMas)}
+                                    />
+                                )
+                            }
+
                         </div>
                         {editState.categories ? (
                             <>

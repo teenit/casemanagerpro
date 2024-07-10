@@ -98,8 +98,8 @@ const DetailedInfo = ({ info, changeData }) => {
                 <InfoBlock />
             </div>}
            
-            {alert.success && <SmallNotification isSuccess={true} text={"Дані успішно оновлено"} close={() => { handleAlertChange("success") }} />}
-            {alert.error && <SmallNotification isSuccess={false} text={""} close={() => { handleAlertChange("error") }} />}
+            {alert.success && <SmallNotification isSuccess={true} text={LANG.detailedInfo.alerts.success} close={() => { handleAlertChange("success") }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={LANG.detailedInfo.alerts.error} close={() => { handleAlertChange("error") }} />}
         </div>
     )
 }
