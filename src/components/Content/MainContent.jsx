@@ -27,6 +27,8 @@ import Search from "../Search/Search";
 import AccessCheck from "../Functions/AccessCheck";
 import NotFound from "../pages/NotFound";
 import Group from "../Groups/Group/Group";
+import TextEditor from "../elements/TextEditor/TextEditor";
+import File from "../pages/File";
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -67,6 +69,7 @@ const MainContent = () => {
         <Route path='/task' element={<Task />} />
         <Route path='/test' element={<TestPage />} />
         <Route path='/search' element={<Search />} />
+        <Route path='/file/:id' element={<File />} />
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
