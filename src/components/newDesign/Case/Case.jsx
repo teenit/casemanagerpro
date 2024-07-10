@@ -29,6 +29,7 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import AccessCheck from "../../Functions/AccessCheck";
 import { appConfig } from "../../../services/config";
 import PersonalInfo from "./PersonalInfo";
+import TextEditor from "../../elements/TextEditor/TextEditor";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -156,6 +157,7 @@ const Case = () => {
                     }} />
                 </div>
             }
+            <TextEditor />
             {settingsAlert && <SmallNotification isSuccess={true} text={"Показ елементів оновлено"} close={() => { setSettingsAlert(false) }} />}
 
         </div>
