@@ -1,0 +1,118 @@
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Button } from "@mui/material";
+import Icon from "../../elements/Icons/Icon";
+import Input from "../../elements/Inputs/Input";
+import Textarea from "../../elements/Inputs/Textarea";
+import SmallNotification from "../../elements/Notifications/SmallNotification";
+import Modal from "../../Modals/Modal";
+import { LANG } from "../../../services/config";
+import { apiResponse } from "../../Functions/get_apiObj";
+
+const Files = ({ case_id, getCaseInfo }) => {
+    const [open, setOpen] = useState(false);
+    const [alert, setAlert] = useState({ success: false, error: false, message: "" });
+    const [modal, setModal] = useState(false);
+    const [files, setFiles] = useState(null);
+    const [data, setData] = useState({
+        title: "",
+        description: ""
+    });
+
+    useEffect(() => {
+        // apiResponse({ case_id: case_id }, "manage/files/get-by-id.php").then((res) => {
+        //     setFiles(res)
+        // }).catch((error) => console.error(error))
+        const item = localStorage.getItem("page_case_files");
+        setOpen(item === "true");
+    }, [case_id]);
+
+    const dataHandler = (key, value) => {
+        setData({ ...data, [key]: value });
+    };
+
+    const openHandler = () => {
+        const newState = !open;
+        localStorage.setItem("page_case_files", newState);
+        setOpen(newState);
+    };
+
+    const alertHandler = (key, message = "") => {
+        setAlert({ ...alert, [key]: !alert[key], message });
+    };
+
+    const saveHandler = () => {
+        if (data.title.length < 1 || data.title.length > 150) {
+            return alertHandler("error", LANG.caseFiles.alerts.invalidName);
+        }
+        apiResponse({ ...data, client_id:case_id }, "manage/files/create.php").then((res) => {
+            alertHandler("success", LANG.caseFiles.alerts.success);
+            console.log(res);
+            // getCaseInfo();
+            setModal(false);
+        }).catch((error) => {
+            alertHandler("error", LANG.caseFiles.alerts.error);
+        });
+    };
+
+    const cutTitle = (str) => {
+        return str.length > 20 ? str.slice(0, 20) + "..." : str;
+    };
+
+    const File = ({ item }) => {
+        const [hover, setHover] = useState(false);
+        const title = "jccccccccccccccccccccccccccccccccccccdshviugiuregiueiue";
+        return (
+            <div className="Files-file" onMouseEnter={() => { setHover(true) }} onMouseLeave={() => { setHover(false) }}>
+                <div className="Files-file-icon"></div>
+                <NavLink to={`/file/${1}`}>{hover ? title : cutTitle(title)}</NavLink>
+            </div>
+        );
+    };
+
+    return (
+        <div className="Files">
+            <div className="Files-title">
+                <div className="Files-title-panel" onClick={openHandler}>
+                    <div>{LANG.caseFiles.title}</div>
+                    <Icon icon="arrow_down" addClass="fs35" />
+                </div>
+                <Icon icon="add" onClick={() => setModal(true)} />
+            </div>
+            {open && (
+                <div className="Files-viewer">
+                    {!files ?
+                        [1, 2, 3].map((item, index) => {
+                            return <File key={index} item={item} />
+                        }) :
+                        <p>{LANG.no_records}</p>
+                    }
+                </div>
+            )}
+
+            {modal && (
+                <Modal
+                    header={LANG.caseFiles.add}
+                    closeHandler={() => setModal(false)}
+                    footer={
+                        <div className="Modal--footer">
+                            <Button onClick={() => setModal(false)} color="error" variant="contained">{LANG.cancel}</Button>
+                            <Button onClick={() => saveHandler()} variant="contained">{LANG.save}</Button>
+                        </div>}>
+                    <div className="Files-modal">
+                        <Input label={LANG.GLOBAL.title} value={data.title} onChange={(e) => { dataHandler("title", e.target.value) }} />
+                        <Textarea label={LANG.GLOBAL.description} value={data.description} onChange={(e) => { dataHandler("description", e.target.value) }} />
+                    </div>
+                </Modal>
+            )}
+            {alert.error && alert.message && (
+                <SmallNotification isSuccess={false} text={alert.message} close={() => alertHandler("error")} />
+            )}
+            {alert.success && alert.message && (
+                <SmallNotification isSuccess={true} text={alert.message} close={() => alertHandler("success")} />
+            )}
+        </div>
+    );
+};
+
+export default Files;

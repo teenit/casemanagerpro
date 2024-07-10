@@ -30,6 +30,7 @@ import AccessCheck from "../../Functions/AccessCheck";
 import { appConfig } from "../../../services/config";
 import PersonalInfo from "./PersonalInfo";
 import TextEditor from "../../elements/TextEditor/TextEditor";
+import Files from "./Files";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const Case = () => {
                 item.options.forEach(option => obj[option] = option)
             }
         })
-        return {...obj, ...views};
+        return { ...obj, ...views };
     }
     let params = useParams();
     const case_id = params.id;
@@ -64,13 +65,14 @@ const Case = () => {
     const [settingsAlert, setSettingsAlert] = useState(false)
     const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
-            
+
             const viewInfo = generateViews(res.userMeta?.case_view_info ? res.userMeta.case_view_info.value : {});
             console.log(viewInfo)
-            setState({ ...res, viewInfo: viewInfo
-                 });
-           // getUserNameById(res.responsible_id)
-          
+            setState({
+                ...res, viewInfo: viewInfo
+            });
+            // getUserNameById(res.responsible_id)
+
         })
     }
     const getUsersName = () => {
@@ -104,7 +106,7 @@ const Case = () => {
     return state && state.general ? (
         <div className="case__wrap">
             {
-               openSetting && <CaseSettings successHandler={getCaseInfo} views={state.viewInfoActive ? {} : state.viewInfo} />
+                openSetting && <CaseSettings successHandler={getCaseInfo} views={state.viewInfoActive ? {} : state.viewInfo} />
             }
             <div className="set__case__ico">
                 <img className="setImg" src={setImg} alt=""
@@ -121,30 +123,30 @@ const Case = () => {
 
 
             <div className="flex">
-            
+
                 {(state.viewInfo.view_InfoBlock) && <CaseInfoBlock profileImg={state.meta?.profileImg?.link ? state.meta.profileImg.link.link : null} case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
-            
+
             </div>
             {(state.viewInfo.view_InfoBlock) && <PersonalInfo case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
             {(state.viewInfo.view_GroupConnection) &&
                 <GroupConnections case_id={case_id} type={"case"} />
             }
-            <div className="container__grid__two">
+            <div className="info__column">
                 {(state.viewInfo.view_DetailedInfo) &&
                     <DetailedInfo info={state.data} changeData={(key, value) => { handleDataChange(key, value) }} />
                 }
                 {(state.viewInfo.view_Plan) &&
                     <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo} />
                 }
-            </div>
-            <div className="container__grid__two">
                 {(state.viewInfo.view_Help) &&
                     <GiveHelps helps={state.helps} case_id={case_id} getCaseInfo={getCaseInfo} />
                 }
                 {(state.viewInfo.view_Notes) &&
                     <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
                 }
+                <Files case_id={case_id} getCaseInfo={getCaseInfo} files={state.files}/>
             </div>
+
             {!!state?.meta?.files?.length && (state.viewInfo.view_Gallery) &&
                 <GalleryBlock check={downloadGallery} data={state.meta.files} />}
             {state.viewInfo.view_FileUploader &&
@@ -157,7 +159,6 @@ const Case = () => {
                     }} />
                 </div>
             }
-            <TextEditor />
             {settingsAlert && <SmallNotification isSuccess={true} text={"Показ елементів оновлено"} close={() => { setSettingsAlert(false) }} />}
 
         </div>
