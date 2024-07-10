@@ -12,7 +12,8 @@ export const LANG = {
     skip: "Пропустити",
     start: "Початок",
     end: "Кінець",
-    link: "Посилання"
+    link: "Посилання",
+    years: "років"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Права користувачів (Сторінки)",
@@ -66,6 +67,13 @@ export const LANG = {
   gallery: "Додані медіа файли",
   documents: "Додані документи",
   years: "років",
+  uploaders: {
+    PhotoUploader: {
+      sucess: "Файли додано успішно",
+      error: "Помилка при завантаженні файлів",
+      notAnImg: "Файл не є зображенням"
+    }
+  },
   placeholders: {
     email: "Ваш Email...",
     connect: "Як кейс пов'язан з групою"
@@ -81,6 +89,13 @@ export const LANG = {
       female: "Жінка",
       other: "Інші",
     },
+  },
+  footer: {
+    email: "Якщо виникли проблеми, пропозиції - пишіть на поштову скриньку",
+    phone: "Якщо питання супер термінове - дзвоніть за номером",
+    updateAvaible: "Доступне оновлення",
+    update: "Оновити програму",
+    lastVersion: "У вас остання версія програми"
   },
   plan: {
     task: "Задача плану",
@@ -99,7 +114,11 @@ export const LANG = {
     family_info: "Сімейний стан",
     comment: "Коментар",
     potreba: "Потреба, запит",
-    history: "Історія сім'ї / особи"
+    history: "Історія сім'ї / особи",
+    alerts:{
+      success:"Дані успішно оновлено",
+      error:"Виникла помилка"
+    }
   },
   add_case: {
     title: "Додати кейс",
@@ -157,7 +176,7 @@ export const LANG = {
     potreba: "Потреба, запит",
     family: "Сімейний стан, деталі про сім'ю, її склад",
     history: "Історія сім'ї / особи",
-    category: "Категорія кейсу",
+    category: "Категорії кейсу",
     comment: "Коментар",
     date_created: "Дата створення",
     responsible: "Відповідальний за кейс"
@@ -787,7 +806,7 @@ export const appConfig = {
       primary: "view_DetailedInfo"
     },
     {
-      primary: "view_InfoBlock", 
+      primary: "view_InfoBlock",
       options: [
         "view_name",
         "view_phone",
@@ -805,7 +824,7 @@ export const appConfig = {
   ],
   caseViewSettingsLists: [
     {
-      primary: "view_InfoBlock", 
+      primary: "view_InfoBlock",
       options: [
         "view_name",
         "view_phone",

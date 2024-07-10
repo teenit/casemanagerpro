@@ -5,6 +5,7 @@ import { useState } from "react";
 import { serverAddres } from "../Functions/serverAddres";
 import "./footer.css";
 import { apiResponse } from "../Functions/get_apiObj";
+import { LANG } from "../../services/config";
 
 
 const Footer = () => {
@@ -75,22 +76,22 @@ const Footer = () => {
             <div className="footer">
                 <div className="footer__top">
                     <div className="footer__top__line">
-                        <p className="footer__contact">Якщо виникли проблеми, пропозиції - пишіть на поштову скриньку </p>
+                        <p className="footer__contact">{LANG.footer.email}</p>
                         <a href="mailto:teenitclub@gmail.com">teenitclub@gmail.com</a>
                     </div>
                     <div className="footer__top__line">
-                        <p className="footer__contact">Якщо питання супер термінове дзвоніть за номером</p>
+                        <p className="footer__contact">{LANG.footer.phone}</p>
                         <a href="tel:+380932080760">+380932080760</a>
                     </div>
                 </div>
                 <div className="footer__bottom">
                     <span>
                     <p className="footer__contact"><b>Version - {version}</b></p>
-                    {newVersion > version ? <p>Доступне оновлення {newVersion}</p> : <p>У вас остання версія програми</p>}
-                    {newVersion > version && right ? <button disabled={disBtn} onClick={() => {
+                    {newVersion > version ? <p>{LANG.footer.updateAvaible} {newVersion}</p> : <p>{LANG.footer.lastVersion}</p>}
+                    {newVersion > version && right && <button disabled={disBtn} onClick={() => {
                         setDisBtn(true)
                         updateCaseManager();
-                    }}>Оновити програму</button> : ""}
+                    }}>{LANG.footer.update}</button>}
                     </span>
                     
                     <p className="copyright">© Case Manager | 2024 | powered by <a href="https://studio.itclub.in.ua" target="_blank">Studio IT Club</a></p>

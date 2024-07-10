@@ -7,9 +7,9 @@ import { apiResponse } from '../../Functions/get_apiObj';
 import Textarea from '../../elements/Inputs/Textarea';
 import SmallNotification from '../../elements/Notifications/SmallNotification';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 const GroupConnections = ({ case_id, type }) => {
-    const categories = useSelector(state => state.categories)
     const [open, setOpen] = useState(false)
     const openHandler = ()=>{
         localStorage.setItem("page_case_connections", !open)
@@ -33,7 +33,6 @@ const GroupConnections = ({ case_id, type }) => {
     });
     const [allGroups, setAllGroups] = useState([])
     const [connections, setConnections] = useState([])
-    const [selectedGroup, setSelectedGroup] = useState(null);
     const [data, setData] = useState({
         group_id: "",
         why: ""
@@ -90,24 +89,6 @@ const GroupConnections = ({ case_id, type }) => {
         return allGroups.filter(item => !connections.some(conn => item.name === conn.name))
     }
 
-    const getCategoryName = (id) => {
-        const category = Object.values(categories.groups).find(category => category.id === id);
-        return category ? category.name : '';
-    }
-
-    const getString = (cat) => {
-        if (cat) {
-            let mas = JSON.parse(cat).map(id => getCategoryName(id))
-            return mas.join(', ')
-        } else {
-            return null
-        }
-    }
-
-    const showGroupInfo = (group) => {
-        setSelectedGroup(group);
-        modalHandler('info');
-    }
 
     const deleteGroupConnect = (id) => {
         apiResponse({
@@ -134,7 +115,7 @@ const GroupConnections = ({ case_id, type }) => {
                 {connections.length>0 ? connections.map((item, index) => {
                     return (
                         <div key={index} className='GroupConnections-list-item'>
-                            <span><a onClick={() => item.status === 1 && showGroupInfo(item)}>{item.name}</a>: {item.why}</span>
+                            <span><NavLink to={`/group/${item.group_id}`}>{item.name}</NavLink>: {item.why}</span>
                             <span className='GroupConnections-list-item-delete' onClick={() => deleteGroupConnect(item.id)}><Icon addClass={"default-icon"} icon={'delete'} /></span>
                         </div>
                     )
@@ -147,7 +128,7 @@ const GroupConnections = ({ case_id, type }) => {
                 <Modal header={LANG.groups.add} closeHandler={() => modalHandler("add")}
                     footer={<Button variant='contained' onClick={checkForm}>{LANG.save}</Button>}>
                     <div className='GroupConnections-select'>
-                        <span>Групи</span>
+                        <span>{LANG.groups.title_case}</span>
                         <Select value={data.group_id} onChange={(e) => dataHandler("group_id", e.target.value)}>
                             {getUnusedGroups().map((item, index) => {
                                 return <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
@@ -155,17 +136,6 @@ const GroupConnections = ({ case_id, type }) => {
                         </Select>
                     </div>
                     <Textarea label={LANG.placeholders.connect} value={data.why} onChange={(e) => { dataHandler("why", e.target.value) }} />
-                </Modal>
-            )}
-            {modal.info && selectedGroup && (
-                <Modal header={`${LANG.groups.info} ${selectedGroup.name}`} closeHandler={() => modalHandler("info")}
-                    footer={<Button variant='contained' onClick={() => modalHandler("info")}>{LANG.buttonTexts.ok}</Button>}>
-                    <div className='GroupConnections-modal'>
-                        <span><b>{LANG.groups.desc}</b> {selectedGroup.description}</span>
-                        <span><b>{LANG.groups.date_created}</b> {selectedGroup.date_created}</span>
-                        {getString(selectedGroup.categories) ? <span><b>{LANG.categories.category}</b>: {getString(selectedGroup.categories)}</span>
-                            : <span>{LANG.categories.noCategory}</span>}
-                    </div>
                 </Modal>
             )}
             {alert.error && <SmallNotification isSuccess={false} text={LANG.groups.alertMessages.error} close={() => { alertHandler("error") }} />}
