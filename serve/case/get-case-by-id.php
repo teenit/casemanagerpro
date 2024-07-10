@@ -116,6 +116,20 @@ try {
 
     }
 
+     // Отримання даних з таблиці case_plans
+     $sql_files = "SELECT title, description, id, date_created FROM files WHERE client_id = ?";
+     $stmt_files = $conn->prepare($sql_files);
+     $stmt_files->bind_param("i", $data->case_id);
+     $stmt_files->execute();
+     $result_files = $stmt_files->get_result();
+     $files = [];
+ 
+     while ($row_files = $result_files->fetch_assoc()) {
+         
+             $files[] = $row_files;
+ 
+     }
+
     // Отримання даних з таблиці cases_data
     $sql_cases_data = "SELECT * FROM cases_data WHERE case_id = ?";
     $stmt_cases_data = $conn->prepare($sql_cases_data);
@@ -168,6 +182,7 @@ try {
         'data' => $cases_data,
         'notes' => $case_notes_data,
         'userMeta' => $user_meta,
+        'files' => $files
     ];
 
     echo json_encode($response);
