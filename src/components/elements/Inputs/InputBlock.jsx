@@ -1,26 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Icon from "../Icons/Icon";
 import { NavLink } from "react-router-dom";
-import { MenuItem, Select } from "@mui/material";
 import Input from "./Input";
 import { LANG } from "../../../services/config";
 import moment from 'moment';
 
-
-
 const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
+
+    useEffect(() => {
+        setStateValue(value);
+    }, [value]);
+
     const handleSave = () => {
         const displayValue = stateValue;
         saveHandler(stateValue, displayValue);
         setShowEdit(false);
     };
+
     const howOldIsCase = (birthday) => {
         const birthDate = moment(birthday);
         const age = moment().diff(birthDate, 'years');
         return `, ${age} ${LANG.GLOBAL.years}`;
     };
+
     return (
         <div className="InputBlock">
             {!showEdit && (
@@ -34,8 +38,11 @@ const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "t
                                 </NavLink>
                             ) : (
                                 <>
-                                    {label == "" || label == null ? <span className="InputBlock-title-default">{titleDefault}</span> : 
-                                    <span className="InputBlock-title-main">{`${label}${inputType=="date" ? howOldIsCase(value):""}`}</span>}
+                                    {label === "" || label === null ? (
+                                        <span className="InputBlock-title-default">{titleDefault}</span>
+                                    ) : (
+                                        <span className="InputBlock-title-main">{`${label}${inputType === "date" ? howOldIsCase(value) : ""}`}</span>
+                                    )}
                                 </>
                             )}
                         </div>
@@ -52,7 +59,7 @@ const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "t
                     <div className="InputBlock-editer-withicon">
                         {icon && <Icon icon={icon} addClass={"default-icon"} />}
                         <Input label={title} type={inputType} value={stateValue} onChange={(e) => {
-                            setStateValue(e.target.value)
+                            setStateValue(e.target.value);
                         }} />
                     </div>
                     <div className="InputBlock-editer-icons">

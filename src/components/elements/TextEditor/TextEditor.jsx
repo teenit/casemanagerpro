@@ -4,13 +4,16 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { LANG } from '../../../services/config';
 
-const TextEditor = ()=> {
+const TextEditor = ({ width,save, }) => {
   const [value, setValue] = useState('');
 
   return (
-    <div>
-        <ReactQuill theme="snow" value={value} onChange={setValue} />
-        <Button onClick={()=>console.log(value)}>{LANG.GLOBAL.save}</Button>
+    <div className='TextEditor'>
+      <ReactQuill className='TextEditor-editor' style={{ width: width ? width : "100%" }} theme="snow" value={value} onChange={setValue} />
+      <Button variant='contained' onClick={() => {
+        console.log(value);
+        save(value)
+      }}>{LANG.GLOBAL.save}</Button>
     </div>
   );
 }

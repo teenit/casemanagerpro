@@ -1,0 +1,13 @@
+.TextEditor {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    &-editor {
+        position: relative;
+        word-wrap:break-word;
+        max-width: 100%;
+    }
+}
+.ql-editor {
+    white-space: pre-wrap;
+  }

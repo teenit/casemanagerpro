@@ -8,21 +8,19 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Modal from "../../Modals/Modal";
 import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
-
-const Files = ({ case_id, getCaseInfo }) => {
+import FileModal from "../../Modals/FileModal";
+import parse from 'html-react-parser';
+const Files = ({ case_id, getCaseInfo, files }) => {
+    console.log(files);
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({ success: false, error: false, message: "" });
     const [modal, setModal] = useState(false);
-    const [files, setFiles] = useState(null);
     const [data, setData] = useState({
         title: "",
         description: ""
     });
 
     useEffect(() => {
-        // apiResponse({ case_id: case_id }, "manage/files/get-by-id.php").then((res) => {
-        //     setFiles(res)
-        // }).catch((error) => console.error(error))
         const item = localStorage.getItem("page_case_files");
         setOpen(item === "true");
     }, [case_id]);
@@ -48,7 +46,7 @@ const Files = ({ case_id, getCaseInfo }) => {
         apiResponse({ ...data, client_id:case_id }, "manage/files/create.php").then((res) => {
             alertHandler("success", LANG.caseFiles.alerts.success);
             console.log(res);
-            // getCaseInfo();
+            getCaseInfo();
             setModal(false);
         }).catch((error) => {
             alertHandler("error", LANG.caseFiles.alerts.error);
@@ -61,11 +59,12 @@ const Files = ({ case_id, getCaseInfo }) => {
 
     const File = ({ item }) => {
         const [hover, setHover] = useState(false);
-        const title = "jccccccccccccccccccccccccccccccccccccdshviugiuregiueiue";
+        const [modal,setModal] = useState(false)
         return (
             <div className="Files-file" onMouseEnter={() => { setHover(true) }} onMouseLeave={() => { setHover(false) }}>
-                <div className="Files-file-icon"></div>
-                <NavLink to={`/file/${1}`}>{hover ? title : cutTitle(title)}</NavLink>
+                <div className="Files-file-icon" onClick={()=>{setModal(true)}}></div>
+                <NavLink to={`/file/${item.id}`}>{hover ? item.title : cutTitle(item.title)}</NavLink>
+                {modal && <FileModal title={item.title} close={()=>{setModal(false)}}/>}
             </div>
         );
     };
@@ -81,8 +80,8 @@ const Files = ({ case_id, getCaseInfo }) => {
             </div>
             {open && (
                 <div className="Files-viewer">
-                    {!files ?
-                        [1, 2, 3].map((item, index) => {
+                    {files ?
+                        files.map((item, index) => {
                             return <File key={index} item={item} />
                         }) :
                         <p>{LANG.no_records}</p>
