@@ -43,14 +43,14 @@ if (isset($data['file_id']) && is_numeric($data['file_id'])) {
     }
     if (isset($data['value'])) {
         $fields[] = "value = ?";
-        $params[] = $data['value'];
+        $params[] = json_encode($data['value']);
         $types .= 's';
     }
-    if (isset($data['user_id'])) {
-        $fields[] = "user_id = ?";
-        $params[] = $data['user_id'];
-        $types .= 'i';
-    }
+    // if (isset($data['id'])) {
+    //     $fields[] = "user_id = ?";
+    //     $params[] = $data['id'];
+    //     $types .= 'i';
+    // }
     if (isset($data['categories'])) {
         $fields[] = "categories = ?";
         $params[] = $data['categories'];
