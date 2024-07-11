@@ -15,7 +15,13 @@ if (isset($data->file_id) && is_numeric($data->file_id)) {
 
     if ($res) {
         $response['status'] = true;
-        $response['data'] = $res;
+        $response['data'] = [
+            'title' => $res['title'],
+            'description' => $res['description'],
+            'value' => json_decode($res['value']),
+            'date_created' => $res['date_created'],
+            'last_updated' => $res['last_updated']
+        ];
     } else {
         $response['status'] = false;
         $response['message'] = 'File not found';

@@ -4,8 +4,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { LANG } from '../../../services/config';
 
-const TextEditor = ({ width,save, }) => {
-  const [value, setValue] = useState('');
+const TextEditor = ({ width,save, val}) => {
+  const [value, setValue] = useState(val);
 
   return (
     <div className='TextEditor'>

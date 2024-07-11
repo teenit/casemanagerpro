@@ -34,7 +34,7 @@ const File = ({ files }) => {
     getFileData()
   }, []);
   const updateData = (key, value) => {
-    console.log(value);
+  // return console.log(key, value);
     apiResponse({ [key]: value, file_id: Number(file_id) }, "manage/files/update.php").then((res) => {
       getFileData()
       alertHandler("success", "Дані оновлено")
@@ -67,7 +67,7 @@ const File = ({ files }) => {
         <div>{data?.last_updated && `Останнє редагування: ${data.last_updated}`}</div>
       </div>
       <div className='File-editor'>
-        <TextEditor save={(key, value) => { updateData("value", value) }} width={"90%"} />
+        {data && <TextEditor val={data.value} save={(value) => { updateData("value", value) }} width={"90%"} />}
       </div>
       <div className='File-info'>
         <div className='File-info-column'>
