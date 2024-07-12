@@ -16,7 +16,7 @@ const FileModal = ({close, title, value}) => {
                         </div>
                     </div>
                     <div className="FileModal--body">
-                        {/* {value} */}
+                        {value}
                     </div>
                 </div>
             </div>

@@ -12,6 +12,7 @@ import FileModal from "../../Modals/FileModal";
 import parse from 'html-react-parser';
 const Files = ({ case_id, getCaseInfo, files }) => {
     console.log(files);
+    const [rows,setRows] = useState(1)
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({ success: false, error: false, message: "" });
     const [modal, setModal] = useState(false);
@@ -21,6 +22,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
     });
 
     useEffect(() => {
+        setRows(Math.ceil(files.length/10))
         const item = localStorage.getItem("page_case_files");
         setOpen(item === "true");
     }, [case_id]);
@@ -48,6 +50,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
             console.log(res);
             getCaseInfo();
             setModal(false);
+            setRows(Math.ceil(files.length/10))
         }).catch((error) => {
             alertHandler("error", LANG.caseFiles.alerts.error);
         });
@@ -64,7 +67,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
             <div className="Files-file" onMouseEnter={() => { setHover(true) }} onMouseLeave={() => { setHover(false) }}>
                 <div className="Files-file-icon" onClick={()=>{setModal(true)}}></div>
                 <NavLink to={`/file/${item.id}`}>{hover ? item.title : cutTitle(item.title)}</NavLink>
-                {modal && <FileModal title={item.title} close={()=>{setModal(false)}}/>}
+                {/* {modal && <FileModal value={parse(item.value)} title={item.title} close={()=>{setModal(false)}}/>} */}
             </div>
         );
     };
@@ -79,7 +82,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
                 <Icon icon="add" onClick={() => setModal(true)} />
             </div>
             {open && (
-                <div className="Files-viewer">
+                <div className="Files-viewer" style={{gridTemplateRows:`repeat(${rows},1fr);`}}>
                     {files ?
                         files.map((item, index) => {
                             return <File key={index} item={item} />

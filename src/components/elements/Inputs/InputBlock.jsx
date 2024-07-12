@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 import Input from "./Input";
 import { LANG } from "../../../services/config";
 import moment from 'moment';
-
-const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
+import Textarea from "./Textarea"
+const InputBlock = ({ textarea = false, age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
 
@@ -58,9 +58,12 @@ const InputBlock = ({ age = false, saveHandler, disabled = false, inputType = "t
                 <div className="InputBlock-editer">
                     <div className="InputBlock-editer-withicon">
                         {icon && <Icon icon={icon} addClass={"default-icon"} />}
-                        <Input label={title} type={inputType} value={stateValue} onChange={(e) => {
+                        {textarea ? <Textarea label={title} type={inputType} value={stateValue} onChange={(e) => {
                             setStateValue(e.target.value);
-                        }} />
+                        }} /> : <Input label={title} type={inputType} value={stateValue} onChange={(e) => {
+                            setStateValue(e.target.value);
+                        }} />}
+
                     </div>
                     <div className="InputBlock-editer-icons">
                         <span onClick={handleSave}>

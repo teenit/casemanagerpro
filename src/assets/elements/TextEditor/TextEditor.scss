@@ -1,11 +1,9 @@
 .TextEditor {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    &-editor {
-        position: relative;
-        word-wrap:break-word;
-        max-width: 100%;
+    &-icon{
+        position: fixed;
+        top: 125px;
+        right: 75px;
+        background-color: #fff;
     }
 }
 .ql-editor {

@@ -8,8 +8,11 @@
 
     &-file {
         display: flex;
-        gap: 15px;
+        gap: 10px;
         align-items: center;
+        flex-direction: column;
+        max-width: 75px;
+        word-wrap: break-word;
         cursor: pointer;
         font-weight: bold;
         &-icon{
@@ -50,8 +53,8 @@
     &-viewer {
         max-height: 400px;
         overflow-y: scroll;
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(10,1fr);
         gap: 25px;
     }
 }

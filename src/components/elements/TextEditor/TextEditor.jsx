@@ -1,21 +1,40 @@
-import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { LANG } from '../../../services/config';
+import Icon from '../Icons/Icon';
 
-const TextEditor = ({ width,save, val}) => {
-  const [value, setValue] = useState(val);
+const TextEditor = ({ saveHandler, val }) => {
+  const [value, setValue] = useState(val)
+  const [initialValue, setInitialValue] = useState(val)
+  const [disabled, setDisabled] = useState(true)
 
+  useEffect(() => {
+    setValue(val)
+    setInitialValue(val)
+  }, [val])
+
+  const changeHandler = (newValue) => {
+    setValue(newValue)
+    setDisabled(newValue === initialValue)
+  };
+
+  const save = () => {
+    if (disabled) return
+    saveHandler(value);
+    setInitialValue(value)
+    setDisabled(true)
+  };
+setInterval(() => {
+  save()
+}, 30000);
   return (
     <div className='TextEditor'>
-      <ReactQuill className='TextEditor-editor' style={{ width: width ? width : "100%" }} theme="snow" value={value} onChange={setValue} />
-      <Button variant='contained' onClick={() => {
-        console.log(value);
-        save(value)
-      }}>{LANG.GLOBAL.save}</Button>
+      <ReactQuill className='TextEditor-editor' theme="snow" value={value} onChange={changeHandler} />
+      <div className='TextEditor-icon' style={{ opacity: disabled ? "0.5" : "1" }}>
+        <Icon icon={"save"} addClass={"save-icon fs40"} onClick={save} />
+      </div>
     </div>
   );
-}
+};
 
 export default TextEditor;
