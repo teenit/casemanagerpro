@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Icon from '../Icons/Icon';
+import { formats, modules } from './constants';
 
 const TextEditor = ({ saveHandler, val }) => {
   const [value, setValue] = useState(val)
@@ -29,7 +30,14 @@ setInterval(() => {
 }, 30000);
   return (
     <div className='TextEditor'>
-      <ReactQuill className='TextEditor-editor' theme="snow" value={value} onChange={changeHandler} />
+      <ReactQuill 
+        className='TextEditor-editor' 
+        theme="snow" 
+        value={value} 
+        onChange={changeHandler} 
+        modules={modules}
+        formats={formats}
+        />
       <div className='TextEditor-icon' style={{ opacity: disabled ? "0.5" : "1" }}>
         <Icon icon={"save"} addClass={"save-icon fs40"} onClick={save} />
       </div>
