@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
+    gap: 15px;
 }
 .resources__add__btn{
     width: 50%;

@@ -6,9 +6,12 @@ import SmallNotification from '../elements/Notifications/SmallNotification';
 import Icon from '../elements/Icons/Icon';
 import InputBlock from '../elements/Inputs/InputBlock';
 import Input from '../elements/Inputs/Input';
-
+import { LANG } from '../../services/config';
+import AccessCheck from "../Functions/AccessCheck"
+import parse from 'html-react-parser';
 const File = () => {
   const [data, setData] = useState(null);
+  const edit = AccessCheck("view_edit", "a_page_file", "edit")
   const [alert, setAlert] = useState({
     success: false,
     error: false,
@@ -41,10 +44,15 @@ const File = () => {
 
   const updateData = (key, value) => {
     apiResponse({ [key]: value, file_id: Number(file_id) }, "manage/files/update.php").then((res) => {
-      getFileData();
-      alertHandler("success", "Дані оновлено");
+      alertHandler("success", LANG.file.alertMessages.success);
+      if (key !== "value") {
+        getFileData();
+      }
+      if (editName) {
+        setEditName(false)
+      }
     }).catch((error) => {
-      alertHandler("error", "Виникла помилка");
+      alertHandler("error", LANG.file.alertMessages.error);
     });
   };
 
@@ -53,7 +61,7 @@ const File = () => {
       <div className='File-header'>
         {editName ? (
           <div className="File-header-title">
-            <Input label='Назва файлу' value={data.title ? data.title : ""} onChange={(e) => { dataHandler("title", e.target.value) }} />
+            <Input label={LANG.file.name} value={data.title ? data.title : ""} onChange={(e) => { dataHandler("title", e.target.value) }} />
             <div className="InputBlock-editer-icons">
               <span onClick={() => { updateData("title", data.title) }}>
                 <Icon icon={"save"} addClass={"save-icon"} />
@@ -65,29 +73,36 @@ const File = () => {
           </div>
         ) : (
           <div className="File-header-title">
-            <div>{data?.title ? data.title : "Файл без назви"}</div>
-            <div className="edit-icon">
+            <div>{data?.title ? data.title : LANG.file.withoutName}</div>
+            {edit && <div className="edit-icon">
               <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEditName(!editName) }} />
-            </div>
+            </div>}
+
           </div>
         )}
 
-        <div>{data?.last_updated && `Останнє редагування: ${data.last_updated}`}</div>
+        <div>{data?.last_updated && `${LANG.file.last_updated}: ${data.last_updated}`}</div>
       </div>
       <div className='File-editor'>
-        {data && <TextEditor val={data.value} saveHandler={(value) => { updateData("value", value) }} />}
+        {data && (
+          edit ? <TextEditor val={data.value} saveHandler={(value) => updateData("value", value)} />
+            : <div className='File-text'>{parse(data.value).length > 0 ? parse(data.value) : LANG.file.empty_file}</div>
+        )}
+
       </div>
       <div className='File-info'>
         <div className='File-info-column'>
-          <div className='File-info-column-row'>
-            <Icon icon={"date_created"} addClass={"default-icon"} />
-            <div className='File-info-column-row-text'>
-              <div>Дата створення</div>
-              <span>{data?.date_created}</span>
-            </div>
-          </div>
+          <InputBlock
+            disabled={true}
+            value={data?.date_created}
+            icon={"date_created"}
+            label={data?.date_created}
+            inputType={"text"}
+            titleDefault={LANG.file.date_created}
+          />
 
           <InputBlock
+            disabled={!edit}
             textarea={true}
             value={data?.description}
             onChange={(e) => { dataHandler("description", e.target.value) }}
@@ -95,7 +110,7 @@ const File = () => {
             label={data?.description}
             inputType={"text"}
             saveHandler={(value) => { updateData("description", value) }}
-            titleDefault={"Опис"}
+            titleDefault={LANG.file.description}
           />
         </div>
 

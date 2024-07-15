@@ -38,7 +38,7 @@ const Icon = ({ icon, addClass, onClick }) => {
                 ico = <Visibility fontSize='large' className={addClass} onClick={onClick} />;
                 break;
             case "book":
-                ico = <MenuBook fontSize='large' className={addClass} onClick={onClick} />;
+                ico = <MenuBook className={addClass} onClick={onClick} />;
                 break;
             case "exit":
                 ico = <ExitToApp fontSize='large' className={addClass} onClick={onClick} />;

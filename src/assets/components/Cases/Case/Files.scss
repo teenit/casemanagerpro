@@ -18,7 +18,7 @@
         &-icon{
             width: 25px;
             height: 25px;
-            background-color: #000;
+            background-color: $main-color;
         }
     }
 
@@ -54,7 +54,7 @@
         max-height: 400px;
         overflow-y: scroll;
         display: grid;
-        grid-template-columns: repeat(10,1fr);
+        grid-template-columns: repeat(5,1fr);
         gap: 25px;
     }
 }

@@ -96,7 +96,7 @@ const SetUser = ({ categories, categoriesCont }) => {
                             }
 
                         }} >
-                            <Icon icon={"book"} addClass={"default-icon"} />
+                            <Icon icon={"book"} addClass={"default-icon fs35"} />
                         </span>
                         {user.active === "true" && AccessCheck('yes_no', 'a_page_settings_deactivate_users') ? (
                             <span onClick={() => {

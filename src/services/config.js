@@ -102,13 +102,13 @@ export const LANG = {
     create: "Створити план",
     error: "Оберіть дату початку та кінця дати"
   },
-  caseFiles:{
-    title:"Файли",
-    add:"Додати файл",
-    alerts:{
-      invalidName:"Введіть ім'я файлу до 150 символів",
-      error:"Виникла помилка",
-      success:"Файл додано"
+  caseFiles: {
+    title: "Файли",
+    add: "Додати файл",
+    alerts: {
+      invalidName: "Введіть ім'я файлу до 150 символів",
+      error: "Виникла помилка",
+      success: "Файл додано"
     },
   },
   notes: {
@@ -124,9 +124,9 @@ export const LANG = {
     comment: "Коментар",
     potreba: "Потреба, запит",
     history: "Історія сім'ї / особи",
-    alerts:{
-      success:"Дані успішно оновлено",
-      error:"Виникла помилка"
+    alerts: {
+      success: "Дані успішно оновлено",
+      error: "Виникла помилка"
     }
   },
   add_case: {
@@ -255,6 +255,18 @@ export const LANG = {
     link_title: "Корисні посилання",
     confirm_delete: "Ви впевнені, що хочете видалити ресурс - "
   },
+  file:{
+    alertMessages:{
+      success:"Дані оновлено",
+      error:"Виникла помилка"
+    },
+    name:"Назва файлу",
+    withoutName:"Файл без назви",
+    last_updated:"Останнє редагування",
+    date_created:"Дата створення",
+    description:"Опис",
+    empty_file:"Поки що в файлі немає інформації"
+  },
   access: {
     "a_cases_category_edit_id": "Доступні категорії кейсів для редагування",
     "a_cases_category_look_id": "Доступні категорії кейсів для перегляду",
@@ -277,6 +289,7 @@ export const LANG = {
     "a_page_case_contact_info": "Доступ до контактної інформації кейса",
     "a_page_case_simple_info": "Доступ до загальної інформації кейса",
     "a_page_case_info": "Доступ до іншої інформації кейса",
+    "a_page_case_files": "Доступ до файлів кейса",
     "a_cases_get": "Доступ до кейсів",
     "get_options": {
       0: "Заборонено",
@@ -335,7 +348,8 @@ export const LANG = {
     "a_page_access_edit": "Редагування шаблону прав користувачів",
     "a_page_groups": "Доступ до сторінки груп",
     "a_group_create": "Створення нової групи",
-    "a_page_case_connection": "Створення зв'язків між об'єктами і групою"
+    "a_page_case_connection": "Створення зв'язків між об'єктами і групою",
+    "a_page_file": "Доступ до сторінки файла",
   },
   pages: {
     case: "Кейс",
@@ -354,7 +368,8 @@ export const LANG = {
     user: "Користувач",
     accesses: "Шаблони прав",
     groups: "Групи",
-    access: "Інше"
+    access: "Інше",
+    file: "Файл"
   },
   documents: "Додані документи",
   give_help: {
@@ -388,6 +403,7 @@ export const LANG = {
     "view_Plan": "Відобразити блок плану",
     "view_Help": "Відобразити блок наданої допомоги",
     "view_Notes": "Відобразити блок нотатків",
+    "view_Files": "Відобразити блок файлів",
     "view_Gallery": "Відобразити блок галерея",
     "view_FileUploader": "Відобразити блок завантаження медіа",
     "view_DetailedInfo": "Відобразити блок детальної інформації",
@@ -527,7 +543,6 @@ export const appConfig = {
       ],
       view_edit: [
         "a_page_case",
-
         "a_page_case_transfer",
         "a_page_case_notes",
         "a_page_case_plan",
@@ -537,6 +552,7 @@ export const appConfig = {
         "a_page_case_contact_info",
         "a_page_case_simple_info",
         "a_page_case_info",
+        "a_page_case_files"
       ],
     },
     cases: {
@@ -645,6 +661,12 @@ export const appConfig = {
         "a_page_case_connection"
       ],
       view_edit: []
+    },
+    file: {
+      yes_no: [],
+      view_edit: [
+        "a_page_file",
+      ]
     }
 
   },
@@ -735,6 +757,10 @@ export const appConfig = {
       title: LANG.pages.access,
       description: ""
     },
+    file: {
+      title: LANG.pages.file,
+      description: ""
+    },
   },
   mounths: {
     1: {
@@ -804,6 +830,9 @@ export const appConfig = {
     },
     {
       primary: "view_Notes"
+    },
+    {
+      primary: "view_Files"
     },
     {
       primary: "view_Gallery"

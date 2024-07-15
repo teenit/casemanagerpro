@@ -1,45 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Icon from '../Icons/Icon';
+import { Button } from '@mui/material';
+import { LANG } from '../../../services/config';
 import { formats, modules } from './constants';
 
 const TextEditor = ({ saveHandler, val }) => {
-  const [value, setValue] = useState(val)
-  const [initialValue, setInitialValue] = useState(val)
-  const [disabled, setDisabled] = useState(true)
+  const [value, setValue] = useState(val);
+  const [initialValue, setInitialValue] = useState(val);
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    setValue(val)
-    setInitialValue(val)
-  }, [val])
+    setValue(val);
+    setInitialValue(val);
+  }, [val]);
+
+  useEffect(() => {
+    const autoSave = setInterval(() => {
+      if (!disabled) {
+        save();
+      }
+    }, 30000);
+
+    return () => clearInterval(autoSave);
+  }, [value, disabled]);
 
   const changeHandler = (newValue) => {
-    setValue(newValue)
-    setDisabled(newValue === initialValue)
+    setValue(newValue);
+    setDisabled(newValue === initialValue);
   };
 
   const save = () => {
-    if (disabled) return
+    if (disabled) return;
     saveHandler(value);
-    setInitialValue(value)
-    setDisabled(true)
+    setInitialValue(value);
+    setDisabled(true);
   };
-setInterval(() => {
-  save()
-}, 30000);
+
   return (
     <div className='TextEditor'>
-      <ReactQuill 
-        className='TextEditor-editor' 
-        theme="snow" 
-        value={value} 
-        onChange={changeHandler} 
+      <ReactQuill
+        className='TextEditor-editor'
+        theme="snow"
+        value={value}
+        onChange={changeHandler}
         modules={modules}
         formats={formats}
-        />
-      <div className='TextEditor-icon' style={{ opacity: disabled ? "0.5" : "1" }}>
-        <Icon icon={"save"} addClass={"save-icon fs40"} onClick={save} />
+      />
+      <div className='TextEditor-icon'>
+        <Button disabled={disabled} variant='contained' onClick={save}>{LANG.GLOBAL.save}</Button>
       </div>
     </div>
   );

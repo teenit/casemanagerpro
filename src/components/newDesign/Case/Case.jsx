@@ -144,7 +144,7 @@ const Case = () => {
                 {(state.viewInfo.view_Notes) &&
                     <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
                 }
-                <Files case_id={case_id} getCaseInfo={getCaseInfo} files={state.files}/>
+                {(state.viewInfo.view_Files) && <Files case_id={case_id} getCaseInfo={getCaseInfo} files={state.files}/>}
             </div>
 
             {!!state?.meta?.files?.length && (state.viewInfo.view_Gallery) &&

@@ -24,18 +24,25 @@
     position: relative;
 }
 .item{
-    width: 80%;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding: 15px 30px;
     cursor: pointer;
     transition: all .5s;
     background-color: var(--second-color);
     border-bottom: solid 3px var(--main-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .item:hover{
-    background-color: aquamarine;
+    background-color: var(--background-color);
+}
+.link__item{
+    max-width: 65%;
+}
+.item__panel{
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .active{
     animation-duration: .7s;
@@ -48,13 +55,13 @@
     cursor: pointer;
     transition: all .3s;
 }
-.bell__img:hover{
+/* .bell__img:hover{
     animation-duration: .1s;
     animation-name: hoverBell;
     animation-iteration-count: infinite;
     animation-direction: alternate;
     animation-fill-mode: forwards;
-}
+} */
 .wr__img{
     position: relative;
 }
@@ -88,15 +95,7 @@
     font-weight: 400;
 }
 .item__read{
-    width: 80%;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    cursor: pointer;
-    transition: all .5s;
     background-color: #eeecf1;
-    border-bottom: solid 3px var(--main-color);
 }
 @keyframes active {
     from{
@@ -107,14 +106,14 @@
     }
 }
 
-@keyframes hoverBell {
+/* @keyframes hoverBell {
     from{
         transform: rotate(10deg);
     }
     to{
         transform: rotate(-10deg);
     }
-}
+} */
 @media screen and (max-width:600px) {
     .wrap__bells{
         grid-template-columns: 20% 80%;

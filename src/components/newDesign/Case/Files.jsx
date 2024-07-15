@@ -22,7 +22,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
     });
 
     useEffect(() => {
-        setRows(Math.ceil(files.length/10))
+        setRows(Math.ceil(files.length/5))
         const item = localStorage.getItem("page_case_files");
         setOpen(item === "true");
     }, [case_id]);
