@@ -21,6 +21,7 @@ import FilesUploader from "../../elements/Uploaders/FilesUploader";
 import PhotoUploader from "../../elements/Uploaders/PhotoUploader";
 import Icon from "../../elements/Icons/Icon";
 import { NavLink } from "react-router-dom";
+import ProfilePhotoBlock from "../../blocks/ProfilePhotoBlock";
 const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
   const [pass, setPass] = useState({
     olderPass: "",
@@ -93,7 +94,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
         pass: pass.newPass,
         olderPass: pass.olderPass
       };
-      handleChangeValue(key,value)
+      handleChangeValue(key, value)
       axios({
         url: serverAddres("user/change-pass.php"),
         method: "POST",
@@ -103,7 +104,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
         .then((data) => {
           handleAlertChange("success")
           dispatch(removeUser())
-  
+
         })
         .catch((error) => console.log(error));
     } else {
@@ -115,51 +116,51 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     const [stateValue, setStateValue] = useState(value);
 
     const handleSave = () => {
-        setShowEdit(false)
-        handleSaveData(icon,stateValue)
+      setShowEdit(false)
+      handleSaveData(icon, stateValue)
     };
 
     return (
-        <div className="User-InputBlock">
-            {!showEdit && (
-                <div className="User-InputBlock-default">
-                    <p>{title}</p>
-                    <div className="User-InputBlock-default-content">
-                        {icon && <Icon icon={icon} addClass={"default-icon"} />}
-                        <div title={title}>
-                            {link ? <NavLink to={link}>{title}</NavLink> : value}
-                        </div>
-                        {!disabled && (
-                            <div className="edit-icon" onClick={() => setShowEdit(true)}>
-                                <Icon icon={"edit"} addClass={"default-icon"} />
-                            </div>
-                        )}
-                    </div>
+      <div className="User-InputBlock">
+        {!showEdit && (
+          <div className="User-InputBlock-default">
+            <p>{title}</p>
+            <div className="User-InputBlock-default-content">
+              {icon && <Icon icon={icon} addClass={"default-icon"} />}
+              <div title={title}>
+                {link ? <NavLink to={link}>{title}</NavLink> : value}
+              </div>
+              {!disabled && (
+                <div className="edit-icon" onClick={() => setShowEdit(true)}>
+                  <Icon icon={"edit"} addClass={"default-icon"} />
                 </div>
-            )}
-            {showEdit && (
-                <div className="User-InputBlock-editer">
-                    <div className="User-InputBlock-editer-withicon">
-                        {icon && <Icon icon={icon} addClass={"default-icon"} />}
-                        <Input
-                            type={inputType}
-                            value={stateValue}
-                            onChange={(e) => setStateValue(e.target.value)}
-                        />
-                    </div>
-                    <div>
-                        <span onClick={() => setShowEdit(false)}>
-                            <Icon icon={"close"} addClass={"close-icon"} />
-                        </span>
-                        <span onClick={handleSave}>
-                            <Icon icon={"save"} addClass={"save-icon"} />
-                        </span>
-                    </div>
-                </div>
-            )}
-        </div>
+              )}
+            </div>
+          </div>
+        )}
+        {showEdit && (
+          <div className="User-InputBlock-editer">
+            <div className="User-InputBlock-editer-withicon">
+              {icon && <Icon icon={icon} addClass={"default-icon"} />}
+              <Input
+                type={inputType}
+                value={stateValue}
+                onChange={(e) => setStateValue(e.target.value)}
+              />
+            </div>
+            <div>
+              <span onClick={() => setShowEdit(false)}>
+                <Icon icon={"close"} addClass={"close-icon"} />
+              </span>
+              <span onClick={handleSave}>
+                <Icon icon={"save"} addClass={"save-icon"} />
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
     );
-};
+  };
 
   const checkPass = () => {
     if (pass.newPass !== pass.newPassTo) {
@@ -188,42 +189,28 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
       })
       .catch((error) => console.log(error));
   }
-  const handleFileChange = (value) => {
-    setEditPhoto(true);
-    setFile(value[0])
-};
+
   return (
     <div className="ProfilePhoto">
       <div className="ProfilePhoto-left">
-        {editPhoto ?
-          <PhotoUploader file={file} close={() => { setEditPhoto(false) }} multiple={false} meta={{
-            key: "user_img_profile",
-            case_id: 11,
-            type: "user"
-          }} />
-          :
-          <div className="ProfilePhoto-inner">
-            {changePass && <label htmlFor="fileInput">
-              <Icon icon={"edit"} addClass={"default-icon"} />
-            </label>}
-            <input type="file" name="fileInput" id="fileInput" style={{ display: "none" }} multiple={false} onChange={(e)=>{handleFileChange(e.target.files)}}/>
-            <img src={`${url}`} alt="Фото профілю" />
-            <Loadpic show={loading} />
-          </div>
-        }
+        <ProfilePhotoBlock profileImg={url} meta={{
+          key: "user_img_profile",
+          case_id: 11,
+          type: "user"
+        }} />
 
 
         <div className="User-info">
-          <h1 className="User-info-name">{userName}</h1>    
-        <InputBlock value={data.phone.value} title="Номер телефону" label={data.phone.value} icon={"phone"}
-        onChange={(e)=>{handleChangeValue("phone",e.target.value)}} inputType="number"
-        saveHandler={(value)=>{handleSaveData("phone",value)}}
-        />
+          <h1 className="User-info-name">{userName}</h1>
+          <InputBlock value={data.phone.value} title="Номер телефону" label={data.phone.value} icon={"phone"}
+            onChange={(e) => { handleChangeValue("phone", e.target.value) }} inputType="number"
+            saveHandler={(value) => { handleSaveData("phone", value) }}
+          />
 
-        <InputBlock value={data.email.value} title="Електронна пошта" label={data.email.value} icon={"email"}
-        onChange={(e)=>{handleChangeValue("email",e.target.value)}} inputType="text"
-        saveHandler={(value)=>{handleSaveData("email",value)}}
-        />
+          <InputBlock value={data.email.value} title="Електронна пошта" label={data.email.value} icon={"email"}
+            onChange={(e) => { handleChangeValue("email", e.target.value) }} inputType="text"
+            saveHandler={(value) => { handleSaveData("email", value) }}
+          />
         </div>
       </div>
       {changePass && <div className="User-pass">

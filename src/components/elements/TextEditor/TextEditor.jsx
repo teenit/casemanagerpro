@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { LANG } from '../../../services/config';
 import { formats, modules } from './constants';
 
-const TextEditor = ({ saveHandler, val }) => {
+const TextEditor = ({ saveHandler, val, close }) => {
   const [value, setValue] = useState(val);
   const [initialValue, setInitialValue] = useState(val);
   const [disabled, setDisabled] = useState(true);
@@ -47,8 +47,9 @@ const TextEditor = ({ saveHandler, val }) => {
         modules={modules}
         formats={formats}
       />
-      <div className='TextEditor-icon'>
+      <div className='TextEditor-buttons'>
         <Button disabled={disabled} variant='contained' onClick={save}>{LANG.GLOBAL.save}</Button>
+        <Button color='error' variant='contained' onClick={close}>{LANG.GLOBAL.close}</Button>
       </div>
     </div>
   );

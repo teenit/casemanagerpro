@@ -1,11 +1,22 @@
 .TextEditor {
-    &-icon{
+    &-buttons{
         position: fixed;
         top: 125px;
         right: 75px;
         background-color: #fff;
+        display: flex;
+        gap: 15px;
     }
 }
 .ql-editor {
     white-space: pre-wrap;
   }
+@media screen and (max-width:1000px){
+    .TextEditor{
+        &-buttons{
+            top: 75px;
+            right: 12.5px;
+            flex-direction: column;
+        }
+    }
+}

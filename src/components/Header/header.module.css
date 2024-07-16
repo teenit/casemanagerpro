@@ -56,8 +56,8 @@
     color: #fff;
 }
 @media screen and (max-width:600px) {
-    .control img{
-        width: 30px;
+    .control:nth-child(odd){
+        display: none;
     }
     .day__number{
         position: absolute;

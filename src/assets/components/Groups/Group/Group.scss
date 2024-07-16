@@ -99,3 +99,11 @@
         }
     }
 }
+@media screen and (max-width:720px){
+    .Group{
+        width: 100%;
+        &-info{
+            grid-template-columns: 1fr;
+        }
+    }
+}

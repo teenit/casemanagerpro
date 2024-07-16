@@ -9,16 +9,22 @@ import Input from '../elements/Inputs/Input';
 import { LANG } from '../../services/config';
 import AccessCheck from "../Functions/AccessCheck"
 import parse from 'html-react-parser';
+import { Button } from '@mui/material';
 const File = () => {
   const [data, setData] = useState(null);
-  const edit = AccessCheck("view_edit", "a_page_file", "edit")
+  const editCheck = AccessCheck("view_edit", "a_page_file", "edit")
   const [alert, setAlert] = useState({
     success: false,
     error: false,
     message: ""
   });
-  const [editName, setEditName] = useState(false);
-
+  const [edit, setEdit] = useState({
+    name: false,
+    text: false
+  })
+  const editHandler = (key) => {
+    setEdit({ ...edit, [key]: !edit[key] })
+  }
   const dataHandler = (key, value) => {
     setData({ ...data, [key]: value });
   };
@@ -45,11 +51,9 @@ const File = () => {
   const updateData = (key, value) => {
     apiResponse({ [key]: value, file_id: Number(file_id) }, "manage/files/update.php").then((res) => {
       alertHandler("success", LANG.file.alertMessages.success);
-      if (key !== "value") {
-        getFileData();
-      }
-      if (editName) {
-        setEditName(false)
+      getFileData();
+      if (edit.name) {
+        editHandler("name")
       }
     }).catch((error) => {
       alertHandler("error", LANG.file.alertMessages.error);
@@ -59,14 +63,14 @@ const File = () => {
   return (
     <div className='File'>
       <div className='File-header'>
-        {editName ? (
+        {edit.name ? (
           <div className="File-header-title">
             <Input label={LANG.file.name} value={data.title ? data.title : ""} onChange={(e) => { dataHandler("title", e.target.value) }} />
             <div className="InputBlock-editer-icons">
               <span onClick={() => { updateData("title", data.title) }}>
                 <Icon icon={"save"} addClass={"save-icon"} />
               </span>
-              <span onClick={() => { setEditName(false) }}>
+              <span onClick={() => { editHandler("name") }}>
                 <Icon icon={"close"} addClass={"close-icon"} />
               </span>
             </div>
@@ -74,8 +78,8 @@ const File = () => {
         ) : (
           <div className="File-header-title">
             <div>{data?.title ? data.title : LANG.file.withoutName}</div>
-            {edit && <div className="edit-icon">
-              <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEditName(!editName) }} />
+            {editCheck && <div className="edit-icon">
+              <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { editHandler("name") }} />
             </div>}
 
           </div>
@@ -85,9 +89,26 @@ const File = () => {
       </div>
       <div className='File-editor'>
         {data && (
-          edit ? <TextEditor val={data.value} saveHandler={(value) => updateData("value", value)} />
-            : <div className='File-text'>{parse(data.value).length > 0 ? parse(data.value) : LANG.file.empty_file}</div>
+          <div className='File-editor'>
+            {editCheck && edit.text ? (
+              <TextEditor
+                close={() => { editHandler("text") }}
+                val={data.value}
+                saveHandler={(value) => updateData("value", value)}
+              />
+            ) : (
+              <div className='File-text'>
+                <div>{parse(data.value).length > 0 ? parse(data.value) : LANG.file.empty_file}</div>
+                <span>
+                  <Button variant='contained' onClick={() => { editHandler("text") }}>
+                    {LANG.GLOBAL.edit}
+                  </Button>
+                </span>
+              </div>
+            )}
+          </div>
         )}
+
 
       </div>
       <div className='File-info'>
@@ -102,7 +123,7 @@ const File = () => {
           />
 
           <InputBlock
-            disabled={!edit}
+            disabled={!editCheck}
             textarea={true}
             value={data?.description}
             onChange={(e) => { dataHandler("description", e.target.value) }}

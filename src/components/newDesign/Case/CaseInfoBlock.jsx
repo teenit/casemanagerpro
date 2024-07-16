@@ -9,6 +9,7 @@ import InputBlock from "../../elements/Inputs/InputBlock";
 import CaseProfilePhoto from "./CaseProfilePhoto";
 import CaseInfoNameBlock from "./CaseInfoNameBlock";
 import SelectBlock from "../../elements/Selects/SelectBlock";
+import ProfilePhotoBlock from "../../blocks/ProfilePhotoBlock";
 
 const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, profileImg }) => {
     const [alert, setAlert] = useState(null);
@@ -169,7 +170,11 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
             </div>
             <div className="CaseInfoBlock">
                 {info.viewInfo.view_ProfilePhoto && (
-                    <CaseProfilePhoto profileImg={profileImg} getCaseInfo={getCaseInfo} case_id={case_id} />
+                    <ProfilePhotoBlock profileImg={profileImg} meta={{
+                        key: "case_profile_img",
+                        case_id: case_id,
+                        type: "case"
+                    }}/>
                 )}
                 <div className="CaseInfoBlock-column">
                     {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">

@@ -13,7 +13,9 @@ export const LANG = {
     start: "Початок",
     end: "Кінець",
     link: "Посилання",
-    years: "років"
+    years: "років",
+    edit:"Редагувати",
+    close:"Закрити"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Права користувачів (Сторінки)",
@@ -106,7 +108,7 @@ export const LANG = {
     title: "Файли",
     add: "Додати файл",
     alerts: {
-      invalidName: "Введіть ім'я файлу до 150 символів",
+      invalidName: "Введіть ім'я файлу до 100 символів",
       error: "Виникла помилка",
       success: "Файл додано"
     },
