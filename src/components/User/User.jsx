@@ -6,6 +6,7 @@ import UserCasesList from "./UserCasesList/UserCasesList";
 import LoadingPage from "../Loading/LoadingPage";
 import { apiResponse } from "../Functions/get_apiObj";
 import AccessCheck from "../Functions/AccessCheck";
+import { useParams } from "react-router-dom";
 
 const User = () => {
   const [user, setUser] = useState({});
@@ -19,14 +20,14 @@ const User = () => {
   const [selectedHistory, setSelectedHistory] = useState(1);
   const [changePass, setChangePass] = useState(false)
 const accessCheckPass = ()=>{AccessCheck('yes_no', 'a_page_user_change_pass')}
-  useEffect(() => {
-    let userId = window.location.href.charAt(window.location.href.indexOf("?")+1)
+useEffect(() => {
+    let userId = window.location.href.split('?')[1];
     apiResponse({userId:userId}, "user/get-user.php").then((data) => {
       if(userId==localStorage.getItem("id") && accessCheckPass){
         setChangePass(true)
       }
       setUser(data);
-      console.log(user);
+      console.log(userId);
     });
 
     // fetchReport().then(setReport);

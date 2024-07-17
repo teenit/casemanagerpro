@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from "react";
-import {NavLink} from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { NavLink } from 'react-router-dom';
 import defaultImg from './../../img/default_profile.png';
 import './cards.css';
-const Card = (props)=>{
+const Card = (props) => {
 
-    const CategoriesData = ({categories})=>{
-        
+    const CategoriesData = ({ categories }) => {
+
         return (
             <div className="categories__data">
                 {
-                    props.categories.map((item)=>{
-                        if (categories.indexOf(item.id) !== -1 )  return <div key={item.id} className="category__circle" title={item.name} style={{backgroundColor: item.color}} />
+                    props.categories.map((item) => {
+                        if (categories.indexOf(item.id) !== -1) return <div key={item.id} className="category__circle" title={item.name} style={{ backgroundColor: item.color }} />
                     })
                 }
             </div>
@@ -18,24 +18,26 @@ const Card = (props)=>{
         )
     }
 
-    return(
+    return (
         <div className="card">
             <div className="card__img">
                 <div className="card__img__img">
-                    <img src={`${ props.info.profileImg ? props.info.profileImg.link : defaultImg}`} alt="" />
+                    <img src={`${props.info.profileImg ? props.info.profileImg.link : defaultImg}`} alt="" />
                 </div>
                 <div className="card__categories">
                     <div className="card__categories__inner">
                         <span className="card__id">{props.info.id}</span>
                         {
-                            props.info.categories && <CategoriesData categories={props.info.categories}/>
+                            props.info.categories && <CategoriesData categories={props.info.categories} />
                         }
-                    </div>   
+                    </div>
                 </div>
             </div>
             <div className="card__info">
                 <div className="card__case__name">
-                    <h2><NavLink to={"/case/" + props.info.id}>{`${props.info.name}`}</NavLink></h2>
+                    {props.edit ? <h2><NavLink to={"/case/" + props.info.id}>{`${props.info.name}`}</NavLink></h2> :
+                        <h2>{`${props.info.name}`}</h2>
+                    }
                 </div>
                 <div className="card__description">
                     <div className="card__description__phones">
@@ -46,7 +48,7 @@ const Card = (props)=>{
                         <a href={`"mailto:"${props.info.email}`}>{props.info.email}</a>
                     </div>
                     <div className="card__description__potreba">
-                        <p dangerouslySetInnerHTML= {{__html:props.info.potreba}} />
+                        <p dangerouslySetInnerHTML={{ __html: props.info.potreba }} />
                     </div>
                 </div>
                 <div className="card__info__status">

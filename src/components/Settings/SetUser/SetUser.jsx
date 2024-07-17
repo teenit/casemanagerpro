@@ -12,6 +12,7 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import { Button, MenuItem, Select } from "@mui/material";
 import Icon from "../../elements/Icons/Icon";
 import AccessCheck from "../../Functions/AccessCheck"
+import { NavLink } from "react-router-dom";
 let usersStr = "";
 
 
@@ -62,7 +63,7 @@ const SetUser = ({ categories, categoriesCont }) => {
             <div className={`set__users__data__line ${index % 2 == 0 ? "arc" : ""}`}>
                 <div className={`set__user__wr ${user.active == "true" ? "arc" : ""}`}>
                     <div>
-                        <div className="set__user__name"><a href={`/user?${user.id}`}>{user.userName}</a></div>
+                        <div className="set__user__name"><NavLink to={`/user?${user.id}`}>{user.userName}</NavLink></div>
                         <div className=""><span>{user.phone}</span></div>
 
                     </div>
