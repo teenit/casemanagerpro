@@ -35,7 +35,7 @@ const Card = (props) => {
             </div>
             <div className="card__info">
                 <div className="card__case__name">
-                    {props.edit ? <h2><NavLink to={"/case/" + props.info.id}>{`${props.info.name}`}</NavLink></h2> :
+                    {props.edit.includes(props.info.id) ? <h2><NavLink to={"/case/" + props.info.id}>{`${props.info.name}`}</NavLink></h2> :
                         <h2>{`${props.info.name}`}</h2>
                     }
                 </div>

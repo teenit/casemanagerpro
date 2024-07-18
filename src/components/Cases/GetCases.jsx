@@ -20,8 +20,7 @@ function sortMas(field, type) {
 const GetCases = ({ posts, postsChange }) => {
   const categories = useSelector(state => state.categories.case);
   const check = AccessCheckCases(posts);
-
-  const [postsState, setPostsState] = useState(check.cases);
+  const [postsState, setPostsState] = useState((check.look.length > check.edit.length) ? check.look : check.edit);
   const [cases, setCases] = useState({
     totalCount: postsState ? postsState.length:0,
     firstSlice: 0,
@@ -64,7 +63,8 @@ const GetCases = ({ posts, postsChange }) => {
     setMasPost(sortedPosts.slice(0, cases.lastSlice));
     postsChange(sortedPosts);
   };
-
+  console.log(check);
+  const editIds = check.edit.map(item=>item.id)
   return (
     <div className="wrap__cards">
       {AccessCheck('yes_no', 'a_page_cases_sort') && (
@@ -87,7 +87,7 @@ const GetCases = ({ posts, postsChange }) => {
         <div className={s.like__cards}>
           <div className="inner__cards" id="inner__cards">
             {masPost.map((elem, ind) => (
-              <Card edit = {check.edit} info={elem} key={elem.id} categories={categories} />
+              <Card edit = {editIds} info={elem} key={ind} categories={categories} />
             ))}
           </div>
           {cases.button ? (
