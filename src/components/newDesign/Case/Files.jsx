@@ -8,8 +8,6 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Modal from "../../Modals/Modal";
 import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
-import FileModal from "../../Modals/FileModal";
-import parse from 'html-react-parser';
 
 const Files = ({ case_id, getCaseInfo, files }) => {
     const [rows, setRows] = useState(1);

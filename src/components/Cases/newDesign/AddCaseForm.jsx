@@ -13,16 +13,16 @@ import AccessCheck from "../../Functions/AccessCheck";
 const AddCaseForm = () => {
     const navigate = useNavigate();
     const [isDataEmpty, setIsDataEmpty] = useState({
-        data:true,
-        categories:true
+        data: true,
+        categories: true
     })
-    const [id,setId] = useState(0)
+    const [id, setId] = useState(0)
     const [alert, setAlert] = useState(false)
     const [errorAlert, setErrorAlert] = useState({
-        status:false,
-        text:""
+        status: false,
+        text: ""
     })
-    const categories = useSelector(state => state.categories.case);  
+    const categories = useSelector(state => state.categories.case);
     const [checkedMas, setCheckedMas] = useState([])
     const [stateGeneral, setStateGeneral] = useState({
         first_name: "",
@@ -30,7 +30,7 @@ const AddCaseForm = () => {
         last_name: "",
         phone1: "",
         phone2: "",
-        sex:" ",
+        sex: " ",
         email: "",
         happy_bd: " ",
     })
@@ -48,27 +48,27 @@ const AddCaseForm = () => {
         family_info: "",
         history: ""
     }
-    const [stateData, setStateData] = useState({...initialStateData})
-    function checkChanges(obj){
+    const [stateData, setStateData] = useState({ ...initialStateData })
+    function checkChanges(obj) {
         const hasChanges = (JSON.stringify(initialStateData) !== JSON.stringify(obj));
         console.log(JSON.stringify(initialStateData), JSON.stringify(obj));
-        setIsDataEmpty({...isDataEmpty,data:!hasChanges});
+        setIsDataEmpty({ ...isDataEmpty, data: !hasChanges });
     }
     const handleCheckboxChange = (value, options) => {
         let categories = [];
         if (options.includes(value)) {
-          categories = options.filter(element => element !== value);
-          
+            categories = options.filter(element => element !== value);
+
         } else {
-          categories = [...options, value];
+            categories = [...options, value];
         }
         setCheckedMas([...categories])
-        if(JSON.stringify(categories)===JSON.stringify([])){
-            setIsDataEmpty({...isDataEmpty, categories:true})
-        }else{
-            setIsDataEmpty({...isDataEmpty, categories:false})
+        if (JSON.stringify(categories) === JSON.stringify([])) {
+            setIsDataEmpty({ ...isDataEmpty, categories: true })
+        } else {
+            setIsDataEmpty({ ...isDataEmpty, categories: false })
         }
-      };
+    };
 
 
     const [switchData, setSwitchData] = useState({
@@ -83,13 +83,11 @@ const AddCaseForm = () => {
         setStateData({ ...stateData, [key]: val });
         checkChanges({ ...stateData, [key]: val })
     }
-    
+
     function handleSubmit() {
         if (stateGeneral.first_name.length < 1) {
-            setErrorAlert({...alert,status:true,text:LANG.add_case.alertMessages.name})
-        } else if (stateGeneral.phone1.length < 10 || stateGeneral.phone1.length > 13) {
-            setErrorAlert({...alert,status:true,text:LANG.add_case.alertMessages.phone})
-        }else{
+            setErrorAlert({ ...alert, status: true, text: LANG.add_case.alertMessages.name })
+        } else {
             sendGeneral()
         }
     }
@@ -149,7 +147,7 @@ const AddCaseForm = () => {
                     </div>
                     <div className="AddCaseForm-inner-line-three w100">
                         <div>
-                            <p>{LANG.case_data.phone} 1<span className="required">*</span></p>
+                            <p>{LANG.case_data.phone} 1</p>
                             <Input
                                 type="number"
                                 value={stateGeneral.phone1}
@@ -169,12 +167,12 @@ const AddCaseForm = () => {
                             />
                         </div>
                         <div>
-                        <p>{LANG.case_data.sex}</p>
-                        <Select value={stateGeneral.sex} onChange={(e)=>{changeHandlerGeneral("sex", e.target.value)}}>
+                            <p>{LANG.case_data.sex}</p>
+                            <Select value={stateGeneral.sex} onChange={(e) => { changeHandlerGeneral("sex", e.target.value) }}>
                                 <MenuItem value="male">{LANG.selects.sex.male}</MenuItem>
                                 <MenuItem value="female">{LANG.selects.sex.female}</MenuItem>
                                 <MenuItem value="other">{LANG.selects.sex.other}</MenuItem>
-                        </Select>
+                            </Select>
                         </div>
                     </div>
 
@@ -200,7 +198,7 @@ const AddCaseForm = () => {
                         </div>
                     </div>
                     {AccessCheck('yes_no', 'a_page_case_add') && <Button variant="contained" onClick={handleSubmit}>Зберегти</Button>}
-                    
+
                 </div>
                 :
                 <div className="AddCaseForm-inner">
@@ -295,14 +293,15 @@ const AddCaseForm = () => {
                         />
                     </div>
                     <div className="w100">
-                            <p>{LANG.case_data.category}</p>
-                            <CheckboxListAccess
-                                allMas={()=>{return categories}} 
-                                checkedMas={checkedMas}
-                                onChange={(value)=>{
-                                    handleCheckboxChange(value, checkedMas)}}
-                            />
-                        
+                        <p>{LANG.case_data.category}</p>
+                        <CheckboxListAccess
+                            allMas={() => { return categories }}
+                            checkedMas={checkedMas}
+                            onChange={(value) => {
+                                handleCheckboxChange(value, checkedMas)
+                            }}
+                        />
+
 
                     </div>
                     <div className="w100">
@@ -318,21 +317,21 @@ const AddCaseForm = () => {
 
                     </div>
                     <div className="AddCaseForm-inner-line-buttons">
-                    <Button variant="contained" color="error" onClick={()=>{navigate("/case/" + stateData.case_id)}}>{LANG.GLOBAL.skip}</Button>
-                    <Button variant="contained" disabled={isDataEmpty.data && isDataEmpty.categories} onClick={saveHandler}>{LANG.save}</Button>
+                        <Button variant="contained" color="error" onClick={() => { navigate("/case/" + stateData.case_id) }}>{LANG.GLOBAL.skip}</Button>
+                        <Button variant="contained" disabled={isDataEmpty.data && isDataEmpty.categories} onClick={saveHandler}>{LANG.save}</Button>
                     </div>
                 </div>
             }
             {alert &&
                 <SmallNotification isSuccess={true} text="Дані збережено успішно" close={() => {
-                        setAlert(false);
-                    }}
+                    setAlert(false);
+                }}
                 />
             }
             {errorAlert.status &&
                 <SmallNotification isSuccess={false} text={errorAlert.text} close={() => {
-                        setErrorAlert({...alert,status:false})
-                    }}
+                    setErrorAlert({ ...alert, status: false })
+                }}
                 />
             }
         </div>

@@ -1,9 +1,8 @@
 .TextEditor {
     &-buttons{
         position: fixed;
-        top: 125px;
+        bottom: 75px;
         right: 75px;
-        background-color: #fff;
         display: flex;
         gap: 15px;
     }
@@ -14,7 +13,7 @@
 @media screen and (max-width:1000px){
     .TextEditor{
         &-buttons{
-            top: 75px;
+            bottom: 25px;
             right: 12.5px;
             flex-direction: column;
         }

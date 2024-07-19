@@ -70,9 +70,9 @@ const GetCases = ({ posts, postsChange }) => {
       {AccessCheck('yes_no', 'a_page_cases_sort') && (
         <Select value={selectFilter} onChange={(e) => handleSelect(e.target.value)}>
           <MenuItem value="default">Сортувати за</MenuItem>
-          <MenuItem value="surname">Сортувати за прізвище</MenuItem>
-          <MenuItem value="firstName">Сортувати за ім'ям</MenuItem>
-          <MenuItem value="createdDate">Сортувати за датою створення</MenuItem>
+          {/* <MenuItem value="surname">Сортувати за прізвище</MenuItem> */}
+          <MenuItem value="name">Сортувати за ім'ям</MenuItem>
+          <MenuItem value="createdDate">Від нового до старого</MenuItem>
           <MenuItem value="id">Сортувати за номером</MenuItem>
         </Select>
       )}

@@ -98,7 +98,7 @@ const File = () => {
               />
             ) : (
               <div className='File-text'>
-                <div>{parse(data.value).length > 0 ? parse(data.value) : LANG.file.empty_file}</div>
+                <div>{typeof data.value == "string" && parse(data.value).length > 0 ? parse(data.value) : LANG.file.empty_file}</div>
                 <span>
                   <Button variant='contained' onClick={() => { editHandler("text") }}>
                     {LANG.GLOBAL.edit}

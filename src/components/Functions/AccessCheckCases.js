@@ -1,13 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const AccessCheckCases = (cases) => {
     const rights = useSelector(state => state.auth);
     const categories = useSelector(state => state.categories.case);
-    // if ((rights.a_super == 1 || rights.a_administartor == 1) && !!rights.a_blocked == false)return { look: cases, edit: cases };
+    const userID = localStorage.getItem("id")
+    if ((rights.a_super == 1 || rights.a_administartor == 1) && !!rights.a_blocked == false)return { look: cases, edit: cases };
     switch (rights["a_cases_get"]) {
         case 0:
             return { look: [], edit: [] }
+        case 1:
+            let userCases = cases.filter(item=>item.user_id==userID)
+            return { look: userCases, edit: userCases }
         case 2:
             //парсинг
             let lookCatIds = JSON.parse(rights["a_cases_category_look_id"])
@@ -34,6 +39,7 @@ const AccessCheckCases = (cases) => {
 
             //сортировка кейсов к просмотру по нарастающему id
             lookMas.sort((a, b) => a.id - b.id);
+            editMas.sort((a, b) => a.id - b.id);
 
             return { look: lookMas, edit: editMas }
         case 7:

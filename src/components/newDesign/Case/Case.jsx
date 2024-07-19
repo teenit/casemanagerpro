@@ -49,7 +49,6 @@ const Case = () => {
         let obj = {}
         let viewConfig = appConfig.caseViewSettings;
         viewConfig.forEach(item => {
-            console.log(item)
             obj[item.primary] = true;
             if (item?.options) {
                 item.options.forEach(option => obj[option] = option)
