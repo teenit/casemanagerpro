@@ -13,6 +13,8 @@ $sql = '
 SELECT 
     cn.id, 
     cn.name, 
+    cn.user_id, 
+    cn.responsible_id, 
     cn.phone1, 
     cn.phone2, 
     cn.happy_bd, 
@@ -46,7 +48,7 @@ $mas = [];
 while ($res = mysqli_fetch_assoc($access)) {
     $obj = new stdClass();
     $obj->{'id'} = $res['id'];
-    $obj->{'name'} = $res['name'];
+    $obj->{'name'} = trim($res['name']);
     $obj->{'phone1'} = decryptData($res['phone1'], $key);
     $obj->{'phone2'} = decryptData($res['phone2'], $key);
     $obj->{'email'} = decryptData($res['email'], $key);
@@ -55,6 +57,8 @@ while ($res = mysqli_fetch_assoc($access)) {
     $obj->{'contractNumber'} = $res['contract_number'];
     $obj->{'addressLive'} = $res['address_live'];
     $obj->{'happyBD'} = $res['happy_bd'];
+    $obj->{'user_id'} = $res['user_id'];
+    $obj->{'responsible_id'} = $res['responsible_id'];
     $obj->{'categories'} = json_decode($res['categories']);
     $obj->{'profileImg'} = json_decode($res['case_profile_img']);
 
