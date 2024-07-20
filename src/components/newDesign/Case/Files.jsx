@@ -67,7 +67,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         if (data.title.length < 1 || data.title.length > 100) {
             return alertHandler("error", LANG.caseFiles.alerts.invalidName);
         }
-        apiResponse({ ...data, client_id: case_id }, "manage/files/create.php").then((res) => {
+        apiResponse({ ...data, client_id: case_id, type:"file" }, "manage/files/create.php").then((res) => {
             alertHandler("success", LANG.caseFiles.alerts.success);
             getCaseInfo();
             setModal(false);

@@ -31,6 +31,7 @@ import { appConfig } from "../../../services/config";
 import PersonalInfo from "./PersonalInfo";
 import TextEditor from "../../elements/TextEditor/TextEditor";
 import Files from "./Files";
+import Fields from "./Fields";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -132,8 +133,9 @@ const Case = () => {
             }
             <div className="info__column">
                 {(state.viewInfo.view_DetailedInfo) &&
-                    <DetailedInfo info={state.data} changeData={(key, value) => { handleDataChange(key, value) }} />
+                    <DetailedInfo info={state.data} case_id={case_id} changeData={(key, value) => { handleDataChange(key, value) }} />
                 }
+                <Fields fields = {state.fields} case_id={case_id} getCaseInfo={getCaseInfo}/>
                 {(state.viewInfo.view_Plan) &&
                     <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo} />
                 }
