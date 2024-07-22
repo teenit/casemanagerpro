@@ -117,15 +117,42 @@ try {
     }
 
      // Отримання даних з таблиці case_plans
-     $sql_files = "SELECT title, description, id, date_created FROM files WHERE client_id = ?";
+     $sql_files = "SELECT title, description, id, date_created, type, value FROM files WHERE client_id = ?";
      $stmt_files = $conn->prepare($sql_files);
      $stmt_files->bind_param("i", $data->case_id);
      $stmt_files->execute();
      $result_files = $stmt_files->get_result();
      $files = [];
- 
+     $fields = [];
      while ($row_files = $result_files->fetch_assoc()) {
-         
+           
+             
+
+             switch ($row_files['type']) {
+                case 'file':
+                    $files[] = [
+                        'title' => $row_files['title'],
+                        'description' => $row_files['description'],
+                        'id' => $row_files['id'],
+                        'date_created' => $row_files['date_created']
+                     ];
+                    break;
+                case 'field':
+                    $fields[] = [
+                        'title' => $row_files['title'],
+                        'description' => $row_files['description'],
+                        'id' => $row_files['id'],
+                        'date_created' => $row_files['date_created'],
+                        'value' => $row_files['value'],
+                     ];
+                    break;
+                case 'case_view_info':
+    
+                    
+                    break;
+            }
+
+
              $files[] = $row_files;
  
      }
@@ -182,7 +209,8 @@ try {
         'data' => $cases_data,
         'notes' => $case_notes_data,
         'userMeta' => $user_meta,
-        'files' => $files
+        'files' => $files,
+        'fields' => $fields
     ];
 
     echo json_encode($response);
