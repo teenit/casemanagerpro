@@ -10,8 +10,10 @@ import { LANG } from '../../services/config';
 import AccessCheck from "../Functions/AccessCheck"
 import parse from 'html-react-parser';
 import { Button } from '@mui/material';
+import ModalConfirm from "../Modals/ModalConfirm"
 const File = () => {
   const [data, setData] = useState(null);
+  const [confirm,setConfirm] = useState(false)
   const editCheck = AccessCheck("view_edit", "a_page_file", "edit")
   const [alert, setAlert] = useState({
     success: false,
@@ -47,9 +49,13 @@ const File = () => {
   useEffect(() => {
     getFileData();
   }, []);
-
+const deleteHandler = ()=>{
+  apiResponse({file_id: Number(file_id)}, "manage/files/delete.php").then((res)=>{
+    window.location.reload()
+  })
+}
   const updateData = (key, value) => {
-    apiResponse({ [key]: value, file_id: Number(file_id) }, "manage/files/update.php").then((res) => {
+    apiResponse({ [key]: value, file_id: Number(file_id), type: "file" }, "manage/files/update.php").then((res) => {
       alertHandler("success", LANG.file.alertMessages.success);
       getFileData();
       if (edit.name) {
@@ -98,13 +104,14 @@ const File = () => {
               />
             ) : (
               <div className='File-text'>
-                <div>{typeof data.value == "string" && parse(data.value).length > 0 ? parse(data.value) : LANG.file.empty_file}</div>
+                <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
                 <span>
                   <Button variant='contained' onClick={() => { editHandler("text") }}>
                     {LANG.GLOBAL.edit}
                   </Button>
                 </span>
               </div>
+
             )}
           </div>
         )}
@@ -136,6 +143,8 @@ const File = () => {
         </div>
 
       </div>
+      <Button variant='contained' color='error'onClick={()=>{setConfirm(true)}}>Видалити файл</Button>
+      {confirm && <ModalConfirm text={"Ви впевнені, що хочете видалити цей файл?"} successHandler={deleteHandler} closeHandler={()=>{setConfirm(false)}}/>}
       {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success", "") }} />}
       {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error", "") }} />}
     </div>

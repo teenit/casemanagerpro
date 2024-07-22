@@ -135,7 +135,9 @@ const Case = () => {
                 {(state.viewInfo.view_DetailedInfo) &&
                     <DetailedInfo info={state.data} case_id={case_id} changeData={(key, value) => { handleDataChange(key, value) }} />
                 }
-                <Fields fields = {state.fields} case_id={case_id} getCaseInfo={getCaseInfo}/>
+                {(state.viewInfo.view_Fields) &&
+                    <Fields fields={state.fields} case_id={case_id} getCaseInfo={getCaseInfo} />
+                }
                 {(state.viewInfo.view_Plan) &&
                     <Plan plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo} />
                 }
@@ -145,7 +147,7 @@ const Case = () => {
                 {(state.viewInfo.view_Notes) &&
                     <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
                 }
-                {(state.viewInfo.view_Files) && <Files case_id={case_id} getCaseInfo={getCaseInfo} files={state.files}/>}
+                {(state.viewInfo.view_Files) && <Files case_id={case_id} getCaseInfo={getCaseInfo} files={state.files} />}
             </div>
 
             {!!state?.meta?.files?.length && (state.viewInfo.view_Gallery) &&
