@@ -144,7 +144,7 @@ const SetUser = ({ categories, categoriesCont }) => {
         <>
             <div className="set__users__wrap">
                 <div className="set__users__inner">
-                    <h2>Користувачі</h2>
+           
                     <div className="set__users__data">
                         <div className="set__users__data__title">
                             <div className="set__users__data__title__text">

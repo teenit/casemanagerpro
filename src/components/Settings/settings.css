@@ -1,3 +1,7 @@
+.set__users__data {
+    max-height: 400px;
+    overflow-y: scroll;
+}
 .set__users__data__line{
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -8,8 +12,8 @@
 .set__users__data__title{
     display: grid;
     grid-template-columns: 3fr 1fr;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 14px;
 }
 .set__users__data__title__text{
     display: grid;
