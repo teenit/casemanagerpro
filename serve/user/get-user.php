@@ -33,12 +33,9 @@ $sql = "SELECT meta_value FROM usermeta WHERE user_id=$userId AND meta_key='$prf
 $result = mysqli_query($conn, $sql);
 $row =  mysqli_fetch_array($result);
  
-if($row == null){
-    $obj->{'profileUrl'} = "/default-img.png";
-}else{
+if($row){
     $obj->{'profileUrl'} = $row['meta_value'];
 }
-   
 $users = mysqli_query($conn, $msql);
 $too = false;
 

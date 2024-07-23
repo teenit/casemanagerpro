@@ -4,16 +4,17 @@ import UserCasesListItem from "./UserCasesListItem/UserCasesListItem";
 import UserPagination from "./UserPagination/UserPagination";
 import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
-
+import AccessCheckCases from "../../Functions/AccessCheckCases"
 const UserCasesList = ({ userAddId }) => {
   const [width, setWidth] = useState(window.innerWidth)
   const [cases, setCases] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [casesPerPage] = useState(12);
   const [selected, setSelected] = useState(1);
-window.addEventListener("resize", ()=>{
-  setWidth(window.innerWidth)
-})
+  window.addEventListener("resize", () => {
+    setWidth(window.innerWidth)
+  })
+  console.log(userAddId);
   useEffect(() => {
     apiResponse({}, "case/get/cases-page-list.php").then((res) => {
       setCases([...res])
@@ -28,7 +29,8 @@ window.addEventListener("resize", ()=>{
   const addCases = cases.filter(item => item.userId === userAddId);
   const lastCaseIndex = currentPage * casesPerPage;
   const firstCaseIndex = lastCaseIndex - casesPerPage;
-  const currentCase = cases.slice(firstCaseIndex, lastCaseIndex);
+  const accessCases = AccessCheckCases(cases).look
+  const currentCase = accessCases.slice(firstCaseIndex, lastCaseIndex);
 
   return (
     <>
@@ -65,7 +67,7 @@ window.addEventListener("resize", ()=>{
           ))}
         </ul>
 
-        {width>720&&<UserPagination
+        {width > 720 && accessCases.length>0 &&<UserPagination
           casesPerPage={casesPerPage}
           totalCases={cases.length}
           paginate={paginate}

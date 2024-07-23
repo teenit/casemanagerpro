@@ -7,7 +7,7 @@ import LoadingPage from "../Loading/LoadingPage";
 import { apiResponse } from "../Functions/get_apiObj";
 import AccessCheck from "../Functions/AccessCheck";
 import { useParams } from "react-router-dom";
-
+import defaultImg from "../../img/default_profile.png"
 const User = () => {
   const [user, setUser] = useState({});
   const [report, setReport] = useState([]);
@@ -27,7 +27,6 @@ useEffect(() => {
         setChangePass(true)
       }
       setUser(data);
-      console.log(userId);
     });
 
     // fetchReport().then(setReport);
@@ -55,13 +54,13 @@ console.log(user);
   return user && !user?.fail ? (
     <div className="User">
       <ProfilePhoto
-        url={user.profileUrl}
+        url={user.profileUrl?user.profileUrl:defaultImg}
         userName={user.userName}
         email={user.email}
         changePass={changePass}
         phone={user.phone}
       />
-      <UserCasesList />
+      <UserCasesList userAddId={user.id}/>
 
       <div>
         <h4>Подані звіти</h4>
