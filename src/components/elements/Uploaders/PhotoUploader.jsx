@@ -31,8 +31,9 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
 
     const metaObject = { ...meta };
     formData.append('meta', JSON.stringify(metaObject));
+    const serverLink = meta.type=="case"?"upload-files.php":"upload-files-user.php"
     axios({
-      url: serverAddres("upload-files.php"),
+      url: serverAddres(serverLink),
       method: "POST",
       headers: { 'Content-Type': 'multipart/form-data' },
       data: formData,
@@ -41,9 +42,9 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
       }
     })
       .then((response) => {
-        // successHandler(response.data);
         console.log(response);
         handleAlertChange("success");
+        successHandler(response.data);
         setUploading(false);
       })
       .catch((error) => {

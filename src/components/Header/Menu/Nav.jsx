@@ -83,9 +83,9 @@ const Nav = ({ close }) => {
                 </div>
                 <div className={s.control__nav}>
                     <div className={s.profile}>
-                        <a className={s.a} href={`/user?${localStorage.getItem("id")}`}>
+                        <NavLink className={s.a} to={`/user/${localStorage.getItem("id")}`}>
                             <img src={profileImg} alt="" />
-                        </a>
+                        </NavLink>
                     </div>
                     <div className={s.logout}>
                         <NavLink

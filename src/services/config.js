@@ -363,6 +363,7 @@ export const LANG = {
     "a_page_groups": "Доступ до сторінки груп",
     "a_group_create": "Створення нової групи",
     // "a_group_edit": "Редагування групи",
+    //a_page_statistics:"Доступ до статистики"
     "a_page_case_connection": "Створення зв'язків між об'єктами і групою",
     "a_page_file": "Доступ до сторінки файла",
   },

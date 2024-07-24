@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import { serverAddres } from "../../Functions/serverAddres";
 import ProfilePhotoBlock from "../../blocks/ProfilePhotoBlock";
 import InputBlock from "../../elements/Inputs/InputBlock";
+import { apiResponse } from "../../Functions/get_apiObj";
 
 const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
   const [pass, setPass] = useState({
@@ -16,8 +17,6 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     newPassTo: "",
     changeError: ""
   });
-  const [loading, setLoading] = useState("");
-  const [editPhoto, setEditPhoto] = useState(false);
   const [alert, setAlert] = useState({
     success: false,
     error: false,
@@ -67,12 +66,6 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     }));
   };
 
-  const handleChangeEdit = (key) => {
-    setData(prevData => ({
-      ...prevData,
-      [key]: { ...prevData[key], originalValue: prevData[key].value, edit: !prevData[key].edit }
-    }));
-  };
 
   const handleChangeValue = (key, value) => {
     setData(prevData => ({
@@ -85,21 +78,15 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     const originalValue = data[key].originalValue;
     if (value !== originalValue) {
       let obj = {
-        id: localStorage.getItem("id"),
-        token: localStorage.getItem("token"),
-        pass: pass.newPass,
-        olderPass: pass.olderPass
+        key:key,
+        value:value
       };
       handleChangeValue(key, value);
-      axios({
-        url: serverAddres("user/change-pass.php"),
-        method: "POST",
-        headers: { "Content-Type": "application/json;charset=utf-8" },
-        data: JSON.stringify(obj),
-      })
-        .then(() => {
+     apiResponse({...obj}, "manage/update-usermeta.php")
+        .then((res) => {
           handleAlertChange("success", "Дані успішно оновлено");
-          dispatch(removeUser());
+          // dispatch(removeUser());
+          console.log(res);
         })
         .catch((error) => console.log(error));
     } else {
@@ -140,8 +127,8 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     <div className="ProfilePhoto">
       <div className="ProfilePhoto-left">
         <ProfilePhotoBlock profileImg={url} meta={{
-          key: "user_img_profile",
-          case_id: 11,
+          key: "user_profile_img",
+          user_id: localStorage.getItem("id"),
           type: "user"
         }} />
 

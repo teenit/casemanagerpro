@@ -20,10 +20,10 @@ const User = () => {
   const [selectedHistory, setSelectedHistory] = useState(1);
   const [changePass, setChangePass] = useState(false)
 const accessCheckPass = ()=>{AccessCheck('yes_no', 'a_page_user_change_pass')}
+const params = useParams()
 useEffect(() => {
-    let userId = window.location.href.split('?')[1];
-    apiResponse({userId:userId}, "user/get-user.php").then((data) => {
-      if(userId==localStorage.getItem("id") && accessCheckPass){
+    apiResponse({userId:params.id}, "user/get-user.php").then((data) => {
+      if(params.id==localStorage.getItem("id") && accessCheckPass){
         setChangePass(true)
       }
       setUser(data);
@@ -54,7 +54,7 @@ console.log(user);
   return user && !user?.fail ? (
     <div className="User">
       <ProfilePhoto
-        url={user.profileUrl?user.profileUrl:defaultImg}
+        url={user.profileUrl?.link?user.profileUrl?.link:defaultImg}
         userName={user.userName}
         email={user.email}
         changePass={changePass}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiResponse } from '../Functions/get_apiObj';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import TextEditor from "../elements/TextEditor/TextEditor";
 import SmallNotification from '../elements/Notifications/SmallNotification';
 import Icon from '../elements/Icons/Icon';
@@ -8,10 +8,10 @@ import InputBlock from '../elements/Inputs/InputBlock';
 import Input from '../elements/Inputs/Input';
 import { LANG } from '../../services/config';
 import AccessCheck from "../Functions/AccessCheck"
-import parse from 'html-react-parser';
 import { Button } from '@mui/material';
 import ModalConfirm from "../Modals/ModalConfirm"
 const File = () => {
+  const navigate = useNavigate()
   const [data, setData] = useState(null);
   const [confirm,setConfirm] = useState(false)
   const editCheck = AccessCheck("view_edit", "a_page_file", "edit")
@@ -51,7 +51,7 @@ const File = () => {
   }, []);
 const deleteHandler = ()=>{
   apiResponse({file_id: Number(file_id)}, "manage/files/delete.php").then((res)=>{
-    window.location.reload()
+    navigate(-1)
   })
 }
   const updateData = (key, value) => {
@@ -102,7 +102,7 @@ const deleteHandler = ()=>{
                 val={data.value}
                 saveHandler={(value) => updateData("value", value)}
               />
-            ) : (
+            ) : (  
               <div className='File-text'>
                 <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
                 <span>

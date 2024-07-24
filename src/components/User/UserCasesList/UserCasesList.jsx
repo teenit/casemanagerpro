@@ -26,7 +26,7 @@ const UserCasesList = ({ userAddId }) => {
     setSelected(pageNumber);
   };
 
-  const addCases = cases.filter(item => item.userId === userAddId);
+  const addCases = cases.filter(item => item.user_id === userAddId);
   const lastCaseIndex = currentPage * casesPerPage;
   const firstCaseIndex = lastCaseIndex - casesPerPage;
   const accessCases = AccessCheckCases(cases).look

@@ -54,7 +54,7 @@ const MainContent = () => {
         <Route path='/add-case' element={access.add_case ? <AddCaseForm /> : <NotFound />} />
         <Route path='/cases' element={access.cases ? <Cases /> : <NotFound />} />
         <Route path='/case/:id' element={access.case ? <Case /> : <NotFound />} />
-        <Route path='/user' element={access.user ? <User /> : <NotFound />} />
+        <Route path='/user/:id' element={access.user ? <User /> : <NotFound />} />
         <Route path='/settings' element={access.settings ? <Settings /> : <NotFound />} />
         <Route path='/contacts' element={access.phonebook ? <Contacts /> : <NotFound />} />
         <Route path="/resources" element={access.resources ? <Resources /> : <NotFound />} />
