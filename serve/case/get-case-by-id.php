@@ -54,7 +54,7 @@ try {
     }
 
     // Отримання даних з таблиці case_plans
-    $sql_case_plans = "SELECT * FROM case_plans WHERE case_id = ?";
+    $sql_case_plans = "SELECT * FROM case_plans WHERE case_id = ? ORDER BY id DESC";
     $stmt_case_plans = $conn->prepare($sql_case_plans);
     $stmt_case_plans->bind_param("i", $case_id);
     $stmt_case_plans->execute();
@@ -66,7 +66,7 @@ try {
     }
 
     // Отримання даних з таблиці case_plans
-    $sql_case_notes = "SELECT * FROM case_notes WHERE case_id = ?";
+    $sql_case_notes = "SELECT * FROM case_notes WHERE case_id = ? ORDER BY id DESC";
     $stmt_case_notes = $conn->prepare($sql_case_notes);
     $stmt_case_notes->bind_param("i", $case_id);
     $stmt_case_notes->execute();
@@ -84,7 +84,7 @@ try {
     }
 
     // Отримання даних з таблиці case_plans
-    $sql_case_helps = "SELECT * FROM case_helps WHERE case_id = ?";
+    $sql_case_helps = "SELECT * FROM case_helps WHERE case_id = ? ORDER BY id DESC";
     $stmt_case_helps = $conn->prepare($sql_case_helps);
     $stmt_case_helps->bind_param("i", $case_id);
     $stmt_case_helps->execute();
@@ -117,7 +117,7 @@ try {
     }
 
      // Отримання даних з таблиці case_plans
-     $sql_files = "SELECT title, description, id, date_created, type, value FROM files WHERE client_id = ?";
+     $sql_files = "SELECT title, description, id, date_created, type, value FROM files WHERE client_id = ? ORDER BY id DESC";
      $stmt_files = $conn->prepare($sql_files);
      $stmt_files->bind_param("i", $data->case_id);
      $stmt_files->execute();
@@ -125,8 +125,6 @@ try {
      $files = [];
      $fields = [];
      while ($row_files = $result_files->fetch_assoc()) {
-           
-             
 
              switch ($row_files['type']) {
                 case 'file':
@@ -146,15 +144,7 @@ try {
                         'value' => $row_files['value'],
                      ];
                     break;
-                case 'case_view_info':
-    
-                    
-                    break;
             }
-
-
-             $files[] = $row_files;
- 
      }
 
     // Отримання даних з таблиці cases_data

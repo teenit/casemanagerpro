@@ -1,0 +1,27 @@
+.AccordionBlock {
+    width: 100%;
+    &-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 10px;
+        background-color: rgba($color: $second-color, $alpha: .7);
+        box-sizing: border-box;
+        border-radius: 10px 10px 0 0;
+        cursor: pointer;
+        &.opened {
+            .AccordionBlock-header-icon {
+                transform: rotate(180deg);
+            }    
+        }
+        &:hover {
+            background-color: rgba($color: $second-color, $alpha: .9); 
+        }
+        &-icon {
+            display: flex;
+            align-items: center;
+            transition: all .3s;
+        }
+    }
+}
