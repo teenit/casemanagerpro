@@ -46,20 +46,24 @@
             gap: 5px;
         }
     }
+    &-content{
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+    
+}
 
-}
-.content{
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    max-height: 400px;
-    overflow-y: scroll;
-}
 @media screen and (max-width:500px){
-    .DetailedInfo{
-        padding: 10px 0px;
+    .Fields{
         &-title{
-            font-size: 16px;
+            &-panel{
+
+                font-size: 14px;
+                word-wrap: break-word;
+            }
         }
     }
 }

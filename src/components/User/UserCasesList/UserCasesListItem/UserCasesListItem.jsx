@@ -5,8 +5,7 @@ const UserCasesListItem = ({ id, name }) => {
   return (
     <>
       <p>№ {id}</p>
-    
-        <NavLink to = {"/case?" + id}>
+        <NavLink to = {"/case/" + id}>
         {name}
       </NavLink>
     </>

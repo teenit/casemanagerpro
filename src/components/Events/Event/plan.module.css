@@ -46,7 +46,6 @@
     position: relative;
 }
 .result{
-    padding-bottom: 40px;
     border: solid 2px var(--main-color);
     
 }
@@ -61,20 +60,7 @@
     width: 90%;
 }
 .btn__feed{
-    bottom: 5px;
-    position: absolute;
-    left: 50%;
-    display: block;
-    width: max-content;
-    transform: translate(-50%,0);
-    padding: 7.5px 17.5px;
-    background-color: var(--main-color);
-    cursor: pointer;
-    transition: all .3s;
-    font-weight: 700;
-    font-size: 18px;    
-    border-radius: 5px;
-    border: none;
+    bottom: 12.5px;
 }
 .btn__feed:hover{
     background-color: var(--main-color);
@@ -133,10 +119,13 @@
 }
 .feed__back{
     padding: 5px;
-    box-shadow: 0 0 2px 0 var(--main-color);
+    background-color: var(--second-color);
     border-radius: 10px;
     font-size: 14px;
     position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
 }
 .feed__back__wrap{
     width: 90%;

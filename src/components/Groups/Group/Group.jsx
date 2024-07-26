@@ -40,11 +40,11 @@ const Group = () => {
             <div className='Group-member' onMouseEnter={() => { setEditMember(1); }} onMouseLeave={() => { setEditMember(0); }}>
                 <NavLink to={`/case/${item.case_id}`}>{item.name}</NavLink>
                 <span><a href={`tel:${item.phone1}`}>{item.phone1}</a></span>
-                <span style={{ opacity: editMember }}>
+                {/* <span style={{ opacity: editMember }}>
                     <Icon icon={'delete'} addClass={'close-icon'} onClick={() => { modalHandler('delete'); }} />
-                </span>
-                {modal.delete && <ModalConfirm successHandler={() => { deleteHandler(index); }} closeHandler={() => { modalHandler('delete'); }}
-                    text={`${LANG.groups.group.confirm} ${item.name}?`} />}
+                </span> */}
+                {/* {modal.delete && <ModalConfirm successHandler={() => { deleteHandler(index); }} closeHandler={() => { modalHandler('delete'); }}
+                    text={`${LANG.groups.group.confirm} ${item.name}?`} />} */}
             </div>
         );
     };

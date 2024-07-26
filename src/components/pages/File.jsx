@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiResponse } from '../Functions/get_apiObj';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import TextEditor from "../elements/TextEditor/TextEditor";
 import SmallNotification from '../elements/Notifications/SmallNotification';
 import Icon from '../elements/Icons/Icon';
@@ -8,10 +8,12 @@ import InputBlock from '../elements/Inputs/InputBlock';
 import Input from '../elements/Inputs/Input';
 import { LANG } from '../../services/config';
 import AccessCheck from "../Functions/AccessCheck"
-import parse from 'html-react-parser';
 import { Button } from '@mui/material';
+import ModalConfirm from "../Modals/ModalConfirm"
 const File = () => {
+  const navigate = useNavigate()
   const [data, setData] = useState(null);
+  const [confirm,setConfirm] = useState(false)
   const editCheck = AccessCheck("view_edit", "a_page_file", "edit")
   const [alert, setAlert] = useState({
     success: false,
@@ -47,9 +49,13 @@ const File = () => {
   useEffect(() => {
     getFileData();
   }, []);
-
+const deleteHandler = ()=>{
+  apiResponse({file_id: Number(file_id)}, "manage/files/delete.php").then((res)=>{
+    navigate(-1)
+  })
+}
   const updateData = (key, value) => {
-    apiResponse({ [key]: value, file_id: Number(file_id) }, "manage/files/update.php").then((res) => {
+    apiResponse({ [key]: value, file_id: Number(file_id), type: "file" }, "manage/files/update.php").then((res) => {
       alertHandler("success", LANG.file.alertMessages.success);
       getFileData();
       if (edit.name) {
@@ -96,15 +102,16 @@ const File = () => {
                 val={data.value}
                 saveHandler={(value) => updateData("value", value)}
               />
-            ) : (
+            ) : (  
               <div className='File-text'>
-                <div>{typeof data.value == "string" && parse(data.value).length > 0 ? parse(data.value) : LANG.file.empty_file}</div>
+                <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
                 <span>
                   <Button variant='contained' onClick={() => { editHandler("text") }}>
                     {LANG.GLOBAL.edit}
                   </Button>
                 </span>
               </div>
+
             )}
           </div>
         )}
@@ -136,6 +143,8 @@ const File = () => {
         </div>
 
       </div>
+      <Button variant='contained' color='error'onClick={()=>{setConfirm(true)}}>Видалити файл</Button>
+      {confirm && <ModalConfirm text={"Ви впевнені, що хочете видалити цей файл?"} successHandler={deleteHandler} closeHandler={()=>{setConfirm(false)}}/>}
       {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success", "") }} />}
       {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error", "") }} />}
     </div>

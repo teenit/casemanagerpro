@@ -89,7 +89,7 @@ export const LANG = {
     sex: {
       male: "Чоловік",
       female: "Жінка",
-      other: "Інші",
+      other: "Інше",
     },
   },
   footer: {
@@ -362,6 +362,8 @@ export const LANG = {
     "a_page_access_edit": "Редагування шаблону прав користувачів",
     "a_page_groups": "Доступ до сторінки груп",
     "a_group_create": "Створення нової групи",
+    // "a_group_edit": "Редагування групи",
+    //a_page_statistics:"Доступ до статистики"
     "a_page_case_connection": "Створення зв'язків між об'єктами і групою",
     "a_page_file": "Доступ до сторінки файла",
   },
@@ -422,6 +424,7 @@ export const LANG = {
     "view_FileUploader": "Відобразити блок завантаження медіа",
     "view_DetailedInfo": "Відобразити блок детальної інформації",
     "view_InfoBlock": "Відобразити інформацію про кейс",
+    "view_Fields": "Відобразити блок користувацької інформації",
     "view_name": "Відобразити повне ім'я кейсу",
     "view_phone": "Відобразити номери телефону кейсу",
     "view_email": "Відобразити електронну пошту кейсу",
@@ -432,7 +435,7 @@ export const LANG = {
     "view_contract": "Відобразити договір",
     "view_channel": "Відобразити канал комунікації кейсу",
     "view_categories": "Відобразити категорії кейсу",
-    "view_responsible": "Відобразити відповідального за кейс"
+    "view_responsible": "Відобразити відповідального за кейс",
   }
 
 };
@@ -856,6 +859,9 @@ export const appConfig = {
     },
     {
       primary: "view_DetailedInfo"
+    },
+    {
+      primary: "view_Fields"
     },
     {
       primary: "view_InfoBlock",

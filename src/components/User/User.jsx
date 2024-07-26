@@ -7,7 +7,7 @@ import LoadingPage from "../Loading/LoadingPage";
 import { apiResponse } from "../Functions/get_apiObj";
 import AccessCheck from "../Functions/AccessCheck";
 import { useParams } from "react-router-dom";
-
+import defaultImg from "../../img/default_profile.png"
 const User = () => {
   const [user, setUser] = useState({});
   const [report, setReport] = useState([]);
@@ -20,14 +20,13 @@ const User = () => {
   const [selectedHistory, setSelectedHistory] = useState(1);
   const [changePass, setChangePass] = useState(false)
 const accessCheckPass = ()=>{AccessCheck('yes_no', 'a_page_user_change_pass')}
+const params = useParams()
 useEffect(() => {
-    let userId = window.location.href.split('?')[1];
-    apiResponse({userId:userId}, "user/get-user.php").then((data) => {
-      if(userId==localStorage.getItem("id") && accessCheckPass){
+    apiResponse({userId:params.id}, "user/get-user.php").then((data) => {
+      if(params.id==localStorage.getItem("id") && accessCheckPass){
         setChangePass(true)
       }
       setUser(data);
-      console.log(userId);
     });
 
     // fetchReport().then(setReport);
@@ -55,13 +54,13 @@ console.log(user);
   return user && !user?.fail ? (
     <div className="User">
       <ProfilePhoto
-        url={user.profileUrl}
+        url={user.profileUrl?.link?user.profileUrl?.link:defaultImg}
         userName={user.userName}
         email={user.email}
         changePass={changePass}
         phone={user.phone}
       />
-      <UserCasesList />
+      <UserCasesList userAddId={user.id}/>
 
       <div>
         <h4>Подані звіти</h4>

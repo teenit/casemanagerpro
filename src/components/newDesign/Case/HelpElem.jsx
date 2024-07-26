@@ -132,7 +132,7 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                                 <SelectStatus statuses={categories} value={state.category} type={"help"} onChange={(e) => changeHandler("category", e)} />
                                 :
                                 <div style={{
-                                    backgroundColor: categories[state.category].color
+                                    backgroundColor: categories[state.category]?.color
                                 }}>
                                     {
                                         LANG.status_plan[state.status]

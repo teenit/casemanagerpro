@@ -40,7 +40,6 @@ if($row == null){
 }else{
     $obj->{'profileUrl'} = json_decode($row['meta_value']);
 }
-   
 $users = mysqli_query($conn, $msql);
 $too = false;
 

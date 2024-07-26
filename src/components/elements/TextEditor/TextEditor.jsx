@@ -48,7 +48,10 @@ const TextEditor = ({ saveHandler, val, close }) => {
         formats={formats}
       />
       <div className='TextEditor-buttons'>
-        <Button disabled={disabled} variant='contained' onClick={save}>{LANG.GLOBAL.save}</Button>
+        <Button disabled={disabled} variant='contained' onClick={()=>{
+          save()
+          close()
+        }}>{LANG.GLOBAL.save}</Button>
         <Button color='error' variant='contained' onClick={close}>{LANG.GLOBAL.close}</Button>
       </div>
     </div>

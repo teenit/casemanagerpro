@@ -132,6 +132,8 @@
     background-color: var(--background-color);
     border-radius: 15px;
     padding: 20px;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 .added_contact_list {
