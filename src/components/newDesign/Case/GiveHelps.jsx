@@ -70,7 +70,6 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
                 if (res.status) getCaseInfo();
             })
             .catch((error) => {
-                console.error("Error creating help:", error);
                 setNotification({
                     show: true,
                     status: false,

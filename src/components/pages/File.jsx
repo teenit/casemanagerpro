@@ -13,7 +13,7 @@ import ModalConfirm from "../Modals/ModalConfirm"
 const File = () => {
   const navigate = useNavigate()
   const [data, setData] = useState(null);
-  const [confirm,setConfirm] = useState(false)
+  const [confirm, setConfirm] = useState(false)
   const editCheck = AccessCheck("view_edit", "a_page_file", "edit")
   const [alert, setAlert] = useState({
     success: false,
@@ -49,11 +49,11 @@ const File = () => {
   useEffect(() => {
     getFileData();
   }, []);
-const deleteHandler = ()=>{
-  apiResponse({file_id: Number(file_id)}, "manage/files/delete.php").then((res)=>{
-    navigate(-1)
-  })
-}
+  const deleteHandler = () => {
+    apiResponse({ file_id: Number(file_id) }, "manage/files/delete.php").then((res) => {
+      navigate(-1)
+    })
+  }
   const updateData = (key, value) => {
     apiResponse({ [key]: value, file_id: Number(file_id), type: "file" }, "manage/files/update.php").then((res) => {
       alertHandler("success", LANG.file.alertMessages.success);
@@ -102,19 +102,33 @@ const deleteHandler = ()=>{
                 val={data.value}
                 saveHandler={(value) => updateData("value", value)}
               />
-            ) : (  
-              <div className='File-text'>
-                <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
-                <span>
-                  <Button variant='contained' onClick={() => { editHandler("text") }}>
-                    {LANG.GLOBAL.edit}
-                  </Button>
-                </span>
+            ) : (
+              <div>
+                {!data.value || data.value=="<p><br></p>" ? (
+                  <div>
+                    <div>{LANG.file.empty_file}</div>
+                    <span>
+                      <Button variant='contained' onClick={() => { editHandler("text") }}>
+                        {LANG.GLOBAL.edit}
+                      </Button>
+                    </span>
+                  </div>
+                ) : (
+                  <div className='File-text'>
+                    <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
+                    <span>
+                      <Button variant='contained' onClick={() => { editHandler("text") }}>
+                        {LANG.GLOBAL.edit}
+                      </Button>
+                    </span>
+                  </div>
+                  
+                )}
               </div>
-
             )}
           </div>
         )}
+
 
 
       </div>
@@ -143,8 +157,8 @@ const deleteHandler = ()=>{
         </div>
 
       </div>
-      <Button variant='contained' color='error'onClick={()=>{setConfirm(true)}}>Видалити файл</Button>
-      {confirm && <ModalConfirm text={"Ви впевнені, що хочете видалити цей файл?"} successHandler={deleteHandler} closeHandler={()=>{setConfirm(false)}}/>}
+      <Button variant='contained' color='error' onClick={() => { setConfirm(true) }}>Видалити файл</Button>
+      {confirm && <ModalConfirm text={"Ви впевнені, що хочете видалити цей файл?"} successHandler={deleteHandler} closeHandler={() => { setConfirm(false) }} />}
       {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success", "") }} />}
       {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error", "") }} />}
     </div>

@@ -67,7 +67,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         if (data.title.length < 1 || data.title.length > 100) {
             return alertHandler("error", LANG.caseFiles.alerts.invalidName);
         }
-        apiResponse({ ...data, client_id: case_id, type:"file" }, "manage/files/create.php").then((res) => {
+        apiResponse({ ...data, client_id: case_id, type: "file" }, "manage/files/create.php").then((res) => {
             alertHandler("success", LANG.caseFiles.alerts.success);
             getCaseInfo();
             setModal(false);
@@ -85,11 +85,13 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         const [hover, setHover] = useState(false);
         const [modal, setModal] = useState(false);
         return (
-            <div className="Files-file" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-                <div className="Files-file-icon" onClick={() => setModal(true)}></div>
-                <NavLink to={`/file/${item.id}`}>{hover ? item.title : cutTitle(item.title)}</NavLink>
-                {/* {modal && <FileModal value={parse(item.value)} title={item.title} close={() => setModal(false)} />} */}
-            </div>
+            <NavLink to={`/file/${item.id}`}>
+                <div className="Files-file" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+                    <div className="Files-file-icon" onClick={() => setModal(true)}></div>
+                    {hover ? item.title : cutTitle(item.title)}
+                    {/* {modal && <FileModal value={parse(item.value)} title={item.title} close={() => setModal(false)} />} */}
+                </div>
+            </NavLink>
         );
     };
 

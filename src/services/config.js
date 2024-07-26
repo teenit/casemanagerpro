@@ -102,7 +102,8 @@ export const LANG = {
   plan: {
     task: "Задача плану",
     create: "Створити план",
-    error: "Оберіть дату початку та кінця дати"
+    error: "Оберіть дату початку та кінця дати",
+    error_date:"Дата початку повинна бути раніше дати кінця"
   },
   caseFiles: {
     title: "Файли",
@@ -390,6 +391,7 @@ export const LANG = {
   documents: "Додані документи",
   give_help: {
     title: "Надано допомогу",
+    edit_help:"Редагувати запис",
     add_help: "Додати запис",
     who_give_help: "Хто надав допомогу",
     details_help: "Деталі наданої допомоги",

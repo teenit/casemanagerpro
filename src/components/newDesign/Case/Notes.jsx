@@ -46,19 +46,11 @@ const Active = ({ elem, handleEdit }) => {
                 <div className="Notes-viewer-line-mess-edit">
                     {edit ? (
                         <div>
-                            <span
-                                onClick={() => {
-                                    setEdit(false);
-                                    handleEdit(activeMessage, activeColor, elem);
-                                }}
-                            >
-                                <Icon icon="save" addClass="save-icon" />
-                            </span>
-                            <span
-                                onClick={() => setEdit(false)}
-                            >
-                                <Icon icon="close" addClass="close-icon" />
-                            </span>
+                            <Icon icon="save" addClass="save-icon" onClick={() => {
+                                setEdit(false);
+                                handleEdit(activeMessage, activeColor, elem);
+                            }} />
+                            <Icon icon="close" addClass="close-icon" onClick={() => setEdit(false)} />
                         </div>
                     ) : (
                         <span onClick={() => setEdit(true)}>
@@ -105,6 +97,7 @@ const Notes = ({ notes, case_id, getCaseInfo }) => {
                 handleAlertChange("success", LANG.notes.success);
                 openHandler()
                 getCaseInfo();
+                setModal(false);
             } else {
                 handleAlertChange("error", LANG.notes.error);
             }
@@ -161,23 +154,20 @@ const Notes = ({ notes, case_id, getCaseInfo }) => {
                     footer={
                         <div className="Modal--footer">
                             <Button onClick={() => setModal(false)} color="error" variant="contained">{LANG.cancel}</Button>
-                            <Button onClick={() => {
-                                    addNote();
-                                    setModal(false);
-                                }}
+                            <Button onClick={addNote}
                                 variant="contained">{LANG.save}</Button>
                         </div>}>
                     <div className="Notes-modal">
-                        <Input type="color" value={noteColor} onChange={(e) => setNoteColor(e.target.value)}/>
-                        <Textarea value={noteMessage} label={LANG.notes.text} onChange={(e) => setNoteMessage(e.target.value)}/>
+                        <Input type="color" value={noteColor} onChange={(e) => setNoteColor(e.target.value)} />
+                        <Textarea value={noteMessage} label={LANG.notes.text} onChange={(e) => setNoteMessage(e.target.value)} />
                     </div>
                 </Modal>
             )}
             {alert.error && (
-                <SmallNotification isSuccess={false} text={alert.message} close={() => handleAlertChange("error")}/>
+                <SmallNotification isSuccess={false} text={alert.message} close={() => handleAlertChange("error")} />
             )}
             {alert.success && (
-                <SmallNotification isSuccess={true} text={alert.message} close={() => handleAlertChange("success")}/>
+                <SmallNotification isSuccess={true} text={alert.message} close={() => handleAlertChange("success")} />
             )}
         </div>
     );

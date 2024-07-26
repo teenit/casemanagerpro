@@ -144,7 +144,7 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
             </div>
             {
                 state.edit && <Modal
-                    header={LANG.give_help.add_help}
+                    header={LANG.give_help.edit_help}
                     closeHandler={() => changeHandler("edit", false)}
                     footer={
                         <div className="Modal--footer">
@@ -157,7 +157,6 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                         <div className="Help-create-date">
                             <Input
                                 type="datetime-local"
-                                label={LANG.GLOBAL.date}
                                 value={state.date_time}
                                 variant="standard"
                                 onChange={(e) => {
