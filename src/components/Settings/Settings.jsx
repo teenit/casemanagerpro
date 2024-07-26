@@ -16,6 +16,7 @@ import { apiResponse } from "../Functions/get_apiObj";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import Icon from "../elements/Icons/Icon";
+import AccordionBlock from "../elements/Accordions/AccordionBlock";
 
 const MODE = 'settings_page_';
 const Settings = ()=>{
@@ -133,7 +134,7 @@ const Settings = ()=>{
                     Конфігурації програми
                 </AccordionSummary>
                 <AccordionDetails>
-               
+                    <AccordionBlock>888888</AccordionBlock>
                 </AccordionDetails>
             </Accordion>
             </div>

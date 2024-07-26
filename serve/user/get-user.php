@@ -28,15 +28,17 @@ if($userId !== $id){
 
 
 $msql = "SELECT * FROM `users` WHERE id='$userId'";
-$prf = 'profile_img';
+$prf = 'user_profile_img';
 $sql = "SELECT meta_value FROM usermeta WHERE user_id=$userId AND meta_key='$prf'";
 $result = mysqli_query($conn, $sql);
 $row =  mysqli_fetch_array($result);
  
 if($row == null){
-    $obj->{'profileUrl'} = "/default-img.png";
+    $obj->{'profileUrl'} = [
+        'link' => "/default-img.png"
+    ];
 }else{
-    $obj->{'profileUrl'} = $row['meta_value'];
+    $obj->{'profileUrl'} = json_decode($row['meta_value']);
 }
    
 $users = mysqli_query($conn, $msql);
