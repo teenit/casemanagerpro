@@ -142,7 +142,7 @@ const Contacts = () => {
     setIsLoading((prevIsLoading) => !prevIsLoading);
   };
 
-  return true ? (
+  return false ? (
     <>
       {isLoading && <Loadpic show={"active"} />}
       <section className={`${style.section_contact} ${style.responsive}`}>
@@ -176,12 +176,7 @@ const Contacts = () => {
       {alert.error && <SmallNotification isSuccess={false} text={"Виникла помилка. Спробуйте пізніше"} close={()=>{alertHandler("error")}}/>}
     </>
   ) : (
-    <div className="page__loading">
-      <LoadingPage
-        effload={false}
-        message={"Даний розділ ТЕЛЕФОННА КНИГА у процесі розробки (найближчим часом буде зроблено)"}
-      />
-    </div>
+    <LoadingPage effload={false} message={"Даний розділ у розробці"} />
   );
 };
 

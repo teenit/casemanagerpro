@@ -9,6 +9,7 @@ import AccessCheck from "../Functions/AccessCheck";
 
 const GroupCard = ({ item, loadGroups }) => {
     const categories = useSelector(state => state.categories);
+    const accessEdit = AccessCheck("view_edit", "a_page_groups", "edit")
     const [edit, setEdit] = useState(false);
     const [data, setData] = useState({
         name: item.name,
@@ -29,6 +30,8 @@ const GroupCard = ({ item, loadGroups }) => {
 
     return (
         <div className="GroupCard">
+            <div className="GroupCard-inner">
+
             <div className="GroupCard-split">
                 {item.connect_count>0 ?<NavLink to={`/group/${item.id}`}>{item.name}</NavLink>: <span>{item.name}</span>}
                 <div className="GroupCard-split-color" style={{ backgroundColor: item.color }}></div>
@@ -39,9 +42,10 @@ const GroupCard = ({ item, loadGroups }) => {
                 {getString() ? <span>{LANG.categories.category}: <b>{getString()}</b></span>
                     : <span>{LANG.categories.noCategory}</span>}
             </div>
+            </div>
             <div className="GroupCard-split">
                 <div className="GroupCard-split-date">{item.date_created}</div>
-                    <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEdit(!edit) }}/>
+                {accessEdit && <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEdit(!edit) }}/>}
             </div>
             {edit && <AddGroup loadGroups={loadGroups} action={"edit"} data={data} id={item.id} close={() => { setEdit(false) }} />}
         </div>

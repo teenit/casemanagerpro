@@ -83,6 +83,9 @@
 
 }
 @media screen and (max-width:500px){
+    .Notes-title{
+        flex-direction: column;
+    }
     .Notes-title-panel{
             font-size: 16px;
     }
