@@ -5,7 +5,7 @@ import CasesList from "./CasesList";
 import { useSelector } from "react-redux";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Button, Checkbox } from "@mui/material";
+import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import AccessCheck from "../Functions/AccessCheck";
 import AccessCheckCases from "../Functions/AccessCheckCases";
 
@@ -80,12 +80,12 @@ const GetCases = ({ posts, postsChange }) => {
 
   return (
     <div className="wrap__cards">
-      <div className="cards__filter">
+      {/* <div className="cards__filter">
         <FormControlLabel
           control={<Checkbox />}
           label="Фільтр"
         />
-      </div>
+      </div> */}
       {AccessCheck('yes_no', 'a_page_cases_sort') && (
         <Select value={selectFilter} onChange={(e) => handleSelect(e.target.value)}>
           <MenuItem value="default">Від старого до нового</MenuItem>

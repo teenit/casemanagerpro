@@ -39,9 +39,10 @@ const SearchCase = ({ eventID, getUsers }) => {
     }
 
     function addUser() {
-        if (sCase.userName === "" || sCase.phone === "") {
-            return alertHandler("error")
-        }
+        if (sCase.userName === "" || sCase.phone === "" || (sCase.phone && sCase.phone.length !== 10 && sCase.phone.length !== 13)) {
+            return alertHandler("error");
+          }
+          
         let obj = {
             userName: sCase.userName,
             phone: sCase.phone,
@@ -49,8 +50,8 @@ const SearchCase = ({ eventID, getUsers }) => {
             eventID: eventID
         };
         apiResponse({...obj}, "event/add-member-case.php").then((data) => {
-            alertHandler("success")
-                if (data.data === true) {
+                if (data) {
+                    alertHandler("success")
                     getUsers(eventID, "eventMemberCase")
                 }
             })
@@ -104,7 +105,7 @@ const SearchCase = ({ eventID, getUsers }) => {
                 <div className={s.add__user__form}>
                     <Input
                         value={sCase.userName}
-                        label="Введіть ПІБ"
+                        label="ПІБ"
                         type="text"
                         onChange={(e) => {
                             setSCase({ ...sCase, userName: e.target.value });
@@ -112,8 +113,8 @@ const SearchCase = ({ eventID, getUsers }) => {
                     />
                     <Input
                         value={sCase.phone}
-                        label="Введіть номер телефону"
-                        type="text"
+                        label="Номер телефону"
+                        type="number"
                         onChange={(e) => {
                             setSCase({ ...sCase, phone: e.target.value.trim() });
                         }}
@@ -123,8 +124,8 @@ const SearchCase = ({ eventID, getUsers }) => {
             <div className={s.button__wrap}>
                 <Button variant="contained" onClick={addUser}>Додати учасника</Button>
             </div>
-            {alert.error&&<SmallNotification isSuccess={false} text={"Заповніть дані про учасника події"} close={()=>{alertHandler("error")}}/>}
-            {alert.success&&<SmallNotification isSuccess={true} text={"Учасника додано. Оновіть сторінку для правильного показу інформації"} close={()=>{alertHandler("success")}}/>}
+            {alert.error&&<SmallNotification isSuccess={false} text={"Перевірте правильність даних"} close={()=>{alertHandler("error")}}/>}
+            {alert.success&&<SmallNotification isSuccess={true} text={"Учасника додано"} close={()=>{alertHandler("success")}}/>}
         </div>
     )
 }

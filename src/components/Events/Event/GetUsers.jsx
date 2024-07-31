@@ -13,16 +13,16 @@ const GetUsers = ({ type, id, users }) => {
                             <div key={index + item.userID} className={`${s.result} ${s.result__constant}`}>
                                 <p><NavLink to={`/user/${item.userID}`}>{item.userName}</NavLink></p>
                                 <div className={s.result__left}>
-                                    {item?.position ? <p>{item.position}</p> : null}
+                                    {item?.position && <div>{item.position}</div>}
                                     <a href={`tel:${item.phone}`}>{item.phone}</a>
                                 </div>
 
                             </div>
                         ) : (
                             <div key={index} className={s.result}>
-                                <p>{item.userName}</p>
+                                <div>{item.userName}</div>
                                 <div className={s.result__left}>
-                                    {item?.position ? <p>{item.position}</p> : null}
+                                    {item?.position && <div>{item.position}</div>}
                                     <a href={`tel:${item.phone}`}>{item.phone}</a>
                                 </div>
 
@@ -43,7 +43,7 @@ const GetUsers = ({ type, id, users }) => {
                             <div key={index + item.userID} className={`${s.result} ${s.result__constant}`}>
                                 <p><NavLink to={`/case/${item.userID}`}>{item.userName}</NavLink></p>
                                 <div className={s.result__left}>
-                                    {item?.position ? <p>{item.position}</p> : null}
+                                    {item?.position && <div>{item.position}</div>}
                                     <a href={`tel:${item.phone}`}>{item.phone}</a>
                                 </div>
 
@@ -53,7 +53,7 @@ const GetUsers = ({ type, id, users }) => {
                             <div key={index} className={s.result}>
                                 <p>{item.userName}</p>
                                 <div className={s.result__left}>
-                                    {item?.position ? <p>{item.position}</p> : null}
+                                    {item?.position && <div>{item.position}</div>}
                                     <a href={`tel:${item.phone}`}>{item.phone}</a>
                                 </div>
 

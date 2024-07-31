@@ -59,6 +59,7 @@ console.log(user);
         email={user.email}
         changePass={changePass}
         phone={user.phone}
+        work={user.datas}
       />
       <UserCasesList userAddId={user.id}/>
 

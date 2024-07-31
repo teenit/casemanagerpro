@@ -5,7 +5,7 @@ import Input from "./Input";
 import { LANG } from "../../../services/config";
 import moment from 'moment';
 import Textarea from "./Textarea"
-const InputBlock = ({ textarea = false, age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
+const InputBlock = ({header = false, textarea = false, age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
 
@@ -41,7 +41,9 @@ const InputBlock = ({ textarea = false, age = false, saveHandler, disabled = fal
                                     {label === "" || label === null ? (
                                         <span className="InputBlock-title-default">{titleDefault}</span>
                                     ) : (
-                                        <span className="InputBlock-title-main">{`${label}${inputType === "date" ? howOldIsCase(value) : ""}`}</span>
+                                        header?<h1 className="InputBlock-title-main">{`${label}${inputType === "date" ? howOldIsCase(value) : ""}`}</h1>
+                                        :<span className="InputBlock-title-main">{`${label}${inputType === "date" ? howOldIsCase(value) : ""}`}</span>
+                                        
                                     )}
                                 </>
                             )}

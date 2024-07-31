@@ -4,10 +4,19 @@ import { serverAddres } from "../../Functions/serverAddres";
 import s from "./modal.module.css";
 import Input from '../../elements/Inputs/Input'
 import { Button } from "@mui/material";
+import SmallNotification from "../../elements/Notifications/SmallNotification";
+import { apiResponse } from "../../Functions/get_apiObj";
 const SearchUsers = ({ eventID, getUsers }) => {
     const [user, setUser] = useState({ userName: "", position: "" })
     const [userInSystem, setUserInSystem] = useState(true);
     const [searchRes, setSearchRes] = useState([])
+    const [alert, setAlert] = useState({
+        error:false,
+        success:false,
+    })
+    const alertHandler = (key)=>{
+        setAlert({...alert, [key]:!alert[key]})
+    }
     function search(val) {
         let obj = {
             id: localStorage.getItem("id"),
@@ -26,23 +35,19 @@ const SearchUsers = ({ eventID, getUsers }) => {
             .catch((error) => console.log(error))
     }
     function addUser() {
-        if (user.userName == "" || user.phone == "") return window.alert("Заповніть всі поля");
+        if (user.userName == "" || user.phone == "" || ( user.phone && user.phone.length !== 10 && user.phone.length !== 13)) {
+            return alertHandler("error")
+        }
         let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token"),
             userName: user.userName,
             phone: user.phone,
             userID: user.id,
             eventID: eventID,
             position: user.position
         }
-        axios({
-            url: serverAddres("event/add-member-user.php"),
-            method: "POST",
-            header: { 'Content-Type': 'application/json;charset=utf-8' },
-            data: JSON.stringify(obj),
-        })
-            .then((data) => {
+      apiResponse({...obj}, "event/add-member-user.php").then((data) => {
+        console.log(data);
+                alertHandler("success")
                 getUsers(eventID, "eventMemberUser");
             })
             .catch((error) => console.log(error))
@@ -82,22 +87,24 @@ const SearchUsers = ({ eventID, getUsers }) => {
                 </div>
                 :
                 <div className={s.add__user__form}>
-                    <Input value={user.userName} label="Введіть ПІБ" type="text" onChange={(e) => {
+                    <Input value={user.userName} label="ПІБ" type="text" onChange={(e) => {
                         setUser({ ...user, userName: e.target.value })
                     }} />
-                    <Input label="Введіть номер телефону" type="text" onChange={(e) => {
+                    <Input label="Номер телефону" value={user.phone} type="number" onChange={(e) => {
                         setUser({ ...user, phone: e.target.value })
                     }} />
                 </div>
             }
             <div className={s.add__user__form} >
-                <Input value={user.position} className={s.margin__top__20px} label="Введіть позицію на івенті" type="text" onChange={(e) => {
+                <Input value={user.position} className={s.margin__top__20px} label="Позиція на івенті" type="text" onChange={(e) => {
                     setUser({ ...user, position: e.target.value })
                 }} />
             </div>
             <div className={s.button__wrap}>
                 <Button variant="contained" onClick={addUser}>Додати користувача</Button>
             </div>
+            {alert.success && <SmallNotification isSuccess={true} text={"Учасника додано"} close={()=>{alertHandler("success")}}/>}
+            {alert.error && <SmallNotification isSuccess={false} text={"Перевірте правильність даних"} close={()=>{alertHandler("error")}}/>}
         </div>
     )
 }
