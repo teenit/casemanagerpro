@@ -14,7 +14,6 @@ import CheckboxListAccess from "../elements/CheckBoxes/CheckboxListAccess";
 
 const AddGroup = ({ action, data, id, close, loadGroups }) => {
     const categories = useSelector(state => state.categories);
-    const [groupCategories, setGroupCategories] = useState({...categories.groups})
     const [state, setState] = useState({
         name: "",
         description: "",
@@ -45,18 +44,18 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
     const [alert, setAlert] = useState({
         success: false,
         error: false,
+        message:""
     });
-
-    const [form, setForm] = useState(false);
-
-    const alertHandler = (key) => {
-        setAlert({...alert,[key]:!alert.key});
+    const alertHandler = (key, message) => {
+        setAlert({...alert,[key]:!alert[key], message:message});
     };
 
     const checkForm = () => {
-        if (state.name.trim().length < 1 || state.description.trim().length < 1) {
-            alertHandler("error");
-        } else {
+        if (state.name.length < 1) {
+            alertHandler("error", "Введіть назву групи");
+        } else if(state.name.length>50){
+            alertHandler("error", `Назва групи повинна бути дожиною до 50 символів. Поточна довжина: ${state.name.length} символів`)
+        }else {
             successHandler();
         }
     };
@@ -66,20 +65,21 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
             apiResponse({ ...state }, "groups/add-group.php").then((res) => {
                 loadGroups()
                 close()
-                alertHandler("success");
+                alertHandler("success", "Групу додано");
             });
         }else{
+            console.log(state);
             apiResponse({ ...state, group_id:id }, "groups/edit-group.php").then((res) => {
                 loadGroups()
                 close();
-                alertHandler("success");
+                alertHandler("success", "Інформацію про групу оновлено");
             });
         }
         
     };
 
     const changeHandler = (key, value) => {
-        setState({ ...state, [key]: value });
+        setState({ ...state, [key]: value});
     };
 
     return (
@@ -101,10 +101,10 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
         
 
             {alert.success && (
-                <SmallNotification isSuccess={true} text={`Групу успішно ${action=="add"?"додано":"змінено"}`} close={() => alertHandler("success")} />
+                <SmallNotification isSuccess={true} text={alert.message} close={() => alertHandler("success")} />
             )}
             {alert.error && (
-                <SmallNotification isSuccess={false} text={"Введіть назву групи"} close={() => alertHandler("error")} />
+                <SmallNotification isSuccess={false} text={alert.message} close={() => alertHandler("error")} />
             )}
         </>
     );

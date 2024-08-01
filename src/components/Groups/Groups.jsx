@@ -6,10 +6,11 @@ import { useSelector } from "react-redux";
 import { LANG, appConfig } from "../../services/config";
 import { NavLink } from "react-router-dom";
 import AccessCheck from "../Functions/AccessCheck";
+import moment from "moment";
 
 const GroupCard = ({ item, loadGroups }) => {
     const categories = useSelector(state => state.categories);
-    const accessEdit = AccessCheck("view_edit", "a_page_groups", "edit")
+    const accessEdit = AccessCheck("view_edit", "a_page_groups", "edit");
     const [edit, setEdit] = useState(false);
     const [data, setData] = useState({
         name: item.name,
@@ -25,27 +26,30 @@ const GroupCard = ({ item, loadGroups }) => {
 
     const getString = () => {
         let mas = data.categories.map(id => getCategoryName(id));
-        return mas ? mas.join(', ') : null
+        return mas ? mas.join(', ') : null;
+    };
+
+    const cutDescription = (str) => {
+        return str.length > 100 ? str.slice(0, 100) + "..." : str;
     };
 
     return (
         <div className="GroupCard">
             <div className="GroupCard-inner">
-
+                <div className="GroupCard-split">
+                    <NavLink to={`/group/${item.id}`}>{item.name}</NavLink>
+                    <div className="GroupCard-split-color" style={{ backgroundColor: item.color }}></div>
+                </div>
+                <div>{cutDescription(item.description)}</div>
+                <div>{LANG.groups.amount}: {item.connect_count}</div>
+                <div>
+                    {getString() ? <span>{LANG.categories.category}: <b>{getString()}</b></span>
+                        : <span>{LANG.categories.noCategory}</span>}
+                </div>
+            </div>
             <div className="GroupCard-split">
-                {item.connect_count>0 ?<NavLink to={`/group/${item.id}`}>{item.name}</NavLink>: <span>{item.name}</span>}
-                <div className="GroupCard-split-color" style={{ backgroundColor: item.color }}></div>
-            </div>
-            <div>{item.description}</div>
-            <div>{LANG.groups.amount}: {item.connect_count}</div>
-            <div>
-                {getString() ? <span>{LANG.categories.category}: <b>{getString()}</b></span>
-                    : <span>{LANG.categories.noCategory}</span>}
-            </div>
-            </div>
-            <div className="GroupCard-split">
-                <div className="GroupCard-split-date">{item.date_created}</div>
-                {accessEdit && <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEdit(!edit) }}/>}
+                <div className="GroupCard-split-date">{moment(item.date_created).format('DD-MM-YYYY')}</div>
+                {accessEdit && <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEdit(!edit) }} />}
             </div>
             {edit && <AddGroup loadGroups={loadGroups} action={"edit"} data={data} id={item.id} close={() => { setEdit(false) }} />}
         </div>
@@ -59,7 +63,7 @@ const Groups = () => {
 
     useEffect(() => {
         loadGroups();
-    }, [categories]);
+    }, []);
 
     const loadGroups = () => {
         apiResponse({}, "groups/get-case-groups.php").then((res) => {
@@ -72,7 +76,6 @@ const Groups = () => {
             <div className="Groups-title">
                 <p>{appConfig.pages.groups.title}</p>
                 {AccessCheck('yes_no', 'a_groups_create') && <Icon icon={"add"} onClick={() => setAdd(true)} />}
-                
                 {add && <AddGroup loadGroups={loadGroups} action={"add"} close={() => { setAdd(false) }} />}
             </div>
             <div className="Groups-list">

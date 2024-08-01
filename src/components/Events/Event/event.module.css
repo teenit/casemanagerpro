@@ -10,6 +10,7 @@
 }
 .title__wrap{
     text-align: center;
+    word-break: break-all;
 }
 .control{
     position: fixed;

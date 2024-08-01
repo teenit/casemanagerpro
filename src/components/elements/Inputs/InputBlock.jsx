@@ -39,10 +39,9 @@ const InputBlock = ({header = false, textarea = false, age = false, saveHandler,
                             ) : (
                                 <>
                                     {label === "" || label === null ? (
-                                        <span className="InputBlock-title-default">{titleDefault}</span>
+                                        <span className={`InputBlock-title-main ${header && 'header'}`}>{titleDefault}</span>
                                     ) : (
-                                        header?<h1 className="InputBlock-title-main">{`${label}${inputType === "date" ? howOldIsCase(value) : ""}`}</h1>
-                                        :<span className="InputBlock-title-main">{`${label}${inputType === "date" ? howOldIsCase(value) : ""}`}</span>
+                                        <span className={`InputBlock-title-main ${header && 'header'}`}>{`${label}${inputType === "date" ? howOldIsCase(value) : ""}`}</span>
                                         
                                     )}
                                 </>

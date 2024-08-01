@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { changeAps, changeApsBr, translateStringToLink } from '../Functions/translateString';
 import axios from 'axios';
 import { serverAddres } from '../Functions/serverAddres';
@@ -6,43 +6,33 @@ import { Button } from '@mui/material';
 import Textarea from '../elements/Inputs/Textarea';
 import InputColor from '../elements/Inputs/InputColor';
 import Input from '../elements/Inputs/Input';
-import SmallNotification from "../elements/Notifications/SmallNotification"
+import SmallNotification from "../elements/Notifications/SmallNotification";
 import { LANG } from '../../services/config';
-import { apiResponse } from "../Functions/get_apiObj"
-const AddEventBlock = ({successHandler}) => {
+import { apiResponse } from "../Functions/get_apiObj";
+
+const AddEventBlock = ({ successHandler }) => {
     const [event, setEvent] = useState({
         title: "",
         description: "",
         color: "#b399cb"
-    })
+    });
     const [alert, setAlert] = useState({
         success: false,
-        error: false
-    })
-    const handleAlertChange = (key) => {
-        setAlert({ ...alert, [key]: !alert[key] })
-    }
+        error: false,
+        message: ""
+    });
+
+    const handleAlertChange = (key, message = "") => {
+        setAlert({ ...alert, [key]: !alert[key], message });
+    };
+
     const handleEventChange = (key, value) => {
-        if(key!=="color"){
-            setEvent({ ...event, [key]: value })
-        }else{
-            setEvent({...event, color:rgbToHex(value)})
-        }
-    }
-    function rgbToHex(rgb) {
-        const rgbArray = rgb.match(/\d+/g);
-        const r = parseInt(rgbArray[0]);
-        const g = parseInt(rgbArray[1]);
-        const b = parseInt(rgbArray[2]);
-        const rHex = r.toString(16).padStart(2, '0');
-        const gHex = g.toString(16).padStart(2, '0');
-        const bHex = b.toString(16).padStart(2, '0');
-        return `#${rHex}${gHex}${bHex}`;
-    }
-    
-    
-    function createEvent() {
-        if (event.title !== "") {
+        setEvent({ ...event, [key]: value });
+    };
+
+    const createEvent = () => {
+        if (event.title.length<1) return handleAlertChange("error", "Введіть назву події")
+        if(event.title.length>75) return handleAlertChange("error", `Назва події поивнна бути довжиною до 75 символів. Поточна довжина: ${event.title.length} символів`)
             let link = translateStringToLink(event.title.replace(/ +/g, ' ').trim());
             let obj = {
                 title: changeAps(event.title),
@@ -50,24 +40,21 @@ const AddEventBlock = ({successHandler}) => {
                 color: event.color,
                 link: link,
                 userName: localStorage.getItem("userName")
-            }
-            apiResponse({...obj}, "event/add-event.php").then(() => {
-                    handleAlertChange("success")
-                    successHandler()
+            };
+            apiResponse({ ...obj }, "event/add-event.php")
+                .then(() => {
+                    handleAlertChange("success", "Подію успішно створено");
+                    successHandler();
                 })
-                .catch((error) => console.log(error))
-        } else {
-            handleAlertChange("error")
-        }
+                .catch((error) => console.log(error));
+    };
 
-    }
     return (
         <div className="AddEventBlock">
             <h2>{LANG.addEvent}</h2>
             <div className='AddEventBlock-inner'>
                 <div className="AddEventBlock-inner-split">
                     <Input type="text" label="Назва Події" value={event.title} onChange={(e) => { handleEventChange("title", e.target.value) }} />
-
                     <InputColor value={event.color} onChange={(e) => { handleEventChange("color", e) }} />
                 </div>
                 <div className='AddEventBlock-inner-textarea'>
@@ -77,10 +64,10 @@ const AddEventBlock = ({successHandler}) => {
                     <Button variant='contained' onClick={createEvent}>Створити подію</Button>
                 </div>
             </div>
-            {alert.success && <SmallNotification isSuccess={true} text={"Подію успішно створено"} close={() => { handleAlertChange("success") }} />}
-            {alert.error && <SmallNotification isSuccess={false} text={"Введіть назву події"} close={() => { handleAlertChange("error") }} />}
+            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { handleAlertChange("success") }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { handleAlertChange("error") }} />}
         </div>
-    )
-}
+    );
+};
 
-export default AddEventBlock
+export default AddEventBlock;
