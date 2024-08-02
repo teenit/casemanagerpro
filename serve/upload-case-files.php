@@ -6,6 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
     // Перевірка, чи надійшли значення case_id та key
     $metaData = json_decode($_POST['meta'], true);
     $user_id = $metaData['id'];
+    $case_id = $metaData['case_id'];
     $key = $metaData['key'];
     $title = $metaData['title'];
     $description = $metaData['description'];
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
     // Перевірка, чи надійшли файли
     if (isset($_FILES['files']) && is_array($_FILES['files']['name'])) {
         // Директорія для зберігання завантажених файлів
-        $uploadDir = 'uploads/resources/';
+        $uploadDir = 'uploads/case/';
 
         // Масив для зберігання посилань на файли
         $fileLinks = array();
@@ -62,8 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
             $link->{'description'} = $description; 
             
             // Вставляємо запис в БД
-            $stmt = $conn->prepare("INSERT INTO resources (user_id, meta_key, meta_value) VALUES (?, ?, ?)");
-            $stmt->bind_param("iss", $user_id, $metaKey, json_encode($link, JSON_UNESCAPED_UNICODE)); // Використання підготовленого зв'язування параметрів
+            $stmt = $conn->prepare("INSERT INTO casemeta (case_id, meta_key, meta_value) VALUES (?, ?, ?)");
+            $stmt->bind_param("iss", $case_id, $metaKey, json_encode($link, JSON_UNESCAPED_UNICODE)); // Використання підготовленого зв'язування параметрів
 
             // Виконання запиту до бази даних
             if (!$stmt->execute()) {

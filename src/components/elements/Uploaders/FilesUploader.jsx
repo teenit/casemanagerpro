@@ -52,7 +52,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
   const { id, token } = useSelector(state => state.user)
   const getFromType = () => {
     if (type === "case") {
-      return "upload-files.php";
+      return "upload-case-files.php";
     }
     if (type == "resource") {
       return "upload-resource-files.php";

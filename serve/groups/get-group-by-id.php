@@ -1,10 +1,11 @@
 <?php
 require_once '../config.php';
 require_once '../functions.php';
-// Отримання даних з фронту
+
+// Отримання даних з фронтенду
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Перевірка чи отримано id групи з даних
+// Перевірка наявності id групи у вхідних даних
 if (isset($data['group_id'])) {
     $groupId = $data['group_id'];
 
@@ -19,8 +20,8 @@ if (isset($data['group_id'])) {
             cn.*, 
             cn.id as case_id
         FROM groups g
-        JOIN group_connect gc ON g.id = gc.group_id
-        JOIN cases_new cn ON gc.client_id = cn.id
+        LEFT JOIN group_connect gc ON g.id = gc.group_id
+        LEFT JOIN cases_new cn ON gc.client_id = cn.id
         WHERE g.id = ?
     ";
 
@@ -33,37 +34,49 @@ if (isset($data['group_id'])) {
         $result = $stmt->get_result();
         
         $members = [];
+        $response = [];
+        $firstRow = true;
+
         while ($row = $result->fetch_assoc()) {
-            $members[] = [
-                'case_id' => $row['case_id'],
-                'name' => $row['name'],
-                'why' => $row['why'],
-                'phone1' => decryptData($row['phone1'], $key),
-                'phone2' => decryptData($row['phone2'], $key)
-            ];
-            $response = [
-                'groupName' => $row['groupName'],
-                'group_id' => $row['group_id'],
-                'groupDescription' => $row['description'],
-                'groupColor' => $row['color'],
-                'groupCategories' => json_decode($row['categories']),
-                'groupDateCreated' => $row['date_created']
-            ];
+            // Заповнення інформації про учасників, якщо вони є
+            if ($row['case_id']) {
+                $members[] = [
+                    'case_id' => $row['case_id'],
+                    'name' => $row['name'],
+                    'why' => $row['why'],
+                    'phone1' => decryptData($row['phone1'], $key),
+                    'phone2' => decryptData($row['phone2'], $key)
+                ];
+            }
+
+            // Заповнення інформації про групу (лише один раз)
+            if ($firstRow) {
+                $response = [
+                    'groupName' => $row['groupName'],
+                    'group_id' => $row['group_id'],
+                    'groupDescription' => $row['description'],
+                    'groupColor' => $row['color'],
+                    'groupCategories' => json_decode($row['categories']),
+                    'groupDateCreated' => $row['date_created']
+                ];
+                $firstRow = false;
+            }
         }
+
+        // Формування остаточного результату
         $res = [
             'group' => $response,
             'members' => $members
         ];
-     
 
         // Виведення результату у форматі JSON
         echo json_encode($res);
     } else {
         // Помилка підготовки запиту
-        echo json_encode(['error' => 'Failed to prepare the SQL query.', 'status' => false]);
+        echo json_encode(['error' => 'Не вдалося підготувати SQL-запит.', 'status' => false]);
     }
 } else {
     // Помилка відсутності id групи
-    echo json_encode(['error' => 'Group ID not provided.', 'status' => false]);
+    echo json_encode(['error' => 'Не надано ID групи.', 'status' => false]);
 }
 ?>

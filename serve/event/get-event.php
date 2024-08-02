@@ -6,7 +6,8 @@ $obj = new StdClass();
 $mike = false;
 if(!checkRight($data->id, 'getEvent', $token, true)) exit;
 $link = $data->link;
-$msql = "SELECT * FROM events WHERE link='$link'";
+$event_id = $data->event_id;
+$msql = "SELECT * FROM events WHERE id='$event_id'";
 $event = mysqli_query($conn, $msql);
 $res = mysqli_fetch_assoc($event);
 if($res['user_id'] == null){
