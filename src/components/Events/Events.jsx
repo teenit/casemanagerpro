@@ -48,7 +48,7 @@ const Events = () => {
                     return (<div key={index} className={s.result} style={{ boxShadow: "0 0 5px 0" + item.color }}>
                         <div className={s.res__color} style={{ backgroundColor: item.color }}></div>
                         <div className={s.res__title}>
-                            <NavLink className={s.link} to={`/events/${item.link}`}> <h3>{item.title}</h3></NavLink>
+                            <NavLink className={s.link} to={`/event/${item.id}`}> <h3>{item.title}</h3></NavLink>
                         </div>
                         <div className={s.res__desc}>
                             <p>{item.description.replaceAll("<br />", " ")}</p>

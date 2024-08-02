@@ -48,7 +48,7 @@ const SetEvent = ()=>{
                     return(<div key={index} className={s.result}>
                     <div className={s.res__color} style={{backgroundColor:item.color}}></div>
                     <div className={s.res__title}>
-                    <NavLink to={`/events/${item.link}`}> <h3>{item.title}</h3></NavLink>
+                    <NavLink to={`/event/${item.id}`}> <h3>{item.title}</h3></NavLink>
                     </div>
                     <div className={s.res__desc}>
                         <p>{item.description.replaceAll("<br />"," ")}</p>

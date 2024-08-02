@@ -14,7 +14,6 @@ const UserCasesList = ({ userAddId }) => {
   window.addEventListener("resize", () => {
     setWidth(window.innerWidth)
   })
-  console.log(userAddId);
   useEffect(() => {
     apiResponse({}, "case/get/cases-page-list.php").then((res) => {
       setCases([...res])

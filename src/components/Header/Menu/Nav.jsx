@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Bell from "./Bell";
 import s from "./nav.module.css";
 import profileImg from "./../../../img/icons/cat-profile-50.png";
@@ -59,7 +59,7 @@ const Nav = ({ close }) => {
 
     const dispatch = useDispatch();
     const { isAuth } = useAuth();
-
+const navigate = useNavigate()
     return (
         <div
             className={s.wrap__nav}

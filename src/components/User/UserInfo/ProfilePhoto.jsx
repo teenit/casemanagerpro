@@ -25,53 +25,23 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
     message: ""
   });
   const [data, setData] = useState({
-    userName: {
-      edit: false,
-      value: ""
-    },
-    phone: {
-      edit: false,
-      value: ""
-    },
-    email: {
-      edit: false,
-      value: ""
-    },
-    work: {
-      edit: false,
-      value: ""
-    },
+    userName: userName,
+    phone: phone,
+    email: email,
+    work: work,
   });
 
   useEffect(() => {
     setData({
-      userName: {
-        edit: false,
-        value: userName
-      },
-      phone: {
-        edit: false,
-        value: phone
-      },
-      email: {
-        edit: false,
-        value: email
-      },
-      work: {
-        edit: false,
-        value: work
-      },
+      userName: userName,
+      phone: phone,
+      email: email,
+      work: work,
     });
   }, [userName, phone, email, work]);
 
   const dispatch = useDispatch();
-  let passObj = {
-    id: localStorage.getItem("id"),
-    token: localStorage.getItem("token"),
-    pass: pass.newPass,
-    olderPass: pass.olderPass
-  };
-
+  
   const handlePassObjChange = (key, value) => {
     setPass(prevPass => ({ ...prevPass, [key]: value }));
   };
@@ -86,32 +56,23 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
 
 
   const handleChangeValue = (key, value) => {
-    setData(prevData => ({
-      ...prevData,
-      [key]: { ...prevData[key], value: value }
-    }));
+    setData({...data, [key]:value});
   };
 
   const handleSaveData = (key, value) => {
-
-    const originalValue = data[key].value;
-    if (value !== originalValue) {
       let obj = {
         [key]:value,
         user_id:params.id
       };
-      console.log(obj);
-      handleChangeValue(key, value);
-     apiResponse({...obj}, "user/update-user.php")
-        .then((res) => {
-          handleAlertChange("success", "Дані успішно оновлено");
-          // dispatch(removeUser());
+
+      apiResponse({...obj}, "user/update-user.php")
+      .then((res) => {
+        handleAlertChange("success", "Дані успішно оновлено");
+        // dispatch(removeUser());
+        handleChangeValue(key, value);
           console.log(res);
         })
         .catch((error) => console.log(error));
-    } else {
-      handleAlertChange("error", "Нові дані повинні відрізнятися від старих");
-    }
   };
 
   const checkPass = () => {
@@ -128,6 +89,12 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
       handleAlertChange("error", "Введіть свій старий пароль для підтвердження особистості");
       return;
     }
+    let passObj = {
+      id: localStorage.getItem("id"),
+      token: localStorage.getItem("token"),
+      pass: pass.newPass,
+      olderPass: pass.olderPass
+    };
     axios({
       url: serverAddres("user/change-pass.php"),
       method: "POST",
@@ -153,21 +120,21 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
         }} />
 
         <div className="User-info">
-          <InputBlock value={data.userName.value} header={true} title="Ім'я" label={data.userName.value}
+          <InputBlock value={data.userName} header={true} title="Ім'я" label={data.userName}
              onChange={(e) => { handleChangeValue("userName", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("userName", value) }}
           />
-          <InputBlock value={data.phone.value} title="Номер телефону" label={data.phone.value} icon={"phone"}
-            link={`tel:${data.phone.value}`} onChange={(e) => { handleChangeValue("phone", e.target.value) }} inputType="number"
+          <InputBlock value={data.phone} title="Номер телефону" label={data.phone} icon={"phone"}
+            link={`tel:${data.phone}`} onChange={(e) => { handleChangeValue("phone", e.target.value) }} inputType="number"
             saveHandler={(value) => { handleSaveData("phone", value) }}
           />
 
-          <InputBlock value={data.email.value} title="Електронна пошта" label={data.email.value} icon={"email"}
-            link={`mailto:${data.email.value}`} onChange={(e) => { handleChangeValue("email", e.target.value) }} inputType="text"
+          <InputBlock value={data.email} title="Електронна пошта" label={data.email} icon={"email"}
+            link={`mailto:${data.email}`} onChange={(e) => { handleChangeValue("email", e.target.value) }} inputType="email"
             saveHandler={(value) => { handleSaveData("email", value) }}
           />
       
-          <InputBlock value={data.work.value} title="Робота" label={data.work.value} icon={"work"}
+          <InputBlock value={data.work} title="Робота" label={data.work} icon={"work"}
             onChange={(e) => { handleChangeValue("work", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("work", value) }}
           />

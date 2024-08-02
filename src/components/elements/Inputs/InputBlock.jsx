@@ -5,18 +5,48 @@ import Input from "./Input";
 import { LANG } from "../../../services/config";
 import moment from 'moment';
 import Textarea from "./Textarea"
-const InputBlock = ({header = false, textarea = false, age = false, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
+import SmallNotification from "../Notifications/SmallNotification";
+const InputBlock = ({ maxLength = null, header = false, textarea = false, age = false, errorKey = null, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
-
     useEffect(() => {
         setStateValue(value);
     }, [value]);
-
+    // const errorsData = {
+    //     phone: {
+    //         check: stateValue && (stateValue.length !== 10 && stateValue.length !== 13),
+    //         message: "Введіть правильний номер телефону"
+    //     },
+    //     email: {
+    //         check: stateValue && (!stateValue.includes("@") || !stateValue.includes(".") ||
+    //             stateValue.indexOf("@") < 1 || stateValue.indexOf(".") >= stateValue.length - 1 ||
+    //             stateValue.length < 8),
+    //         message: "Введіть правильну пошту"
+    //     },
+    //     required: {
+    //         check: stateValue && stateValue.length < 1,
+    //         message: `Поле ${titleDefault} є обов'язковим`
+    //     },
+    //     maxLength: {
+    //         check: stateValue && stateValue.length >= maxLength,
+    //         message: `Допустима довжина для вашого поля: ${maxLength}. Поточна довжина: ${stateValue.length}`
+    //     }
+    // }
+    const [alert, setAlert] = useState({
+        alert: false,
+        message: ""
+    })
+    const alertHandler = (message = "") => {
+        setAlert({ ...alert, alert: !alert.alert, message: message })
+    }
     const handleSave = () => {
-        const displayValue = stateValue;
-        saveHandler(stateValue, displayValue);
+        // const key = errorsData[errorKey]
+        // if (key && key.check) return alertHandler(key.message)
+        // if (maxLength && errorsData.maxLength.check) return alertHandler(errorsData.maxLength.message)
         setShowEdit(false);
+        if (value !== stateValue) {
+            saveHandler(stateValue);
+        }
     };
 
     const howOldIsCase = (birthday) => {
@@ -42,7 +72,7 @@ const InputBlock = ({header = false, textarea = false, age = false, saveHandler,
                                         <span className={`InputBlock-title-main ${header && 'header'}`}>{titleDefault}</span>
                                     ) : (
                                         <span className={`InputBlock-title-main ${header && 'header'}`}>{`${label}${inputType === "date" ? howOldIsCase(value) : ""}`}</span>
-                                        
+
                                     )}
                                 </>
                             )}
@@ -70,12 +100,16 @@ const InputBlock = ({header = false, textarea = false, age = false, saveHandler,
                         <span onClick={handleSave}>
                             <Icon icon={"save"} addClass={"save-icon"} />
                         </span>
-                        <span onClick={() => { setShowEdit(false) }}>
+                        <span onClick={() => {
+                            setShowEdit(false)
+                            setStateValue(value)
+                        }}>
                             <Icon icon={"close"} addClass={"close-icon"} />
                         </span>
                     </div>
                 </div>
             )}
+            {alert.alert && <SmallNotification isSuccess={false} text={alert.message} close={alertHandler} />}
         </div>
     );
 }

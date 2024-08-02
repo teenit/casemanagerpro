@@ -61,7 +61,7 @@ const MainContent = () => {
         <Route path="/access" element={access.access ? <AccessPage /> : <NotFound />} />
         <Route path="/access/:id" element={access.access ? <AccessPageRight /> : <NotFound />} />
         <Route path='/events' element={access.events ? <Events /> : <NotFound />} />
-        <Route path='/events/:link' element={access.event ? <Event /> : <NotFound />} />
+        <Route path='/event/:id' element={access.event ? <Event /> : <NotFound />} />
         <Route path='/calendar' element={access.calendar ? <Calendar /> : <NotFound />} />
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />

@@ -21,6 +21,7 @@ const User = () => {
   const [changePass, setChangePass] = useState(false)
 const accessCheckPass = ()=>{AccessCheck('yes_no', 'a_page_user_change_pass')}
 const params = useParams()
+console.log(params.id);
 useEffect(() => {
     apiResponse({userId:params.id}, "user/get-user.php").then((data) => {
       if(params.id==localStorage.getItem("id") && accessCheckPass){
@@ -31,7 +32,7 @@ useEffect(() => {
 
     // fetchReport().then(setReport);
     // fetchHistory().then(setHistory);
-  }, []);
+  }, [params.id]);
 console.log(user);
   const paginateReport = (pageNumber) => {
     setCurrentPageReport(pageNumber);
@@ -54,7 +55,7 @@ console.log(user);
   return user && !user?.fail ? (
     <div className="User">
       <ProfilePhoto
-        url={user.profileUrl?.link?user.profileUrl?.link:defaultImg}
+        url={user?.profileUrl?.link=="/default-img.png"?defaultImg:user?.profileUrl?.link}
         userName={user.userName}
         email={user.email}
         changePass={changePass}

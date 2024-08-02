@@ -79,7 +79,7 @@ const Group = () => {
                         <div>{LANG.groups.group.members}</div>
                     </div>
                     <div className='Group-info-inner'>
-                        {data.members && data.members.map((item, index) => {
+                        {data.members && data.members.length>0 && data.members.map((item, index) => {
                             return <Member key={index} item={item} index={index} />;
                         })}
                     </div>

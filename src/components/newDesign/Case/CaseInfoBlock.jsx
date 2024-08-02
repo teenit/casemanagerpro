@@ -174,11 +174,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                         key: "case_profile_img",
                         case_id: case_id,
                         type: "case"
-                    }}/>
+                    }} />
                 )}
                 <div className="CaseInfoBlock-column">
                     {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
-                        {/* <CaseInfoNameBlock title={LANG.case_data.phone} /> */}
                         <InputBlock
                             value={dataState.phone1}
                             onChange={(e) => { handleDataChange("phone1", e.target.value) }}
@@ -191,7 +190,6 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                         />
                     </div>}
                     {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
-                        {/* <span>{LANG.case_data.phone}</span> */}
                         <InputBlock
                             value={dataState.phone2}
                             onChange={(e) => { handleDataChange("phone2", e.target.value) }}
@@ -204,7 +202,6 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                         />
                     </div>}
                     {(info.viewInfo.view_email) && <div className="CaseInfoBlock-line">
-                        {/* <span>{LANG.case_data.email}</span> */}
                         <InputBlock
                             value={dataState.email}
                             onChange={(e) => { handleDataChange("email", e.target.value) }}
@@ -217,7 +214,6 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                         />
                     </div>}
                     {(info.viewInfo.view_birthday) && <div className="CaseInfoBlock-line">
-                        {/* <span>{LANG.case_data.birthday}</span> */}
                         <InputBlock
                             value={dataState.happy_bd}
                             age={true}
@@ -248,7 +244,6 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                 </div>
                 <div className="CaseInfoBlock-column">
                     {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
-                        {/* <span>{LANG.case_data.address_live}</span> */}
                         <InputBlock
                             value={dataState.address_live}
                             onChange={(e) => { handleDataChange("address_live", e.target.value) }}
@@ -260,7 +255,6 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                         />
                     </div>}
                     {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
-                        {/* <span>{LANG.case_data.address_registered}</span> */}
                         <InputBlock
                             value={dataState.address_registered}
                             onChange={(e) => { handleDataChange("address_registered", e.target.value) }}

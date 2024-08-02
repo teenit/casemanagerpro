@@ -156,7 +156,7 @@ const CaseShortInfo = ({ info, changeGeneral, changeData }) => {
                 <h1>{info.general.name} <span style={{ color: "var(--main-color)" }}>№{info.general.id}</span></h1>
                 <div className="case-info-inner-left-cards">
                     <div className="case-info-card">
-                        <InputBlock 
+                        <InputBlock
                             value={dataState.phone1}
                             onChange={(e) => { handleDataChange("phone1", e.target.value) }}
                             link={`tel:${dataState.phone1}`}

@@ -72,12 +72,12 @@ const Event = ()=>{
         })
         .catch((error)=>console.log(error)) 
     }
-    const link = useParams();
+    const params = useParams();
     function getEvent(){
         let obj = {
             id: localStorage.getItem("id"),
             token: localStorage.getItem("token"),
-            link:link.link,
+            event_id:params.id,
         }
         axios({
             url: serverAddres("event/get-event.php") ,
@@ -87,6 +87,7 @@ const Event = ()=>{
         })
         .then((data)=>{ 
             setEvent(data.data) 
+            console.log(data);
             if(data.data?.id)  {
                 getUsers(data.data.id,"eventMemberUser")
                 getUsers(data.data.id,"eventMemberCase")

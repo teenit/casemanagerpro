@@ -69,15 +69,15 @@ const File = () => {
   return (
     <div className='File'>
       <div className='File-header'>
-          <InputBlock
-            header={true}
-            value={data?.title ? data?.title : ""}
-            label={data?.title}
-            inputType={"text"}
-            titleDefault={LANG.file.withoutName}
-            onChange={(e) => { dataHandler("title", e.target.value) }}
-            saveHandler={(value) => { updateData("title", value) }}
-          />
+        <InputBlock
+          header={true}
+          value={data?.title ? data?.title : ""}
+          label={data?.title}
+          inputType={"text"}
+          titleDefault={LANG.file.withoutName}
+          onChange={(e) => { dataHandler("title", e.target.value) }}
+          saveHandler={(value) => { updateData("title", value) }}
+        />
 
         <div>{data?.last_updated && `${LANG.file.last_updated}: ${data.last_updated}`}</div>
       </div>

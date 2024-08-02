@@ -28,6 +28,8 @@ nav a.active{
 }
 .a{
     color: #fff;
+    border: none;
+    background: none;
 }
 .a.active{
     color: #f4f;
