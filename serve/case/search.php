@@ -1,5 +1,6 @@
 <?php
 require_once '../config.php';
+require_once '../functions.php';
 
 $data = json_decode(file_get_contents('php://input'));
 
@@ -20,7 +21,11 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         // Додавання результатів до масиву
-        $mas[] = $row;
+        $mas[] = [
+            'id' => $row['id'],
+            'phone' => decryptData($row['phone1'], $key),
+            'name' => $row['name']
+        ];
     }
     // Виведення успішної відповіді
     echo json_encode([
