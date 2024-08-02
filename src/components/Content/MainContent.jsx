@@ -41,7 +41,7 @@ const MainContent = () => {
     access: AccessCheck('page', "a_page_access"),
     event: AccessCheck('page', "a_page_event"),
     events: AccessCheck('page', "a_page_events"),
-    groups: AccessCheck('page', "a_page_groups"),
+    groups: AccessCheck('view_edit', "a_page_groups"),
     resources: AccessCheck('page', "a_page_resources"),
     settings: AccessCheck('page', "a_page_settings"),
     user: AccessCheck('page', "a_page_user"),

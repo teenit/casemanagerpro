@@ -1,44 +1,73 @@
-import react, { useState } from "react"
-import { apiResponse } from "../../Functions/get_apiObj"
-import Input from "../../elements/Inputs/Input"
-import moment from "moment"
-import Icon from "../../elements/Icons/Icon"
-import Textarea from "../../elements/Inputs/Textarea"
-import SelectStatusPlan from "../../elements/Selects/SelectStatusPlan"
-import { LANG, appConfig } from "../../../services/config"
-import SmallNotification from "../../elements/Notifications/SmallNotification"
+import React, { useState } from "react";
+import { apiResponse } from "../../Functions/get_apiObj";
+import Input from "../../elements/Inputs/Input";
+import moment from "moment";
+import Icon from "../../elements/Icons/Icon";
+import Textarea from "../../elements/Inputs/Textarea";
+import SelectStatusPlan from "../../elements/Selects/SelectStatusPlan";
+import { LANG, appConfig } from "../../../services/config";
+import SmallNotification from "../../elements/Notifications/SmallNotification";
+
 const PlanElem = ({ plan }) => {
     const [notification, setNotification] = useState({
         show: false,
         status: null,
         message: null
-    })
+    });
     const [state, setState] = useState({
         ...plan,
         editPlan: false
-    })
+    });
+    const [originalState, setOriginalState] = useState({ ...plan });
+
     const editHandler = () => {
-        setState({ ...state, editPlan: true })
-    }
+        if (!state.editPlan) {
+            setOriginalState({ ...state });
+        }
+        setState({ ...state, editPlan: !state.editPlan });
+    };
+
     const saveHandler = () => {
-        if(!moment(state.start_time, "DD-MM-YYYY").isAfter(moment(state.end_time, "DD-MM-YYYY")))
-            return setNotification({...notification, show:true, status:false, message:LANG.plan.error_date})
-        if(state.end_time.length<=1 || state.start_time.length<=1) 
-            return setNotification({...notification, show:true, status:false, message:LANG.plan.error})
+        const startDate = moment(state.start_time, "YYYY-MM-DDTHH:mm");
+        const endDate = moment(state.end_time, "YYYY-MM-DDTHH:mm");
+
+        if (startDate.isAfter(endDate)) {
+            return setNotification({
+                ...notification,
+                show: true,
+                status: false,
+                message: LANG.plan.error_date
+            });
+        }
+
+        if (state.end_time.length <= 1 || state.start_time.length <= 1) {
+            return setNotification({
+                ...notification,
+                show: true,
+                status: false,
+                message: LANG.plan.error
+            });
+        }
+
         apiResponse({
             ...state,
             plan_id: state.id
         }, "case/update-plan-task.php").then((res) => {
-            setState({ ...state, editPlan: false })
-        })
+            setState({ ...state, editPlan: false });
+        });
+    };
 
-    }
+    const cancelHandler = () => {
+        setState({ ...originalState, editPlan: false });
+    };
+
     const changeHandler = (key, value) => {
         setState({
             ...state,
             [key]: value
-        })
-    }
+        });
+    };
+
     return (
         <div className="Plan-content-element">
             <div className="str">
@@ -55,7 +84,7 @@ const PlanElem = ({ plan }) => {
                                             value={state.start_time}
                                             variant="standard"
                                             onChange={(e) => {
-                                                changeHandler("start_time", e.target.value)
+                                                changeHandler("start_time", e.target.value);
                                             }}
                                         />
                                         <Input
@@ -64,14 +93,14 @@ const PlanElem = ({ plan }) => {
                                             value={state.end_time}
                                             variant="standard"
                                             onChange={(e) => {
-                                                changeHandler("end_time", e.target.value)
+                                                changeHandler("end_time", e.target.value);
                                             }}
                                         />
                                     </>
                                     :
                                     <>
-                                        <span> {moment(state.start_time).format("DD-MM-YYYY")} </span>
-                                        <span> {moment(state.end_time).format("DD-MM-YYYY")} </span>
+                                        <span>{moment(state.start_time).format("DD-MM-YYYY")}</span>
+                                        <span>{moment(state.end_time).format("DD-MM-YYYY")}</span>
                                     </>
                             }
                         </div>
@@ -80,8 +109,9 @@ const PlanElem = ({ plan }) => {
                         {
                             state.editPlan
                                 ?
-                                <span onClick={saveHandler}>
-                                    <Icon icon={"save"} addClass={"save-icon"} />
+                                <span>
+                                    <Icon icon={"save"} addClass={"save-icon"} onClick={saveHandler} />
+                                    <Icon icon={"close"} addClass={"close-icon"} onClick={cancelHandler} />
                                 </span>
                                 :
                                 <span onClick={editHandler}>
@@ -99,15 +129,13 @@ const PlanElem = ({ plan }) => {
                                     label={LANG.task_plan}
                                     value={state.value}
                                     onChange={(e) => {
-                                        changeHandler("value", e.target.value)
+                                        changeHandler("value", e.target.value);
                                     }}
                                 />
                             </div>
                             :
                             <div className="task-value">
-                                {
-                                    state.value
-                                }
+                                {state.value}
                             </div>
                     }
                 </div>
@@ -124,18 +152,23 @@ const PlanElem = ({ plan }) => {
                                 <div style={{
                                     backgroundColor: appConfig.statusPlan[state.status].color
                                 }}>
-                                    {
-                                        LANG.status_plan[state.status]
-                                    }
+                                    {LANG.status_plan[state.status]}
                                 </div>
                         }
                     </div>
                 </div>
             </div>
             {
-                notification.show && <SmallNotification isSuccess={notification.status} text={notification.message} close={() => setNotification({ show: false })} />
+                notification.show && (
+                    <SmallNotification
+                        isSuccess={notification.status}
+                        text={notification.message}
+                        close={() => setNotification({ show: false })}
+                    />
+                )
             }
         </div>
-    )
-}
+    );
+};
+
 export default PlanElem;

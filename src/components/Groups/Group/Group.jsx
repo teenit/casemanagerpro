@@ -29,6 +29,7 @@ const Group = () => {
     const params = useParams();
 
     useEffect(() => {
+        console.log(params.id);
         apiResponse({ group_id: params.id }, 'groups/get-group-by-id.php').then((res)=>{
             setData(res)
         })
@@ -39,7 +40,7 @@ const Group = () => {
         return (
             <div className='Group-member' onMouseEnter={() => { setEditMember(1); }} onMouseLeave={() => { setEditMember(0); }}>
                 <NavLink to={`/case/${item.case_id}`}>{item.name}</NavLink>
-                <span><a href={`tel:${item.phone1}`}>{item.phone1}</a></span>
+                <NavLink to={`tel:${item.phone1}`}>{item.phone1}</NavLink>
                 {/* <span style={{ opacity: editMember }}>
                     <Icon icon={'delete'} addClass={'close-icon'} onClick={() => { modalHandler('delete'); }} />
                 </span> */}

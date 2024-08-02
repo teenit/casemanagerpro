@@ -19,9 +19,11 @@
         align-items: center;
         flex-direction: column;
         padding-bottom: 5px;
+        word-break: break-all;
         &-desc {
             font-size: 16px;
             font-weight: normal;
+            word-break: break-all;
         }
     }
 

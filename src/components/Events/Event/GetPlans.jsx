@@ -65,6 +65,8 @@ const GetPlans = ({ id, plans }) => {
                                         )
                                     })}
                                 </div>
+
+                            </div>
                                 {canWriteFeedback && <Button variant="contained" onClick={() => {
                                     setModalInfo({
                                         item: item
@@ -73,8 +75,6 @@ const GetPlans = ({ id, plans }) => {
                                 }
 
                                 } className={s.btn__feed}>Написати</Button>}
-
-                            </div>
                         </div>
                     )
                 })}

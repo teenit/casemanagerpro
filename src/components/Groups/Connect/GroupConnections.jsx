@@ -10,95 +10,97 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 const GroupConnections = ({ case_id, type }) => {
-    const [open, setOpen] = useState(false)
-    const openHandler = ()=>{
-        localStorage.setItem("page_case_connections", !open)
-        setOpen(!open)
-    }
-    useEffect(()=>{
-        let item = localStorage.getItem("page_case_connections")
-        if(item){
-            if(item=="true"){
-                setOpen(true)
-            }else{
-                setOpen(false)
+    const [open, setOpen] = useState(false);
+    const openHandler = () => {
+        localStorage.setItem("page_case_connections", !open);
+        setOpen(!open);
+    };
+    useEffect(() => {
+        let item = localStorage.getItem("page_case_connections");
+        if (item) {
+            if (item === "true") {
+                setOpen(true);
+            } else {
+                setOpen(false);
             }
-        }else{
-            setOpen(false)
+        } else {
+            setOpen(false);
         }
-    },[])
+    }, []);
     const [modal, setModal] = useState({
         add: false,
         info: false
     });
-    const [allGroups, setAllGroups] = useState([])
-    const [connections, setConnections] = useState([])
+    const [allGroups, setAllGroups] = useState([]);
+    const [connections, setConnections] = useState([]);
     const [data, setData] = useState({
         group_id: "",
         why: ""
-    })
+    });
     const [alert, setAlert] = useState({
         success: false,
-        error: false
-    })
+        error: false,
+        message: ""
+    });
 
     const loadConnections = () => {
         apiResponse({ ...data, client_id: case_id, type: type }, "groups/get-group-connect-by-case-id.php").then((res) => {
-            setConnections([...res])
+            setConnections([...res]);
         });
-    }
+    };
     useEffect(() => {
         apiResponse({}, "groups/get-case-groups.php").then((res) => {
             setAllGroups([...res]);
         });
-        loadConnections()
-    }, [])
+        loadConnections();
+    }, []);
 
     const dataHandler = (key, value) => {
-        let val = key === "group_id" ? Number(value) : value
-        setData({ ...data, [key]: val })
-    }
+        let val = key === "group_id" ? Number(value) : value;
+        setData({ ...data, [key]: val });
+    };
 
-    const alertHandler = (key) => {
-        setAlert({ ...alert, [key]: !alert[key] })
-    }
+    const alertHandler = (key, message = "") => {
+        setAlert({ ...alert, [key]: !alert[key], message });
+    };
 
     const modalHandler = (key) => {
-        setModal({ ...modal, [key]: !modal[key] })
-    }
+        setModal({ ...modal, [key]: !modal[key] });
+    };
 
     const checkForm = () => {
         if (data.group_id === "") {
-            alertHandler("error")
+            alertHandler("error", LANG.groups.alertMessages.error);
+        } else if (data.why.length > 250) {
+            alertHandler("error", `Причина зв'язку повинна бути довжиною до 250 символів. Поточна довжина: ${data.why.length} символів`);
         } else {
-            successHandler()
+            successHandler();
         }
-    }
+    };
 
     const successHandler = () => {
         apiResponse({ ...data, client_id: case_id, type: type }, "groups/add-group-connect.php").then((res) => {
-            alertHandler("success")
-            modalHandler("add")
-            dataHandler("why", "")
-            openHandler()
-            loadConnections()
-        })
-    }
+            alertHandler("success", LANG.groups.alertMessages.success);
+            modalHandler("add");
+            dataHandler("why", "");
+            openHandler();
+            loadConnections();
+        });
+    };
 
     const getUnusedGroups = () => {
-        return allGroups.filter(item => !connections.some(conn => item.name === conn.name))
-    }
-
+        return allGroups.filter(item => !connections.some(conn => item.name === conn.name));
+    };
 
     const deleteGroupConnect = (id) => {
         apiResponse({
             connect_id: id
         }, "groups/delete-group-connect.php").then((res) => {
             apiResponse({ ...data, client_id: case_id, type: type }, "groups/get-group-connect-by-case-id.php").then((res) => {
-                setConnections([...res])
+                setConnections([...res]);
             });
-        })
-    }
+        });
+    };
 
     return (
         <div className='GroupConnections'>
@@ -112,17 +114,15 @@ const GroupConnections = ({ case_id, type }) => {
                 </span>
             </div>
             {open && <div className='GroupConnections-list'>
-                {connections.length>0 ? connections.map((item, index) => {
+                {connections.length > 0 ? connections.map((item, index) => {
                     return (
                         <div key={index} className='GroupConnections-list-item'>
                             <span><NavLink to={`/group/${item.group_id}`}>{item.name}</NavLink>: {item.why}</span>
-                            <span className='GroupConnections-list-item-delete' onClick={() => deleteGroupConnect(item.id)}><Icon addClass={"default-icon"} icon={'delete'} /></span>
+                            <Icon addClass={"close-icon"} icon={'delete'} onClick={() => deleteGroupConnect(item.id)}/>
                         </div>
                     )
-                }):<p style={{margin:"15px 0px"}}>{LANG.no_records}</p>}
+                }) : <p style={{ margin: "15px 0px" }}>{LANG.no_records}</p>}
             </div>}
-
-
 
             {modal.add && (
                 <Modal header={LANG.groups.add} closeHandler={() => modalHandler("add")}
@@ -138,8 +138,8 @@ const GroupConnections = ({ case_id, type }) => {
                     <Textarea label={LANG.placeholders.connect} value={data.why} onChange={(e) => { dataHandler("why", e.target.value) }} />
                 </Modal>
             )}
-            {alert.error && <SmallNotification isSuccess={false} text={LANG.groups.alertMessages.error} close={() => { alertHandler("error") }} />}
-            {alert.success && <SmallNotification isSuccess={true} text={LANG.groups.alertMessages.success} close={() => { alertHandler("success") }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error") }} />}
+            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success") }} />}
         </div>
     );
 }

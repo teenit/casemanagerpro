@@ -72,7 +72,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
 
   const handleUpload = async () => {
 
-    if (!meta) return alertHandler("error")
+    if (!meta || selectedFiles.length<1) return alertHandler("error")
     setUploading(true);
     const formData = new FormData();
     for (let i = 0; i < selectedFiles.length; i++) {

@@ -107,6 +107,9 @@
 .add__plan{
     width: 90%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
    
 }
 .add__plan__form{

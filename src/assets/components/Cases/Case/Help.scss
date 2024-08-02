@@ -101,6 +101,9 @@
     }
 }
 @media screen and (max-width:500px){
+    .Help-title{
+        flex-direction: column;
+    }
     .Help-title-panel{
         div{
             font-size: 16px;

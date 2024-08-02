@@ -69,27 +69,15 @@ const File = () => {
   return (
     <div className='File'>
       <div className='File-header'>
-        {edit.name ? (
-          <div className="File-header-title">
-            <Input label={LANG.file.name} value={data.title ? data.title : ""} onChange={(e) => { dataHandler("title", e.target.value) }} />
-            <div className="InputBlock-editer-icons">
-              <span onClick={() => { updateData("title", data.title) }}>
-                <Icon icon={"save"} addClass={"save-icon"} />
-              </span>
-              <span onClick={() => { editHandler("name") }}>
-                <Icon icon={"close"} addClass={"close-icon"} />
-              </span>
-            </div>
-          </div>
-        ) : (
-          <div className="File-header-title">
-            <div>{data?.title ? data.title : LANG.file.withoutName}</div>
-            {editCheck && <div className="edit-icon">
-              <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { editHandler("name") }} />
-            </div>}
-
-          </div>
-        )}
+          <InputBlock
+            header={true}
+            value={data?.title ? data?.title : ""}
+            label={data?.title}
+            inputType={"text"}
+            titleDefault={LANG.file.withoutName}
+            onChange={(e) => { dataHandler("title", e.target.value) }}
+            saveHandler={(value) => { updateData("title", value) }}
+          />
 
         <div>{data?.last_updated && `${LANG.file.last_updated}: ${data.last_updated}`}</div>
       </div>
@@ -104,7 +92,7 @@ const File = () => {
               />
             ) : (
               <div>
-                {!data.value || data.value=="<p><br></p>" ? (
+                {!data.value || data.value == "<p><br></p>" ? (
                   <div>
                     <div>{LANG.file.empty_file}</div>
                     <span>
@@ -122,7 +110,7 @@ const File = () => {
                       </Button>
                     </span>
                   </div>
-                  
+
                 )}
               </div>
             )}

@@ -58,11 +58,19 @@
 
 @media screen and (max-width:500px){
     .Fields{
+        &-InfoBlock{
+            &-title{
+                flex-direction: column;
+            }
+        }
         &-title{
+            flex-direction: column;
             &-panel{
-
+                max-width: 100%;
                 font-size: 14px;
                 word-wrap: break-word;
+                word-break: break-all;
+                flex-direction: column;
             }
         }
     }

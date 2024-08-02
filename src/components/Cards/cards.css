@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     gap: 25px;
+    position: relative;
 }
 .inner__cards{
     width: 80%;
@@ -118,6 +119,11 @@ border-radius: 10px;
     text-align: center;
     font-weight: bold;
     font-size: 22px;
+}
+.cards__filter{
+    position: absolute;
+    top: 25px;
+    left: 10%;
 }
 @media (max-width:720px){
     .inner__cards {

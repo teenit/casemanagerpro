@@ -6,7 +6,18 @@ import s from "./modal.module.css"
 import Input from '../../elements/Inputs/Input'
 import Textarea from "../../elements/Inputs/Textarea"
 import { Button } from "@mui/material";
+import SmallNotification from "../../elements/Notifications/SmallNotification";
+import { apiResponse } from "../../Functions/get_apiObj";
+import { changeApsBr } from "../../Functions/translateString";
 const EventAddPlan = ({eventID,getPlans})=>{
+    const [alert, setAlert] = useState({
+        success:false,
+        error:false,
+        message:""
+    })
+    const alertHandler = (key, message="")=>{
+        setAlert({...alert, [key]:!alert[key], message:message})
+    }
     const [plan,setPlan]  = useState({
         title:"",
         dateStart:"",
@@ -15,30 +26,23 @@ const EventAddPlan = ({eventID,getPlans})=>{
         timeEnd:"",
         description:""
     })
-    function addPlan(){
-       let a = `".replaceAll("'", "’").replaceAll(/\n/g, "<br />")"`
-       
-       if(plan.title == "" || plan.dateStart == ""|| plan.dateEnd == ""|| plan.timeStart == ""|| plan.timeEnd == "" || plan.description == "") return window.alert("Заповніть всі поля");
+    function addPlan(){       
+       if(plan.title == "" || plan.dateStart == ""|| plan.dateEnd == ""|| plan.timeStart == ""|| plan.timeEnd == "" || plan.description == ""){
+        return alertHandler("error", "Заповніть усі поля")
+       }
        let obj = {
-           id: localStorage.getItem("id"),
-           token: localStorage.getItem("token"),
            title:plan.title,
            dateStart:plan.dateStart,
            dateEnd:plan.dateEnd,
            timeStart:plan.timeStart,
            timeEnd:plan.timeEnd,
-           description:plan.description.replaceAll("'", "’").replaceAll(/\n/g, "<br />"),
+           description:changeApsBr(plan.description),
            eventID:eventID,
            feedBack:[]
        }
-       axios({
-           url: serverAddres("event/add-plan.php"),
-           method: "POST",
-           header : {'Content-Type': 'application/json;charset=utf-8'},
-           data : JSON.stringify(obj),
-       })
-       .then((data)=>{ 
-           if(data.data == true){
+       apiResponse({...obj}, "event/add-plan.php").then((data)=>{ 
+           if(data == true){
+            alertHandler("success", "План додано")
             getPlans(eventID,"eventPlan")
            }
        })
@@ -88,6 +92,8 @@ const EventAddPlan = ({eventID,getPlans})=>{
                     <Button variant="contained" onClick={addPlan}>Створити план</Button>
                 </div>
             </div>
+            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={()=>{alertHandler("success")}}/>}
+            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={()=>{alertHandler("error")}}/>}
         </div>
     )
 }

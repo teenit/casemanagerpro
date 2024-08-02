@@ -9,8 +9,10 @@ import { serverAddres } from "../../Functions/serverAddres";
 import ProfilePhotoBlock from "../../blocks/ProfilePhotoBlock";
 import InputBlock from "../../elements/Inputs/InputBlock";
 import { apiResponse } from "../../Functions/get_apiObj";
+import { useParams } from "react-router-dom";
 
-const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
+const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
+  const params = useParams()
   const [pass, setPass] = useState({
     olderPass: "",
     newPass: "",
@@ -23,6 +25,10 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     message: ""
   });
   const [data, setData] = useState({
+    userName: {
+      edit: false,
+      value: ""
+    },
     phone: {
       edit: false,
       value: ""
@@ -30,11 +36,19 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
     email: {
       edit: false,
       value: ""
-    }
+    },
+    work: {
+      edit: false,
+      value: ""
+    },
   });
 
   useEffect(() => {
     setData({
+      userName: {
+        edit: false,
+        value: userName
+      },
       phone: {
         edit: false,
         value: phone
@@ -42,9 +56,13 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
       email: {
         edit: false,
         value: email
-      }
+      },
+      work: {
+        edit: false,
+        value: work
+      },
     });
-  }, [phone, email]);
+  }, [userName, phone, email, work]);
 
   const dispatch = useDispatch();
   let passObj = {
@@ -75,14 +93,16 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
   };
 
   const handleSaveData = (key, value) => {
-    const originalValue = data[key].originalValue;
+
+    const originalValue = data[key].value;
     if (value !== originalValue) {
       let obj = {
-        key:key,
-        value:value
+        [key]:value,
+        user_id:params.id
       };
+      console.log(obj);
       handleChangeValue(key, value);
-     apiResponse({...obj}, "manage/update-usermeta.php")
+     apiResponse({...obj}, "user/update-user.php")
         .then((res) => {
           handleAlertChange("success", "Дані успішно оновлено");
           // dispatch(removeUser());
@@ -133,7 +153,10 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
         }} />
 
         <div className="User-info">
-          <h1 className="User-info-name">{userName}</h1>
+          <InputBlock value={data.userName.value} header={true} title="Ім'я" label={data.userName.value}
+             onChange={(e) => { handleChangeValue("userName", e.target.value) }} inputType="text"
+            saveHandler={(value) => { handleSaveData("userName", value) }}
+          />
           <InputBlock value={data.phone.value} title="Номер телефону" label={data.phone.value} icon={"phone"}
             link={`tel:${data.phone.value}`} onChange={(e) => { handleChangeValue("phone", e.target.value) }} inputType="number"
             saveHandler={(value) => { handleSaveData("phone", value) }}
@@ -142,6 +165,11 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone }) => {
           <InputBlock value={data.email.value} title="Електронна пошта" label={data.email.value} icon={"email"}
             link={`mailto:${data.email.value}`} onChange={(e) => { handleChangeValue("email", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("email", value) }}
+          />
+      
+          <InputBlock value={data.work.value} title="Робота" label={data.work.value} icon={"work"}
+            onChange={(e) => { handleChangeValue("work", e.target.value) }} inputType="text"
+            saveHandler={(value) => { handleSaveData("work", value) }}
           />
         </div>
       </div>

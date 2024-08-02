@@ -23,7 +23,7 @@ const caseCategories = (catMas) => {
         });
         return mas.join(", ");
     } else {
-        return LANG.cases;
+        return LANG.casesList.noCategory
     }
 };
 

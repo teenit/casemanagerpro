@@ -37,6 +37,7 @@
     &-list{
         width: max-content;
         &-item{
+            word-break: break-all;
             width: 100%;
             padding: 10px 0px;
             background-color: #fff;

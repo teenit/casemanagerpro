@@ -179,9 +179,10 @@ export const LANG = {
     pib: "ПІБ",
     phone: "Телефон",
     email: "Пошта",
-    birthday: "Дата нар-ня",
+    birthday: "Дата народження",
     address: "Адреса (факт)",
     categories: "Категорія",
+    noCategory: "Без категорії"
   },
   case_data: {
     first_name: "Ім'я",
@@ -363,8 +364,7 @@ export const LANG = {
     "a_page_access_edit": "Редагування шаблону прав користувачів",
     "a_page_groups": "Доступ до сторінки груп",
     "a_group_create": "Створення нової групи",
-    // "a_group_edit": "Редагування групи",
-    //a_page_statistics:"Доступ до статистики"
+    "a_page_statistics":"Доступ до статистики",
     "a_page_case_connection": "Створення зв'язків між об'єктами і групою",
     "a_page_file": "Доступ до сторінки файла",
   },
@@ -675,11 +675,12 @@ export const appConfig = {
     },
     groups: {
       yes_no: [
-        "a_page_groups",
         "a_group_create",
         "a_page_case_connection"
       ],
-      view_edit: []
+      view_edit: [
+        "a_page_groups",
+      ]
     },
     file: {
       yes_no: [],
