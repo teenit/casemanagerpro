@@ -38,6 +38,8 @@
         gap: 25px;
 
         &-element {
+            word-break: break-all;
+            word-wrap: break-word;
             border-radius: 10px;
             background-color: #fff;
             border: solid 3px $second-color;

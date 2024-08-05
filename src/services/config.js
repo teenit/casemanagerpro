@@ -386,7 +386,8 @@ export const LANG = {
     accesses: "Шаблони прав",
     groups: "Групи",
     access: "Інше",
-    file: "Файл"
+    file: "Файл",
+    updateLog:"Оновленння програми"
   },
   documents: "Додані документи",
   give_help: {
@@ -781,6 +782,10 @@ export const appConfig = {
       title: LANG.pages.file,
       description: ""
     },
+    updateLog:{
+      title:"",
+      description:""
+    }
   },
   mounths: {
     1: {

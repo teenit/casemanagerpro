@@ -20,7 +20,7 @@ const Fields = ({ fields, getCaseInfo, case_id }) => {
     const [formData, setFormData] = useState({
         title: "",
         description: "",
-        id: null
+        file_id: null
     });
     const [isEditing, setIsEditing] = useState(false);
     const [modal, setModal] = useState({
@@ -52,7 +52,7 @@ const Fields = ({ fields, getCaseInfo, case_id }) => {
             return handleAlertChange("error", LANG.fields.alertMessages.errorAddEmpty);
         }
         if (formData.title.length > 125) {
-            return handleAlertChange("error", LANG.fields.alertMessages.errorAddLong);
+            return handleAlertChange("error", `${LANG.fields.alertMessages.errorAddLong}. Поточна довжина: ${formData.title.length} символів`);
         }
 
         if (isEditing) {
@@ -67,18 +67,18 @@ const Fields = ({ fields, getCaseInfo, case_id }) => {
             handleAlertChange("success", LANG.fields.alertMessages.successAdd);
             getCaseInfo();
             setModal({ ...modal, add: false });
-            setFormData({ title: "", description: "", id: null });
+            setFormData({ title: "", description: "", file_id: null });
         }).catch((err) => {
             handleAlertChange("error", LANG.fields.alertMessages.errorAdd);
         });
     };
 
     const updateInfo = () => {
-        apiResponse({ description: formData.description, type: "field", file_id: formData.id }, "manage/files/update.php").then((res) => {
+        apiResponse({...formData, type: "field",}, "manage/files/update.php").then((res) => {
             handleAlertChange("success", LANG.fields.alertMessages.successEdit);
             getCaseInfo();
             setModal({ ...modal, add: false });
-            setFormData({ title: "", description: "", id: null });
+            setFormData({ title: "", description: "", file_id: null });
             setIsEditing(false);
         }).catch((err) => {
             handleAlertChange("error", LANG.fields.alertMessages.errorEdit);
@@ -86,7 +86,7 @@ const Fields = ({ fields, getCaseInfo, case_id }) => {
     };
 
     const handleEdit = (item) => {
-        setFormData({ title: item.title, description: item.description, id: item.id });
+        setFormData({ title: item.title, description: item.description, file_id: item.id });
         setIsEditing(true);
         setModal({ ...modal, add: true });
     };

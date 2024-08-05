@@ -47,7 +47,9 @@ const Active = ({ elem, handleEdit }) => {
                     {edit ? (
                         <div>
                             <Icon icon="save" addClass="save-icon" onClick={() => {
-                                setEdit(false);
+                                if(activeMessage.length>=1){
+                                    setEdit(false);
+                                }
                                 handleEdit(activeMessage, activeColor, elem);
                             }} />
                             <Icon icon="close" addClass="close-icon" onClick={() => setEdit(false)} />
@@ -91,7 +93,6 @@ const Notes = ({ notes, case_id, getCaseInfo }) => {
     };
 
     const addNote = () => {
-        if (noteMessage.length < 1) return handleAlertChange("error", LANG.notes.error_data);
         apiResponse({ text: noteMessage, color: noteColor, case_id }, "case/create-note.php").then((res) => {
             if (res.status) {
                 handleAlertChange("success", LANG.notes.success);

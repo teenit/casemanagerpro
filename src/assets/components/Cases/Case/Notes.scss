@@ -38,6 +38,8 @@
         flex-direction: column;
         gap: 25px;
         &-line{
+            word-wrap: break-word;
+            word-break: break-all;
             padding: 20px;
             border: solid 3px $second-color;
             border-radius: 10px;

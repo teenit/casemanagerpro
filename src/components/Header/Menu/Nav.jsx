@@ -55,6 +55,10 @@ const Nav = ({ close }) => {
             title: LANG.pages.groups,
             link: "/groups"
         },
+        {
+            title: LANG.pages.updateLog,
+            link: "/update"
+        },
     ];
 
     const dispatch = useDispatch();

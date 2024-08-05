@@ -39,6 +39,8 @@
         gap: 25px;
 
         &-element {
+            word-wrap: break-word  ;
+            word-break: break-all;
             border-radius: 10px;
             background-color: #fff;
             border: solid 3px $second-color;

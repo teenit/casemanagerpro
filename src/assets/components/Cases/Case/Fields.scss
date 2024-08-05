@@ -27,6 +27,8 @@
 
     &-InfoBlock{
         border-radius: 10px;
+        word-wrap: break-word;
+        word-break: break-all;
         background-color: #fff;
         border: solid 3px #90CAF9;
         padding: 15px;

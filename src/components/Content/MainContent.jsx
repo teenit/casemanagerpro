@@ -29,6 +29,7 @@ import NotFound from "../pages/NotFound";
 import Group from "../Groups/Group/Group";
 import TextEditor from "../elements/TextEditor/TextEditor";
 import File from "../pages/File";
+import UpdateLog from "../pages/UpdateLog";
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ const MainContent = () => {
         <Route path='/test' element={<TestPage />} />
         <Route path='/search' element={<Search />} />
         <Route path='/file/:id' element={<File />} />
+        <Route path='/update' element={<UpdateLog />} />
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

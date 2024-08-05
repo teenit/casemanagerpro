@@ -1,11 +1,12 @@
-.GroupConnections{
+.GroupConnections {
     border-radius: 5px;
     padding: 0px 15px;
     margin-top: 25px;
     border: solid 1px $second-color;
     display: flex;
     flex-direction: column;
-    &-title{
+
+    &-title {
         width: 100%;
         background-color: $second-color;
         display: flex;
@@ -16,28 +17,32 @@
         padding: 0px 15px;
         position: relative;
         right: 15px;
-        &-panel{
+
+        &-panel {
             font-size: 18px;
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 0px 10px;
-            &:hover{
+
+            &:hover {
                 background-color: #fff;
                 border-radius: 15px;
                 cursor: pointer;
             }
         }
     }
-    &-select{
+
+    &-select {
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
-    &-list{
-        width: max-content;
-        &-item{
-            word-break: break-all;
+
+    &-list {
+        width: 100%;
+
+        &-item {
             width: 100%;
             padding: 10px 0px;
             background-color: #fff;
@@ -45,21 +50,29 @@
             justify-content: space-between;
             gap: 15px;
             align-items: center;
-            &-delete, a{
+
+            > span {
+                word-break: break-word;
+                overflow-wrap: break-word;
+                white-space: normal;
+                word-wrap: break-word;
+            }
+
+            &-delete, a {
                 cursor: pointer;
             }
         }
     }
 
-    &-modal{
+    &-modal {
         display: flex;
         flex-direction: column;
         gap: 15px;
     }
-    
 }
-@media screen and (max-width:500px){
-    .GroupConnections-title-panel{
-            font-size: 16px;
+
+@media screen and (max-width: 500px) {
+    .GroupConnections-title-panel {
+        font-size: 16px;
     }
 }

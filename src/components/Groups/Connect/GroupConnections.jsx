@@ -71,8 +71,8 @@ const GroupConnections = ({ case_id, type }) => {
     const checkForm = () => {
         if (data.group_id === "") {
             alertHandler("error", LANG.groups.alertMessages.error);
-        } else if (data.why.length > 250) {
-            alertHandler("error", `Причина зв'язку повинна бути довжиною до 250 символів. Поточна довжина: ${data.why.length} символів`);
+        } else if (data.why.length > 150) {
+            alertHandler("error", `Причина зв'язку повинна бути довжиною до 150 символів. Поточна довжина: ${data.why.length} символів`);
         } else {
             successHandler();
         }
@@ -83,7 +83,7 @@ const GroupConnections = ({ case_id, type }) => {
             alertHandler("success", LANG.groups.alertMessages.success);
             modalHandler("add");
             dataHandler("why", "");
-            openHandler();
+            setOpen(true)
             loadConnections();
         });
     };

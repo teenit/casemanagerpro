@@ -26,6 +26,8 @@
     }
 
     &-InfoBlock{
+        word-wrap: break-word;
+        word-break: break-all;
         border-radius: 10px;
         background-color: #fff;
         border: solid 3px #90CAF9;

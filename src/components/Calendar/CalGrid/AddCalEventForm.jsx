@@ -26,7 +26,8 @@ const AddCalEventForm = ({ date, close, getCalendarList }) => {
 
     const [alert, setAlert] = useState({
         success: false,
-        error: false
+        error: false,
+        message: ""
     });
 
     const handleChange = (field, value) => {
@@ -34,7 +35,15 @@ const AddCalEventForm = ({ date, close, getCalendarList }) => {
     };
 
     const validateForm = () => {
-        return form.title.trim().length > 1 && form.text.trim().length > 1;
+        if (form.title.length === 0 || form.start.length === 0 || form.end.length === 0) {
+            setAlert({ success: false, error: true, message: "Введіть назву, дату початку та дату кінця події" });
+            return false;
+        } else if (form.title.length > 75) {
+            setAlert({ success: false, error: true, message: `Назв аповинна бути довжиною до 75 символів. Поточна довжина: ${form.title.length} символів` });
+            return false;
+        }else{
+            return true
+        }
     };
 
     const saveHandler = () => {
@@ -59,9 +68,7 @@ const AddCalEventForm = ({ date, close, getCalendarList }) => {
     const sendForm = () => {
         if (validateForm()) {
             saveHandler();
-            setAlert({ success: true, error: false });
-        } else {
-            setAlert({ success: false, error: true });
+            setAlert({ success: true, error: false, message: LANG.calendar.add_event.alertMessages.success });
         }
     };
 
@@ -147,14 +154,14 @@ const AddCalEventForm = ({ date, close, getCalendarList }) => {
                     {alert.success && 
                         <SmallNotification 
                             isSuccess={true} 
-                            text={LANG.calendar.add_event.alertMessages.success} 
+                            text={alert.message} 
                             close={() => setAlert({ ...alert, success: false })}
                         />
                     }
                     {alert.error && 
                         <SmallNotification 
                             isSuccess={false} 
-                            text={LANG.calendar.add_event.alertMessages.error} 
+                            text={alert.message} 
                             close={() => setAlert({ ...alert, error: false })}
                         />
                     }
