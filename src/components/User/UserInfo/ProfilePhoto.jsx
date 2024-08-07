@@ -10,6 +10,7 @@ import ProfilePhotoBlock from "../../blocks/ProfilePhotoBlock";
 import InputBlock from "../../elements/Inputs/InputBlock";
 import { apiResponse } from "../../Functions/get_apiObj";
 import { useParams } from "react-router-dom";
+import { LANG } from "../../../services/config";
 
 const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
   const params = useParams()
@@ -124,12 +125,12 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
              onChange={(e) => { handleChangeValue("userName", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("userName", value) }}
           />
-          <InputBlock value={data.phone} title="Номер телефону" label={data.phone} icon={"phone"}
+          <InputBlock hintMessage={LANG.hints.phone} value={data.phone} title="Номер телефону" label={data.phone} icon={"phone"}
             link={`tel:${data.phone}`} onChange={(e) => { handleChangeValue("phone", e.target.value) }} inputType="number"
             saveHandler={(value) => { handleSaveData("phone", value) }}
           />
 
-          <InputBlock value={data.email} title="Електронна пошта" label={data.email} icon={"email"}
+          <InputBlock hintMessage={LANG.hints.email} value={data.email} title="Електронна пошта" label={data.email} icon={"email"}
             link={`mailto:${data.email}`} onChange={(e) => { handleChangeValue("email", e.target.value) }} inputType="email"
             saveHandler={(value) => { handleSaveData("email", value) }}
           />

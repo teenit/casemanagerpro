@@ -123,6 +123,7 @@ const File = () => {
       <div className='File-info'>
         <div className='File-info-column'>
           <InputBlock
+            hintMessage={LANG.hints.disabled}
             disabled={true}
             value={data?.date_created}
             icon={"date_created"}
@@ -133,6 +134,7 @@ const File = () => {
 
           <InputBlock
             disabled={!editCheck}
+            hintMessage={!editCheck && LANG.hints.disabled}
             textarea={true}
             value={data?.description}
             onChange={(e) => { dataHandler("description", e.target.value) }}

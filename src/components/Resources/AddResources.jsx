@@ -12,18 +12,19 @@ import { Label } from "@mui/icons-material";
 const AddResources = ({ close, loadResources }) => {
     const [alert, setAlert] = useState({
         success: false,
-        error: false
+        error: false,
+        message: ""
     });
     const [meta, setMeta] = useState({
         title: "",
         description: "",
-        link:""
+        link: ""
     });
 
     const [typeResource, setTypeResource] = useState('files');
 
-    const handleAlertChange = (key) => {
-        setAlert({ ...alert, [key]: !alert[key] });
+    const handleAlertChange = (key, message = "") => {
+        setAlert({ ...alert, [key]: !alert[key], message });
     };
 
     const handleMetaChange = (key, value) => {
@@ -31,13 +32,18 @@ const AddResources = ({ close, loadResources }) => {
     };
 
     const successHandler = () => {
-        handleAlertChange("success");
+        handleAlertChange("success", "Ресурс додано");
         close();
-        loadResources()
+        loadResources();
     };
 
     const addLinkResource = () => {
-        if (meta.title.length < 1 || (typeResource=="link" && meta.link.length<1)) {return handleAlertChange('error')}
+        if (meta.title.length < 1 || (typeResource === "link" && meta.link.length < 1)) {
+            return handleAlertChange('error', "Введіть назву та посилання(якщо треба) на ресурс");
+        }
+        if (meta.title.length > 150) {
+            return handleAlertChange('error', `Назва ресурсу не може перевищувати 150 символів. Поточна довжина: ${meta.title.length} символів`)
+        }
         apiResponse({
             resource: {
                 title: meta.title,
@@ -45,12 +51,12 @@ const AddResources = ({ close, loadResources }) => {
                 link: meta.link,
                 type: 'link'
             },
-            type:"link"
-        }, "resources/add-links-resource.php").then((res)=>{
+            type: "link"
+        }, "resources/add-links-resource.php").then((res) => {
             if (res.status) successHandler();
-            else handleAlertChange('error');
-        })
-    }
+            else handleAlertChange('error', "Помилка при додаванні ресурсу");
+        });
+    };
 
     return (
         <>
@@ -60,16 +66,13 @@ const AddResources = ({ close, loadResources }) => {
                 footer={
                     <div className="Modal--footer">
                         <Button onClick={close} color="error" variant="contained">{LANG.cancel}</Button>
-                        {
-                            typeResource !== 'files' && <Button onClick={addLinkResource}  variant="contained">{LANG.GLOBAL.save}</Button>
-                        }
-                        
+                        {typeResource !== 'files' && <Button onClick={addLinkResource} variant="contained">{LANG.GLOBAL.save}</Button>}
                     </div>
                 }
             >
                 <div className="AddResources">
                     <span>Тип ресурсу</span>
-                    <Select value={typeResource} onChange={(e)=>setTypeResource(e.target.value)}>
+                    <Select value={typeResource} onChange={(e) => setTypeResource(e.target.value)}>
                         <MenuItem value={'files'}>Файл</MenuItem>
                         <MenuItem value={'link'}>Посилання</MenuItem>
                     </Select>
@@ -84,7 +87,7 @@ const AddResources = ({ close, loadResources }) => {
                         value={meta.description}
                         onChange={(e) => handleMetaChange("description", e.target.value)}
                     />
-                   {typeResource == 'files' && <FilesUploader
+                    {typeResource === 'files' && <FilesUploader
                         multiple={true}
                         type="resource"
                         successHandler={successHandler}
@@ -94,7 +97,7 @@ const AddResources = ({ close, loadResources }) => {
                             description: meta.description
                         }}
                     />}
-                    {typeResource == 'link' && <Input 
+                    {typeResource === 'link' && <Input
                         type="text"
                         label="Посилання на ресурс"
                         value={meta.link}
@@ -102,11 +105,9 @@ const AddResources = ({ close, loadResources }) => {
                     />}
                 </div>
             </Modal>
-            {alert.success && <SmallNotification isSuccess={true} text={"Ресурс додано"} close={() => { handleAlertChange("success") }} />}
-            {alert.error && <SmallNotification isSuccess={false} text={"Введіть назву та посилання(якщо треба) на ресурс"} close={() => { handleAlertChange("error") }} />}
-
+            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { handleAlertChange("success") }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { handleAlertChange("error") }} />}
         </>
-
     );
 };
 

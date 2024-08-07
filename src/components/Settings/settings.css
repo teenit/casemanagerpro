@@ -275,6 +275,18 @@ input[type="color"]{
     column-gap: 10px;
     align-items: center;
 }
+.accordion__item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 0px;
+}
+.accordion__item >span{
+    display: flex;
+    align-items: center;
+    gap: 7.5px;
+}
 @media (max-width:720px) {
     .settings__page{
         grid-template-columns: 1fr;

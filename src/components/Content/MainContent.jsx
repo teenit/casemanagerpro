@@ -71,7 +71,7 @@ const MainContent = () => {
         <Route path='/test' element={<TestPage />} />
         <Route path='/search' element={<Search />} />
         <Route path='/file/:id' element={<File />} />
-        <Route path='/update' element={<UpdateLog />} />
+        {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

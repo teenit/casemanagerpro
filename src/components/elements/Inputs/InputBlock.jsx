@@ -6,7 +6,8 @@ import { LANG } from "../../../services/config";
 import moment from 'moment';
 import Textarea from "./Textarea"
 import SmallNotification from "../Notifications/SmallNotification";
-const InputBlock = ({ maxLength = null, header = false, textarea = false, age = false, errorKey = null, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
+import Hint from "../Hints/Hint";
+const InputBlock = ({ hintMessage = null, maxLength = null, header = false, textarea = false, age = false, errorKey = null, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
     useEffect(() => {
@@ -78,6 +79,7 @@ const InputBlock = ({ maxLength = null, header = false, textarea = false, age = 
                             )}
                         </div>
                     </div>
+                    {hintMessage && <Hint text={hintMessage} />}
                     {!disabled && (
                         <div className="edit-icon" onClick={() => { setShowEdit(true) }}>
                             <Icon icon={"edit"} addClass={"default-icon"} />

@@ -61,7 +61,7 @@ const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
                         <div className={s.modal__file__info}>
                             <span>
                                 <p className={s.modal__file__title}>Назва:</p>
-                                <p>{info.title}</p>
+                                <p>{cutTitle(info.title)}</p>
                             </span>
                             <span>
                                 <p className={s.modal__file__title}>Дата:</p>
@@ -87,7 +87,7 @@ const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
     };
 
     const cutTitle = (title) => {
-        return title.length > 40 ? title.substring(0, 40) + "..." : title;
+        return title.length<1?"Файл без назви":(title.length > 40 ? title.substring(0, 40) + "..." : title)
     };
 
     const getImageByType = (type) => {

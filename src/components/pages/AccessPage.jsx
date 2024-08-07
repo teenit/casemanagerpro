@@ -19,10 +19,11 @@ const AccessPage = () => {
     })
     const [alert, setAlert] = useState({
         success: false,
-        error: false
+        error: false,
+        message:""
     })
-    const alertHandler = (key) => {
-        setAlert({ ...alert, [key]: !alert[key] })
+    const alertHandler = (key, message="") => {
+        setAlert({ ...alert, [key]: !alert[key], message:message })
     }
     const loadList = () => {
         apiResponse({}, 'access/get-list.php').then((res) => {
@@ -34,9 +35,9 @@ const AccessPage = () => {
     }, []);
 
     const addNewAccess = () => {
-        if (addAccess.name.length < 1) return alertHandler("error")
+        if (addAccess.name.length < 1) return alertHandler("error", "Введіть назву шаблону права")
         apiResponse({ name: changeAps(addAccess.name), description: changeApsBr(addAccess.description) }, "access/add-access.php").then((res) => {
-            alertHandler("success")
+            alertHandler("success", "Шаблон прав додано")
             loadList()
             setModal(false)
         })
@@ -71,8 +72,8 @@ const AccessPage = () => {
                 setModal(true)
             }}>{LANG.access_text.add_template}</button>}
             
-            {alert.error && <SmallNotification isSuccess={false} text="Введіть назву шаблону права" close={() => { alertHandler("error") }} />}
-            {alert.success && <SmallNotification isSuccess={true} text="Шаблон прав додано" close={() => { alertHandler("success") }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error") }} />}
+            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success") }} />}
         </div>
 
     )

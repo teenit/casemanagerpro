@@ -89,6 +89,7 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
         <div className="PersonalInfo">
             {info.viewInfo.view_date_created && <div className="PersonalInfo-line">
                 <InputBlock
+                    hintMessage={LANG.hints.disabled}
                     value={dataState.date_created}
                     icon={"date_created"}
                     label={dataState.date_created}

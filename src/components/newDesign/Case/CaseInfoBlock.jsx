@@ -179,6 +179,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                 <div className="CaseInfoBlock-column">
                     {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
                         <InputBlock
+                            hintMessage={`${LANG.hints.phone}. ${LANG.hints.required}`}
                             value={dataState.phone1}
                             onChange={(e) => { handleDataChange("phone1", e.target.value) }}
                             link={`tel:${dataState.phone1}`}
@@ -191,6 +192,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                     </div>}
                     {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
                         <InputBlock
+                            hintMessage={LANG.hints.phone}
                             value={dataState.phone2}
                             onChange={(e) => { handleDataChange("phone2", e.target.value) }}
                             link={`tel:${dataState.phone2}`}
@@ -203,6 +205,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                     </div>}
                     {(info.viewInfo.view_email) && <div className="CaseInfoBlock-line">
                         <InputBlock
+                        hintMessage={LANG.hints.email}
                             value={dataState.email}
                             onChange={(e) => { handleDataChange("email", e.target.value) }}
                             link={`mailto:${dataState.email}`}

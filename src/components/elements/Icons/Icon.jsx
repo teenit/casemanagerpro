@@ -9,13 +9,16 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import EventIcon from '@mui/icons-material/Event';
-
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 const Icon = ({ icon, addClass, onClick }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case "warning":
+                ico = <PriorityHighIcon className={addClass} onClick={onClick} />
+                break;
             case "work":
                 ico = <WorkOutline className={addClass} onClick={onClick} />;
                 break;
@@ -23,7 +26,7 @@ const Icon = ({ icon, addClass, onClick }) => {
                 ico = <Man className={addClass} onClick={onClick} />;
                 break;
             case "settings":
-                ico = <SettingsOutlined style={{cursor:'pointer'}} className={addClass} onClick={onClick} />;
+                ico = <SettingsOutlined style={{ cursor: 'pointer' }} className={addClass} onClick={onClick} />;
                 break;
             case "print":
                 ico = <Print className={addClass} onClick={onClick} />;
@@ -56,13 +59,13 @@ const Icon = ({ icon, addClass, onClick }) => {
                 ico = <CalendarMonthIcon fontSize='large' className={addClass} onClick={onClick} />;
                 break;
             case "delete":
-                ico = <Delete style={{cursor:"pointer"}} className={addClass} onClick={onClick} />;
+                ico = <Delete style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             case "add":
-                ico = <Add className={addClass} style={{cursor:"pointer"}} fontSize='large' onClick={onClick} />;
+                ico = <Add className={addClass} style={{ cursor: "pointer" }} fontSize='large' onClick={onClick} />;
                 break;
             case "edit":
-                ico = <Edit style={{cursor:"pointer"}} className={addClass} onClick={onClick} />;
+                ico = <Edit style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             case "phone":
                 ico = <PhoneAndroidIcon className={addClass} onClick={onClick} />;
@@ -90,16 +93,16 @@ const Icon = ({ icon, addClass, onClick }) => {
                 ico = <AttachFile className={addClass} onClick={onClick} />;
                 break;
             case "send":
-                ico = <Send style={{cursor:"pointer"}} className={addClass} onClick={onClick} />;
+                ico = <Send style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             case "close":
-                ico = <Close style={{cursor:"pointer"}} className={addClass} onClick={onClick} />;
+                ico = <Close style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             case "save":
-                ico = <Check style={{cursor:"pointer"}} className={addClass} onClick={onClick} />;
+                ico = <Check style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             case "arrow_down":
-                ico = <ArrowDownwardOutlined style={{cursor:"pointer"}} className={addClass} onClick={onClick} />;
+                ico = <ArrowDownwardOutlined style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             default:
                 ico = null;
