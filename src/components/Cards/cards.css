@@ -22,8 +22,8 @@
 }
 .card__img{
     display: grid;
-    grid-template-columns: 1fr 30px;
-    column-gap: 30px;
+    grid-template-columns: 1fr 40px;
+    column-gap: 20px;
     width: 90%;
     margin: auto;
     margin-top: 15px;

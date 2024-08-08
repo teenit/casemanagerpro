@@ -5,7 +5,19 @@
     display: grid;
     box-sizing: border-box;
     gap: 25px;
-
+    &-tags{
+        display: flex;
+        gap: 15px;
+    }
+    &-tag{
+        background-color: $main-color;
+        border-radius: 25px;
+        font-weight: bold;
+        padding: 5px 7.5px;
+        display: flex;
+        align-items: center;
+        gap: 7.5px;
+    }
     &-file {
         margin: auto;
         text-align: center;
@@ -50,6 +62,12 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        &-caption{
+            display: flex;
+            align-items: center;
+            gap: 7.5px;
+            font-weight: bold;
+        }
     }
 
     &-viewer {
@@ -58,4 +76,5 @@
         display: grid;
         gap: 25px;
     }
+
 }

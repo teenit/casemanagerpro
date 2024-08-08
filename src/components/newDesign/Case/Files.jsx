@@ -8,6 +8,8 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Modal from "../../Modals/Modal";
 import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
+import FileSearch from "./FileSearch";
+import Hint from "../../elements/Hints/Hint";
 
 const Files = ({ case_id, getCaseInfo, files }) => {
     const [rows, setRows] = useState(1);
@@ -16,9 +18,11 @@ const Files = ({ case_id, getCaseInfo, files }) => {
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({ success: false, error: false, message: "" });
     const [modal, setModal] = useState(false);
+    const [tags, setTags] = useState([]);
     const [data, setData] = useState({
         title: "",
-        description: ""
+        description: "",
+        tag: ""
     });
 
     useEffect(() => {
@@ -67,7 +71,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         if (data.title.length < 1 || data.title.length > 100) {
             return alertHandler("error", LANG.caseFiles.alerts.invalidName);
         }
-        apiResponse({ ...data, client_id: case_id, type: "file" }, "manage/files/create.php").then((res) => {
+        apiResponse({title:data.title, description:data.description,tags:tags, client_id: case_id, type: "file" }, "manage/files/create.php").then((res) => {
             alertHandler("success", LANG.caseFiles.alerts.success);
             getCaseInfo();
             setModal(false);
@@ -81,17 +85,35 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         return str.length > 20 ? str.slice(0, 20) + "..." : str;
     };
 
+    const addTag = () => {
+        if (data.tag.trim() !== "" && !tags.some(item => item === data.tag.trim()) && data.tag.trim().length <= 50) {
+            setTags([...tags, data.tag]);
+            dataHandler("tag", "");
+        }
+    };
+
+    const removeTag = (name) => {
+        setTags(tags.filter(item => item !== name));
+    };
+
     const File = ({ item }) => {
         const [hover, setHover] = useState(false);
-        const [modal, setModal] = useState(false);
         return (
             <NavLink to={`/file/${item.id}`}>
                 <div className="Files-file" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-                    <div className="Files-file-icon" onClick={() => setModal(true)}></div>
+                    <div className="Files-file-icon"></div>
                     {hover ? item.title : cutTitle(item.title)}
-                    {/* {modal && <FileModal value={parse(item.value)} title={item.title} close={() => setModal(false)} />} */}
                 </div>
             </NavLink>
+        );
+    };
+
+    const Tag = ({ name }) => {
+        return (
+            <div className="Files-tag">
+                <Icon icon={"close"} addClass={"close-icon"} onClick={() => removeTag(name)} />
+                <span>{name}</span>
+            </div>
         );
     };
 
@@ -102,6 +124,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
                     <div>{LANG.caseFiles.title}</div>
                     <Icon icon="arrow_down" addClass="fs35" />
                 </div>
+                <FileSearch files={files} />
                 <Icon icon="add" onClick={() => setModal(true)} />
             </div>
             {open && (
@@ -128,6 +151,17 @@ const Files = ({ case_id, getCaseInfo, files }) => {
                     <div className="Files-modal">
                         <Input label={LANG.GLOBAL.title} value={data.title} onChange={(e) => dataHandler("title", e.target.value)} />
                         <Textarea label={LANG.GLOBAL.description} value={data.description} onChange={(e) => dataHandler("description", e.target.value)} />
+                        <div className="Files-modal-caption">
+                            <span>{LANG.GLOBAL.tags}</span>
+                            <Hint text={LANG.hints.tag} placement="right" />
+                        </div>
+                        {tags.length > 0 && <div className="Files-tags">
+                            {tags.map((item, index) => (
+                                <Tag key={index} name={item} />
+                            ))}
+                        </div>}
+                        <Input value={data.tag} onChange={(e) => dataHandler("tag", e.target.value)} />
+                        <Button variant="contained" onClick={addTag}>Додати тег</Button>
                     </div>
                 </Modal>
             )}
