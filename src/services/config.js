@@ -16,7 +16,9 @@ export const LANG = {
     years: "років",
     edit:"Редагувати",
     close:"Закрити",
-    tags:"Теги"
+    tags:"Теги",
+    category:"Категорія",
+    type:"Тип"
   },
   SETTINGS:{
     title_category:"Назва категорії",
