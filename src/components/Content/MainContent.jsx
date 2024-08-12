@@ -30,6 +30,7 @@ import Group from "../Groups/Group/Group";
 import TextEditor from "../elements/TextEditor/TextEditor";
 import File from "../pages/File";
 import UpdateLog from "../pages/UpdateLog";
+import EventsPage from "../pages/EventsPage";
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const MainContent = () => {
         <Route path="/access" element={access.access ? <AccessPage /> : <NotFound />} />
         <Route path="/access/:id" element={access.access ? <AccessPageRight /> : <NotFound />} />
         <Route path='/events' element={access.events ? <Events /> : <NotFound />} />
+        <Route path='/events_new' element={access.events ? <EventsPage /> : <NotFound />} />
         <Route path='/event/:id' element={access.event ? <Event /> : <NotFound />} />
         <Route path='/calendar' element={access.calendar ? <Calendar /> : <NotFound />} />
         <Route path='/cooperation' element={<Cooperation />} />
