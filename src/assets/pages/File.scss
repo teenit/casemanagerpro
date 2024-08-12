@@ -6,6 +6,13 @@
     gap: 50px;
     margin: auto;
     position: relative;
+    &-modal{
+        &-header{
+            display: flex;
+            align-items: center;
+            gap: 7.5px;
+        }
+    }
     &-tag{
         background-color: $main-color;
         border-radius: 25px;

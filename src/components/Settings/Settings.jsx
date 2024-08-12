@@ -77,8 +77,12 @@ const Settings = () => {
         key: "",
         auth:false
     })
+    const initialSettingsData = {...settingsData}
     const settingsHandler = (key, value) => {
         setSettingsData({ ...settingsData, [key]: value })
+    }
+    const saveSettings = ()=>{
+        
     }
     const generateKey = () => {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -151,7 +155,7 @@ const Settings = () => {
                         Конфігурації програми
                     </AccordionSummary>
                     <AccordionDetails>
-                        <AccordionBlock title={"Системні налаштування"}>
+                        <AccordionBlock disabled = {JSON.stringify(initialSettingsData)==JSON.stringify(settingsData)} title={"Системні налаштування"}>
                             <div className="accordion__item">
                                 <span>
                                     <div>Номер телефону</div>

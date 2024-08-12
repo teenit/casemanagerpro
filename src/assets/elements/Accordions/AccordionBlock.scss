@@ -10,6 +10,11 @@
         box-sizing: border-box;
         border-radius: 10px 10px 0 0;
         cursor: pointer;
+        &-panel{
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
         &.opened {
             .AccordionBlock-header-icon {
                 transform: rotate(180deg);

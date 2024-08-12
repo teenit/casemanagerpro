@@ -11,9 +11,9 @@ const FileSearch = ({ files }) => {
 
     const handleSearch = (value) => {
         let res = []
-        let checkTags = files.filter(item => item.tags.some(tag => tag.includes(value)))
+        // let checkTags = files.filter(item => item.tags.some(tag => tag.includes(value)))
         files.forEach(item => {
-            if (item.title.includes(value) || item.description.includes(value) || checkTags.includes(item)) {
+            if (item.title.toLowerCase().includes(value.toLowerCase()) || item.description.toLowerCase().includes(value.toLowerCase())) {
                 res.push(item)
             }
         });
