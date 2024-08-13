@@ -4,7 +4,7 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import FilesUploader from "../../elements/Uploaders/FilesUploader";
 import CasePhoto from "../../Cases/Case/Info/CasePhoto";
 import CaseShortInfo from "./Caseshortinfo";
-import setImg from "../../../img/icons/settings-50-black.png";
+import setImg from "../../../img/icons/settings.svg";
 import editImg from "../../../img/icons/edit-48-black.png";
 import cameraImg from "../../../img/icons/camera-48-black.png";
 import { checkRight } from "../../Functions/checkRight";
@@ -109,7 +109,7 @@ const Case = () => {
                 openSetting && <CaseSettings successHandler={getCaseInfo} views={state.viewInfoActive ? {} : state.viewInfo} />
             }
             <div className="set__case__ico">
-                <img className="setImg" src={setImg} alt=""
+                <img src={setImg} alt=""
                     onClick={() => { setOpenSetting(!openSetting) }} />
                 {
                     (checkRight(post.level, "editOwnCase") || checkRight(post.level, "")) &&

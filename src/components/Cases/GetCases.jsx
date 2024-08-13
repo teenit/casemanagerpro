@@ -75,7 +75,6 @@ const GetCases = ({ posts, postsChange }) => {
     postsChange(sortedPosts);
   };
 
-  console.log(check);
   const editIds = check.edit.map(item => item.id);
 
   return (

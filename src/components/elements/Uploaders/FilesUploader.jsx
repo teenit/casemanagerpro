@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { serverAddres } from '../../Functions/serverAddres';
-import pdfImg from "./../../../img/resources/pdf.png";
-import docImg from "./../../../img/resources/doc.png";
-import docxImg from "./../../../img/resources/docx.png";
-import jpegImg from "./../../../img/resources/jpeg.png";
-import jpgImg from "./../../../img/resources/jpg.png";
-import movImg from "./../../../img/resources/mov.png";
-import mp3Img from "./../../../img/resources/mp3.png";
-import mp4Img from "./../../../img/resources/mp4.png";
-import pngImg from "./../../../img/resources/png.png";
-import pptImg from "./../../../img/resources/ppt.png";
-import pptxImg from "./../../../img/resources/pptx.png";
-import xlsImg from "./../../../img/resources/xls.png";
-import xlsxImg from "./../../../img/resources/xlsx.png";
+import docxImg from "./../../../img/resources/docx.svg";
+import mp3Img from "./../../../img/resources/mp3.svg";
+import pdfImg from "./../../../img/resources/pdf.svg";
+import pptxImg from "./../../../img/resources/pptx.svg";
+import xlsxImg from "./../../../img/resources/xlsx.svg";
+import codeImg from "./../../../img/resources/code.svg"
+import zipImg from "./../../../img/resources/zip.svg"
+import mp4Img from "./../../../img/resources/mp4.svg"
+import pngImg from "./../../../img/resources/img.svg"
 import send from '../../../img/icons/send-media.png';
 import add from '../../../img/icons/add-media.png';
 import loadImg from '../../../img/loading_3.gif';
@@ -22,18 +18,23 @@ import { useSelector } from 'react-redux';
 import Icon from "../Icons/Icon"
 const FORMAT = {
   pdf: { imgUrl: pdfImg },
-  doc: { imgUrl: docImg },
+  doc: { imgUrl: docxImg },
   docx: { imgUrl: docxImg },
-  jpeg: { imgUrl: jpegImg },
-  jpg: { imgUrl: jpgImg },
-  mov: { imgUrl: movImg },
+  jpeg: { imgUrl: pngImg },
+  jpg: { imgUrl: pngImg },
+  mov: { imgUrl: mp4Img },
   mp3: { imgUrl: mp3Img },
   mp4: { imgUrl: mp4Img },
   png: { imgUrl: pngImg },
-  ppt: { imgUrl: pptImg },
+  ppt: { imgUrl: pptxImg },
   pptx: { imgUrl: pptxImg },
-  xls: { imgUrl: xlsImg },
-  xlsx: { imgUrl: xlsxImg }
+  xls: { imgUrl: xlsxImg },
+  xlsx: { imgUrl: xlsxImg },
+  zip: { imgUrl: zipImg },
+  html: { imgUrl: codeImg },
+  css: { imgUrl: codeImg },
+  js: { imgUrl: codeImg },
+  py: { imgUrl: codeImg },
 };
 
 function ext(name) {
@@ -41,11 +42,11 @@ function ext(name) {
 }
 function FilesUploader({ multiple = true, successHandler = () => { }, meta = null, type = "case" }) {
   const [alert, setAlert] = useState({
-    error:false,
-    success:false
+    error: false,
+    success: false
   })
-  const alertHandler = (key)=>{
-    setAlert({...alert, [key]:!alert[key]})
+  const alertHandler = (key) => {
+    setAlert({ ...alert, [key]: !alert[key] })
   }
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -72,7 +73,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
 
   const handleUpload = async () => {
 
-    if (!meta || selectedFiles.length<1) return alertHandler("error")
+    if (!meta || selectedFiles.length < 1) return alertHandler("error")
     setUploading(true);
     const formData = new FormData();
     for (let i = 0; i < selectedFiles.length; i++) {
@@ -115,7 +116,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
         {selectedFiles.map((file, index) => (
           <div key={index}>
             <p style={{ textDecoration: "underline" }}>{cutTitle(file.name)}</p>
-            {/* {FORMAT[ext(file.name)] && <img className='FilesUploader-files-preview' src={FORMAT[ext(file.name)].imgUrl} alt={`File type: ${ext(file.name)}`} />} */}
+            {FORMAT[ext(file.name)] && <img className='FilesUploader-files-preview' src={FORMAT[ext(file.name)].imgUrl} alt={`File type: ${ext(file.name)}`} />}
             <span onClick={() => { handleDelete(index) }}>
               <Icon icon={"close"} addClass={"close-icon"} />
             </span>
