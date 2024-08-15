@@ -77,7 +77,7 @@ const loadEvents = ()=>{
                     return (
                         <div key={index} className="EventsPage-event" style={{ boxShadow: `0px 0px 5px 1px ${item.color ? item.color : "000"}` }}>
                             <div style={{ backgroundColor: item.color ? item.color : "000" }} className="EventsPage-event-color"></div>
-                            <NavLink to={`/event/${item.event_id}`}><div className="EventsPage-event-title">{item.title}</div></NavLink>
+                            <NavLink to={`/event_new/${item.event_id}`}><div className="EventsPage-event-title">{item.title}</div></NavLink>
                             <div>{description(item.description)}</div>
                             <div className="EventsPage-event-date">{item.date_created}</div>
                         </div>

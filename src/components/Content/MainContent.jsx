@@ -31,6 +31,7 @@ import TextEditor from "../elements/TextEditor/TextEditor";
 import File from "../pages/File";
 import UpdateLog from "../pages/UpdateLog";
 import EventsPage from "../pages/EventsPage";
+import EventPage from "../pages/EventPage";
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ const MainContent = () => {
         <Route path='/events' element={access.events ? <Events /> : <NotFound />} />
         <Route path='/events_new' element={access.events ? <EventsPage /> : <NotFound />} />
         <Route path='/event/:id' element={access.event ? <Event /> : <NotFound />} />
+        <Route path='/event_new/:id' element={access.event ? <EventPage /> : <NotFound />} />
         <Route path='/calendar' element={access.calendar ? <Calendar /> : <NotFound />} />
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
