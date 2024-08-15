@@ -84,7 +84,9 @@
 .inner__cards{
     padding: 10px;
     margin: auto;
-
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .wrap__cards__list{
     display: grid;
@@ -151,7 +153,6 @@
     word-wrap: break-word;
     padding: 20px;
     background-color: #fff;
-    border-radius: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
@@ -179,7 +180,7 @@ font-weight: bold;
     justify-content: center;
 }
 .modal__file__img img{
-    max-width: 100%;
+    min-width: 100px;
 }
 .b__load {
     background-image: url(../../img/loading_3.gif);

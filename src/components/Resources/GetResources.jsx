@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { getResourcesBD } from "../../services/resources-api";
 import s from "./Resources.module.css";
-import pngImg from "./../../img/resources/png.png";
-import docImg from "./../../img/resources/doc.png";
-import docxImg from "./../../img/resources/docx.png";
-import jpegImg from "./../../img/resources/jpeg.png";
-import jpgImg from "./../../img/resources/jpg.png";
-import movImg from "./../../img/resources/mov.png";
-import mp3Img from "./../../img/resources/mp3.png";
-import mp4Img from "./../../img/resources/mp4.png";
-import pdfImg from "./../../img/resources/pdf.png";
-import pptImg from "./../../img/resources/ppt.png";
-import pptxImg from "./../../img/resources/pptx.png";
-import xlsImg from "./../../img/resources/xls.png";
-import xlsxImg from "./../../img/resources/xlsx.png";
+import docxImg from "./../../img/resources/docx.svg";
+import mp3Img from "./../../img/resources/mp3.svg";
+import pdfImg from "./../../img/resources/pdf.svg";
+import pptxImg from "./../../img/resources/pptx.svg";
+import xlsxImg from "./../../img/resources/xlsx.svg";
+import codeImg from "./../../img/resources/code.svg"
+import zipImg from "./../../img/resources/zip.svg"
+import mp4Img from "./../../img/resources/mp4.svg"
 import { Button } from "@mui/material";
-import { apiResponse } from "../Functions/get_apiObj";
-import GetDocumentBlock from "./GetDocumentBlock";
 import GetLinksBlock from "./GetLinksBlock";
 import Icon from "../elements/Icons/Icon";
 import AccessCheck from "../Functions/AccessCheck";
@@ -56,12 +48,12 @@ const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
                 >
                     <div className={s.modal__file__inner}>
                         <div className={s.modal__file__img}>
-                            <img src={info.img} alt="" />
+                            <img src={info.img} alt="Файл" />
                         </div>
                         <div className={s.modal__file__info}>
                             <span>
                                 <p className={s.modal__file__title}>Назва:</p>
-                                <p>{cutTitle(info.title)}</p>
+                                <p>{info.title}</p>
                             </span>
                             <span>
                                 <p className={s.modal__file__title}>Дата:</p>
@@ -92,26 +84,31 @@ const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
 
     const getImageByType = (type) => {
         switch (type) {
-            case "application/msword":
-                return docImg;
             case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
                 return docxImg;
-            case "audio/mpeg":
-                return mp3Img;
             case "application/pdf":
                 return pdfImg;
-            case "application/vnd.ms-powerpoint":
-                return pptImg;
             case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
                 return pptxImg;
-            case "application/vnd.ms-excel":
-                return xlsImg;
             case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
                 return xlsxImg;
+    
+            case "audio/mpeg":
+                return mp3Img;
+    
+            case "video/mp4", "video/x-msvideo", "video/quicktime", "video/x-matroska":
+                return mp4Img;
+    
+            case "application/zip", "application/x-rar-compressed", "application/x-7z-compressed":
+                return zipImg;
+    
+            case "text/html","text/css", "application/javascript", "application/json", "application/x-python-code", "application/x-java":
+                return codeImg;
             default:
                 return "";
         }
     };
+    
 
     const getPreview = (file) => {
         const type = file.type.split('/')[0]
@@ -148,7 +145,7 @@ const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
         }
         return (
             <div className={s.file__card} key={ind}>
-                <img src={previewUrl} alt="" onClick={open} />
+                <img src={previewUrl} alt="Файл" onClick={open} />
                 <p className={s.titleH2} onClick={open}>{cutTitle(elem.title)}</p>
                 <p>{convertSize(elem.size)}</p>
                 {canDelete && <Icon icon={"delete"} addClass={"close-icon fs16"} onClick={() => { confirmDelete(elem) }}/>}

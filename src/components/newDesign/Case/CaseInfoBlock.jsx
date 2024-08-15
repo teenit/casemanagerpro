@@ -170,7 +170,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
             </div>
             <div className="CaseInfoBlock">
                 {info.viewInfo.view_ProfilePhoto && (
-                    <ProfilePhotoBlock profileImg={profileImg} meta={{
+                    <ProfilePhotoBlock data={{
+                        sex:dataState.sex,
+                        age:dataState.happy_bd
+                    }} profileImg={profileImg} meta={{
                         key: "case_profile_img",
                         case_id: case_id,
                         type: "case"
