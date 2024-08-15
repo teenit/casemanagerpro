@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { serverAddres } from "../../Functions/serverAddres";
 import s from "./modal.module.css";
 import Input from '../../elements/Inputs/Input'
 import { Button, MenuItem, Select } from "@mui/material";
@@ -19,25 +17,25 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
     const [alert, setAlert] = useState({
         error: false,
         success: false,
-        message:""
+        message: ""
     });
 
-    const alertHandler = (key, message="") => {
-        setAlert({ ...alert, [key]: !alert[key], message:message });
+    const alertHandler = (key, message = "") => {
+        setAlert({ ...alert, [key]: !alert[key], message: message });
     };
 
     function search(val) {
-        let fileLink = role=="manager"?"user/search.php":"case/search.php"
-        apiResponse({val: val}, fileLink)
+        let fileLink = role == "manager" ? "user/search.php" : "case/search.php"
+        apiResponse({ val: val }, fileLink)
             .then((data) => {
                 console.log(data);
-                
-                if(role=="manager"){
+
+                if (role == "manager") {
                     setSearchRes(data)
-                }else{
+                } else {
                     setSearchRes(data?.mas)
                 }
-                
+
             })
             .catch((error) => console.log(error))
     }
@@ -45,7 +43,7 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
         if (user.userName == "" || user.phone == "") {
             return alertHandler("error", "Введіть користувача та його номер телефону (якщо користувач новий)")
         }
-        if(user.phone && user.phone.length !== 10 && user.phone.length !== 13){
+        if (user.phone && user.phone.length !== 10 && user.phone.length !== 13) {
             return alertHandler("error", "Введіть правильний номер телефону")
         }
         let fileLink = role == "manager" ? "event/add-member-user.php" : "event/add-member-case.php"
@@ -81,7 +79,7 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
                         <MenuItem value={true}>Існуючий</MenuItem>
                         <MenuItem value={false}>Новий</MenuItem>
                     </Select>
-                   
+
                     {userInSystem ?
                         <div className={s.add__user__search}>
                             <Input value={user.userName} label="Пошук користувача..." type="text" onChange={(e) => {
@@ -93,7 +91,7 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
                                     {searchRes.map((item, index) => {
                                         return (
                                             <div key={index} className={`${s.add__user__item}`} onClick={() => {
-                                                setUser({ ...user, userName: role=="manager"?item.userName:item.name, id: item.id, phone: item.phone })
+                                                setUser({ ...user, userName: role == "manager" ? item.userName : item.name, id: item.id, phone: item.phone })
                                                 setSearchRes([])
                                             }}>
                                                 <p className={s.add__user__item__p}>{item.userName}</p>
@@ -111,13 +109,11 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
                             <Input label="Номер телефону" value={user.phone} type="number" onChange={(e) => {
                                 setUser({ ...user, phone: e.target.value })
                             }} />
+                            <Input value={user.position} label="Позиція на івенті" type="text" onChange={(e) => {
+                                setUser({ ...user, position: e.target.value })
+                            }} />
                         </div>
                     }
-                    {role == "manager" && <div className={s.add__user__form} >
-                        <Input value={user.position} label="Позиція на івенті" type="text" onChange={(e) => {
-                            setUser({ ...user, position: e.target.value })
-                        }} />
-                    </div>}
 
                     {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success") }} />}
                     {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error") }} />}
