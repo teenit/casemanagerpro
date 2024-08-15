@@ -12,6 +12,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data=null }) => {
     const images = {
         male: [serverAddres("media/default/m-young.png"), serverAddres("media/default/m-middle.png"), serverAddres("media/default/m-old.png")],
         female: [serverAddres("media/default/f-young.png"), serverAddres("media/default/f-middle.png"), serverAddres("media/default/f-old.png")],
+        other: [serverAddres("media/default/o-young.png"), serverAddres("media/default/o-middle.png"), serverAddres("media/default/o-old.png")],
         default: defaultImg
     }
     useEffect(() => {
