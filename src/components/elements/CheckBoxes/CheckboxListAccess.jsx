@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
-
+import Hint from "../Hints/Hint"
 export default function CheckboxListAccess({allMas, checkedMas, onChange}) {
   const [checked, setChecked] = useState([checkedMas]);
   const [allMasElements, setAllMasElements] = useState(allMas());
@@ -59,6 +59,7 @@ export default function CheckboxListAccess({allMas, checkedMas, onChange}) {
                 />
               </ListItemIcon>
               <ListItemText id={labelId} primary={item.id + " " + item.name} />
+              {item.description && <Hint text={item.description} placement='left'/>}
             </ListItemButton>
           </ListItem>
         );

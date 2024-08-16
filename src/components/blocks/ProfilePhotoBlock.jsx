@@ -3,7 +3,7 @@ import Icon from "../elements/Icons/Icon";
 import PhotoUploader from "../elements/Uploaders/PhotoUploader";
 import defaultImg from "../../img/default_profile.png";
 import { serverAddres } from "../Functions/serverAddres";
-const ProfilePhotoBlock = ({ profileImg, meta, data=null }) => {
+const ProfilePhotoBlock = ({ profileImg, meta, data = null }) => {
     const [hover, setHover] = useState(false);
     const [edit, setEdit] = useState(false);
     const [file, setFile] = useState(null);
@@ -28,57 +28,59 @@ const ProfilePhotoBlock = ({ profileImg, meta, data=null }) => {
         setFile(value[0]);
     };
     const getImage = () => {
-        if(!data && !profileImg) return images.default
-        if(!data) return profileImg
-        if(data.sex && !state){
-            if(howOldIsCase(data.age)<18){
-                return images[data.sex][0]
-            }else if(howOldIsCase(data.age)>=18&&howOldIsCase(data.age)<=50){
-                return images[data.sex][1]
-            }else{
+        if (!data && !profileImg) return images.default
+        if (profileImg) return profileImg
+        if (data && data?.sex && data.sex.trim().length>0) {
+            const age = howOldIsCase(data.age)
+            if (age) {
+                if (age < 18) {
+                    return images[data.sex][0]
+                }
+                if (age >= 18 && age <= 50) {
+                    return images[data.sex][1]
+                }
                 return images[data.sex][2]
-            }
-        }else if(state){
-            return state
-        }else{
-            return images.default
+            }else return images[data.sex][1]
+
         }
-    }
+        return images.default
+    };
+
     return (
         <div className="ProfilePhotoBlock" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-        {!edit ? (
-            <div>
-                {hover && (
-                    <div className="ProfilePhotoBlock-hover">
-                        <label htmlFor="fileInput">
-                            <Icon icon={"edit"} addClass={"default-icon fs35"} />
-                        </label>
-                        <input
-                            type="file"
-                            name="fileInput"
-                            id="fileInput"
-                            style={{ display: "none" }}
-                            multiple={false}
-                            onChange={(e) => handleFileChange(e.target.files)}
+            {!edit ? (
+                <div>
+                    {hover && (
+                        <div className="ProfilePhotoBlock-hover">
+                            <label htmlFor="fileInput">
+                                <Icon icon={"edit"} addClass={"default-icon fs35"} />
+                            </label>
+                            <input
+                                type="file"
+                                name="fileInput"
+                                id="fileInput"
+                                style={{ display: "none" }}
+                                multiple={false}
+                                onChange={(e) => handleFileChange(e.target.files)}
                             />
-                    </div>
-                )}
-                <img className="ProfilePhotoBlock-img" src={getImage()} />
-            </div>
-        ) : (
-            <PhotoUploader
-                close={() => setEdit(false)}
-                successHandler={(data) => {
-                    setEdit(false);
-                    setState(data[0].link);
-                }}
-                multiple={false}
-                meta={meta}
-                file={file}
-            />
-        )}
-    </div>
-);
+                        </div>
+                    )}
+                    <img className="ProfilePhotoBlock-img" src={getImage()} />
+                </div>
+            ) : (
+                <PhotoUploader
+                    close={() => setEdit(false)}
+                    successHandler={(data) => {
+                        setEdit(false);
+                        setState(data[0].link);
+                    }}
+                    multiple={false}
+                    meta={meta}
+                    file={file}
+                />
+            )}
+        </div>
+    );
 }
 
 

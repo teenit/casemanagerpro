@@ -43,9 +43,6 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
         if (user.userName == "" || user.phone == "") {
             return alertHandler("error", "Введіть користувача та його номер телефону (якщо користувач новий)")
         }
-        if (user.phone && user.phone.length !== 10 && user.phone.length !== 13) {
-            return alertHandler("error", "Введіть правильний номер телефону")
-        }
         let fileLink = role == "manager" ? "event/add-member-user.php" : "event/add-member-case.php"
         let getUsersKey = role == "manager" ? "eventMemberUser" : "eventMemberCase"
         let obj = {
@@ -81,12 +78,13 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
                     </Select>
 
                     {userInSystem ?
-                        <div className={s.add__user__search}>
+                        <div className={s.add__user__form}>
+
+                            <div className={s.add__user__results}>
                             <Input value={user.userName} label="Пошук користувача..." type="text" onChange={(e) => {
                                 search(e.target.value)
                                 setUser({ ...user, userName: e.target.value })
                             }} />
-                            <div className={s.add__user__results}>
                                 <div className={s.add__user__result}>
                                     {searchRes.map((item, index) => {
                                         return (
@@ -94,12 +92,15 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
                                                 setUser({ ...user, userName: role == "manager" ? item.userName : item.name, id: item.id, phone: item.phone })
                                                 setSearchRes([])
                                             }}>
-                                                <p className={s.add__user__item__p}>{item.userName}</p>
+                                                <p className={s.add__user__item__p}>{role == "manager" ? item.userName : item.name}</p>
                                             </div>
                                         )
                                     })}
                                 </div>
                             </div>
+                            <Input value={user.position} label="Позиція на івенті" type="text" onChange={(e) => {
+                                setUser({ ...user, position: e.target.value })
+                            }} />
                         </div>
                         :
                         <div className={s.add__user__form}>

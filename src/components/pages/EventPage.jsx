@@ -3,7 +3,7 @@ import { Button } from "@mui/material"
 import GalleryBlock from "../blocks/GalleryBlock"
 import AccessCheck from "../Functions/AccessCheck";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { serverAddres } from "../Functions/serverAddres";
 import { apiResponse } from "../Functions/get_apiObj";
 import Modal from "../Modals/Modal";
@@ -12,6 +12,7 @@ import Textarea from "../elements/Inputs/Textarea";
 import Icon from "../elements/Icons/Icon";
 import AddMembers from "../Events/Event/AddMembers";
 import AddPlan from "../Modals/EventModals/AddPlan";
+import FilesUploader from "../elements/Uploaders/FilesUploader";
 const EventPage = () => {
     const params = useParams()
     const downloadGallery = AccessCheck('yes_no', 'a_page_event_media')
@@ -19,6 +20,8 @@ const EventPage = () => {
         managers: [],
         members: []
     })
+    const [plans, setPlans] = useState(null)
+    const [files, setFiles] = useState(null)
     const [event, setEvent] = useState(null)
     // const [width, setWidth] = useState(window.innerWidth)
     // const [planRows, setPlanRows] = useState(1)
@@ -39,10 +42,32 @@ const EventPage = () => {
                 if (data?.id) {
                     getUsers(data.id, "eventMemberUser")
                     getUsers(data.id, "eventMemberCase")
-                    // getPlans(data.data.id, "eventPlan")
-                    // getFiles(data.data.id, "event_files")
+                    getPlans(data.id, "eventPlan")
+                    getFiles(data.id, "event_files")
                 }
             })
+            .catch((error) => console.log(error))
+    }
+    function getFiles(id, key) {
+        let obj = {
+            key: key,
+            eventID: id
+        }
+        apiResponse({ ...obj }, "event/get-files.php").then((data) => {
+            let mas = data.map(item => { return item.fileInfo })
+            setFiles([...mas])            
+        })
+            .catch((error) => console.log(error))
+    }
+    function getPlans(id, key) {
+        let obj = {
+            key: key,
+            eventID: id
+        }
+        apiResponse({ ...obj }, "event/get-plans.php").then((data) => {
+            console.log(data);
+            setPlans(data)
+        })
             .catch((error) => console.log(error))
     }
     function getUsers(id, key) {
@@ -50,10 +75,9 @@ const EventPage = () => {
             key: key,
             eventID: id
         }
-        apiResponse({ obj }, "event/get-event-members.php")
+        apiResponse({ ...obj }, "event/get-event-members.php")
             .then((data) => {
-                console.log(data);
-
+                
                 if (key == "eventMemberUser") {
                     setUsers({ ...users, managers: data })
                 } else {
@@ -62,6 +86,9 @@ const EventPage = () => {
             })
             .catch((error) => console.log(error))
     }
+    const uploadFiles = ()=>{
+        getFiles(event.id)
+    }
     useEffect(() => {
         // window.dispatchEvent(new Event('resize'))
         getEvent()
@@ -69,10 +96,10 @@ const EventPage = () => {
     const MemberItem = () => {
         return (
             <div className="EventPage-MemberItem">
-                <div>Name</div>
+                <NavLink to={`dhdh`}>Name</NavLink>
                 <div className="EventPage-MemberItem-right">
                     <div className="EventPage-MemberItem-right-role">role</div>
-                    <div>0987654321</div>
+                    <div><a href="tel:0987654321">0987654321</a></div>
                 </div>
             </div>
         )
@@ -116,7 +143,7 @@ const EventPage = () => {
     return (
         <div className="EventPage">
             <div className="EventPage-header">
-                <div className="EventPage-header-title" style={{borderBottom:`solid 3px ${event?.color}`}}>{event?.title}</div>
+                <div className="EventPage-header-title" style={{ borderBottom: `solid 3px ${event?.color}` }}>{event?.title}</div>
                 <div className="EventPage-header-subtitle">{event?.description}</div>
             </div>
             <div className="EventPage-members">
@@ -151,17 +178,36 @@ const EventPage = () => {
             <div className="EventPage-plans">
                 <div className="EventPage-plans-title">
                     <div>Плани</div>
-                    <Icon icon="add" addClass={"fs40"} onClick={() => { modalHandler("addPlan") }} />
+                    {AccessCheck('yes_no', 'a_page_event_add_plan') && <Icon icon="add" addClass={"fs40"} onClick={() => { modalHandler("addPlan") }} />}
+                    
                 </div>
                 <div className="EventPage-plans-inner">
                     <PlanItem />
+                    <PlanItem />
+                    <PlanItem />
+                    <PlanItem />
+                    <PlanItem />
+                    <PlanItem />
                 </div>
             </div>
-            {/* <GalleryBlock/> */}
-            <div className="EventPage-addFiles">
-                <div>Завантажити файли</div>
-            </div>
-            {modal.addPlan && <AddPlan close={()=>{modalHandler("addPlan")}}/>}
+            {files && <GalleryBlock data={files} check={downloadGallery}/>}
+            {AccessCheck('yes_no', 'a_page_event_add_media') && <div className="EventPage-addFiles">
+                <div>Завантаження файлів</div>
+                <FilesUploader
+                    successHandler={uploadFiles}
+                    multiple={true}
+                    meta={{
+                        key: "event_files",
+                        type: "event",
+                        title: "",
+                        description: "",
+                        eventID: params.id
+                    }}
+                    type="event"
+                />
+            </div>}
+            
+            {modal.addPlan && <AddPlan close={() => { modalHandler("addPlan") }} />}
             {modal.addMember && <AddMembers getUsers={(id, key) => {
                 getUsers(id, key)
             }} modalHandler={() => { modalHandler("addMember") }} />}

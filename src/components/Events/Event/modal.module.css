@@ -79,6 +79,8 @@
     margin: 0;
 }
 .add__user__result{
+    max-height: 100px;
+    overflow-y: scroll;
     display: grid;
     grid-template-columns: 1fr;
     gap: 5px;

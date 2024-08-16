@@ -28,7 +28,7 @@
         height: max-content;
         padding: 25px;
         border-radius: 15px;
-        border: solid 1.5px $second-color;
+        border: solid 2px $second-color;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -106,13 +106,13 @@
 
     &-PlanItem{
         position: relative;
-        border: solid 1.5px $second-color;
+        border: solid 2px $second-color;
         border-radius: 15px;
         display: flex;
         flex-direction: column;
         &-header{
             padding: 10px 0px;
-            border-radius: 15px 15px 7.5px 7.5px;
+            border-radius: 10px 10px 7.5px 7.5px;
             background-color: $second-color;
             display: flex;
             justify-content: center;
@@ -145,7 +145,6 @@
             width: max-content;
             left: 37.5%;
             bottom: 25px;
-            position: absolute;
         }
     }
     &-addFiles{

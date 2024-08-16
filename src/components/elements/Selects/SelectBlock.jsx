@@ -46,7 +46,9 @@ const SelectBlock = ({ saveHandler, disabled = false, value = "", onChange, link
                             value={stateValue}
                             onChange={(e) => {
                                 setStateValue(e.target.value);
-                                onChange(e.target.value);
+                                if (onChange) {
+                                    onChange(e)
+                                }
                             }}
                         >
                             {selectOptions.map((option, index) => (
@@ -55,6 +57,7 @@ const SelectBlock = ({ saveHandler, disabled = false, value = "", onChange, link
                                 </MenuItem>
                             ))}
                         </Select>
+
                     </div>
                     <div className="InputBlock-editer-icons">
                         <span onClick={handleSave}>

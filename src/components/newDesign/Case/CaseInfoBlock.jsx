@@ -171,8 +171,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
             <div className="CaseInfoBlock">
                 {info.viewInfo.view_ProfilePhoto && (
                     <ProfilePhotoBlock data={{
-                        sex:dataState.sex,
-                        age:dataState.happy_bd
+                        sex: dataState.sex,
+                        age: dataState.happy_bd
                     }} profileImg={profileImg} meta={{
                         key: "case_profile_img",
                         case_id: case_id,
@@ -208,7 +208,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                     </div>}
                     {(info.viewInfo.view_email) && <div className="CaseInfoBlock-line">
                         <InputBlock
-                        hintMessage={LANG.hints.email}
+                            hintMessage={LANG.hints.email}
                             value={dataState.email}
                             onChange={(e) => { handleDataChange("email", e.target.value) }}
                             link={`mailto:${dataState.email}`}
@@ -243,6 +243,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     titleDefault={LANG.case_data.sex}
                                     selectOptions={selectOptions}
                                 />
+
                             </div>
                         </div>
                     )}
