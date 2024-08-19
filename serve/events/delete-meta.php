@@ -2,15 +2,15 @@
 require_once '../config.php';
 
 // Отримання даних з фронтенду
-$data = json_decode(file_get_contents('php://input'), true);
+$data = json_decode(file_get_contents('php://input'), true); 
 
 // Перевірка наявності event_id для видалення
-if (!isset($data['event_id'])) {
+if (!isset($data['meta_id'])) {
     echo json_encode(array("status" => false, "message" => "Event ID is required"));
     exit;
 }
 
-$event_id = $data['event_id'];
+$meta_id = $data['meta'];
 
 // Підготовка SQL-запиту для видалення рядка
 $sql = "DELETE FROM eventsmeta WHERE id = ?";
@@ -24,7 +24,7 @@ if ($stmt === false) {
 }
 
 // Прив'язка параметра і виконання запиту
-$stmt->bind_param("i", $event_id);
+$stmt->bind_param("i", $meta_id);
 
 if ($stmt->execute() === TRUE) {
     echo json_encode(array("status" => true, "message" => "Row deleted successfully"));
