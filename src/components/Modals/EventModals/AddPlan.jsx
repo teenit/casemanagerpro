@@ -4,25 +4,38 @@ import { LANG } from '../../../services/config'
 import { Button } from '@mui/material'
 import Input from '../../elements/Inputs/Input'
 import Textarea from '../../elements/Inputs/Textarea'
+import { apiResponse } from '../../Functions/get_apiObj'
 
 
-const AddPlan = ({ close }) => {
+const AddPlan = ({ close, event_id }) => {
     const [plan, setPlan] = useState({
         title: "",
         startDate: "",
         startTime: "",
         endDate: "",
         endTime: "",
-        description: ""
+        description: "",
+        event_id: event_id
     })
     const planHandler = (key, value) => {
         setPlan({ ...plan, [key]: value })
+    }
+
+    const createPlan = () => {
+        apiResponse({
+            event_id: event_id,
+            meta_key: 'event_plan',
+            meta_value: JSON.stringify({...plan})
+        }, "events/add-event-meta.php").then((res)=>{
+            console.log(res)
+        })
     }
     return (
         <Modal closeHandler={close} header={"Додати план"} footer={
             <>
                 <Button variant="contained" color="error" onClick={close}>{LANG.GLOBAL.cancel}</Button>
                 <Button variant="contained" onClick={() => {
+                    createPlan()
                     close()
                 }}>{LANG.GLOBAL.save}</Button>
             </>

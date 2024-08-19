@@ -13,6 +13,7 @@ import Icon from "../elements/Icons/Icon";
 import AddMembers from "../Events/Event/AddMembers";
 import AddPlan from "../Modals/EventModals/AddPlan";
 import FilesUploader from "../elements/Uploaders/FilesUploader";
+import EventPlans from "../newDesign/Events/EventPlans";
 const EventPage = () => {
     const params = useParams()
     const downloadGallery = AccessCheck('yes_no', 'a_page_event_media')
@@ -23,6 +24,7 @@ const EventPage = () => {
     const [plans, setPlans] = useState(null)
     const [files, setFiles] = useState(null)
     const [event, setEvent] = useState(null)
+    const [state, setState] = useState(null)
     // const [width, setWidth] = useState(window.innerWidth)
     // const [planRows, setPlanRows] = useState(1)
     // window.addEventListener('resize', () => {
@@ -32,9 +34,23 @@ const EventPage = () => {
         addMember: false,
         addPlan: false
     })
+    
+    useEffect(()=>{
+        apiResponse({event_id:params.id}, "events/get-event-by-id.php").then((res)=>{
+            setState(res)
+        })
+    },[])
+
     const modalHandler = (key) => {
         setModal({ ...modal, [key]: !modal[key] })
     }
+
+    // const saveFeedback = () => {
+    //     apiResponse({
+    //         plan_id: 
+    //     }, )
+    // }
+
     function getEvent() {
         apiResponse({ event_id: params.id }, "event/get-event.php")
             .then((data) => {
@@ -132,7 +148,7 @@ const EventPage = () => {
                 <>
                     <Button variant="contained" color="error" onClick={() => { setModal(false) }}>{LANG.GLOBAL.cancel}</Button>
                     <Button variant="contained" onClick={() => {
-                        setModal(false)
+                       // setModal(false)
                     }}>{LANG.GLOBAL.save}</Button>
                 </>
             }>
@@ -146,6 +162,11 @@ const EventPage = () => {
                 <div className="EventPage-header-title" style={{ borderBottom: `solid 3px ${event?.color}` }}>{event?.title}</div>
                 <div className="EventPage-header-subtitle">{event?.description}</div>
             </div>
+            <Button onClick={()=>{
+                    apiResponse({event_id:params.id}, "events/get-event-by-id.php").then((res)=>{
+                        console.log(res)
+                    })
+                }}>CLICK</Button>
             <div className="EventPage-members">
                 <div className="EventPage-members-title">
                     <div>{event?.title}</div>
@@ -174,6 +195,10 @@ const EventPage = () => {
                     </div>
                 </div>
             </div>
+            {
+                state && <EventPlans plans={state.event_plans} event_id={params.id}/>
+            }
+            
 
             <div className="EventPage-plans">
                 <div className="EventPage-plans-title">
@@ -212,7 +237,7 @@ const EventPage = () => {
                 getUsers(id, key)
             }} modalHandler={() => { modalHandler("addMember") }} />}
         </div>
-    )
+    ) 
 }
 
 export default EventPage;

@@ -45,6 +45,8 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
         }
         let fileLink = role == "manager" ? "event/add-member-user.php" : "event/add-member-case.php"
         let getUsersKey = role == "manager" ? "eventMemberUser" : "eventMemberCase"
+        
+        
         let obj = {
             userName: user.userName,
             phone: user.phone,
@@ -52,12 +54,21 @@ const AddMembers = ({ addUser, getUsers, modalHandler }) => {
             eventID: params.id,
             position: user.position
         }
-        apiResponse({ ...obj }, fileLink).then((data) => {
-            console.log(data);
-            modalHandler()
-            getUsers(params.id, getUsersKey);
-        })
-            .catch((error) => console.log(error))
+        if (userInSystem) {
+            apiResponse({
+                meta_key: 'event_user_manager',
+                meta_value: user.id,
+                event_id: params.id
+            },"events/add-event-meta.php").then((res)=>{
+                console.log(res);
+            })
+        }
+        // apiResponse({ ...obj }, fileLink).then((data) => {
+        //     console.log(data);
+        //     modalHandler()
+        //     getUsers(params.id, getUsersKey);
+        // })
+        //     .catch((error) => console.log(error))
     }
     return (
         <Modal closeHandler={() => { modalHandler() }} header={"Додати учасника"} footer={
