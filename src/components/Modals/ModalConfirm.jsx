@@ -12,7 +12,10 @@ const ModalConfirm = ({closeHandler, successHandler, text}) => {
             footer={
                 <>
                     <Button onClick={closeHandler} color="error">{LANG.GLOBAL.cancel}</Button>
-                    <Button color="error" variant="contained" onClick={successHandler} >{LANG.GLOBAL.delete}</Button>
+                    <Button color="error" variant="contained" onClick={()=>{
+                        successHandler()
+                        closeHandler()
+                    }} >{LANG.GLOBAL.delete}</Button>
                 </>
             }
             >

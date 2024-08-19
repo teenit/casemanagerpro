@@ -14,6 +14,7 @@ import AddMembers from "../Events/Event/AddMembers";
 import AddPlan from "../Modals/EventModals/AddPlan";
 import FilesUploader from "../elements/Uploaders/FilesUploader";
 import EventPlans from "../newDesign/Events/EventPlans";
+import EventMembers from "../newDesign/Events/EventMembers";
 const EventPage = () => {
     const params = useParams()
     const downloadGallery = AccessCheck('yes_no', 'a_page_event_media')
@@ -34,31 +35,23 @@ const EventPage = () => {
         addMember: false,
         addPlan: false
     })
-    
-    useEffect(()=>{
-        apiResponse({event_id:params.id}, "events/get-event-by-id.php").then((res)=>{
-            setState(res)
-        })
-    },[])
-
+    const getEventData = ()=>{
+            apiResponse({event_id:params.id}, "events/get-event-by-id.php").then((res)=>{
+                setState(res)
+            })
+    }
+useEffect(()=>{
+    getEventData()
+},[])
     const modalHandler = (key) => {
         setModal({ ...modal, [key]: !modal[key] })
     }
-
-    // const saveFeedback = () => {
-    //     apiResponse({
-    //         plan_id: 
-    //     }, )
-    // }
 
     function getEvent() {
         apiResponse({ event_id: params.id }, "event/get-event.php")
             .then((data) => {
                 setEvent(data)
                 if (data?.id) {
-                    getUsers(data.id, "eventMemberUser")
-                    getUsers(data.id, "eventMemberCase")
-                    getPlans(data.id, "eventPlan")
                     getFiles(data.id, "event_files")
                 }
             })
@@ -75,147 +68,31 @@ const EventPage = () => {
         })
             .catch((error) => console.log(error))
     }
-    function getPlans(id, key) {
-        let obj = {
-            key: key,
-            eventID: id
-        }
-        apiResponse({ ...obj }, "event/get-plans.php").then((data) => {
-            console.log(data);
-            setPlans(data)
-        })
-            .catch((error) => console.log(error))
-    }
-    function getUsers(id, key) {
-        let obj = {
-            key: key,
-            eventID: id
-        }
-        apiResponse({ ...obj }, "event/get-event-members.php")
-            .then((data) => {
-                
-                if (key == "eventMemberUser") {
-                    setUsers({ ...users, managers: data })
-                } else {
-                    setUsers({ ...users, members: data })
-                }
-            })
-            .catch((error) => console.log(error))
-    }
+  
     const uploadFiles = ()=>{
-        getFiles(event.id)
+        getEventData()
     }
     useEffect(() => {
-        // window.dispatchEvent(new Event('resize'))
         getEvent()
     }, [])
-    const MemberItem = () => {
-        return (
-            <div className="EventPage-MemberItem">
-                <NavLink to={`dhdh`}>Name</NavLink>
-                <div className="EventPage-MemberItem-right">
-                    <div className="EventPage-MemberItem-right-role">role</div>
-                    <div><a href="tel:0987654321">0987654321</a></div>
-                </div>
-            </div>
-        )
-    }
 
-    const PlanItem = () => {
-        const [modal, setModal] = useState(false)
-        const [feedbackValue, setFeedbackValue] = useState("")
-        return <div className="EventPage-PlanItem">
-            <div className="EventPage-PlanItem-header">
-                <div className="EventPage-PlanItem-header-title">
-                    <div>duu</div>
-                    <div>12:00-13:00</div>
-                </div>
-            </div>
-            <div className="EventPage-PlanItem-inner">
-                <div>fifufufuffu</div>
-                <div>fifufufuffu</div>
-                <div>fifufufuffu</div>
-                <div>fifufufuffu</div>
-                <div>fifufufuffu</div>
-                <div>fifufufuffu</div>
-                <div className="EventPage-PlanItem-inner-feedback">
-                    <div className="EventPage-PlanItem-inner-feedback-title">Зворотній зв'язок</div>
-                    <div>Немає зворотнього зв'язку</div>
-                </div>
-            </div>
-            <Button variant="contained" className="EventPage-PlanItem-button" onClick={() => { setModal(true) }}>Написати</Button>
-            {modal && <Modal header="Додати зворотній зв'язок" closeHandler={() => { setModal(false) }} footer={
-                <>
-                    <Button variant="contained" color="error" onClick={() => { setModal(false) }}>{LANG.GLOBAL.cancel}</Button>
-                    <Button variant="contained" onClick={() => {
-                       // setModal(false)
-                    }}>{LANG.GLOBAL.save}</Button>
-                </>
-            }>
-                <Textarea value={feedbackValue} onChange={(e) => { setFeedbackValue(e.target.value) }} label="Зворотній зв'язок" />
-            </Modal>}
-        </div>
-    }
     return (
         <div className="EventPage">
             <div className="EventPage-header">
                 <div className="EventPage-header-title" style={{ borderBottom: `solid 3px ${event?.color}` }}>{event?.title}</div>
                 <div className="EventPage-header-subtitle">{event?.description}</div>
             </div>
-            <Button onClick={()=>{
-                    apiResponse({event_id:params.id}, "events/get-event-by-id.php").then((res)=>{
-                        console.log(res)
-                    })
-                }}>CLICK</Button>
             <div className="EventPage-members">
                 <div className="EventPage-members-title">
                     <div>{event?.title}</div>
                     <Icon icon="add" addClass={"fs40"} onClick={() => { modalHandler("addMember") }} />
                 </div>
-                <div className="EventPage-members-inner">
-                    <div className="EventPage-members-inner-block">
-                        <div className="EventPage-members-inner-block-title">Організатори</div>
-                        <div className="EventPage-members-inner-block-members">
-                            <MemberItem />
-                            <MemberItem />
-                            <MemberItem />
-                        </div>
-                    </div>
-
-                    <div className="EventPage-members-inner-block">
-                        <div className="EventPage-members-inner-block-title">Учасники</div>
-                        <div className="EventPage-members-inner-block-members">
-                            <MemberItem />
-                            <MemberItem />
-                            <MemberItem />
-                            <MemberItem />
-                            <MemberItem />
-                            <MemberItem />
-                        </div>
-                    </div>
-                </div>
+                {state && <EventMembers event_id={params.id} getEventData={getEventData} managers={state.event_user_manager} members={state.event_case_member}/>}
             </div>
             {
-                state && <EventPlans plans={state.event_plans} event_id={params.id}/>
+                state && <EventPlans getEventData={getEventData} feedbacks={state.event_feedbacks} plans={state.event_plans} event_id={params.id}/>
             }
-            
-
-            <div className="EventPage-plans">
-                <div className="EventPage-plans-title">
-                    <div>Плани</div>
-                    {AccessCheck('yes_no', 'a_page_event_add_plan') && <Icon icon="add" addClass={"fs40"} onClick={() => { modalHandler("addPlan") }} />}
-                    
-                </div>
-                <div className="EventPage-plans-inner">
-                    <PlanItem />
-                    <PlanItem />
-                    <PlanItem />
-                    <PlanItem />
-                    <PlanItem />
-                    <PlanItem />
-                </div>
-            </div>
-            {files && <GalleryBlock data={files} check={downloadGallery}/>}
+            {files && <GalleryBlock data={state.event_files} check={downloadGallery}/>}
             {AccessCheck('yes_no', 'a_page_event_add_media') && <div className="EventPage-addFiles">
                 <div>Завантаження файлів</div>
                 <FilesUploader
@@ -233,9 +110,7 @@ const EventPage = () => {
             </div>}
             
             {modal.addPlan && <AddPlan close={() => { modalHandler("addPlan") }} />}
-            {modal.addMember && <AddMembers getUsers={(id, key) => {
-                getUsers(id, key)
-            }} modalHandler={() => { modalHandler("addMember") }} />}
+            {modal.addMember && <AddMembers getEventData={getEventData} modalHandler={() => { modalHandler("addMember") }} />}
         </div>
     ) 
 }

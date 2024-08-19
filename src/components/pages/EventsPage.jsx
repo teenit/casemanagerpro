@@ -8,6 +8,7 @@ import { LANG } from "../../services/config";
 import Icon from "../elements/Icons/Icon";
 import SmallNotification from "../elements/Notifications/SmallNotification";
 import { NavLink } from "react-router-dom";
+import ModalConfirm from "../Modals/ModalConfirm";
 
 const DEFAULT_FORM_DATA = {
     title: '',
@@ -22,7 +23,11 @@ const EventsPage = () => {
         modal: false,
         action: "",
         currentEvent: null
-    });
+    })
+
+    const [deleteModal, setDeleteModal] = useState(false)
+    const [eventToDelete, setEventToDelete] = useState(null)
+
     const modalHandler = (action = "", event = null) => {
         setModal({
             modal: !modal.modal,
@@ -30,56 +35,69 @@ const EventsPage = () => {
             currentEvent: event
         });
         if (action === "edit" && event) {
-            setFormData({ ...event })
+            setFormData({ ...event });
         } else if (action === "add") {
-            setFormData({ ...DEFAULT_FORM_DATA })
+            setFormData({ ...DEFAULT_FORM_DATA });
         }
-    };
+    }
 
     const [alert, setAlert] = useState({
         error: false,
         success: false,
         message: ""
-    });
+    })
+
     const alertHandler = (key, message = "") => {
         setAlert({ ...alert, [key]: !alert[key], message: message });
-    };
+    }
 
     const [formData, setFormData] = useState({
         ...DEFAULT_FORM_DATA
-    });
+    })
 
-    const [events, setEvents] = useState([])
+    const [events, setEvents] = useState([]);
 
     const loadEvents = () => {
         apiResponse({ ...formData }, "events/get-events.php").then((res) => {
             setEvents([...res])
-        });
-    };
+        })
+    }
 
     useEffect(() => {
-        loadEvents();
-    }, []);
+        loadEvents()
+    }, [])
 
     const updateEvent = () => {
         if (formData.title === DEFAULT_FORM_DATA.title) {
             return alertHandler("error", "Введіть назву події")
         }
         if (formData.title.length >= 100) {
-            return alertHandler("error", `Назва події повинна бути довжиною до 100 символів. Поточна довжина: ${formData.title.length} символів`);
+            return alertHandler("error", `Назва події повинна бути довжиною до 100 символів. Поточна довжина: ${formData.title.length} символів`)
         }
-        
-        const link = modal.action == "add" ? "events/create.php" : "events/update.php"
-        
-        apiResponse({ ...formData, event_id: modal.currentEvent.event_id }, link).then((res) => {
+
+        const link = modal.action === "add" ? "events/create.php" : "events/update.php"
+
+        apiResponse({ ...formData, event_id: modal.currentEvent?.event_id }, link).then((res) => {
             loadEvents()
             modalHandler()
-        })
-    }
+        });
+    };
+
+    const confirmDelete = (event) => {
+        setEventToDelete(event);
+        setDeleteModal(true)
+    };
+
+    const deleteEvent = () => {
+        apiResponse({ event_id: eventToDelete.event_id, status:0 }, "events/update.php").then(() => {
+            setDeleteModal(false);
+            loadEvents();
+        });
+    };
 
     const description = (str) => {
-        return str.length > 0 ? (str.length > 50 ? str.slice(0, 50) + "..." : str) : "Без опису"
-    }
+        return str.length > 0 ? (str.length > 50 ? str.slice(0, 50) + "..." : str) : "Без опису";
+    };
 
     return (
         <div className="EventsPage">
@@ -87,6 +105,7 @@ const EventsPage = () => {
                 <div>Події</div>
                 <Icon icon={"add"} addClass={"fs40"} onClick={() => modalHandler("add")} />
             </div>
+            
             {modal.modal && (
                 <Modal
                     closeHandler={() => setModal({ modal: false, action: "", currentEvent: null })}
@@ -105,7 +124,8 @@ const EventsPage = () => {
                     <Input
                         label={LANG.GLOBAL.title}
                         value={formData.title}
-                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}/>
+                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    />
                     <Textarea
                         label={LANG.GLOBAL.description}
                         value={formData.description}
@@ -128,6 +148,15 @@ const EventsPage = () => {
                     />
                 </Modal>
             )}
+
+            {deleteModal && (
+                <ModalConfirm
+                    closeHandler={() => setDeleteModal(false)}
+                    successHandler={deleteEvent}
+                    text={`Ви впевнені, що хочете видалити подію "${eventToDelete?.title}"?`}
+                />
+            )}
+
             <div className="EventsPage-events">
                 {events.map((item, index) => {
                     return (
@@ -143,14 +172,17 @@ const EventsPage = () => {
                             <div>{description(item.description)}</div>
                             <div className="EventsPage-event-split">
                                 <div className="EventsPage-event-split-date">{item.date_created}</div>
-                                <Icon icon={"edit"} addClass={"default-icon"} onClick={() => modalHandler("edit", item)} />
+                                <div>
+                                    <Icon icon={"edit"} addClass={"default-icon"} onClick={() => modalHandler("edit", item)} />
+                                    <Icon icon={"delete"} addClass={"close-icon"} onClick={() => confirmDelete(item)} />
+                                </div>
                             </div>
                         </div>
                     );
                 })}
             </div>
-            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error") }} />}
-            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success") }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error"); }} />}
+            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success"); }} />}
         </div>
     );
 };

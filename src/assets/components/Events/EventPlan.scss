@@ -1,0 +1,83 @@
+.EventPlan {
+    position: relative;
+    border: solid 2px $second-color;
+    border-radius: 15px;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+
+    &-header {
+        padding: 10px 0px;
+        border-radius: 10px 10px 7.5px 7.5px;
+        background-color: $second-color;
+        display: flex;
+        justify-content: center;
+
+        &-title {
+            width: 90%;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            word-break: break-all;
+        }
+    }
+
+    &-inner {
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        word-break: break-all;
+
+        &-text {
+            display: flex;
+            flex-direction: column;
+            max-height: 150px;
+            overflow-y: scroll;
+            gap: 15px;
+
+            &-item {
+                display: flex;
+                flex-direction: column;
+
+                &-title {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    &-feedback {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    
+        &:hover {
+            background-color: $background-color;
+    
+            .EventPlan-feedback-panel {
+                display: flex;
+            }
+        }
+    
+        &-panel {
+            display: none;
+            gap: 5px;
+        }
+    }
+    
+    
+    &-addFeedback {
+        padding: 15px 20px 0px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        &-button {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    }
+}
