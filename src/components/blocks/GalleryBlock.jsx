@@ -74,23 +74,23 @@ const GalleryBlock = ({ data, check }) => {
     }
 
     return (
-        <div className='Gallery'>
+        <div className='GalleryBlock'>
             {imagesAndVideos.length > 0 && <>
                 <h1>{LANG.gallery}</h1>
-                <div className='Gallery-grid' style={{
+                <div className='GalleryBlock-grid' style={{
                     gridTemplateRows: `repeat(${imgRows}, 1fr)`,
                     gridTemplateColumns: `repeat(${imgColumns}, 1fr)`,
                 }}>
                     {imagesAndVideos.map((item, index) => {
                         if (item.type.startsWith("video/")) {
                             return (
-                                <div className='Gallery-grid-img-wrap' key={index}>
+                                <div className='GalleryBlock-grid-img-wrap' key={index}>
                                     <VideoPlayer className="video" src={item.link} />
                                 </div>
                             );
                         } else {
                             return (
-                                <div className='Gallery-grid-img-wrap' key={index}>
+                                <div className='GalleryBlock-grid-img-wrap' key={index}>
                                     <img onClick={() => { setOpenedPhoto({ url: item.link, show: true }) }} src={item.link} alt="Фотографія" />
                                 </div>
                             );
@@ -100,7 +100,7 @@ const GalleryBlock = ({ data, check }) => {
             </>}
             {otherFiles.length > 0 && <>
                 <h1>{LANG.documents}</h1>
-                <table className='Gallery-documents'>
+                <table className='Table'>
                     <thead>
                         <tr>
                             <td>{LANG.galleryBlock.name}</td>
@@ -118,7 +118,6 @@ const GalleryBlock = ({ data, check }) => {
                                     <td>{getType(item.type)}</td>
                                     <td>{convertSize(item.size)}</td>
                                     {check && <td><NavLink download={true} to={item.link}><GetAppIcon /></NavLink></td>}
-                                    
                                 </tr>
                             );
                         })}

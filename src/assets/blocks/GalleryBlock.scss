@@ -1,4 +1,4 @@
-.Gallery{
+.GalleryBlock{
     height: max-content;
     margin-top: 50px;
     display: flex;
@@ -24,23 +24,7 @@
             }
         }
     }
-    &-documents{
-        border-collapse: collapse;
-        border: solid 1.5px #fff;
-        thead{
-            background-color: $main-color;
-            color: #fff;
-            td{
-                padding: 0px 75px;
-            }
-        }
-        tbody{
-            background-color: $second-color;
-            &:nth-child(even){
-                background-color: $background-color;
-            }
-        }
-    }
+    
 }
 // @media screen and (max-width:720px){
 //     .Gallery-grid{

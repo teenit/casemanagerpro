@@ -2,32 +2,12 @@
     width: 90%;
     margin: auto;
 }
-
-tbody tr:nth-child(even) {
-    background-color: #cfe5f6;
-  }
-  
-  tbody tr:nth-child(odd) {
-    background-color: var(--background-color);
-  }
-table{
-    text-align: center;
-    display: block;
-    border-collapse: collapse;
-    width: 100%;
-}
-thead{
-    font-weight: 600;
-    background-color: var(--main-color);
-    border: 1px solid #000;
-}
-td{
-    border: 1px solid #ccc;
-    padding: 2px;
-}
 .btn__print{
     display: flex;
     gap: 15px;
+}
+.wrap > table{
+    display: block;
 }
 @media screen and (max-width:1024px) {
     table{

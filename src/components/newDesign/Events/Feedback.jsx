@@ -27,14 +27,15 @@ const Feedback = ({ item, event_id, getEventData }) => {
         setModals({ ...modals, [key]: !modals[key] });
     };
     const deleteFeedback = (feedback_id) => {
-        apiResponse({ event_id: event_id, meta_id: feedback_id }, "events/delete-meta.php").then((res) => {
+        apiResponse({ meta_id: feedback_id }, "events/delete-meta.php").then((res) => {
             alertHandler("success", "Зворотній зв'язок видалено")
             getEventData()
         })
     };
 
     const editFeedback = (feedback_id) => {
-        apiResponse({ event_id: event_id, meta_id: feedback_id }, "events/update.php").then(() => {
+        apiResponse({ meta_value: editingFeedback, meta_id: feedback_id }, "events/update-event-meta.php").then((res) => {
+            console.log(res);
             modalHandler("edit")
             alertHandler("success", "Зворотній зв'язок оновлено")
             getEventData()
@@ -44,7 +45,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
         <div className="EventPlan-feedback">
             <div dangerouslySetInnerHTML={{ __html: item.value }}></div>
             <div className="EventPlan-feedback-panel">
-                <Icon icon={"edit"} addClass={"default-icon"} onClick={() => {                    
+                <Icon icon={"edit"} addClass={"default-icon"} onClick={() => {
                     setEditingFeedback(item.value)
                     modalHandler("edit");
                 }} />

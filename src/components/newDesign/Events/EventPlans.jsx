@@ -22,7 +22,7 @@ const EventPlans = ({plans = [], feedbacks={}, event_id, getEventData}) => {
                 })
             }
             </div>
-            {modal && <AddPlan event_id = {event_id} close={() => { setModal(false) }} />}
+            {modal && <AddPlan getEventData={getEventData} event_id = {event_id} close={() => { setModal(false) }} />}
         </div>
     )
 }

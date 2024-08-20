@@ -10,7 +10,7 @@ if (!isset($data['meta_id'])) {
     exit;
 }
 
-$meta_id = $data['meta'];
+$meta_id = $data['meta_id'];
 
 // Підготовка SQL-запиту для видалення рядка
 $sql = "DELETE FROM eventsmeta WHERE id = ?";

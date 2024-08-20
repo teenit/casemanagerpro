@@ -39,7 +39,7 @@ const AddPlan = ({ close, event_id, action = "add", data, getEventData }) => {
                 endDate: data.endDate || "",
                 endTime: data.endTime || "",
                 description: data.description || "",
-                event_id: event_id
+                plan_id: data.plan_id
             });
         }
     }, [action, data, event_id]);
@@ -47,35 +47,41 @@ const AddPlan = ({ close, event_id, action = "add", data, getEventData }) => {
     const planHandler = (key, value) => {
         setPlan({ ...plan, [key]: value });
     };
-    const validate = ()=>{
+    const validate = () => {
+        if(action=="edit" && JSON.stringify(plan)==JSON.stringify(data)){
+            return close()
+        }
         const startDateTime = moment(`${plan.startDate} ${plan.startTime}`, "YYYY-MM-DD HH:mm");
         const endDateTime = moment(`${plan.endDate} ${plan.endTime}`, "YYYY-MM-DD HH:mm");
-    
+
         if (startDateTime.isAfter(endDateTime)) {
             return alertHandler("error", "Дата початку повинна бути раніше дати кінця");
         }
-    
+
         if (plan.title.length < 1 || plan.startDate.length < 1 || plan.endDate.length < 1 || plan.startTime.length < 1 || plan.endTime.length < 1) {
             return alertHandler("error", "Введіть назву, дату початку і дату кінця плану");
         }
+        // console.log(plan.plan_id);
+
         createPlan()
     }
     const createPlan = () => {
-        if(action=="add"){
+        if (action == "add") {
             apiResponse({
                 event_id: event_id,
                 meta_key: 'event_plan',
                 meta_value: JSON.stringify({ ...plan })
             }, "events/add-event-meta.php").then((res) => {
+                alertHandler("success", "План додано")
                 close();
                 getEventData()
             });
-        }else{
+        } else {
             apiResponse({
-                event_id: event_id,
-                meta_key: 'event_plan',
+                meta_id: plan.plan_id,
                 meta_value: JSON.stringify({ ...plan })
-            }, "events/update.php").then((res) => {
+            }, "events/update-event-meta.php").then((res) => {
+                alertHandler("success", "План оновлено")
                 close();
                 getEventData()
             });
