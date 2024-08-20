@@ -18,7 +18,7 @@ const EventPlans = ({plans = [], feedbacks={}, event_id, getEventData}) => {
             {
                 plans.map((item,index)=>{
 
-                    return <EventPlan key={index} getEventData={getEventData} feedbacks={feedbacks} event_id={event_id} {...item}/>
+                    return <EventPlan key={index} getEventData={getEventData} feedbacks={feedbacks} event_id={event_id} plan={item}/>
                 })
             }
             </div>

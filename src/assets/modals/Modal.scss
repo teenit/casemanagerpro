@@ -81,6 +81,11 @@
             width: 100%;
         }
     }
+    &--label{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
     &--split{
         display: grid;
         grid-template-columns: 1fr 1fr;
