@@ -11,7 +11,7 @@ if (isset($data['meta_id'], $data['id'], $data['meta_value'])) {
     $meta_value = $data['meta_value'];
 
     // Підготовка SQL-запиту для оновлення даних
-    $sql = "UPDATE eventsmeta SET user_id = ?, meta_value = ? WHERE meta_id = ?";
+    $sql = "UPDATE eventsmeta SET user_id = ?, meta_value = ? WHERE id = ?";
 
     // Підготовка запиту
     $stmt = $conn->prepare($sql);
