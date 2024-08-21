@@ -35,9 +35,9 @@ const caseCategories = (catMas) => {
     return (
         <>
             <div className={s.wrap} ref={componentRef}>
-                <table >
+                <table className="Table">
                     <thead>
-                        <tr className={s.tr}>
+                        <tr>
                             <td>{LANG.casesList.caseNumber}</td>
                             <td>{LANG.casesList.pib}</td>
                             <td>{LANG.casesList.phone}</td>

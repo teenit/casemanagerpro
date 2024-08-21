@@ -4,6 +4,8 @@ import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Feedback from "./Feedback";
+import Icon from "../../elements/Icons/Icon";
+import AddPlan from "../../Modals/EventModals/AddPlan";
 
 const EventPlan = (props) => {
     const [alert, setAlert] = useState({
@@ -11,7 +13,14 @@ const EventPlan = (props) => {
         error: false,
         message: ""
     });
-    const feedbacks = props.feedbacks[props.plan_id]
+    const [modals,setModals] = useState({
+        edit:false,
+        delete:false
+    })
+    const modalsHandler = (key)=>{
+        setModals({...modals, [key]:!modals[key]})
+    }
+    const feedbacks = props.feedbacks[props.plan.plan_id]
 
     const [feedback, setFeedback] = useState('');
 
@@ -27,7 +36,7 @@ const EventPlan = (props) => {
             meta_value: JSON.stringify({
                 event_id: props.event_id,
                 value: feedback,
-                plan_id: props.plan_id
+                plan_id: props.plan.plan_id
             })
         }, "events/add-event-meta.php").then((res) => {
             setFeedback('');
@@ -40,25 +49,28 @@ const EventPlan = (props) => {
         <div className="EventPlan">
             <div className="EventPlan-header">
                 <div className="EventPlan-header-title">
-                    <div>{props.title}</div>
-                    <div>{`${props.startTime}-${props.endTime}`}</div>
+                    <div className="EventPlan-header-title-left">
+                        <div>{props.plan.title}</div>
+                        <Icon icon={"edit"} onClick={()=>{modalsHandler("edit")}}/>
+                    </div>
+                    <div>{`${props.plan.startTime}-${props.plan.endTime}`}</div>
                 </div>
             </div>
             <div className="EventPlan-inner">
                 <div className="EventPlan-inner-text">
                     <div className="EventPlan-inner-text-item">
                         <div className="EventPlan-inner-text-item-title">Дата проведення</div>
-                        <div>{`${props.startDate} - ${props.endDate}`}</div>
+                        <div>{`${props.plan.startDate} - ${props.plan.endDate}`}</div>
                     </div>
                     <div className="EventPage-inner-text-item">
                         <div className="EventPlan-inner-text-item-title">Опис</div>
-                        <div dangerouslySetInnerHTML={{ __html: props.description }}></div>
+                        <div dangerouslySetInnerHTML={{ __html: props.plan.description }}></div>
                     </div>
                     <div className="EventPage-inner-text-item">
                         <div className="EventPlan-inner-text-item-title">Зворотній зв'язок</div>
-                        {feedbacks.map((item, index) => {
-                            return <Feedback key={index} item={item} event_id={props.event_id} getEventData={props.getEventData}/>
-                        })}
+                        {feedbacks && feedbacks.length > 0 ? feedbacks.map((item, index) => {
+                            return <Feedback key={index} item={item} event_id={props.event_id} getEventData={props.getEventData} />
+                        }) : <div>Немає зворотнього зв'язку</div>}
                     </div>
                 </div>
                 <div className="EventPlan-addFeedback">
@@ -68,6 +80,7 @@ const EventPlan = (props) => {
                     </div>
                 </div>
             </div>
+            {modals.edit && <AddPlan getEventData={props.getEventData} action="edit" event_id={props.event_id} close={()=>{modalsHandler("edit")}} data={props.plan}/>}
             {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => alertHandler("success")} />}
             {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => alertHandler("error")} />}
         </div>

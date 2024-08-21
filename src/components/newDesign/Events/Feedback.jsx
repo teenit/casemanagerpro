@@ -27,15 +27,15 @@ const Feedback = ({ item, event_id, getEventData }) => {
         setModals({ ...modals, [key]: !modals[key] });
     };
     const deleteFeedback = (feedback_id) => {
-        apiResponse({ event_id: event_id, meta_id: feedback_id }, "events/delete-meta.php").then((res) => {
-            console.log(feedback_id);
+        apiResponse({ meta_id: feedback_id }, "events/delete-meta.php").then((res) => {
             alertHandler("success", "Зворотній зв'язок видалено")
             getEventData()
         })
     };
 
-    const saveFeedback = (feedback_id) => {
-        apiResponse({ event_id: event_id, meta_id: feedback_id }, "events/update.php").then(() => {
+    const editFeedback = (feedback_id) => {
+        apiResponse({ meta_value: editingFeedback, meta_id: feedback_id }, "events/update-event-meta.php").then((res) => {
+            console.log(res);
             modalHandler("edit")
             alertHandler("success", "Зворотній зв'язок оновлено")
             getEventData()
@@ -46,7 +46,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
             <div dangerouslySetInnerHTML={{ __html: item.value }}></div>
             <div className="EventPlan-feedback-panel">
                 <Icon icon={"edit"} addClass={"default-icon"} onClick={() => {
-                    setEditingFeedback(item)
+                    setEditingFeedback(item.value)
                     modalHandler("edit");
                 }} />
                 <Icon icon={"delete"} addClass={"close-icon"} onClick={() => { modalHandler("delete") }} />
@@ -58,12 +58,8 @@ const Feedback = ({ item, event_id, getEventData }) => {
                     closeHandler={() => { modalHandler("edit") }}
                     footer={
                         <>
-                            <Button color="error" variant="contained" onClick={() => modalHandler("edit")}>
-                                {LANG.GLOBAL.cancel}
-                            </Button>
-                            <Button variant="contained" onClick={() => saveFeedback(item.feedback_id)}>
-                                {LANG.GLOBAL.save}
-                            </Button>
+                            <Button color="error" variant="contained" onClick={() => modalHandler("edit")}>{LANG.GLOBAL.cancel}</Button>
+                            <Button variant="contained" onClick={() => editFeedback(item.feedback_id)}>{LANG.GLOBAL.save}</Button>
                         </>
                     }>
                     <div>

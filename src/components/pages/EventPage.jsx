@@ -18,19 +18,8 @@ import EventMembers from "../newDesign/Events/EventMembers";
 const EventPage = () => {
     const params = useParams()
     const downloadGallery = AccessCheck('yes_no', 'a_page_event_media')
-    const [users, setUsers] = useState({
-        managers: [],
-        members: []
-    })
-    const [plans, setPlans] = useState(null)
-    const [files, setFiles] = useState(null)
     const [event, setEvent] = useState(null)
     const [state, setState] = useState(null)
-    // const [width, setWidth] = useState(window.innerWidth)
-    // const [planRows, setPlanRows] = useState(1)
-    // window.addEventListener('resize', () => {
-    //     setWidth(window.innerWidth)
-    // })
     const [modal, setModal] = useState({
         addMember: false,
         addPlan: false
@@ -38,6 +27,8 @@ const EventPage = () => {
     const getEventData = ()=>{
             apiResponse({event_id:params.id}, "events/get-event-by-id.php").then((res)=>{
                 setState(res)
+                console.log(res);
+                
             })
     }
 useEffect(()=>{
@@ -51,21 +42,7 @@ useEffect(()=>{
         apiResponse({ event_id: params.id }, "event/get-event.php")
             .then((data) => {
                 setEvent(data)
-                if (data?.id) {
-                    getFiles(data.id, "event_files")
-                }
             })
-            .catch((error) => console.log(error))
-    }
-    function getFiles(id, key) {
-        let obj = {
-            key: key,
-            eventID: id
-        }
-        apiResponse({ ...obj }, "event/get-files.php").then((data) => {
-            let mas = data.map(item => { return item.fileInfo })
-            setFiles([...mas])            
-        })
             .catch((error) => console.log(error))
     }
   
@@ -92,7 +69,7 @@ useEffect(()=>{
             {
                 state && <EventPlans getEventData={getEventData} feedbacks={state.event_feedbacks} plans={state.event_plans} event_id={params.id}/>
             }
-            {files && <GalleryBlock data={state.event_files} check={downloadGallery}/>}
+            {state?.event_files && state.event_files.length>0 && <GalleryBlock data={state.event_files} check={downloadGallery}/>}
             {AccessCheck('yes_no', 'a_page_event_add_media') && <div className="EventPage-addFiles">
                 <div>Завантаження файлів</div>
                 <FilesUploader
