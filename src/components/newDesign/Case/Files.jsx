@@ -12,6 +12,7 @@ import FileSearch from "./FileSearch";
 import Hint from "../../elements/Hints/Hint";
 
 const Files = ({ case_id, getCaseInfo, files }) => {
+    const [filteredFiles, setFilteredFiles] = useState(null)
     const [rows, setRows] = useState(1);
     const [columns, setColumns] = useState(5);
     const [width, setWidth] = useState(window.innerWidth);
@@ -48,11 +49,19 @@ const Files = ({ case_id, getCaseInfo, files }) => {
     }, [width]);
 
     useEffect(() => {
+        setFilteredFiles(files)
         setRows(Math.ceil(files.length / columns));
         const item = localStorage.getItem("page_case_files");
         setOpen(item === "true");
     }, [case_id, columns, files]);
 
+    const filterFiles = (result)=>{
+        const fileIds = result.map(item=>item.id)
+        const filter = files.filter(item=>fileIds.includes(item.id))
+        setFilteredFiles(filter)
+        console.log(filter);
+        
+    }
     const dataHandler = (key, value) => {
         setData({ ...data, [key]: value });
     };
@@ -124,13 +133,13 @@ const Files = ({ case_id, getCaseInfo, files }) => {
                     <div>{LANG.caseFiles.title}</div>
                     <Icon icon="arrow_down" addClass="fs35" />
                 </div>
-                <FileSearch files={files} />
+                <FileSearch files={files} filterFiles={(res)=>{filterFiles(res)}} />
                 <Icon icon="add" onClick={() => setModal(true)} />
             </div>
             {open && (
                 <div className="Files-viewer" style={{ gridTemplateRows: `repeat(${rows}, 1fr)`, gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
-                    {files && files.length > 0 ?
-                        files.map((item, index) => (
+                    {filteredFiles && filteredFiles.length > 0 ?
+                        filteredFiles.map((item, index) => (
                             <File key={index} item={item} />
                         )) :
                         <p>{LANG.no_records}</p>

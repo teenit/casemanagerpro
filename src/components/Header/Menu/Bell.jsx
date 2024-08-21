@@ -8,9 +8,8 @@ import axios from "axios";
 import { serverAddres } from "../../Functions/serverAddres";
 import { NavLink } from "react-router-dom";
 import Icon from "../../elements/Icons/Icon";
-import docIcon from "../../../img/resources/docx.svg"
-import userIcon from "../../../img/icons/notification-user.svg"
-import editIcon from "../../../img/icons/notification-edit.svg"
+
+import MenuNotification from "../../elements/Notifications/MenuNotification";
 const Bell = () => {
 
     const [bells, setBells] = useState([])
@@ -55,16 +54,14 @@ const Bell = () => {
         getAllBells()
     }, [])
     console.log(bells);
-    const getIcon = (key) => {
-        switch (key) {
-            case "createdCase":
-                return userIcon;
-            case "createdEvent":
-                return userIcon;
-            default:
-                return editIcon;
-        }
-    }
+
+    const readNotification = async (id) => {
+        console.log(id);
+        await doneBells(id);
+        getBells();
+        getAllBells();
+    };
+    
     return (
         <div className={s.bell__wrap}>
             <div className={s.wr__img}><img src={bellImg} className={s.bell__img} alt="" onClick={() => {
@@ -75,36 +72,19 @@ const Bell = () => {
                     setActive(!active)
                 }}></div>
                 <div className={`${s.items} ${s.active}`}>
+                    <div className={s.items__header}>
+                        <div className={s.items__header__title}>Сповіщення</div>
+                        <div className={s.items__header__unread}>{`${bells.length} не прочитано`}</div>
+                    </div>
                     {bells.map((item, index) => {
                         return (
-                            <div className={s.item} key={item.id * index} >
-                                <div className={s.item__icon}>
-                                    <img src={getIcon(item.value.type)} />
-                                </div>
-                                <div className={s.link__item}>{item.value.message}</div>
-                                <div className={s.item__panel}>
-                                    {/* <div className={s.date__bell}>{item.date}</div> */}
-                                    <Icon icon={"save"} addClass={"save-icon"} onClick={() => {
-                                        doneBells(item.id);
-                                        getBells()
-                                        getAllBells()
-                                    }} />
-                                </div>
-                            </div>
+                           <MenuNotification read={(id)=>{readNotification(id)}} data={item} IsUnread={true} key={index}/>
                         )
                     })}
                     {read.map((item, index) => {
                         return (
-                            <div className={`${s.item__read} ${s.item}`} key={index}>
-                                <div className={s.item__icon}>
-                                    <img src={getIcon(item.value.type)} />
-                                </div>
-                                <div className={s.link__item}>{item.value.message}</div>
-                                <div className={s.item__panel}>
-                                    {/* <div className={s.date__bell}>{item.date}</div> */}
-                                  
-                                </div>
-                            </div>
+                            <MenuNotification read={(id)=>{readNotification(id)}} data={item} IsUnread={false} key={index}/>
+
                         )
                     })}
                 </div>

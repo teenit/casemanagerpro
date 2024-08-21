@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { apiResponse } from "../../Functions/get_apiObj";
 import Modal from "../../Modals/Modal";
 
-const AddMembers = ({  modalHandler, getEventData }) => {
+const AddMembers = ({ modalHandler, getEventData }) => {
     const params = useParams();
     const [role, setRole] = useState("manager");
     const [user, setUser] = useState({ userName: "", phone: "", position: "" });
@@ -41,8 +41,9 @@ const AddMembers = ({  modalHandler, getEventData }) => {
         if (user.userName === "" || (!userInSystem && user.phone === "")) {
             return alertHandler("error", "Введіть користувача та його номер телефону (якщо користувач новий)");
         }
+    
         let usersKey = role === "manager" ? "event_user_manager" : "event_case_member";
-
+    
         let obj = {
             userName: user.userName,
             phone: user.phone,
@@ -50,7 +51,7 @@ const AddMembers = ({  modalHandler, getEventData }) => {
             eventID: params.id,
             position: user.position
         };
-
+    
         if (userInSystem) {
             apiResponse({
                 meta_key: usersKey,
@@ -58,11 +59,22 @@ const AddMembers = ({  modalHandler, getEventData }) => {
                 event_id: params.id
             }, "events/add-event-meta.php").then((res) => {
                 console.log(res);
-                modalHandler()
-                getEventData()
+                modalHandler();
+                getEventData();
+            });
+        } else {
+            apiResponse({
+                meta_key: usersKey,
+                meta_value: JSON.stringify({ ...obj }),
+                event_id: params.id
+            }, "events/add-event-meta.php").then((res) => {
+                console.log(res);
+                // modalHandler();
+                getEventData();
             });
         }
     }
+    
 
     return (
         <Modal closeHandler={() => { modalHandler(); }} header={"Додати учасника"} footer={
@@ -102,11 +114,7 @@ const AddMembers = ({  modalHandler, getEventData }) => {
                                     })}
                                 </div>
                             </div>
-                            {role === "member" && (
-                                <Input value={user.position} label="Позиція на івенті" type="text" onChange={(e) => {
-                                    setUser({ ...user, position: e.target.value });
-                                }} />
-                            )}
+
                         </div>
                         :
                         <div className={s.add__user__form}>
@@ -116,11 +124,9 @@ const AddMembers = ({  modalHandler, getEventData }) => {
                             <Input label="Номер телефону" value={user.phone} type="number" onChange={(e) => {
                                 setUser({ ...user, phone: e.target.value });
                             }} />
-                            {role === "member" && (
-                                <Input value={user.position} label="Позиція на івенті" type="text" onChange={(e) => {
-                                    setUser({ ...user, position: e.target.value });
-                                }} />
-                            )}
+                            <Input value={user.position} label="Позиція на івенті" type="text" onChange={(e) => {
+                                setUser({ ...user, position: e.target.value });
+                            }} />
                         </div>
                     }
 

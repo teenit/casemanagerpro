@@ -15,7 +15,7 @@ const EventMembers = ({ getEventData, event_id, managers, members }) => {
             <div className="EventPage-MemberItem">
                 <NavLink to={`/case/${item.case_id}`}>{item.name}</NavLink>
                 <div className="EventPage-MemberItem-right">
-                    <div className="EventPage-MemberItem-right-role">role</div>
+                    {/* <div className="EventPage-MemberItem-right-role">role</div> */}
                     <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
                 </div>
             </div>

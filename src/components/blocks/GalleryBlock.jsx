@@ -4,6 +4,7 @@ import GetAppIcon from '@mui/icons-material/GetApp';
 import VideoPlayer from "react-video-js-player";
 import OpenPhoto from '../Galery/OpenPhoto';
 import { LANG } from '../../services/config';
+import Icon from '../elements/Icons/Icon';
 
 const GalleryBlock = ({ data, check }) => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -117,7 +118,9 @@ const GalleryBlock = ({ data, check }) => {
                                     <td>{item.name}</td>
                                     <td>{getType(item.type)}</td>
                                     <td>{convertSize(item.size)}</td>
-                                    {check && <td><NavLink download={true} to={item.link}><GetAppIcon /></NavLink></td>}
+                                    {check && <td><NavLink download={true} to={item.link}>
+                                        <Icon icon={"download"} addClass={"default-icon"}/>
+                                        </NavLink></td>}
                                 </tr>
                             );
                         })}

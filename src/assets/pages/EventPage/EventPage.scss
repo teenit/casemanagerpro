@@ -53,7 +53,7 @@
                 gap: 10px;
                 &-members{
                     max-height: 150px;
-                    overflow-y: scroll;
+                    overflow-y: auto;
                     display: flex;
                     flex-direction: column;
                     >:nth-child(odd){

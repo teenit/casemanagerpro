@@ -22,6 +22,21 @@
     overflow-y: scroll;
     border-left: solid 3px var(--second-color);
 }
+.items__header{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+}
+.items__header__title{
+    font-size: 22px;
+}
+.items__header__unread{
+    padding: 5px 10px;
+    background-color: #F99C9C;
+    border-radius: 5px;
+}
 .item{
     width: 80%;
     padding: 15px 30px;

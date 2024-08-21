@@ -6,6 +6,7 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Feedback from "./Feedback";
 import Icon from "../../elements/Icons/Icon";
 import AddPlan from "../../Modals/EventModals/AddPlan";
+import ModalConfirm from "../../Modals/ModalConfirm";
 
 const EventPlan = (props) => {
     const [alert, setAlert] = useState({
@@ -44,7 +45,12 @@ const EventPlan = (props) => {
             props.getEventData();
         });
     };
-
+    const deletePlan = ()=>{
+        apiResponse({ meta_id: props.plan.plan_id }, "events/delete-meta.php").then((res) => {
+            alertHandler("success", "Зворотній зв'язок видалено")
+            props.getEventData()
+        })
+    }
     return (
         <div className="EventPlan">
             <div className="EventPlan-header">
@@ -52,6 +58,7 @@ const EventPlan = (props) => {
                     <div className="EventPlan-header-title-left">
                         <div>{props.plan.title}</div>
                         <Icon icon={"edit"} onClick={()=>{modalsHandler("edit")}}/>
+                        <Icon icon={"delete"} addClass={"close-icon"} onClick={()=>{modalsHandler("delete")}}/>
                     </div>
                     <div>{`${props.plan.startTime}-${props.plan.endTime}`}</div>
                 </div>
@@ -68,9 +75,11 @@ const EventPlan = (props) => {
                     </div>
                     <div className="EventPage-inner-text-item">
                         <div className="EventPlan-inner-text-item-title">Зворотній зв'язок</div>
+                        <div className="EventPlan-inner-feedbacks">
                         {feedbacks && feedbacks.length > 0 ? feedbacks.map((item, index) => {
                             return <Feedback key={index} item={item} event_id={props.event_id} getEventData={props.getEventData} />
                         }) : <div>Немає зворотнього зв'язку</div>}
+                        </div>
                     </div>
                 </div>
                 <div className="EventPlan-addFeedback">
@@ -80,6 +89,7 @@ const EventPlan = (props) => {
                     </div>
                 </div>
             </div>
+            {modals.delete && <ModalConfirm closeHandler={()=>{modalsHandler("delete")}} successHandler={deletePlan} text={`Ви впевнені, що хочете видалити план ${props.plan.title}?`}/> }
             {modals.edit && <AddPlan getEventData={props.getEventData} action="edit" event_id={props.event_id} close={()=>{modalsHandler("edit")}} data={props.plan}/>}
             {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => alertHandler("success")} />}
             {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => alertHandler("error")} />}

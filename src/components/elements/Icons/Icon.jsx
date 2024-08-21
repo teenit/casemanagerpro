@@ -2,22 +2,27 @@ import React, { useEffect, useState } from 'react';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Add, ArrowDownwardOutlined, AttachFile, Cake, Check, Close, Delete, Edit, ExitToApp, MailOutline, Man, MenuBook, Print, Search, Send, Settings, SettingsOutlined, Visibility, VisibilityOff, Work, WorkOutline } from '@mui/icons-material';
+import { Add, ArrowDownwardOutlined, AttachFile, Cake, Call, Check, Close, Delete, Download, Edit, ExitToApp, MailOutline, Man, MenuBook, Print, PriorityHigh, Search, Send, Settings, SettingsOutlined, SystemUpdate, Visibility, VisibilityOff, Work, WorkOutline } from '@mui/icons-material';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import EventIcon from '@mui/icons-material/Event';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 const Icon = ({ icon, addClass, onClick }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case "download":
+                ico = <Download className={addClass} onClick={onClick} />
+                break;
+            case "call":
+                ico = <Call className={addClass} onClick={onClick} />
+                break;
             case "warning":
-                ico = <PriorityHighIcon className={addClass} onClick={onClick} />
+                ico = <PriorityHigh className={addClass} onClick={onClick} />
                 break;
             case "work":
                 ico = <WorkOutline className={addClass} onClick={onClick} />;

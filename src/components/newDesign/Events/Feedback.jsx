@@ -27,6 +27,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
         setModals({ ...modals, [key]: !modals[key] });
     };
     const deleteFeedback = (feedback_id) => {
+        console.log(feedback_id);
         apiResponse({ meta_id: feedback_id }, "events/delete-meta.php").then((res) => {
             alertHandler("success", "Зворотній зв'язок видалено")
             getEventData()
@@ -34,8 +35,12 @@ const Feedback = ({ item, event_id, getEventData }) => {
     };
 
     const editFeedback = (feedback_id) => {
-        apiResponse({ meta_value: editingFeedback, meta_id: feedback_id }, "events/update-event-meta.php").then((res) => {
-            console.log(res);
+        let obj = {
+            event_id:event_id,
+            value:editingFeedback,
+            plan_id:item.plan_id
+        }
+        apiResponse({ meta_value: JSON.stringify(obj), meta_id: feedback_id }, "events/update-event-meta.php").then((res) => {
             modalHandler("edit")
             alertHandler("success", "Зворотній зв'язок оновлено")
             getEventData()

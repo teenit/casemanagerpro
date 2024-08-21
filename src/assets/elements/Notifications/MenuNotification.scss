@@ -1,0 +1,65 @@
+.MenuNotification{
+    width: 90%;
+    padding: 10px;
+    background-color: $background-color;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    &-header{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &-title{
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 7.5px;
+        }
+        &-unread{
+            font-size: 14px;
+            background-color: #f0eded;
+            box-shadow: 0px 0px 1px 0px #f0eded;
+            padding: 2.5px 5px;
+            cursor: pointer;
+        }
+    }
+    &-inner{
+        width: 85%;
+        display: flex;
+        flex-direction: column;
+        gap: 7.5px;
+        &-date{
+            font-size: 12px;
+            color: #bababa;
+        }
+        &-options{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            &-more{
+                background-color: #2D79B7;
+            }
+            &-call{
+                background-color: #06AD67;
+            }
+        }
+    }
+    &-button{
+        padding: 5px 7.5px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        cursor: pointer;
+        &-content{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+        }
+    }
+}

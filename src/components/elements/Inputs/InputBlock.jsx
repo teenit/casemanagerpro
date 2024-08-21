@@ -72,7 +72,7 @@ const InputBlock = ({ hintMessage = null, maxLength = null, header = false, text
                                     {label === "" || label === null ? (
                                         <span className={`InputBlock-title-main ${header && 'header'}`}>{titleDefault}</span>
                                     ) : (
-                                        <span className={`InputBlock-title-main ${header && 'header'}`}>{`${label}${inputType === "date" ? howOldIsCase(value) : ""}`}</span>
+                                        <span className={`InputBlock-title-main ${header && 'header'}`}>{`${label}${icon == "birthday" ? howOldIsCase(value) : ""}`}</span>
 
                                     )}
                                 </>
