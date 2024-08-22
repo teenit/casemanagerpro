@@ -11,7 +11,7 @@ $limit = isset($data['limit']) ? (int)$data['limit'] : 10; // Кількість
 $offset = ($page - 1) * $limit;
 
 // Підготовка SQL-запиту з пагінацією, починаючи з останнього
-$sql = "SELECT * FROM `notification` WHERE user_id = ? AND date_read IS NULL ORDER BY date_created DESC LIMIT ? OFFSET ?";
+$sql = "SELECT * FROM `notification` WHERE user_id = ? ORDER BY date_created DESC LIMIT ? OFFSET ?";
 
 // Підготовка запиту
 $stmt = $conn->prepare($sql);
