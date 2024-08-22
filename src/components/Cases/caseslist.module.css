@@ -9,8 +9,17 @@
 .wrap > table{
     display: block;
 }
+.wrap a{
+    font-weight: lighter;
+}
+.wrap tbody tr:nth-child(even){
+    background-color: var(--background-color);
+}
+.wrap thead td{
+    padding: 10px !important;
+}
 @media screen and (max-width:1024px) {
     table{
-        overflow-x: scroll;
+        overflow-x: auto;
     }
 }

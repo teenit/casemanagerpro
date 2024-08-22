@@ -74,6 +74,17 @@ color: $main-color;
     font-size: 35px !important;
 }
 .notification-icon{
-    color: #fff;
-    font-size: 22px !important;
+    &-button{
+        color: #fff;
+        font-size: 22px !important;
+    }
+    &-yellow{
+        background: #FF5C00;
+    }
+    &-blue{
+        color:#2D79B7;
+    }
+    &-purple{
+        color: #9747FF;
+    }
 }

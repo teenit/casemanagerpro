@@ -65,7 +65,7 @@ const Bell = () => {
         getBells();
         getAllBells();
     };
-    
+
     return (
         <div className={s.bell__wrap}>
             <div className={s.wr__img}><img src={bellImg} className={s.bell__img} alt="" onClick={() => {
@@ -78,16 +78,16 @@ const Bell = () => {
                 <div className={`${s.items} ${s.active}`}>
                     <div className={s.items__header}>
                         <div className={s.items__header__title}>Сповіщення</div>
-                        <div className={s.items__header__unread}>{`${bells.length} не прочитано`}</div>
+                        {bells.length > 0 && <div className={s.items__header__unread}>{`${bells.length} не прочитано`}</div>}
                     </div>
                     {bells.map((item, index) => {
                         return (
-                           <MenuNotification read={(id)=>{readNotification(id)}} data={item} IsUnread={true} key={index}/>
+                            <MenuNotification read={(id) => { readNotification(id) }} data={item} IsUnread={true} key={index} />
                         )
                     })}
                     {read.map((item, index) => {
                         return (
-                            <MenuNotification read={(id)=>{readNotification(id)}} data={item} IsUnread={false} key={index}/>
+                            <MenuNotification read={(id) => { readNotification(id) }} data={item} IsUnread={false} key={index} />
 
                         )
                     })}
