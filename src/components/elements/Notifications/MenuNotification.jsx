@@ -1,10 +1,11 @@
 import React from 'react'
 import Icon from '../Icons/Icon'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
-const MenuNotification = ({ data, read }) => {
+const MenuNotification = ({ data, read, deleteNotification }) => {
     const key = data.meta_key
     const isUnread = !data.date_read
+    const navigate = useNavigate();
     const GetMessage = () => {
         const item = data.meta_value
         switch (key) {
@@ -32,21 +33,27 @@ const MenuNotification = ({ data, read }) => {
             icon: "add_notification",
             icon_class: "notification-icon-blue",
             color: "#E9F4FE",
-            link: `/case/${data.meta_value.case_id}`
+            link: `/case/${data.meta_value.case_id}`,
+            click: ()=>{navigate(`/case/${data.meta_value.case_id}`)},
+            showButton: true,
+            buttonText: "Details",
+            type: 'case-created'
         },
         created_new_event: {
             title: "Нова подія",
             icon: "add_notification",
             icon_class: "notification-icon-blue",
             color: "#E9F4FE",
-            link: `/event/${data.meta_value.event_id}`
+            click: ()=>{navigate(`/events_new/${data.meta_value.event_id}`)},
+            showButton: true
         },
         change_case_name: {
             title: "Редагування кейсу",
             icon: "edit",
             icon_class: "notification-icon-blue",
             color: "#E9F4FE",
-            link: `/case/${data.meta_value.case_id}`
+            click: ()=>{navigate(`/case/${data.meta_value.case_id}`)},
+            showButton: true
         },
         update: {
             title: "Оновлення",
@@ -61,8 +68,9 @@ const MenuNotification = ({ data, read }) => {
             color: "#9747FF"
         }
     }
+    console.log(notificationType[key].click)
     return (
-        <div className={`MenuNotification ${!isUnread && 'MenuNotification-read'}`} style={{ backgroundColor: notificationType[key].color }}>
+        <div className={`MenuNotification ${!isUnread && 'MenuNotification-read'} ${notificationType[key].type}`}>
             <div className='MenuNotification-header'>
                 <div className="MenuNotification-header-title">
                     <Icon icon={notificationType[key].icon} addClass={notificationType[key].icon_class} />
@@ -75,18 +83,23 @@ const MenuNotification = ({ data, read }) => {
                 <GetMessage />
                 <div className='MenuNotification-inner-date'>{data.date_created}</div>
                 <div className='MenuNotification-inner-options'>
-                    <button className='MenuNotification-button MenuNotification-inner-options-more'>
+                    {!!notificationType[key].showButton && typeof notificationType[key].click == 'function' && 
+                    <button onClick={notificationType[key].click} className='MenuNotification-button MenuNotification-inner-options-more'>
                         <div className='MenuNotification-button-content'>
                             <Icon icon={"eye"} addClass={"notification-icon-button"} />
-                            <NavLink to={notificationType[key].link}>Детальніше</NavLink>
+                            <div>{notificationType[key].buttonText}</div>
                         </div>
-                    </button>
+                    </button>}
                     {/* <button className='MenuNotification-button MenuNotification-inner-options-call'>
                         <div className='MenuNotification-button-content'>
                             <Icon icon={"call"} addClass={"notification-icon-button"} />
                             <div>Зателефонувати</div>
                         </div>
                     </button> */}
+                    <div className='notification-delete'>
+                    <Icon icon={'delete'} addClass={'notification-delete'} onClick={()=>deleteNotification(data.notification_id)}/>
+                    </div>
+                    
                 </div>
             </div>
         </div>

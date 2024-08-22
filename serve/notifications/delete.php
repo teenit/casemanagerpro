@@ -18,8 +18,8 @@ $stmt->bind_param("ii", $notification_id, $user_id);
 // Виконання запиту
 if ($stmt->execute()) {
     // Якщо запит успішний
-    echo json_encode(['success' => true, 'message' => 'Notification deleted successfully.']);
+    echo json_encode(['status' => true, 'message' => 'Notification deleted successfully.']);
 } else {
     // Якщо сталася помилка
-    echo json_encode(['success' => false, 'message' => 'Failed to delete notification.']);
+    echo json_encode(['status' => false, 'message' => 'Failed to delete notification.']);
 }
