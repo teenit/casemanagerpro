@@ -2,14 +2,22 @@ import React from 'react'
 import Icon from '../Icons/Icon'
 
 const MenuNotification = ({IsUnread, data, read}) => {
-    const getIcon = (key) => {
-        switch (key) {
-            default:
-                return "edit";
-        }
+   const eventType = {
+    edit:{
+        icon:"edit",
+        color: "$background-color"
+    },
+    update:{
+        icon:"star",
+        color:"#FFE55F"
+    },
+    birthday:{
+        icon:"birthday",
+        color: "#9747FF"
     }
+   }
   return (
-    <div className='MenuNotification'>
+    <div className={`MenuNotification ${!IsUnread && 'MenuNotification-read'}`}>
         <div className='MenuNotification-header'>
             <div className="MenuNotification-header-title">
                 <Icon icon={"edit"} addClass={"default-icon"}/>

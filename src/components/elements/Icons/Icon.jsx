@@ -9,12 +9,16 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import EventIcon from '@mui/icons-material/Event';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
 const Icon = ({ icon, addClass, onClick }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case "star":
+                ico = <StarRoundedIcon className={addClass} onClick={onClick} />
+                break;
             case "download":
                 ico = <Download className={addClass} onClick={onClick} />
                 break;
