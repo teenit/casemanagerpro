@@ -27,7 +27,7 @@ if ($stmt === false) {
 $stmt->bind_param("i", $meta_id);
 
 if ($stmt->execute() === TRUE) {
-    echo json_encode(array("status" => true, "message" => "Row deleted successfully"));
+    echo json_encode(array("status" => true, "message" => "Row deleted successfully " . $meta_id));
 } else {
     echo json_encode(array("status" => false, "message" => "Execute failed: " . $stmt->error));
 }

@@ -1,5 +1,6 @@
 <?php
 require_once '../config.php';
+require_once '../service/users.php';
 
 // Отримання даних з фронту
 $data = json_decode(file_get_contents('php://input'), true);
@@ -33,6 +34,18 @@ if (isset($data['title'], $data['id'])) {
     if ($stmt->execute() === TRUE) {
         // Отримання ідентифікатора останнього вставленого запису
         $last_id = $stmt->insert_id;
+        $user = getUserById($data['id']);
+        $nUsers = getUsersIds();
+        $nKey = 'created_new_event';
+        $nValue = [
+            'case_id' => $last_id,
+            'name' => $name,
+            'user_id_created' => $data['id'],
+            'user_name_created' => $user['userName']
+        ];
+        $encodedValue = json_encode($nValue, JSON_UNESCAPED_UNICODE);
+
+    _addNotification($nUsers, $nKey, $encodedValue);
         // Повернення ідентифікатора на фронт у форматі JSON
         echo json_encode(array("event_id" => $last_id, "status" => true));
     } else {

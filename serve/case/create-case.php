@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../functions.php';
+require_once '../service/users.php';
 // Отримання даних з фронту
 $data = json_decode(file_get_contents('php://input'), true);
 
@@ -9,6 +10,7 @@ $phone1_encrypted = encryptData($data['phone1'], $key);
 $phone2_encrypted = encryptData($data['phone2'], $key);
 $email_encrypted = encryptData($data['email'], $key);
 $name = $data["last_name"]." ".$data["first_name"]." ".$data["middle_name"];
+
 
 // Підготовка SQL-запиту для вставки даних
 $sql = "INSERT INTO cases_new (name, first_name, middle_name, last_name, phone1, phone2, email, happy_bd, user_id, responsible_id, sex) 
@@ -35,6 +37,19 @@ if ($stmt->execute() === TRUE) {
     $stmts = $conn->prepare($mysql);
     $stmts->bind_param("i",$last_id);
     if ($stmts->execute() === TRUE) {
+        $user = getUserById($data['id']);
+        $nUsers = getUsersIds();
+        $nKey = 'created_new_case';
+        $nValue = [
+            'case_id' => $last_id,
+            'name' => $name,
+            'user_id_created' => $data['id'],
+            'user_name_created' => $user['userName']
+        ];
+        $encodedValue = json_encode($nValue, JSON_UNESCAPED_UNICODE);
+
+    _addNotification($nUsers, $nKey, $encodedValue);
+
         echo json_encode(array("id" => $last_id, "status" => true));
     }   
 } else {

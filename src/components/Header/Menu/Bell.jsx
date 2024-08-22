@@ -10,6 +10,7 @@ import { NavLink } from "react-router-dom";
 import Icon from "../../elements/Icons/Icon";
 
 import MenuNotification from "../../elements/Notifications/MenuNotification";
+import { apiResponse } from "../../Functions/get_apiObj";
 const Bell = () => {
 
     const [bells, setBells] = useState([])
@@ -50,8 +51,11 @@ const Bell = () => {
             .catch((error) => console.log(error))
     }
     useEffect(() => {
-        getBells()
-        getAllBells()
+        apiResponse({},"notifications/get.php").then((res)=>{
+            console.log(res)
+        })
+        // getBells()
+        // getAllBells()
     }, [])
     console.log(bells);
 
