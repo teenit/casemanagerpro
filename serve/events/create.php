@@ -38,8 +38,8 @@ if (isset($data['title'], $data['id'])) {
         $nUsers = getUsersIds();
         $nKey = 'created_new_event';
         $nValue = [
-            'case_id' => $last_id,
-            'name' => $name,
+            'event_id' => $last_id,
+            'name' => $title,
             'user_id_created' => $data['id'],
             'user_name_created' => $user['userName']
         ];
