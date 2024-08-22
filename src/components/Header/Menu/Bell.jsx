@@ -6,71 +6,45 @@ import s from "./bell.module.css";
 import bellImg from "./../../../img/icons/bell-50.png";
 import axios from "axios";
 import { serverAddres } from "../../Functions/serverAddres";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Icon from "../../elements/Icons/Icon";
 
 import MenuNotification from "../../elements/Notifications/MenuNotification";
 import { apiResponse } from "../../Functions/get_apiObj";
+import { Button } from "@mui/material";
 const Bell = () => {
-
+    const location = useLocation()
     const [bells, setBells] = useState([])
-    const [bellsCount, setBellsCount] = useState(bells.length)
     const [active, setActive] = useState(false)
     const [read, setRead] = useState([])
-    function getBells() {
-        let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token"),
-        }
-        axios({
-            url: serverAddres("user/get-notification.php"),
-            method: "POST",
-            header: { 'Content-Type': 'application/json;charset=utf-8' },
-            data: JSON.stringify(obj),
+    const [notifications, setNotifications] = useState([])
+    const [state, setState] = useState({
+        limit:10,
+        page:0
+    })
+    const getNotifications = ()=>{
+        apiResponse({limit: state.limit, page:state.page + 1},"notifications/get.php").then((res)=>{
+            console.log(res)
+            setState({...state, page:state.page + 1})
+            setNotifications([...notifications, ...res])
         })
-            .then((data) => {
-                setBellsCount(data.data.length)
-                setBells(data.data)
-            })
-            .catch((error) => console.log(error))
-    }
-    function getAllBells() {
-        let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token"),
-        }
-        axios({
-            url: serverAddres("user/get-all-notification.php"),
-            method: "POST",
-            header: { 'Content-Type': 'application/json;charset=utf-8' },
-            data: JSON.stringify(obj),
-        })
-            .then((data) => {
-                setRead(data.data)
-            })
-            .catch((error) => console.log(error))
     }
     useEffect(() => {
-        apiResponse({},"notifications/get.php").then((res)=>{
-            console.log(res)
-        })
-        // getBells()
-        // getAllBells()
-    }, [])
-    console.log(bells);
+        setActive(false)        
+        getNotifications()
+    }, [location.pathname])
 
-    const readNotification = async (id) => {
-        console.log(id);
-        await doneBells(id);
-        getBells();
-        getAllBells();
+    const readNotification = (id) => {
+        apiResponse({notification_id:id}, "notifications/mark-read.php").then((res)=>{
+            getNotifications()
+        })
     };
 
     return (
         <div className={s.bell__wrap}>
             <div className={s.wr__img}><img src={bellImg} className={s.bell__img} alt="" onClick={() => {
                 setActive(!active)
-            }} />{bellsCount !== 0 && <span className={s.count}> {bellsCount} </span>}</div>
+            }} />{notifications.length !== 0 && <span className={s.count}> {notifications.length} </span>}</div>
             {active && <div className={s.wrap__bells}>
                 <div className={`${s.black} ${s.active}`} onClick={() => {
                     setActive(!active)
@@ -78,19 +52,14 @@ const Bell = () => {
                 <div className={`${s.items} ${s.active}`}>
                     <div className={s.items__header}>
                         <div className={s.items__header__title}>Сповіщення</div>
-                        {bells.length > 0 && <div className={s.items__header__unread}>{`${bells.length} не прочитано`}</div>}
+                        {notifications.length > 0 && <div className={s.items__header__unread}>{`${notifications.length} не прочитано`}</div>}
                     </div>
-                    {bells.map((item, index) => {
+                    {notifications && notifications.map((item, index) => {
                         return (
-                            <MenuNotification read={(id) => { readNotification(id) }} data={item} IsUnread={true} key={index} />
+                            <MenuNotification read={(id) => { readNotification(id) }} data={item} key={index} />
                         )
                     })}
-                    {read.map((item, index) => {
-                        return (
-                            <MenuNotification read={(id) => { readNotification(id) }} data={item} IsUnread={false} key={index} />
-
-                        )
-                    })}
+                    <Button variant="contained" onClick={()=>{getNotifications()}}>Показати ще</Button>
                 </div>
             </div>}
         </div>

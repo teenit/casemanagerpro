@@ -10,12 +10,16 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import EventIcon from '@mui/icons-material/Event';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 const Icon = ({ icon, addClass, onClick }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case "add_notification":
+                ico = <LibraryAddIcon className={addClass} onClick={onClick} />
+                break;
             case "star":
                 ico = <StarRoundedIcon className={addClass} onClick={onClick} />
                 break;

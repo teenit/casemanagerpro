@@ -47,7 +47,7 @@ const EventPlan = (props) => {
     };
     const deletePlan = ()=>{
         apiResponse({ meta_id: props.plan.plan_id }, "events/delete-meta.php").then((res) => {
-            alertHandler("success", "Зворотній зв'язок видалено")
+            alertHandler("success", "План видалено")
             props.getEventData()
         })
     }

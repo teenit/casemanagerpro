@@ -197,9 +197,9 @@ input[type=color]::-moz-color-swatch {
   top: 60px;
   right: 0px;
 }
-.active{
-  color: #fbb911!important;
-}
+/* .active{
+  color: #fbb911;
+} */
 .video-js{
   width: 100%;
   height: auto;
