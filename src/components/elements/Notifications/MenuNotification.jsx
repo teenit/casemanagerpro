@@ -31,29 +31,33 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
         created_new_case: {
             title: "Новий кейс",
             icon: "add_notification",
-            icon_class: "notification-icon-blue",
+            icon_class: "notification-icon-yellow",
             color: "#E9F4FE",
             link: `/case/${data.meta_value.case_id}`,
-            click: ()=>{navigate(`/case/${data.meta_value.case_id}`)},
+            click: () => { navigate(`/case/${data.meta_value.case_id}`) },
             showButton: true,
-            buttonText: "Details",
+            buttonText: "Детальніше",
             type: 'case-created'
         },
         created_new_event: {
             title: "Нова подія",
             icon: "add_notification",
-            icon_class: "notification-icon-blue",
+            icon_class: "notification-icon-purple",
             color: "#E9F4FE",
-            click: ()=>{navigate(`/events_new/${data.meta_value.event_id}`)},
-            showButton: true
+            click: () => { navigate(`/event_new/${data.meta_value.event_id}`) },
+            showButton: true,
+            buttonText: "Детальніше",
+            type: 'event-created'
         },
         change_case_name: {
             title: "Редагування кейсу",
             icon: "edit",
             icon_class: "notification-icon-blue",
             color: "#E9F4FE",
-            click: ()=>{navigate(`/case/${data.meta_value.case_id}`)},
-            showButton: true
+            click: () => { navigate(`/case/${data.meta_value.case_id}`) },
+            showButton: true,
+            buttonText: "Детальніше",
+            type: 'edit-case'
         },
         update: {
             title: "Оновлення",
@@ -68,7 +72,6 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             color: "#9747FF"
         }
     }
-    console.log(notificationType[key].click)
     return (
         <div className={`MenuNotification ${!isUnread && 'MenuNotification-read'} ${notificationType[key].type}`}>
             <div className='MenuNotification-header'>
@@ -83,13 +86,13 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
                 <GetMessage />
                 <div className='MenuNotification-inner-date'>{data.date_created}</div>
                 <div className='MenuNotification-inner-options'>
-                    {!!notificationType[key].showButton && typeof notificationType[key].click == 'function' && 
-                    <button onClick={notificationType[key].click} className='MenuNotification-button MenuNotification-inner-options-more'>
-                        <div className='MenuNotification-button-content'>
-                            <Icon icon={"eye"} addClass={"notification-icon-button"} />
-                            <div>{notificationType[key].buttonText}</div>
-                        </div>
-                    </button>}
+                    {!!notificationType[key].showButton && typeof notificationType[key].click == 'function' &&
+                        <button onClick={notificationType[key].click} className='MenuNotification-button MenuNotification-inner-options-more'>
+                            <div className='MenuNotification-button-content'>
+                                <Icon icon={"eye"} addClass={"notification-icon-button"} />
+                                <div>{notificationType[key].buttonText}</div>
+                            </div>
+                        </button>}
                     {/* <button className='MenuNotification-button MenuNotification-inner-options-call'>
                         <div className='MenuNotification-button-content'>
                             <Icon icon={"call"} addClass={"notification-icon-button"} />
@@ -97,9 +100,9 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
                         </div>
                     </button> */}
                     <div className='notification-delete'>
-                    <Icon icon={'delete'} addClass={'notification-delete'} onClick={()=>deleteNotification(data.notification_id)}/>
+                        <Icon icon={'delete'} addClass={'notification-delete'} onClick={() => deleteNotification(data.notification_id)} />
                     </div>
-                    
+
                 </div>
             </div>
         </div>

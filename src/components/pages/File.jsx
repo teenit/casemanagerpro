@@ -186,19 +186,19 @@ const File = () => {
           <div className='File-info-tags'>
             {tags.map(tag => <Tag key={tag} name={tag} />)}
             <Icon icon={"add"} addClass={"fs35"} onClick={() => { setModal(true) }} />
-          
+
           </div>
         </div>
       </div>
-      <Button variant='contained' color='error' onClick={() => { setConfirm(true) }}>Видалити файл</Button>
-        {modal && <Modal closeHandler={closeModal} header={<span className='File-modal-header'>Додати тег <Hint text={LANG.hints.tag}/></span>} footer={
-              <>
-                <Button variant='contained' color='error' onClick={closeModal}>{LANG.GLOBAL.cancel}</Button>
-                <Button variant='contained' onClick={addTag}>{LANG.GLOBAL.save}</Button>
-              </>
-            }>
-              <Input value={newTag} onChange={(e) => { setNewTag(e.target.value) }} label='Назва тегу' />
-            </Modal>}
+      {edit.text && <Button variant='contained' color='error' onClick={() => { setConfirm(true) }}>Видалити файл</Button>}
+      {modal && <Modal closeHandler={closeModal} header={<span className='File-modal-header'>Додати тег <Hint text={LANG.hints.tag} /></span>} footer={
+        <>
+          <Button variant='contained' color='error' onClick={closeModal}>{LANG.GLOBAL.cancel}</Button>
+          <Button variant='contained' onClick={addTag}>{LANG.GLOBAL.save}</Button>
+        </>
+      }>
+        <Input value={newTag} onChange={(e) => { setNewTag(e.target.value) }} label='Назва тегу' />
+      </Modal>}
       {confirm && <ModalConfirm text={"Ви впевнені, що хочете видалити цей файл?"} successHandler={deleteHandler} closeHandler={() => { setConfirm(false) }} />}
       {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success", "") }} />}
       {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error", "") }} />}

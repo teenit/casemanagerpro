@@ -73,13 +73,16 @@ color: $main-color;
 .fs35{
     font-size: 35px !important;
 }
+.notification-delete{
+    color: #f00;
+}
 .notification-icon{
     &-button{
         color: #fff;
         font-size: 22px !important;
     }
     &-yellow{
-        background: #FF5C00;
+        color: #FF5C00;
     }
     &-blue{
         color:#2D79B7;

@@ -9,6 +9,12 @@
     &.case-created {
         background-color: $notification--default-case-created-fill;
     }
+    &.edit-case{
+        background-color: $notification--default-edit-case-fill;
+    }
+    &.event-created{
+        background-color: $notification--default-event-created-fill;
+    }
     &-header{
         font-size: 14px;
         width: 100%;
@@ -37,7 +43,7 @@
         font-size: 12px;
         &-date{
             font-size: 10px;
-            color: #bababa;
+            color: #818181;
         }
         &-options{
             display: grid;
@@ -64,7 +70,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            a{
+            div{
                 color: #fff;
             }
             svg {
@@ -75,6 +81,12 @@
     &-read{
         &.case-created {
             background-color: $notification--marked-case-created-fill;
+        }
+        &.edit-case{
+            background-color: $notification--marked-edit-case-fill;
+        }
+        &.event-created{
+            background-color: $notification--marked-event-created-fill;
         }
     }
 }
