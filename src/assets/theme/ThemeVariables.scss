@@ -8,3 +8,7 @@ $default-color-primary-fill: var(--default-color-primary-fill, $light-theme-colo
 
 $notification--default-case-created-fill: var(--notification--default-case-created-fill, $light-theme-color-orange000--o); 
 $notification--marked-case-created-fill: var(--notification--marked-case-created-fill, $light-theme-color-orange800--o); 
+$notification--default-edit-case-fill: var(--notification--default-edit-case-fill, $light-theme-color-blue000--o); 
+$notification--marked-edit-case-fill: var(--notification--marked-edit-case-fill, $light-theme-color-blue800--o); 
+$notification--default-event-created-fill: var(--notification--default-event-created-fill, $light-theme-color-purple000--o); 
+$notification--marked-event-created-fill: var(--notification--marked-event-created-fill, $light-theme-color-purple800--o); 
