@@ -1,0 +1,13 @@
+.LoginPage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 50%;
+        min-width: 400px;
+    }
+}

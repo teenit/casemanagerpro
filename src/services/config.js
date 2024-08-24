@@ -924,5 +924,134 @@ export const appConfig = {
         "view_responsible",
       ]
     }
-  ]
+  ],
+  config: {
+    notifications:{
+      case:{
+        created_send_all_users: {
+          title: 'Надіслати сповіщення всім користувачам, коли створено кейс',
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+      },
+      event:{
+        created_send_all_users: {
+          title: 'Надіслати сповіщення всім користувачам, коли створено подію',
+          description:"",
+          type: 'boolean',
+          value: true
+        }
+      }
+    },
+    API:{
+      telegram_bot:{
+        token: {
+          title: "Telegram bot token",
+          description: "",
+          type: 'string',
+          value: null
+        },
+        userID: {
+          title: "User ID",
+          description: "",
+          type: 'string',
+          value: null
+        }
+      } 
+    },
+    administration: {
+      twofa:{
+        title: "Enabled 2FA",
+        description: "",
+        type: 'boolean',
+        value: true
+      },
+      system_phone:{
+        title: "System Phone number",
+        description: "",
+        type: 'number',
+        value: ''
+      },
+      system_email: {
+        title: "System Email",
+        description: "",
+        type: 'email',
+        value: ''
+      }
+    },
+  },
+  
+  userConfig: {
+    notifications:{
+      case:{
+        created_all: {
+          title: 'Надіслати спqовіщення, коли створено кейс у програмі',
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        switch_responsible: {
+          title: 'Надіслати спqовіщення, коли вас назначено відповідальним або змінено',
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        change_case_name: {
+          title: "Надіслати спqовіщення, коли змінено ім'я кейсу",
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        change_case_data: {
+          title: "Надіслати спqовіщення, коли редагується кейс",
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        case_happy_day: {
+          title: "Надіслати спqовіщення, дня народження кейса",
+          description:"",
+          type: 'boolean',
+          value: true
+        }
+      },
+      event:{
+        created_all: {
+          title: 'Надіслати сповіщення, коли створено подію',
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        change_event_data: {
+          title: "Надіслати спqовіщення, коли редагується івент/подія",
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+      }
+    },
+    API: {
+      telegram: {
+        userID: {
+          title: "User ID",
+          description: "",
+          type: 'string',
+          value: null
+        },
+        userID: {
+          title: "User Name",
+          description: "",
+          type: 'string',
+          value: null
+        },
+        phone: {
+          title: "Phone",
+          description: "",
+          type: 'string',
+          value: null
+        }
+      }
+    }
+  },
 }

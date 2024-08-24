@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { store } from './store';
 import Login from './components/Auth/Login';
 import { loadCategories } from './actions/categories';
+import LoginPage from './components/pages/LoginPage';
 
 class App extends Component {
   constructor(props) {
@@ -36,8 +37,9 @@ class App extends Component {
             <div className="App">
               <Header show={auth.auth}/>
               {
-                auth.auth ? <MainContent /> : <Login />
+                auth.auth ? <MainContent /> : <LoginPage />
               }
+              {/* <MainContent /> */}
               
               <Footer />
             </div>

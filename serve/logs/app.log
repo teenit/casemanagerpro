@@ -1,0 +1,37 @@
+2024-08-24 15:50:27 - Prepared statement for login query.
+2024-08-24 15:50:27 - Executed login query for user: 
+2024-08-24 15:50:27 - Invalid login attempt for user: 
+2024-08-24 15:51:21 - Prepared statement for login query.
+2024-08-24 15:51:21 - Executed login query for user: 
+2024-08-24 15:51:21 - Invalid login attempt for user: 
+2024-08-24 15:53:48 - Prepared statement for login query.
+2024-08-24 15:53:48 - Executed login query for user: teenitclub@gmail.com
+2024-08-24 15:53:48 - Prepared statement for inserting temp code.
+2024-08-24 15:53:48 - Inserted temp code for user: teenitclub@gmail.com
+2024-08-24 15:53:49 - Email with temp code sent to: teenitclub@gmail.com
+2024-08-24 15:54:30 - No record found for user .
+2024-08-24 15:55:20 - No record found for user .
+2024-08-24 15:57:35 - Failed attempt 1 for user teenitclub@gmail.com.
+2024-08-24 15:59:54 - Failed attempt 2 for user teenitclub@gmail.com.
+2024-08-24 16:00:17 - Prepared statement for login query.
+2024-08-24 16:00:17 - Executed login query for user: teenitclub@gmail.com
+2024-08-24 16:00:17 - Prepared statement for inserting temp code.
+2024-08-24 16:00:17 - Inserted temp code for user: teenitclub@gmail.com
+2024-08-24 16:00:18 - Email with temp code sent to: teenitclub@gmail.com
+2024-08-24 16:01:23 - Prepared statement for login query.
+2024-08-24 16:01:23 - Executed login query for user: teenitclub@gmail.com
+2024-08-24 16:01:23 - Prepared statement for inserting temp code.
+2024-08-24 16:01:23 - Inserted temp code for user: teenitclub@gmail.com
+2024-08-24 16:01:23 - Email with temp code sent to: teenitclub@gmail.com
+2024-08-24 16:02:02 - Failed attempt 3 for user teenitclub@gmail.com.
+2024-08-24 16:02:37 - Failed attempt 4 for user teenitclub@gmail.com.
+2024-08-24 16:04:00 - Failed attempt 5 for user teenitclub@gmail.com.
+2024-08-24 16:06:34 - Failed attempt 6 for user teenitclub@gmail.com.
+2024-08-24 18:52:37 - Prepared statement for login query.
+2024-08-24 18:52:37 - Executed login query for user: teenitclub@gmail.com
+2024-08-24 18:52:37 - Prepared statement for inserting temp code.
+2024-08-24 18:52:37 - Inserted temp code for user: teenitclub@gmail.com
+2024-08-24 18:52:37 - Email with temp code sent to: teenitclub@gmail.com
+2024-08-24 18:53:09 - Failed attempt 6 for user teenitclub@gmail.com.
+2024-08-24 19:04:29 - Failed attempt 3 for user teenitclub@gmail.com.
+2024-08-24 19:07:58 - Failed attempt 4 for user teenitclub@gmail.com. inputCode: 631073 storedCode^ 631073
