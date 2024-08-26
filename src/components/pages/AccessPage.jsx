@@ -68,9 +68,9 @@ const AccessPage = () => {
 
                 </Modal>
             }
-            {AccessCheck('yes_no', 'a_page_access_create') && <button className="AccessPage-button" onClick={() => {
+            {AccessCheck('yes_no', 'a_page_access_create') && <Button variant="contained" onClick={() => {
                 setModal(true)
-            }}>{LANG.access_text.add_template}</button>}
+            }}>{LANG.access_text.add_template}</Button>}
             
             {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error") }} />}
             {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success") }} />}

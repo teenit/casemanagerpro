@@ -61,10 +61,17 @@ useEffect(()=>{
             </div>
             <div className="EventPage-members">
                 <div className="EventPage-members-title">
-                    <div>{event?.title}</div>
+                <div>Приймають участь</div>
                     <Icon icon="add" addClass={"fs40"} onClick={() => { modalHandler("addMember") }} />
                 </div>
-                {state && <EventMembers event_id={params.id} getEventData={getEventData} managers={state.event_user_manager} members={state.event_case_member}/>}
+                {state && <EventMembers 
+                    event_id={params.id} 
+                    getEventData={getEventData} 
+                    managers={state.event_user_manager} 
+                    members={state.event_case_member}
+                    managersNew={state.event_user_manager_new}
+                    membersNew={state.event_case_member_new}
+                    />}
             </div>
             {
                 state && <EventPlans getEventData={getEventData} feedbacks={state.event_feedbacks} plans={state.event_plans} event_id={params.id}/>

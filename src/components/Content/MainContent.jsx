@@ -66,7 +66,7 @@ const MainContent = () => {
         <Route path="/access/:id" element={access.access ? <AccessPageRight /> : <NotFound />} />
         <Route path='/events' element={access.events ? <Events /> : <NotFound />} />
         <Route path='/events_new' element={access.events ? <EventsPage /> : <NotFound />} />
-        <Route path='/event/:id' element={access.event ? <Event /> : <NotFound />} />
+        <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} />
         <Route path='/event_new/:id' element={access.event ? <EventPage /> : <NotFound />} />
         <Route path='/calendar' element={access.calendar ? <Calendar /> : <NotFound />} />
         <Route path='/cooperation' element={<Cooperation />} />
@@ -85,6 +85,7 @@ const MainContent = () => {
   ) : (
     <Routes>
       <Route path='/login' element={<LoginPage />} />
+      <Route path='/register' element={<Registration />} />
       <Route path='/recovery' element={<Recovery />} />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>

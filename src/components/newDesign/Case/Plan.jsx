@@ -79,7 +79,7 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
             <div className="Plan-title">
                 <div className="Plan-title-panel" onClick={openHandler}>
                     <div>{LANG.planing}</div>
-                        <Icon icon={"arrow_down"} addClass={"fs35"}/>
+                        <Icon icon={"arrow_down"} addClass={"fs35 arrow"}/>
                 </div>
                 <span onClick={() => changeHandler("create", true)}>
                     <Icon icon={"add"}/>

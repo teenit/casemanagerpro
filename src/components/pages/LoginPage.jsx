@@ -6,6 +6,7 @@ import { setUser } from "../../store/Slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { loadUserAuth } from "../../actions/auth";
 import { Button } from "@mui/material";
+import Registration from "../Auth/Registration";
 
 const LoginPage = () => {
     const [state, setState] = useState({
@@ -19,6 +20,7 @@ const LoginPage = () => {
         go: 1,
         type: 'login'
     });
+    const [activeLogin, setActiveLogin] = useState(true)
 
     useEffect(() => {
         const checkLockStatus = () => {
@@ -157,7 +159,12 @@ const LoginPage = () => {
 
     return (
         <div className="LoginPage">
-            <div className="LoginPage-form">
+            <div className="" >
+                <span className={`LoginPage-switch ${activeLogin && 'active'}`} onClick={()=>setActiveLogin(true)}>Авторизація</span>
+                <span>/</span>
+                <span className={`LoginPage-switch ${!activeLogin && 'active'}`} onClick={()=>setActiveLogin(false)}>Реєстрація</span>
+                </div>
+            {activeLogin ? <div className="LoginPage-form">
             {!state.activeCode && ( <Input
                 label={"Email"}
                 value={state.email}
@@ -194,7 +201,9 @@ const LoginPage = () => {
                 disabled={isDisabled}>Login</Button>
             {state.isLocked && <p>{state.lockMessage}</p>}
             {state.remainingTime > 0 && <p>Time remaining: {formatTime(state.remainingTime)}</p>}
-            </div>
+            </div>: <Registration switchForms={()=>setActiveLogin(true)}/>
+            }
+            
         </div>
     );
 }

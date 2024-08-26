@@ -29,7 +29,7 @@ export const LANG = {
     title_category_groups: "Категорії груп",
 },
   settings_to_page: "Налаштування до сторінки",
-  access_users_pages: "Права користувачів (Сторінки)",
+  access_users_pages: "Рівень доступу користувачів (Сторінки)",
   forbidden: "Заборонено",
   assigned_categories: "Призначені категорії",
   full_access: "Повний доступ",
@@ -55,11 +55,11 @@ export const LANG = {
   a_page_case_add_notes: "Додавати нотатки до кейсу",
   a_page_case_hidden: "Приховати інформацію",
   access_text: {
-    title: "Шаблони прав",
-    add_template: "Додати шаблон прав",
-    add_name: "Назва нового права",
-    add_description: "Опис нового права",
-    modal_header: "Додати новий шаблон прав"
+    title: "Рівні доступу",
+    add_template: "Додати рівень доступу",
+    add_name: "Назва нового рівня доступу",
+    add_description: "Опис нового рівня доступу",
+    modal_header: "Додати новий рівень доступу"
   },
   status_plan: {
     0: "Задачу створено",

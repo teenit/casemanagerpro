@@ -40,7 +40,7 @@ const Registration = ({ switchForms }) => {
 
     const [alert, setAlert] = useState({
         success: false,
-        error: false,
+        error: false,   
         message: ""
     });
 
@@ -111,17 +111,17 @@ const Registration = ({ switchForms }) => {
         apiResponse(data, "user-register.php").then((response) => {
             let isSuccess = response.marker == "red" ? "error" : "success"
             setAlert({ [isSuccess]: true, message: response.message });
-            // switchForms()
-            // setFormData({
-            //     userName: '',
-            //     userPhone: '',
-            //     userEmail: '',
-            //     userAddress: '',
-            //     userType: 'volunteer',
-            //     userWork: '',
-            //     userAnotherData: '',
-            //     pass: ''
-            // });
+            
+            setFormData({
+                userName: '',
+                userPhone: '',
+                userEmail: '',
+                userAddress: '',
+                userType: 'volunteer',
+                userWork: '',
+                userAnotherData: '',
+                pass: ''
+            });
         }).catch((error) => {
             console.log(error);
         })

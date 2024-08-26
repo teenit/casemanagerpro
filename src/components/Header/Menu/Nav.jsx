@@ -19,10 +19,10 @@ const Nav = ({ close }) => {
             title: LANG.pages.addCase,
             link: "/add-case"
         },
-        {
-            title: LANG.pages.contacts,
-            link: "/contacts"
-        },
+        // {
+        //     title: LANG.pages.contacts,
+        //     link: "/contacts"
+        // },
         {
             title: LANG.pages.calendar,
             link: "/calendar"
@@ -31,10 +31,10 @@ const Nav = ({ close }) => {
             title: LANG.pages.events,
             link: "/events"
         },
-        {
-            title: LANG.pages.search,
-            link: "/search"
-        },
+        // {
+        //     title: LANG.pages.search,
+        //     link: "/search"
+        // },
         {
             title: LANG.pages.settings,
             link: "/settings"
@@ -47,10 +47,10 @@ const Nav = ({ close }) => {
             title: LANG.pages.accesses,
             link: "/access"
         },
-        {
-            title: LANG.pages.cooperation,
-            link: "/cooperation"
-        },
+        // {
+        //     title: LANG.pages.cooperation,
+        //     link: "/cooperation"
+        // },
         {
             title: LANG.pages.groups,
             link: "/groups"

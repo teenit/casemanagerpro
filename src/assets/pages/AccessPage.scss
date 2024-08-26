@@ -4,18 +4,25 @@
     display: flex;
     flex-direction: column;
     gap: 25px;
+    color: $light-theme-color-black000--o;
     &-title{
         margin: auto;
         font-size: 33px;
         font-weight: bold;
+        color: $light-theme-color-black000--o;
     }
     &-templates{
         display: flex;
-        flex-direction: column;
         gap: 15px;
+        flex-wrap: wrap;
+
         &-row{
-            font-size: 28px;
+            font-size: 18px;
             transition: all .3s;
+            padding: 5px 15px;
+            border: solid 4px $default-color-primary-fill;
+            border-radius: 8px;
+            color: $light-theme-color-black000--o;
             >span:hover{
                 color: $main-color;
                 cursor: pointer;

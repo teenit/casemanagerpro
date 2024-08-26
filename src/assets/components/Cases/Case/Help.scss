@@ -104,7 +104,10 @@
 }
 @media screen and (max-width:500px){
     .Help-title{
-        flex-direction: column;
+        flex-direction: row;
+        .fs30.arrow{
+            display: none;
+        }
     }
     .Help-title-panel{
         div{

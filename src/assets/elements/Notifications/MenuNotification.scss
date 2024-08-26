@@ -15,6 +15,9 @@
     &.event-created{
         background-color: $notification--default-event-created-fill;
     }
+    &.birthday {
+        background-color: $notification--default-case-birthday-fill;
+    }
     &-header{
         font-size: 14px;
         width: 100%;

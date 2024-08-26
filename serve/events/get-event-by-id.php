@@ -80,7 +80,7 @@ try {
             case 'event_user_manager':
                 if ($row['userName']) {
                     $results['event_user_manager'][] = [
-                        'userName' => $row['userName'],
+                        'name' => $row['userName'],
                         'phone' => $row['user_phone'],
                         'type' => $row['type'],
                         'meta_id' => $row['meta_id'],
@@ -103,7 +103,7 @@ try {
 
             case 'event_user_manager_new':
                 $value = json_decode($row['meta_value']);
-                $results['data'][] = [
+                $results['event_user_manager_new'][] = [
                     'name' => $value->name,
                     'phone' => $value->phone,
                     'role' => $value->role,
@@ -112,7 +112,7 @@ try {
                 break;
             case 'event_case_manager_new':
                 $value = json_decode($row['meta_value']);
-                $results['data'][] = [
+                $results['event_case_member_new'][] = [
                     'name' => $value->name,
                     'phone' => $value->phone,
                     'role' => $value->role,

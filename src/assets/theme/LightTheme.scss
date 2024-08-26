@@ -4,9 +4,12 @@
     /*GLOBAL*/
     --default-background: #{$light-theme-color-white000--o};
     --default-color-primary-fill: #{$light-theme-color-blue000--o};
+    --default-color-primary-text: #{$light-theme-color-black000--o};
 
     /*NOTIFICATIONS COLOR*/
     --notification--default-notification-fill: #{$light-theme-color-blue000--o};
     --notification--default-case-created-fill: #{$light-theme-color-orange000--o};
     --notification--marked-case-created-fill: #{$light-theme-color-orange800--o};
+    --notification--default-case-birthday-fill: #{$light-theme-color-pink000--o}; 
+
 }

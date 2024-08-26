@@ -21,7 +21,8 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
                 return <div>
                     <NavLink to={`/user/${item.user_id_changer}`}>{item.user_name_changer}</NavLink> змінив ім'я кейсу <NavLink to={`/case/${item.case_id}`}>{item.case_id}</NavLink> з {item.older_name} на {item.new_name}
                 </div>
-
+            case "birthday":
+                return <div>У кейса <NavLink to={`/case/${data.case_id}`}>№{data.case_id} {data.case_name}</NavLink> {data.when} <b>{data.years} років</b> {data.happy_day}</div>
             default:
                 break;
         }
@@ -33,7 +34,7 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             icon: "add_notification",
             icon_class: "notification-icon-yellow",
             color: "#E9F4FE",
-            link: `/case/${data.meta_value.case_id}`,
+           // link: `/case/${data.meta_value.case_id}`,
             click: () => { navigate(`/case/${data.meta_value.case_id}`) },
             showButton: true,
             buttonText: "Детальніше",
@@ -69,7 +70,8 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             title: "День народження",
             icon: "birthday",
             icon_class: "notification-icon-purple",
-            color: "#9747FF"
+            color: "#9747FF",
+            type: 'birthday'
         }
     }
     return (
@@ -79,12 +81,12 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
                     <Icon icon={notificationType[key].icon} addClass={notificationType[key].icon_class} />
                     <div>{notificationType[key].title}</div>
                 </div>
-                {isUnread && <div className="MenuNotification-header-unread" onClick={() => { read(data.notification_id) }}>Нове</div>}
+                {isUnread && data.meta_key !== 'birthday' && <div className="MenuNotification-header-unread" onClick={() => { read(data.notification_id) }}>Нове</div>}
 
             </div>
             <div className='MenuNotification-inner'>
                 <GetMessage />
-                <div className='MenuNotification-inner-date'>{data.date_created}</div>
+                {data.meta_key !== 'birthday' && <><div className='MenuNotification-inner-date'>{data.date_created}</div>
                 <div className='MenuNotification-inner-options'>
                     {!!notificationType[key].showButton && typeof notificationType[key].click == 'function' &&
                         <button onClick={notificationType[key].click} className='MenuNotification-button MenuNotification-inner-options-more'>
@@ -103,7 +105,7 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
                         <Icon icon={'delete'} addClass={'notification-delete'} onClick={() => deleteNotification(data.notification_id)} />
                     </div>
 
-                </div>
+                </div></>}
             </div>
         </div>
     )

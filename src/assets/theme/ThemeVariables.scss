@@ -4,6 +4,7 @@
 
 $default-background: var(--default-background, $light-theme-color-white000--o);
 $default-color-primary-fill: var(--default-color-primary-fill, $light-theme-color-blue000--o);
+$default-color-primary-text: var(--default-color-primary-text, $light-theme-color-black000--o);
 
 
 $notification--default-case-created-fill: var(--notification--default-case-created-fill, $light-theme-color-orange000--o); 
@@ -12,3 +13,4 @@ $notification--default-edit-case-fill: var(--notification--default-edit-case-fil
 $notification--marked-edit-case-fill: var(--notification--marked-edit-case-fill, $light-theme-color-blue800--o); 
 $notification--default-event-created-fill: var(--notification--default-event-created-fill, $light-theme-color-purple000--o); 
 $notification--marked-event-created-fill: var(--notification--marked-event-created-fill, $light-theme-color-purple800--o); 
+$notification--default-case-birthday-fill: var(--notification--default-case-birthday-fill, $light-theme-color-pink000--o); 
