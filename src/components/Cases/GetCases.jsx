@@ -8,6 +8,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import AccessCheck from "../Functions/AccessCheck";
 import AccessCheckCases from "../Functions/AccessCheckCases";
+import defaultImg from "../../img/default_profile.png";
+import { serverAddres } from "../Functions/serverAddres";
+import moment from "moment";
 
 function sortMas(field) {
   return (a, b) => {
@@ -76,7 +79,35 @@ const GetCases = ({ posts, postsChange }) => {
   };
 
   const editIds = check.edit.map(item => item.id);
+  const images = {
+    male: [serverAddres("media/default/m-young.png"), serverAddres("media/default/m-middle.png"), serverAddres("media/default/m-old.png")],
+    female: [serverAddres("media/default/f-young.png"), serverAddres("media/default/f-middle.png"), serverAddres("media/default/f-old.png")],
+    other: [serverAddres("media/default/o-young.png"), serverAddres("media/default/o-middle.png"), serverAddres("media/default/o-old.png")],
+    default: defaultImg
+}
+const howOldIsCase = (birthday) => {
+  const birthDate = moment(birthday);
+  const age = moment().diff(birthDate, 'years');
+  return age;
+};
+const getImage = (data) => {
+  if (!data && !data?.profileImg?.link) return images.default
+  if (data?.profileImg?.link) return data.profileImg.link
+  if (data && data?.sex && data.sex.trim().length>0) {
+      const age = howOldIsCase(data.happyBD)
+      if (age) {
+          if (age < 18) {
+              return images[data.sex][0]
+          }
+          if (age >= 18 && age <= 50) {
+              return images[data.sex][1]
+          }
+          return images[data.sex][2]
+      }else return images[data.sex][1]
 
+  }
+  return images.default
+};
   return (
     <div className="wrap__cards">
       {/* <div className="cards__filter">
@@ -105,7 +136,7 @@ const GetCases = ({ posts, postsChange }) => {
         <div className={s.like__cards}>
           <div className="inner__cards" id="inner__cards">
             {masPost.map((elem, ind) => (
-              <Card edit={editIds} info={elem} key={ind} categories={categories} />
+              <Card img={getImage(elem)} edit={editIds} info={elem} key={ind} categories={categories} />
             ))}
           </div>
           {cases.button ? (
