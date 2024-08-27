@@ -26,7 +26,7 @@ const Bell = () => {
     })
     const getNotifications = ()=>{
         apiResponse({limit: state.limit, page:state.page + 1},"notifications/get.php").then((res)=>{
-            console.log(res)
+           //return console.log(res)
             setState({...state, page:state.page + 1, more: res.length < state.limit ? false : true})
             setNotifications([...notifications, ...res])
         })
@@ -52,11 +52,23 @@ const Bell = () => {
         setActive(false)        
         getNotifications()
         getContUnRead()
+        const intervalId = setInterval(getContUnRead, 60000);
+
+        return () => clearInterval(intervalId); 
     }, [location.pathname])
+
 
     const readNotification = (id) => {
         apiResponse({notification_id:id}, "notifications/mark-read.php").then((res)=>{
-            getNotifications()
+            if (res.status) {
+                let filtered = [];
+                notifications.forEach((elem)=>{ 
+                    if(elem.notification_id === id) elem.date_read = true;
+                    filtered.push(elem)
+                })
+                setNotifications(filtered)
+                getContUnRead()
+            }
         })
     };
 
@@ -64,7 +76,9 @@ const Bell = () => {
         <div className={s.bell__wrap}>
             <div className={s.wr__img}><img src={bellImg} className={s.bell__img} alt="" onClick={() => {
                 setActive(!active)
-            }} />{notifications.length !== 0 && <span className={s.count}> {unRead} </span>}</div>
+                setState({limit:10, page:0, more: true});
+                getNotifications()
+            }} />{unRead !== 0 && <span className={s.count}> {unRead} </span>}</div>
             {active && <div className={s.wrap__bells}>
                 <div className={`${s.black} ${s.active}`} onClick={() => {
                     setActive(!active)

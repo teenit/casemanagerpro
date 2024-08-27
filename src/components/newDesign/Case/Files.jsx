@@ -131,7 +131,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
             <div className="Files-title">
                 <div className="Files-title-panel" onClick={openHandler}>
                     <div>{LANG.caseFiles.title}</div>
-                    <Icon icon="arrow_down" addClass="fs35" />
+                    <Icon icon="arrow_down" addClass="fs35 arrow" />
                 </div>
                 <FileSearch files={files} filterFiles={(res)=>{filterFiles(res)}} />
                 <Icon icon="add" onClick={() => setModal(true)} />

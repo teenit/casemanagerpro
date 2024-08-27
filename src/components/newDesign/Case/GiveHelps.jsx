@@ -83,7 +83,7 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
             <div className="Help-title">
                 <div className="Help-title-panel" onClick={openHandler}>
                     <div>{LANG.give_help.helping}</div>
-                    <Icon icon="arrow_down" addClass="fs35" />
+                    <Icon icon="arrow_down" addClass="fs35 arrow" />
                 </div>
                 <span onClick={() => changeHandler("create", true)}>
                     <Icon icon="add" />

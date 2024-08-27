@@ -1,0 +1,26 @@
+.LoginPage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    &-switch {
+        cursor: pointer;
+        color: $default-color-primary-text;
+        font-weight: 600;
+        &.active {
+            color: goldenrod;
+        }
+        &:hover{
+            color: $main-color;
+        }
+    }
+    &-form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 50%;
+        min-width: 400px;
+    }
+}

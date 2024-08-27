@@ -69,38 +69,6 @@ if ($stmt) {
 
 }
 
-
-
-
-
-// $users = mysqli_query($conn, $msql);
-// $too = false;
-
-// while ($res = mysqli_fetch_array($users)) {
-    
-//     if($res['email'] === $data->login && $res['password'] === md5($data->password) && $res['active'] === 'true'){
-//         $token = uniqid(md5($res['id']),true);
-//         $time = time();
-//         $timeEnd = $time + 86400;
-//         $id = $res['id'];
-//         $obj = new StdClass();
-//         $obj->{'userName'} = $res['userName'];
-//         $obj->{'active'} = $res['active'];
-//         $obj->{'email'} = $res['email'];
-//         $obj->{'id'} = $res['id'];
-//         $obj->{'token'} = $token;
-//         $tokenSql = "INSERT INTO tokens (token, linetime, endtime, userid) VALUES ('$token','$time','$timeEnd','$id')";
-//         mysqli_query($conn, $tokenSql);
-//         $too = true;
-//         $ip = $_SERVER['REMOTE_ADDR'];
-//         setcookie("buldog", md5($ip), time() + 3600 * 24);
-//         setcookie("userName", $res['userName'], time() + 3600 * 24);
-//         setcookie("email", $res['email'], time() + 3600 * 24);
-//         setcookie("id", $res['id'], time() + 3600 * 24);
-//         setcookie("pekines", $token, time() + 3600 * 24);
-
-//     }
-// }
 if(!$too){
 
     $obj = new StdClass();

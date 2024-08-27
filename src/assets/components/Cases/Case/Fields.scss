@@ -60,19 +60,23 @@
 
 @media screen and (max-width:500px){
     .Fields{
+        .fs35.arrow  {
+            display: none;
+        }
         &-InfoBlock{
             &-title{
-                flex-direction: column;
+                flex-direction: row;
             }
+            width: 100%;
         }
         &-title{
-            flex-direction: column;
+            flex-direction: row;
             &-panel{
                 max-width: 100%;
-                font-size: 14px;
+                font-size: 16px;
                 word-wrap: break-word;
                 word-break: break-all;
-                flex-direction: column;
+                flex-direction: row;
             }
         }
     }

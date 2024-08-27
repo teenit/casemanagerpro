@@ -87,7 +87,7 @@ const DetailedInfo = ({ info, changeData }) => {
             <div className='DetailedInfo-title' >
                 <div className='DetailedInfo-title-panel' onClick={openHandler}>
                     <div>{LANG.detailedInfo.title}</div>
-                    <Icon icon={"arrow_down"} addClass={"fs35"} />
+                    <Icon icon={"arrow_down"} addClass={"fs35 arrow"} />
                 </div>
             </div>
             {open && <div className='content'>

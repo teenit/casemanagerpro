@@ -48,7 +48,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
     };
     return (
         <div className="EventPlan-feedback">
-            <div dangerouslySetInnerHTML={{ __html: item.value }}></div>
+            <div >{item.value}</div>
             <div className="EventPlan-feedback-panel">
                 <Icon icon={"edit"} addClass={"default-icon"} onClick={() => {
                     setEditingFeedback(item.value)

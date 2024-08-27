@@ -29,7 +29,7 @@ export const LANG = {
     title_category_groups: "Категорії груп",
 },
   settings_to_page: "Налаштування до сторінки",
-  access_users_pages: "Права користувачів (Сторінки)",
+  access_users_pages: "Рівень доступу користувачів (Сторінки)",
   forbidden: "Заборонено",
   assigned_categories: "Призначені категорії",
   full_access: "Повний доступ",
@@ -55,11 +55,11 @@ export const LANG = {
   a_page_case_add_notes: "Додавати нотатки до кейсу",
   a_page_case_hidden: "Приховати інформацію",
   access_text: {
-    title: "Шаблони прав",
-    add_template: "Додати шаблон прав",
-    add_name: "Назва нового права",
-    add_description: "Опис нового права",
-    modal_header: "Додати новий шаблон прав"
+    title: "Рівні доступу",
+    add_template: "Додати рівень доступу",
+    add_name: "Назва нового рівня доступу",
+    add_description: "Опис нового рівня доступу",
+    modal_header: "Додати новий рівень доступу"
   },
   status_plan: {
     0: "Задачу створено",
@@ -924,5 +924,134 @@ export const appConfig = {
         "view_responsible",
       ]
     }
-  ]
+  ],
+  config: {
+    notifications:{
+      case:{
+        created_send_all_users: {
+          title: 'Надіслати сповіщення всім користувачам, коли створено кейс',
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+      },
+      event:{
+        created_send_all_users: {
+          title: 'Надіслати сповіщення всім користувачам, коли створено подію',
+          description:"",
+          type: 'boolean',
+          value: true
+        }
+      }
+    },
+    API:{
+      telegram_bot:{
+        token: {
+          title: "Telegram bot token",
+          description: "",
+          type: 'string',
+          value: null
+        },
+        userID: {
+          title: "User ID",
+          description: "",
+          type: 'string',
+          value: null
+        }
+      } 
+    },
+    administration: {
+      twofa:{
+        title: "Enabled 2FA",
+        description: "",
+        type: 'boolean',
+        value: true
+      },
+      system_phone:{
+        title: "System Phone number",
+        description: "",
+        type: 'number',
+        value: ''
+      },
+      system_email: {
+        title: "System Email",
+        description: "",
+        type: 'email',
+        value: ''
+      }
+    },
+  },
+  
+  userConfig: {
+    notifications:{
+      case:{
+        created_all: {
+          title: 'Надіслати спqовіщення, коли створено кейс у програмі',
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        switch_responsible: {
+          title: 'Надіслати спqовіщення, коли вас назначено відповідальним або змінено',
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        change_case_name: {
+          title: "Надіслати спqовіщення, коли змінено ім'я кейсу",
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        change_case_data: {
+          title: "Надіслати спqовіщення, коли редагується кейс",
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        case_happy_day: {
+          title: "Надіслати спqовіщення, дня народження кейса",
+          description:"",
+          type: 'boolean',
+          value: true
+        }
+      },
+      event:{
+        created_all: {
+          title: 'Надіслати сповіщення, коли створено подію',
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+        change_event_data: {
+          title: "Надіслати спqовіщення, коли редагується івент/подія",
+          description:"",
+          type: 'boolean',
+          value: true
+        },
+      }
+    },
+    API: {
+      telegram: {
+        userID: {
+          title: "User ID",
+          description: "",
+          type: 'string',
+          value: null
+        },
+        userID: {
+          title: "User Name",
+          description: "",
+          type: 'string',
+          value: null
+        },
+        phone: {
+          title: "Phone",
+          description: "",
+          type: 'string',
+          value: null
+        }
+      }
+    }
+  },
 }

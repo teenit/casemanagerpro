@@ -70,4 +70,16 @@ function addEventToCalendar($conn, $data) {
     }
 }
 
+// Функція для логування
+function logMessage($message) {
+    // Визначення шляху до файлу журналу
+    $logFile = 'logs/app.log';
+
+    // Форматування повідомлення з міткою часу
+    $formattedMessage = date("Y-m-d H:i:s") . " - " . $message . PHP_EOL;
+
+    // Запис повідомлення у файл журналу
+    file_put_contents($logFile, $formattedMessage, FILE_APPEND);
+}
+
 ?>

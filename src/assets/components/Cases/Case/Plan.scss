@@ -113,15 +113,25 @@
     }
 }
 @media screen and (max-width:720px){
+
     .dates-start{
-        flex-direction: column;
+        flex-direction: row;
     }
 }
 @media screen and (max-width:500px){
+    .Plan {
+       
+    }
     .Plan-title{
-        flex-direction: column;
+        flex-direction: row;
+        .fs30.arrow{
+            display: none;
+        }
     }
     .Plan-title-panel{
             font-size: 16px;
+            .fs30.arrow{
+                display: none;
+            }
     }
 }

@@ -58,6 +58,8 @@
                     flex-direction: column;
                     >:nth-child(odd){
                         background-color:  $main-color;
+                        border: solid 3px $main-color!important;
+                        border-bottom: none;
                     }
                 }
             }
@@ -86,14 +88,25 @@
         &-notInSystem{
             background-color: #fff;
         }
+        &.without-in-system {
+            background-color: $default-background;
+            border: solid 3px $second-color;
+        }
         padding: 7.5px 12.5px;
         font-weight: bold;
         border-radius: 7.5px;
         background-color: $second-color;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        word-break: break-all;
+        &-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            word-break: break-all;
+        }
+        &-role {
+            font-size: 12px;
+            font-weight: 400;
+            padding-left: 10px;
+        }
         &-right{
             display: flex;
             align-items: center;

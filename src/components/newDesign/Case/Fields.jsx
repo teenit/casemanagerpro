@@ -129,7 +129,7 @@ const Fields = ({ fields, getCaseInfo, case_id }) => {
             <div className='Fields-title'>
                 <div className='Fields-title-panel' onClick={openHandler}>
                     <div>{LANG.fields.title}</div>
-                    <Icon icon={"arrow_down"} addClass={"fs35"} />
+                    <Icon icon={"arrow_down"} addClass={"fs35 arrow"} />
                 </div>
                 <Icon icon={"add"} addClass={"fs35"} onClick={() => { setModal({ ...modal, add: true }); setIsEditing(false); setFormData({ title: "", description: "", id: null }); }} />
             </div>

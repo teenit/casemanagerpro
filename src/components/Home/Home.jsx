@@ -22,32 +22,31 @@ const Home = ()=>{
                         <NavLink className={s.a} to="/add-case">Додати кейс</NavLink>
 
                     </li>
-                    <li className={s.li}>
+                    {/* <li className={s.li}>
                         <NavLink className={s.a} to="/contacts">Телефонна книга</NavLink>
 
-                    </li>
+                    </li> */}
                     <li className={s.li}>
                         <NavLink className={s.a} to="/calendar">Календар</NavLink>
                     </li>
                     <li className={s.li}>
                         <NavLink className={s.a} to="/events">Події</NavLink>
                     </li>
-                    <li className={s.li}>
+                    {/* <li className={s.li}>
                         <NavLink className={s.a} to="/search">Розширений пошук</NavLink>
-                    </li>
-                    <li className={s.li}>
+                    </li> */}
+                    {/* <li className={s.li}>
                         <NavLink className={s.a} to="/settings">Налаштування</NavLink>
-
-                    </li>
+                    </li> */}
                     <li className={s.li}>
                         <NavLink className={s.a} to="/resources">Ресурси</NavLink>
                     </li>
-                    <li className={s.li}>
+                    {/* <li className={s.li}>
                         <NavLink className={s.a} to="/cooperation">Коаліція</NavLink>
-                    </li>
-                    <li className={s.li}>
-                        <NavLink className={s.a} to="/access">Шаблони прав</NavLink>
-                    </li>
+                    </li> */}
+                    {/* <li className={s.li}>
+                        <NavLink className={s.a} to="/access">Рівні доступу</NavLink>
+                    </li> */}
                     <li className={s.li}>
                         <NavLink className={s.a} to="/groups">Групи</NavLink>
                     </li>

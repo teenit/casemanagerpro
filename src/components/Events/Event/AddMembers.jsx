@@ -43,13 +43,13 @@ const AddMembers = ({ modalHandler, getEventData }) => {
         }
     
         let usersKey = role === "manager" ? "event_user_manager" : "event_case_member";
-    
+        let newUserKey = role === "manager" ? "event_user_manager_new" : "event_case_manager_new"
         let obj = {
-            userName: user.userName,
+            name: user.userName,
             phone: user.phone,
-            userID: user.id,
-            eventID: params.id,
-            position: user.position
+            user_id: user.id,
+            event_id: params.id,
+            role: user.position
         };
     
         if (userInSystem) {
@@ -64,12 +64,12 @@ const AddMembers = ({ modalHandler, getEventData }) => {
             });
         } else {
             apiResponse({
-                meta_key: usersKey,
+                meta_key: newUserKey,
                 meta_value: JSON.stringify({ ...obj }),
                 event_id: params.id
             }, "events/add-event-meta.php").then((res) => {
                 console.log(res);
-                // modalHandler();
+                modalHandler();
                 getEventData();
             });
         }

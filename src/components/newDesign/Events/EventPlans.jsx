@@ -13,7 +13,10 @@ const EventPlans = ({plans = [], feedbacks={}, event_id, getEventData}) => {
                 <div>Плани</div>
                 <Icon icon={"add"} addClass={"fs40"} onClick={() => { setModal(true) }}/>
             </div>
-            <div className="EventPlans-inner">
+            {
+                plans.length === 0 && <span>Немає створених планів</span>
+            }
+            {plans.length > 0 && <div className="EventPlans-inner">
 
             {
                 plans.map((item,index)=>{
@@ -21,7 +24,7 @@ const EventPlans = ({plans = [], feedbacks={}, event_id, getEventData}) => {
                     return <EventPlan key={index} getEventData={getEventData} feedbacks={feedbacks} event_id={event_id} plan={item}/>
                 })
             }
-            </div>
+            </div>}
             {modal && <AddPlan getEventData={getEventData} event_id = {event_id} close={() => { setModal(false) }} />}
         </div>
     )

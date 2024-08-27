@@ -19,13 +19,13 @@ $stmt->bind_param("ii", $notification_id, $user_id);
 if ($stmt->execute()) {
     // Перевірка, чи було оновлено рядки
     if ($stmt->affected_rows > 0) {
-        echo json_encode(['success' => true, 'message' => 'Notification marked as read.']);
+        echo json_encode(['status' => true, 'message' => 'Notification marked as read.']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'No notification found or already marked as read.']);
+        echo json_encode(['status' => false, 'message' => 'No notification found or already marked as read.']);
     }
 } else {
     // Обробка помилок
-    echo json_encode(['success' => false, 'message' => 'Error: ' . $stmt->error]);
+    echo json_encode(['status' => false, 'message' => 'Error: ' . $stmt->error]);
 }
 
 // Закриття підготовленого запиту

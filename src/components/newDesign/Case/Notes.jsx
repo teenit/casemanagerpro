@@ -130,7 +130,7 @@ const Notes = ({ notes, case_id, getCaseInfo }) => {
             <div className="Notes-title">
                 <div className="Notes-title-panel" onClick={openHandler}>
                     <div>Нотатки</div>
-                    <Icon icon="arrow_down" addClass="fs35" />
+                    <Icon icon="arrow_down" addClass="fs35 arrow" />
                 </div>
                 <span onClick={() => setModal(true)}>
                     <Icon icon="add" />
