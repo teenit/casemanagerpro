@@ -34,13 +34,16 @@ const Group = () => {
             setData(res)
         })
     }, [params.id]);
-
+const cutString = (str)=>{
+    return str.length<=15?str:str.slice(0,15)+"..."
+}
     const Member = ({ item, index }) => {
         const [editMember, setEditMember] = useState(0);
         return (
             <div className='Group-member' onMouseEnter={() => { setEditMember(1); }} onMouseLeave={() => { setEditMember(0); }}>
                 <NavLink to={`/case/${item.case_id}`}>{item.name}</NavLink>
                 <NavLink to={`tel:${item.phone1}`}>{item.phone1}</NavLink>
+                <div title={item.why}>{cutString(item.why)}</div>
                 {/* <span style={{ opacity: editMember }}>
                     <Icon icon={'delete'} addClass={'close-icon'} onClick={() => { modalHandler('delete'); }} />
                 </span> */}
