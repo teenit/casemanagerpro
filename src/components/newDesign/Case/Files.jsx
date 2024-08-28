@@ -55,12 +55,12 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         setOpen(item === "true");
     }, [case_id, columns, files]);
 
-    const filterFiles = (result)=>{
-        const fileIds = result.map(item=>item.id)
-        const filter = files.filter(item=>fileIds.includes(item.id))
+    const filterFiles = (result) => {
+        const fileIds = result.map(item => item.id)
+        const filter = files.filter(item => fileIds.includes(item.id))
         setFilteredFiles(filter)
         console.log(filter);
-        
+
     }
     const dataHandler = (key, value) => {
         setData({ ...data, [key]: value });
@@ -80,14 +80,17 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         if (data.title.length < 1 || data.title.length > 100) {
             return alertHandler("error", LANG.caseFiles.alerts.invalidName);
         }
-        apiResponse({title:data.title, description:data.description,tags:tags, client_id: case_id, type: "file" }, "manage/files/create.php").then((res) => {
-            alertHandler("success", LANG.caseFiles.alerts.success);
-            getCaseInfo();
-            setModal(false);
-            setRows(Math.ceil(files.length / columns));
-        }).catch((error) => {
-            alertHandler("error", LANG.caseFiles.alerts.error);
-        });
+        console.log(tags.join(','));
+        
+        // apiResponse({ title: data.title, description: data.description, tag: tags.join(','), client_id: case_id, type: "file" }, 
+        // "manage/files/create.php").then((res) => {
+        //     alertHandler("success", LANG.caseFiles.alerts.success);
+        //     getCaseInfo();
+        //     setModal(false);
+        //     setRows(Math.ceil(files.length / columns));
+        // }).catch((error) => {
+        //     alertHandler("error", LANG.caseFiles.alerts.error);
+        // });
     };
 
     const cutTitle = (str) => {
@@ -95,11 +98,14 @@ const Files = ({ case_id, getCaseInfo, files }) => {
     };
 
     const addTag = () => {
-        if (data.tag.trim() !== "" && !tags.some(item => item === data.tag.trim()) && data.tag.trim().length <= 50) {
-            setTags([...tags, data.tag]);
+        const newTags = data.tag.includes(',') ? data.tag.split(',') : [data.tag.trim()];
+        const filteredTags = newTags.map(item=>item.trim()).filter(item=>item.length>0&&item.length<50)
+        if (data.tag.trim() !== "" && filteredTags.length>0) {
+            setTags([...tags, ...filteredTags]);
             dataHandler("tag", "");
         }
     };
+
 
     const removeTag = (name) => {
         setTags(tags.filter(item => item !== name));
@@ -133,7 +139,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
                     <div>{LANG.caseFiles.title}</div>
                     <Icon icon="arrow_down" addClass="fs35 arrow" />
                 </div>
-                <FileSearch files={files} filterFiles={(res)=>{filterFiles(res)}} />
+                <FileSearch files={files} filterFiles={(res) => { filterFiles(res) }} />
                 <Icon icon="add" onClick={() => setModal(true)} />
             </div>
             {open && (

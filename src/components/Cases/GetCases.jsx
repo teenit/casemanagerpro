@@ -146,7 +146,7 @@ const getImage = (data) => {
           )}
         </div>
       ) : (
-        <CasesList cases={masPost} categories={categories} />
+        <CasesList loadMoreCases={loadMoreCases} cases={masPost} categories={categories} />
       )}
     </div>
   );

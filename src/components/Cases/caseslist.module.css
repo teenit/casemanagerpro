@@ -6,9 +6,6 @@
     display: flex;
     gap: 15px;
 }
-.wrap > table{
-    display: block;
-}
 .wrap a{
     font-weight: lighter;
 }

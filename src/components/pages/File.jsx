@@ -17,7 +17,7 @@ const File = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [modal, setModal] = useState(false);
-  const [tags, setTags] = useState(["jss", "jdiiusdyusu"]);
+  const [tags, setTags] = useState(data?.tags ? data.tags : ["jss", "jdiiusdyusu"]);
   const [confirm, setConfirm] = useState(false);
   const editCheck = AccessCheck("view_edit", "a_page_file", "edit");
   const [alert, setAlert] = useState({
@@ -30,7 +30,6 @@ const File = () => {
     text: false
   });
   const [newTag, setNewTag] = useState("");
-  const [tagMessage, setTagMessage] = useState("");
 
   const editHandler = (key) => {
     setEdit({ ...edit, [key]: !edit[key] });
@@ -84,17 +83,18 @@ const File = () => {
   };
 
   const addTag = () => {
-    if (newTag.trim() !== "" && !tags.includes(newTag.trim()) && newTag.trim().length <= 50) {
-      setTags([...tags, newTag.trim()]);
-      setNewTag("");
-      setModal(false);
-    } else {
-      setTagMessage("Invalid tag or tag already exists");
+    const newTags = newTag.includes(',') ? newTag.split(',') : [newTag.trim()]
+    const filteredTags = newTags.map(item => item.trim()).filter(item => item.length > 0 && item.length < 50)
+      if (newTag.trim() !== "" && filteredTags.length > 0) {
+      setTags([...new Set([...tags, ...filteredTags])])
+      setModal(false)
+      setNewTag("")
     }
   };
-
+  
+  
   const removeTag = (name) => {
-    setTags(tags.filter(item => item !== name));
+    setTags(tags.filter(item => item !== name))
   };
 
   const Tag = ({ name }) => {
