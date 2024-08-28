@@ -82,15 +82,15 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         }
         console.log(tags.join(','));
         
-        // apiResponse({ title: data.title, description: data.description, tag: tags.join(','), client_id: case_id, type: "file" }, 
-        // "manage/files/create.php").then((res) => {
-        //     alertHandler("success", LANG.caseFiles.alerts.success);
-        //     getCaseInfo();
-        //     setModal(false);
-        //     setRows(Math.ceil(files.length / columns));
-        // }).catch((error) => {
-        //     alertHandler("error", LANG.caseFiles.alerts.error);
-        // });
+        apiResponse({ title: data.title, description: data.description, tag: tags.join(','), client_id: case_id, type: "file" }, 
+        "manage/files/create.php").then((res) => {
+            alertHandler("success", LANG.caseFiles.alerts.success);
+            getCaseInfo();
+            setModal(false);
+            setRows(Math.ceil(files.length / columns));
+        }).catch((error) => {
+            alertHandler("error", LANG.caseFiles.alerts.error);
+        });
     };
 
     const cutTitle = (str) => {

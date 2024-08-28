@@ -2,7 +2,6 @@
 require_once '../config.php';
 
 $data = json_decode(file_get_contents('php://input'));
-//if(!checkRight($data->id, 'apiUpdateProgram', $token,true)) exit;
 $userId = $data->id;
 $token = $data->token;
 $link = $data->link;
@@ -10,36 +9,36 @@ $newVersion = $data->newVersion;
 $uploaddir = './updates/';
 $uploadfile = $uploaddir.basename($link);
 $obj = new StdClass();
-function unzip_file( $file_path, $dest ){
-	$zip = new ZipArchive;
 
-	if( ! is_dir($dest) ) return 'Нет папки, куда распаковывать...';
+function unzip_file($file_path, $dest) {
+    $zip = new ZipArchive;
 
-	// открываем архив
-	$is  = $zip -> open( $file_path );
-	if( $is ) {
+    if (!is_dir($dest)) return 'Нет папки, куда распаковывать...';
 
-		 $zip->extractTo($dest);
-
-		 $zip->close();
-
-		 return true;
-	}
-	else
-		return 'Произошла ошибка при распаковке архива';
+    $is = $zip->open($file_path);
+    if ($is) {
+        $zip->extractTo($dest);
+        $zip->close();
+        return true;
+    } else {
+        return 'Произошла ошибка при распаковке архива';
+    }
 }
 
-
-
-// Копируем файл в files
-if (copy($link, $uploadfile)){
-     $obj->{'message'} = "Файл успішно завантажено";
-     $zipfile = 'updates/'.$newVersion.'.zip'; // путь до файла архива
-    $pathdir = '../../'; // путь к папке, в которую будет распакован архив
-    $done = unzip_file( $zipfile, $pathdir );
+// Копируем файл в папку updates
+if (copy($link, $uploadfile)) {
+    $obj->{'message'} = "Файл успішно завантажено";
+    $zipfile = 'updates/' . $newVersion . '.zip'; // шлях до архіву
+    $pathdir = '../../'; // шлях до папки, в яку буде розпаковано архів
+    $done = unzip_file($zipfile, $pathdir);
     $obj->{'message4'} = 'Розпаковано';
-    if( is_string($done) ){
-    	$obj->{'message3'} = 'Помилка: '. $done;
+    
+    if (is_string($done)) {
+        $obj->{'message3'} = 'Помилка: ' . $done;
+    } else {
+        // Виконання міграцій після успішного розпакування
+        include_once 'migrate.php';  // Викликаємо скрипт міграцій
+        $obj->{'message5'} = 'Міграції успішно виконані';
     }
 }
 
@@ -49,8 +48,5 @@ if (mysqli_query($conn, $sql)) {
 } else {
     $obj->{'message2'} = "Помилка запису у БД";
 }
-
-
-
 
 echo json_encode($obj);
