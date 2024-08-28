@@ -22,7 +22,7 @@ const Card = (props) => {
         <div className="card">
             <div className="card__img">
                 <div className="card__img__img">
-                    <img src={`${props.info.profileImg ? props.info.profileImg.link : defaultImg}`} alt="" />
+                    <img src={props.img} alt="Фотграфія кейсу" />
                 </div>
                 <div className="card__categories">
                     <div className="card__categories__inner">

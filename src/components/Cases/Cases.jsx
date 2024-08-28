@@ -21,7 +21,7 @@ const Cases = ()=>{
             token: localStorage.getItem("token")
         }
         axios({
-            url: serverAddres('get-cases.php'),
+            url: serverAddres('case/get/cases-page-list.php'),
             method: "POST",
             header : {'Content-Type': 'application/json;charset=utf-8'},
             data : JSON.stringify(obj),

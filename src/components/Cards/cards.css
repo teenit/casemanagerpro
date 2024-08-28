@@ -7,7 +7,7 @@
     position: relative;
 }
 .inner__cards{
-    width: 80%;
+    width: 85%;
     margin: auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -15,18 +15,15 @@
     row-gap: 50px;
 }
 .card{
+    padding: 20px;
     box-shadow: 0 0 10px 0 gray;
     position: relative;
     border-radius: 10px;
     background-color: var(--second-color);
 }
 .card__img{
-    display: grid;
-    grid-template-columns: 1fr 40px;
-    column-gap: 20px;
-    width: 90%;
-    margin: auto;
-    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
     max-height: 200px;
     overflow: hidden;
 }
@@ -37,8 +34,9 @@
     gap: 7.5px;
 }
 .card__img img{
-width: 100%;
-border-radius: 10px;
+max-width: 100%;
+max-height: 200px;
+min-width: 100px;
 }
 .card__case__name{
     text-align: center;
@@ -106,6 +104,7 @@ border-radius: 10px;
    grid-template-columns: 1fr;
    row-gap: 10px;
    align-items: top;
+   padding: 0px 5px;
 }
 .card__categories__inner{
     display: grid;

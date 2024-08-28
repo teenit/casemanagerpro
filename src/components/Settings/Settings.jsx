@@ -75,7 +75,8 @@ const Settings = () => {
         phone: "",
         email: "",
         key: "",
-        auth:false
+        auth:false,
+        lightTheme:true
     })
     const initialSettingsData = {...settingsData}
     const settingsHandler = (key, value) => {
@@ -186,6 +187,13 @@ const Settings = () => {
                                     <Hint text={LANG.hints.auth} placement="right" />
                                 </span>
                                     <Switch value={settingsData.auth} onChange={()=>{settingsHandler("auth", !settingsData.auth)}}/>
+                            </div>
+                            <div className="accordion__item">
+                                <span>
+                                    <div>Світла тема</div>
+                                    {/* <Hint text={LANG.hints.auth} placement="right" /> */}
+                                </span>
+                                    <Switch value={settingsData.lightTheme} onChange={()=>{settingsHandler("lightTheme", !settingsData.lightTheme)}}/>
                             </div>
                         </AccordionBlock>
                     </AccordionDetails>

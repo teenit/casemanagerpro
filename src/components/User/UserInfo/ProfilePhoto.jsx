@@ -135,7 +135,7 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
             saveHandler={(value) => { handleSaveData("email", value) }}
           />
       
-          <InputBlock value={data.work} title="Робота" label={data.work} icon={"work"}
+          <InputBlock value={data.work} title="Про себе" label={data.work} icon={"book"}
             onChange={(e) => { handleChangeValue("work", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("work", value) }}
           />

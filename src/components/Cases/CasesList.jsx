@@ -7,7 +7,7 @@ import { Button } from "@mui/material";
 import Icon from "../elements/Icons/Icon"
 import { NavLink } from "react-router-dom";
 import AccessCheck from "../Functions/AccessCheck";
-const CasesList = ({ cases, categories }) => {
+const CasesList = ({ cases, categories, loadMoreCases }) => {
     const componentRef = useRef();
 
     const pageStyle = `
@@ -26,6 +26,7 @@ const caseCategories = (catMas) => {
         return LANG.casesList.noCategory
     }
 };
+console.log(cases);
 
 
     const handlerPrint = useReactToPrint({
@@ -69,6 +70,7 @@ const caseCategories = (catMas) => {
                 </table>
 
             </div>
+            <Button variant="contained" onClick={loadMoreCases}>Показати ще</Button>
             {AccessCheck('yes_no', 'a_page_cases_print') && <Button variant="contained" className="btn__print" onClick={handlerPrint}> <Icon icon={"print"}/><span>Друк</span></Button>}
             </>
     )
