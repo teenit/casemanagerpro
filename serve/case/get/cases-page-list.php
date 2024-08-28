@@ -23,6 +23,7 @@ SELECT
     cd.categories,
     cd.contract_date,
     cd.contract_number,
+    cn.sex,
     cd.address_live,
     cm.meta_value AS case_profile_img
 FROM 
@@ -35,7 +36,6 @@ LEFT JOIN
     casemeta cm
 ON
     cn.id = cm.case_id AND cm.meta_key = "case_profile_img"
-
 ';
 
 // Виконання запиту
@@ -58,6 +58,7 @@ while ($res = mysqli_fetch_assoc($access)) {
     $obj->{'addressLive'} = $res['address_live'];
     $obj->{'happyBD'} = $res['happy_bd'];
     $obj->{'user_id'} = $res['user_id'];
+    $obj->{'sex'} = $res['sex'];
     $obj->{'responsible_id'} = $res['responsible_id'];
     $obj->{'categories'} = json_decode($res['categories']);
     $obj->{'profileImg'} = json_decode($res['case_profile_img']);

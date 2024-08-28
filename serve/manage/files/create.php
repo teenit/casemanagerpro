@@ -8,7 +8,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 // Перевірка отриманих даних
 if (isset($data['title'], $data['description'], $data['client_id'], $data['id'], $data['type'])) {
     // Підготовка SQL-запиту для вставки даних
-    $sql = "INSERT INTO files (title, description, client_id, user_id, type) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO files (title, description, client_id, user_id, type, tag) VALUES (?, ?, ?, ?, ?, ?)";
 
     // Підготовка запиту
     $stmt = $conn->prepare($sql);
@@ -21,7 +21,7 @@ if (isset($data['title'], $data['description'], $data['client_id'], $data['id'],
     }
 
     // Прив'язка параметрів та виконання запиту
-    $stmt->bind_param("ssiis", $data['title'], $data['description'], $data['client_id'], $data['id'], $data['type']);
+    $stmt->bind_param("ssiiss", $data['title'], $data['description'], $data['client_id'], $data['id'], $data['type'], $data['tag']);
 
     // Виконання запиту
     if ($stmt->execute() === TRUE) {
