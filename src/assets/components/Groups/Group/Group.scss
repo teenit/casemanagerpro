@@ -54,7 +54,7 @@
             gap: 10px;
             >.Group-info-inner{
                 max-height: 150px;
-                overflow-y: scroll;
+                overflow-y: auto;
             }
         }
 
@@ -103,9 +103,12 @@
 }
 @media screen and (max-width:720px){
     .Group{
-        width: 100%;
         &-info{
             grid-template-columns: 1fr;
+        }
+        &-member{
+            flex-direction: column;
+            gap: 5px;
         }
     }
 }

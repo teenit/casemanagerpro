@@ -10,19 +10,19 @@ const FileSearch = ({ files, filterFiles }) => {
     const [searchStr, setSearchStr] = useState("");
 
     const handleSearch = (value) => {
-        if(value.length<0) return filterFiles(files)
+        if (value.length < 0) return filterFiles(files)
         let res = []
-        // let checkTags = files.filter(item => item.tags.some(tag => tag.includes(value)))
         files.forEach(item => {
-            if (item.title.toLowerCase().includes(value.toLowerCase()) || item.description.toLowerCase().includes(value.toLowerCase())) {
+            if (item.title.toLowerCase().includes(value.toLowerCase())
+                || item.description.toLowerCase().includes(value.toLowerCase())
+                || (item.tag && item.tag.split(',').some(tag => tag.includes(value)))
+            ) {
                 res.push(item)
             }
         });
-        console.log(res);
-        
         filterFiles(res)
     };
-    
+
 
     // const Result = ({ elems }) => {
     //     return (
@@ -46,7 +46,7 @@ const FileSearch = ({ files, filterFiles }) => {
                     type="text"
                     onChange={(e) => {
                         const value = e.target.value.trim();
-                            handleSearch(value);                        
+                        handleSearch(value);
                     }}
                 />
                 {load ? (
@@ -54,7 +54,6 @@ const FileSearch = ({ files, filterFiles }) => {
                 ) : (
                     <span className="FileSearch-icon" onClick={() => {
                         setActive(!active);
-                        setResults(null);
                     }}>
                         <Icon icon={"search"} addClass={"black-icon fs40"} />
                     </span>

@@ -36,9 +36,9 @@
     border-radius: 5px;
     transition: all .3s;
 }
-.control__btn:nth-child(even){
+/* .control__btn:nth-child(even){
     color: #000;
-}
+} */
 .control__btn:hover{
     transform: scale(1.05);
 }

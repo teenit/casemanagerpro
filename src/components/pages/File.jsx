@@ -17,7 +17,7 @@ const File = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [modal, setModal] = useState(false);
-  const [tags, setTags] = useState(data?.tags ? data.tags : ["jss", "jdiiusdyusu"]);
+  const [tags, setTags] = useState();
   const [confirm, setConfirm] = useState(false);
   const editCheck = AccessCheck("view_edit", "a_page_file", "edit");
   const [alert, setAlert] = useState({
@@ -49,19 +49,15 @@ const File = () => {
   const getFileData = () => {
     apiResponse({ file_id: file_id }, "manage/files/get-by-id.php").then((res) => {
       setData(res.data);
+      let dataTags = res.data.tag ? res.data.tag.split(',').map((item) => item.trim()) : []
+      setTags([...dataTags])
     }).catch((error) => {
       console.error(error);
     });
   };
 
   useEffect(() => {
-    let isMounted = true;
-    apiResponse({ file_id: file_id }, "manage/files/get-by-id.php").then((res) => {
-      if (isMounted) setData(res.data);
-    }).catch((error) => {
-      if (isMounted) console.error(error);
-    });
-    return () => { isMounted = false; };
+    getFileData()
   }, [file_id]);
 
   const deleteHandler = () => {
@@ -72,7 +68,9 @@ const File = () => {
 
   const updateData = (key, value) => {
     apiResponse({ [key]: value, file_id: Number(file_id), type: "file" }, "manage/files/update.php").then((res) => {
-      alertHandler("success", LANG.file.alertMessages.success);
+      if(key!=="tag"){
+        alertHandler("success", LANG.file.alertMessages.success);
+      }
       getFileData();
       if (edit.name) {
         editHandler("name");
@@ -85,16 +83,20 @@ const File = () => {
   const addTag = () => {
     const newTags = newTag.includes(',') ? newTag.split(',') : [newTag.trim()]
     const filteredTags = newTags.map(item => item.trim()).filter(item => item.length > 0 && item.length < 50)
-      if (newTag.trim() !== "" && filteredTags.length > 0) {
-      setTags([...new Set([...tags, ...filteredTags])])
+    if (newTag.trim() !== "" && filteredTags.length > 0) {
+      const uniqueTags = [...new Set([...tags, ...filteredTags])]
       setModal(false)
       setNewTag("")
+      setTags(uniqueTags)
+      updateData("tag", uniqueTags.join(','))
     }
   };
-  
-  
+
+
   const removeTag = (name) => {
-    setTags(tags.filter(item => item !== name))
+    const newTags = tags.filter(item => item !== name)
+    setTags(newTags)
+    updateData("tag", newTags.join(','))
   };
 
   const Tag = ({ name }) => {
@@ -184,20 +186,20 @@ const File = () => {
             titleDefault={LANG.file.description}
           />
           <div className='File-info-tags'>
-            {tags.map(tag => <Tag key={tag} name={tag} />)}
+            {tags && (tags.length > 0 ? tags.map(tag => <Tag key={tag} name={tag} />) : <div>Додати тег</div>)}
             <Icon icon={"add"} addClass={"fs35"} onClick={() => { setModal(true) }} />
 
           </div>
         </div>
       </div>
       {edit.text && <Button variant='contained' color='error' onClick={() => { setConfirm(true) }}>Видалити файл</Button>}
-      {modal && <Modal closeHandler={closeModal} header={<span className='File-modal-header'>Додати тег <Hint text={LANG.hints.tag} /></span>} footer={
+      {modal && <Modal closeHandler={closeModal} header={<span className='File-modal-header'>Додати теги <Hint text={LANG.hints.tag} /></span>} footer={
         <>
           <Button variant='contained' color='error' onClick={closeModal}>{LANG.GLOBAL.cancel}</Button>
           <Button variant='contained' onClick={addTag}>{LANG.GLOBAL.save}</Button>
         </>
       }>
-        <Input value={newTag} onChange={(e) => { setNewTag(e.target.value) }} label='Назва тегу' />
+        <Input value={newTag} onChange={(e) => { setNewTag(e.target.value) }} label='Ваші теги' />
       </Modal>}
       {confirm && <ModalConfirm text={"Ви впевнені, що хочете видалити цей файл?"} successHandler={deleteHandler} closeHandler={() => { setConfirm(false) }} />}
       {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success", "") }} />}

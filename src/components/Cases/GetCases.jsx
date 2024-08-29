@@ -19,22 +19,25 @@ function sortMas(field) {
     } else if (field === "id") {
       return b["id"] - a["id"];
     } else if (field === "categories") {
-      const hasCategoriesA = a["categories"] && a["categories"].length > 0
-      const hasCategoriesB = b["categories"] && b["categories"].length > 0
+      const hasCategoriesA = a["categories"] && a["categories"].length > 0;
+      const hasCategoriesB = b["categories"] && b["categories"].length > 0;
       if (hasCategoriesA && !hasCategoriesB) {
-        return -1; // а приходит первее b
+        return -1
       } else if (!hasCategoriesA && hasCategoriesB) {
-        return 1; // b приходит первее а
+        return 1
       } else if (hasCategoriesA && hasCategoriesB) {
-        return a["categories"][0] - b["categories"][0]
+        return a["categories"][0] - b["categories"][0];
       } else {
-        return 0
+        return 0;
       }
+    } else if (field === "name") {
+      return a["name"].localeCompare(b["name"])
     } else {
       return a[field] > b[field] ? 1 : -1;
     }
   };
 }
+
 
 const GetCases = ({ posts, postsChange }) => {
   const categories = useSelector(state => state.categories.case);
@@ -77,6 +80,7 @@ const GetCases = ({ posts, postsChange }) => {
     setMasPost(sortedPosts.slice(0, cases.lastSlice));
     postsChange(sortedPosts);
   };
+  
 
   const editIds = check.edit.map(item => item.id);
   const images = {
