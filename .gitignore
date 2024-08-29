@@ -12,6 +12,12 @@
 /build
 /serveLaravel
 /serve/config.php
+/serve/logs
+/serve/manage/logs
+/serve/manage/updates
+/serve/uploads
+/serve/mpdf
+/serve/resources/uploads
 # misc
 .DS_Store
 .env.local

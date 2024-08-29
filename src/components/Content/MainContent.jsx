@@ -33,6 +33,7 @@ import UpdateLog from "../pages/UpdateLog";
 import EventsPage from "../pages/EventsPage";
 import EventPage from "../pages/EventPage";
 import LoginPage from "../pages/LoginPage";
+import TransactionsPage from "../pages/TransactionsPage";
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -76,6 +77,7 @@ const MainContent = () => {
         <Route path='/test' element={<TestPage />} />
         <Route path='/search' element={<Search />} />
         <Route path='/login_new' element={<LoginPage />} />
+        <Route path='/transactions' element={<TransactionsPage />} />
         <Route path='/file/:id' element={<File />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />

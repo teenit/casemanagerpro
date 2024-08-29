@@ -1,15 +1,25 @@
 <?php
 require_once '../config.php';
+require_once 'logger.php';
 $logFile = __DIR__ . '/logs/log_migrations.log'; // Файл для зберігання логу
+
+logMessage("Початок скрипту міграцій", $logFile);
 
 if ($conn->connect_error) {
     logMessage("Помилка підключення: " . $conn->connect_error, $logFile);
     die("Помилка підключення: " . $conn->connect_error);
 }
 
+logMessage("Підключення до бази даних встановлено", $logFile);
+
 // Перевіряємо наявність таблиці migration_history
 $sql = "SHOW TABLES LIKE 'migration_history'";
 $result = $conn->query($sql);
+
+if ($result === false) {
+    logMessage("Помилка виконання запиту SHOW TABLES: " . $conn->error, $logFile);
+    die("Помилка виконання запиту SHOW TABLES: " . $conn->error);
+}
 
 if ($result->num_rows === 0) {
     logMessage("Таблиця migration_history не існує. Створюємо таблицю.", $logFile);
@@ -30,35 +40,51 @@ if ($result->num_rows === 0) {
 $executedMigrations = [];
 $result = $conn->query("SELECT migration FROM migration_history");
 
+if ($result === false) {
+    logMessage("Помилка виконання запиту SELECT: " . $conn->error, $logFile);
+    die("Помилка виконання запиту SELECT: " . $conn->error);
+}
+
 while ($row = $result->fetch_assoc()) {
     $executedMigrations[] = $row['migration'];
 }
 
+logMessage("Знайдено виконані міграції: " . implode(', ', $executedMigrations), $logFile);
+
 $migrationFiles = glob(__DIR__ . '/migrations/*.php');
+if (!$migrationFiles) {
+    logMessage("Не знайдено файлів міграцій у папці /migrations", $logFile);
+    die("Не знайдено файлів міграцій у папці /migrations");
+}
+
 sort($migrationFiles); // Сортуємо, щоб міграції виконувалися в правильному порядку
 
 foreach ($migrationFiles as $migrationFile) {
     $migrationName = basename($migrationFile, '.php');
 
     if (!in_array($migrationName, $executedMigrations)) {
-        require $migrationFile;
         logMessage("Виконання міграції: $migrationName", $logFile);
-        migrate_up($conn);
+        require $migrationFile;
 
-        if ($conn->query("INSERT INTO migration_history (migration) VALUES ('$migrationName')")) {
-            logMessage("Міграція $migrationName успішно виконана.", $logFile);
+        if (function_exists('migrate_up')) {
+            $result = migrate_up($conn);
+
+            if ($result === false) {
+                logMessage("Міграція $migrationName завершилась з помилкою.", $logFile);
+            } else {
+                if ($conn->query("INSERT INTO migration_history (migration) VALUES ('$migrationName')")) {
+                    logMessage("Міграція $migrationName успішно виконана.", $logFile);
+                } else {
+                    logMessage("Помилка запису міграції $migrationName в базу даних: " . $conn->error, $logFile);
+                }
+            }
         } else {
-            logMessage("Помилка запису міграції $migrationName в базу даних: " . $conn->error, $logFile);
+            logMessage("Функція migrate_up не знайдена у файлі $migrationFile.", $logFile);
         }
     } else {
         logMessage("Міграція $migrationName вже виконана. Пропускаємо.", $logFile);
     }
 }
 
-$conn->close();
 logMessage("Всі міграції завершені.", $logFile);
-
-function logMessage($message, $file) {
-    $time = date('Y-m-d H:i:s');
-    file_put_contents($file, "[$time] $message\n", FILE_APPEND);
-}
+echo "Скрипт завершено успішно.";

@@ -57,8 +57,9 @@ const Footer = () => {
         apiResponse({
             link: `https://update.people-ua.org/version/${newVersion}.zip`,
             newVersion: newVersion
-        }, "manage/update-download.php").then(() => {
-            window.location.reload()
+        }, "manage/update-download.php").then((res) => {
+            console.log(res)
+           // window.location.reload()
         })
         // axios({
         //     url: serverAddres("manage/update-download.php"),
