@@ -12,7 +12,7 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import { useParams } from "react-router-dom";
 import { LANG } from "../../../services/config";
 
-const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
+const ProfilePhoto = ({getUser, changePass, url, user }) => {
   const params = useParams()
   const [pass, setPass] = useState({
     olderPass: "",
@@ -26,20 +26,20 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
     message: ""
   });
   const [data, setData] = useState({
-    userName: userName,
-    phone: phone,
-    email: email,
-    work: work,
+    userName: user.userName,
+    phone: user.phone,
+    email: user.email,
+    datas: user.datas,
   });
 
   useEffect(() => {
     setData({
-      userName: userName,
-      phone: phone,
-      email: email,
-      work: work,
+      userName: user.userName,
+      phone: user.phone,
+      email: user.email,
+      datas: user.datas,
     });
-  }, [userName, phone, email, work]);
+  }, [user.userName, user.phone, user.email, user.datas]);
 
   const dispatch = useDispatch();
   
@@ -69,9 +69,10 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
       apiResponse({...obj}, "user/update-user.php")
       .then((res) => {
         handleAlertChange("success", "Дані успішно оновлено");
-        // dispatch(removeUser());
-        handleChangeValue(key, value);
-          console.log(res);
+        getUser()
+        console.log(res);
+        // if(key=="email") dispatch(removeUser());
+
         })
         .catch((error) => console.log(error));
   };
@@ -91,18 +92,10 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
       return;
     }
     let passObj = {
-      id: localStorage.getItem("id"),
-      token: localStorage.getItem("token"),
       pass: pass.newPass,
       olderPass: pass.olderPass
     };
-    axios({
-      url: serverAddres("user/change-pass.php"),
-      method: "POST",
-      headers: { "Content-Type": "application/json;charset=utf-8" },
-      data: JSON.stringify(passObj),
-    })
-      .then(() => {
+    apiResponse({...passObj}, "user/change-pass.php").then(() => {
         handleAlertChange("success", "Пароль успішно змінено. Через декілька секунд вас перекине на сторінку логіну");
         setTimeout(()=>{
           dispatch(removeUser());
@@ -125,19 +118,21 @@ const ProfilePhoto = ({ url, userName, email, changePass, phone, work }) => {
              onChange={(e) => { handleChangeValue("userName", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("userName", value) }}
           />
-          <InputBlock hintMessage={LANG.hints.phone} value={data.phone} title="Номер телефону" label={data.phone} icon={"phone"}
+          <InputBlock titleDefault="Номер телефону" hintMessage={LANG.hints.phone} value={data.phone} title="Номер телефону" 
+          label={data.phone} icon={"phone"}
             link={`tel:${data.phone}`} onChange={(e) => { handleChangeValue("phone", e.target.value) }} inputType="number"
             saveHandler={(value) => { handleSaveData("phone", value) }}
           />
 
-          <InputBlock hintMessage={LANG.hints.email} value={data.email} title="Електронна пошта" label={data.email} icon={"email"}
+          <InputBlock titleDefault="Електронна пошта" hintMessage={LANG.hints.email} value={data.email} title="Електронна пошта" 
+          label={data.email} icon={"email"}
             link={`mailto:${data.email}`} onChange={(e) => { handleChangeValue("email", e.target.value) }} inputType="email"
             saveHandler={(value) => { handleSaveData("email", value) }}
           />
       
-          <InputBlock value={data.work} title="Про себе" label={data.work} icon={"book"}
-            onChange={(e) => { handleChangeValue("work", e.target.value) }} inputType="text"
-            saveHandler={(value) => { handleSaveData("work", value) }}
+          <InputBlock titleDefault="Про себе" value={data.datas} title="Про себе" label={data.datas} icon={"book"}
+            onChange={(e) => { handleChangeValue("datas", e.target.value) }} inputType="text"
+            saveHandler={(value) => { handleSaveData("datas", value) }}
           />
         </div>
       </div>

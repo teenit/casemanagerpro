@@ -166,7 +166,7 @@ const LoginPage = () => {
                 </div>
             {activeLogin ? <div className="LoginPage-form">
             {!state.activeCode && ( <Input
-                label={"Email"}
+                label={"Електронна пошта"}
                 value={state.email}
                 onChange={(e) => setState({ ...state, email: e.target.value })}
                 type={'email'}
@@ -174,7 +174,7 @@ const LoginPage = () => {
             />)}
             {!state.activeCode && (
                 <Input
-                    label={"Password"}
+                    label={"Пароль"}
                     value={state.password}
                     onChange={(e) => setState({ ...state, password: e.target.value })}
                     type={'password'}
@@ -183,7 +183,7 @@ const LoginPage = () => {
             )}
             {state.activeCode && (
                 <Input
-                    label={"Secret code"}
+                    label={"Код"}
                     value={state.secretCode}
                     onChange={(e) => setState({ ...state, secretCode: e.target.value })}
                     type={'text'}
@@ -198,9 +198,9 @@ const LoginPage = () => {
                         sendPassword();
                     }
                 }} 
-                disabled={isDisabled}>Login</Button>
+                disabled={isDisabled}>Увійти</Button>
             {state.isLocked && <p>{state.lockMessage}</p>}
-            {state.remainingTime > 0 && <p>Time remaining: {formatTime(state.remainingTime)}</p>}
+            {state.remainingTime > 0 && <p>Залишилось часу: {formatTime(state.remainingTime)}</p>}
             </div>: <Registration switchForms={()=>setActiveLogin(true)}/>
             }
             

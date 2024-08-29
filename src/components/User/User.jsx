@@ -22,13 +22,16 @@ const User = () => {
 const accessCheckPass = ()=>{AccessCheck('yes_no', 'a_page_user_change_pass')}
 const params = useParams()
 console.log(params.id);
+const getUser=()=>{
+  apiResponse({userId:params.id}, "user/get-user.php").then((data) => {
+    if(params.id==localStorage.getItem("id") && accessCheckPass){
+      setChangePass(true)
+    }
+    setUser(data);
+  });
+}
 useEffect(() => {
-    apiResponse({userId:params.id}, "user/get-user.php").then((data) => {
-      if(params.id==localStorage.getItem("id") && accessCheckPass){
-        setChangePass(true)
-      }
-      setUser(data);
-    });
+    getUser()
 
     // fetchReport().then(setReport);
     // fetchHistory().then(setHistory);
@@ -56,11 +59,9 @@ console.log(user);
     <div className="User">
       <ProfilePhoto
         url={user?.profileUrl?.link=="/default-img.png"?defaultImg:user?.profileUrl?.link}
-        userName={user.userName}
-        email={user.email}
+        getUser={getUser}
         changePass={changePass}
-        phone={user.phone}
-        work={user.datas}
+        user={user}
       />
       <UserCasesList userAddId={user.id}/>
 

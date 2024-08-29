@@ -19,7 +19,6 @@ const Files = ({ case_id, getCaseInfo, files }) => {
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({ success: false, error: false, message: "" });
     const [modal, setModal] = useState(false);
-    const [tags, setTags] = useState([]);
     const [data, setData] = useState({
         title: "",
         description: "",
@@ -80,9 +79,9 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         if (data.title.length < 1 || data.title.length > 100) {
             return alertHandler("error", LANG.caseFiles.alerts.invalidName);
         }
-        console.log(tags.join(','));
+        console.log(data);
         
-        apiResponse({ title: data.title, description: data.description, tag: tags.join(','), client_id: case_id, type: "file" }, 
+        apiResponse({ title: data.title, description: data.description, tag: data.tag, client_id: case_id, type: "file" }, 
         "manage/files/create.php").then((res) => {
             alertHandler("success", LANG.caseFiles.alerts.success);
             getCaseInfo();
@@ -97,19 +96,6 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         return str.length > 20 ? str.slice(0, 20) + "..." : str;
     };
 
-    const addTag = () => {
-        const newTags = data.tag.includes(',') ? data.tag.split(',') : [data.tag.trim()];
-        const filteredTags = newTags.map(item=>item.trim()).filter(item=>item.length>0&&item.length<50)
-        if (data.tag.trim() !== "" && filteredTags.length>0) {
-            setTags([...tags, ...filteredTags]);
-            dataHandler("tag", "");
-        }
-    };
-
-
-    const removeTag = (name) => {
-        setTags(tags.filter(item => item !== name));
-    };
 
     const File = ({ item }) => {
         const [hover, setHover] = useState(false);
@@ -123,14 +109,6 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         );
     };
 
-    const Tag = ({ name }) => {
-        return (
-            <div className="Files-tag">
-                <Icon icon={"close"} addClass={"close-icon"} onClick={() => removeTag(name)} />
-                <span>{name}</span>
-            </div>
-        );
-    };
 
     return (
         <div className="Files">
@@ -170,13 +148,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
                             <span>{LANG.GLOBAL.tags}</span>
                             <Hint text={LANG.hints.tag} placement="right" />
                         </div>
-                        {tags.length > 0 && <div className="Files-tags">
-                            {tags.map((item, index) => (
-                                <Tag key={index} name={item} />
-                            ))}
-                        </div>}
                         <Input value={data.tag} onChange={(e) => dataHandler("tag", e.target.value)} />
-                        <Button variant="contained" onClick={addTag}>Додати тег</Button>
                     </div>
                 </Modal>
             )}

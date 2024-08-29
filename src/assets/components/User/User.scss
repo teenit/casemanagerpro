@@ -5,7 +5,7 @@
     flex-direction: column;
     gap: 50px;
     margin: auto;
-    width: 100%;
+    width: 90%;
     &-InputBlock {
         &-default {
             display: flex;
@@ -270,7 +270,7 @@ ul {
 
 
     .added_contact_wrap {
-        position: sticky;
+        // position: sticky;
         top: 0;
         width: 90%;
         margin: auto;
