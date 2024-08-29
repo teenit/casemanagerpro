@@ -117,7 +117,7 @@ try {
     }
 
      // Отримання даних з таблиці case_plans
-     $sql_files = "SELECT title, description, id, date_created, type, value FROM files WHERE client_id = ? ORDER BY id DESC";
+     $sql_files = "SELECT title, description, id, date_created, type, value, tag FROM files WHERE client_id = ? ORDER BY id DESC";
      $stmt_files = $conn->prepare($sql_files);
      $stmt_files->bind_param("i", $data->case_id);
      $stmt_files->execute();
@@ -132,7 +132,8 @@ try {
                         'title' => $row_files['title'],
                         'description' => $row_files['description'],
                         'id' => $row_files['id'],
-                        'date_created' => $row_files['date_created']
+                        'date_created' => $row_files['date_created'],
+                        'tag' => $row_files['tag']
                      ];
                     break;
                 case 'field':

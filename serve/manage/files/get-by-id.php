@@ -20,7 +20,8 @@ if (isset($data->file_id) && is_numeric($data->file_id)) {
             'description' => $res['description'],
             'value' => json_decode($res['value']),
             'date_created' => $res['date_created'],
-            'last_updated' => $res['last_updated']
+            'last_updated' => $res['last_updated'],
+            'tag' => $res['tag']
         ];
     } else {
         $response['status'] = false;
