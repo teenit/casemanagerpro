@@ -3,12 +3,96 @@ import { apiResponse } from "../Functions/get_apiObj";
 import AddTransaction from "../newDesign/Transactions/AddTransaction";
 import Table from "../elements/Table/Table";
 
+
+
 const TransactionsPage = () => {
     const [transactions, setTransactions] = useState([]);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const columnsTable = [
+        {
+            dataField: 'id',
+            text:'  ',
+            fixed: false,
+            isHidden: false,
+            sort: true
+        },
+        {
+            dataField: 'transaction_type',
+            text:'  ',
+            fixed: false,
+            isHidden: false,
+            sort: true
+        },
+        {
+            dataField: 'description',
+            text:'  ',
+            fixed: false,
+            isHidden: false,
+            sort: true
+        },
+        {
+            dataField: 'amount',
+            text:'  ',
+            fixed: false,
+            isHidden: false,
+            sort: true,
+            formatter: (cell, row) => {
+                return <div>{cell} {row.currency}</div>
+            } 
+        },
+        {
+            dataField: 'payment_method',
+            text:'  ',
+            fixed: false,
+            isHidden: false,
+            sort: true
+        },
+        {
+            dataField: 'status',
+            text:'  ',
+            fixed: false,
+            isHidden: false,
+            sort: true
+        },
+        {
+            dataField: 'created_at',
+            text:'  ',
+            fixed: false,
+            isHidden: false,
+            sort: true
+        },
+        {
+            dataField: 'ip_address',
+            text:'  ',
+            fixed: false,
+            isHidden: false,
+            sort: true
+        },
+        {
+            dataField: 'row_menu',
+            text:'  ',
+            fixed: true,
+            isHidden: false,
+        },
+    ]
+
+
+    const prepareColumns = (columns) => {
+        return columns.map((item) => prepareColumn(item))
+    }
+
+    const prepareColumn = (column) => {
+        if (typeof column.formatter !== 'function') {
+            column.formatter = (cell, row) => {
+                return cell
+            }
+        }
+        return column;
+    }
 
     useEffect(() => {
         fetchTransactions();
@@ -57,9 +141,15 @@ const TransactionsPage = () => {
     if (loading) return <p>Завантаження...</p>;
    // if (error) return <p>Помилка: {error}</p>;
 
+    const transactionColumns = prepareColumns(columnsTable);
+
     return (
         <div>
-            <Table />
+            <Table 
+                columns={transactionColumns}
+                data={transactions}
+                keyField={'id'}
+            />
             <h1>Список транзакцій</h1>
             <AddTransaction onTransactionAdded={handleTransactionAdded} />
             <table>

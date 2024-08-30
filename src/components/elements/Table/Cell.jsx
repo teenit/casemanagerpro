@@ -1,12 +1,7 @@
 import React from "react";
 
-const Cell = () => {
-
-    return(
-        <td>
-
-        </td>
-    )
-}
+const Cell = ({ cell }) => {
+    return <td>{cell}</td>;
+};
 
 export default Cell;
