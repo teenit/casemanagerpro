@@ -1,0 +1,10 @@
+.Transactions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    &-title{
+        font-size: 25px;
+        font-weight: 700;
+    }
+}

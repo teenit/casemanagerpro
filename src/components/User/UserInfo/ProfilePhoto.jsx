@@ -12,7 +12,7 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import { useParams } from "react-router-dom";
 import { LANG } from "../../../services/config";
 
-const ProfilePhoto = ({getUser, changePass, url, user }) => {
+const ProfilePhoto = ({ getUser, changePass, url, user }) => {
   const params = useParams()
   const [pass, setPass] = useState({
     olderPass: "",
@@ -42,7 +42,7 @@ const ProfilePhoto = ({getUser, changePass, url, user }) => {
   }, [user.userName, user.phone, user.email, user.datas]);
 
   const dispatch = useDispatch();
-  
+
   const handlePassObjChange = (key, value) => {
     setPass(prevPass => ({ ...prevPass, [key]: value }));
   };
@@ -57,24 +57,24 @@ const ProfilePhoto = ({getUser, changePass, url, user }) => {
 
 
   const handleChangeValue = (key, value) => {
-    setData({...data, [key]:value});
+    setData({ ...data, [key]: value });
   };
 
   const handleSaveData = (key, value) => {
-      let obj = {
-        [key]:value,
-        user_id:params.id
-      };
+    let obj = {
+      [key]: value,
+      user_id: params.id
+    };
 
-      apiResponse({...obj}, "user/update-user.php")
+    apiResponse({ ...obj }, "user/update-user.php")
       .then((res) => {
         handleAlertChange("success", "Дані успішно оновлено");
         getUser()
         console.log(res);
         // if(key=="email") dispatch(removeUser());
 
-        })
-        .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
   };
 
   const checkPass = () => {
@@ -95,12 +95,12 @@ const ProfilePhoto = ({getUser, changePass, url, user }) => {
       pass: pass.newPass,
       olderPass: pass.olderPass
     };
-    apiResponse({...passObj}, "user/change-pass.php").then(() => {
-        handleAlertChange("success", "Пароль успішно змінено. Через декілька секунд вас перекине на сторінку логіну");
-        setTimeout(()=>{
-          dispatch(removeUser());
-        },10000)
-      })
+    apiResponse({ ...passObj }, "user/change-pass.php").then(() => {
+      handleAlertChange("success", "Пароль успішно змінено. Через декілька секунд вас перекине на сторінку логіну");
+      setTimeout(() => {
+        dispatch(removeUser());
+      }, 10000)
+    })
       .catch((error) => console.log(error));
   };
 
@@ -115,21 +115,21 @@ const ProfilePhoto = ({getUser, changePass, url, user }) => {
 
         <div className="User-info">
           <InputBlock value={data.userName} header={true} title="Ім'я" label={data.userName}
-             onChange={(e) => { handleChangeValue("userName", e.target.value) }} inputType="text"
+            onChange={(e) => { handleChangeValue("userName", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("userName", value) }}
           />
-          <InputBlock titleDefault="Номер телефону" hintMessage={LANG.hints.phone} value={data.phone} title="Номер телефону" 
-          label={data.phone} icon={"phone"}
+          <InputBlock titleDefault="Номер телефону" hintMessage={LANG.hints.phone} value={data.phone} title="Номер телефону"
+            label={data.phone} icon={"phone"}
             link={`tel:${data.phone}`} onChange={(e) => { handleChangeValue("phone", e.target.value) }} inputType="number"
             saveHandler={(value) => { handleSaveData("phone", value) }}
           />
 
-          <InputBlock titleDefault="Електронна пошта" hintMessage={LANG.hints.email} value={data.email} title="Електронна пошта" 
-          label={data.email} icon={"email"}
-            link={`mailto:${data.email}`} onChange={(e) => { handleChangeValue("email", e.target.value) }} inputType="email"
-            saveHandler={(value) => { handleSaveData("email", value) }}
+          <InputBlock disabled titleDefault="Електронна пошта" hintMessage={LANG.hints.disabled} value={data.email}
+            title="Електронна пошта"
+            label={data.email} icon={"email"}
+            link={`mailto:${data.email}`} inputType="email"
           />
-      
+
           <InputBlock titleDefault="Про себе" value={data.datas} title="Про себе" label={data.datas} icon={"book"}
             onChange={(e) => { handleChangeValue("datas", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("datas", value) }}

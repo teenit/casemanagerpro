@@ -150,7 +150,7 @@ const getImage = (data) => {
           )}
         </div>
       ) : (
-        <CasesList loadMoreCases={loadMoreCases} cases={masPost} categories={categories} />
+        <CasesList maxLength={posts.length} loadMoreCases={loadMoreCases} cases={masPost} categories={categories} />
       )}
     </div>
   );

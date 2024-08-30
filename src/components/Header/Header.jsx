@@ -51,7 +51,7 @@ const Header = (props) => {
           </div>
       </div>
     </header>
-    {active ? <Nav  close={()=>{setActive(!active)}}/> : null}
+    {active ? <Nav close={()=>{setActive(!active)}}/> : null}
     </div>
   ) : (
     <div className={s.wrap__header}>

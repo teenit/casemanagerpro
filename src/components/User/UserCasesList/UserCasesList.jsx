@@ -4,20 +4,35 @@ import UserCasesListItem from "./UserCasesListItem/UserCasesListItem";
 import UserPagination from "./UserPagination/UserPagination";
 import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
-import AccessCheckCases from "../../Functions/AccessCheckCases"
+import AccessCheckCases from "../../Functions/AccessCheckCases";
+
 const UserCasesList = ({ userAddId }) => {
-  const [width, setWidth] = useState(window.innerWidth)
+  const [width, setWidth] = useState(window.innerWidth);
   const [cases, setCases] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [casesPerPage] = useState(12);
+  const [casesPerPage, setCasesPerPage] = useState(width < 720 ? 4 : 12);
   const [selected, setSelected] = useState(1);
-  window.addEventListener("resize", () => {
-    setWidth(window.innerWidth)
-  })
+
+  const [createdCasesPage, setCreatedCasesPage] = useState(1);
+  const [createdCasesSelected, setCreatedCasesSelected] = useState(1);
+  const [createdCasesPerPage, setCreatedCasesPerPage] = useState(width < 720 ? 4 : 12);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+      const casesPerPage = window.innerWidth < 720 ? 4 : 12;
+      setCasesPerPage(casesPerPage);
+      setCreatedCasesPerPage(casesPerPage);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     apiResponse({}, "case/get/cases-page-list.php").then((res) => {
-      setCases([...res])
-    })
+      setCases([...res]);
+    });
   }, []);
 
   const paginate = (pageNumber) => {
@@ -25,11 +40,20 @@ const UserCasesList = ({ userAddId }) => {
     setSelected(pageNumber);
   };
 
-  const addCases = cases.filter(item => item.user_id === userAddId);
+  const paginateCreatedCases = (pageNumber) => {
+    setCreatedCasesPage(pageNumber);
+    setCreatedCasesSelected(pageNumber);
+  };
+
+  const addCases = cases.filter((item) => item.user_id === userAddId);
   const lastCaseIndex = currentPage * casesPerPage;
   const firstCaseIndex = lastCaseIndex - casesPerPage;
-  const accessCases = AccessCheckCases(cases).look
+  const accessCases = AccessCheckCases(cases).look;
   const currentCase = accessCases.slice(firstCaseIndex, lastCaseIndex);
+
+  const lastCreatedCaseIndex = createdCasesPage * createdCasesPerPage;
+  const firstCreatedCaseIndex = lastCreatedCaseIndex - createdCasesPerPage;
+  const currentCreatedCases = addCases.slice(firstCreatedCaseIndex, lastCreatedCaseIndex);
 
   return (
     <>
@@ -41,15 +65,20 @@ const UserCasesList = ({ userAddId }) => {
           </Button>
         </div>
         <ul className="added_contact_list">
-          {addCases.map(({ id, name }) => (
+          {currentCreatedCases.map(({ id, name }) => (
             <li className="added_contact_list_item" key={id}>
-              <UserCasesListItem
-                id={id}
-                name={name}
-              />
+              <UserCasesListItem id={id} name={name} />
             </li>
           ))}
         </ul>
+        {addCases.length > createdCasesPerPage && (
+          <UserPagination
+            casesPerPage={createdCasesPerPage}
+            totalCases={addCases.length}
+            paginate={paginateCreatedCases}
+            activeKey={createdCasesSelected}
+          />
+        )}
       </div>
 
       <div className="added_all_contact">
@@ -58,20 +87,19 @@ const UserCasesList = ({ userAddId }) => {
         <ul className="added_contact_list">
           {currentCase.map(({ id, name }) => (
             <li className="added_contact_list_item" key={id}>
-              <UserCasesListItem
-                id={id}
-                name={name}
-              />
+              <UserCasesListItem id={id} name={name} />
             </li>
           ))}
         </ul>
 
-        {width > 720 && accessCases.length>0 &&<UserPagination
-          casesPerPage={casesPerPage}
-          totalCases={cases.length}
-          paginate={paginate}
-          activeKey={selected}
-        />}
+        {accessCases.length > casesPerPage && (
+          <UserPagination
+            casesPerPage={casesPerPage}
+            totalCases={cases.length}
+            paginate={paginate}
+            activeKey={selected}
+          />
+        )}
       </div>
     </>
   );

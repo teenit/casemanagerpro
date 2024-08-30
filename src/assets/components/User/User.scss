@@ -103,10 +103,10 @@
     grid-template-columns: 3fr 1fr;
     gap: 20px;
 
-    img {
-        max-width: 400px;
-        width: 100%;
-    }
+    // img {
+    //     max-width: 400px;
+    //     width: 100%;
+    // }
 
     &-left {
         display: grid;
@@ -129,11 +129,14 @@
 
 .added_all_contact,
 .added_contact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     background-color: var(--background-color);
     border-radius: 15px;
     padding: 20px;
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .added_contact_list {
@@ -268,7 +271,10 @@ ul {
         margin: auto;
     }
 
-
+    .pagination__wrap{
+        display: flex;
+        justify-content: center;
+    }
     .added_contact_wrap {
         // position: sticky;
         top: 0;
@@ -279,8 +285,8 @@ ul {
     }
 
     .added_contact, .added_all_contact{
-        max-height: 250px;
-        overflow-y: scroll;
+        max-height: 300px;
+        overflow-y: auto;
         border: solid 3px var(--main-color);
         border-radius: 15px;
         padding: 20px 0;

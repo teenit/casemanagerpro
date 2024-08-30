@@ -41,11 +41,11 @@ const Card = (props) => {
                 </div>
                 <div className="card__description">
                     <div className="card__description__phones">
-                        <a href={`"tel:"${props.info.phone1}`}>{props.info.phone1}</a>
-                        <a href={`"tel:"${props.info.phone2}`}>{props.info.phone2}</a>
+                        <NavLink to={`tel:${props.info.phone1}`}>{props.info.phone1}</NavLink>
+                        <NavLink to={`tel:${props.info.phone2}`}>{props.info.phone2}</NavLink>
                     </div>
                     <div className="card__description__email">
-                        <a href={`"mailto:"${props.info.email}`}>{props.info.email}</a>
+                    <NavLink to={`mailto:${props.info.email}`}>{props.info.email}</NavLink>
                     </div>
                     <div className="card__description__potreba">
                         <p dangerouslySetInnerHTML={{ __html: props.info.potreba }} />

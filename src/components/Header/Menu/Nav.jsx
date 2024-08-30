@@ -87,7 +87,7 @@ const navigate = useNavigate()
                 </div>
                 <div className={s.control__nav}>
                     <div className={s.profile}>
-                        <NavLink className={s.a} to={`/user/${localStorage.getItem("id")}`}>
+                        <NavLink className={s.a} to={`/user/${localStorage.getItem("id")}`} onClick={close}>
                             <img src={profileImg} alt="" />
                         </NavLink>
                     </div>

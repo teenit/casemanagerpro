@@ -7,26 +7,25 @@ import { Button } from "@mui/material";
 import Icon from "../elements/Icons/Icon"
 import { NavLink } from "react-router-dom";
 import AccessCheck from "../Functions/AccessCheck";
-const CasesList = ({ cases, categories, loadMoreCases }) => {
+const CasesList = ({ cases, categories, loadMoreCases, maxLength }) => {
     const componentRef = useRef();
-
     const pageStyle = `
 
 `;
-const caseCategories = (catMas) => {
-    const mas = [];
-    if(catMas){
-        categories.forEach((item)=>{
-            if (catMas.includes(item.id)) {
-                mas.push(item.name);
-            }
-        });
-        return mas.join(", ");
-    } else {
-        return LANG.casesList.noCategory
-    }
-};
-console.log(cases);
+    const caseCategories = (catMas) => {
+        const mas = [];
+        if (catMas) {
+            categories.forEach((item) => {
+                if (catMas.includes(item.id)) {
+                    mas.push(item.name);
+                }
+            });
+            return mas.join(", ");
+        } else {
+            return LANG.casesList.noCategory
+        }
+    };
+    console.log(cases);
 
 
     const handlerPrint = useReactToPrint({
@@ -56,8 +55,11 @@ console.log(cases);
                                     <tr key={item.id} className={s.item}>
                                         <td>{item.id}</td>
                                         <td><NavLink to={"/case/" + item.id}>{item.name}</NavLink></td>
-                                        <td>{`${item.phone1} ${item.phone2}`}</td>
-                                        <td>{item.email}</td>
+                                        <td>
+                                            <NavLink to={`tel:${item.phone1}`}>{item.phone1} </NavLink>
+                                            <NavLink to={`tel:${item.phone2}`}>{item.phone2}</NavLink>
+                                        </td>
+                                        <td><NavLink to={`mailto:${item.email}`}>{item.email}</NavLink></td>
                                         <td style={{ whiteSpace: "nowrap" }}>{item.happyBD}</td>
                                         <td><span dangerouslySetInnerHTML={{ __html: item.addressLive }} /></td>
                                         <td><span>{caseCategories(item.categories)}</span></td>
@@ -70,9 +72,9 @@ console.log(cases);
                 </table>
 
             </div>
-            <Button variant="contained" onClick={loadMoreCases}>Показати ще</Button>
-            {AccessCheck('yes_no', 'a_page_cases_print') && <Button variant="contained" className="btn__print" onClick={handlerPrint}> <Icon icon={"print"}/><span>Друк</span></Button>}
-            </>
+            {cases.length < maxLength && <Button variant="contained" onClick={loadMoreCases}>Показати ще</Button>}
+            {AccessCheck('yes_no', 'a_page_cases_print') && <Button variant="contained" className="btn__print" onClick={handlerPrint}> <Icon icon={"print"} /><span>Друк</span></Button>}
+        </>
     )
 }
 export default CasesList;
