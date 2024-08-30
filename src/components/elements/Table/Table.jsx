@@ -2,19 +2,25 @@ import React from "react";
 import Row from "./Row";
 import Cell from "./Cell";
 
-const Table = ({columns = [], data=[], keyField}) => {
-
+const Table = ({ columns = [], data = [], keyField }) => {
     return (
         <div className="Table">
             <table>
-                <th>
-                    {columns.map((item)=><Cell cell = {item.title}/>)}
-                </th>
-                {
-                    data.map((item)=><Row key={keyField} columns = {columns} data={item}/>)
-                }
+                <thead>
+                    <tr>
+                        {columns.map((item) => (
+                            <Cell key={item.dataField} cell={item.text} />
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map((item) => (
+                        <Row key={item[keyField]} columns={columns} data={item} />
+                    ))}
+                </tbody>
             </table>
         </div>
-    )
-}
+    );
+};
+
 export default Table;
