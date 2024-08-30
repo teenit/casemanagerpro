@@ -17,5 +17,12 @@
             border: 1px solid #ccc;
             padding: 5px 10px;
         }
+        tr:hover {
+            td:last-child{
+                background-color: #eb4a4a;
+                position: sticky;
+                right: 0px;
+            }
+        }
     }
 }
