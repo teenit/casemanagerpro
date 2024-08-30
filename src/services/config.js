@@ -28,6 +28,9 @@ export const LANG = {
     title_category_case_helps: "Категорії наданої допомоги",
     title_category_groups: "Категорії груп",
 },
+TRANSACTIONS: {
+  transaction_type: 'Тип транзакції'
+},
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Рівень доступу користувачів (Сторінки)",
   forbidden: "Заборонено",

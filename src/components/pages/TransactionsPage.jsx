@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { apiResponse } from "../Functions/get_apiObj";
 import AddTransaction from "../newDesign/Transactions/AddTransaction";
 import Table from "../elements/Table/Table";
+import { LANG } from "../../services/config";
 
 
 
@@ -15,14 +16,14 @@ const TransactionsPage = () => {
     const columnsTable = [
         {
             dataField: 'id',
-            text:'  ',
+            text:'ID',
             fixed: false,
             isHidden: false,
-            sort: true
+            sort: true,
         },
         {
             dataField: 'transaction_type',
-            text:'  ',
+            text:LANG.TRANSACTIONS.transaction_type,
             fixed: false,
             isHidden: false,
             sort: true
@@ -76,7 +77,7 @@ const TransactionsPage = () => {
             dataField: 'row_menu',
             text:'  ',
             fixed: true,
-            isHidden: false,
+            isHidden: false
         },
     ]
 
