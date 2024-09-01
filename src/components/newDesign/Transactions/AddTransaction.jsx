@@ -1,129 +1,190 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiResponse } from "../../Functions/get_apiObj";
+import Modal from "../../Modals/Modal";
+import { Button, MenuItem, Select } from "@mui/material";
+import { LANG } from "../../../services/config";
+import Input from "../../elements/Inputs/Input";
+import Textarea from "../../elements/Inputs/Textarea";
+import SmallNotification from "../../elements/Notifications/SmallNotification";
 
-const AddTransaction = ({ onTransactionAdded }) => {
-    const [transactionType, setTransactionType] = useState("");
-    const [amount, setAmount] = useState("");
-    const [currency, setCurrency] = useState("UAH");
-    const [status, setStatus] = useState("pending");
-    const [referenceId, setReferenceId] = useState("");
-    const [description, setDescription] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("");
-    const [location, setLocation] = useState("");
+const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
+    const [transactionData, setTransactionData] = useState({
+        transaction_type: "",
+        amount: "",
+        currency: "UAH",
+        status: "pending",
+        reference_id: "",
+        description: "",
+        payment_method: "card",
+        location: "",
+    });
+
+    const [alert, setAlert] = useState({
+        active: false,
+        message: "",
+    });
+
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const alertHandler = (message = "") => {
+        setAlert((prev) => ({ ...prev, active: !prev.active, message }));
+    };
+
+    const dataHandler = (key, value) => {
+        setTransactionData((prev) => ({ ...prev, [key]: value }));
+    };
+
+    const getTransaction = () => {
+        apiResponse({ transaction_id: id }, "transactions/get-by-id.php")
+            .then((res) => {
+                if (res.status) {
+                    setTransactionData({ ...res.transaction });
+                } else {
+                    alertHandler("Не вдалося завантажити дані транзакції");
+                }
+            })
+            .catch(() => {
+                alertHandler("Помилка при завантаженні даних.");
+            });
+    };
+
+    useEffect(() => {
+        if (id) {
+            getTransaction();
+        }
+    }, [id]);
+
+    const handleSubmit = () => {
+
+        if (transactionData.amount.trim() === "" || transactionData.transaction_type.trim() === "") {
+            return alertHandler("Введіть суму та тип транзакції");
+        }
+
         setLoading(true);
 
-        try {
-            const res = await apiResponse(
-                { 
-                    transaction_type: transactionType, 
-                    amount, 
-                    currency, 
-                    status, 
-                    reference_id: referenceId, 
-                    description, 
-                    payment_method: paymentMethod, 
-                    location 
-                },
-                "transactions/create.php"
-            );
+        const obj = id ? { ...transactionData, transaction_id: id } : transactionData
+        const link = id ? "transactions/edit.php" : "transactions/create.php"
+        apiResponse(obj, link).then((res) => {
             if (res.status) {
-                onTransactionAdded(); // Call the callback function to refresh the list
-                setTransactionType("");
-                setAmount("");
-                setCurrency("UAH");
-                setStatus("pending");
-                setReferenceId("");
-                setDescription("");
-                setPaymentMethod("");
-                setLocation("");
+                onTransactionAdded()
+                setTransactionData({
+                    transaction_type: "",
+                    amount: "",
+                    currency: "UAH",
+                    status: "pending",
+                    reference_id: "",
+                    description: "",
+                    payment_method: "card",
+                    location: "",
+                });
+                close()
             } else {
-                setError(res.message);
+                alertHandler(res.message);
             }
-        } catch (err) {
-            setError("Помилка при додаванні транзакції.");
-        }
-        setLoading(false);
+        })
+            .catch(() => {
+                alertHandler("Виникла помилка. Будь ласка, спробуйте пізніше");
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Додати транзакцію</h2>
-            {error && <p>Помилка: {error}</p>}
-            <div>
-                <label>Тип транзакції:</label>
-                <input
-                    type="text"
-                    value={transactionType}
-                    onChange={(e) => setTransactionType(e.target.value)}
-                    required
-                />
-            </div>
-            <div>
-                <label>Сума:</label>
-                <input
+        <Modal
+            header={id ? "Редагувати транзакцію" : "Додати транзакцію"}
+            footer={
+                <>
+                    <Button variant="contained" onClick={handleSubmit} disabled={loading}>
+                        {loading ? "Зберігається..." : LANG.GLOBAL.save}
+                    </Button>
+                    <Button variant="contained" color="error" onClick={close} disabled={loading}>
+                        {LANG.GLOBAL.cancel}
+                    </Button>
+                </>
+            }
+            closeHandler={close}
+        >
+            <form className="AddTransaction">
+                <div className="AddTransaction-split">
+                    <Input
+                        type="number"
+                        label="Сума"
+                        name="amount"
+                        value={transactionData.amount}
+                        onChange={(e) => dataHandler("amount", e.target.value)}
+                    />
+                    <div className="AddTransaction-select">
+                        <Select
+                            name="currency"
+                            value={transactionData.currency}
+                            onChange={(e) => dataHandler("currency", e.target.value)}
+                        >
+                            <MenuItem value="UAH">UAH</MenuItem>
+                            <MenuItem value="USD">USD</MenuItem>
+                            <MenuItem value="EUR">EUR</MenuItem>
+                        </Select>
+                    </div>
+                </div>
+                <div className="AddTransaction-split">
+                    <Input
+                        type="text"
+                        label="Тип транзакції"
+                        name="transaction_type"
+                        value={transactionData.transaction_type}
+                        onChange={(e) => dataHandler("transaction_type", e.target.value)}
+                    />
+                    <Input
+                        type="text"
+                        label="Розташування"
+                        name="location"
+                        value={transactionData.location}
+                        onChange={(e) => dataHandler("location", e.target.value)}
+                    />
+                </div>
+                <div className="AddTransaction-split">
+                    <div className="AddTransaction-select">
+                        <label>Метод оплати</label>
+                        <Select
+                            name="payment_method"
+                            value={transactionData.payment_method}
+                            onChange={(e) => dataHandler("payment_method", e.target.value)}
+                        >
+                            <MenuItem value="card">Карта</MenuItem>
+                            <MenuItem value="currency">Готівка</MenuItem>
+                        </Select>
+                    </div>
+                    <div className="AddTransaction-select">
+                        <label>Статус</label>
+                        <Select
+                            name="status"
+                            value={transactionData.status}
+                            onChange={(e) => dataHandler("status", e.target.value)}
+                        >
+                            <MenuItem value="pending">Очікується</MenuItem>
+                            <MenuItem value="completed">Завершено</MenuItem>
+                            <MenuItem value="failed">Не вдалося</MenuItem>
+                        </Select>
+                    </div>
+                </div>
+                <Input
                     type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    required
+                    label="ID посилання"
+                    name="reference_id"
+                    value={transactionData.reference_id}
+                    onChange={(e) => dataHandler("reference_id", e.target.value)}
                 />
-            </div>
-            <div>
-                <label>Валюта:</label>
-                <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-                    <option value="UAH">UAH</option>
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-                </select>
-            </div>
-            <div>
-                <label>Статус:</label>
-                <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                    <option value="pending">Очікується</option>
-                    <option value="completed">Завершено</option>
-                    <option value="failed">Не вдалося</option>
-                </select>
-            </div>
-            <div>
-                <label>ID посилання:</label>
-                <input
-                    type="text"
-                    value={referenceId}
-                    onChange={(e) => setReferenceId(e.target.value)}
+                <Textarea
+                    label="Опис"
+                    name="description"
+                    value={transactionData.description}
+                    onChange={(e) => dataHandler("description", e.target.value)}
                 />
-            </div>
-            <div>
-                <label>Опис:</label>
-                <input
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </div>
-            <div>
-                <label>Метод оплати:</label>
-                <input
-                    type="text"
-                    value={paymentMethod}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                />
-            </div>
-            <div>
-                <label>Розташування:</label>
-                <input
-                    type="text"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                />
-            </div>
-            <button type="submit" disabled={loading}>
-                {loading ? "Додавання..." : "Додати транзакцію"}
-            </button>
-        </form>
+            </form>
+            {alert.active && (
+                <SmallNotification isSuccess={false} text={alert.message} close={alertHandler} />
+            )}
+        </Modal>
     );
 };
 

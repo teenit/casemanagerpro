@@ -3,81 +3,100 @@ import { apiResponse } from "../Functions/get_apiObj";
 import AddTransaction from "../newDesign/Transactions/AddTransaction";
 import Table from "../elements/Table/Table";
 import { LANG } from "../../services/config";
-
-
+import Icon from "../elements/Icons/Icon"
+import ModalConfirm from "../Modals/ModalConfirm"
 
 const TransactionsPage = () => {
+    const [transactionId, setTransactionId] = useState(null)
     const [transactions, setTransactions] = useState([]);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [modal, setModal] = useState({
+        active: false,
+        action: ""
+    })
+    const modalHandler = (action = "") => {
+        setModal({ ...modal, active: !modal.active, action: action })
+    }
     const columnsTable = [
         {
             dataField: 'id',
-            text:'ID',
+            text: 'ID',
             fixed: false,
             isHidden: false,
             sort: true,
         },
         {
             dataField: 'transaction_type',
-            text:LANG.TRANSACTIONS.transaction_type,
+            text: LANG.TRANSACTIONS.transaction_type,
             fixed: false,
             isHidden: false,
             sort: true
         },
         {
             dataField: 'description',
-            text:'  ',
+            text: LANG.TRANSACTIONS.description,
             fixed: false,
             isHidden: false,
             sort: true
         },
         {
             dataField: 'amount',
-            text:'  ',
+            text: LANG.TRANSACTIONS.amount,
             fixed: false,
             isHidden: false,
             sort: true,
             formatter: (cell, row) => {
                 return <div>{cell} {row.currency}</div>
-            } 
+            }
         },
         {
             dataField: 'payment_method',
-            text:'  ',
+            text: LANG.TRANSACTIONS.payment_method,
             fixed: false,
             isHidden: false,
             sort: true
         },
         {
             dataField: 'status',
-            text:'  ',
+            text: LANG.TRANSACTIONS.status,
             fixed: false,
             isHidden: false,
             sort: true
         },
         {
             dataField: 'created_at',
-            text:'  ',
+            text: LANG.TRANSACTIONS.created_at,
             fixed: false,
             isHidden: false,
             sort: true
         },
         {
             dataField: 'ip_address',
-            text:'  ',
+            text: 'IP',
             fixed: false,
             isHidden: false,
             sort: true
         },
         {
             dataField: 'row_menu',
-            text:'  ',
+            text: '',
             fixed: true,
-            isHidden: false
+            isHidden: false,
+            formatter: (cell, row) => {
+                return <div>
+                    <Icon icon={"edit"} onClick={() => {
+                        modalHandler("edit")
+                        setTransactionId(row.id)
+                    }} />
+                    <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {
+                        modalHandler("delete")
+                        setTransactionId(row.id)
+                    }} />
+                </div>
+            }
         },
     ]
 
@@ -118,42 +137,47 @@ const TransactionsPage = () => {
         console.log("Edit transaction:", transactionId);
     };
 
-    const handleDelete = async (transactionId) => {
-        if (window.confirm("Ви впевнені, що хочете видалити цю транзакцію?")) {
-            setLoading(true);
-            try {
-                const res = await apiResponse({ transaction_id: transactionId }, "transactions/delete.php");
-                if (res.status) {
-                    fetchTransactions();
-                } else {
-                    setError(res.message);
-                }
-            } catch (err) {
-                setError("Помилка при видаленні даних.");
+    const handleDelete = (transactionId) => {
+        setLoading(true);
+        apiResponse({ transaction_id: transactionId }, "transactions/delete.php").then((res) => {
+            if (res.status) {
+                fetchTransactions();
+            } else {
+                setError(res.message);
             }
-            setLoading(false);
-        }
+        })
+            .catch((err) => {
+                setError("Помилка при видаленні даних.");
+            });
+
+        setLoading(false);
     };
 
     const handleTransactionAdded = () => {
         fetchTransactions(); // Refresh the list when a new transaction is added
+        modalHandler()
     };
 
     if (loading) return <p>Завантаження...</p>;
-   // if (error) return <p>Помилка: {error}</p>;
+    // if (error) return <p>Помилка: {error}</p>;
 
     const transactionColumns = prepareColumns(columnsTable);
 
     return (
-        <div>
-            <Table 
+        <div className="Transactions">
+            <div className="Transactions-title">
+                <div>Список транзакцій</div>
+                <Icon icon={"add"} addClass={"fs35"} onClick={() => { modalHandler("add"); setTransactionId(null) }} />
+            </div>
+            <Table
                 columns={transactionColumns}
                 data={transactions}
                 keyField={'id'}
             />
-            <h1>Список транзакцій</h1>
-            <AddTransaction onTransactionAdded={handleTransactionAdded} />
-            <table>
+            {modal.active && modal.action == "delete" && <ModalConfirm text={"Ви впевнені, що хочете видалити цю транзакцію?"}
+                closeHandler={() => { modalHandler("") }} successHandler={() => { handleDelete(transactionId) }} />}
+            {modal.active && modal.action !== "delete" && <AddTransaction id={transactionId} onTransactionAdded={handleTransactionAdded} action={modal.action} close={modalHandler} />}
+            {/* <table>
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -179,7 +203,7 @@ const TransactionsPage = () => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table> */}
         </div>
     );
 };

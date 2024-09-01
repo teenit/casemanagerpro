@@ -1,0 +1,17 @@
+.AddTransaction{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    &-split{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+    &-select{
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+}

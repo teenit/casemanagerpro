@@ -29,7 +29,12 @@ export const LANG = {
     title_category_groups: "Категорії груп",
 },
 TRANSACTIONS: {
-  transaction_type: 'Тип транзакції'
+  transaction_type: 'Тип транзакції',
+  description:'Опис',
+  amount:'Суму',
+  payment_method:'Метод оплати',
+  status:'Статус',
+  created_at:'Дата створення'
 },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Рівень доступу користувачів (Сторінки)",
