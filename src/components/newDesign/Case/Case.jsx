@@ -67,10 +67,10 @@ const Case = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
 
             const viewInfo = generateViews(res.userMeta?.case_view_info ? res.userMeta.case_view_info.value : {});
-            console.log(viewInfo)
             setState({
                 ...res, viewInfo: viewInfo
             });
+            console.log(res)
             // getUserNameById(res.responsible_id)
 
         })
@@ -106,7 +106,7 @@ const Case = () => {
     return state && state.general ? (
         <div className="case__wrap">
             {
-                openSetting && <CaseSettings successHandler={getCaseInfo} views={state.viewInfoActive ? {} : state.viewInfo} />
+                openSetting && <CaseSettings isActive={state.general.active} handleGeneralChange={handleGeneralChange} successHandler={getCaseInfo} views={state.viewInfoActive ? {} : state.viewInfo} />
             }
             <div className="set__case__ico">
                 <img src={setImg} alt=""

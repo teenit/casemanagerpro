@@ -1,0 +1,51 @@
+.Pagination {
+    width: max-content;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 14px;
+    padding: 5px;
+    border: solid 1px $default-color-primary-fill;
+    &-icon {
+        font-size: 20px!important;
+        color: grey;
+        &:hover {
+            color: $default-color-primary-text;
+        }
+        &.disabled {
+            opacity: .5;
+        }
+        &.eye_off:hover {
+            color: $default-color-primary-text;
+            cursor: pointer;
+        }
+    }
+    &-pages {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        &-arrow {
+            display: flex;
+            align-items: center;
+        }
+        &-text {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            div {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+    &-limit {
+        &-select {
+            
+            &>div{
+                padding-top: 0;
+                padding-bottom: 0;
+                font-size: 14px;
+            }
+        }
+    }
+}

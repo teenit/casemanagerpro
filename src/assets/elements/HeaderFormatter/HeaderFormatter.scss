@@ -1,0 +1,20 @@
+.HeaderFormatter {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0px 0px 0 20px;
+    align-items: center;
+    box-sizing: border-box;
+    &:has(.HeaderFormatter-arrows-arrow.active) {
+        background-color: $second-color;
+    }
+    &-arrows {
+        &-arrow {
+            &.active {
+                color: green;
+            }
+        }
+    }
+}

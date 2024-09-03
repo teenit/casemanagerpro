@@ -3,16 +3,16 @@
     max-height: 450px;
     overflow: auto;
     text-align: center;
+
     table{
         border-collapse: collapse;
+        width: 100%;
     }
     thead{
         background-color: $main-color;
         color: #fff;
         border: none;
-        td{
-            padding: 10px 75px;
-        }
+        padding: 10px;
     }
     tbody{
         td{
@@ -28,4 +28,15 @@
             }
         }
     }
+    &.without-row-menu {
+        tbody{
+        tr:hover {
+            background-color: $background-color;
+            td:last-child{
+                background-color: $background-color;
+                position: inherit;
+                right: auto;
+            }
+        }
+    }}
 }

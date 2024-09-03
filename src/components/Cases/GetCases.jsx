@@ -39,7 +39,7 @@ function sortMas(field) {
 }
 
 
-const GetCases = ({ posts, postsChange }) => {
+const GetCases = ({ posts, postsChange, loadCasesMore, showLoadMore = true }) => {
   const categories = useSelector(state => state.categories.case);
   const check = AccessCheckCases(posts);
   const [postsState, setPostsState] = useState(check.look.length > check.edit.length ? check.look : check.edit);
@@ -112,6 +112,7 @@ const getImage = (data) => {
   }
   return images.default
 };
+console.log(posts)
   return (
     <div className="wrap__cards">
       {/* <div className="cards__filter">
@@ -120,7 +121,7 @@ const getImage = (data) => {
           label="Фільтр"
         />
       </div> */}
-      {AccessCheck('yes_no', 'a_page_cases_sort') && (
+      {/* {AccessCheck('yes_no', 'a_page_cases_sort') && (
         <Select value={selectFilter} onChange={(e) => handleSelect(e.target.value)}>
           <MenuItem value="default">Від старого до нового</MenuItem>
           <MenuItem value="id">Від нового до старого</MenuItem>
@@ -128,26 +129,26 @@ const getImage = (data) => {
           <MenuItem value="contractNumber">За номером контракту</MenuItem>
           <MenuItem value="categories">За категорією</MenuItem>
         </Select>
-      )}
-      <div className={s.select__sort}>
+      )} */}
+      {/* <div className={s.select__sort}>
         {AccessCheck('yes_no', 'a_page_cases_look_list') && (
           <Button variant="contained" onClick={() => setLikeShow(!likeShow)}>
             {!likeShow ? "Як картки" : "Як список"}
           </Button>
         )}
-      </div>
-      {likeShow ? (
+      </div> */}
+      {true ? (
         <div className={s.like__cards}>
           <div className="inner__cards" id="inner__cards">
-            {masPost.map((elem, ind) => (
+            {posts.map((elem, ind) => (
               <Card img={getImage(elem)} edit={editIds} info={elem} key={ind} categories={categories} />
             ))}
           </div>
-          {cases.button ? (
-            <Button variant="contained" onClick={loadMoreCases}>Показати ще</Button>
+          {/* {showLoadMore ? (
+            <Button variant="contained" onClick={loadCasesMore}>Показати ще</Button>
           ) : (
             <h3 className={s.look__more__text}>Немає більше доступних кейсів</h3>
-          )}
+          )} */}
         </div>
       ) : (
         <CasesList maxLength={posts.length} loadMoreCases={loadMoreCases} cases={masPost} categories={categories} />
