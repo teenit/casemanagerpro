@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { LANG, appConfig } from "../../../services/config";
 import Icon from "../../elements/Icons/Icon";
 import { apiResponse } from "../../Functions/get_apiObj";
-import { Button, Checkbox } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, Switch } from "@mui/material";
 
-const CaseSettings = ({ views, successHandler }) => {
+const CaseSettings = ({ views, successHandler, handleGeneralChange, isActive }) => {
     const { caseViewSettings } = appConfig;
     const [state, setState] = useState({ ...views });
 
@@ -34,8 +34,18 @@ const CaseSettings = ({ views, successHandler }) => {
     },[caseViewSettings])
     return (
         <div className="CaseSettings">
+            <label htmlFor="">{isActive ? 'Кейс активовано' : "Кейс деактивовано"}
+            <Switch 
+                inputProps={{label:'Кейс активовано'}}
+                checked={!!isActive}
+                onChange={(e)=>{
+                    handleGeneralChange('active', e.target.checked ? 1 : 0)
+                }}
+            /></label>
+           
+            
             <div className="CaseSettings-inner">
-
+            
                 <div className="CaseSettings-inner-left">
                 {settings.primary && settings.primary.length>0 && settings.primary.map((item, index) => {
                 return <label key={index}>

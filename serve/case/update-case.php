@@ -25,6 +25,7 @@ $email_encrypted = isset($data['email']) ? encryptData($data['email'], $key) : n
 $name = isset($data['last_name']) && isset($data['first_name']) && isset($data['middle_name']) ? $data["last_name"]." ".$data["first_name"]." ".$data["middle_name"] : null;
 $responsible_id = isset($data['responsible_id']) ?  $data['responsible_id'] : null;
 $sex = isset($data['sex']) ?  $data['sex'] : null;
+$active = isset($data['active']) ?  $data['active'] : null;
 // Підготовка SQL-запиту для оновлення даних
 $sql = "UPDATE cases_new SET";
 $set_values = array();
@@ -54,6 +55,10 @@ if ($responsible_id !== null) {
 if ($sex !== null) {
     $sql .= " sex = ?,";
     $set_values[] = $sex;
+}
+if ($active !== null) {
+    $sql .= " active = ?,";
+    $set_values[] = $active;
 }
 // Додавання умови WHERE для визначення, який запис оновити
 $sql .= " happy_bd = ? WHERE id = ?";

@@ -1,0 +1,17 @@
+.ListCases {
+    &-sort {
+        display: flex;
+        gap: 5px;
+        width: max-content;
+        margin: auto;
+        padding-bottom: 10px;
+        flex-wrap: nowrap;
+    }
+}
+@media screen and (max-width: 600px){
+    .ListCases {
+        &-sort {
+            flex-direction: column;
+        }
+    }
+}

@@ -82,30 +82,11 @@ if (($access_rights['a_super'] == 1 || $access_rights['a_administrator'] == 1) &
 
 // Формування умови WHERE
 $where_clause = !empty($case_conditions) ? implode(' OR ', $case_conditions) : "1=1";
-$sortField = $data->sort->field ?? 'active';
-$sortOrder = $data->sort->order ?? 'DESC';
+
 // Створення основного SQL-запиту з урахуванням умов доступу, пагінації та сортування
 $sql = "
 SELECT 
-    cn.id, 
-    cn.name, 
-    cn.first_name, 
-    cn.middle_name, 
-    cn.last_name, 
-    cn.user_id, 
-    cn.responsible_id, 
-    cn.phone1, 
-    cn.phone2, 
-    cn.happy_bd, 
-    cn.email, 
-    cn.active,
-    cd.id AS data_id,
-    cd.categories,
-    cd.contract_date,
-    cd.contract_number,
-    cn.sex,
-    cd.address_live,
-    cm.meta_value AS case_profile_img
+    COUNT(*) AS total_count
 FROM 
     cases_new cn 
 JOIN 
@@ -117,10 +98,7 @@ LEFT JOIN
 ON
     cn.id = cm.case_id AND cm.meta_key = 'case_profile_img'
 WHERE 
-    $where_clause
-ORDER BY 
-    $sortField $sortOrder
-LIMIT ? OFFSET ?";
+    $where_clause";
 
 // Підготовка та виконання запиту
 $stmt_cases = $conn->prepare($sql);
@@ -136,39 +114,17 @@ $result = $stmt_cases->get_result();
 
 // Масив для зберігання результатів
 $mas = [];
-
+$count = null;
 // Ітерація через результати запиту та створення об'єктів для збереження даних
 while ($res = $result->fetch_assoc()) {
-    $obj = new stdClass();
-    $obj->{'id'} = $res['id'];
-    $obj->{'first_name'} = $res['first_name'];
-    $obj->{'middle_name'} = $res['middle_name'];
-    $obj->{'last_name'} = $res['last_name'];
-    $obj->{'name'} = $res['middle_name'] . ' ' . $res['first_name'] . ' ' .  $res['last_name'];
-    $obj->{'phone1'} = decryptData($res['phone1'], $key);
-    $obj->{'phone2'} = decryptData($res['phone2'], $key);
-    $obj->{'email'} = decryptData($res['email'], $key);
-    $obj->{'data_id'} = $res['data_id'];
-    $obj->{'contractDate'} = $res['contract_date'];
-    $obj->{'contractNumber'} = $res['contract_number'];
-    $obj->{'addressLive'} = $res['address_live'];
-    $obj->{'happyBD'} = $res['happy_bd'];
-    $obj->{'user_id'} = $res['user_id'];
-    $obj->{'sex'} = $res['sex'];
-    $obj->{'active'} = $res['active'];
-    $obj->{'responsible_id'} = $res['responsible_id'];
-    $obj->{'categories'} = json_decode($res['categories']);
-    $obj->{'profileImg'} = json_decode($res['case_profile_img']);
-
-    // Додавання об'єкта до масиву
-    $mas[] = $obj;
+    $count = $res['total_count'];
 }
 
 // Закриття підключення до бази даних
 mysqli_close($conn);
 
 // Перевірка, чи були знайдені кейси
-$status = !empty($mas);
+$status = !empty($count);
 
 // Вивід результату у форматі JSON
-echo json_encode(['status' => $status, 'list' => $mas, 'message' => $status ? 'Cases retrieved successfully.' : 'No cases found or access denied.']);
+echo json_encode(['status' => $status, 'total_count' => $count, 'message' => $status ? 'Cases retrieved successfully.' : 'No cases found or access denied.']);
