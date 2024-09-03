@@ -2,14 +2,14 @@ import React from "react";
 import Row from "./Row";
 import Cell from "./Cell";
 
-const Table = ({ columns = [], data = [], keyField, addClass="" }) => {
+const Table = ({ columns = [], data = [], keyField, addClass="", sortField="", sortOrder="" }) => {
     return (
         <div className={`Table ${addClass}`}>
             <table>
                 <thead>
                     <tr>
                         {columns.map((item) => (
-                            <Cell key={item.dataField} column = {item} cell={item.text} headerFormatter={typeof item.headerFormatter == 'function' ? true : false}/>
+                            <Cell sortField={sortField} sortOrder={sortOrder} key={item.dataField} column = {item} cell={item.text} headerFormatter={typeof item.headerFormatter == 'function' ? true : false}/>
                         ))}
                     </tr>
                 </thead>

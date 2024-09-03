@@ -6,6 +6,16 @@
         margin: auto;
         padding-bottom: 10px;
         flex-wrap: nowrap;
+        align-items: center;
+    }
+    &-table {
+        width: 90%;
+        margin: auto;
+    }
+    &-pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
     }
 }
 @media screen and (max-width: 600px){

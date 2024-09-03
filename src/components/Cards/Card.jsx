@@ -54,7 +54,7 @@ const Card = (props) => {
                 <div className="card__info__status">
                     <div className="card__info__status__contract">
                         {props.info.contractDate && <span>{props.info.contractDate}</span>}
-                        {props.info.contractNumber && <span><b>#{props.info.contractNumber}</b></span>}
+                        {props.info.contract_number && <span><b>#{props.info.contract_number}</b></span>}
                     </div>
                 </div>
             </div>

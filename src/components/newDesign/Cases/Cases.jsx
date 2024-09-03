@@ -4,27 +4,27 @@ import GetCases from "../../Cases/GetCases";
 import Pagination from "../../elements/Pagination/Pagination";
 import { LANG } from "../../../services/config";
 import Table from "../../elements/Table/Table";
-import { MenuItem, Select } from "@mui/material";
+import { MenuItem, Select, Switch } from "@mui/material";
 import HeaderFormatter from "../../elements/HeaderFormatter/HeaderFormatter";
 
 const columnsTable = [
     {
         dataField: 'id',
-        text: '#',
+        text: 'Номер',
         fixed: false,
         isHidden: false,
         sort: true,
     },
     {
         dataField: 'name',
-        text: 'NAME',
+        text: "Ім'я",
         fixed: false,
         isHidden: false,
         sort: true
     },
     {
-        dataField: 'contractNumber',
-        text: 'DOGOVIR',
+        dataField: 'contract_number',
+        text: 'Договір',
         fixed: false,
         isHidden: false,
         sort: true,
@@ -43,17 +43,17 @@ const columnsTable = [
         }
     },
     {
-        dataField: 'phone1',
+        dataField: 'Телефон',
         text: LANG.TRANSACTIONS.payment_method,
         fixed: false,
         isHidden: false,
         sort: false,
-        formatter: (cell, row)=>{
+        formatter: (cell, row) => {
             return <div>{cell} {row.phone2}</div>
         }
     },
     {
-        dataField: 'addressLive',
+        dataField: 'Адреса проживання',
         text: LANG.TRANSACTIONS.status,
         fixed: false,
         isHidden: false,
@@ -61,50 +61,52 @@ const columnsTable = [
     },
     {
         dataField: 'active',
-        text: 'Active',
+        text: 'Статус',
         fixed: false,
         isHidden: false,
-        sort: true
+        sort: true,
+        formatter: (cell, row)=>{
+            return <div style={{color: cell == 0 ? "red" : "green"}}>{ cell == 0 ? "Деактивовано" : "Активовано"}</div>
+        }
     }
-]
+];
 
 const Cases = () => {
     const [state, setState] = useState([]);
     const [options, setOptions] = useState({
-        page: 0,  // Починаємо з нульової сторінки (індекс сторінки 0)
-        limit: 10,  // Кількість записів на сторінку
+        page: 0,
+        limit: 10,
         sort: {
             field: "id",
             order: 'DESC'
         }
     });
-    const [totalCount, setTotalCount] = useState("hidden");  // Загальна кількість записів
-
+    const [totalCount, setTotalCount] = useState("hidden");
+    const [view, setView] = useState("cards")
     useEffect(() => {
         loadCases();
     }, [options.page, options.limit, options.sort]);
 
     const loadCases = () => {
         apiResponse({
-            page: options.page + 1,  // Серверні сторінки зазвичай починаються з 1
+            page: options.page + 1,
             limit: options.limit,
             sort: {
                 field: options.sort.field,
                 order: options.sort.order
             }
         }, "case/get/cases-page-list.php").then((res) => {
-            setState([...res.list]);  // Оновлюємо стан даними
-            //setTotalCount(res.totalCount);  // Оновлюємо загальну кількість записів
+            setState([...res.list]);
         });
     };
 
     const loadTotalCount = () => {
         apiResponse({}, "case/get/cases-list-count.php").then((res) => {
-           if (res.status) {
-            setTotalCount(res.total_count)
-           }
+            if (res.status) {
+                setTotalCount(res.total_count);
+            }
         });
-    }
+    };
 
     const handleNextPage = () => {
         setOptions((prevOptions) => ({
@@ -116,51 +118,51 @@ const Cases = () => {
     const handlePrevPage = () => {
         setOptions((prevOptions) => ({
             ...prevOptions,
-            page: Math.max(prevOptions.page - 1, -1),  // Не дозволяємо сторінці йти нижче 0
+            page: Math.max(prevOptions.page - 1, 0),
         }));
     };
 
     const handleChangeRowsPerPage = (newLimit) => {
         setOptions({
-            page: 0,  // Повертаємося на першу сторінку
+            ...options,
+            page: 0,
             limit: newLimit,
         });
     };
 
+    const handleSortClick = (field, order) => {
+        setOptions((prevOptions) => ({
+            ...prevOptions,
+            sort: {
+                field,
+                order
+            }
+        }));
+    };
+
     const prepareColumns = (columns) => {
-        return columns.map((item) => prepareColumn(item))
-    }
+        return columns.map((item) => prepareColumn(item));
+    };
 
     const prepareColumn = (column) => {
         if (typeof column.formatter !== 'function') {
-            column.formatter = (cell, row) => {
-                return cell
-            }
+            column.formatter = (cell, row) => cell;
         }
         if (typeof column.headerFormatter !== 'function' && column.sort) {
-            column.headerFormatter = () => {
+            column.headerFormatter = (field, order) => {
                 return (
                     <HeaderFormatter 
-                        sortOrder={options.sort.order} 
-                        sortField={options.sort.field} 
+                        sortOrder={order} 
+                        sortField={field} 
                         text={column.text} 
                         dataField={column.dataField}
-                        onSortClick={(field, order)=>{
-                            setOptions((prevOptions) => ({
-                                ...prevOptions,
-                                sort: {
-                                    ...prevOptions.sort,
-                                    field: field,
-                                    order: order,
-                                }
-                            }));
-                        }}
+                        onSortClick={handleSortClick}
                     />
-                )
-            }
+                );
+            };
         }
         return column;
-    }
+    };
 
     const casesColumns = prepareColumns(columnsTable);
 
@@ -170,65 +172,72 @@ const Cases = () => {
                 <Select
                     value={options.sort.field}
                     onChange={(e) => {
-                        setOptions({...options, sort: {...options.sort, field: e.target.value}})
+                        setOptions({ ...options, sort: { ...options.sort, field: e.target.value } });
                     }}
                 >
-                    {columnsTable.map((item)=>{
+                    {columnsTable.map((item) => {
                         if (item.sort) return (
                             <MenuItem key={item.dataField} value={item.dataField}>
-                            Сортувати за {item.text}
-                            </MenuItem>)
-                        })
-                    }
+                                Сортувати за {item.text}
+                            </MenuItem>
+                        );
+                    })}
                 </Select>
                 <Select
                     value={options.sort.order}
                     onChange={(e) => {
-                        setOptions({...options, sort: {...options.sort, order: e.target.value}})
+                        setOptions({ ...options, sort: { ...options.sort, order: e.target.value } });
                     }}
                 >
                     <MenuItem value={"ASC"}>
-                        Сортувати від старого до нового
+                        Сортувати від меншого до більшого
                     </MenuItem>
                     <MenuItem value={"DESC"}>
-                        Сортувати від нового до старого
+                        Сортувати від більшого до меншого
                     </MenuItem>
                 </Select>
+                <div>Відобразити як таблицю
+                <Switch checked={view == 'table'} onChange={(e) => {
+                                if (e.target.checked) {
+                                    setView('table')
+                                } else {
+                                    setView('cards')
+                                }
+                    }} />
+                </div>
             </div>
-           
-            
-            {state.length > 0 && (
+
+            {state.length > 0 && view === "cards" && (
                 <GetCases 
                     posts={state} 
                     postsChange={() => {}} 
                     loadCasesMore={loadCases} 
                 />
             )}
-              <Table
-                columns={casesColumns}
-                data={state}
-                keyField={'id'}
-                addClass="without-row-menu"
-            />
-            <div style={{
-                display: 'flex',
-                justifyContent: "center",
-                marginTop: '20px'
-            }}>
-            <Pagination 
-                page={options.page}
-                count={state.length}  // Кількість записів на поточній сторінці
-                nextPage={handleNextPage}
-                prewPage={handlePrevPage}
-                rowsPerPage={options.limit}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                rowsPerPageOptions={[10, 25, 50, 100]}
-                totalCount={totalCount}  // Загальна кількість записів
-                loadTotalCount={loadTotalCount}
-            />
+            {view === 'table' && <div className="ListCases-table">
+                <Table
+                    columns={casesColumns}
+                    data={state}
+                    keyField={'id'}
+                    addClass="without-row-menu"
+                    sortField={options.sort.field}
+                    sortOrder={options.sort.order}
+                />
+            </div>}
+            <div className = "ListCases-pagination">
+                <Pagination 
+                    page={options.page}
+                    count={state.length}
+                    nextPage={handleNextPage}
+                    prewPage={handlePrevPage}
+                    rowsPerPage={options.limit}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    rowsPerPageOptions={[10, 25, 50, 100]}
+                    totalCount={totalCount}
+                    loadTotalCount={loadTotalCount}
+                />
             </div>
-
-            </div>
+        </div>
     );
 };
 

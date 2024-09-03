@@ -84,6 +84,7 @@ if (($access_rights['a_super'] == 1 || $access_rights['a_administrator'] == 1) &
 $where_clause = !empty($case_conditions) ? implode(' OR ', $case_conditions) : "1=1";
 $sortField = $data->sort->field ?? 'active';
 $sortOrder = $data->sort->order ?? 'DESC';
+
 // Створення основного SQL-запиту з урахуванням умов доступу, пагінації та сортування
 $sql = "
 SELECT 
@@ -150,7 +151,7 @@ while ($res = $result->fetch_assoc()) {
     $obj->{'email'} = decryptData($res['email'], $key);
     $obj->{'data_id'} = $res['data_id'];
     $obj->{'contractDate'} = $res['contract_date'];
-    $obj->{'contractNumber'} = $res['contract_number'];
+    $obj->{'contract_number'} = $res['contract_number'];
     $obj->{'addressLive'} = $res['address_live'];
     $obj->{'happyBD'} = $res['happy_bd'];
     $obj->{'user_id'} = $res['user_id'];
