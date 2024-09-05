@@ -25,7 +25,39 @@ const Settings = () => {
     const [page, setPage] = useState({ loading: true, effload: false, message: "" })
     const [categories, setCategories] = useState([]);
     const [categoriesCont, setCategoriesCont] = useState([]);
-
+    const [version, setVersion] = useState(false)
+    const [newVersion, setNewVersion] = useState(false)
+    const [disBtn, setDisBtn] = useState(false)
+    function checkVersion() {
+        let obj = {
+            id: localStorage.getItem("id"),
+            token: localStorage.getItem("token")
+        }
+        axios({
+            url: "https://update.people-ua.org/check-update.php",
+            method: "POST",
+            header: { 'Content-Type': 'application/json;charset=utf-8' },
+            data: JSON.stringify(obj),
+        })
+            .then((data) => {
+                data.data > version ? setNewVersion(data.data) : setNewVersion(false)
+            })
+            .catch((error) => console.log(error))
+    }
+    useEffect(() => {
+        apiResponse({}, "manage/get-version.php").then((data) => {
+                setVersion(data.version);
+                checkVersion()
+        })
+    }, []);
+    function updateCaseManager() {
+        apiResponse({
+            link: `https://update.people-ua.org/version/${newVersion}.zip`,
+            newVersion: newVersion
+        }, "manage/update-download.php").then((res) => {
+            window.location.reload()
+        })
+    }
 
     const [expanded, setExpanded] = useState({
         users: localStorage.getItem(MODE + 'users') ? !!+localStorage.getItem(MODE + 'users') : false,
@@ -103,6 +135,11 @@ const Settings = () => {
                 <h1>Налаштування</h1>
             </div>
             <div className="SettingsPage-accordion">
+                {newVersion > version && 
+                    <Button disabled={disBtn} onClick={()=>{
+                        setDisBtn(true)
+                        updateCaseManager();
+                    }}>{LANG.footer.update} до версії <b style={{paddingLeft:"10px"}}> { newVersion}</b></Button>}
                 <Accordion expanded={expanded.users} id="expanded_users" onChange={() => {
                     expandedChange('users')
                 }}>

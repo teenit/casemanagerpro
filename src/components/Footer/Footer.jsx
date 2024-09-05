@@ -100,10 +100,7 @@ const Footer = () => {
                     <span>
                         <p className="footer__contact"><b>Version - {version}</b></p>
                         {newVersion > version ? <p>{LANG.footer.updateAvaible} {newVersion}</p> : <p>{LANG.footer.lastVersion}</p>}
-                        {newVersion > version && right && <button disabled={disBtn} onClick={() => {
-                            setDisBtn(true)
-                            updateCaseManager();
-                        }}>{LANG.footer.update}</button>}
+                        
                     </span>
 
                     <div className="footer__copyright">

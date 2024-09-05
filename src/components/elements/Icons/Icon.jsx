@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Add, ArrowBack, ArrowBackIos, ArrowDownwardOutlined, ArrowForwardIos, AttachFile, Cake, Call, Check, Close, Delete, Download, Edit, ExitToApp, ExpandLess, ExpandLessRounded, ExpandLessSharp, ExpandMore, MailOutline, Man, MenuBook, Print, PriorityHigh, Search, Send, Settings, SettingsOutlined, SystemUpdate, Visibility, VisibilityOff, Work, WorkOutline } from '@mui/icons-material';
+import { Add, ArrowBack, ArrowBackIos, ArrowDownwardOutlined, ArrowForwardIos, AttachFile, Cake, Call, Check, Close, Delete, Download, Edit, ExitToApp, ExpandLess, ExpandLessRounded, ExpandLessSharp, ExpandMore, MailOutline, Man, MenuBook, Print, PriorityHigh, Replay, Replay5Outlined, Search, Send, Settings, SettingsOutlined, SystemUpdate, Visibility, VisibilityOff, Work, WorkOutline } from '@mui/icons-material';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
@@ -134,6 +134,9 @@ const Icon = ({ icon, addClass, onClick }) => {
                 break;
             case "eye_off":
                 ico = <VisibilityOff style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "replay":
+                ico = <Replay style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             default:
                 ico = null;

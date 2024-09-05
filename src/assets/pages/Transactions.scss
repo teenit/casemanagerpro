@@ -12,4 +12,16 @@
         align-items: center;
         gap: 10px;
     }
+    .status {
+        font-weight: 600;
+        &.pending {
+            color: $light-theme-color-orange000--o;
+        }
+        &.completed {
+            color: $light-theme-color-green000--o;
+        }
+        &.feiled {
+            color: $light-theme-color-red000--o;
+        }
+    }
 }

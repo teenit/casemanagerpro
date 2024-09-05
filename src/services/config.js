@@ -34,7 +34,10 @@ TRANSACTIONS: {
   amount:'Суму',
   payment_method:'Метод оплати',
   status:'Статус',
-  created_at:'Дата створення'
+  created_at:'Дата створення',
+  pending: "Очікується",
+  completed: "Завершено успішно",
+  failed: "Завершено невдало"
 },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Рівень доступу користувачів (Сторінки)",
@@ -414,7 +417,8 @@ TRANSACTIONS: {
     groups: "Групи",
     access: "Інше",
     file: "Файл",
-    updateLog:"Оновленння програми"
+    updateLog:"Оновленння програми",
+    transactions:"Транзакції"
   },
   documents: "Додані документи",
   give_help: {

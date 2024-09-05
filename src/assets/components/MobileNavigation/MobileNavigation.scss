@@ -1,0 +1,27 @@
+.MobileNavigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: $main-color;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    &-container {
+        width:  100%;
+        display: flex;
+        gap: 15px;
+        justify-content: space-around;
+    }
+    &-icon {
+        color: $light-theme-color-white000--o;
+        &:hover {
+            color: $second-color;
+        }
+        &.disabled {
+            opacity: .5;
+        }
+    }
+}

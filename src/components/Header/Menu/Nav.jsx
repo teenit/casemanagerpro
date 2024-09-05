@@ -31,10 +31,10 @@ const Nav = ({ close }) => {
             title: LANG.pages.events,
             link: "/events"
         },
-        // {
-        //     title: LANG.pages.search,
-        //     link: "/search"
-        // },
+        {
+            title: LANG.pages.transactions,
+            link: "/transactions"
+        },
         {
             title: LANG.pages.settings,
             link: "/settings"

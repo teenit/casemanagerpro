@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Textarea from "../../elements/Inputs/Textarea";
-import { Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Feedback from "./Feedback";
 import Icon from "../../elements/Icons/Icon";
 import AddPlan from "../../Modals/EventModals/AddPlan";
 import ModalConfirm from "../../Modals/ModalConfirm";
+import TextDescription from "../../elements/TextFormatters/TextDescription";
 
 const EventPlan = (props) => {
     const [alert, setAlert] = useState({
@@ -51,6 +52,12 @@ const EventPlan = (props) => {
             props.getEventData()
         })
     }
+
+    const formatTextWithLineBreaks = (text) => {
+        // Замінюємо всі нові рядки на <br> для HTML
+        return text.replace(/\n/g, '<br />');
+      };
+      
     return (
         <div className="EventPlan">
             <div className="EventPlan-header">
@@ -71,7 +78,9 @@ const EventPlan = (props) => {
                     </div>
                     <div className="EventPage-inner-text-item">
                         <div className="EventPlan-inner-text-item-title">Опис</div>
-                        <div dangerouslySetInnerHTML={{ __html: props.plan.description }}></div>
+                        <TextDescription text={props.plan.description}/>
+                        
+
                     </div>
                     <div className="EventPage-inner-text-item">
                         <div className="EventPlan-inner-text-item-title">Зворотній зв'язок</div>
