@@ -90,10 +90,29 @@ const LoginPage = () => {
             secretCode: state.secretCode
         }, 'user/login.php').then((res) => {
             if (res.status) {
-                setState({ ...state, activeCode: true, type: 'secretCode' });
-                // Reset tries on successful login
-                localStorage.removeItem('tries');
-                localStorage.removeItem('lockUntil');
+                if (res.message == "Authorization successful.") {
+                    localStorage.setItem("token", res.userData.token);
+                    localStorage.setItem("email", res.userData.email);
+                    localStorage.setItem("id", res.userData.user_id);
+                    localStorage.setItem("userName", res.userData.userName);
+                    localStorage.setItem("profilePhoto", res.userData.profilePhoto);
+                    dispatch(setUser({
+                        email: res.userData.email,
+                        id: res.userData.user_id,
+                        token: res.userData.token,
+                        userName: res.userData.userName,
+                        profilePhoto: res.userData.profilePhoto,
+                        access: res.access
+                    }));
+                    
+                    window.location.href = "/";
+                } else {
+                    setState({ ...state, activeCode: true, type: 'secretCode' });
+                    // Reset tries on successful login
+                    localStorage.removeItem('tries');
+                    localStorage.removeItem('lockUntil');
+                }
+              
             } else {
                 let updatedTries = tries + 1;
                 localStorage.setItem('tries', updatedTries);

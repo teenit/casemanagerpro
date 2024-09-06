@@ -3,8 +3,8 @@ require_once '../config.php';
 
 // Декодування отриманих даних з фронтенду
 $data = json_decode(file_get_contents('php://input'), true);
-$user_id = $data['user_id'];
-$config_data = json_encode($data['data'], JSON_UNESCAPED_UNICODE); // Конвертуємо масив у JSON
+$user_id = $data['id'];
+$config_data = json_encode($data['config'], JSON_UNESCAPED_UNICODE); // Конвертуємо масив у JSON
 
 // Оновлення всіх записів для користувача, встановлюючи is_active = 0
 $update_sql = "UPDATE `config` SET is_active = 0";

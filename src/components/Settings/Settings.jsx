@@ -18,7 +18,8 @@ import Icon from "../elements/Icons/Icon";
 import AccordionBlock from "../elements/Accordions/AccordionBlock";
 import Input from "../elements/Inputs/Input";
 import Hint from "../elements/Hints/Hint"
-import { LANG } from "../../services/config";
+import { appConfig, LANG } from "../../services/config";
+import SetConfigItem from "./SetConfig/SetConfigItem";
 const MODE = 'settings_page_';
 const Settings = () => {
 
@@ -28,6 +29,8 @@ const Settings = () => {
     const [version, setVersion] = useState(false)
     const [newVersion, setNewVersion] = useState(false)
     const [disBtn, setDisBtn] = useState(false)
+    const [config, setConfig] = useState({...appConfig.defaultConfig})
+    const [activeConfig, setActiveConfig] = useState({})
     function checkVersion() {
         let obj = {
             id: localStorage.getItem("id"),
@@ -49,6 +52,10 @@ const Settings = () => {
                 setVersion(data.version);
                 checkVersion()
         })
+        apiResponse({}, "config/get-active-config.php").then((res)=>{
+            
+            if (res.status) setActiveConfig({...res.configs})
+        })
     }, []);
     function updateCaseManager() {
         apiResponse({
@@ -65,13 +72,6 @@ const Settings = () => {
         events: localStorage.getItem(MODE + 'events') ? !!+localStorage.getItem(MODE + 'events') : false,
         config: localStorage.getItem(MODE + 'config') ? !!+localStorage.getItem(MODE + 'config') : false,
     });
-
-    const [expandedConfig, setExpandedConfig] = useState(localStorage.getItem(MODE + 'active_config'));
-
-    const changeActiveConfig = (key) => {
-        localStorage.setItem(MODE + 'active_config', key);
-        setExpanded(key)
-    }
 
     const expandedChange = (type) => {
         localStorage.setItem(MODE + type, !expanded[type] ? 1 : 0);
@@ -114,8 +114,17 @@ const Settings = () => {
     const settingsHandler = (key, value) => {
         setSettingsData({ ...settingsData, [key]: value })
     }
-    const saveSettings = ()=>{
-        
+    const saveConfig = ()=>{
+        apiResponse({config: config}, "config/create.php").then((res)=>{
+            console.log(res)
+        })
+    }
+
+    const getConfig = () => {
+        apiResponse({}, "config/get-active-config.php").then((res)=>{
+            
+            if (res.status) setActiveConfig({...res.configs})
+        })
     }
     const generateKey = () => {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -125,6 +134,17 @@ const Settings = () => {
         }
         settingsHandler("key", result)
     }
+
+    const saveConfigItem = (key, value) => {
+        const sendValue = typeof value == 'boolean' && value ? 1 : 0;
+        apiResponse({
+            key: key,
+            value: sendValue
+        }, "config/create-config.php").then((res)=>{
+            if(res.status) getConfig()
+        })
+    }
+   
     return page.loading ? (
         <div className="page__loading">
             <LoadingPage message={page.message} effload={page.effload} />
@@ -193,7 +213,7 @@ const Settings = () => {
                         Конфігурації програми
                     </AccordionSummary>
                     <AccordionDetails>
-                        <AccordionBlock disabled = {JSON.stringify(initialSettingsData)==JSON.stringify(settingsData)} title={"Системні налаштування"}>
+                        {/* <AccordionBlock disabled = {JSON.stringify(initialSettingsData)==JSON.stringify(settingsData)} title={"Системні налаштування"}>
                             <div className="accordion__item">
                                 <span>
                                     <div>Номер телефону</div>
@@ -216,24 +236,25 @@ const Settings = () => {
                                     <Input type="text" onChange={(e) => { settingsHandler("key", e.target.value) }} value={settingsData.key} />
                                 </span>
                             </div>
-                        </AccordionBlock>
+                        </AccordionBlock> */}
                         <AccordionBlock title={"Загальні налаштування"}>
-                            <div className="accordion__item">
-                                <span>
-                                    <div>Двохфакторна аутентифікація</div>
-                                    <Hint text={LANG.hints.auth} placement="right" />
-                                </span>
-                                    <Switch value={settingsData.auth} onChange={()=>{settingsHandler("auth", !settingsData.auth)}}/>
-                            </div>
-                            <div className="accordion__item">
-                                <span>
-                                    <div>Світла тема</div>
-                                    {/* <Hint text={LANG.hints.auth} placement="right" /> */}
-                                </span>
-                                    <Switch value={settingsData.lightTheme} onChange={()=>{settingsHandler("lightTheme", !settingsData.lightTheme)}}/>
-                            </div>
+                            {
+                                config.system.map((item)=><SetConfigItem 
+                                                            key={item.config_key} 
+                                                            type={item.type} 
+                                                            label={item.label} 
+                                                            description={item.description}
+                                                            value={activeConfig[item.config_key] !== undefined ? activeConfig[item.config_key] : item.value} 
+                                                            config_key={item.config_key} 
+                                                            onChange = {(value)=>{
+                                                                saveConfigItem(item.config_key, value)
+                                                            }}
+                                                            />)
+                            }
+                          
                         </AccordionBlock>
                     </AccordionDetails>
+                    <Button onClick={saveConfig}>Зберегти</Button>
                 </Accordion>
             </div>
 

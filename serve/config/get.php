@@ -3,16 +3,12 @@ require_once '../config.php';
 
 // Декодування отриманих даних з фронтенду
 $data = json_decode(file_get_contents('php://input'), true);
-$user_id = $data['user_id'];
 
 // Підготовка SQL-запиту для отримання активної конфігурації
-$sql = "SELECT * FROM `config` WHERE user_id = ? AND is_active = 1 LIMIT 1";
+$sql = "SELECT * FROM `config` WHERE is_active = 1 LIMIT 1";
 
 // Підготовка запиту
 $stmt = $conn->prepare($sql);
-
-// Прив'язка параметрів
-$stmt->bind_param("i", $user_id);
 
 // Виконання запиту
 $stmt->execute();
@@ -25,7 +21,7 @@ $config = $result->fetch_assoc();
 if ($config) {
     // Якщо знайдено, повертаємо дані конфігурації
     echo json_encode([
-        'success' => true,
+        'status' => true,
         'config' => [
             'id' => $config['id'],
             'user_id' => $config['user_id'],
@@ -36,5 +32,5 @@ if ($config) {
     ]);
 } else {
     // Якщо не знайдено, повертаємо повідомлення про відсутність конфігурації
-    echo json_encode(['success' => false, 'message' => 'No active config found.']);
+    echo json_encode(['status' => false, 'message' => 'No active config found.']);
 }

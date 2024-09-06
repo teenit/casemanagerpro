@@ -28,6 +28,10 @@ export const LANG = {
     title_category_case_helps: "Категорії наданої допомоги",
     title_category_groups: "Категорії груп",
 },
+CONFIG:{
+  system_twofa_label: "2-факторна автентифікація",
+  system_twofa_description: "Запровадьте або обмежте двофакторну автентифікацію по email. Коли параметр увімкнено, при кожній авторизації, користувачу буде приходити на поштому адресу числовий пароль для підтвердження входу",
+},
 TRANSACTIONS: {
   transaction_type: 'Тип транзакції',
   description:'Опис',
@@ -1066,4 +1070,14 @@ export const appConfig = {
       }
     }
   },
+  defaultConfig:{
+      system:[
+        {
+          config_key: 'system_twofa',
+          value: true,
+          type: 'boolean',
+          description: LANG.CONFIG.system_twofa_description,
+          label: LANG.CONFIG.system_twofa_label
+        }
+      ]}
 }

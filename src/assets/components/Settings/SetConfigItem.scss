@@ -1,0 +1,16 @@
+.SetConfigItem {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    &-text{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 10px;
+        &-label {
+            font-weight: 600;
+        }
+    }
+}
