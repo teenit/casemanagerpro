@@ -11,7 +11,6 @@
         background-color: $second-color;
         display: flex;
         justify-content: center;
-
         &-title {
             width: 90%;
             font-weight: bold;
@@ -19,11 +18,19 @@
             align-items: center;
             justify-content: space-between;
             word-break: break-all;
+            flex-direction: column;
             &-left{
                 display: flex;
                 align-items: center;
                 gap: 7.5px;
             }
+        }
+        &-details {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
         }
     }
 
@@ -78,7 +85,7 @@
     
     
     &-addFeedback {
-        padding: 15px 20px 0px 20px;
+        padding: 15px 0px 0px 0px;
         display: flex;
         flex-direction: column;
         gap: 10px;

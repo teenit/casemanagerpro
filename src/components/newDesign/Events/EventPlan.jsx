@@ -63,11 +63,16 @@ const EventPlan = (props) => {
             <div className="EventPlan-header">
                 <div className="EventPlan-header-title">
                     <div className="EventPlan-header-title-left">
-                        <div>{props.plan.title}</div>
-                        <Icon icon={"edit"} onClick={()=>{modalsHandler("edit")}}/>
-                        <Icon icon={"delete"} addClass={"close-icon"} onClick={()=>{modalsHandler("delete")}}/>
+                        <div>{props.plan.title}</div> 
                     </div>
-                    <div>{`${props.plan.startTime}-${props.plan.endTime}`}</div>
+                    <div className="EventPlan-header-details">
+                        <div>{`${props.plan.startTime}-${props.plan.endTime}`}</div>
+                        <div>
+                            <Icon icon={"edit"} onClick={()=>{modalsHandler("edit")}}/>
+                            <Icon icon={"delete"} addClass={"close-icon"} onClick={()=>{modalsHandler("delete")}}/>
+                        </div>
+                    </div>
+                   
                 </div>
             </div>
             <div className="EventPlan-inner">

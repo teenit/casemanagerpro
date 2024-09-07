@@ -36,7 +36,7 @@ class App extends Component {
   render() {
     const { auth } = this.props;
     const { isMobile } = this.state; // Отримуємо значення isMobile зі стану
-
+    console.log(auth)
     return (
       auth.loading ? (
         <LoadingPage effload={true} />

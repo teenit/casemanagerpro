@@ -20,6 +20,8 @@ export function loadUserAuth () {
             } else {
                 dispatch(setUserAuth({auth: false}));
             }
+            console.log(data)
+
         });
     };
 }

@@ -118,7 +118,7 @@ function handleLogin($conn, $data) {
                 }
             } else {
                 // Для випадків, коли 2ФА вимкнено, авторизуємо користувача без перевірки коду
-                $token = uniqid(md5($user['id']), true);
+                $token = uniqid(md5($user['users_id']), true);
                 $time = time();
                 $timeEnd = $time + 86400;
 
@@ -126,7 +126,7 @@ function handleLogin($conn, $data) {
                 $tokenStmt = $conn->prepare($tokenSql);
 
                 if ($tokenStmt) {
-                    $tokenStmt->bind_param("siii", $token, $time, $timeEnd, $user['id']);
+                    $tokenStmt->bind_param("siii", $token, $time, $timeEnd, $user['users_id']);
                     $tokenStmt->execute();
                     $tokenStmt->close();
 
@@ -220,7 +220,7 @@ function handleSecretCode($conn, $data) {
                                 $userData = $userResult->fetch_assoc();
                                 
                                 // Генерація токена
-                                $token = uniqid(md5($userData['id']), true);
+                                $token = uniqid(md5($userData['user_id']), true);
                                 $time = time();
                                 $timeEnd = $time + 86400;
 
@@ -228,15 +228,15 @@ function handleSecretCode($conn, $data) {
                                 $tokenStmt = $conn->prepare($tokenSQL);
 
                                 if ($tokenStmt) {
-                                    $tokenStmt->bind_param("siii", $token, $time, $timeEnd, $userData['id']);
+                                    $tokenStmt->bind_param("siii", $token, $time, $timeEnd, $userData['user_id']);
                                     if ($tokenStmt->execute()) {
-                                        logMessage("Token successfully generated and inserted for user ID: " . $userData['id']);
+                                        logMessage("Token successfully generated and inserted for user ID: " . $userData['user_id']);
                                         
                                         // Встановлення cookies
                                         setcookie("token", $token, time() + 86400, "/");
                                         setcookie("userName", $userData['userName'], time() + 86400, "/");
                                         setcookie("email", $userData['email'], time() + 86400, "/");
-                                        setcookie("id", $userData['id'], time() + 86400, "/");
+                                        setcookie("id", $userData['user_id'], time() + 86400, "/");
 
                                         return json_encode(array(
                                             'status' => true,
@@ -244,7 +244,7 @@ function handleSecretCode($conn, $data) {
                                             'userData' => array(
                                                 'userName' => $userData['userName'],
                                                 'email' => $userData['email'],
-                                                'user_id' => $userData['id'],
+                                                'user_id' => $userData['user_id'],
                                                 'access_id' => $userData['access_id'],
                                                 'token' => $token
                                             )

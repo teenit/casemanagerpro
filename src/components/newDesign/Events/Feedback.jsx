@@ -7,6 +7,7 @@ import Icon from '../../elements/Icons/Icon';
 import ModalConfirm from '../../Modals/ModalConfirm';
 import { apiResponse } from '../../Functions/get_apiObj';
 import SmallNotification from '../../elements/Notifications/SmallNotification';
+import TextDescription from '../../elements/TextFormatters/TextDescription';
 
 
 const Feedback = ({ item, event_id, getEventData }) => {
@@ -48,7 +49,8 @@ const Feedback = ({ item, event_id, getEventData }) => {
     };
     return (
         <div className="EventPlan-feedback">
-            <div >{item.value}</div>
+            <TextDescription text={item.value}/>
+            
             <div className="EventPlan-feedback-panel">
                 <Icon icon={"edit"} addClass={"default-icon"} onClick={() => {
                     setEditingFeedback(item.value)
