@@ -16,6 +16,8 @@ import loadImg from '../../../img/loading_3.gif';
 import SmallNotification from '../Notifications/SmallNotification';
 import { useSelector } from 'react-redux';
 import Icon from "../Icons/Icon"
+import { MenuItem, Select } from '@mui/material';
+
 const FORMAT = {
   pdf: { imgUrl: pdfImg },
   doc: { imgUrl: docxImg },
@@ -40,27 +42,26 @@ const FORMAT = {
 function ext(name) {
   return name.match(/\.([^.]+)$|$/)[1];
 }
+
 function FilesUploader({ multiple = true, successHandler = () => { }, meta = null, type = "case" }) {
+  const [fileSelect, setFileSelect] = useState(false);
+  const [fileType, setFileType] = useState(meta?.key[0] || "case_files");
   const [alert, setAlert] = useState({
     error: false,
     success: false
-  })
-  const alertHandler = (key) => {
-    setAlert({ ...alert, [key]: !alert[key] })
-  }
+  });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const { id, token } = useSelector(state => state.user)
+  const { id, token } = useSelector(state => state.user);
+
+  const alertHandler = (key) => {
+    setAlert({ ...alert, [key]: !alert[key] });
+  }
+
   const getFromType = () => {
-    if (type === "case") {
-      return "upload-case-files.php";
-    }
-    if (type == "resource") {
-      return "upload-resource-files.php";
-    }
-    if (type == "event") {
-      return "event/upload.php";
-    }
+    if (type === "case") return "upload-case-files.php";
+    if (type === "resource") return "upload-resource-files.php";
+    if (type === "event") return "event/upload.php";
   }
 
   const handleFileChange = (event) => {
@@ -69,70 +70,103 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
       const filesArray = Array.from(files);
       setSelectedFiles(filesArray);
     }
+    if (Array.isArray(meta.key)) {
+      setFileSelect(true);
+    }
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (metaKey) => {
+    if (!meta || selectedFiles.length < 1) return alertHandler("error");
 
-    if (!meta || selectedFiles.length < 1) return alertHandler("error")
     setUploading(true);
     const formData = new FormData();
-    for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append(`files[${i}]`, selectedFiles[i]);
-    }
+    selectedFiles.forEach((file, i) => formData.append(`files[${i}]`, file));
 
-    const metaObject = { ...meta, id, token };
+    const metaObject = { ...meta, key: metaKey, id, token };
     formData.append('meta', JSON.stringify(metaObject));
 
-    axios({
-      url: serverAddres(getFromType()),
-      method: "POST",
-      headers: { 'Content-Type': 'multipart/form-data' },
-      data: formData,
-      onUploadProgress: event => {
-        console.log(Math.round(event.loaded * 100 / event.total))
-      }
-    })
-      .then((response) => {
-        setSelectedFiles([])
-        successHandler(response.data)
-        alertHandler("success")
-        setUploading(false);
-      })
-      .catch((error) => console.log(error))
+    try {
+      const response = await axios({
+        url: serverAddres(getFromType()),
+        method: "POST",
+        headers: { 'Content-Type': 'multipart/form-data' },
+        data: formData,
+        onUploadProgress: event => {
+          console.log(Math.round(event.loaded * 100 / event.total));
+        }
+      });
+      setSelectedFiles([]);
+      successHandler(response.data);
+      alertHandler("success");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setUploading(false);
+    }
   };
 
+  const checkUpload = () => {
+    if (typeof meta.key === "string") {
+      handleUpload(meta.key);
+    } else if (Array.isArray(meta.key)) {
+      handleUpload(fileType)
+    }
+  }
 
   const handleDelete = (index) => {
-    const newMas = [...selectedFiles]
-    newMas.splice(index, 1)
-    setSelectedFiles(newMas)
+    const newFiles = [...selectedFiles];
+    newFiles.splice(index, 1);
+    setSelectedFiles(newFiles);
   }
-  const cutTitle = (str) => {
-    return str.length > 20 ? str.substring(0, 20) + "..." : str
-  }
-  return (
-    <div className="FilesUploader">
-      {selectedFiles.length > 0 && <div className="FilesUploader-files">
-        {selectedFiles.map((file, index) => (
-          <div key={index}>
-            <p style={{ textDecoration: "underline" }}>{cutTitle(file.name)}</p>
-            {FORMAT[ext(file.name)] && <img className='FilesUploader-files-preview' src={FORMAT[ext(file.name)].imgUrl} alt={`File type: ${ext(file.name)}`} />}
-            <span onClick={() => { handleDelete(index) }}>
-              <Icon icon={"close"} addClass={"close-icon"} />
-            </span>
-          </div>
-        ))}
-      </div>}
 
-      <div className="FilesUploader-buttons">
-        <label htmlFor="fileInput"><img src={add} alt="Завантажити файл" /></label>
-        <input style={{ display: "none" }} id="fileInput" multiple type="file" onChange={handleFileChange} />
-        {!uploading ? <label htmlFor="submitInput" onClick={handleUpload}><img src={send} alt="Відправити файл" /></label> : <img style={{ width: "30px" }} src={loadImg} />}
-        <input disabled={uploading} style={{ display: "none" }} type="submit" id="submitInput" />
+  const cutTitle = (str) => str.length > 20 ? `${str.substring(0, 20)}...` : str;
+
+  return (
+    <>
+      <div className="FilesUploader">
+        {selectedFiles.length > 0 && (
+          <div className="FilesUploader-files">
+            {selectedFiles.map((file, index) => (
+              <div key={index}>
+                <p style={{ textDecoration: "underline" }}>{cutTitle(file.name)}</p>
+                {FORMAT[ext(file.name)] && (
+                  <img className='FilesUploader-files-preview' src={FORMAT[ext(file.name)].imgUrl} alt={`File type: ${ext(file.name)}`} />
+                )}
+                <span onClick={() => handleDelete(index)}>
+                  <Icon icon={"close"} addClass={"close-icon"} />
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="FilesUploader-buttons">
+          <label htmlFor="fileInput">
+            <img src={add} alt="Завантажити файл" />
+          </label>
+          <input style={{ display: "none" }} id="fileInput" multiple={multiple} type="file" onChange={handleFileChange} />
+          {!uploading ? (
+            <label htmlFor="submitInput" onClick={checkUpload}>
+              <img src={send} alt="Відправити файл" />
+            </label>
+          ) : (
+            <img style={{ width: "30px" }} src={loadImg} />
+          )}
+          <input disabled={uploading} style={{ display: "none" }} type="submit" id="submitInput" />
+        </div>
+
+        {alert.success && <SmallNotification isSuccess={true} text="Файли завантажено успішно" close={() => alertHandler("success")} />}
+        {alert.error && <SmallNotification isSuccess={false} text="Неправильні дані" close={() => alertHandler("error")} />}
       </div>
-      {alert.success && <SmallNotification isSuccess={true} text="Файли завантажено успішно" close={() => { alertHandler("success") }} />}
-      {alert.error && <SmallNotification isSuccess={false} text="Неправильні дані" close={() => { alertHandler("error") }} />}
-    </div>
+
+      {fileSelect && (
+        <Select value={fileType} onChange={(e) => setFileType(e.target.value)}>
+          {meta.key.map((item, index) => (
+            <MenuItem key={index} value={item.value}>{item.title}</MenuItem>
+          ))}
+        </Select>
+      )}
+    </>
   );
 }
 

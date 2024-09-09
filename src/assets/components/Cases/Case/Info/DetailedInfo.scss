@@ -55,7 +55,7 @@
     flex-direction: column;
     gap: 25px;
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 @media screen and (max-width:500px){
     .DetailedInfo{

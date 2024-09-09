@@ -32,6 +32,8 @@ import PersonalInfo from "./PersonalInfo";
 import TextEditor from "../../elements/TextEditor/TextEditor";
 import Files from "./Files";
 import Fields from "./Fields";
+import Histories from "./Histories";
+import { MenuItem, Select } from "@mui/material";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -148,18 +150,29 @@ const Case = () => {
                     <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
                 }
                 {(state.viewInfo.view_Files) && <Files case_id={case_id} getCaseInfo={getCaseInfo} files={state.files} />}
+                {(state.viewInfo.view_Histories) && <Histories data={state.meta.histories} getCaseInfo={getCaseInfo} case_id={case_id} />}
             </div>
 
             {!!state?.meta?.files?.length && (state.viewInfo.view_Gallery) &&
                 <GalleryBlock check={downloadGallery} data={state.meta.files} />}
             {state.viewInfo.view_FileUploader &&
-                <div className="uploader_wrap">
+                <div className="Uploader">
                     <p>Завантажити файл</p>
-                    <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
-                        key: "case_files",
-                        case_id: case_id,
-                        type: "case"
-                    }} />
+                    <div className="Uploader-content">
+                        <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
+                            key: [{
+                                title:"Усі файли",
+                                value:"case_files"
+                            },{
+                                title:"Історії",
+                                value:"history_case_files"
+                            }
+                        ],
+                            case_id: case_id,
+                            type: "case"
+                        }} />
+                        
+                    </div>
                 </div>
             }
             {settingsAlert && <SmallNotification isSuccess={true} text={"Показ елементів оновлено"} close={() => { setSettingsAlert(false) }} />}

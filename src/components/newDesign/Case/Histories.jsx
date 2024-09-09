@@ -1,0 +1,79 @@
+import React, { useEffect, useState } from 'react'
+import Icon from "../../elements/Icons/Icon"
+import { LANG } from '../../../services/config';
+import pptxIcon from "../../../img/resources/pptx.svg"
+import docxIcon from "../../../img/resources/docx.svg"
+import imgIcon from "../../../img/resources/img.svg"
+import pdfIcon from "../../../img/resources/pdf.svg"
+import videoIcon from "../../../img/resources/mp4.svg"
+import { NavLink } from 'react-router-dom';
+const Histories = ({ data, case_id, getCaseInfo }) => {
+    const [open, setOpen] = useState(false);
+    const [histories, setHistories] = useState(null)
+    useEffect(() => {
+        const item = localStorage.getItem("page_case_histories");
+        setOpen(item === "true");
+        setHistories(data)
+
+    }, []);
+    const openHandler = () => {
+        const newState = !open;
+        localStorage.setItem("page_case_histories", newState);
+        setOpen(newState);
+    };
+    const HistoryItem = ({ item }) => {
+        const getIcon = (item) => {            
+            switch (item.type) {
+                case "application/msword":
+                case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+                    return docxIcon;
+                case "application/vnd.ms-powerpoint":
+                case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+                    return pptxIcon;
+                case "application/pdf":
+                    return pdfIcon;
+                case "video/mp4":
+                case "video/quicktime":
+                    return videoIcon;
+                case "image/png":
+                case "image/jpeg":
+                case "image/jpg":
+                    return item.link;
+    
+                default:
+                    break;
+            }
+        }
+    
+        const cutTitle = (str) => {
+            return str.length > 25 ? str.slice(0, 25) + "..." : str;
+        }
+    
+        return (
+            <NavLink to={item.link} target='_blank'>
+                <div className='Histories-HistoryItem'>
+                    <img src={getIcon(item)} alt="icon" />
+                    <div>{cutTitle(item.name)}</div>
+                </div>
+            </NavLink>
+        );
+    };
+    
+    return (
+        <div className="Histories">
+            <div className="Histories-title">
+                <div>Історії</div>
+                <Icon icon={"arrow_down"} addClass={"fs35"} onClick={openHandler} />
+            </div>
+            <div className="Histories-content">
+                {open && (
+                    histories && histories.length > 0 ? histories.map((item, index) => {
+                        return <HistoryItem key={index} item={item} />
+                    })
+                        : <div>{LANG.no_records}</div>)}
+            </div>
+        </div>
+    )
+}
+
+export default Histories

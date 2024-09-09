@@ -13,9 +13,6 @@ import Hint from "../../elements/Hints/Hint";
 
 const Files = ({ case_id, getCaseInfo, files }) => {
     const [filteredFiles, setFilteredFiles] = useState(null)
-    const [rows, setRows] = useState(1);
-    const [columns, setColumns] = useState(5);
-    const [width, setWidth] = useState(window.innerWidth);
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({ success: false, error: false, message: "" });
     const [modal, setModal] = useState(false);
@@ -25,34 +22,12 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         tag: ""
     });
 
-    useEffect(() => {
-        const handleResize = () => {
-            setWidth(window.innerWidth);
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (width > 800) {
-            setColumns(5);
-        } else if (width <= 800 && width > 550) {
-            setColumns(3);
-        } else {
-            setColumns(2);
-        }
-    }, [width]);
 
     useEffect(() => {
         setFilteredFiles(files)
-        setRows(Math.ceil(files.length / columns));
         const item = localStorage.getItem("page_case_files");
         setOpen(item === "true");
-    }, [case_id, columns, files]);
+    }, [case_id, files]);
 
     const filterFiles = (result) => {
         const fileIds = result.map(item => item.id)
@@ -86,7 +61,6 @@ const Files = ({ case_id, getCaseInfo, files }) => {
             alertHandler("success", LANG.caseFiles.alerts.success);
             getCaseInfo();
             setModal(false);
-            setRows(Math.ceil(files.length / columns));
         }).catch((error) => {
             alertHandler("error", LANG.caseFiles.alerts.error);
         });
@@ -121,7 +95,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
                 <Icon icon="add" onClick={() => setModal(true)} />
             </div>
             {open && (
-                <div className="Files-viewer" style={{ gridTemplateRows: `repeat(${rows}, 1fr)`, gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+                <div className="Files-viewer">
                     {filteredFiles && filteredFiles.length > 0 ?
                         filteredFiles.map((item, index) => (
                             <File key={index} item={item} />

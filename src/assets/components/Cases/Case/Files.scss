@@ -71,10 +71,12 @@
     }
 
     &-viewer {
-        max-height: 400px;
-        overflow-y: scroll;
-        display: grid;
+        max-height: 200px;
+        overflow-y: auto;
+        display: flex;
+        flex-wrap: wrap;
         gap: 25px;
+        padding: 0px 10px;
     }
 
 }
