@@ -4,11 +4,22 @@
     gap: 25px;
     display: flex;
     flex-wrap: wrap;
-    &-column {
+    &-right{
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 25px;
+        &-columns{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            &-column {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
     }
+   
     &.name-block {
         display: flex;
         align-items: center;

@@ -1,11 +1,13 @@
 .ListCases {
+    width: 80%;
+    margin:auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
     &-sort {
         display: flex;
-        gap: 5px;
-        width: max-content;
-        margin: auto;
         padding-bottom: 10px;
-        flex-wrap: nowrap;
+        justify-content: space-between;
         align-items: center;
     }
     &-table {
@@ -22,6 +24,7 @@
     .ListCases {
         &-sort {
             flex-direction: column;
+            gap: 10px;
         }
     }
 }

@@ -34,12 +34,10 @@ const GroupCard = ({ item, loadGroups }) => {
     };
 
     return (
-        <div className="GroupCard">
+        <div className="GroupCard" style={{ boxShadow: `0px 0px 5px 0px ${item.color}` }}>
             <div className="GroupCard-inner">
-                <div className="GroupCard-split">
-                    <NavLink to={`/group/${item.id}`}>{item.name}</NavLink>
-                    <div className="GroupCard-split-color" style={{ backgroundColor: item.color }}></div>
-                </div>
+                <div className="GroupCard-line" style={{ backgroundColor: item.color }}></div>
+                <NavLink to={`/group/${item.id}`}>{item.name}</NavLink>
                 <div>{cutDescription(item.description)}</div>
                 <div>{LANG.groups.amount}: {item.connect_count}</div>
                 <div>
@@ -48,8 +46,8 @@ const GroupCard = ({ item, loadGroups }) => {
                 </div>
             </div>
             <div className="GroupCard-split">
-                <div className="GroupCard-split-date">{moment(item.date_created).format('DD-MM-YYYY')}</div>
                 {accessEdit && <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEdit(!edit) }} />}
+                <div className="GroupCard-split-date">{moment(item.date_created).format('DD-MM-YYYY')}</div>
             </div>
             {edit && <AddGroup loadGroups={loadGroups} action={"edit"} data={data} id={item.id} close={() => { setEdit(false) }} />}
         </div>

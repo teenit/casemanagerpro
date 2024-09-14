@@ -10,10 +10,10 @@ import CaseProfilePhoto from "./CaseProfilePhoto";
 import CaseInfoNameBlock from "./CaseInfoNameBlock";
 import SelectBlock from "../../elements/Selects/SelectBlock";
 import ProfilePhotoBlock from "../../blocks/ProfilePhotoBlock";
+import CaseName from "./CaseName";
 
 const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, profileImg }) => {
     const [alert, setAlert] = useState(null);
-    const [editName, setEditName] = useState(false);
     const [dataState, setDataState] = useState({
         phone1: info.general.phone1,
         phone2: info.general.phone2,
@@ -97,18 +97,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         }
     };
 
-    const changeName = () => {
-        apiResponse({
-            case_id: case_id,
-            first_name: dataState.first_name,
-            last_name: dataState.last_name,
-            middle_name: dataState.middle_name,
-        }, "case/update-case-name.php").then((res) => {
-            setAlert(true);
-            getCaseInfo();
-            setEditName(false);
-        });
-    };
+
 
 
     const selectOptions = [
@@ -117,166 +106,120 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         { value: "other", label: LANG.selects.sex.other }]
 
     return (
-        <div className="CaseInfoBlock-name-item">
-            <div className="name-item">
-                <div className="CaseInfoBlock-inner">
-                    {(info.viewInfo.view_name) && (
-                        <div className="InputBlock">
-                            {!editName && (
-                                <div className="InputBlock-default">
-                                    <div className="CaseInfoBlock-line-title">
-                                        {info.general.name} <span style={{ color: "var(--main-color)" }}>№{info.general.id}</span>
-                                    </div>
-                                    <div>
-                                        <div className="edit-icon" onClick={() => setEditName(true)}>
-                                            <Icon icon={"edit"} addClass={"default-icon"} />
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                            {editName && (
-                                <div className="InputBlock-pib">
-                                    <Input
-                                        type="text"
-                                        label={LANG.case_data.first_name}
-                                        value={dataState.first_name}
-                                        onChange={(e) => setDataState({ ...dataState, first_name: e.target.value.trim() })}
-                                    />
-                                    <Input
-                                        type="text"
-                                        label={LANG.case_data.last_name}
-                                        value={dataState.last_name}
-                                        onChange={(e) => setDataState({ ...dataState, last_name: e.target.value.trim() })}
-                                    />
-                                    <Input
-                                        type="text"
-                                        label={LANG.case_data.middle_name}
-                                        value={dataState.middle_name}
-                                        onChange={(e) => setDataState({ ...dataState, middle_name: e.target.value.trim() })}
-                                    />
-                                    <div className="InputBlock-editer-icons">
-                                        <span onClick={() => changeName()}>
-                                            <Icon icon={"save"} addClass={"save-icon"} />
-                                        </span>
-                                        <span onClick={() => setEditName(false)}>
-                                            <Icon icon={"close"} addClass={"close-icon"} />
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </div>
-            </div>
-            <div className="CaseInfoBlock">
-                {info.viewInfo.view_ProfilePhoto && (
-                    <ProfilePhotoBlock data={{
-                        sex: dataState.sex,
-                        age: dataState.happy_bd
-                    }} profileImg={profileImg} meta={{
-                        key: "case_profile_img",
-                        case_id: case_id,
-                        type: "case"
-                    }} />
-                )}
-                <div className="CaseInfoBlock-column">
-                    {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
-                        <InputBlock
-                            hintMessage={`${LANG.hints.phone}. ${LANG.hints.required}`}
-                            value={dataState.phone1}
-                            onChange={(e) => { handleDataChange("phone1", e.target.value) }}
-                            link={`tel:${dataState.phone1}`}
-                            icon={"phone"}
-                            label={dataState.phone1}
-                            inputType={"number"}
-                            saveHandler={(val) => saveHandler("phone1", val, "general")}
-                            titleDefault={LANG.case_data.phone}
-                        />
-                    </div>}
-                    {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
-                        <InputBlock
-                            hintMessage={LANG.hints.phone}
-                            value={dataState.phone2}
-                            onChange={(e) => { handleDataChange("phone2", e.target.value) }}
-                            link={`tel:${dataState.phone2}`}
-                            icon={"phone"}
-                            label={dataState.phone2}
-                            inputType={"number"}
-                            saveHandler={(val) => saveHandler("phone2", val, "general")}
-                            titleDefault={LANG.case_data.phone}
-                        />
-                    </div>}
-                    {(info.viewInfo.view_email) && <div className="CaseInfoBlock-line">
-                        <InputBlock
-                            hintMessage={LANG.hints.email}
-                            value={dataState.email}
-                            onChange={(e) => { handleDataChange("email", e.target.value) }}
-                            link={`mailto:${dataState.email}`}
-                            icon={"email"}
-                            label={dataState.email}
-                            inputType={"text"}
-                            saveHandler={(val) => saveHandler("email", val, "general")}
-                            titleDefault={LANG.case_data.email}
-                        />
-                    </div>}
-                    {(info.viewInfo.view_birthday) && <div className="CaseInfoBlock-line">
-                        <InputBlock
-                            value={dataState.happy_bd}
-                            age={true}
-                            onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
-                            icon={"birthday"}
-                            label={dataState.happy_bd}
-                            inputType={"date"}
-                            saveHandler={(val) => saveHandler("happy_bd", val, "general")}
-                            titleDefault={LANG.case_data.birthday}
-                        />
-                    </div>}
-                    {info.viewInfo.view_sex && (
-                        <div className="CaseInfoBlock-column">
-                            <div className="CaseInfoBlock-line">
-                                <SelectBlock
-                                    value={dataState.sex}
-                                    onChange={(e) => handleDataChange("sex", e.target.value)}
-                                    icon={"sex"}
-                                    label={LANG.selects.sex[dataState.sex]}
-                                    saveHandler={(val, displayVal) => saveHandler("sex", val, "general", displayVal)}
-                                    titleDefault={LANG.case_data.sex}
-                                    selectOptions={selectOptions}
-                                />
+        <div className="CaseInfoBlock">
+            {info.viewInfo.view_ProfilePhoto && (
+                <ProfilePhotoBlock data={{
+                    sex: dataState.sex,
+                    age: dataState.happy_bd
+                }} profileImg={profileImg} meta={{
+                    key: "case_profile_img",
+                    case_id: case_id,
+                    type: "case"
+                }} />
+            )}
+            <div className="CaseInfoBlock-right">
+                <CaseName dataState={dataState} view={info.viewInfo.view_name} id={info.general.id} getCaseInfo={getCaseInfo} />
+                <div className="CaseInfoBlock-right-columns">
+                    <div className="CaseInfoBlock-right-columns-column">
 
+                        {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
+                            <InputBlock
+                                hintMessage={`${LANG.hints.phone}. ${LANG.hints.required}`}
+                                value={dataState.phone1}
+                                onChange={(e) => { handleDataChange("phone1", e.target.value) }}
+                                link={`tel:${dataState.phone1}`}
+                                icon={"phone"}
+                                label={dataState.phone1}
+                                inputType={"number"}
+                                saveHandler={(val) => saveHandler("phone1", val, "general")}
+                                titleDefault={LANG.case_data.phone}
+                            />
+                        </div>}
+                        {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
+                            <InputBlock
+                                hintMessage={LANG.hints.phone}
+                                value={dataState.phone2}
+                                onChange={(e) => { handleDataChange("phone2", e.target.value) }}
+                                link={`tel:${dataState.phone2}`}
+                                icon={"phone"}
+                                label={dataState.phone2}
+                                inputType={"number"}
+                                saveHandler={(val) => saveHandler("phone2", val, "general")}
+                                titleDefault={LANG.case_data.phone}
+                            />
+                        </div>}
+                        {(info.viewInfo.view_email) && <div className="CaseInfoBlock-line">
+                            <InputBlock
+                                hintMessage={LANG.hints.email}
+                                value={dataState.email}
+                                onChange={(e) => { handleDataChange("email", e.target.value) }}
+                                link={`mailto:${dataState.email}`}
+                                icon={"email"}
+                                label={dataState.email}
+                                inputType={"text"}
+                                saveHandler={(val) => saveHandler("email", val, "general")}
+                                titleDefault={LANG.case_data.email}
+                            />
+                        </div>}
+                        {(info.viewInfo.view_birthday) && <div className="CaseInfoBlock-line">
+                            <InputBlock
+                                value={dataState.happy_bd}
+                                age={true}
+                                onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
+                                icon={"birthday"}
+                                label={dataState.happy_bd}
+                                inputType={"date"}
+                                saveHandler={(val) => saveHandler("happy_bd", val, "general")}
+                                titleDefault={LANG.case_data.birthday}
+                            />
+                        </div>}
+                        {info.viewInfo.view_sex && (
+                            <div className="CaseInfoBlock-right-columns-column">
+                                <div className="CaseInfoBlock-line">
+                                    <SelectBlock
+                                        value={dataState.sex}
+                                        onChange={(e) => handleDataChange("sex", e.target.value)}
+                                        icon={"sex"}
+                                        label={LANG.selects.sex[dataState.sex]}
+                                        saveHandler={(val, displayVal) => saveHandler("sex", val, "general", displayVal)}
+                                        titleDefault={LANG.case_data.sex}
+                                        selectOptions={selectOptions}
+                                    />
+
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+
+                    </div>
+            <div className="CaseInfoBlock-right-columns-column">
+                {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
+                    <InputBlock
+                        value={dataState.address_live}
+                        onChange={(e) => { handleDataChange("address_live", e.target.value) }}
+                        icon={"location"}
+                        label={dataState.address_live}
+                        inputType={"text"}
+                        saveHandler={(val) => saveHandler("address_live", val, "data")}
+                        titleDefault={LANG.case_data.address_live}
+                    />
+                </div>}
+                {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
+                    <InputBlock
+                        value={dataState.address_registered}
+                        onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
+                        icon={"location"}
+                        label={dataState.address_registered}
+                        inputType={"text"}
+                        saveHandler={(val) => saveHandler("address_registered", val, "data")}
+                        titleDefault={LANG.case_data.address_registered}
+                    />
+                </div>}
 
                 </div>
-                <div className="CaseInfoBlock-column">
-                    {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
-                        <InputBlock
-                            value={dataState.address_live}
-                            onChange={(e) => { handleDataChange("address_live", e.target.value) }}
-                            icon={"location"}
-                            label={dataState.address_live}
-                            inputType={"text"}
-                            saveHandler={(val) => saveHandler("address_live", val, "data")}
-                            titleDefault={LANG.case_data.address_live}
-                        />
-                    </div>}
-                    {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
-                        <InputBlock
-                            value={dataState.address_registered}
-                            onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
-                            icon={"location"}
-                            label={dataState.address_registered}
-                            inputType={"text"}
-                            saveHandler={(val) => saveHandler("address_registered", val, "data")}
-                            titleDefault={LANG.case_data.address_registered}
-                        />
-                    </div>}
-
-                </div>
-
-                {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />}
             </div>
+            </div>
+
+            {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />}
         </div>
     );
 };
