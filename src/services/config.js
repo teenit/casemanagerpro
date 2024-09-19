@@ -230,7 +230,8 @@ TRANSACTIONS: {
     category: "Категорії кейсу",
     comment: "Коментар",
     date_created: "Дата створення",
-    responsible: "Відповідальний за кейс"
+    responsible: "Відповідальний за кейс",
+    date_first_contact: "Дата першого контакту"
   },
   categories: {
     category: "Категорія",
@@ -474,6 +475,7 @@ TRANSACTIONS: {
     "view_channel": "Відобразити канал комунікації кейсу",
     "view_categories": "Відобразити категорії кейсу",
     "view_responsible": "Відобразити відповідального за кейс",
+    "view_date_first_contact": "Відобразити дату першого контакту"
   }
 
 };
@@ -914,6 +916,7 @@ export const appConfig = {
         "view_email",
         "view_birthday",
         "view_address",
+        "view_date_first_contact",
         "view_sex",
         "view_date_created",
         "view_contract",
@@ -932,6 +935,7 @@ export const appConfig = {
         "view_email",
         "view_birthday",
         "view_address",
+        "view_date_first_contact",
         "view_sex",
         "view_date_created",
         "view_contract",

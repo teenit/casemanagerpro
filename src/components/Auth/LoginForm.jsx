@@ -56,7 +56,7 @@ const LoginForm = ({ show }) => {
                     access: data.access
                 }));
 
-                window.location.href = "/";
+                window.location.reload();
             }
         })
         .catch(rejected => {

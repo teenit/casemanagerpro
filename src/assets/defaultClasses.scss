@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 .flex {
     display: flex;
     width: 100%;
@@ -50,10 +53,11 @@ color: $main-color;
 }
 .hint-icon{
     border-radius: 50%;
-    background-color: #2b2b2b;
-    color: #bababa;
+    background-color: #ffffff;
+    color: $main-color;
     font-size: 8px;
     transform: scale(0.5);
+    border: solid 1px $main-color;
     cursor: pointer;
     :hover{
         background-color: #2b2b2b;

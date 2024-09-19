@@ -1,0 +1,29 @@
+.MyBigCalendar {
+    width: 90%;
+    margin: auto;
+    min-height: 400px;
+    &-custom-toolbar {
+        display: flex;
+        justify-content: space-between;
+        &-text{
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+    }
+    .rbc-event.rbc-selected {
+        background-color: #fff;
+    }
+}
+@media screen and (max-width: 800px) {
+    .MyBigCalendar {
+        &-custom-toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-bottom: 10px;
+            margin: auto;
+            justify-content: center;
+           align-items: center;
+        }
+    }
+}

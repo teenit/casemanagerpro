@@ -34,6 +34,7 @@ import EventsPage from "../pages/EventsPage";
 import EventPage from "../pages/EventPage";
 import LoginPage from "../pages/LoginPage";
 import TransactionsPage from "../pages/TransactionsPage";
+import MyBigCalendar from "../newDesign/Calendar/MyBigCalendar";
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const MainContent = () => {
         <Route path='/events_new' element={access.events ? <EventsPage /> : <NotFound />} />
         <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} />
         <Route path='/event_new/:id' element={access.event ? <EventPage /> : <NotFound />} />
-        <Route path='/calendar' element={access.calendar ? <Calendar /> : <NotFound />} />
+        {/* <Route path='/calendar' element={access.calendar ? <Calendar /> : <NotFound />} /> */}
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
         <Route path='/group/:id' element={<Group />} />
@@ -79,6 +80,7 @@ const MainContent = () => {
         <Route path='/login_new' element={<LoginPage />} />
         <Route path='/transactions' element={<TransactionsPage />} />
         <Route path='/file/:id' element={<File />} />
+        <Route path='/calendar' element={<MyBigCalendar />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />

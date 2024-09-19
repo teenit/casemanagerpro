@@ -1,0 +1,37 @@
+.AddCalendarEvent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 5px;
+    &-delete {
+        position: absolute;
+        left: 16px;
+        bottom: 16px;
+        color: red;
+    }
+    .one-element {
+
+    }
+    .two-element {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        align-items: center;
+        justify-content: space-between;
+        .color-inp {
+            width: 50px;
+        }
+       & > label {
+            width: 100%;
+        }
+    }
+}
+.CalendarInfoBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.rbc-event, .rbc-day-slot .rbc-background-event {
+    background-color: #fff;
+    padding: 0;
+}

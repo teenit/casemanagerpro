@@ -105,7 +105,7 @@ const LoginPage = () => {
                         access: res.access
                     }));
                     
-                    window.location.href = "/";
+                    window.location.reload();
                 } else {
                     setState({ ...state, activeCode: true, type: 'secretCode' });
                     // Reset tries on successful login
@@ -161,7 +161,7 @@ const LoginPage = () => {
                     access: data.access
                 }));
                 
-                window.location.href = "/";
+                window.location.reload();
             }
         })
         

@@ -11,8 +11,11 @@
     margin: auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 10%;
+    column-gap: 25px;
     row-gap: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .card{
     padding: 20px;
@@ -20,6 +23,8 @@
     position: relative;
     border-radius: 10px;
     background-color: var(--second-color);
+    max-width: 300px;
+    min-width: 300px;
 }
 .card__img{
     display: flex;

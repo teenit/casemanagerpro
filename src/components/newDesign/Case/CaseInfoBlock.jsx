@@ -125,7 +125,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             {!editName && (
                                 <div className="InputBlock-default">
                                     <div className="CaseInfoBlock-line-title">
-                                        {info.general.name} <span style={{ color: "var(--main-color)" }}>№{info.general.id}</span>
+                                        {`${info.general.middle_name} ${info.general.first_name} ${info.general.last_name} `}  <span style={{ color: "var(--main-color)" }}>№{info.general.id}</span>
                                     </div>
                                     <div>
                                         <div className="edit-icon" onClick={() => setEditName(true)}>
@@ -136,6 +136,12 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             )}
                             {editName && (
                                 <div className="InputBlock-pib">
+                                     <Input
+                                        type="text"
+                                        label={LANG.case_data.middle_name}
+                                        value={dataState.middle_name}
+                                        onChange={(e) => setDataState({ ...dataState, middle_name: e.target.value.trim() })}
+                                    />
                                     <Input
                                         type="text"
                                         label={LANG.case_data.first_name}
@@ -148,12 +154,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                         value={dataState.last_name}
                                         onChange={(e) => setDataState({ ...dataState, last_name: e.target.value.trim() })}
                                     />
-                                    <Input
-                                        type="text"
-                                        label={LANG.case_data.middle_name}
-                                        value={dataState.middle_name}
-                                        onChange={(e) => setDataState({ ...dataState, middle_name: e.target.value.trim() })}
-                                    />
+                                   
                                     <div className="InputBlock-editer-icons">
                                         <span onClick={() => changeName()}>
                                             <Icon icon={"save"} addClass={"save-icon"} />
@@ -270,6 +271,17 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             inputType={"text"}
                             saveHandler={(val) => saveHandler("address_registered", val, "data")}
                             titleDefault={LANG.case_data.address_registered}
+                        />
+                    </div>}
+                    {(info.viewInfo.view_date_first_contact) && <div className="CaseInfoBlock-line">
+                        <InputBlock
+                            value={dataState.date_first_contact}
+                            onChange={(e) => { handleDataChange("date_first_contact", e.target.value) }}
+                            icon={"location"}
+                            label={dataState.date_first_contact}
+                            inputType={"text"}
+                            saveHandler={(val) => saveHandler("date_first_contact", val, "data")}
+                            titleDefault={LANG.case_data.date_first_contact}
                         />
                     </div>}
 

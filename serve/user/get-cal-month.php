@@ -65,7 +65,25 @@ if ($result->num_rows > 0) {
 
 
 // Підготовлений запит з параметрами
-$msql = "SELECT * FROM calendar WHERE (user_id=? OR user_id=0) AND (((month=? OR month=? OR month=?) AND year=?) OR ((month=? OR month=? OR month=?) AND every_year=1) OR ((month=? OR month=? OR month=?) AND meta_key='happyCase'))"; 
+$msql = "
+SELECT * 
+FROM calendar 
+WHERE (user_id=? OR user_id=0) 
+  AND (
+    (
+      (month=? OR month=? OR month=?) AND year=?
+    ) 
+    OR 
+    (
+      (month=? OR month=? OR month=?) AND every_year=1
+    ) 
+    OR 
+    (
+      (month=? OR month=? OR month=?) AND meta_key='happyCase'
+    )
+  );
+
+"; 
 
 // Підготовка і виконання запиту з використанням параметрів bind
 if ($stmt = mysqli_prepare($conn, $msql)) {
@@ -83,6 +101,7 @@ if ($stmt = mysqli_prepare($conn, $msql)) {
             $user->{'month'} = $res['month'];
             $user->{'key'} = $res['meta_key'];
             $user->{'year'} = $res['year'];
+            $user->{'every_year'} = $res['every_year'];
             $mas[] = $user;
         }
     } else {

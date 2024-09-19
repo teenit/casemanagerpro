@@ -12,33 +12,40 @@ function decryptData($encryptedData, $key) {
 }
 
 function addEventToCalendar($conn, $data) {
+    // Перевірка необхідних даних
+    if (!isset($data->id, $data->key, $data->day, $data->month, $data->year, $data->title, $data->text)) {
+        return "Error: Missing required data.";
+    }
+
+    // Отримання даних з об'єкта $data
     $dateCreated = date("d-m-Y H:i:s");
     $userID = $data->id;
-    $link = $data->link;
+    $link = isset($data->link) ? $data->link : null;
     $day = $data->day;
     $month = $data->month;
     $year = $data->year;
     $title = $data->title;
     $text = $data->text;
-    $color = $data->color;
-    $start = $data->start;
-    $end = $data->end;
-
+    $color = isset($data->color) ? $data->color : null;
+    $start = isset($data->start) ? $data->start : null;
+    $end = isset($data->end) ? $data->end : null;
+    
     $key = $data->key;
     $id = $data->id;
+    $calendar_id = isset($data->calendar_id) ? $data->calendar_id : null; // Отримуємо calendar_id
 
     // Перевірка ключа
-    if($key !== 'myCalendar'){
+    if ($key !== 'myCalendar') {
         $id = 0;
     }
 
     // Отримання поточної дати
     $date = date("d-m-Y");
-    $case_id = $data->case_id ? $data->case_id : 0;
-    $every_year = $data->every_year ? $data->every_year : 0;
-    // Підготовка SQL запиту з використанням параметрів bind
-    $msql = "INSERT INTO calendar (user_id, meta_key, meta_value, date, month, year, day, case_id, every_year) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $obj = json_encode(array(
+    $case_id = isset($data->case_id) ? $data->case_id : 0;
+    $every_year = isset($data->every_year) ? $data->every_year : 0;
+
+    // Створення об'єкта для збереження в базі
+    $meta_value = json_encode(array(
         'dateCreated' => $dateCreated,
         'userID' => $userID,
         'link' => $link,
@@ -51,24 +58,51 @@ function addEventToCalendar($conn, $data) {
         'start' => $start,
         'end' => $end
     ), JSON_UNESCAPED_UNICODE);
-    // Підготовка і виконання запиту з використанням параметрів bind
-    if ($stmt = mysqli_prepare($GLOBALS['conn'], $msql)) {
-  // Підготовка значення об'єкта в форматі JSON
 
-        mysqli_stmt_bind_param($stmt, "issssssis", $id, $key, $obj, $date, $month, $year, $day, $case_id, $every_year);
-        // Встановлення значень параметрів і виконання запиту
-        if (mysqli_stmt_execute($stmt)) {
-            return true;
+    if ($calendar_id) {
+        // Якщо calendar_id передано, оновлюємо існуючий запис
+        $sql = "UPDATE calendar 
+                SET user_id = ?, meta_key = ?, meta_value = ?, date = ?, month = ?, year = ?, day = ?, case_id = ?, every_year = ? 
+                WHERE id = ?";
+        
+        if ($stmt = mysqli_prepare($conn, $sql)) {
+            mysqli_stmt_bind_param($stmt, "issssssiis", $id, $key, $meta_value, $date, $month, $year, $day, $case_id, $every_year, $calendar_id);
+
+            // Виконання запиту
+            if (mysqli_stmt_execute($stmt)) {
+                mysqli_stmt_close($stmt);
+                return true;
+            } else {
+                $error = "Error: " . mysqli_stmt_error($stmt);
+                mysqli_stmt_close($stmt);
+                return $error;
+            }
         } else {
-            return "Error: " . mysqli_stmt_error($stmt);
+            return "Error: " . mysqli_error($conn);
         }
-
-        // Закриття підготовленого запиту
-        mysqli_stmt_close($stmt);
     } else {
-        return "Error: 000" . mysqli_error($conn);
+        // Якщо calendar_id немає, додаємо новий запис
+        $sql = "INSERT INTO calendar (user_id, meta_key, meta_value, date, month, year, day, case_id, every_year) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        if ($stmt = mysqli_prepare($conn, $sql)) {
+            mysqli_stmt_bind_param($stmt, "issssssis", $id, $key, $meta_value, $date, $month, $year, $day, $case_id, $every_year);
+
+            // Виконання запиту
+            if (mysqli_stmt_execute($stmt)) {
+                mysqli_stmt_close($stmt);
+                return true;
+            } else {
+                $error = "Error: " . mysqli_stmt_error($stmt);
+                mysqli_stmt_close($stmt);
+                return $error;
+            }
+        } else {
+            return "Error: " . mysqli_error($conn);
+        }
     }
 }
+
 
 // Функція для логування
 function logMessage($message) {
