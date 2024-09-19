@@ -19,6 +19,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 15px;
+    padding: 0;
 }
 nav a.active{
     color: rgb(188, 166, 166);

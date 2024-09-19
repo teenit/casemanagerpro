@@ -6,9 +6,15 @@
     gap: 25px;
     &-sort {
         display: flex;
+        gap: 5px;
+        width: 100%;
+        margin: auto;
         padding-bottom: 10px;
         justify-content: space-between;
+        flex-wrap: wrap;
         align-items: center;
+        justify-content: center;
+
     }
     &-table {
         width: 90%;

@@ -1,13 +1,14 @@
 import React from 'react';
 
 const TextDescription = ({ text }) => {
+  const formatText = text;
   // Форматуємо текст
-  const formatTextWithLineBreaks = (text) => {
+  const formatTextWithLineBreaks = (formatText) => {
     // Замінюємо всі нові рядки на <br> для HTML
-    return text.replace(/\n/g, '<br />');
+    return formatText.replace(/\n/g, '<br />');
   };
   
-  const formattedText = formatTextWithLineBreaks(text);
+  const formattedText = formatTextWithLineBreaks(formatText);
 
   return (
     <div

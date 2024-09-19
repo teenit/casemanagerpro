@@ -34,7 +34,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         first_name: info.general.first_name,
         middle_name: info.general.middle_name,
         last_name: info.general.last_name,
-        sex: info.general.sex
+        sex: info.general.sex,
+        date_first_contact: info.data.date_first_contact
     });
 
     useEffect(() => {
@@ -56,7 +57,8 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
             first_name: info.general.first_name,
             middle_name: info.general.middle_name,
             last_name: info.general.last_name,
-            sex: info.general.sex
+            sex: info.general.sex,
+            date_first_contact: info.data.date_first_contact
         });
     }, [info]);
 
@@ -190,7 +192,9 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
 
                                     </div>
                                 </div>
-                            )}
+                            </div>
+                        )}
+                        
 
                         </div>
                         <div className="CaseInfoBlock-right-columns-column">
@@ -219,6 +223,42 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
 
                         </div>
                     </div>
+            <div className="CaseInfoBlock-right-columns-column">
+            {(info.viewInfo.view_date_first_contact) && <div className="CaseInfoBlock-line">
+                    <InputBlock
+                        value={dataState.date_first_contact}
+                        onChange={(e) => { handleDataChange("date_first_contact", e.target.value) }}
+                        icon={"calendar"}
+                        label={dataState.date_first_contact}
+                        inputType={"date"}
+                        saveHandler={(val) => saveHandler("date_first_contact", val, "data")}
+                        titleDefault={LANG.case_data.date_first_contact}
+                    />
+                </div>}
+                {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
+                    <InputBlock
+                        value={dataState.address_live}
+                        onChange={(e) => { handleDataChange("address_live", e.target.value) }}
+                        icon={"location"}
+                        label={dataState.address_live}
+                        inputType={"text"}
+                        saveHandler={(val) => saveHandler("address_live", val, "data")}
+                        titleDefault={LANG.case_data.address_live}
+                    />
+                </div>}
+              
+                {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
+                    <InputBlock
+                        value={dataState.address_registered}
+                        onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
+                        icon={"location"}
+                        label={dataState.address_registered}
+                        inputType={"text"}
+                        saveHandler={(val) => saveHandler("address_registered", val, "data")}
+                        titleDefault={LANG.case_data.address_registered}
+                    />
+                </div>}
+
                 </div>
             </div>
             <PersonalInfo case_id={case_id} getCaseInfo={getCaseInfo} info={info} changeData={changeData} changeGeneral={changeGeneral} />
