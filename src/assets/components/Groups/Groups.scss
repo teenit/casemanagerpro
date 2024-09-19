@@ -13,7 +13,7 @@
     &-list{
         width: 80%;
         display: grid;
-        grid-template-columns: repeat(3,1fr);
+        grid-template-columns: repeat(4,1fr);
         gap: 25px;
     }
 }
@@ -26,7 +26,7 @@
     gap: 15px;
     word-break: break-all;
     &-line{
-        height: 10px;
+        height: 6px;
         border-radius: 15px;
     }
     &-inner{
@@ -45,6 +45,7 @@
         gap: 25px;
         &-date{
             font-weight: normal;
+            font-size: 16px;
         }
         &-color{
             min-width: 25px;

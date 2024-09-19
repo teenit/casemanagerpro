@@ -1,9 +1,12 @@
 .CaseInfoBlock {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
     display: flex;
-    flex-wrap: wrap;
+    gap: 25px;
+    // display: flex;
+    // flex-wrap: wrap;
+    &-media{
+        display: flex;
+        gap: 25px;
+    }
     &-right{
         display: flex;
         flex-direction: column;
@@ -84,10 +87,26 @@
         }
     }
 }
-@media screen  and (max-width:720px){
+@media screen  and (max-width:1150px){
     .CaseInfoBlock{
-        grid-template-columns: none;
-        grid-template-rows: max-content max-content;
+        flex-direction: column;
+    }
+
+}
+@media screen  and (max-width:900px){
+    .CaseInfoBlock{
+        &-right-columns{
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+    }
+
+}
+@media screen  and (max-width:750px){
+    .CaseInfoBlock{
+        &-media{
+            flex-direction: column;
+        }
         .InputBlock{
             &-pib{
                 display: grid;

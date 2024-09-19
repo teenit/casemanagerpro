@@ -129,7 +129,6 @@ const Case = () => {
                 {(state.viewInfo.view_InfoBlock) && <CaseInfoBlock profileImg={state.meta?.profileImg?.link ? state.meta.profileImg.link.link : null} case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
 
             </div>
-            {(state.viewInfo.view_InfoBlock) && <PersonalInfo case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
             {(state.viewInfo.view_GroupConnection) &&
                 <GroupConnections case_id={case_id} type={"case"} />
             }
@@ -161,17 +160,17 @@ const Case = () => {
                     <div className="Uploader-content">
                         <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
                             key: [{
-                                title:"Усі файли",
-                                value:"case_files"
-                            },{
-                                title:"Історії",
-                                value:"history_case_files"
+                                title: "Усі файли",
+                                value: "case_files"
+                            }, {
+                                title: "Історії",
+                                value: "history_case_files"
                             }
-                        ],
+                            ],
                             case_id: case_id,
                             type: "case"
                         }} />
-                        
+
                     </div>
                 </div>
             }

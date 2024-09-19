@@ -36,6 +36,8 @@ const Events = () => {
     //         getEvents();
     //     }).catch(err=>console.log(err))
     // }
+    console.log(events);
+    
     return (
         <div className={s.wrap}>
             <div className={s.title}>
@@ -45,7 +47,7 @@ const Events = () => {
             </div>
             <div className={s.inner}>
                 {events.map((item, index) => {
-                    return (<div key={index} className={s.result} style={{ boxShadow: "0 0 5px 0" + item.color }}>
+                    return (<div key={index} className={s.result} style={{ boxShadow: `0px 0px 5px 0px ${item.color ? item.color : "#000"}` }}>
                         <div className={s.res__color} style={{ backgroundColor: item.color }}></div>
                         <div className={s.res__title}>
                             <NavLink className={s.link} to={`/event/${item.id}`}> <h3>{item.title}</h3></NavLink>
