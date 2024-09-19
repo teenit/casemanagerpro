@@ -59,7 +59,7 @@ const Footer = () => {
             newVersion: newVersion
         }, "manage/update-download.php").then((res) => {
             console.log(res)
-           // window.location.reload()
+            // window.location.reload()
         })
         // axios({
         //     url: serverAddres("manage/update-download.php"),
@@ -80,27 +80,31 @@ const Footer = () => {
             <div className="footer">
                 <div className="footer__top">
 
-                    <div className="footer__top__column">
+                    <div className="footer__top__row">
                         <div className="footer__top__logo">
                             <a href="/"><img src={logo} alt="Логотип Case Manager" /></a>
                             <span>Case Manager</span>
                         </div>
-                        <p className="footer__contact">{LANG.footer.email}</p>
-                        <p className="footer__contact">{LANG.footer.phone}</p>
-
-                    </div>
-                    <div className="footer__top__column">
                         <div className="footer__gray">Наші контакти:</div>
-                        <a href="mailto:teenitclub@gmail.com">teenitclub@gmail.com</a>
-                        <a href="tel:+380932080760">+380932080760</a>
+                    </div>
+                    <div className="footer__top__contacts">
+                        <div className="footer__top__contact">
+                            <p className="footer__contact">{LANG.footer.email}</p>
+                            <a href="mailto:teenitclub@gmail.com">teenitclub@gmail.com</a>
+                        </div>
+                        <div className="footer__top__contact">
+                            <p className="footer__contact">{LANG.footer.phone}</p>
+                            <a href="tel:+380932080760">+380932080760</a>
+
+                        </div>
                     </div>
 
                 </div>
                 <div className="footer__bottom">
                     <span>
-                        <p className="footer__contact"><b>Version - {version}</b></p>
+                        <p><b>Version - {version}</b></p>
                         {newVersion > version ? <p>{LANG.footer.updateAvaible} {newVersion}</p> : <p>{LANG.footer.lastVersion}</p>}
-                        
+
                     </span>
 
                     <div className="footer__copyright">

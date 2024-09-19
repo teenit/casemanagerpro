@@ -10,10 +10,10 @@ import CaseProfilePhoto from "./CaseProfilePhoto";
 import CaseInfoNameBlock from "./CaseInfoNameBlock";
 import SelectBlock from "../../elements/Selects/SelectBlock";
 import ProfilePhotoBlock from "../../blocks/ProfilePhotoBlock";
+import CaseName from "./CaseName";
 
 const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, profileImg }) => {
     const [alert, setAlert] = useState(null);
-    const [editName, setEditName] = useState(false);
     const [dataState, setDataState] = useState({
         phone1: info.general.phone1,
         phone2: info.general.phone2,
@@ -97,18 +97,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         }
     };
 
-    const changeName = () => {
-        apiResponse({
-            case_id: case_id,
-            first_name: dataState.first_name,
-            last_name: dataState.last_name,
-            middle_name: dataState.middle_name,
-        }, "case/update-case-name.php").then((res) => {
-            setAlert(true);
-            getCaseInfo();
-            setEditName(false);
-        });
-    };
+
 
 
     const selectOptions = [
@@ -245,9 +234,9 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     selectOptions={selectOptions}
                                 />
 
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
 
                 </div>
                 <div className="CaseInfoBlock-column">
@@ -286,9 +275,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                     </div>}
 
                 </div>
-
-                {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />}
             </div>
+            </div>
+
+            {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />}
         </div>
     );
 };

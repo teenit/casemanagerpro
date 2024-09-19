@@ -464,6 +464,7 @@ TRANSACTIONS: {
     "view_DetailedInfo": "Відобразити блок детальної інформації",
     "view_InfoBlock": "Відобразити інформацію про кейс",
     "view_Fields": "Відобразити блок користувацької інформації",
+    "view_Histories":"Відобразити історії кейсу",
     "view_name": "Відобразити повне ім'я кейсу",
     "view_phone": "Відобразити номери телефону кейсу",
     "view_email": "Відобразити електронну пошту кейсу",
@@ -923,6 +924,7 @@ export const appConfig = {
         "view_channel",
         "view_categories",
         "view_responsible",
+        "view_Histories"
       ]
     }
   ],

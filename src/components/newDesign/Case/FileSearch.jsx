@@ -4,7 +4,7 @@ import Icon from "../../elements/Icons/Icon";
 import { NavLink } from "react-router-dom";
 
 const FileSearch = ({ files, filterFiles }) => {
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState(true);
     const [load, setLoad] = useState(false);
     const [results, setResults] = useState(null);
     const [searchStr, setSearchStr] = useState("");

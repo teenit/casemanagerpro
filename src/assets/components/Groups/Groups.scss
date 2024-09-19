@@ -18,15 +18,19 @@
     }
 }
 .GroupCard{
-    border-radius: 15px;
-    padding: 15px;
+    border-radius: 10px;
+    padding: 15px 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 15px;
-    background-color: $background-color;
     word-break: break-all;
+    &-line{
+        height: 10px;
+        border-radius: 15px;
+    }
     &-inner{
+        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -40,7 +44,7 @@
         align-items: center;
         gap: 25px;
         &-date{
-            color: #bababa;
+            font-weight: normal;
         }
         &-color{
             min-width: 25px;

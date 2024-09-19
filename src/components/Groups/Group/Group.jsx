@@ -30,13 +30,13 @@ const Group = () => {
 
     useEffect(() => {
         console.log(params.id);
-        apiResponse({ group_id: params.id }, 'groups/get-group-by-id.php').then((res)=>{
+        apiResponse({ group_id: params.id }, 'groups/get-group-by-id.php').then((res) => {
             setData(res)
         })
     }, [params.id]);
-const cutString = (str)=>{
-    return str.length<=15?str:str.slice(0,15)+"..."
-}
+    const cutString = (str) => {
+        return str.length <= 15 ? str : str.slice(0, 15) + "..."
+    }
     const Member = ({ item, index }) => {
         const [editMember, setEditMember] = useState(0);
         return (
@@ -73,7 +73,10 @@ const cutString = (str)=>{
                 </div>
             )} */}
             <div className='Group-title'>
-                <div style={{borderBottom:`solid 5px ${data.group?.groupColor}`}}>{data.group?.groupName}</div>
+                <div>
+                    <div>{data.group?.groupName}</div>
+                    <div className='Group-title-line' style={{backgroundColor:data.group?.groupColor?data.group.groupColor:"#000"}}></div>
+                </div>
                 <div className='Group-title-desc'>{data.group?.groupDescription}</div>
             </div>
             <div className="Group-info">
@@ -82,7 +85,7 @@ const cutString = (str)=>{
                         <div>{LANG.groups.group.members}</div>
                     </div>
                     <div className='Group-info-inner'>
-                        {data.members && data.members.length>0 && data.members.map((item, index) => {
+                        {data.members && data.members.length > 0 && data.members.map((item, index) => {
                             return <Member key={index} item={item} index={index} />;
                         })}
                     </div>
@@ -92,14 +95,14 @@ const cutString = (str)=>{
                     <div className='Group-info-title'>Інформація про групу</div>
                     <div className='Group-info-inner'>
                         <div className='Group-info-stats-item'>
-                            <Icon icon={"date_created"} addClass={"default-icon"}/>
+                            <Icon icon={"date_created"} addClass={"default-icon"} />
                             <div className='Group-info-stats-item-text'>
                                 <div>Дата створення</div>
                                 <span>{data.group?.groupDateCreated}</span>
                             </div>
                         </div>
                         <div className='Group-info-stats-item'>
-                            <Icon icon={"categories"} addClass={"default-icon"}/>
+                            <Icon icon={"categories"} addClass={"default-icon"} />
                             <div className='Group-info-stats-item-text'>
                                 <div>Категорія</div>
                                 <span>{getString(data.group?.groupCategories)}</span>

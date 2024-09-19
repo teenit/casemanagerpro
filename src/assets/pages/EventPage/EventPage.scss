@@ -57,8 +57,7 @@
                     display: flex;
                     flex-direction: column;
                     >:nth-child(odd){
-                        background-color:  $main-color;
-                        border: solid 3px $main-color!important;
+                        background-color:  #42A5F588;
                         border-bottom: none;
                     }
                 }
@@ -95,7 +94,7 @@
         padding: 7.5px 12.5px;
         font-weight: bold;
         border-radius: 7.5px;
-        background-color: $second-color;
+        background-color: #90CAF988;
         &-line {
             display: flex;
             justify-content: space-between;

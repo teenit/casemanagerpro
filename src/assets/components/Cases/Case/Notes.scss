@@ -33,7 +33,7 @@
     }
     &-viewer{
         max-height: 400px;
-        overflow-y: scroll;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         gap: 25px;

@@ -7,8 +7,6 @@
     position: relative;
 }
 .inner__cards{
-    width: 85%;
-    margin: auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 25px;
@@ -19,12 +17,13 @@
 }
 .card{
     padding: 20px;
-    box-shadow: 0 0 10px 0 gray;
+    box-shadow: 0 0 10px 0 #ababaa;
     position: relative;
     border-radius: 10px;
     background-color: var(--second-color);
     max-width: 300px;
     min-width: 300px;
+    background-color: #90CAF988;
 }
 .card__img{
     display: flex;

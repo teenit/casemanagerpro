@@ -11,6 +11,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import EventIcon from '@mui/icons-material/Event';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 const Icon = ({ icon, addClass, onClick }) => {
     const [state, setState] = useState(null);
 
@@ -115,7 +116,7 @@ const Icon = ({ icon, addClass, onClick }) => {
                 ico = <Check style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             case "arrow_down":
-                ico = <ArrowDownwardOutlined style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                ico = <KeyboardArrowDownIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             case "arrow_back":
                 ico = <ArrowBackIos style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
