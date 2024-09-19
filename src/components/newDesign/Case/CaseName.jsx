@@ -51,7 +51,7 @@ const CaseName = ({ dataState, view, id, getCaseInfo }) => {
                         {!editName && (
                             <div className="InputBlock-default">
                                 <div className="CaseInfoBlock-line-title">
-                                    {fullName} <span style={{ color: "var(--main-color)" }}>№{id}</span>
+                                    {name.middle_name} {name.first_name} {name.last_name} <span style={{ color: "var(--main-color)" }}>№{id}</span>
                                 </div>
                                 <div>
                                     <div className="edit-icon" onClick={() => setEditName(true)}>
@@ -62,17 +62,18 @@ const CaseName = ({ dataState, view, id, getCaseInfo }) => {
                         )}
                         {editName && (
                             <div className="InputBlock-pib">
-                                <Input
-                                    type="text"
-                                    label={LANG.case_data.first_name}
-                                    value={name.first_name}
-                                    onChange={(e) => handleInputChange('first_name', e.target.value)}
-                                />
+                                
                                 <Input
                                     type="text"
                                     label={LANG.case_data.middle_name}
                                     value={name.middle_name}
                                     onChange={(e) => handleInputChange('middle_name', e.target.value)}
+                                />
+                                <Input
+                                    type="text"
+                                    label={LANG.case_data.first_name}
+                                    value={name.first_name}
+                                    onChange={(e) => handleInputChange('first_name', e.target.value)}
                                 />
                                 <Input
                                     type="text"
