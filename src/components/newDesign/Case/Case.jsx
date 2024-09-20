@@ -72,7 +72,7 @@ const Case = () => {
             setState({
                 ...res, viewInfo: viewInfo
             });
-            console.log(res)
+           
             // getUserNameById(res.responsible_id)
 
         })
@@ -149,7 +149,7 @@ const Case = () => {
                     <Notes case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
                 }
                 {(state.viewInfo.view_Files) && <Files case_id={case_id} getCaseInfo={getCaseInfo} files={state.files} />}
-                {(state.viewInfo.view_Histories) && <Histories data={state.meta.histories} getCaseInfo={getCaseInfo} case_id={case_id} />}
+                {(state.viewInfo.view_Histories) && <Histories data={state.meta.history_files} getCaseInfo={getCaseInfo} case_id={case_id} />}
             </div>
 
             {!!state?.meta?.files?.length && (state.viewInfo.view_Gallery) &&
@@ -159,14 +159,7 @@ const Case = () => {
                     <p>Завантажити файл</p>
                     <div className="Uploader-content">
                         <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
-                            key: [{
-                                title: "Усі файли",
-                                value: "case_files"
-                            }, {
-                                title: "Історії",
-                                value: "history_case_files"
-                            }
-                            ],
+                            key: ["case_files", "history_case_files"],
                             case_id: case_id,
                             type: "case"
                         }} />

@@ -25,8 +25,6 @@ const CasesList = ({ cases, categories, loadMoreCases, maxLength }) => {
             return LANG.casesList.noCategory
         }
     };
-    console.log(cases);
-
 
     const handlerPrint = useReactToPrint({
         content: () => componentRef.current,

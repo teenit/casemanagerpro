@@ -17,6 +17,7 @@ import SmallNotification from '../Notifications/SmallNotification';
 import { useSelector } from 'react-redux';
 import Icon from "../Icons/Icon"
 import { MenuItem, Select } from '@mui/material';
+import { LANG } from '../../../services/config';
 
 const FORMAT = {
   pdf: { imgUrl: pdfImg },
@@ -45,7 +46,7 @@ function ext(name) {
 
 function FilesUploader({ multiple = true, successHandler = () => { }, meta = null, type = "case" }) {
   const [fileSelect, setFileSelect] = useState(false);
-  const [fileType, setFileType] = useState(meta?.key[0] || "case_files");
+  const [fileType, setFileType] = useState(typeof meta.key === 'string' ? meta.key : meta.key[0]);
   const [alert, setAlert] = useState({
     error: false,
     success: false
@@ -84,7 +85,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
 
     const metaObject = { ...meta, key: metaKey, id, token };
     formData.append('meta', JSON.stringify(metaObject));
-
+    
     try {
       const response = await axios({
         url: serverAddres(getFromType()),
@@ -162,7 +163,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
       {fileSelect && (
         <Select value={fileType} onChange={(e) => setFileType(e.target.value)}>
           {meta.key.map((item, index) => (
-            <MenuItem key={index} value={item.value}>{item.title}</MenuItem>
+            <MenuItem key={index} value={item}>{LANG.FILES[item]}</MenuItem>
           ))}
         </Select>
       )}

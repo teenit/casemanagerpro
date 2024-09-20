@@ -46,7 +46,7 @@ const SearchUsers = ({ eventID, getUsers }) => {
             position: user.position
         }
       apiResponse({...obj}, "event/add-member-user.php").then((data) => {
-        console.log(data);
+        
                 alertHandler("success")
                 getUsers(eventID, "eventMemberUser");
             })

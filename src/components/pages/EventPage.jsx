@@ -27,7 +27,7 @@ const EventPage = () => {
     const getEventData = ()=>{
             apiResponse({event_id:params.id}, "events/get-event-by-id.php").then((res)=>{
                 setState(res)
-                console.log(res);
+               
                 
             })
     }

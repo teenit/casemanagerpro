@@ -28,7 +28,7 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
     }
 
     const MemberItem = ({ item, type }) => {
-        console.log(item, type)
+        
         return type == "manager" ? (
             <div className="EventPage-MemberItem">
                 <div className='EventPage-MemberItem-line'>

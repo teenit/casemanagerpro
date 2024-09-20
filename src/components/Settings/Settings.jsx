@@ -30,7 +30,11 @@ const Settings = () => {
     const [newVersion, setNewVersion] = useState(false)
     const [disBtn, setDisBtn] = useState(false)
     const [config, setConfig] = useState({...appConfig.defaultConfig})
-    const [activeConfig, setActiveConfig] = useState({})
+    const [activeConfig, setActiveConfig] = useState({});
+    const [deleteMeta, setDeleteMeta] = useState({
+        tableName: "",
+        idMeta:""
+    })
     function checkVersion() {
         let obj = {
             id: localStorage.getItem("id"),
@@ -144,6 +148,12 @@ const Settings = () => {
             if(res.status) getConfig()
         })
     }
+
+    const deleteMetaToServer = () => {
+        apiResponse({...deleteMeta}, "manage/delete_meta.php").then((res)=>{
+            alert(res.message)
+        })
+    }
    
     return page.loading ? (
         <div className="page__loading">
@@ -254,7 +264,29 @@ const Settings = () => {
                           
                         </AccordionBlock>
                     </AccordionDetails>
-                    <Button onClick={saveConfig}>Зберегти</Button>
+                    
+                </Accordion>
+                <Accordion expanded={expanded.special} id="expanded_special" onChange={() => {
+                    expandedChange('special')
+                }}>
+                    <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
+                        Суперадміністратор 
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <AccordionBlock title={"Видалення запису з таблиці"}>
+                            <div style={{
+                                display:"flex",
+                                gap:"10px",
+                                flexDirection:"column"
+                            }}>
+                                <Input label="Table name" value={deleteMeta.tableName} onChange={(e)=>{setDeleteMeta({...deleteMeta, tableName:e.target.value})}}/>
+                                <Input label="Id meta" value={deleteMeta.idMeta} onChange={(e)=>{setDeleteMeta({...deleteMeta, idMeta:e.target.value})}}/>
+                                <Button variant="contained" onClick={deleteMetaToServer}>Видалити запис</Button>
+                            </div>
+                          
+                        </AccordionBlock>
+                    </AccordionDetails>
+                    
                 </Accordion>
             </div>
 

@@ -24,7 +24,7 @@ const AccessPageRight = () => {
   useEffect(() => {
     apiResponse({ access_id: access_id }, "access/get-by-id.php").then((data) => {
       setState({ ...state, rights: data.access })
-      console.log(state);
+      
     })
 
   }, [])
@@ -91,7 +91,8 @@ const AccessPageRight = () => {
         <div className='AccessPageRight-left-options'>
           {
             showPages && Object.keys(PAGES).map((item) => {
-              return <div className={`AccessPageRight-left-options-option ${item === state.selectedPage && "active"}`} key={item} onClick={() => {
+             
+              return <div className={`AccessPageRight-left-options-option ${item === state.selectedPage ? "active" :""}`} key={item} onClick={() => {
                 filterSelectedRights(item)
                 if(width<720){
                   setShowPages(false)

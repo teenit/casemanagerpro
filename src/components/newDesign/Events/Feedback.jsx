@@ -28,7 +28,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
         setModals({ ...modals, [key]: !modals[key] });
     };
     const deleteFeedback = (feedback_id) => {
-        console.log(feedback_id);
+       
         apiResponse({ meta_id: feedback_id }, "events/delete-meta.php").then((res) => {
             alertHandler("success", "Зворотній зв'язок видалено")
             getEventData()

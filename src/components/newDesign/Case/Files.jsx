@@ -33,7 +33,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         const fileIds = result.map(item => item.id)
         const filter = files.filter(item => fileIds.includes(item.id))
         setFilteredFiles(filter)
-        console.log(filter);
+       
 
     }
     const dataHandler = (key, value) => {
@@ -54,7 +54,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         if (data.title.length < 1 || data.title.length > 100) {
             return alertHandler("error", LANG.caseFiles.alerts.invalidName);
         }
-        console.log(data);
+      
         
         apiResponse({ title: data.title, description: data.description, tag: data.tag, client_id: case_id, type: "file" }, 
         "manage/files/create.php").then((res) => {

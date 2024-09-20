@@ -62,7 +62,7 @@ const Resources = () => {
         apiResponse({
             resource_id:activeResource.resource_id
         },"resources/delete-resource.php").then((res)=>{
-            console.log(res)
+           
             setDeleteModal(false)
             loadResources()
             alertHandler("success")

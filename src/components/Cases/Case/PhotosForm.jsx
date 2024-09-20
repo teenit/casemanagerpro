@@ -38,7 +38,7 @@ const PhotosForm = ({show})=>{
                     message: "LOADING",
                     active: "active"
                 })
-                console.log(Math.round(event.loaded * 100 / event.total))
+                
             }
         })
         .then((data)=>{

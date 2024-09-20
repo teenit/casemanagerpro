@@ -18,7 +18,7 @@ const CaseSettings = ({ views, successHandler, handleGeneralChange, isActive }) 
             value: JSON.stringify(state),
             key: "case_view_info"
         }, "manage/update-usermeta.php").then((res) => {
-            console.log(res)
+           
         })
         successHandler();
         window.location.reload();

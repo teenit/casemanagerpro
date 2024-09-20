@@ -35,7 +35,7 @@ const ContactForm = ({ editContact, onSubmit, contact, showModal, toggleModal })
           categori: data,
           category: initialCategory
         }));
-        console.log(initialCategory);
+        
       })
       .catch((error) => console.log(error));
   }, [contact]);

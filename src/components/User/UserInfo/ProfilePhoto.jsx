@@ -70,9 +70,6 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
       .then((res) => {
         handleAlertChange("success", "Дані успішно оновлено");
         getUser()
-        console.log(res);
-        // if(key=="email") dispatch(removeUser());
-
       })
       .catch((error) => console.log(error));
   };

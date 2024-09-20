@@ -112,7 +112,6 @@ const getImage = (data) => {
   }
   return images.default
 };
-console.log(posts)
   return (
     <div className="wrap__cards">
       {/* <div className="cards__filter">

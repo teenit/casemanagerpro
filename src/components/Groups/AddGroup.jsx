@@ -68,7 +68,7 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
                 alertHandler("success", "Групу додано");
             });
         }else{
-            console.log(state);
+            
             apiResponse({ ...state, group_id:id }, "groups/edit-group.php").then((res) => {
                 loadGroups()
                 close();

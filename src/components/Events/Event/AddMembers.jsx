@@ -58,7 +58,7 @@ const AddMembers = ({ modalHandler, getEventData }) => {
                 meta_value: user.id,
                 event_id: params.id
             }, "events/add-event-meta.php").then((res) => {
-                console.log(res);
+                
                 modalHandler();
                 getEventData();
             });
@@ -68,7 +68,7 @@ const AddMembers = ({ modalHandler, getEventData }) => {
                 meta_value: JSON.stringify({ ...obj }),
                 event_id: params.id
             }, "events/add-event-meta.php").then((res) => {
-                console.log(res);
+               
                 modalHandler();
                 getEventData();
             });

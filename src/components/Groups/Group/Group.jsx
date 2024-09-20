@@ -29,7 +29,7 @@ const Group = () => {
     const params = useParams();
 
     useEffect(() => {
-        console.log(params.id);
+        
         apiResponse({ group_id: params.id }, 'groups/get-group-by-id.php').then((res) => {
             setData(res)
         })
