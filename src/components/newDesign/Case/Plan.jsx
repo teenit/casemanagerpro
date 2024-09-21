@@ -55,25 +55,40 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
     }
 
     const createPlan = () => {
-        if(moment(state.start_time, "DD-MM-YYYY").isAfter(moment(state.end_time, "DD-MM-YYYY")))
-            return setNotification({...notification, show:true, status:false, message:LANG.plan.error_date})
-        if(state.end_time.length<=1 || state.start_time.length<=1) 
-            return setNotification({...notification, show:true, status:false, message:LANG.plan.error})
-            apiResponse({
-                ...state,
-                case_id: case_id,
-            }, "case/create-plan-task.php").then((res) => {
-                setState({ ...state, create: false })
-                setNotification({
-                    show: true,
-                    status: res.status,
-                    message: res.message
-                })
-                openHandler()
-                getCaseInfo();
-            })
-        
-    }
+        const startTime = moment(state.start_time, "YYYY-MM-DDTHH:mm");
+        const endTime = moment(state.end_time, "YYYY-MM-DDTHH:mm");
+        if (startTime.isAfter(endTime)) {
+            return setNotification({
+                ...notification, 
+                show: true, 
+                status: false, 
+                message: LANG.plan.error_date
+            });
+        }
+        if (state.end_time.length <= 1 || state.start_time.length <= 1) {
+            return setNotification({
+                ...notification, 
+                show: true, 
+                status: false, 
+                message: LANG.plan.error
+            });
+        }
+    
+        apiResponse({
+            ...state,
+            case_id: case_id,
+        }, "case/create-plan-task.php").then((res) => {
+            setState({ ...state, create: false });
+            setNotification({
+                show: true,
+                status: res.status,
+                message: res.message
+            });
+            openHandler();
+            getCaseInfo();
+        });
+    };
+    
     return (
         <div className="Plan">
             <div className="Plan-title">
@@ -143,9 +158,9 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
                     </div>
                 </Modal>
             }
-            {
+            {/* {
                 notification.show && <SmallNotification isSuccess={notification.status} text={notification.message} close={() => setNotification({ show: false })} />
-            }
+            } */}
         </div>
     )
 
