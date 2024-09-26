@@ -44,6 +44,11 @@
             background-color: #fff;
             border: solid 3px $second-color;
             padding: 15px;
+            &-color{
+                width: 25px;
+                height: 25px;
+                border-radius: 100%;
+            }
             .str {
                 display: flex;
                 flex-direction: column;
@@ -57,8 +62,14 @@
                 .dates {
                     &-start {
                         display: flex;
+                        align-items: center;
                         font-weight: bold;
                         gap: 25px;
+                        &-category{
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                        }
                     }
                 }
                 .controls {

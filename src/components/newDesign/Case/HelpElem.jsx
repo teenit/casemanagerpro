@@ -11,8 +11,12 @@ import editImg from "./../../../img/icons/edit.svg";
 import saveImg from "./../../../img/icons/save-50.png";
 import { LANG } from "../../../services/config"
 import Icon from "../../elements/Icons/Icon"
+import TextDescription from "../../elements/TextFormatters/TextDescription"
+import { useSelector } from "react-redux"
+import { NavLink } from "react-router-dom"
 
 const HelpElem = ({ help, categories, getCaseInfo }) => {
+
     const [state, setState] = useState({
         ...help,
         editHelp: false,
@@ -23,7 +27,13 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
         status: null,
         message: null
     })
-
+    const getCategory = (id) => {
+        const category = Object.values(categories).find(item => item.id === id)
+        return {
+            color: category.color,
+            name: category.name
+        }
+    }
     const saveHandler = () => {
         apiResponse({
             ...state,
@@ -78,7 +88,11 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                                     :
                                     <>
                                         <span> {state.date_time && moment(state.date_time).format("DD-MM-YYYY")} </span>
-                                        <span> {state.who} </span>
+                                            {state.who && <NavLink to={`/user/${state.user_id}`}>{state.who}</NavLink>}
+                                        <div className="dates-start-category">
+                                            <span> {state.category && getCategory(state.category).name} </span>
+                                            <span className="Help-content-element-color" style={{ backgroundColor: getCategory(state.category).color }}></span>
+                                        </div>
                                     </>
                             }
                         </div>
@@ -91,9 +105,9 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                                     <Icon icon={"save"} addClass={"save-icon"} />
                                 </span>
                                 :
-                                <span onClick={()=>{setState({...state, edit: true})}}  >
-                                <Icon icon={"edit"} addClass={"default-icon"}/>
-                            </span>
+                                <span onClick={() => { setState({ ...state, edit: true }) }}  >
+                                    <Icon icon={"edit"} addClass={"default-icon"} />
+                                </span>
                         }
                     </div>
                 </div>
@@ -112,12 +126,7 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                             </div>
                             :
                             <div className="task-value">
-                                <pre>
-                                {
-                                    state.text
-                                }
-                                </pre>
-                                
+                                <TextDescription text={state.text} />
                             </div>
                     }
                 </div>
