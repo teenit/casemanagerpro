@@ -1,0 +1,36 @@
+.TelegramPage {
+    &-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        max-width: 500px;
+        gap: 20px;
+        &-selects {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        &-message {
+            width: 100%;
+            overflow-x: auto;
+        }
+    }
+    &-messages {
+
+        &-message {
+
+            &-img {
+                display: flex;
+                flex-wrap: wrap;
+                .img-back {
+                   width: 200px;
+                   height: 200px;
+                   background-size: cover;
+                   background-position: center;
+                }
+            }
+        }
+    }
+}

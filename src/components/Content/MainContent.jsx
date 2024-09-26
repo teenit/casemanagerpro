@@ -35,6 +35,7 @@ import EventPage from "../pages/EventPage";
 import LoginPage from "../pages/LoginPage";
 import TransactionsPage from "../pages/TransactionsPage";
 import MyBigCalendar from "../newDesign/Calendar/MyBigCalendar";
+import TelegramPage from "../pages/TelegramPage";
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -70,7 +71,7 @@ const MainContent = () => {
         <Route path='/events_new' element={access.events ? <EventsPage /> : <NotFound />} />
         <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} />
         <Route path='/event_new/:id' element={access.event ? <EventPage /> : <NotFound />} />
-        {/* <Route path='/calendar' element={access.calendar ? <Calendar /> : <NotFound />} /> */}
+        <Route path='/telegram' element={ <TelegramPage />} />
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
         <Route path='/group/:id' element={<Group />} />

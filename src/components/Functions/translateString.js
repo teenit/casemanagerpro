@@ -30,3 +30,15 @@ export function changeApsBr(arg){
     let a = arg.replaceAll("'", "’").replaceAll(/\n/g, "<br />");
     return a;
 }
+
+export function replaceParagraphTags(text) {
+  // Видаляємо відкриваючі теги <p>
+  let result = text.replace(/<p>/g, '');
+
+  // Заміняємо закриваючі теги </p> на перенос рядка \n
+  result = result.replace(/<\/p>/g, '\n');
+  result = result.replace(/<br>/g, '\n');
+
+  // Повертаємо оброблений текст
+  return result;
+}

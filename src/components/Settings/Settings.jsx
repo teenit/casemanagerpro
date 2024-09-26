@@ -20,7 +20,17 @@ import Input from "../elements/Inputs/Input";
 import Hint from "../elements/Hints/Hint"
 import { appConfig, LANG } from "../../services/config";
 import SetConfigItem from "./SetConfig/SetConfigItem";
+import Modal from "../Modals/Modal";
+import FilesUploader from "../elements/Uploaders/FilesUploader";
 const MODE = 'settings_page_';
+const DEFAULT_TELEGRAM_BOT = {
+    bot_id: null,
+    bot_name: "",
+    chat_id:"",
+    is_active:"",
+    bot_token:"",
+    type: "chanel"
+}
 const Settings = () => {
 
     const [page, setPage] = useState({ loading: true, effload: false, message: "" })
@@ -35,6 +45,10 @@ const Settings = () => {
         tableName: "",
         idMeta:""
     })
+    const [telegramBots, setTelegramBots] = useState([]);
+    const [selectedTelegramBot, setSelectedTelegramBot] = useState({
+        ...DEFAULT_TELEGRAM_BOT
+    }) 
     function checkVersion() {
         let obj = {
             id: localStorage.getItem("id"),
@@ -60,6 +74,7 @@ const Settings = () => {
             
             if (res.status) setActiveConfig({...res.configs})
         })
+        loadTelegramBots();
     }, []);
     function updateCaseManager() {
         apiResponse({
@@ -154,7 +169,29 @@ const Settings = () => {
             alert(res.message)
         })
     }
+
+    const loadTelegramBots = () => {
+        apiResponse({}, "telegram/get-telegram-bot-list.php").then((res)=>{
+            if (res.status) {
+                setTelegramBots([...res.data])
+            }
+        })
+    }
    
+    const addTelegramBot = () => {
+       // return console.log(selectedTelegramBot)
+        apiResponse({...selectedTelegramBot}, "telegram/create-telegram-bot.php").then((res)=>{
+            if (res.status) {
+                setSelectedTelegramBot({...selectedTelegramBot, modal: false});
+            }
+        })
+    }
+
+    const sendInTelegram = () => {
+        // apiResponse({bot_id: 1, message: "test message"}, "telegram/send-message-in-telegram.php").then((res)=>{
+        //     console.log(res)
+        // })
+    }
     return page.loading ? (
         <div className="page__loading">
             <LoadingPage message={page.message} effload={page.effload} />
@@ -250,16 +287,16 @@ const Settings = () => {
                         <AccordionBlock title={"Загальні налаштування"}>
                             {
                                 config.system.map((item)=><SetConfigItem 
-                                                            key={item.config_key} 
-                                                            type={item.type} 
-                                                            label={item.label} 
-                                                            description={item.description}
-                                                            value={activeConfig[item.config_key] !== undefined ? activeConfig[item.config_key] : item.value} 
-                                                            config_key={item.config_key} 
-                                                            onChange = {(value)=>{
-                                                                saveConfigItem(item.config_key, value)
-                                                            }}
-                                                            />)
+                                key={item.config_key} 
+                                type={item.type} 
+                                label={item.label} 
+                                description={item.description}
+                                value={activeConfig[item.config_key] !== undefined ? activeConfig[item.config_key] : item.value} 
+                                config_key={item.config_key} 
+                                onChange = {(value)=>{
+                                    saveConfigItem(item.config_key, value)
+                                }}
+                                />)
                             }
                           
                         </AccordionBlock>
@@ -288,8 +325,58 @@ const Settings = () => {
                     </AccordionDetails>
                     
                 </Accordion>
+                <Accordion expanded={expanded.telegram} id="expanded_telegram" onChange={() => {
+                    expandedChange('telegram')
+                }}>
+                    <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
+                        Налаштування з телеграм 
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <AccordionBlock title={"Телеграм боти"}>
+                            {
+                                telegramBots.map((item)=>{
+                                    return(
+                                        <>
+                                        <div>{item.bot_name}</div>
+                                        <div>{item.bot_token}</div>
+                                        <div>{item.chat_id}</div>
+                                        </>
+                                    )
+                                })
+                            }
+                           <Button onClick={()=>{setSelectedTelegramBot({...selectedTelegramBot, modal: true})}}>Додати</Button>
+                          
+                        </AccordionBlock>
+                    </AccordionDetails>
+                    
+                </Accordion>
             </div>
-
+            {selectedTelegramBot.modal && <Modal closeHandler={() => {setSelectedTelegramBot({...selectedTelegramBot, modal: false}) }} header={"Додати учасника"} footer={
+            <>
+                <Button variant="contained" color="error" onClick={() => { setSelectedTelegramBot({...selectedTelegramBot, modal: false}) }}>{LANG.GLOBAL.cancel}</Button>
+                <Button variant="contained" onClick={addTelegramBot}>{LANG.GLOBAL.save}</Button>
+            </>
+             }>
+            <div style={{paddingTop:"15px"}}>
+                <Input value={selectedTelegramBot.bot_name} label="Ім'я телеграм бота" onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, bot_name: e.target.value})}}/>
+            </div>
+            <div>
+                <Input value={selectedTelegramBot.bot_token} label="Токен телеграм бота" onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, bot_token: e.target.value})}}/>
+            </div>
+            <div>
+                <Input value={selectedTelegramBot.chat_id} label="Chat ID телеграм бота" onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, chat_id: e.target.value})}}/>
+            </div>
+            <div>
+                <label htmlFor=""> Активувати
+                <Switch 
+                    
+                    checked={selectedTelegramBot.is_active == 1 ? true : false}
+                    onChange={(e)=>{
+                        setSelectedTelegramBot({...selectedTelegramBot, is_active: e.target.checked ? 1 : 0})
+                    }}
+                /></label>
+            </div>
+        </Modal>}
         </div>
 
     )

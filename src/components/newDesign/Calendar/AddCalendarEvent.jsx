@@ -48,7 +48,7 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
 
     const deleteEvent = () => {
         let check = window.confirm("Видалити подію " + state.title + " ?");
-        if (check) return;
+        if (!check) return;
         if (state.key === "happyCase" || state.userID !== localStorage.getItem('id')) return alert("Ви не можете видалити цю подію")
         apiResponse({calendar_id: state.calendar_id}, "calendar/delete.php").then((res)=>{
             loadEvents()

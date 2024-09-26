@@ -77,7 +77,7 @@ const GalleryBlock = ({ data, check }) => {
     return (
         <div className='GalleryBlock'>
             {imagesAndVideos.length > 0 && <>
-                <h1>{LANG.gallery}</h1>
+                <div>{LANG.gallery}</div>
                 <div className='GalleryBlock-grid' style={{
                     gridTemplateRows: `repeat(${imgRows}, 1fr)`,
                     gridTemplateColumns: `repeat(${imgColumns}, 1fr)`,

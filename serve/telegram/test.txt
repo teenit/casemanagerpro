@@ -1,0 +1,304 @@
+<?php
+require_once '../config.php'; // Підключення до бази даних
+
+function logMessageTelegram($message) {
+    $logFile = '../logs/telegram_messages.log'; // Шлях до файлу з логами
+    $logEntry = "[" . date('Y-m-d H:i:s') . "] " . $message . PHP_EOL;
+    file_put_contents($logFile, $logEntry, FILE_APPEND);
+}
+
+// Функція для відправки фото + текст
+function sendPhotoWithMessage($botToken, $chatId, $photoPath, $message) {
+    $url = "https://api.telegram.org/bot$botToken/sendPhoto";
+    $postData = [
+        'chat_id' => $chatId,
+        'photo' => new CURLFile(realpath($photoPath)),
+        'caption' => $message
+    ];
+
+    return sendRequest($url, $postData);
+}
+
+// Функція для відправки відео + текст
+function sendVideoWithMessage($botToken, $chatId, $videoPath, $message) {
+    $url = "https://api.telegram.org/bot$botToken/sendVideo";
+    $postData = [
+        'chat_id' => $chatId,
+        'video' => new CURLFile(realpath($videoPath)),
+        'caption' => $message
+    ];
+
+    return sendRequest($url, $postData);
+}
+
+// Функція для відправки файлу + текст
+function sendFileWithMessage($botToken, $chatId, $filePath, $message) {
+    $url = "https://api.telegram.org/bot$botToken/sendDocument";
+    $postData = [
+        'chat_id' => $chatId,
+        'document' => new CURLFile(realpath($filePath)),
+        'caption' => $message
+    ];
+
+    return sendRequest($url, $postData);
+}
+
+// Функція для відправки текстового повідомлення без медіа
+function sendMessage($botToken, $chatId, $message) {
+    $url = "https://api.telegram.org/bot$botToken/sendMessage";
+    $postData = [
+        'chat_id' => $chatId,
+        'text' => $message,
+        'parse_mode' => "HTML"
+    ];
+
+    return sendRequest($url, $postData);
+}
+
+// Функція для відправки групи медіа
+function sendMediaGroup($botToken, $chatId, $media) {
+    $url = "https://api.telegram.org/bot$botToken/sendMediaGroup";
+    $postData = [
+        'chat_id' => $chatId,
+        'media' => json_encode($media)
+    ];
+
+    return sendRequest($url, $postData);
+}
+
+// Універсальна функція для відправки запиту
+function sendRequest($url, $postData) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($error) {
+        return ['status' => false, 'message' => $error];
+    }
+
+    $responseData = json_decode($response, true);
+    return $responseData['ok']
+        ? ['status' => true, 'message' => 'Повідомлення успішно відправлено']
+        : ['status' => false, 'message' => $responseData['description']];
+}
+
+// Отримуємо дані з запиту
+$data = json_decode($_POST['meta'], true); // Дані з фронтенду
+$botId = $data['bot_id'] ?? null;
+$message = $data['message'] ?? '';
+$files =  [];
+
+// Витягуємо дані про бота з бази
+if ($botId) {
+    $sql = "SELECT bot_token, chat_id FROM telegram_bots WHERE id = ?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("i", $botId);
+        $stmt->execute();
+        $stmt->bind_result($botToken, $chatId);
+        $stmt->fetch();
+        $stmt->close();
+
+        if (!$botToken || !$chatId) {
+            echo json_encode(['status' => false, 'message' => 'Бот або chat_id не знайдені']);
+            exit;
+        }
+
+        // Вибір типу медіа для відправки
+        if (!empty($files)) {
+            // Якщо передано кілька файлів, відправляємо медіа-групу
+            if (count($files['tmp_name']) > 1) {
+                $media = [];
+                foreach ($files['tmp_name'] as $index => $tmpName) {
+                    $fileType = mime_content_type($tmpName);
+                    $fileName = $files['name'][$index];
+                    $type = (strpos($fileType, 'image') !== false) ? 'photo' : 'document'; // Можна додати відео
+                    $media[] = [
+                        'type' => $type,
+                        'media' => 'attach://' . $fileName
+                    ];
+                }
+            
+                // Preparing the postData correctly
+                $postData = array_merge($media, array_map(function($index) use ($files) {
+                    return [ $files['name'][$index] => new CURLFile(realpath($files['tmp_name'][$index])) ];
+                }, array_keys($files['tmp_name'])));
+            
+                $response = sendMediaGroup($botToken, $chatId, $postData);
+            } else {
+                // Якщо 1 файл, визначаємо тип файлу та відправляємо відповідне повідомлення
+                $filePath = $files['tmp_name'][0];
+                $fileType = mime_content_type($filePath);
+            
+                if (strpos($fileType, 'image') !== false) {
+                    // Відправка фото з текстом
+                    $response = sendPhotoWithMessage($botToken, $chatId, $filePath, $message);
+                } elseif (strpos($fileType, 'video') !== false) {
+                    // Відправка відео з текстом
+                    $response = sendVideoWithMessage($botToken, $chatId, $filePath, $message);
+                } else {
+                    // Відправка файла з текстом
+                    $response = sendFileWithMessage($botToken, $chatId, $filePath, $message);
+                }
+            }
+            
+        } else {
+            // Якщо немає файлів, відправляємо лише текст
+            $response = sendMessage($botToken, $chatId, $message);
+        }
+
+        if ($response['status']) {
+            // Логування та збереження в базі даних
+            $sqlInsert = "INSERT INTO telegram_messages (bot_id, chat_id, message, date_sent) VALUES (?, ?, ?, NOW())";
+            if ($stmtInsert = $conn->prepare($sqlInsert)) {
+                $stmtInsert->bind_param("iis", $botId, $chatId, $message);
+                $stmtInsert->execute();
+                $stmtInsert->close();
+            }
+
+            logMessageTelegram("Повідомлення успішно відправлено в Telegram: $message");
+            echo json_encode(['status' => true, 'message' => 'Повідомлення успішно відправлено']);
+        } else {
+            echo json_encode(['status' => false, 'message' => $response['message']]);
+        }
+    } else {
+        echo json_encode(['status' => false, 'message' => 'Помилка підключення до бази даних']);
+    }
+} else {
+    echo json_encode(['status' => false, 'message' => 'Не вказано bot_id']);
+}
+?>
+
+
+
+
+
+
+
+
+
+<?php
+require_once '../config.php'; // Підключення до бази даних
+
+// Функція для логування повідомлень
+function logMessageTelegram($message) {
+    $logFile = '../logs/telegram_messages.log'; // Шлях до файлу з логами
+    $logEntry = "[" . date('Y-m-d H:i:s') . "] " . $message . PHP_EOL;
+    file_put_contents($logFile, $logEntry, FILE_APPEND);
+}
+
+// Функція для відправки медіа-групи в Telegram
+function sendMediaGroupToTelegram($botToken, $chatId, $message = '', $files = []) {
+    $telegramApiUrl = "https://api.telegram.org/bot$botToken/sendMediaGroup";
+
+    // Формуємо медіа-групу
+    $media = [];
+    $arrayQuery = [
+        'chat_id' => $chatId,
+    ];
+
+    // Додаємо файли до медіа
+    foreach ($files['tmp_name'] as $key => $tmpName) {
+        if (is_uploaded_file($tmpName)) {
+            $filePath = $tmpName;
+            $fileName = basename($files['name'][$key]);
+            $fileType = mime_content_type($filePath);
+
+            $mediaType = strpos($fileType, 'image') !== false ? 'photo' : (strpos($fileType, 'video') !== false ? 'video' : null);
+
+            if ($mediaType) {
+                // Додаємо файли до масиву медіа
+                $media[] = [
+                    'type' => $mediaType,
+                    'media' => 'attach://' . $fileName,
+                    'caption' => ($key == 0 && !empty($message)) ? $message : ''
+                ];
+
+                // Додаємо файли до масиву для CURL
+                $arrayQuery[$fileName] = new CURLFile($filePath);
+            }
+        }
+    }
+
+    // Якщо є медіа для відправки
+    if (count($media) > 0) {    
+        $arrayQuery['media'] = json_encode($media);
+
+        $ch = curl_init($telegramApiUrl);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $arrayQuery);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+
+        $response = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        // Обробка помилок
+        if ($error) {
+            logMessageTelegram("Помилка при відправці медіа-групи: " . $error);
+            return ['status' => false, 'message' => 'Помилка відправки медіа-групи'];
+        }
+
+        $responseData = json_decode($response, true);
+        if (!$responseData['ok']) {
+            logMessageTelegram("Помилка при відправці медіа-групи: " . $responseData['description']);
+            return ['status' => false, 'message' => 'Помилка відправки медіа-групи'];
+        }
+
+        return ['status' => true, 'message' => 'Медіа-група успішно відправлена'];
+    }
+
+    return ['status' => false, 'message' => 'Немає файлів для відправки'];
+}
+
+// Нова функція для отримання даних про бота і відправки медіа-групи
+function processTelegramMessage($conn, $botId, $message, $files) {
+    // Перевіряємо наявність bot_id
+    if (!$botId) {
+        return ['status' => false, 'message' => 'Не вказано bot_id'];
+    }
+
+    // Витягуємо дані про бота з бази
+    $sql = "SELECT bot_token, chat_id FROM telegram_bots WHERE id = ?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("i", $botId);
+        $stmt->execute();
+        $stmt->bind_result($botToken, $chatId);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Перевіряємо наявність ботів і chat_id
+        if (!$botToken || !$chatId) {
+            return ['status' => false, 'message' => 'Бот або chat_id не знайдені'];
+        }
+
+        // Відправляємо медіа-групу з текстом
+        $response = sendMediaGroupToTelegram($botToken, $chatId, $message, $files);
+        
+        // Логування результатів
+        if ($response['status']) {
+            logMessageTelegram("Медіа-група успішно відправлена.");
+        }
+
+        return $response;
+    } else {
+        return ['status' => false, 'message' => 'Помилка підключення до бази даних'];
+    }
+}
+
+// Обробка даних з форми
+$data = json_decode($_POST['meta'], true);
+$botId = $data['bot_id'] ?? null;
+$message = $data['message'] ?? ''; // Текст повідомлення
+$files = $_FILES['files'] ?? [];
+
+// Виклик функції для відправки медіа
+$response = processTelegramMessage($conn, $botId, $message, $files);
+
+// Повертаємо результат
+echo json_encode($response);

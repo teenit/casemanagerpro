@@ -63,6 +63,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
     if (type === "case") return "upload-case-files.php";
     if (type === "resource") return "upload-resource-files.php";
     if (type === "event") return "event/upload.php";
+    if (type === "telegram") return "telegram/send-group-media-in-telegram.php";
   }
 
   const handleFileChange = (event) => {
@@ -85,7 +86,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
 
     const metaObject = { ...meta, key: metaKey, id, token };
     formData.append('meta', JSON.stringify(metaObject));
-    
+    console.log(formData)
     try {
       const response = await axios({
         url: serverAddres(getFromType()),
