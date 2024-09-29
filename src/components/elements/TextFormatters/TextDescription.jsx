@@ -5,6 +5,7 @@ const TextDescription = ({ text }) => {
   // Форматуємо текст
   const formatTextWithLineBreaks = (formatText) => {
     // Замінюємо всі нові рядки на <br> для HTML
+    if (!formatText) return formatText
     return formatText.replace(/\n/g, '<br />');
   };
   

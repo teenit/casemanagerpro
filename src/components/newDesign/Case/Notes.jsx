@@ -8,6 +8,7 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Modal from "../../Modals/Modal";
 import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
+import TextDescription from "../../elements/TextFormatters/TextDescription";
 
 const Active = ({ elem, handleEdit }) => {
     const [edit, setEdit] = useState(false);
@@ -41,7 +42,7 @@ const Active = ({ elem, handleEdit }) => {
                         />
                     </div>
                 ) : (
-                    <p>{activeMessage}</p>
+                    <TextDescription text={activeMessage}/>
                 )}
                 <div className="Notes-viewer-line-mess-edit">
                     {edit ? (

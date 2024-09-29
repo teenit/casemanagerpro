@@ -77,6 +77,43 @@ function telegramSendMessage($conn, $botToken, $chatId, $message, $botId, $userI
     }
 }
 
+function sendDocumentToTelegram($botToken, $chatId, $documentPath, $caption = '') {
+    $telegramApiUrl = "https://api.telegram.org/bot$botToken/sendDocument";
+
+    // Формуємо дані для запиту
+    $postData = [
+        'chat_id' => $chatId,
+        'document' => new CURLFile(realpath($documentPath)),  // Передаємо файл як CURLFile
+        'caption' => $caption,
+        'parse_mode' => 'HTML'
+    ];
+
+    // Ініціалізація cURL
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $telegramApiUrl);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Виконання запиту
+    $response = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    // Обробка відповіді
+    if ($error) {
+        return ['status' => false, 'message' => "Помилка відправки документа: $error"];
+    }
+
+    $responseData = json_decode($response, true);
+    if (!$responseData['ok']) {
+        return ['status' => false, 'message' => 'Помилка відправки документа: ' . $responseData['description']];
+    }
+
+    return ['status' => true, 'message' => 'Документ успішно відправлено'];
+}
+
+
 // Функція для відправки медіа-групи
 function sendMediaGroupToTelegram($conn, $botToken, $chatId, $message = '', $files = [], $botId, $userId) {
     $telegramApiUrl = "https://api.telegram.org/bot$botToken/sendMediaGroup";
@@ -92,17 +129,21 @@ function sendMediaGroupToTelegram($conn, $botToken, $chatId, $message = '', $fil
             $fileType = mime_content_type($filePath);
 
             $mediaType = strpos($fileType, 'image') !== false ? 'photo' : 
-                         (strpos($fileType, 'video') !== false ? 'video' : null);
+            (strpos($fileType, 'video') !== false ? 'video' : 'document');
 
-            if ($mediaType) {
+            if ($mediaType == 'document') {
+                // Якщо це документ, викликаємо функцію для відправки документа
+                $response = sendDocumentToTelegram($botToken, $chatId, $filePath, ($key == 0 && !empty($message)) ? $message : '');
+            } else {
+                // Якщо це фото або відео, додаємо їх до медіа-групи
                 $media[] = [
                     'type' => $mediaType,
                     'media' => 'attach://' . $fileName,
                     'caption' => ($key == 0 && !empty($message)) ? $message : ''
                 ];
-
                 $arrayQuery[$fileName] = new CURLFile($filePath);
             }
+
         }
     }
 

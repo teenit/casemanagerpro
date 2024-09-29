@@ -33,7 +33,7 @@ import TextEditor from "../../elements/TextEditor/TextEditor";
 import Files from "./Files";
 import Fields from "./Fields";
 import Histories from "./Histories";
-import { MenuItem, Select } from "@mui/material";
+import { Button, MenuItem, Select } from "@mui/material";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -107,8 +107,11 @@ const Case = () => {
     }
     return state && state.general ? (
         <div className="case__wrap">
+            {!state?.general?.active && <div className="case-deactivate">
+                <div className="">Кейс деактивовано, хочете активувати? <Button variant="contained" onClick={()=>handleGeneralChange("active", 1)}>ТАК</Button></div>
+            </div>}
             {
-                openSetting && <CaseSettings isActive={state.general.active} handleGeneralChange={handleGeneralChange} successHandler={getCaseInfo} views={state.viewInfoActive ? {} : state.viewInfo} />
+                openSetting && !!state?.general?.active && <CaseSettings isActive={state.general.active} handleGeneralChange={handleGeneralChange} successHandler={getCaseInfo} views={state.viewInfoActive ? {} : state.viewInfo} />
             }
             <div className="set__case__ico">
                 <img src={setImg} alt=""

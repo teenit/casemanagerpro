@@ -6,6 +6,7 @@ import { LANG } from "../../../services/config";
 import Table from "../../elements/Table/Table";
 import { MenuItem, Select, Switch } from "@mui/material";
 import HeaderFormatter from "../../elements/HeaderFormatter/HeaderFormatter";
+import { NavLink } from "react-router-dom";
 
 const columnsTable = [
     {
@@ -20,7 +21,8 @@ const columnsTable = [
         text: "Ім'я",
         fixed: false,
         isHidden: false,
-        sort: true
+        sort: true,
+        formatter: (cell, row) => <NavLink to={'/case/'+row.id}>{cell}</NavLink>
     },
     {
         dataField: 'contract_number',

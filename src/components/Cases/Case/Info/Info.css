@@ -1,6 +1,21 @@
 .case__wrap{
     width: 80%;
     margin: auto;
+    position: relative;
+}
+.case-deactivate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0000000d;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+    font-size: 24px;
 }
 .case__contact__info__img__inner{
     position: relative;

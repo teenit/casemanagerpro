@@ -118,9 +118,9 @@ const GalleryBlock = ({ data, check }) => {
                                     <td>{item.name}</td>
                                     <td>{getType(item.type)}</td>
                                     <td>{convertSize(item.size)}</td>
-                                    {check && <td><NavLink download={true} to={item.link}>
+                                    {check && <td><a download={item.name} href={item.link}>
                                         <Icon icon={"download"} addClass={"default-icon"}/>
-                                        </NavLink></td>}
+                                        </a></td>}
                                 </tr>
                             );
                         })}

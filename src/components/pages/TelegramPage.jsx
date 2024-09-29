@@ -10,6 +10,8 @@ import SmallTextEditorTelegram from "../elements/TextEditor/SmallTextEditorTeleg
 import { isArray } from "chart.js/helpers";
 import TextDescription from "../elements/TextFormatters/TextDescription";
 import Galery from "../Galery/Galery";
+import BigPhoto from "../Events/Event/BigPhoto";
+import OpenPhoto from "../Galery/OpenPhoto";
 
 const DEFAULT_URL = {
     media: "telegram/send-group-media-in-telegram.php",
@@ -27,6 +29,10 @@ const TelegramPage = () => {
     const [typeMessage, setTypeMessage] = useState("text");
     const [addMessage, setAddMessage] = useState(false);
     const [messages, setMessages] = useState([]);
+    const [bigPhoto, setBigPhoto] = useState({
+        link: null,
+        show: false
+    })
     useEffect(()=>{
         apiResponse({},"telegram/get-telegram-bot-list.php").then((res)=>{
             setBots([...res.data])
@@ -39,7 +45,12 @@ const TelegramPage = () => {
             message: replaceParagraphTags(state.message),
             bot_id: state.bot_id
         }, DEFAULT_URL.text).then((res)=>{
-            console.log(res)
+            setState({
+                message: '',
+                bot_id: 0,
+                bot_id_messages: 0
+            });
+            setAddMessage(false)
         })
     }
 
@@ -51,39 +62,44 @@ const TelegramPage = () => {
             per_page: 100,
 
         }, "telegram/load-telegram-messages-by-id.php").then((res)=>{
-            setMessages([...res.data])
+            if (res.status) setMessages([...res.data])
+            else setMessages([])
         })
     }
 
     return (
-        <div className="Page TelegramPage">
-            <Button variant='contained' onClick={()=>setAddMessage(true)}>Надіслати повідомлення</Button>
-            {bots.length > 0 && <Select name="bot_mes" value={state.bot_id_messages} onChange={(e) => { getMessagesByBotId(e.target.value);  }}>
-                            <MenuItem value={0}>Оберіть бота</MenuItem>
-                            {
-                                bots.map((item)=><MenuItem key={item.id} value={item.id}>{item.bot_name}</MenuItem>)
-                            }
-                        </Select>}
+        <>
+        {bots.length > 0 ? <div className="Page TelegramPage">
+            <div className="TelegramPage-controls">
+                
+                <Select name="bot_mes" value={state.bot_id_messages} onChange={(e) => { getMessagesByBotId(e.target.value);  }}>
+                    <MenuItem value={0}>Оберіть бота</MenuItem>
+                    {
+                        bots.map((item)=><MenuItem key={item.id} value={item.id}>{item.bot_name}</MenuItem>)
+                    }
+                </Select>
+                <Button variant='contained' onClick={()=>setAddMessage(true)}>Надіслати повідомлення</Button>
+            </div>
+            
             <div className="TelegramPage-messages">
+            
                 { messages.map((item)=>{
                     return(<div key={item.message_id} className="TelegramPage-messages-message">
-                        <div className="TelegramPage-messages-message-img">
-                        {Array.isArray(item.files) && item.files.map((file) => {
+                        <div className="TelegramPage-messages-message-date">{item.sent_at}</div>
+                        <div className={`TelegramPage-messages-message-img total-${Array.isArray(item.files) ? item.files.length : 0}`}>
+                        {Array.isArray(item.files) && item.files.map((file, index) => {
                             const absoluteUrl = new URL(file, window.location.origin).href;
                             return (
                                 <div 
-                                style={{ 
-                                    backgroundImage: `url(${absoluteUrl})`, 
-                                    backgroundSize: 'cover', 
-                                    backgroundPosition: 'center' 
-                                }} 
                                 className="img-back" 
-                                key={file}>
+                                key={file + index}>
+                                    <img src={absoluteUrl} onClick={()=>setBigPhoto({link: absoluteUrl, show: true})}/>
                                 </div>
                             );
                             })}
                         </div>
                         <TextDescription text={item.message}/>
+                        
                     </div>)
                 })}
             </div>
@@ -92,6 +108,7 @@ const TelegramPage = () => {
                 <Modal
                     closeHandler={()=>setAddMessage(false)}
                     header={"Надіслати повідомлення в телеграм"}
+                    successHandler={()=>setAddMessage(false)}
                     >
                 <div className="TelegramPage-form">
                     <div className="TelegramPage-form-selects">
@@ -122,7 +139,11 @@ const TelegramPage = () => {
                     <div>
                         {typeMessage == "media" && <FilesUploader 
                             successHandler={()=>{
-                                console.log(state)
+                                setState({
+                                    message: '',
+                                    bot_id: 0,
+                                    bot_id_messages: 0
+                                });
                             }}
                             multiple={true} 
                             meta={{
@@ -138,8 +159,9 @@ const TelegramPage = () => {
                 </div>
                 </Modal>
             }
-           
-        </div>
+           {bigPhoto.show && <OpenPhoto url={bigPhoto.link} close={()=>setBigPhoto({link: null, show: false})}/>}
+        </div>: <div className="no-data">Чат ботів не знайдено</div>}
+        </>
     )
 }
 

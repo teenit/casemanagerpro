@@ -90,6 +90,7 @@ footer{
     .footer__copyright{
         flex-direction: column;
         gap: 10px;
+        padding-bottom: 50px;
     }
     .footer__top__logo{
         flex-direction: column;

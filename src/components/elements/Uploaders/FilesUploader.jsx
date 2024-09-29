@@ -86,7 +86,6 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
 
     const metaObject = { ...meta, key: metaKey, id, token };
     formData.append('meta', JSON.stringify(metaObject));
-    console.log(formData)
     try {
       const response = await axios({
         url: serverAddres(getFromType()),

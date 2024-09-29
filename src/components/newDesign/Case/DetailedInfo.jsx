@@ -7,6 +7,7 @@ import Modal from "../../Modals/Modal"
 import { Button } from '@mui/material'
 import Input from '../../elements/Inputs/Input'
 import { apiResponse } from '../../Functions/get_apiObj'
+import TextDescription from '../../elements/TextFormatters/TextDescription'
 const DetailedInfo = ({ info, changeData }) => {
     const [alert, setAlert] = useState({
         success: false,
@@ -77,7 +78,7 @@ const DetailedInfo = ({ info, changeData }) => {
                 </div>
                 {edit ?
                     <Textarea value={value} onChange={(e) => { setValue(e.target.value) }} />
-                    : <span>{value}</span>}
+                    : <span><TextDescription text={value}/></span>}
 
             </div>
         )

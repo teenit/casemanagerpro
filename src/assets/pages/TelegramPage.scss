@@ -17,20 +17,73 @@
             overflow-x: auto;
         }
     }
+    &-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
     &-messages {
-
+        width: 50%;
+        padding: 10px;
+        height: 70vh;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background-color: #42a4f51a;
         &-message {
-
+            width: 90%;
+            margin: auto;
+            box-shadow: 0 0 0 3px $main-color;
+            padding: 10px;
+            border-radius: 15px;
             &-img {
+                // &.total-0 {
+                //     display: none;
+                // }
+                // &.total-1 {
+                //     display: block;
+                // }
+                // &.total-2 {
+                //     display: grid;
+                //     grid-template-columns: 1fr 1fr;
+                // }
                 display: flex;
                 flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
                 .img-back {
-                   width: 200px;
-                   height: 200px;
+                   max-width: 150px;
+                   max-height: 300px;
                    background-size: cover;
                    background-position: center;
+                   
+                  img {
+                    object-fit: cover;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    border: solid 1px $second-color;
+                    border-radius: 2px;
+                  }
                 }
             }
+            &-date {
+                font-size: 12px;
+                font-weight: 900;
+                width: max-content;
+                padding: 2px;
+                background-color: $main-color;
+                color: #fff;
+                border-radius: 15px;
+            }
         }
+    }
+}
+
+@media screen and (max-width: 600px){
+    .TelegramPage-messages {
+        width: 100%;
     }
 }

@@ -30,7 +30,7 @@ function getTelegramMessagesList($conn, $botId, $page, $perPage, $orderBy, $orde
         // Автоматичне отримання базового URL
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
         $host = $_SERVER['HTTP_HOST'];
-        $baseUrl = $protocol . $host . '/serve/';
+        $baseUrl = $protocol . $host . '/serve';
         // Перевірка наявності результатів
         if ($result->num_rows > 0) {
             $messages = [];
