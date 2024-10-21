@@ -27,7 +27,7 @@ import {
   const Circle = ({data,options})=>{
     return(
         <div>
-          <h2 className={s.title__graph}>Категорії кейсів</h2>
+          {/* <h2 className={s.title__graph}>Категорії кейсів</h2> */}
             <Pie
                 data={data}
                 options={options}

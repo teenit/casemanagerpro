@@ -42,7 +42,7 @@ if (isset($data['group_id'])) {
             if ($row['case_id']) {
                 $members[] = [
                     'case_id' => $row['case_id'],
-                    'name' => $row['name'],
+                    'name' => $row['middle_name'] ." ". $row['first_name'] ." ". $row['last_name'],
                     'why' => $row['why'],
                     'phone1' => decryptData($row['phone1'], $key),
                     'phone2' => decryptData($row['phone2'], $key)
@@ -57,7 +57,8 @@ if (isset($data['group_id'])) {
                     'groupDescription' => $row['description'],
                     'groupColor' => $row['color'],
                     'groupCategories' => json_decode($row['categories']),
-                    'groupDateCreated' => $row['date_created']
+                    'groupDateCreated' => $row['date_created'],
+                    'is_favourite' => $row['is_favourite']
                 ];
                 $firstRow = false;
             }

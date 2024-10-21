@@ -36,6 +36,7 @@ import LoginPage from "../pages/LoginPage";
 import TransactionsPage from "../pages/TransactionsPage";
 import MyBigCalendar from "../newDesign/Calendar/MyBigCalendar";
 import TelegramPage from "../pages/TelegramPage";
+import AdministrationPage from "../pages/AdministrationPage";
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -82,6 +83,7 @@ const MainContent = () => {
         <Route path='/transactions' element={<TransactionsPage />} />
         <Route path='/file/:id' element={<File />} />
         <Route path='/calendar' element={<MyBigCalendar />} />
+        <Route path='/administration' element={<AdministrationPage />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />

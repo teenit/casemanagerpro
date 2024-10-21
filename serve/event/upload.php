@@ -21,8 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
     // Перевірка, чи надійшли файли
     if (isset($_FILES['files']) && is_array($_FILES['files']['name'])) {
         // Директорія для зберігання завантажених файлів
-        $uploadDir = 'uploads/';
-
+        $uploadDir = '../uploads/event/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }        
         // Масив для зберігання посилань на файли
         $fileLinks = array();
 
@@ -44,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
             }
 
             // Генеруємо унікальне ім'я для файлу
-            $fileName = $uploadDir . uniqid() . '_' . $name;
-
+            $fileNameLink = uniqid() . '_' . $name;
+            $fileName = $uploadDir . $fileNameLink;
             // Переміщуємо файл з тимчасового місця розташування в директорію для зберігання
             if (move_uploaded_file($tmpName, $fileName)) {
                 
@@ -55,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['files'])) {
                 continue; // Перейти до наступного файлу
             }
             $link = new stdClass();
-            $link->{'link'} = "https://".$_SERVER['SERVER_NAME']."/serve/event/".$fileName;
+            $link->{'link'} = $fileNameLink;
             $link->{'type'} = $type; 
             $link->{'size'} = $size; 
             $link->{'name'} = $name; 

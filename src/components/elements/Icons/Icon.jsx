@@ -143,7 +143,7 @@ const Icon = ({ icon, addClass, onClick }) => {
                 ico = <TodaySharp style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             default:
-                ico = null;
+                ico = <StarRoundedIcon className={addClass} onClick={onClick} />;
         }
         setState(ico);
     }, [icon, addClass, onClick]);

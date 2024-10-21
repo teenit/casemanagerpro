@@ -4,6 +4,7 @@ import userReducer from "./Slices/userSlice";
 import accessReducer from "./Slices/accessSlice";
 import categoriesReducer from "../reducers/categories";
 import authReducer from "../reducers/auth";
+import fieldsReducer from "../reducers/fields";
 
 export const store = configureStore({
     reducer:{
@@ -11,5 +12,6 @@ export const store = configureStore({
         access:accessReducer,
         categories: categoriesReducer,
         auth: authReducer,
+        fields: fieldsReducer
     }
 })

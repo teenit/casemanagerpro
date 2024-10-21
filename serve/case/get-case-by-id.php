@@ -5,6 +5,83 @@ require_once '../functions.php';
 $data = json_decode(file_get_contents('php://input'));
 $case_id = $data->case_id;
 
+function getAndMergeData($conn, $group, $table, $clientIdField, $clientId) {
+    // Запит до таблиці fields_new з фільтрацією за значенням group
+    $sqlFields = "SELECT * FROM fields_new WHERE `group` = ?";
+    $stmtFields = $conn->prepare($sqlFields);
+
+    if ($stmtFields === false) {
+        echo json_encode(array("status" => false, "message" => "Prepare failed: " . $conn->error));
+        return;
+    }
+
+    // Прив'язка параметра $group
+    $stmtFields->bind_param("s", $group);
+    $stmtFields->execute();
+    $resultFields = $stmtFields->get_result();
+
+    // Збереження результату першого запиту
+    $fieldsData = [];
+    while ($row = $resultFields->fetch_assoc()) {
+        $fieldsData[$row['id']] = $row;
+    }
+
+    // Закриття запиту
+    $stmtFields->close();
+
+    // Запит до іншої таблиці $table з фільтрацією за значенням $clientIdField і $clientId
+    $sqlClient = "SELECT * FROM $table WHERE $clientIdField = ?";
+    $stmtClient = $conn->prepare($sqlClient);
+
+    if ($stmtClient === false) {
+        echo json_encode(array("status" => false, "message" => "Prepare failed: " . $conn->error));
+        return;
+    }
+
+    // Прив'язка параметра $clientId
+    $stmtClient->bind_param("i", $clientId);
+    $stmtClient->execute();
+    $resultClient = $stmtClient->get_result();
+
+
+    while ($row = $resultClient->fetch_assoc()) {
+        if (isset($fieldsData[$row['field_id']])) {
+            // Додаємо 'value' до відповідного поля у $fieldsData
+            $fieldsData[$row['field_id']]['value'] = $row['value'];
+        }
+    }
+
+    $fieldsMas = [
+        "contacts"=>[],
+        "works"=>[],
+        "another"=>[]
+    ];
+
+    foreach ($fieldsData as $id => $field) {
+        switch($field['block_view']) {
+            case "contacts":
+                $fieldsMas["contacts"][]=$field;
+                break;
+            case "works":
+                $fieldsMas["works"][]=$field;
+                break;
+            default:
+                $fieldsMas["another"][]=$field;
+        };
+    }
+    // Закриття запиту
+    $stmtClient->close();
+
+    return $fieldsMas;
+}
+
+// Використання функції:
+// $conn - це ваше підключення до бази даних
+// $group - значення для поля group у таблиці fields_new
+// $table - назва таблиці для другого запиту
+// $clientIdField - поле, за яким фільтрується у другій таблиці
+// $clientId - значення для фільтрації у другій таблиці
+
 try {
     // Перевірка з'єднання
     if ($conn->connect_error) {
@@ -198,6 +275,9 @@ try {
      $row_cases_new['phone2'] = $decrypted_phone2;
      $row_cases_new['email'] = $decrypted_email;
 
+
+    $fieldsMeta = getAndMergeData($conn, "cases", "case_fieldsmeta", "case_id", $case_id);
+
     // Формування відповіді JSON
     $response = [
         'general' => $row_cases_new,
@@ -208,7 +288,8 @@ try {
         'notes' => $case_notes_data,
         'userMeta' => $user_meta,
         'files' => $files,
-        'fields' => $fields
+        'fields' => $fields,
+        'fieldsMeta'=>$fieldsMeta
     ];
 
     echo json_encode($response);

@@ -6,6 +6,7 @@ import { LANG } from '../../../services/config';
 import SettingsModal from './SettingsModal';
 import ModalConfirm from '../../Modals/ModalConfirm';
 import { useSelector } from 'react-redux'
+import { Switch } from '@mui/material';
 
 const Group = () => {
     const categories = useSelector(state => state.categories)
@@ -37,6 +38,18 @@ const Group = () => {
     const cutString = (str) => {
         return str.length <= 15 ? str : str.slice(0, 15) + "..."
     }
+
+    const saveHandler = (key, value) => {
+
+        apiResponse({[key]: value, group_id: params.id}, "groups/update-group-by-id.php").then((res)=>{
+            if (res.status) {
+                apiResponse({ group_id: params.id }, 'groups/get-group-by-id.php').then((res) => {
+                    setData(res)
+                })
+            }
+        })
+    }
+
     const Member = ({ item, index }) => {
         const [editMember, setEditMember] = useState(0);
         return (
@@ -99,6 +112,20 @@ const Group = () => {
                             <div className='Group-info-stats-item-text'>
                                 <div>Дата створення</div>
                                 <span>{data.group?.groupDateCreated}</span>
+                            </div>
+                        </div>
+                        <div className='Group-info-stats-item'>
+                            <Icon icon={"date_created"} addClass={"default-icon"} />
+                            <div className='Group-info-stats-item-text'>
+                                <div>Додати в обране  
+                                    <Switch checked={data.group?.is_favourite == 1 ? true : false} onChange={(e) => {
+                                        if (e.target.checked) {
+                                            saveHandler("is_favourite", 1);
+                                        } else {
+                                            saveHandler("is_favourite", 0);
+                                        }
+                                    }} /></div>
+                               
                             </div>
                         </div>
                         <div className='Group-info-stats-item'>

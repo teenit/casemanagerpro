@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { apiResponse } from '../../Functions/get_apiObj';
 import Icon from '../../elements/Icons/Icon';
 import Input from '../../elements/Inputs/Input';
@@ -20,6 +20,10 @@ const CaseName = ({ dataState, view, id, getCaseInfo }) => {
         last_name: dataState.last_name,
         middle_name: dataState.middle_name,
     });
+
+    useEffect(()=>{
+        setName({...dataState})
+    },[dataState])
 
     const fullName = `${dataState.middle_name} ${dataState.first_name} ${dataState.last_name}`;
 

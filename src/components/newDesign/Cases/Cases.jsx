@@ -7,6 +7,7 @@ import Table from "../../elements/Table/Table";
 import { MenuItem, Select, Switch } from "@mui/material";
 import HeaderFormatter from "../../elements/HeaderFormatter/HeaderFormatter";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const columnsTable = [
     {
@@ -45,8 +46,8 @@ const columnsTable = [
         }
     },
     {
-        dataField: 'Телефон',
-        text: LANG.TRANSACTIONS.payment_method,
+        dataField: 'phone1',
+        text: "Телефон",
         fixed: false,
         isHidden: false,
         sort: false,
@@ -55,8 +56,8 @@ const columnsTable = [
         }
     },
     {
-        dataField: 'Адреса проживання',
-        text: LANG.TRANSACTIONS.status,
+        dataField: 'addressLive',
+        text: 'Адреса проживання',
         fixed: false,
         isHidden: false,
         sort: false
@@ -74,6 +75,7 @@ const columnsTable = [
 ];
 
 const Cases = () => {
+    const fields = useSelector(state => state.fields.cases);
     const [state, setState] = useState([]);
     const [options, setOptions] = useState({
         page: 0,
@@ -166,8 +168,30 @@ const Cases = () => {
         return column;
     };
 
-    const casesColumns = prepareColumns(columnsTable);
+    const getColumns = () => {
+        const testArray = [...fields.works, ...fields.contacts, ...fields.another].map((item)=>{
+            return {
+                dataField: 'field' + item.id,
+                text: item.name,
+                fixed: false,
+                isHidden: false,
+                sort: false,
+                formatter: (cell, row)=>{
+                    
+                    return (
+                        <>
+                            {item.type == "boolean" && <div>{cell == 1 ? "Так" : cell == undefined ? "" : "Ні" }</div>}
+                            {item.type !== "boolean" && <div>{cell}</div>}
+                        </>
+                    )
+                }
+            }
+        })
+        return [...columnsTable, ...testArray];
+    }
 
+    const casesColumns = prepareColumns(getColumns());
+    console.log(fields)
     return (
         <div className="ListCases">
             <div className="ListCases-sort">

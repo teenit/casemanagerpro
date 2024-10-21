@@ -7,7 +7,8 @@ import moment from 'moment';
 import Textarea from "./Textarea"
 import SmallNotification from "../Notifications/SmallNotification";
 import Hint from "../Hints/Hint";
-const InputBlock = ({ hintMessage = null, maxLength = null, header = false, textarea = false, age = false, errorKey = null, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "" }) => {
+import TextDescription from "../TextFormatters/TextDescription";
+const InputBlock = ({ hintMessage = null, maxLength = null, header = false, textarea = false, age = false, errorKey = null, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "", showLable=false }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
     useEffect(() => {
@@ -61,6 +62,7 @@ const InputBlock = ({ hintMessage = null, maxLength = null, header = false, text
             {!showEdit && (
                 <div className="InputBlock-default">
                     {icon && <Icon icon={icon} addClass={"default-icon"} />}
+                    {showLable && <b>{title}: </b>}
                     <div className="case-info-card-text">
                         <div title={titleDefault}>
                             {link && (label !== "" && label !== null) ? (
@@ -70,9 +72,9 @@ const InputBlock = ({ hintMessage = null, maxLength = null, header = false, text
                             ) : (
                                 <>
                                     {label === "" || label === null ? (
-                                        <span className={`InputBlock-title-main ${header && 'header'}`}>{titleDefault}</span>
+                                        <span className={`InputBlock-title-main ${header && 'header'}`}><TextDescription text={titleDefault}/></span>
                                     ) : (
-                                        <span className={`InputBlock-title-main ${header && 'header'}`}>{`${label}${icon == "birthday" ? howOldIsCase(value) : ""}`}</span>
+                                        <span className={`InputBlock-title-main ${header && 'header'}`}><TextDescription text={ `${label}${icon == "birthday" ? howOldIsCase(value) : ""}`}/></span>
 
                                     )}
                                 </>

@@ -10,10 +10,59 @@ if (empty($data->token)) {
     exit(json_encode(['status' => false, 'list' => [], 'message' => 'Token is missing.']));
 }
 
-// Валідація токену (якщо потрібна)
-// if (!validateToken($data->token)) {
-//     exit(json_encode(['status' => false, 'list' => [], 'message' => 'Invalid token.']));
-// }
+function getCaseFieldsMeta($conn, $case_ids) {
+    // Перевіряємо, чи масив case_ids не порожній і є масивом
+    if (empty($case_ids) || !is_array($case_ids)) {
+        return [];
+    }
+
+    // Створюємо запит із використанням оператора IN для case_id
+    $placeholders = implode(',', array_fill(0, count($case_ids), '?')); // Динамічні placeholders для запиту
+    
+    $sql = "
+        SELECT case_id, field_id, value, data
+        FROM case_fieldsmeta
+        WHERE case_id IN ($placeholders)";
+    
+    // Підготовка запиту
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        return []; // Якщо підготовка запиту не вдалася, повертаємо порожній масив
+    }
+
+    // Підставляємо значення в запит для кожного case_id
+    $stmt->bind_param(str_repeat('i', count($case_ids)), ...$case_ids);
+
+    // Виконання запиту
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Масив для зберігання результатів
+    $case_fields = [];
+
+    // Збір даних з результату
+    while ($row = $result->fetch_assoc()) {
+        $case_id = $row['case_id'];
+
+        // Ініціалізуємо масив для case_id, якщо він ще не існує
+        if (!isset($case_fields[$case_id])) {
+            $case_fields[$case_id] = [];
+        }
+
+        // Додаємо всю інформацію (field_id, value, data) для кожного case_id
+        $case_fields[$case_id][] = [
+            'field_id' => $row['field_id'],
+            'value' => $row['value'],
+            'data' => $row['data']
+        ];
+    }
+
+    // Закриваємо запит
+    $stmt->close();
+
+    return $case_fields; // Повертаємо масив даних для кожного case_id
+}
+
 
 // Отримання параметрів пагінації з POST-запиту
 $page = isset($data->page) ? (int)$data->page : 1;
@@ -137,7 +186,7 @@ $result = $stmt_cases->get_result();
 
 // Масив для зберігання результатів
 $mas = [];
-
+$caseIds = [];
 // Ітерація через результати запиту та створення об'єктів для збереження даних
 while ($res = $result->fetch_assoc()) {
     $obj = new stdClass();
@@ -156,6 +205,7 @@ while ($res = $result->fetch_assoc()) {
     $obj->{'happyBD'} = $res['happy_bd'];
     $obj->{'user_id'} = $res['user_id'];
     $obj->{'sex'} = $res['sex'];
+    $obj->{'fields'} = [];
     $obj->{'active'} = $res['active'];
     $obj->{'responsible_id'} = $res['responsible_id'];
     $obj->{'categories'} = json_decode($res['categories']);
@@ -163,7 +213,34 @@ while ($res = $result->fetch_assoc()) {
 
     // Додавання об'єкта до масиву
     $mas[] = $obj;
+    $caseIds[] = $res['id'];
 }
+
+$caseFields = [];
+
+if (!empty($caseIds)) {
+    // Отримуємо поля для case_ids
+    $caseFields = getCaseFieldsMeta($conn, $caseIds);
+
+    // Ітеруємо по масиву кейсів
+    foreach($mas as $index => $item) {
+        // Перевіряємо, чи є поля для цього case_id
+        $case_id = $item->id;
+        if (isset($caseFields[$case_id])) {
+            // Додаємо поля з таблиці case_fieldsmeta до відповідного кейса
+            foreach($caseFields[$case_id] as $fieldItem) {
+                $fieldKey = 'field' . $fieldItem['field_id']; // Використовуємо правильний ключ field_id
+                $mas[$index]->{$fieldKey} = $fieldItem['value']; // Додаємо значення поля
+            }
+            $mas[$index]->fields = $caseFields[$case_id]; // Додаємо масив полів
+        } else {
+            // Якщо немає полів, можемо залишити порожній масив
+            $mas[$index]->fields = [];
+        }
+    }
+}
+
+
 
 // Закриття підключення до бази даних
 mysqli_close($conn);

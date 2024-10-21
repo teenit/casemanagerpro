@@ -122,13 +122,14 @@ try {
             case 'event_files':
                 $value = json_decode($row['meta_value']);
                 $results['event_files'][] = [
-                    'link' => $value->link,
+                    'link' => "https://".$_SERVER['SERVER_NAME']."/serve/uploads/event/".$value->link,
                     'name' => $value->name,
                     'description' => $value->description,
                     'size' => $value->size,
                     'title' => $value->title,
                     'type' => $value->type,
-                    'meta_id' => $row['meta_id']
+                    'meta_id' => $row['meta_id'],
+                    
                 ];
                 break;
             case 'event_plan':

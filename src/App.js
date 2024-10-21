@@ -15,6 +15,7 @@ import { loadCategories } from './actions/categories';
 import LoginPage from './components/pages/LoginPage';
 import MobileNavigation from './components/MobileNavigation/MobileNavigation';
 import ScrollToTop from './assets/components/ScrollTop/ScrollTop';
+import { loadFields } from './actions/fields';
 
 class App extends Component {
   constructor(props) {
@@ -28,6 +29,8 @@ class App extends Component {
   componentDidMount() {
     this.props.loadUserAuth(); // Викликаємо екшен для завантаження авторизації
     this.props.loadCategories();
+    
+    this.props.loadFields();
 
     // Перевірка на мобільний пристрій
     this.setState({ isMobile: window.innerWidth <= 768 }); // Визначаємо, чи пристрій мобільний за шириною екрану
@@ -59,6 +62,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   loadUserAuth,
   loadCategories,
+  loadFields
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

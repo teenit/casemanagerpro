@@ -2,7 +2,6 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { serverAddres } from "../Functions/serverAddres";
 import "./footer.css";
 import { apiResponse } from "../Functions/get_apiObj";
 import { LANG } from "../../services/config";
@@ -15,8 +14,7 @@ const Footer = () => {
 
     const [version, setVersion] = useState(false)
     const [newVersion, setNewVersion] = useState(false)
-    const [right, setRight] = useState(false)
-    const [disBtn, setDisBtn] = useState(false)
+
     function checkVersion() {
         let obj = {
             id: localStorage.getItem("id"),
@@ -34,47 +32,12 @@ const Footer = () => {
             .catch((error) => console.log(error))
     }
     useEffect(() => {
-        let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token")
-        }
-        axios({
-            url: serverAddres("manage/get-version.php"),
-            method: "POST",
-            header: { 'Content-Type': 'application/json;charset=utf-8' },
-            data: JSON.stringify(obj),
+        apiResponse({},"manage/get-version.php").then((res)=>{
+            setVersion(res.version);
+            checkVersion()
         })
-            .then((data) => {
-                if (!data.data?.message) setRight(true)
-                setVersion(data.data.version);
-                checkVersion()
-            })
-            .catch((error) => console.log(error))
     }, [])
 
-
-    function updateCaseManager() {
-        apiResponse({
-            link: `https://update.people-ua.org/version/${newVersion}.zip`,
-            newVersion: newVersion
-        }, "manage/update-download.php").then((res) => {
-           
-            // window.location.reload()
-        })
-        // axios({
-        //     url: serverAddres("manage/update-download.php"),
-        //     method: "POST",
-        //     header: { 'Content-Type': 'application/json;charset=utf-8' },
-        //     data: JSON.stringify({
-        //         link: `https://update.people-ua.org/version/${newVersion}.zip`,
-        //         newVersion: newVersion
-        //     }),
-        // })
-        //     .then((data) => {
-        //         // window.location.reload()
-        //     })
-        //     .catch((error) => console.log(error))
-    }
     return (
         <footer>
             <div className="footer">

@@ -28,6 +28,32 @@ export const LANG = {
     title_category_case_helps: "Категорії наданої допомоги",
     title_category_groups: "Категорії груп",
 },
+FIELDS:{
+  field_type: "Тип поля",
+  create_field:"Додати нове поле",
+  block_view:"Блок відображення",
+  field_name:"Назва",
+  system_field:"Системне",
+  group_field:"Область відображення",
+  date_created:"Дата створення",
+  sorted_field:"Сортування",
+  unique:"Унікальний ID",
+  icon_field: "Іконка",
+  contacts: "Контактні дані",
+  works: "Робочі дані",  
+  another: "Інше",
+  cases: "Кейси",
+  users:"Користувачі",
+  type_fields: {
+    "int": "Число",
+    "boolean": "Світчер",
+    "string": "Строка",
+    "phone": "Телефон",
+    "email": "E-mail",
+    "date": "Дата",
+    "text":"Текст"
+  }
+},
   FILES:{
     "case_files":"Файли кейса",
     "history_case_files":"Файл історія кейсу"
@@ -1089,5 +1115,35 @@ export const appConfig = {
           description: LANG.CONFIG.system_twofa_description,
           label: LANG.CONFIG.system_twofa_label
         }
-      ]}
+      ]},
+  fields: [
+    {
+      label: LANG.FIELDS.type_fields.int,
+      key: "int"
+    },
+    {
+      label: LANG.FIELDS.type_fields.boolean,
+      key: "boolean"
+    },
+    {
+      label: LANG.FIELDS.type_fields.string,
+      key: "string"
+    },
+    {
+      label: LANG.FIELDS.type_fields.phone,
+      key: "phone"
+    },
+    {
+      label: LANG.FIELDS.type_fields.email,
+      key: "email"
+    },
+    {
+      label: LANG.FIELDS.type_fields.date,
+      key: "date"
+    },
+    {
+      label: LANG.FIELDS.type_fields.text,
+      key: "text"
+    },
+  ]
 }

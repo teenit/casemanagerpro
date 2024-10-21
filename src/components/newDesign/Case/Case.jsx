@@ -34,6 +34,7 @@ import Files from "./Files";
 import Fields from "./Fields";
 import Histories from "./Histories";
 import { Button, MenuItem, Select } from "@mui/material";
+import FieldsBlock from "./FieldsBlock";
 
 const Case = () => {
     const dispatch = useDispatch();
@@ -128,12 +129,14 @@ const Case = () => {
 
 
             <div className="flex">
-
                 {(state.viewInfo.view_InfoBlock) && <CaseInfoBlock profileImg={state.meta?.profileImg?.link ? state.meta.profileImg.link.link : null} case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
-
+            </div>
+            <div>
+                {state?.fieldsMeta && <FieldsBlock getCaseInfo={getCaseInfo} works={state.fieldsMeta.works} contacts={state.fieldsMeta.contacts} another={state.fieldsMeta.another} case_id={case_id}/>}
+                
             </div>
             {(state.viewInfo.view_GroupConnection) &&
-                <GroupConnections case_id={case_id} type={"case"} />
+                <GroupConnections case_id={case_id} type={"case"}/>
             }
             <div className="info__column">
                 {(state.viewInfo.view_DetailedInfo) &&

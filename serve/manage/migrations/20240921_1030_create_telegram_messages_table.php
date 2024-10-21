@@ -4,7 +4,7 @@ function migrate_up($conn) {
         id INT AUTO_INCREMENT PRIMARY KEY,
         bot_id INT NOT NULL,
         user_id INT NOT NULL,
-        message_text TTEXT NULL DEFAULT NULL,
+        message_text TEXT NULL DEFAULT NULL,
         message_files TEXT NULL DEFAULT NULL,
         sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         status VARCHAR(50) DEFAULT 'sent',

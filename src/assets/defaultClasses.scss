@@ -4,6 +4,12 @@
 div {
     box-sizing: border-box;
 }
+.mrauto {
+    margin: auto;
+}
+.wmc{
+    width: max-content;
+}
 .flex {
     display: flex;
     width: 100%;
@@ -12,6 +18,9 @@ div {
         align-items: center;
         justify-content: space-between;
     }
+}
+.gap10 {
+    gap: 10px;
 }
 .w100 {
     width: 100%;

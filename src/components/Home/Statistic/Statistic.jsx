@@ -51,6 +51,7 @@ const Statistic = () =>{
     const [happy, setHappy] = useState(null)
     const [caseCategiries, setCaseCategories] = useState(null)
     const categories = useSelector(state => state.categories);
+    const [groups, setGroups] = useState(null)
     useEffect(()=>{
         // AmountCases().then((res) => {
         //     if(res?.message) return
@@ -129,6 +130,19 @@ const Statistic = () =>{
               }]
           })
         })
+        apiResponse({},"statistics/count-group-categories.php").then((res)=>{
+          if(res.status) {
+            setGroups({
+              labels: res.groups.map(item=>item.name),
+              datasets: [{
+                  label: 'Обрані групи',
+                  data: res.groups.map(item=>item.count),
+                  borderWidth: 1,
+                  backgroundColor: res.groups.map(item=>item.color),
+                }]
+            });
+          }
+        })
        
     },[])
  
@@ -139,8 +153,9 @@ const Statistic = () =>{
                 <div className={s.stats__grid}>
                 {caseCategiries == null ? "":<Circle data={caseCategiries} options = {options}/>}
                     {happy == null ? "":<HappyG data={happy} options = {options}/>}
-                   {size == null ? "":<DoughnutB title="Доступне місце на сервері" data={size} options={options}/>}
-                   {amountCases == null ? "":<DoughnutB title="Доступних кейсів" data={amountCases} options={options}/>}
+                    {groups == null ? "":<Circle data={groups} options = {options}/>}
+                   {/* {size == null ? "":<DoughnutB title="Доступне місце на сервері" data={size} options={options}/>}
+                   {amountCases == null ? "":<DoughnutB title="Доступних кейсів" data={amountCases} options={options}/>} */}
                     {/* {caseCategiries == null ? "":<LineG data={caseCategiries} options = {options}/>} */}
                     
                     
