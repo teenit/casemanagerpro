@@ -10,8 +10,9 @@ import { MuiColorInput } from "mui-color-input";
 import ListCategories from "./ListCategories";
 import Modal from "../../Modals/Modal";
 import Icon from "../../elements/Icons/Icon";
+import AccessCheck from "../../Functions/AccessCheck";
 
-const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "", categoryColor = "", categoryKey = null}) => {
+const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "", categoryColor = "", categoryKey = null, rights = {}}) => {
     const [state, setState] = useState({
         categoryName:categoryName,
         categoryDescription:categoryDescription,
@@ -21,6 +22,8 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
     const [addModal, setAddModal] = useState(false)
     const [showList, setShowList] = useState(false)
     const [categories, setCategories]  = useState([]);
+    const checkAddRight = AccessCheck("yes_no", rights.add);
+    const checkRemoveRight = AccessCheck("yes_no", rights.remove);
     const getCategories = (key) => {
         apiResponse({categoryKey:key},"manage/get-categories.php").then((data)=>{
             setCategories([...data.data])
@@ -55,7 +58,7 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
                     <div>{title} ({categories.length})</div>
                 </div>
                 
-                <div className="add" onClick={()=>setAddModal(true)}><Icon icon={'add'}/></div>
+                {checkAddRight && <div className="add" onClick={()=>setAddModal(true)}><Icon icon={'add'}/></div>}
             </div>
             {
                 showList && <ListCategories categories={categories}/>

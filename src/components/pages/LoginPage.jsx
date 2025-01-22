@@ -104,8 +104,13 @@ const LoginPage = () => {
                         profilePhoto: res.userData.profilePhoto,
                         access: res.access
                     }));
-                    
-                    window.location.reload();
+
+                    if (window.location.pathname == "/login") {
+                        window.location.href = "/";
+                    } else {
+                        window.location.reload();
+                    }
+                   
                 } else {
                     setState({ ...state, activeCode: true, type: 'secretCode' });
                     // Reset tries on successful login
@@ -161,7 +166,11 @@ const LoginPage = () => {
                     access: data.access
                 }));
                 
-                window.location.reload();
+                if (window.location.pathname == "/login") {
+                    window.location.href = "/";
+                } else {
+                    window.location.reload();
+                }
             }
         })
         

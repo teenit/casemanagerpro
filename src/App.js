@@ -16,6 +16,8 @@ import LoginPage from './components/pages/LoginPage';
 import MobileNavigation from './components/MobileNavigation/MobileNavigation';
 import ScrollToTop from './assets/components/ScrollTop/ScrollTop';
 import { loadFields } from './actions/fields';
+import Menu from './components/newDesign/Menu/Menu';
+import HorisontalMenu from './components/newDesign/Menu/HorisontalMenu';
 
 class App extends Component {
   constructor(props) {
@@ -28,12 +30,17 @@ class App extends Component {
 
   componentDidMount() {
     this.props.loadUserAuth(); // Викликаємо екшен для завантаження авторизації
-    this.props.loadCategories();
     
-    this.props.loadFields();
 
     // Перевірка на мобільний пристрій
     this.setState({ isMobile: window.innerWidth <= 768 }); // Визначаємо, чи пристрій мобільний за шириною екрану
+  }
+
+  componentDidUpdate(prewProps, prewState){
+    if (prewProps.auth.auth !== this.props.auth.auth) {
+      this.props.loadCategories();
+      this.props.loadFields();
+    }
   }
 
   render() {
@@ -45,10 +52,21 @@ class App extends Component {
       ) : (
         <div className="App">
           <ScrollToTop />
-          <Header show={auth.auth} />
-          {auth.auth ? <MainContent /> : <LoginPage />}
-          <Footer />
-          {isMobile && <MobileNavigation />} {/* Відображаємо MobileNavigation тільки на мобільних пристроях */}
+          {/* <Header show={auth.auth} /> */}
+          <div className='App-content'>
+            {auth.auth ? <Menu /> : <div></div>}
+            <div className='App-content-right'>
+              {auth.auth && <div className='App-control'>
+                <HorisontalMenu isMobile={isMobile}/>
+              </div>}
+            {auth.auth ? <MainContent /> : <LoginPage />}
+            {auth.auth && <Footer />}
+            </div>
+            
+          </div>
+          
+          
+          {isMobile && false && <MobileNavigation />} {/* Відображаємо MobileNavigation тільки на мобільних пристроях */}
         </div>
       )
     );

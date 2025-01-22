@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Add, ArrowBack, ArrowBackIos, ArrowDownwardOutlined, ArrowForwardIos, AttachFile, Cake, Call, Check, Close, Delete, Download, Edit, ExitToApp, ExpandLess, ExpandLessRounded, ExpandLessSharp, ExpandMore, MailOutline, Man, MenuBook, Print, PriorityHigh, Replay, Replay5Outlined, Search, Send, Settings, SettingsOutlined, SystemUpdate, TodaySharp, Visibility, VisibilityOff, Work, WorkOutline } from '@mui/icons-material';
+import { Add, ArrowBack, ArrowBackIos, ArrowDownwardOutlined, ArrowForwardIos, AttachFile, Cake, Call, Check, Close, Delete, Download, Edit, ExitToApp, ExpandLess, ExpandLessRounded, ExpandLessSharp, ExpandMore, Logout, LogoutRounded, MailOutline, Man, MenuBook, Print, PriorityHigh, Replay, Replay5Outlined, Search, Send, Settings, SettingsOutlined, SystemUpdate, TodaySharp, Visibility, VisibilityOff, Work, WorkOutline } from '@mui/icons-material';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
@@ -12,7 +12,15 @@ import EventIcon from '@mui/icons-material/Event';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-const Icon = ({ icon, addClass, onClick }) => {
+import LogoutIcon from '@mui/icons-material/Logout';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import GroupIcon from '@mui/icons-material/Group';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
@@ -20,6 +28,9 @@ const Icon = ({ icon, addClass, onClick }) => {
         switch (icon) {
             case "add_notification":
                 ico = <LibraryAddIcon className={addClass} onClick={onClick} />
+                break;
+            case "notification":
+                ico = <NotificationsNoneIcon className={addClass} onClick={onClick} />
                 break;
             case "star":
                 ico = <StarRoundedIcon className={addClass} onClick={onClick} />
@@ -103,7 +114,7 @@ const Icon = ({ icon, addClass, onClick }) => {
             case "categories":
                 ico = <FolderOpenIcon className={addClass} onClick={onClick} />;
                 break;
-            case "attach_file":
+            case "  ":
                 ico = <AttachFile className={addClass} onClick={onClick} />;
                 break;
             case "send":
@@ -141,6 +152,27 @@ const Icon = ({ icon, addClass, onClick }) => {
                 break;
             case "today":
                 ico = <TodaySharp style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "logout":
+                ico = <LogoutIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "profile":
+                ico = <PermIdentityIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "cases":
+                ico = <GroupIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "transaction":
+                ico = <AccountBalanceWalletIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "resource":
+                ico = <TextSnippetIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "access":
+                ico = <VpnKeyIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "groups":
+                ico = <Diversity3Icon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             default:
                 ico = <StarRoundedIcon className={addClass} onClick={onClick} />;

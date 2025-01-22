@@ -9,6 +9,8 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import TextDescription from "../../elements/TextFormatters/TextDescription";
 import Icon from "../../elements/Icons/Icon";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import AccessCheck from "../../Functions/AccessCheck";
 
 const CalendarInfoBlock = ({data}) => {
     const [state, setState] = useState({...data})
@@ -33,7 +35,10 @@ const CalendarInfoBlock = ({data}) => {
 const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>{}}) => {
 
     const [state, setState] = useState({...data})
-
+    const user = useSelector(state => state.user)
+    console.log(user)
+    const checkEditEvent = AccessCheck("yes_no", "a_page_calendar_edit");
+    const checkRemoveEvent = AccessCheck("yes_no", "a_page_calendar_remove");
     const handleChange = (key, value) => {
         setState({...state, [key]: value})
     }
@@ -55,14 +60,15 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
             close();
         })   
     }
+    console.log(checkRemoveEvent)
     return(
         <Modal
             header={<div className="Modal--head-header">
-                {edit || state.key == 'happyCase' ? <div className="title">{LANG.calendar.add_event.title}</div> : <Button onClick={setEdit} startIcon={<Icon icon={'edit'}/>}>Редагувати подію</Button>}
+                {edit || state.key == 'happyCase' ? <div className="title">{LANG.calendar.add_event.title}</div> : (!checkEditEvent && user.id !== state.userID) ? "" :<Button onClick={setEdit} startIcon={<Icon icon={'edit'}/>}>Редагувати подію</Button>}
             </div>}
             closeHandler={close}
             footer={ <div className="Modal--footer" style={{justifyContent:"space-between",width:"100%"}}>
-                {edit && state.calendar_id && <Icon icon={'delete'} addClass={'AddCalendarEvent-delete'} onClick={deleteEvent}/>}
+                {edit && state.calendar_id &&  !(!checkRemoveEvent && user.id !== state.userID) && <Icon icon={'delete'} addClass={'AddCalendarEvent-delete'} onClick={deleteEvent}/>}
                
                 <Button onClick={close}  variant="outlined">{LANG.cancel}</Button>
                 <Button disabled={!edit} onClick={sendForm} variant="contained">{LANG.save}</Button>

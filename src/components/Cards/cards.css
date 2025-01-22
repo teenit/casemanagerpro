@@ -110,6 +110,17 @@ min-width: 100px;
    align-items: top;
    padding: 0px 5px;
 }
+.card__info__category {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.card__info__category__block {
+    padding: 2px 4px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 12px;
+}
 .card__categories__inner{
     display: grid;
     grid-template-columns: 1fr;

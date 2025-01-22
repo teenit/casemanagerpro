@@ -1,7 +1,5 @@
 import React from "react";
-import Login from "../Auth/Login";
-import { Routes, Route, Navigate } from "react-router-dom";
-import AddCase from '../Cases/Add-case/AddCase';
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import Registration from "../Auth/Registration";
 import Home from "../Home/Home";
 import User from "../User/User";
@@ -9,11 +7,9 @@ import Settings from "../Settings/Settings";
 import Recovery from "../Recovery/Recovery";
 import Contacts from "../Contacts/Contacts";
 import Resources from "../Resources/Resources";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useAuth } from "../../hooks/use-auth";
 import Events from "../Events/Events";
-import Event from "../Events/Event/Event";
-import Calendar from "../Calendar/Calendar";
 import Cooperation from "../Cooperation/Cooperation";
 import Task from "../Task/Task";
 import AccessPage from "../pages/AccessPage";
@@ -27,23 +23,22 @@ import Search from "../Search/Search";
 import AccessCheck from "../Functions/AccessCheck";
 import NotFound from "../pages/NotFound";
 import Group from "../Groups/Group/Group";
-import TextEditor from "../elements/TextEditor/TextEditor";
 import File from "../pages/File";
-import UpdateLog from "../pages/UpdateLog";
 import EventsPage from "../pages/EventsPage";
 import EventPage from "../pages/EventPage";
 import LoginPage from "../pages/LoginPage";
 import TransactionsPage from "../pages/TransactionsPage";
 import MyBigCalendar from "../newDesign/Calendar/MyBigCalendar";
 import TelegramPage from "../pages/TelegramPage";
-import AdministrationPage from "../pages/AdministrationPage";
+import FieldsPage from "../pages/FieldsPage";
+import GoogleDrivePage from "../pages/GoogleDrivePage";
 
 const MainContent = () => {
-  const dispatch = useDispatch();
-  const categories = useSelector(state => state.user);
+  const rights = useSelector(state => state.auth);
   const access = {
     add_case: AccessCheck('page', 'a_page_case_add'),
     cases: AccessCheck('page', "a_cases_get"),
+    group: AccessCheck('page', "a_page_group"),
     case: AccessCheck('page', "a_page_case"),
     calendar: AccessCheck('page', "a_page_calendar"),
     access: AccessCheck('page', "a_page_access"),
@@ -75,15 +70,17 @@ const MainContent = () => {
         <Route path='/telegram' element={ <TelegramPage />} />
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
-        <Route path='/group/:id' element={<Group />} />
+        <Route path='/group/:id' element={access.group ? <Group />  : <NotFound />} />
         <Route path='/task' element={<Task />} />
         <Route path='/test' element={<TestPage />} />
         <Route path='/search' element={<Search />} />
         <Route path='/login_new' element={<LoginPage />} />
         <Route path='/transactions' element={<TransactionsPage />} />
         <Route path='/file/:id' element={<File />} />
-        <Route path='/calendar' element={<MyBigCalendar />} />
-        <Route path='/administration' element={<AdministrationPage />} />
+        <Route path='/calendar' element={ access.calendar ? <MyBigCalendar /> :  <NotFound />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/google-drive' element={<GoogleDrivePage />} />
+        <Route path='/fields' element={rights.a_super == 1 ? <FieldsPage /> : <NotFound />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />

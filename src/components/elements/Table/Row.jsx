@@ -12,7 +12,7 @@ const Row = ({ columns = [], data = {} }) => {
     return (
         <tr>
             {columns.map((item) => (
-                <Cell key={item.dataField} cell={getCell(item)} />
+                <Cell key={item.dataField} cell={getCell(item)} breakWord={item?.breakWord}/>
             ))}
         </tr>
     );

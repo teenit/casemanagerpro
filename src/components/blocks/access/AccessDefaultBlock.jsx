@@ -31,7 +31,7 @@ const AccessDefaultBlock = (props) => {
         <div className="AccessDefaultBlock">
             <hr />
             <div className="AccessDefaultBlock-container">
-                {access.yes_no.map((item) => {
+                {access?.yes_no.map((item) => {
                     return (
                         <div className="line-yes" key={item}>
                             <div className="title">{LANG.access[item]}</div>
@@ -47,14 +47,14 @@ const AccessDefaultBlock = (props) => {
                 })}
             </div>
             <div className="AccessDefaultBlock-container">
-                {access.view_edit.length > 0 && (
+                {access?.view_edit.length > 0 && (
                     <div className="line">
                         <div className="title"></div>
                         <div className="show">Відображати</div>
                         <div className="edit">Редагувати</div>
                     </div>
                 )}
-                {access.view_edit.map((item) => {
+                {access?.view_edit.map((item) => {
                     return (
                         <div key={item} className="line">
                             <div className="title">{LANG.access[item]}</div>

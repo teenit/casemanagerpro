@@ -20,6 +20,7 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
     newPassTo: "",
     changeError: ""
   });
+  console.log(url)
   const [alert, setAlert] = useState({
     success: false,
     error: false,

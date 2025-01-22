@@ -1,4 +1,3 @@
-
 export const LANG = {
   GLOBAL: {
     save: "Зберегти",
@@ -14,65 +13,65 @@ export const LANG = {
     end: "Кінець",
     link: "Посилання",
     years: "років",
-    edit:"Редагувати",
-    close:"Закрити",
-    tags:"Теги",
-    category:"Категорія",
-    type:"Тип"
+    edit: "Редагувати",
+    close: "Закрити",
+    tags: "Теги",
+    category: "Категорія",
+    type: "Тип"
   },
-  SETTINGS:{
-    title_category:"Назва категорії",
-    description_category:"Опис категорії",
-    color_category:"Колір категорії",
-    title_category_case:"Категорії кейсів",
+  SETTINGS: {
+    title_category: "Назва категорії",
+    description_category: "Опис категорії",
+    color_category: "Колір категорії",
+    title_category_case: "Категорії кейсів",
     title_category_case_helps: "Категорії наданої допомоги",
     title_category_groups: "Категорії груп",
-},
-FIELDS:{
-  field_type: "Тип поля",
-  create_field:"Додати нове поле",
-  block_view:"Блок відображення",
-  field_name:"Назва",
-  system_field:"Системне",
-  group_field:"Область відображення",
-  date_created:"Дата створення",
-  sorted_field:"Сортування",
-  unique:"Унікальний ID",
-  icon_field: "Іконка",
-  contacts: "Контактні дані",
-  works: "Робочі дані",  
-  another: "Інше",
-  cases: "Кейси",
-  users:"Користувачі",
-  type_fields: {
-    "int": "Число",
-    "boolean": "Світчер",
-    "string": "Строка",
-    "phone": "Телефон",
-    "email": "E-mail",
-    "date": "Дата",
-    "text":"Текст"
-  }
-},
-  FILES:{
-    "case_files":"Файли кейса",
-    "history_case_files":"Файл історія кейсу"
   },
-CONFIG:{
-  system_twofa_label: "2-факторна автентифікація",
-  system_twofa_description: "Запровадьте або обмежте двофакторну автентифікацію по email. Коли параметр увімкнено, при кожній авторизації, користувачу буде приходити на поштому адресу числовий пароль для підтвердження входу",
-},
-TRANSACTIONS: {
-  transaction_type: 'Тип транзакції',
-  description:'Опис',
-  amount:'Суму',
-  payment_method:'Метод оплати',
-  status:'Статус',
-  created_at:'Дата створення',
-  pending: "Очікується",
-  completed: "Завершено успішно",
-  failed: "Завершено невдало"
-},
+  FIELDS: {
+    field_type: "Тип поля",
+    create_field: "Додати нове поле",
+    block_view: "Блок відображення",
+    field_name: "Назва",
+    system_field: "Системне",
+    group_field: "Область відображення",
+    date_created: "Дата створення",
+    sorted_field: "Сортування",
+    unique: "Унікальний ID",
+    icon_field: "Іконка",
+    contacts: "Контактні дані",
+    works: "Робочі дані",
+    another: "Інше",
+    cases: "Кейси",
+    users: "Користувачі",
+    type_fields: {
+      "int": "Число",
+      "boolean": "Світчер",
+      "string": "Строка",
+      "phone": "Телефон",
+      "email": "E-mail",
+      "date": "Дата",
+      "text": "Текст"
+    }
+  },
+  FILES: {
+    "case_files": "Файли кейса",
+    "history_case_files": "Файл історія кейсу"
+  },
+  CONFIG: {
+    system_twofa_label: "2-факторна автентифікація",
+    system_twofa_description: "Запровадьте або обмежте двофакторну автентифікацію по email. Коли параметр увімкнено, при кожній авторизації, користувачу буде приходити на поштому адресу числовий пароль для підтвердження входу",
+  },
+  TRANSACTIONS: {
+    transaction_type: 'Тип транзакції',
+    description: 'Опис',
+    amount: 'Суму',
+    payment_method: 'Метод оплати',
+    status: 'Статус',
+    created_at: 'Дата створення',
+    pending: "Очікується",
+    completed: "Завершено успішно",
+    failed: "Завершено невдало"
+  },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Рівень доступу користувачів (Сторінки)",
   forbidden: "Заборонено",
@@ -159,7 +158,7 @@ TRANSACTIONS: {
     task: "Задача плану",
     create: "Створити план",
     error: "Оберіть дату початку та кінця дати",
-    error_date:"Дата початку повинна бути раніше дати кінця"
+    error_date: "Дата початку повинна бути раніше дати кінця"
   },
   caseFiles: {
     title: "Файли",
@@ -177,16 +176,16 @@ TRANSACTIONS: {
     error_data: "Введіть текст запису",
     success: "Запис додано"
   },
-  fields:{
-    title:"Користувацька інформація",
-    add:"Додати інформацію",
-    alertMessages:{
-      errorAdd:"Помилка при додаванні інформації",
-      successAdd:"Нову інформацію додано",
-      errorAddEmpty:"Введіть назву і опис інформації",
-      errorAddLong:"Назва повинна бути довжиною не більше 125 символів",
-      errorEdit:"Помилка при редагуванні інформації",
-      successEdit:"Дані оновлено успішно"
+  fields: {
+    title: "Користувацька інформація",
+    add: "Додати інформацію",
+    alertMessages: {
+      errorAdd: "Помилка при додаванні інформації",
+      successAdd: "Нову інформацію додано",
+      errorAddEmpty: "Введіть назву і опис інформації",
+      errorAddLong: "Назва повинна бути довжиною не більше 125 символів",
+      errorEdit: "Помилка при редагуванні інформації",
+      successEdit: "Дані оновлено успішно"
     }
   },
   detailedInfo: {
@@ -328,25 +327,25 @@ TRANSACTIONS: {
     link_title: "Корисні посилання",
     confirm_delete: "Ви впевнені, що хочете видалити ресурс - "
   },
-  file:{
-    alertMessages:{
-      success:"Дані оновлено",
-      error:"Виникла помилка"
+  file: {
+    alertMessages: {
+      success: "Дані оновлено",
+      error: "Виникла помилка"
     },
-    name:"Назва файлу",
-    withoutName:"Файл без назви",
-    last_updated:"Останнє редагування",
-    date_created:"Дата створення",
-    description:"Опис",
-    empty_file:"Поки що в файлі немає інформації"
+    name: "Назва файлу",
+    withoutName: "Файл без назви",
+    last_updated: "Останнє редагування",
+    date_created: "Дата створення",
+    description: "Опис",
+    empty_file: "Поки що в файлі немає інформації"
   },
-  hints:{
-    phone:"Номер телефону може бути як і з префіксом країни, так і без нього",
-    email:"Правильна пошта має бути довжиною не менше 7 символів, а також містити симоли '@' та '.'",
-    required:"Це поле обов'язково до заповнення",
-    disabled:"Це поле не підлягає редагуванню",
-    auth:"Двофакторна аутентифікація — це метод захисту облікового запису, який вимагає два різні типи підтвердження особи для доступу, зазвичай поєднуючи те, що користувач знає (наприклад, пароль), з тим, що він має (наприклад, мобільний пристрій).",
-    tag:"Введіть теги файлу, розділяючи кожен з них комою. Кожен тег повинен відрізнятися один від одного, бути довжиною менше за 50 символів та не може бути порожнім"
+  hints: {
+    phone: "Номер телефону може бути як і з префіксом країни, так і без нього",
+    email: "Правильна пошта має бути довжиною не менше 7 символів, а також містити симоли '@' та '.'",
+    required: "Це поле обов'язково до заповнення",
+    disabled: "Це поле не підлягає редагуванню",
+    auth: "Двофакторна аутентифікація — це метод захисту облікового запису, який вимагає два різні типи підтвердження особи для доступу, зазвичай поєднуючи те, що користувач знає (наприклад, пароль), з тим, що він має (наприклад, мобільний пристрій).",
+    tag: "Введіть теги файлу, розділяючи кожен з них комою. Кожен тег повинен відрізнятися один від одного, бути довжиною менше за 50 символів та не може бути порожнім"
   },
   access: {
     "a_cases_category_edit_id": "Доступні категорії кейсів для редагування",
@@ -420,7 +419,23 @@ TRANSACTIONS: {
     "a_page_settings_activate_users": "Активація користувачів",
     "a_page_settings_deactivate_users": "Деактивація користувачів",
     "a_page_settings_remove_user": "Видалення користувачів",
+    "a_page_settings_show_phones": "Відобразити номери телефонів користувачів",
+    "a_page_settings_show_name": "Відобразити імена користувачів",
+    "a_page_settings_category_case_add": "Надати можливість створювати категорії Кейсів",
+    "a_page_settings_category_case_remove": "Надати можливість видаляти категорії Кейсів",
+    "a_page_settings_category_phone_add": "Надати можливість створювати категорії Телефонної книги",
+    "a_page_settings_category_phone_remove": "Надати можливість видаляти категорії Телефонної книги",
+    "a_page_settings_category_help_add": "Надати можливість створювати категорії Наданої допомоги",
+    "a_page_settings_category_help_remove": "Надати можливість видаляти категорії Наданої допомоги",
+    "a_page_settings_category_group_add": "Надати можливість створювати категорії Груп",
+    "a_page_settings_category_group_remove": "Надати можливість видаляти категорії Груп",
     "a_page_settings_change_accesses": "Змінити налаштування прав користувачів",
+    "a_page_settings_tab_users": "Відображати таб Користувачі",
+    "a_page_settings_tab_categories": "Відображати таб категорії",
+    "a_page_settings_tab_events": "Відображати таб Події",
+    "a_page_settings_tab_configurations": "Відображати таб Конфігурації програми",
+    "a_page_settings_tab_super": "Відображати таб Суперадміністратор",
+    "a_page_settings_tab_telegram": "Відображати таб Налаштування телеграм",
     "a_page_settings_case_categories": "Категорії кейсів",
     "a_page_settings_phone_categories": "Категорії телефонної книги",
     "a_page_settings_help_categories": "Категорії наданої допомоги",
@@ -429,7 +444,11 @@ TRANSACTIONS: {
     "a_page_access_edit": "Редагування шаблону прав користувачів",
     "a_page_groups": "Доступ до сторінки груп",
     "a_group_create": "Створення нової групи",
-    "a_page_statistics":"Доступ до статистики",
+    "a_page_group": "Доступ до сторінки групи",
+    "a_page_group_phones": "Відображати номери телефонів учасників",
+    "a_page_group_names": "Відображати імена учасників",
+    "a_page_group_favourite": "Додати можливість додавати групу у обране",
+    "a_page_statistics": "Доступ до статистики",
     "a_page_case_connection": "Створення зв'язків між об'єктами і групою",
     "a_page_file": "Доступ до сторінки файла",
   },
@@ -452,13 +471,15 @@ TRANSACTIONS: {
     groups: "Групи",
     access: "Інше",
     file: "Файл",
-    updateLog:"Оновленння програми",
-    transactions:"Транзакції"
+    updateLog: "Оновленння програми",
+    transactions: "Транзакції",
+    administration: "Адміністрування",
+    fields: "Системні поля"
   },
   documents: "Додані документи",
   give_help: {
     title: "Надано допомогу",
-    edit_help:"Редагувати запис",
+    edit_help: "Редагувати запис",
     add_help: "Додати запис",
     who_give_help: "Хто надав допомогу",
     details_help: "Деталі наданої допомоги",
@@ -494,7 +515,7 @@ TRANSACTIONS: {
     "view_DetailedInfo": "Відобразити блок детальної інформації",
     "view_InfoBlock": "Відобразити інформацію про кейс",
     "view_Fields": "Відобразити блок користувацької інформації",
-    "view_Histories":"Відобразити історії кейсу",
+    "view_Histories": "Відобразити історії кейсу",
     "view_name": "Відобразити повне ім'я кейсу",
     "view_phone": "Відобразити номери телефону кейсу",
     "view_email": "Відобразити електронну пошту кейсу",
@@ -723,9 +744,25 @@ export const appConfig = {
     settings: {
       yes_no: [
         "a_page_settings",
+        "a_page_settings_tab_users",
+        "a_page_settings_tab_categories",
+        "a_page_settings_tab_events",
+        "a_page_settings_tab_configurations",
+        "a_page_settings_tab_super",
+        "a_page_settings_tab_telegram",
         "a_page_settings_activate_users",
         "a_page_settings_deactivate_users",
         "a_page_settings_remove_user",
+        "a_page_settings_show_phones",
+        "a_page_settings_show_name",
+        "a_page_settings_category_case_add",
+        "a_page_settings_category_case_remove",
+        "a_page_settings_category_phone_add",
+        "a_page_settings_category_phone_remove",
+        "a_page_settings_category_help_add",
+        "a_page_settings_category_help_remove",
+        "a_page_settings_category_group_add",
+        "a_page_settings_category_group_remove",
       ],
       view_edit: [
         "a_page_settings_change_accesses",
@@ -744,8 +781,12 @@ export const appConfig = {
     },
     groups: {
       yes_no: [
+        "a_page_group",
         "a_group_create",
-        "a_page_case_connection"
+        "a_page_case_connection",
+        "a_page_group_phones",
+        "a_page_group_names",
+        "a_page_group_favourite"
       ],
       view_edit: [
         "a_page_groups",
@@ -796,12 +837,14 @@ export const appConfig = {
     },
     cases: {
       title: LANG.pages.cases,
-      description: ""
+      description: "",
+      path: '/cases'
     },
-    // addCase: {
-    //   title: LANG.pages.addCase,
-    //   description: ""
-    // },
+    addCase: {
+      title: LANG.pages.addCase,
+      description: "",
+      path: "/add-case"
+    },
     settings: {
       title: LANG.pages.settings,
       description: ""
@@ -820,7 +863,8 @@ export const appConfig = {
     },
     calendar: {
       title: LANG.pages.calendar,
-      description: ""
+      description: "",
+      path: "/calendar"
     },
     event: {
       title: LANG.pages.event,
@@ -828,7 +872,8 @@ export const appConfig = {
     },
     events: {
       title: LANG.pages.events,
-      description: ""
+      description: "",
+      path: "/events"
     },
     user: {
       title: LANG.pages.user,
@@ -836,11 +881,18 @@ export const appConfig = {
     },
     accesses: {
       title: LANG.pages.accesses,
-      description: ""
+      description: "",
+      path: "/access"
     },
     groups: {
       title: LANG.pages.groups,
-      description: ""
+      description: "",
+      path: '/groups'
+    },
+    fields: {
+      title: "Системні поля",
+      description: "",
+      path: '/fields'
     },
     file: {
       title: LANG.pages.file,
@@ -978,26 +1030,26 @@ export const appConfig = {
     }
   ],
   config: {
-    notifications:{
-      case:{
+    notifications: {
+      case: {
         created_send_all_users: {
           title: 'Надіслати сповіщення всім користувачам, коли створено кейс',
-          description:"",
+          description: "",
           type: 'boolean',
           value: true
         },
       },
-      event:{
+      event: {
         created_send_all_users: {
           title: 'Надіслати сповіщення всім користувачам, коли створено подію',
-          description:"",
+          description: "",
           type: 'boolean',
           value: true
         }
       }
     },
-    API:{
-      telegram_bot:{
+    API: {
+      telegram_bot: {
         token: {
           title: "Telegram bot token",
           description: "",
@@ -1010,16 +1062,16 @@ export const appConfig = {
           type: 'string',
           value: null
         }
-      } 
+      }
     },
     administration: {
-      twofa:{
+      twofa: {
         title: "Enabled 2FA",
         description: "",
         type: 'boolean',
         value: true
       },
-      system_phone:{
+      system_phone: {
         title: "System Phone number",
         description: "",
         type: 'number',
@@ -1033,51 +1085,51 @@ export const appConfig = {
       }
     },
   },
-  
+
   userConfig: {
-    notifications:{
-      case:{
+    notifications: {
+      case: {
         created_all: {
           title: 'Надіслати спqовіщення, коли створено кейс у програмі',
-          description:"",
+          description: "",
           type: 'boolean',
           value: true
         },
         switch_responsible: {
           title: 'Надіслати спqовіщення, коли вас назначено відповідальним або змінено',
-          description:"",
+          description: "",
           type: 'boolean',
           value: true
         },
         change_case_name: {
           title: "Надіслати спqовіщення, коли змінено ім'я кейсу",
-          description:"",
+          description: "",
           type: 'boolean',
           value: true
         },
         change_case_data: {
           title: "Надіслати спqовіщення, коли редагується кейс",
-          description:"",
+          description: "",
           type: 'boolean',
           value: true
         },
         case_happy_day: {
           title: "Надіслати спqовіщення, дня народження кейса",
-          description:"",
+          description: "",
           type: 'boolean',
           value: true
         }
       },
-      event:{
+      event: {
         created_all: {
           title: 'Надіслати сповіщення, коли створено подію',
-          description:"",
+          description: "",
           type: 'boolean',
           value: true
         },
         change_event_data: {
           title: "Надіслати спqовіщення, коли редагується івент/подія",
-          description:"",
+          description: "",
           type: 'boolean',
           value: true
         },
@@ -1106,16 +1158,17 @@ export const appConfig = {
       }
     }
   },
-  defaultConfig:{
-      system:[
-        {
-          config_key: 'system_twofa',
-          value: true,
-          type: 'boolean',
-          description: LANG.CONFIG.system_twofa_description,
-          label: LANG.CONFIG.system_twofa_label
-        }
-      ]},
+  defaultConfig: {
+    system: [
+      {
+        config_key: 'system_twofa',
+        value: true,
+        type: 'boolean',
+        description: LANG.CONFIG.system_twofa_description,
+        label: LANG.CONFIG.system_twofa_label
+      }
+    ]
+  },
   fields: [
     {
       label: LANG.FIELDS.type_fields.int,
@@ -1144,6 +1197,72 @@ export const appConfig = {
     {
       label: LANG.FIELDS.type_fields.text,
       key: "text"
+    },
+  ],
+  menu: [
+    {
+      title: LANG.pages.cases,
+      link: "/cases",
+      icon: "cases"
+    },
+    {
+      title: LANG.pages.addCase,
+      link: "/add-case",
+      icon: "add_case"
+    },
+    // {
+    //     title: LANG.pages.contacts,
+    //     link: "/contacts"
+    // },
+    {
+      title: LANG.pages.calendar,
+      link: "/calendar",
+      icon: "calendar"
+    },
+    {
+      title: LANG.pages.events,
+      link: "/events",
+      icon: "event"
+    },
+    {
+      title: LANG.pages.transactions,
+      link: "/transactions",
+      icon: "transaction"
+    },
+    {
+      title: LANG.pages.settings,
+      link: "/settings",
+      icon: "settings"
+    },
+    {
+      title: LANG.pages.resources,
+      link: "/resources",
+      icon: "resource"
+    },
+    {
+      title: LANG.pages.accesses,
+      link: "/access",
+      icon: "access"
+    },
+    // {
+    //     title: LANG.pages.cooperation,
+    //     link: "/cooperation"
+    // },
+    {
+      title: LANG.pages.groups,
+      link: "/groups",
+      icon: "groups"
+    },
+    {
+      title: LANG.pages.administration,
+      icon: "settings",
+      type: "settings",
+      subMenu: [
+        {
+          title: LANG.pages.fields,
+          link: "/fields"
+        }
+      ]
     },
   ]
 }

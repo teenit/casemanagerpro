@@ -73,12 +73,15 @@ const Bell = () => {
     };
 
     return (
-        <div className={s.bell__wrap}>
-            <div className={s.wr__img}><img src={bellImg} className={s.bell__img} alt="" onClick={() => {
-                setActive(!active)
-                setState({limit:10, page:0, more: true});
-                getNotifications()
-            }} />{unRead !== 0 && <span className={s.count}> {unRead} </span>}</div>
+        <div className={"Bell"}>
+            <div className={'Bell-click'}>
+                <Icon addClass="Bell-click-img" icon={'notification'} onClick={() => {
+                    setActive(!active)
+                    setState({limit:10, page:0, more: true});
+                    getNotifications()
+                }}/>
+                {unRead !== 0 && <span className={'Bell-click-count'}> {unRead} </span>}
+            </div>
             {active && <div className={s.wrap__bells}>
                 <div className={`${s.black} ${s.active}`} onClick={() => {
                     setActive(!active)

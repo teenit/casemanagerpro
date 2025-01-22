@@ -7,8 +7,9 @@ import CheckboxListAccess from "../../elements/CheckBoxes/CheckboxListAccess";
 import SelectBlock from "../../elements/Selects/SelectBlock";
 import { apiResponse } from "../../Functions/get_apiObj";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
+import AccessCheck from "../../Functions/AccessCheck";
 
-const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo }) => {
+const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo, cg = false }) => {
     const [alert, setAlert] = useState(null);
     const categories = useSelector(state => state.categories.case);
     const [userNames, setUserNames] = useState(null);
@@ -46,6 +47,15 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
         categories: false,
         responsible_id: false,
     });
+
+    const access = {
+        responsible_view: AccessCheck("view_edit", "a_page_case_transfer"),
+        responsible_edit: AccessCheck("view_edit", "a_page_case_transfer", "edit") && cg,
+        contact_info_edit: AccessCheck("view_edit", "a_page_case_contact_info", "edit") && cg,
+        contact_info_view: AccessCheck("view_edit", "a_page_case_contact_info", "view"),
+        simple_info_edit: AccessCheck("view_edit", "a_page_case_simple_info", "edit") && cg,
+        simple_info_view: AccessCheck("view_edit", "a_page_case_simple_info", "view"),
+    }
 
     const handleDataChange = (key, val) => {
         if (key === "responsible_id") {
@@ -87,7 +97,7 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
 
     return (
         <div className="PersonalInfo">
-            {info.viewInfo.view_date_created && <div className="PersonalInfo-line">
+            {info.viewInfo.view_date_created && access.simple_info_view && <div className="PersonalInfo-line">
                 <InputBlock
                     hintMessage={LANG.hints.disabled}
                     value={dataState.date_created}
@@ -97,7 +107,7 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
                     titleDefault={LANG.case_data.date_created}
                 />
             </div>}
-            {info.viewInfo.view_contract && <div className="PersonalInfo-line">
+            {info.viewInfo.view_contract && access.simple_info_view && <div className="PersonalInfo-line">
                 <InputBlock
                     value={dataState.contract_date}
                     onChange={(e) => handleDataChange("contract_date", e.target.value)}
@@ -106,9 +116,10 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
                     inputType={"date"}
                     saveHandler={(val) => saveHandler("contract_date", val, "data")}
                     titleDefault={LANG.case_data.contract_date}
+                    disabled={!access.simple_info_edit}
                 />
             </div>}
-            {info.viewInfo.view_contract && <div className="PersonalInfo-line">
+            {info.viewInfo.view_contract && access.simple_info_view && <div className="PersonalInfo-line">
                 <InputBlock
                     value={dataState.contract_number}
                     onChange={(e) => handleDataChange("contract_number", e.target.value)}
@@ -117,9 +128,10 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
                     inputType={"number"}
                     saveHandler={(val) => saveHandler("contract_number", val, "data")}
                     titleDefault={LANG.case_data.contract_number}
+                    disabled={!access.simple_info_edit}
                 />
             </div>}
-            {info.viewInfo.view_channel && <div className="PersonalInfo-line">
+            {info.viewInfo.view_channel && access.contact_info_view && <div className="PersonalInfo-line">
                 <InputBlock
                     value={dataState.channel}
                     onChange={(e) => handleDataChange("channel", e.target.value)}
@@ -128,9 +140,10 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
                     inputType={"text"}
                     saveHandler={(val) => saveHandler("channel", val, "data")}
                     titleDefault={LANG.case_data.channel}
+                    disabled={!access.contact_info_edit}
                 />
             </div>}
-            {info.viewInfo.view_categories && (
+            {info.viewInfo.view_categories && access.simple_info_view && (
                 <div className="PersonalInfo-categories">
                     <span className="PersonalInfo-categories-content">
                         <Icon icon="categories" addClass={"default-icon"} />
@@ -172,14 +185,17 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
                                 </span>
                             </>
                         ) : (
-                            <div className="edit-icon" onClick={() => handleEditChange("categories")}>
+                            <>
+                            {access.simple_info_edit && <div className="edit-icon" onClick={() => handleEditChange("categories")}>
                                 <Icon icon="edit" addClass="default-icon" />
-                            </div>
+                            </div>}
+                            </>
+                           
                         )}
                     </span>
                 </div>
             )}
-            {info.viewInfo.view_responsible && (
+            {info.viewInfo.view_responsible && access.responsible_view && (
                 <div className="PersonalInfo-line">
                     <div className="PersonalInfo-line-select">
                         <Icon icon="categories" addClass={"default-icon"} />
@@ -191,6 +207,7 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo })
                             label={userNames && userNames[dataState.responsible_id]?.userName}
                             titleDefault={LANG.case_data.responsible}
                             selectOptions={userNames ? Object.values(userNames).map((user) => ({ value: user.id, label: user.userName })) : []}
+                            disabled={!access.responsible_edit}
                         />
                     </div>
                 </div>

@@ -35,7 +35,7 @@ const AccessCheck = (type, right, option="") => {
 
 
     }
-    return true
+    return false
 }
 
 export default AccessCheck;

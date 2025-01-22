@@ -114,28 +114,7 @@ const getImage = (data) => {
 };
   return (
     <div className="wrap__cards">
-      {/* <div className="cards__filter">
-        <FormControlLabel
-          control={<Checkbox />}
-          label="Фільтр"
-        />
-      </div> */}
-      {/* {AccessCheck('yes_no', 'a_page_cases_sort') && (
-        <Select value={selectFilter} onChange={(e) => handleSelect(e.target.value)}>
-          <MenuItem value="default">Від старого до нового</MenuItem>
-          <MenuItem value="id">Від нового до старого</MenuItem>
-          <MenuItem value="name">За ім'ям</MenuItem>
-          <MenuItem value="contractNumber">За номером контракту</MenuItem>
-          <MenuItem value="categories">За категорією</MenuItem>
-        </Select>
-      )} */}
-      {/* <div className={s.select__sort}>
-        {AccessCheck('yes_no', 'a_page_cases_look_list') && (
-          <Button variant="contained" onClick={() => setLikeShow(!likeShow)}>
-            {!likeShow ? "Як картки" : "Як список"}
-          </Button>
-        )}
-      </div> */}
+      
       {true ? (
         <div className={s.like__cards}>
           <div className="inner__cards" id="inner__cards">
@@ -143,11 +122,6 @@ const getImage = (data) => {
               <Card img={getImage(elem)} edit={editIds} info={elem} key={ind} categories={categories} />
             ))}
           </div>
-          {/* {showLoadMore ? (
-            <Button variant="contained" onClick={loadCasesMore}>Показати ще</Button>
-          ) : (
-            <h3 className={s.look__more__text}>Немає більше доступних кейсів</h3>
-          )} */}
         </div>
       ) : (
         <CasesList maxLength={posts.length} loadMoreCases={loadMoreCases} cases={masPost} categories={categories} />

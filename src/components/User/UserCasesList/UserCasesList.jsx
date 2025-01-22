@@ -16,6 +16,7 @@ const UserCasesList = ({ userAddId }) => {
   const [createdCasesPage, setCreatedCasesPage] = useState(1);
   const [createdCasesSelected, setCreatedCasesSelected] = useState(1);
   const [createdCasesPerPage, setCreatedCasesPerPage] = useState(width < 720 ? 4 : 12);
+ 
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,7 +32,8 @@ const UserCasesList = ({ userAddId }) => {
 
   useEffect(() => {
     apiResponse({}, "case/get/cases-page-list.php").then((res) => {
-      setCases([...res]);
+      console.log(res)
+      setCases([...res.list]);
     });
   }, []);
 
@@ -45,7 +47,7 @@ const UserCasesList = ({ userAddId }) => {
     setCreatedCasesSelected(pageNumber);
   };
 
-  const addCases = cases.filter((item) => item.user_id === userAddId);
+  const addCases = cases.filter((item) => item.user_id === +userAddId);
   const lastCaseIndex = currentPage * casesPerPage;
   const firstCaseIndex = lastCaseIndex - casesPerPage;
   const accessCases = AccessCheckCases(cases).look;
@@ -54,9 +56,9 @@ const UserCasesList = ({ userAddId }) => {
   const lastCreatedCaseIndex = createdCasesPage * createdCasesPerPage;
   const firstCreatedCaseIndex = lastCreatedCaseIndex - createdCasesPerPage;
   const currentCreatedCases = addCases.slice(firstCreatedCaseIndex, lastCreatedCaseIndex);
-
   return (
     <>
+
       <div className="added_contact">
         <div className="added_contact_wrap">
           <h4 className="added_contact_title">Створені кейси</h4>

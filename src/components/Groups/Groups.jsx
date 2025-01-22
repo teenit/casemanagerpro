@@ -73,7 +73,7 @@ const Groups = () => {
         <div className="Groups">
             <div className="Groups-title">
                 <p>{appConfig.pages.groups.title}</p>
-                {AccessCheck('yes_no', 'a_groups_create') && <Icon icon={"add"} onClick={() => setAdd(true)} />}
+                {AccessCheck('yes_no', 'a_group_create') && <Icon icon={"add"} onClick={() => setAdd(true)} />}
                 {add && <AddGroup loadGroups={loadGroups} action={"add"} close={() => { setAdd(false) }} />}
             </div>
             <div className="Groups-list">

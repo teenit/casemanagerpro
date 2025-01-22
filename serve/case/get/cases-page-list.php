@@ -129,8 +129,21 @@ if (($access_rights['a_super'] == 1 || $access_rights['a_administrator'] == 1) &
     }
 }
 
+// Отримання параметру пошуку з POST-запиту
+$search = isset($data->search) ? $data->search : '';
+
+// Додаємо умову пошуку до запиту, якщо search не порожній
+if (!empty($search)) {
+    $searchCondition = "
+        (cn.id LIKE ? OR 
+         cn.first_name LIKE ? OR 
+         cn.middle_name LIKE ? OR 
+         cn.last_name LIKE ?)";
+    $case_conditions[] = $searchCondition;
+}
+
 // Формування умови WHERE
-$where_clause = !empty($case_conditions) ? implode(' OR ', $case_conditions) : "1=1";
+$where_clause = !empty($case_conditions) ? implode(' AND ', $case_conditions) : "1=1";
 $sortField = $data->sort->field ?? 'active';
 $sortOrder = $data->sort->order ?? 'DESC';
 
@@ -179,8 +192,13 @@ if (!$stmt_cases) {
     exit(json_encode(['status' => false, 'list' => [], 'message' => 'Failed to prepare SQL query.']));
 }
 
-// Встановлення параметрів пагінації
-$stmt_cases->bind_param('ii', $limit, $offset);
+// Додавання параметрів для пошуку та пагінації
+$searchParam = '%' . $search . '%';
+if (!empty($search)) {
+    $stmt_cases->bind_param(str_repeat('s', 4) . 'ii', $searchParam, $searchParam, $searchParam, $searchParam, $limit, $offset);
+} else {
+    $stmt_cases->bind_param('ii', $limit, $offset);
+}
 $stmt_cases->execute();
 $result = $stmt_cases->get_result();
 

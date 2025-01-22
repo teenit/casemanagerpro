@@ -8,6 +8,8 @@
         &-text{
             text-transform: uppercase;
             font-weight: 600;
+            display: flex;
+            align-items: center;
         }
     }
     .rbc-event.rbc-selected {

@@ -3,6 +3,12 @@
   --second-color:#90CAF9;
   --background-color:#E9F4FE;
 }
+.App-content {
+  display: grid;
+  grid-template-columns: max-content auto;
+  width: 100%;
+  gap: 16px;
+}
 body{
   font-family: Montserrat;
   margin: 0;
@@ -38,7 +44,11 @@ a{
 
 .wrap__content{
   min-height: 100vh;
-  margin-top: 50px;
+  position: relative;
+  padding-right: 10px;
+  box-sizing: border-box;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .primary__btn:hover {
   box-shadow: 0 0 10px var(--main-color);
@@ -211,6 +221,15 @@ pre{
   max-width: 100%;
   box-sizing: border-box;  
 }
+.App-control {
+  width: calc(100% - 10px);
+  height: 40px;
+  background-color: #eeecec;
+  border-radius: 0px 0px 8px 8px;
+}
+.App-content-right {
+  overflow-x: auto;
+}
 @media (max-width:720px){
   .wrap__content{
     width: 100%;
@@ -220,4 +239,5 @@ pre{
 }
 .wrap__content{
   min-height: 100vh;
+  overflow-y: auto;
 }

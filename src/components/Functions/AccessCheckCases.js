@@ -3,10 +3,12 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 const AccessCheckCases = (cases) => {
+    console.log(cases)
     const rights = useSelector(state => state.auth);
     const categories = useSelector(state => state.categories.case);
     const userID = localStorage.getItem("id")
-    if ((rights.a_super == 1 || rights.a_administartor == 1) && !!rights.a_blocked == false)return { look: cases, edit: cases };
+    console.log(categories)
+    if ((rights.a_super == 1 || rights.a_administartor == 1) && !!rights.a_blocked == false) return { look: cases, edit: cases };
     switch (rights["a_cases_get"]) {
         case 0:
             return { look: [], edit: [] }
@@ -14,6 +16,7 @@ const AccessCheckCases = (cases) => {
             let userCases = cases.filter(item=>item.user_id==userID)
             return { look: userCases, edit: userCases }
         case 2:
+            return { look: cases, edit: cases };
             //парсинг
             let lookCatIds = JSON.parse(rights["a_cases_category_look_id"])
             let editCatIds = JSON.parse(rights["a_cases_category_edit_id"])

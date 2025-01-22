@@ -9,6 +9,8 @@ import Modal from '../../Modals/Modal';
 import { LANG } from '../../../services/config';
 import AddCalendarEvent from './AddCalendarEvent';
 import { invertColor } from '../../Functions/invertColor';
+import { useSelector } from 'react-redux';
+import AccessCheck from '../../Functions/AccessCheck';
 // Локалізація з moment.js
 const localizer = momentLocalizer(moment);
 
@@ -37,7 +39,7 @@ const MyBigCalendar = () => {
   const [view, setView] = useState('month'); // Зберігаємо поточний вигляд
   const [date, setDate] = useState(new Date()); // Зберігаємо поточну дату
   // Отримання поточної дати за допомогою moment
-  const today = moment();
+  const checkAddEvent = AccessCheck("yes_no", "a_page_calendar_add_event");
 
   useEffect(() => {
     getCalendarList();
@@ -67,6 +69,21 @@ const MyBigCalendar = () => {
     });
   }
 
+const EventTitle = (event) => {
+
+  return (
+    <div style={{
+      backgroundColor:event.value.color, 
+      fontSize:"12px",
+      color:"black",
+      textOverflow: "ellipsis",
+
+    }} title={event.value.title}>
+        {event.value.title}
+    </div>
+  )
+}
+
   // Функція для перетворення JSON у події для react-big-calendar
 const transformEvents = (data) => {
   //console.log("Дані з API перед перетворенням:", data); // Логування даних з API
@@ -87,7 +104,7 @@ const transformEvents = (data) => {
     const start = new Date(`${currentYear}-${month}-${day}T${startTime}`);
     const end = new Date(`${currentYear}-${month}-${day}T${endTime}`);
     return({
-    title: <div style={{backgroundColor:event.value.color, fontSize:"12px", color:"black"}} title={event.value.title}>{event.value.title}</div>,
+    title: <EventTitle event={event}/>,
     start: start,
     end: end,
     allDay: isAllDay,
@@ -162,10 +179,25 @@ const CustomToolbar = (toolbar) => {
 };
 
 const handleSelectSlot = (slotInfo) => {
+
+  let year = moment(slotInfo.start).year();
+  let day = moment(slotInfo.start).date();
+  let month = moment(slotInfo.start).month() + 1;
+  let startTime = moment(slotInfo.start).format("HH:mm");
+  let endTime = moment(slotInfo.end).format("HH:mm");
   
   if (view === 'day') {
-    setEventModal({...DEFAULT_ADD_FORM})
-    setShowEventModal(true);
+    
+    setEventModal({...DEFAULT_ADD_FORM,
+      day: day,
+      month: month,
+      year: year,
+      start: startTime,
+      end: endTime,
+    })
+    if (checkAddEvent) {
+      setShowEventModal(true);
+    }
   }
   
   setDate(slotInfo.start); // Змінюємо поточну дату
@@ -187,11 +219,15 @@ const CustomEvent = ({ event }) => {
     <div 
       style={{ 
         backgroundColor: event.resource.color, 
+        border: "solid 2px " + event.resource.color,
         fontSize: "12px", 
-        color: "#000", 
+        color: invertedColor, 
         padding: '0 5px',
         borderRadius: '5px',
-        textAlign: 'center'
+        textAlign: 'center',
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        //opacity: '.5'
       }} 
       title={event.resource.title} // Передаємо конкретне поле для відображення при наведенні
     >

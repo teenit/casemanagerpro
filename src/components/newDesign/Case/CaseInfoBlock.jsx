@@ -12,8 +12,9 @@ import SelectBlock from "../../elements/Selects/SelectBlock";
 import ProfilePhotoBlock from "../../blocks/ProfilePhotoBlock";
 import CaseName from "./CaseName";
 import PersonalInfo from "./PersonalInfo";
+import AccessCheck from "../../Functions/AccessCheck";
 
-const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, profileImg }) => {
+const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, profileImg, cg = false }) => {
     const [alert, setAlert] = useState(null);
     const [dataState, setDataState] = useState({
         phone1: info.general.phone1,
@@ -100,13 +101,18 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         }
     };
 
-
-
-
     const selectOptions = [
         { value: "male", label: LANG.selects.sex.male },
         { value: "female", label: LANG.selects.sex.female },
         { value: "other", label: LANG.selects.sex.other }]
+
+    const access = {
+        contact_info_edit: AccessCheck("view_edit", "a_page_case_contact_info", "edit") && cg,
+        contact_info_view: AccessCheck("view_edit", "a_page_case_contact_info", "view"),
+        simple_info_edit: AccessCheck("view_edit", "a_page_case_simple_info", "edit") && cg,
+        simple_info_view: AccessCheck("view_edit", "a_page_case_simple_info", "view"),
+        
+    }
 
     return (
         <div className="CaseInfoBlock">
@@ -126,7 +132,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                     <div className="CaseInfoBlock-right-columns">
                         <div className="CaseInfoBlock-right-columns-column">
 
-                            {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
+                            {(info.viewInfo.view_phone) && access.contact_info_view && <div className="CaseInfoBlock-line">
                                 <InputBlock
                                     hintMessage={`${LANG.hints.phone}. ${LANG.hints.required}`}
                                     value={dataState.phone1}
@@ -137,9 +143,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     inputType={"number"}
                                     saveHandler={(val) => saveHandler("phone1", val, "general")}
                                     titleDefault={LANG.case_data.phone}
+                                    disabled={!access.contact_info_edit}
                                 />
                             </div>}
-                            {(info.viewInfo.view_phone) && <div className="CaseInfoBlock-line">
+                            {(info.viewInfo.view_phone) && access.contact_info_view && <div className="CaseInfoBlock-line">
                                 <InputBlock
                                     hintMessage={LANG.hints.phone}
                                     value={dataState.phone2}
@@ -150,9 +157,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     inputType={"number"}
                                     saveHandler={(val) => saveHandler("phone2", val, "general")}
                                     titleDefault={LANG.case_data.phone}
+                                    disabled={!access.contact_info_edit}
                                 />
                             </div>}
-                            {(info.viewInfo.view_email) && <div className="CaseInfoBlock-line">
+                            {(info.viewInfo.view_email) && access.contact_info_view && <div className="CaseInfoBlock-line">
                                 <InputBlock
                                     hintMessage={LANG.hints.email}
                                     value={dataState.email}
@@ -163,9 +171,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     inputType={"text"}
                                     saveHandler={(val) => saveHandler("email", val, "general")}
                                     titleDefault={LANG.case_data.email}
+                                    disabled={!access.contact_info_edit}
                                 />
                             </div>}
-                            {(info.viewInfo.view_birthday) && <div className="CaseInfoBlock-line">
+                            {(info.viewInfo.view_birthday) && access.simple_info_view && <div className="CaseInfoBlock-line">
                                 <InputBlock
                                     value={dataState.happy_bd}
                                     age={true}
@@ -175,9 +184,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     inputType={"date"}
                                     saveHandler={(val) => saveHandler("happy_bd", val, "general")}
                                     titleDefault={LANG.case_data.birthday}
+                                    disabled={!access.simple_info_edit}
                                 />
                             </div>}
-                            {info.viewInfo.view_sex && (
+                            {info.viewInfo.view_sex && access.simple_info_view && (
                                 <div className="CaseInfoBlock-right-columns-column">
                                     <div className="CaseInfoBlock-line">
                                         <SelectBlock
@@ -188,6 +198,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                             saveHandler={(val, displayVal) => saveHandler("sex", val, "general", displayVal)}
                                             titleDefault={LANG.case_data.sex}
                                             selectOptions={selectOptions}
+                                            disabled={!access.simple_info_edit}
                                         />
 
                                     </div>
@@ -195,7 +206,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                             )}
                         </div>
                         <div className="CaseInfoBlock-right-columns-column">
-                            {(info.viewInfo.view_date_first_contact) && <div className="CaseInfoBlock-line">
+                            {(info.viewInfo.view_date_first_contact) && access.simple_info_view && <div className="CaseInfoBlock-line">
                                 <InputBlock
                                     value={dataState.date_first_contact}
                                     onChange={(e) => { handleDataChange("date_first_contact", e.target.value) }}
@@ -204,9 +215,10 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     inputType={"date"}
                                     saveHandler={(val) => saveHandler("date_first_contact", val, "data")}
                                     titleDefault={LANG.case_data.date_first_contact}
+                                    disabled={!access.simple_info_edit}
                                 />
                             </div>}
-                            {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
+                            {(info.viewInfo.view_address) && access.contact_info_view && <div className="CaseInfoBlock-line">
                                 <InputBlock
                                     value={dataState.address_live}
                                     onChange={(e) => { handleDataChange("address_live", e.target.value) }}
@@ -215,10 +227,11 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     inputType={"text"}
                                     saveHandler={(val) => saveHandler("address_live", val, "data")}
                                     titleDefault={LANG.case_data.address_live}
+                                    disabled={!access.contact_info_edit}
                                 />
                             </div>}
 
-                            {(info.viewInfo.view_address) && <div className="CaseInfoBlock-line">
+                            {(info.viewInfo.view_address) && access.contact_info_view && <div className="CaseInfoBlock-line">
                                 <InputBlock
                                     value={dataState.address_registered}
                                     onChange={(e) => { handleDataChange("address_registered", e.target.value) }}
@@ -227,6 +240,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     inputType={"text"}
                                     saveHandler={(val) => saveHandler("address_registered", val, "data")}
                                     titleDefault={LANG.case_data.address_registered}
+                                    disabled={!access.contact_info_edit}
                                 />
                             </div>}
 
@@ -237,7 +251,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
 
 
             </div>
-            <PersonalInfo case_id={case_id} getCaseInfo={getCaseInfo} info={info} changeData={changeData} changeGeneral={changeGeneral} />
+            <PersonalInfo cg={cg} case_id={case_id} getCaseInfo={getCaseInfo} info={info} changeData={changeData} changeGeneral={changeGeneral} />
             {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />}
         </div>
     );

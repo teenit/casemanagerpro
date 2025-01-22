@@ -117,11 +117,11 @@
     margin-top: 50px;
 }
 
-.set__case__ico {
-    width: 30px;
-    position: absolute;
-    right: -20px;
-    top: -20px;
+.set__case__control {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+
 
     .setImg {
         width: 100%;
@@ -133,7 +133,7 @@
     }
 
     img {
-        width: 100%;
+        width: 30px;
         cursor: pointer;
     }
 }

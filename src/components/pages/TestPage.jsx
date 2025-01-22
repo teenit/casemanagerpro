@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CustomInput from "../elements/Inputs/CustomInput";
 
 const TestPage = () => {
     const [state, setState] = useState([
@@ -561,7 +562,7 @@ const TestPage = () => {
     ])
     return(
         <div className="TestPage">
-            <div className="main">Структура компанії</div>
+            {/* <div className="main">Структура компанії</div>
             <div className="main-line" ></div>
             <div className="offices">
                 {
@@ -602,7 +603,11 @@ const TestPage = () => {
                         )
                     })
                 }
-            </div>
+            </div> */}
+
+            <CustomInput 
+                label={"Тест лабел"} 
+            />
         </div>
     )
 }

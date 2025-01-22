@@ -8,16 +8,19 @@ import { useDispatch } from "react-redux";
 import { removeUser } from "../../../store/Slices/userSlice";
 import { useAuth } from "../../../hooks/use-auth";
 import { LANG, appConfig } from "../../../services/config";
+import Icon from "../../elements/Icons/Icon";
 
 const Nav = ({ close }) => {
     const pagesData = [
         {
             title: LANG.pages.cases,
-            link: "/cases"
+            link: "/cases",
+
         },
         {
             title: LANG.pages.addCase,
-            link: "/add-case"
+            link: "/add-case",
+            icon: "plus"
         },
         // {
         //     title: LANG.pages.contacts,
@@ -25,7 +28,8 @@ const Nav = ({ close }) => {
         // },
         {
             title: LANG.pages.calendar,
-            link: "/calendar"
+            link: "/calendar",
+            icon: "calendar"
         },
         {
             title: LANG.pages.events,
@@ -37,7 +41,8 @@ const Nav = ({ close }) => {
         },
         {
             title: LANG.pages.settings,
-            link: "/settings"
+            link: "/settings",
+            icon: "settings"
         },
         {
             title: LANG.pages.resources,
@@ -55,10 +60,16 @@ const Nav = ({ close }) => {
             title: LANG.pages.groups,
             link: "/groups"
         },
-        // {
-        //     title: LANG.pages.updateLog,
-        //     link: "/update"
-        // },
+        {
+            title: LANG.pages.administration,
+            icon:"",
+            subMenu: [
+                {
+                    title: LANG.pages.fields,
+                    link: "/fields"
+                }
+            ]
+        },
     ];
 
     const dispatch = useDispatch();
@@ -79,8 +90,27 @@ const navigate = useNavigate()
                         {pagesData.map((page, index) => (
                             <li className={s.li} key={index}>
                                 <NavLink className={s.a} onClick={close} to={page.link}>
-                                    {page.title}
+                                    <div className={s.with_icon}>
+                                        <Icon icon={page.icon}/>
+                                        {page.title}
+                                    </div>
+                                    
                                 </NavLink>
+                                {
+                                   page?.subMenu && <ul>
+                                    {page.subMenu.map((sub)=>{
+
+                                        return (
+                                            <li className={s.li} key={page.link}>
+                                                <NavLink className={s.a} onClick={close} to={sub.link}>
+                                                    <div className={s.with_icon}><Icon icon={sub.icon}/>{sub.title}</div>
+                                                    
+                                                </NavLink>
+                                            </li>
+                                        )
+                                    })}
+                                   </ul>
+                                }
                             </li>
                         ))}
                     </ul>
@@ -88,7 +118,8 @@ const navigate = useNavigate()
                 <div className={s.control__nav}>
                     <div className={s.profile}>
                         <NavLink className={s.a} to={`/user/${localStorage.getItem("id")}`} onClick={close}>
-                            <img src={profileImg} alt="" />
+                            {/* <img src={profileImg} alt="" /> */}
+                            <Icon icon={'profile'}/>
                         </NavLink>
                     </div>
                     <div className={s.logout}>
@@ -97,7 +128,8 @@ const navigate = useNavigate()
                             onClick={() => { dispatch(removeUser()) }}
                             to="/login"
                         >
-                            <img className={s.logout} src={logoutImg} alt="" />
+                            <Icon icon={'logout'}/>
+                            {/* <img className={s.logout} src={logoutImg} alt="" /> */}
                         </NavLink>
                     </div>
                 </div>

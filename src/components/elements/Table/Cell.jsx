@@ -1,12 +1,12 @@
 import React from "react";
 
-const Cell = ({ cell, headerFormatter, column, sortField, sortOrder }) => {
+const Cell = ({ cell, headerFormatter, column, sortField, sortOrder, breakWord }) => {
 
-    
+    console.log(column)
 
 
     return <td>
-        {!headerFormatter ? <div className="cell">{cell}</div> : column.headerFormatter(sortField, sortOrder)}
+        {!headerFormatter ? <div title={breakWord ? cell : ""} className={`cell ${breakWord ? "break-word" : ""}`}>{cell}</div> : column.headerFormatter(sortField, sortOrder)}
     </td>;
 };
 

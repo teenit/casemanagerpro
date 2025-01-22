@@ -24,6 +24,10 @@ const SetUser = ({ categories, categoriesCont }) => {
     const [modal, setModal] = useState(false)
     const [modalInfo, setModalInfo] = useState(false)
     const [access, setAccess] = useState([]);
+    const showName = AccessCheck("yes_no", "a_page_settings_show_name");
+    const showPhone = AccessCheck("yes_no", "a_page_settings_show_phones");
+    const editChangeAccess = AccessCheck("view_edit", "a_page_settings_change_accesses", "edit");
+    const viewChangeAccess = AccessCheck("view_edit", "a_page_settings_change_accesses");
     function activateUser(arg, userID, text, keyt) {
         apiResponse({
             activate: arg,
@@ -63,16 +67,17 @@ const SetUser = ({ categories, categoriesCont }) => {
             <div className={`set__users__data__line ${index % 2 == 0 ? "arc" : ""}`}>
                 <div className={`set__user__wr ${user.active == "true" ? "arc" : ""}`}>
                     <div>
-                        <div className="set__user__name"><NavLink to={`/user/${user.id}`}>{user.userName}</NavLink></div>
-                        <div className=""><span>{user.phone}</span></div>
+                        {showName && <div className="set__user__name"><NavLink to={`/user/${user.id}`}>{user.userName}</NavLink></div>}
+                        {showPhone && <div className=""><span>{user.phone}</span></div>}
 
                     </div>
 
-                    <Select
+                   {viewChangeAccess && <Select
                         value={user.access ? user.access : 0}
                         onChange={(e) => {
                             selectAccess(user.id, e.target.value)
                         }}
+                        disabled={!editChangeAccess}
                     >
                         <MenuItem value={0}>{"Права не встановлено"}</MenuItem>
                         {
@@ -80,14 +85,14 @@ const SetUser = ({ categories, categoriesCont }) => {
                                 return <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
                             })
                         }
-                    </Select>
+                    </Select>}
                 </div>
 
                 <div className="set__user__control__panel">
                     <div className={`set__user__control__panel__icons ${user.active == "true" ? "arc" : ""}`}>
-                        {AccessCheck('yes_no', 'a_page_settings_remove_user') && <Icon icon={"delete"} addClass={"default-icon fs40"} />}
+                        {/* {AccessCheck('yes_no', 'a_page_settings_remove_user') && <Icon icon={"delete"} addClass={"default-icon fs40"} />} */}
 
-                        <span onClick={() => {
+                        {/* <span onClick={() => {
                             return;
                             if (user.id == localStorage.getItem("id") || user?.type == "root") {
                                 setModal(true);
@@ -98,7 +103,7 @@ const SetUser = ({ categories, categoriesCont }) => {
 
                         }} >
                             <Icon icon={"book"} addClass={"default-icon fs35"} />
-                        </span>
+                        </span> */}
                         {user.active === "true" && AccessCheck('yes_no', 'a_page_settings_deactivate_users') ? (
                             <span onClick={() => {
                                 if (user.id === localStorage.getItem("id") || user?.type === "root") {

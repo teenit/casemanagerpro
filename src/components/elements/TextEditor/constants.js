@@ -1,56 +1,49 @@
+import { Quill } from 'react-quill';
+
+// Додаємо кастомний список кольорів
 export const LIST_OF_COLOURS = [
-    "#0290D7",
-    "#4D4D4D",
-    "#999999",
-    "#F44E3B",
-    "#FE9200",
-    "#FCDC00",
-    "#DBDF00"
-  ];
-  
-  export const toolbarModules = {
-    listsAndIndents: [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" }
-    ],
-    characterFormats: ["bold", "italic", "underline", "strike", "blockquote"],
-    colors: [
-      { color: [...LIST_OF_COLOURS] },
-      { background: [...LIST_OF_COLOURS] }
-    ]
-  };
-  
-  export const formatsSettings = {
-    listsAndIndents: ["list", "bullet", "indent"],
-    characterFormats: [
-      "bold",
-      "italic",
-      "underline",
-      "strike",
-      "blockquote",
-      "align"
-    ],
-    colors: ["color", "background"]
-  };
-  
-  export const formats = [
-    ...formatsSettings.characterFormats,
-    ...formatsSettings.colors,
-    ...formatsSettings.listsAndIndents
-  ];
-  
-  export const modules = {
-    toolbar: [
-      toolbarModules.characterFormats,
-      toolbarModules.colors,
-      toolbarModules.listsAndIndents
-    ],
-    clipboard: { matchVisual: false },
-    history: {
-      delay: 2000,
-      maxStack: 100,
-      userOnly: true
-    }
-  };
+  "#0290D7", // Синій
+  "#4D4D4D", // Темно-сірий
+  "#999999", // Світло-сірий
+  "#F44E3B", // Червоний
+  "#FE9200", // Помаранчевий
+  "#FCDC00", // Жовтий
+  "#DBDF00"  // Зелений
+];
+
+// Розміри шрифтів
+const FontSize = Quill.import('attributors/style/size');
+FontSize.whitelist = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '30px', '36px'];
+Quill.register(FontSize, true);
+
+// Налаштування модулів
+export const modules = {
+  toolbar: [
+    [{ size: FontSize.whitelist }], // Розміри шрифтів
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'], // Стилі тексту
+    [{ list: 'ordered' }, { list: 'bullet' }], // Списки
+    [{ color: LIST_OF_COLOURS }, { background: LIST_OF_COLOURS }], // Кольори тексту та фону
+    ['clean'], // Скидання стилів
+  ],
+  clipboard: { matchVisual: false },
+  history: {
+    delay: 2000,
+    maxStack: 100,
+    userOnly: true,
+  },
+};
+
+// Дозволені формати
+export const formats = [
+  'header',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'color',
+  'background',
+];

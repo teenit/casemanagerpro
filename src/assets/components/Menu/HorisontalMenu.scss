@@ -1,0 +1,47 @@
+.HorisontalMenu{
+    height: 100%;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    &-left {
+        &-title {
+            font-size: 16px;
+            font-weight: 600;
+            padding-left: 10px;
+        }
+    }
+    &-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    &-profile {
+        width: max-content;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &-name {
+            padding-right: 10px;
+            a {
+                font-size: 14px;
+                font-weight: 400;
+            }
+        }
+        &-image {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+                width: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+    }
+}

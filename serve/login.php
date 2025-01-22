@@ -76,15 +76,16 @@ if(!$too){
     $obj->{'active'} = null;
     $obj->{'email'} = null;
     $obj->{'token'} = null;
-    $obj->{'profilePhoto'} = null;
+    $obj->{'profilePhoto'} = null;  
     $obj->{'message'} = "Не правильний логін чи пароль або у користувача недостатьно прав";
     echo json_encode($obj);
     exit;
 }
 
-$prf = 'profile_img';
+$prf = 'user_profile_img';
 $msql = "SELECT meta_value FROM usermeta WHERE user_id=$id AND meta_key='$prf'";
 $result = $conn->query($msql);
 $row = $result->fetch_assoc();
-$obj->{'profilePhoto'} = $row["meta_value"];
-echo json_encode($obj);
+
+$obj->{'profilePhoto'} = null;
+echo json_encode($obj); 

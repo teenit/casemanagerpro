@@ -44,14 +44,16 @@ const TransactionsPage = () => {
             text: LANG.TRANSACTIONS.transaction_type,
             fixed: false,
             isHidden: false,
-            sort: true
+            sort: true,
+            breakWord: true
         },
         {
             dataField: 'description',
             text: LANG.TRANSACTIONS.description,
             fixed: false,
             isHidden: false,
-            sort: true
+            sort: true,
+            breakWord: true
         },
         {
             dataField: 'amount',
@@ -100,7 +102,7 @@ const TransactionsPage = () => {
             fixed: true,
             isHidden: false,
             formatter: (cell, row) => {
-                return <div>
+                return <div className="Table-row-menu default">
                     <Icon icon={"edit"} onClick={() => {
                         modalHandler("edit")
                         setTransactionId(row.id)

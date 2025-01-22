@@ -8,6 +8,7 @@ import { MenuItem, Select, Switch } from "@mui/material";
 import HeaderFormatter from "../../elements/HeaderFormatter/HeaderFormatter";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Input from "../../elements/Inputs/Input";
 
 const columnsTable = [
     {
@@ -74,22 +75,27 @@ const columnsTable = [
     }
 ];
 
+const mode = "cases_filter";
+
 const Cases = () => {
     const fields = useSelector(state => state.fields.cases);
+    const activeFilter = localStorage.getItem(mode) ? JSON.parse(localStorage.getItem(mode)) : null
     const [state, setState] = useState([]);
     const [options, setOptions] = useState({
-        page: 0,
-        limit: 10,
+        page: (activeFilter ? activeFilter?.page : 0),
+        limit: (activeFilter ? activeFilter?.limit : 10),
         sort: {
-            field: "id",
-            order: 'DESC'
-        }
+            field: (activeFilter ? activeFilter?.sort?.field : "id"),
+            order: (activeFilter ? activeFilter?.sort?.order : 'DESC')
+        },
+        search: ""
     });
     const [totalCount, setTotalCount] = useState("hidden");
     const [view, setView] = useState("cards")
     useEffect(() => {
         loadCases();
-    }, [options.page, options.limit, options.sort]);
+        localStorage.setItem(mode, JSON.stringify(options))
+    }, [options.page, options.limit, options.sort, options.search]);
 
     const loadCases = () => {
         apiResponse({
@@ -98,8 +104,10 @@ const Cases = () => {
             sort: {
                 field: options.sort.field,
                 order: options.sort.order
-            }
+            },
+            search: options.search
         }, "case/get/cases-page-list.php").then((res) => {
+            console.log(res)
             setState([...res.list]);
         });
     };
@@ -191,10 +199,12 @@ const Cases = () => {
     }
 
     const casesColumns = prepareColumns(getColumns());
-    console.log(fields)
     return (
         <div className="ListCases">
             <div className="ListCases-sort">
+                <Input label="Пошук" value={options.search} onChange={(e)=>{
+                    setOptions({ ...options, search: e.target.value.trim() });
+                }}/>
                 <Select
                     value={options.sort.field}
                     onChange={(e) => {
@@ -204,7 +214,7 @@ const Cases = () => {
                     {columnsTable.map((item) => {
                         if (item.sort) return (
                             <MenuItem key={item.dataField} value={item.dataField}>
-                                Сортувати за {item.text}
+                                За {item.text}
                             </MenuItem>
                         );
                     })}
@@ -216,13 +226,13 @@ const Cases = () => {
                     }}
                 >
                     <MenuItem value={"ASC"}>
-                        Сортувати від меншого до більшого
+                        Від меншого до більшого
                     </MenuItem>
                     <MenuItem value={"DESC"}>
-                        Сортувати від більшого до меншого
+                        Від більшого до меншого
                     </MenuItem>
                 </Select>
-                <div>Відобразити як таблицю
+                <div>Як таблицю
                 <Switch checked={view == 'table'} onChange={(e) => {
                                 if (e.target.checked) {
                                     setView('table')

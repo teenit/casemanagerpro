@@ -7,6 +7,7 @@ import SettingsModal from './SettingsModal';
 import ModalConfirm from '../../Modals/ModalConfirm';
 import { useSelector } from 'react-redux'
 import { Switch } from '@mui/material';
+import AccessCheck from '../../Functions/AccessCheck';
 
 const Group = () => {
     const categories = useSelector(state => state.categories)
@@ -15,6 +16,9 @@ const Group = () => {
     const [modal, setModal] = useState({
         delete: false
     });
+    const showName = AccessCheck("yes_no", "a_page_group_names");
+    const showPhone = AccessCheck("yes_no", "a_page_group_phones");
+    const showFavourite = AccessCheck("yes_no", "a_page_group_favourite");
 
     const modalHandler = (key) => {
         setModal({ ...modal, [key]: !modal[key] });
@@ -54,8 +58,9 @@ const Group = () => {
         const [editMember, setEditMember] = useState(0);
         return (
             <div className='Group-member' onMouseEnter={() => { setEditMember(1); }} onMouseLeave={() => { setEditMember(0); }}>
-                <NavLink to={`/case/${item.case_id}`}>{item.name}</NavLink>
-                <NavLink to={`tel:${item.phone1}`}>{item.phone1}</NavLink>
+                {index + 1}.
+               {showName && <NavLink to={`/case/${item.case_id}`}>{item.name}</NavLink>}
+                {showPhone && <NavLink to={`tel:${item.phone1}`}>{item.phone1}</NavLink>}
                 <div title={item.why}>{cutString(item.why)}</div>
                 {/* <span style={{ opacity: editMember }}>
                     <Icon icon={'delete'} addClass={'close-icon'} onClick={() => { modalHandler('delete'); }} />
@@ -114,10 +119,10 @@ const Group = () => {
                                 <span>{data.group?.groupDateCreated}</span>
                             </div>
                         </div>
-                        <div className='Group-info-stats-item'>
+                        {showFavourite && <div className='Group-info-stats-item'>
                             <Icon icon={"date_created"} addClass={"default-icon"} />
                             <div className='Group-info-stats-item-text'>
-                                <div>Додати в обране  
+                                 <div>Додати в обране  
                                     <Switch checked={data.group?.is_favourite == 1 ? true : false} onChange={(e) => {
                                         if (e.target.checked) {
                                             saveHandler("is_favourite", 1);
@@ -127,7 +132,7 @@ const Group = () => {
                                     }} /></div>
                                
                             </div>
-                        </div>
+                        </div>}
                         <div className='Group-info-stats-item'>
                             <Icon icon={"categories"} addClass={"default-icon"} />
                             <div className='Group-info-stats-item-text'>

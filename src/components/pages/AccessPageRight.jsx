@@ -110,7 +110,7 @@ const AccessPageRight = () => {
             <span></span>
             <p>{LANG.settings_to_page} {PAGES[state.selectedPage].title}</p>
           </div>
-          {AccessCheck('yes_no', 'a_page_accesse_edit') &&    <div className='AccessPageRight-right-head-buttons'>
+          {AccessCheck('yes_no', 'a_page_accesse_edit') && <div className='AccessPageRight-right-head-buttons'>
             {/* <button className='AccessPageRight-right-head-buttons-CancelButton'>{LANG.GLOBAL.cancel}</button> */}
             <button className='AccessPageRight-right-head-buttons-SaveButton' onClick={updateRights}>{LANG.GLOBAL.save}</button>
           </div>}

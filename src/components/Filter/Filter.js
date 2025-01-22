@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FieldsTable from '../tables/FieldsTable';
 
-class AdministrationPage extends Component {
+class Filter extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,4 +17,4 @@ class AdministrationPage extends Component {
   }
 }
 
-export default AdministrationPage;
+export default Filter;

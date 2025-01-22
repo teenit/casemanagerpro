@@ -22,6 +22,7 @@ import { appConfig, LANG } from "../../services/config";
 import SetConfigItem from "./SetConfig/SetConfigItem";
 import Modal from "../Modals/Modal";
 import FilesUploader from "../elements/Uploaders/FilesUploader";
+import AccessCheck from "../Functions/AccessCheck";
 const MODE = 'settings_page_';
 const DEFAULT_TELEGRAM_BOT = {
     bot_id: null,
@@ -91,6 +92,14 @@ const Settings = () => {
         events: localStorage.getItem(MODE + 'events') ? !!+localStorage.getItem(MODE + 'events') : false,
         config: localStorage.getItem(MODE + 'config') ? !!+localStorage.getItem(MODE + 'config') : false,
     });
+
+    const usersTab = AccessCheck("yes_no", "a_page_settings_tab_users");
+    const categoriesTab = AccessCheck("yes_no", "a_page_settings_tab_categories");
+    const eventsTab = AccessCheck("yes_no", "a_page_settings_tab_events");
+    const configurationsTab = AccessCheck("yes_no", "a_page_settings_tab_configurations");
+    const superTab = AccessCheck("yes_no", "a_page_settings_tab_super");
+    const telegramTab = AccessCheck("yes_no", "a_page_settings_tab_telegram");
+    const updateProgramRight = AccessCheck("yes_no", "a_update_program");
 
     const expandedChange = (type) => {
         localStorage.setItem(MODE + type, !expanded[type] ? 1 : 0);
@@ -202,23 +211,23 @@ const Settings = () => {
                 <h1>Налаштування</h1>
             </div>
             <div className="SettingsPage-accordion">
-                {newVersion > version && 
+                {newVersion > version && updateProgramRight &&
                     <Button disabled={disBtn} onClick={()=>{
                         setDisBtn(true)
                         updateCaseManager();
                     }}>{LANG.footer.update} до версії <b style={{paddingLeft:"10px"}}> { newVersion}</b></Button>}
-                <Accordion expanded={expanded.users} id="expanded_users" onChange={() => {
+                {usersTab && <Accordion expanded={expanded.users} id="expanded_users" onChange={() => {
                     expandedChange('users')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
                         Користувачі
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SetUser categories={categories} categoriesCont={categoriesCont} />
+                        <SetUser categories={categories} categoriesCont={categoriesCont} />+
                     </AccordionDetails>
-                </Accordion>
+                </Accordion>}
 
-                <Accordion expanded={expanded.categories} id="expanded_categories" onChange={() => {
+                {categoriesTab && <Accordion expanded={expanded.categories} id="expanded_categories" onChange={() => {
                     expandedChange('categories')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
@@ -229,21 +238,33 @@ const Settings = () => {
                             title={LANG.SETTINGS.title_category_case}
                             categoryColor="#1976d2"
                             categoryKey="case"
+                            rights={{
+                                add: "a_page_settings_category_case_add",
+                                remove: "a_page_settings_category_case_remove",
+                            }}
                         />
                         <SettingsCategory
                             title={LANG.SETTINGS.title_category_case_helps}
                             categoryColor="#1976d2"
                             categoryKey="case_helps"
+                            rights={{
+                                add: "a_page_settings_category_help_add",
+                                remove: "a_page_settings_category_help_remove",
+                            }}
                         />
                         <SettingsCategory
                             title={LANG.SETTINGS.title_category_groups}
                             categoryColor="#1976d2"
                             categoryKey="groups"
+                            rights={{
+                                add: "a_page_settings_category_group_add",
+                                remove: "a_page_settings_category_group_remove",
+                            }}
                         />
                     </AccordionDetails>
-                </Accordion>
+                </Accordion>}
 
-                <Accordion expanded={expanded.events} id="expanded_events" onChange={() => {
+                {eventsTab && <Accordion expanded={expanded.events} id="expanded_events" onChange={() => {
                     expandedChange('events')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
@@ -252,8 +273,8 @@ const Settings = () => {
                     <AccordionDetails>
                         <SetEvent />
                     </AccordionDetails>
-                </Accordion>
-                <Accordion expanded={expanded.config} id="expanded_config" onChange={() => {
+                </Accordion>}
+                {configurationsTab && <Accordion expanded={expanded.config} id="expanded_config" onChange={() => {
                     expandedChange('config')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
@@ -302,8 +323,8 @@ const Settings = () => {
                         </AccordionBlock>
                     </AccordionDetails>
                     
-                </Accordion>
-                <Accordion expanded={expanded.special} id="expanded_special" onChange={() => {
+                </Accordion>}
+                {superTab && <Accordion expanded={expanded.special} id="expanded_special" onChange={() => {
                     expandedChange('special')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
@@ -324,8 +345,8 @@ const Settings = () => {
                         </AccordionBlock>
                     </AccordionDetails>
                     
-                </Accordion>
-                <Accordion expanded={expanded.telegram} id="expanded_telegram" onChange={() => {
+                </Accordion>}
+                {telegramTab && <Accordion expanded={expanded.telegram} id="expanded_telegram" onChange={() => {
                     expandedChange('telegram')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
@@ -349,7 +370,7 @@ const Settings = () => {
                         </AccordionBlock>
                     </AccordionDetails>
                     
-                </Accordion>
+                </Accordion>}
             </div>
             {selectedTelegramBot.modal && <Modal closeHandler={() => {setSelectedTelegramBot({...selectedTelegramBot, modal: false}) }} header={"Додати учасника"} footer={
             <>
