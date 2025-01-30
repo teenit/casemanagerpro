@@ -9,18 +9,21 @@ import { removeUser } from "../../../store/Slices/userSlice";
 import { useAuth } from "../../../hooks/use-auth";
 import { LANG, appConfig } from "../../../services/config";
 import Icon from "../../elements/Icons/Icon";
+import AccessCheck from "../../Functions/AccessCheck";
 
 const Nav = ({ close }) => {
     const pagesData = [
         {
             title: LANG.pages.cases,
             link: "/cases",
+            show: AccessCheck('yes_no','a_page_cases')
 
         },
         {
             title: LANG.pages.addCase,
             link: "/add-case",
-            icon: "plus"
+            icon: "plus",
+            show: AccessCheck('yes_no','a_page_cases')
         },
         // {
         //     title: LANG.pages.contacts,
@@ -73,8 +76,6 @@ const Nav = ({ close }) => {
     ];
 
     const dispatch = useDispatch();
-    const { isAuth } = useAuth();
-const navigate = useNavigate()
     return (
         <div
             className={s.wrap__nav}

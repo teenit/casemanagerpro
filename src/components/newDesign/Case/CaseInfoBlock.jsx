@@ -111,14 +111,13 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         contact_info_view: AccessCheck("view_edit", "a_page_case_contact_info", "view"),
         simple_info_edit: AccessCheck("view_edit", "a_page_case_simple_info", "edit") && cg,
         simple_info_view: AccessCheck("view_edit", "a_page_case_simple_info", "view"),
-        
     }
 
     return (
         <div className="CaseInfoBlock">
             <div className="CaseInfoBlock-media">
-                {info.viewInfo.view_ProfilePhoto && (
-                    <ProfilePhotoBlock data={{
+                {info.viewInfo.view_ProfilePhoto && access.contact_info_view && (
+                    <ProfilePhotoBlock editor={access.contact_info_edit} data={{
                         sex: dataState.sex,
                         age: dataState.happy_bd
                     }} profileImg={profileImg} meta={{
@@ -128,7 +127,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                     }} />
                 )}
                 <div className="CaseInfoBlock-right">
-                    <CaseName dataState={dataState} view={info.viewInfo.view_name} id={info.general.id} getCaseInfo={getCaseInfo} />
+                    <CaseName editor={access.contact_info_edit} dataState={dataState} view={info.viewInfo.view_name} id={info.general.id} getCaseInfo={getCaseInfo} />
                     <div className="CaseInfoBlock-right-columns">
                         <div className="CaseInfoBlock-right-columns-column">
 

@@ -5,7 +5,7 @@ import Input from '../../elements/Inputs/Input';
 import SmallNotification from '../../elements/Notifications/SmallNotification';
 import { LANG } from '../../../services/config';
 
-const CaseName = ({ dataState, view, id, getCaseInfo }) => {
+const CaseName = ({ dataState, view, id, getCaseInfo, editor }) => {
     const [editName, setEditName] = useState(false);
     const [alert, setAlert] = useState({
         success: false,
@@ -57,11 +57,11 @@ const CaseName = ({ dataState, view, id, getCaseInfo }) => {
                                 <div className="CaseInfoBlock-line-title">
                                     {name.middle_name} {name.first_name} {name.last_name} <span style={{ color: "var(--main-color)" }}>№{id}</span>
                                 </div>
-                                <div>
+                               {editor && <div>
                                     <div className="edit-icon" onClick={() => setEditName(true)}>
                                         <Icon icon={"edit"} addClass={"default-icon"} />
                                     </div>
-                                </div>
+                                </div>}
                             </div>
                         )}
                         {editName && (

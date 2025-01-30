@@ -8,8 +8,10 @@ import { Button } from '@mui/material';
 import Input from '../../elements/Inputs/Input';
 import { apiResponse } from '../../Functions/get_apiObj';
 import ModalConfirm from "../../Modals/ModalConfirm";
+import AccessCheck from '../../Functions/AccessCheck';
+import { useSelector } from 'react-redux';
 
-const Fields = ({ fields, getCaseInfo, case_id }) => {
+const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
     const [alert, setAlert] = useState({
         success: false,
         error: false,
@@ -109,20 +111,29 @@ const Fields = ({ fields, getCaseInfo, case_id }) => {
         setModal({ ...modal, [key]: !modal[key], deleteId: value });
     };
 
+    const access = {
+        case_simple_info_edit: AccessCheck("view_edit", "a_page_case_simple_info", "edit"),
+        super: AccessCheck('super')
+    }
+
     const InfoBlock = ({ item }) => {
+        const user = useSelector(state=>state.auth);
+
         return (
             <div className='Fields-InfoBlock'>
                 <div className='Fields-InfoBlock-title'>
                     <div className='Fields-InfoBlock-title-block'>{item.title}</div>
-                    <div className='Fields-InfoBlock-panel'>
+                    {((access.case_simple_info_edit && item.user_id === user.id) || access.super) && <div className='Fields-InfoBlock-panel'>
                         <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { handleEdit(item) }} />
                         <Icon icon={"delete"} addClass={"close-icon"} onClick={() => { handleModalChange("confirm", item.id) }} />
-                    </div>
+                    </div>}
                 </div>
                 <span>{item.description}</span>
             </div>
         );
     };
+
+
 
     return (
         <div className='Fields'>
@@ -131,7 +142,7 @@ const Fields = ({ fields, getCaseInfo, case_id }) => {
                     <div>{LANG.fields.title}</div>
                     <Icon icon={"arrow_down"} addClass={"fs35 arrow"} />
                 </div>
-                <Icon icon={"add"} addClass={"fs35"} onClick={() => { setModal({ ...modal, add: true }); setIsEditing(false); setFormData({ title: "", description: "", id: null }); }} />
+                {(access.case_simple_info_edit || access.super) && <Icon icon={"add"} addClass={"fs35"} onClick={() => { setModal({ ...modal, add: true }); setIsEditing(false); setFormData({ title: "", description: "", id: null }); }} />}
             </div>
             {open && <div>
                 {fields.length > 0 && fields ? <div className='Fields-content'>

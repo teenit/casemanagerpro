@@ -4,7 +4,7 @@ import PhotoUploader from "../elements/Uploaders/PhotoUploader";
 import defaultImg from "../../img/default_profile.png";
 import { serverAddres } from "../Functions/serverAddres";
 
-const ProfilePhotoBlock = ({ profileImg, meta, data = null }) => {
+const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true }) => {
     const [hover, setHover] = useState(false);
     const [edit, setEdit] = useState(false);
     const [file, setFile] = useState(null);
@@ -47,7 +47,6 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null }) => {
     };
 
     const getImage = () => {
-        console.log(profileImg)
         if (!data && !profileImg) return images.default;
         if (profileImg) return profileImg;
         if (data && data.sex && data.sex.trim().length > 0) {
@@ -75,7 +74,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null }) => {
         >
             {!edit ? (
                 <div>
-                    {hover && (
+                    {hover && editor && (
                         <div className="ProfilePhotoBlock-hover">
                             <label htmlFor="fileInput">
                                 <Icon icon={"edit"} addClass={"default-icon fs35"} />

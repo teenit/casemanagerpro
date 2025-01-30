@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiResponse } from '../Functions/get_apiObj';
-import { useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import TextEditor from "../elements/TextEditor/TextEditor";
 import SmallNotification from '../elements/Notifications/SmallNotification';
 import Icon from '../elements/Icons/Icon';
@@ -12,6 +12,8 @@ import { Button } from '@mui/material';
 import ModalConfirm from "../Modals/ModalConfirm";
 import Modal from '../Modals/Modal';
 import Hint from '../elements/Hints/Hint';
+import LoadingPage from '../Loading/LoadingPage';
+import NotFound from './NotFound';
 
 const File = () => {
   const navigate = useNavigate();
@@ -20,17 +22,21 @@ const File = () => {
   const [tags, setTags] = useState();
   const [confirm, setConfirm] = useState(false);
   const editCheck = AccessCheck("view_edit", "a_page_file", "edit");
+  const access = {
+    file_edit: AccessCheck("view_edit", "a_page_file", "edit")
+  }
   const [alert, setAlert] = useState({
     success: false,
     error: false,
     message: ""
   });
+  const [error, setError] = useState(false)
   const [edit, setEdit] = useState({
     name: false,
     text: false
   });
   const [newTag, setNewTag] = useState("");
-
+  const [loading, setLoading] = useState(true);
   const editHandler = (key) => {
     setEdit({ ...edit, [key]: !edit[key] });
   };
@@ -45,12 +51,28 @@ const File = () => {
 
   let params = useParams();
   const file_id = params.id;
+  const [searchParams] = useSearchParams();
 
   const getFileData = () => {
-    apiResponse({ file_id: file_id }, "manage/files/get-by-id.php").then((res) => {
+    
+    let obj = { file_id: file_id };
+    for (const [key, value] of searchParams.entries()) {
+      console.log(key, value)
+      obj[key] = value;
+    }
+    console.log(searchParams.get('case_id'))
+  
+    apiResponse(obj, "manage/files/get-by-id.php").then((res) => {
+      console.log(res)
+      if (!res?.status) {
+        setError(true);
+        setLoading(false);
+        return;
+      }
       setData(res.data);
       let dataTags = res.data.tag ? res.data.tag.split(',').map((item) => item.trim()) : []
       setTags([...dataTags])
+      setLoading(false);
     }).catch((error) => {
       console.error(error);
     });
@@ -102,7 +124,7 @@ const File = () => {
   const Tag = ({ name }) => {
     return (
       <div className="File-tag">
-        <Icon icon={"close"} addClass={"close-icon"} onClick={() => removeTag(name)} />
+        {access.file_edit && <Icon icon={"close"} addClass={"close-icon"} onClick={() => removeTag(name)} />}
         <span>{name}</span>
       </div>
     );
@@ -114,8 +136,11 @@ const File = () => {
   };
 
   return (
-    <div className='File'>
-      <div className='File-header'>
+    <>
+     {loading && <LoadingPage message={error.message} effload={loading}/>}
+     {error && <NotFound />}
+    {!loading && !error && <div className='File'>
+     <div className='File-header'>
         <InputBlock
           header={true}
           value={data?.title ? data?.title : ""}
@@ -126,10 +151,35 @@ const File = () => {
           saveHandler={(value) => { updateData("title", value) }}
         />
         <div>{data?.last_updated && `${LANG.file.last_updated}: ${data.last_updated}`}</div>
+        <div><NavLink to={data?.client?.link}>{data?.client?.title}</NavLink></div>
       </div>
       <div className='File-editor'>
+      <div className='File-editor-control'>
+        <div className='File-editor-control-up'>
+          <div className='File-editor-control-up-btn edit'>
+            {access.file_edit && editCheck && !edit.text &&
+              <Button className="button"  onClick={() => { editHandler("text") }}><Icon icon={'edit'} /></Button>}
+           
+          </div>
+          {/* <div className='File-editor-control-up-btn save'>
+          {edit.text && access.file_edit && 
+            <Button className="button" color='success'><Icon icon={'save'} /></Button>}
+            
+          </div>
+          <div className='File-editor-control-up-btn close'>
+          {edit.text && access.file_edit && 
+            <Button className="button" color='error'  onClick={() => { editHandler("text") }}><Icon icon={'close'} /></Button>}
+          </div> */}
+        </div>
+        <div className='File-editor-control-down'>
+          <div className='File-editor-control-down-btn delete'>
+          {edit.text && access.file_edit && 
+            <Button variant='outlined' className="button" color='error' onClick={()=>setConfirm(true)}><Icon icon={'delete'} /></Button>}
+          </div>
+        </div>   
+      </div>
         {data && (
-          <div className='File-editor'>
+          <div className='File-editor-block'>
             {editCheck && edit.text ? (
               <TextEditor
                 close={() => { editHandler("text") }}
@@ -141,20 +191,20 @@ const File = () => {
                 {!data.value || data.value === "<p><br></p>" ? (
                   <div>
                     <div>{LANG.file.empty_file}</div>
-                    <span>
+                    {/* {access.file_edit && <span>
                       <Button variant='contained' onClick={() => { editHandler("text") }}>
                         {LANG.GLOBAL.edit}
                       </Button>
-                    </span>
+                    </span>} */}
                   </div>
                 ) : (
                   <div className='File-text'>
                     <div dangerouslySetInnerHTML={{ __html: data.value }}></div>
-                    <span>
+                    {/* {access.file_edit && <span>
                       <Button variant='contained' onClick={() => { editHandler("text") }}>
                         {LANG.GLOBAL.edit}
                       </Button>
-                    </span>
+                    </span>} */}
                   </div>
                 )}
               </div>
@@ -187,12 +237,12 @@ const File = () => {
           />
           <div className='File-info-tags'>
             {tags && (tags.length > 0 ? tags.map(tag => <Tag key={tag} name={tag} />) : <div>Додати тег</div>)}
-            <Icon icon={"add"} addClass={"fs35"} onClick={() => { setModal(true) }} />
+            {access.file_edit && <Icon icon={"add"} addClass={"fs35"} onClick={() => { setModal(true) }} />}
 
           </div>
         </div>
       </div>
-      {edit.text && <Button variant='contained' color='error' onClick={() => { setConfirm(true) }}>Видалити файл</Button>}
+      {/* {edit.text && access.file_edit && <Button variant='contained' color='error' onClick={() => { setConfirm(true) }}>Видалити файл</Button>} */}
       {modal && <Modal closeHandler={closeModal} header={<span className='File-modal-header'>Додати теги <Hint text={LANG.hints.tag} /></span>} footer={
         <>
           <Button variant='contained' color='error' onClick={closeModal}>{LANG.GLOBAL.cancel}</Button>
@@ -204,7 +254,8 @@ const File = () => {
       {confirm && <ModalConfirm text={"Ви впевнені, що хочете видалити цей файл?"} successHandler={deleteHandler} closeHandler={() => { setConfirm(false) }} />}
       {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success", "") }} />}
       {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error", "") }} />}
-    </div>
+    </div>}
+    </>
   );
 };
 

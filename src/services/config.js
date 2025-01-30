@@ -783,7 +783,6 @@ export const appConfig = {
       yes_no: [
         "a_page_group",
         "a_group_create",
-        "a_page_case_connection",
         "a_page_group_phones",
         "a_page_group_names",
         "a_page_group_favourite"
@@ -1203,12 +1202,14 @@ export const appConfig = {
     {
       title: LANG.pages.cases,
       link: "/cases",
-      icon: "cases"
+      icon: "cases",
+      access: "a_page_cases"
     },
     {
       title: LANG.pages.addCase,
       link: "/add-case",
-      icon: "add_case"
+      icon: "add_case",
+      access: "a_page_case_add"
     },
     // {
     //     title: LANG.pages.contacts,
@@ -1217,32 +1218,38 @@ export const appConfig = {
     {
       title: LANG.pages.calendar,
       link: "/calendar",
-      icon: "calendar"
+      icon: "calendar",
+      access: "a_page_calendar"
     },
     {
       title: LANG.pages.events,
       link: "/events",
-      icon: "event"
+      icon: "event",
+      access: "a_page_event"
     },
     {
       title: LANG.pages.transactions,
       link: "/transactions",
-      icon: "transaction"
+      icon: "transaction",
+      access: 'super'
     },
     {
       title: LANG.pages.settings,
       link: "/settings",
-      icon: "settings"
+      icon: "settings",
+      access: "a_page_settings"
     },
     {
       title: LANG.pages.resources,
       link: "/resources",
-      icon: "resource"
+      icon: "resource",
+      access: "a_page_resources"
     },
     {
       title: LANG.pages.accesses,
       link: "/access",
-      icon: "access"
+      icon: "access",
+      access: "a_page_access"
     },
     // {
     //     title: LANG.pages.cooperation,
@@ -1251,12 +1258,14 @@ export const appConfig = {
     {
       title: LANG.pages.groups,
       link: "/groups",
-      icon: "groups"
+      icon: "groups",
+      access: 'a_page_groups'
     },
     {
       title: LANG.pages.administration,
       icon: "settings",
       type: "settings",
+      access: "a_page_settings",
       subMenu: [
         {
           title: LANG.pages.fields,

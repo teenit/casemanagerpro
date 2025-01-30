@@ -8,7 +8,7 @@ import SelectStatusPlan from "../../elements/Selects/SelectStatusPlan";
 import { LANG, appConfig } from "../../../services/config";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 
-const PlanElem = ({ plan }) => {
+const PlanElem = ({ plan, editor }) => {
     const [notification, setNotification] = useState({
         show: false,
         status: null,
@@ -75,7 +75,7 @@ const PlanElem = ({ plan }) => {
                     <div className="dates">
                         <div className="dates-start">
                             {
-                                state.editPlan
+                                state.editPlan && editor
                                     ?
                                     <>
                                         <Input
@@ -107,16 +107,19 @@ const PlanElem = ({ plan }) => {
                     </div>
                     <div className="controls">
                         {
-                            state.editPlan
+                            state.editPlan && editor
                                 ?
                                 <span>
                                     <Icon icon={"save"} addClass={"save-icon"} onClick={saveHandler} />
                                     <Icon icon={"close"} addClass={"close-icon"} onClick={cancelHandler} />
                                 </span>
                                 :
-                                <span onClick={editHandler}>
+                                <>
+                                {editor && <span onClick={editHandler}>
                                     <Icon icon={"edit"} addClass={"default-icon"} />
-                                </span>
+                                </span>}
+                                </>
+                                
                         }
                     </div>
                 </div>

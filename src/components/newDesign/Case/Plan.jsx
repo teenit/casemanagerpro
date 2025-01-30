@@ -17,7 +17,8 @@ import { appConfig } from "../../../services/config";
 import plus from "../../../img/icons/plus.svg"
 import Icon from "../../elements/Icons/Icon";
 import PlanElem from "./PlanElem";
-const Plan = ({ plans, case_id, getCaseInfo }) => {
+import AccessCheck from "../../Functions/AccessCheck";
+const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
     const [open, setOpen] = useState(false)
     const openHandler = () => {
         localStorage.setItem("page_case_plan", !open)
@@ -88,6 +89,10 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
             getCaseInfo();
         });
     };
+
+    const access = {
+        case_plan_edit: AccessCheck("view_edit", "a_page_case_plan", "edit"),
+    }
     
     return (
         <div className="Plan">
@@ -96,14 +101,14 @@ const Plan = ({ plans, case_id, getCaseInfo }) => {
                     <div>{LANG.planing}</div>
                         <Icon icon={"arrow_down"} addClass={"fs35 arrow"}/>
                 </div>
-                <span onClick={() => changeHandler("create", true)}>
+                {access.case_plan_edit && cg && <span onClick={() => changeHandler("create", true)}>
                     <Icon icon={"add"}/>
-                </span>
+                </span>}
             </div>
             {open && <div className="content">
                 {plans.length > 0 ? <div className="Plan-content">
                     {
-                        plans.map(plan => <PlanElem key={plan.id} plan={plan} />)
+                        plans.map(plan => <PlanElem editor={access.case_plan_edit && cg} key={plan.id} plan={plan} />)
                     }
                 </div>:<p>{LANG.no_records}</p>}
 

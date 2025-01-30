@@ -36,9 +36,11 @@ import Histories from "./Histories";
 import { Button, Switch } from "@mui/material";
 import FieldsBlock from "./FieldsBlock";
 import CaseLikePDF from "./CaseLikePDF";
+import Icon from "../../elements/Icons/Icon";
 
 const Case = () => {
     const downloadGallery = AccessCheck('yes_no', 'a_page_case_media_download')
+    const superUser = AccessCheck('super',"");
     const [modeDisplay, setModeDisplay] = useState(localStorage.getItem('case_mode_display') == 1 ? true : false)
     const [page, setPage] = useState({
         loading: true,
@@ -72,34 +74,18 @@ const Case = () => {
             const user_id = res?.general?.user_id;
             const responsible_id = res?.general?.responsible_id;
             const user_id_active = user.user_id;
-            setCg(user_id == user_id_active || responsible_id == user_id_active);
+           
+            setCg(user_id == user_id_active || responsible_id == user_id_active || superUser);
             const viewInfo = generateViews(res.userMeta?.case_view_info ? res.userMeta.case_view_info.value : {});
             setState({
                 ...res, viewInfo: viewInfo
             });
-           
-            // getUserNameById(res.responsible_id)
-
         })
     }
-    // const getUsersName = () => {
-    //     apiResponse({}, "user/get-all-users-name.php").then(res => {
-    //     })
-    // }
-    // const getUserNameById = () => {
-    //     // apiResponse({user_id:1}, "user/get-user-name-by-id.php").then(res => {
-    //     // })
-    // }
     useEffect(() => {
         getCaseInfo();
-       // getUsersName();
     }, [case_id])
-    const settingsHandler = (value) => {
-        setState({ ...state, viewInfo: value })
-        localStorage.setItem("page_case_settings", JSON.stringify(value))
-        setOpenSetting(false)
-        setSettingsAlert(true)
-    }
+
     const handleDataChange = (key, value) => {
         setState({ ...state, data: { ...state.data, [key]: value } })
         apiResponse({ [key]: value, case_id: case_id }, "case/update-case-data.php").then((data) => {
@@ -109,6 +95,29 @@ const Case = () => {
         setState({ ...state, general: { ...state.general, [key]: value } })
         apiResponse({ [key]: value, case_id: case_id }, "case/update-case.php").then((data) => {
         })
+    }
+    const printPDF = () => {
+         apiResponse({case_id: case_id}, 'mpdf/printcard.php').then((res)=>{
+            if (res.status) {
+                const a = document.createElement("a");
+                a.href = res.link;
+                a.download = "Case_pdf"; // Можна вказати ім'я файлу, або залишити порожнім
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        })
+    }
+    const access = {
+        case_connection_view: AccessCheck("view_edit", "a_page_case_connection", "view"),
+        case_simple_info_view: AccessCheck("view_edit", "a_page_case_simple_info", "view"),
+        case_plan_view: AccessCheck("view_edit", "a_page_case_plan", "view"),
+        case_help_view: AccessCheck("view_edit", "a_page_case_help", "view"),
+        case_notes_view: AccessCheck("view_edit", "a_page_case_notes", "view"),
+        case_files_view: AccessCheck("view_edit", "a_page_case_files", "view"),
+        case_media_view: AccessCheck("view_edit", "a_page_case_media", "view"),
+        case_media_edit: AccessCheck("view_edit", "a_page_case_media", "edit"),
+        super: AccessCheck('super')
     }
     return state && state.general ? (
         <div className="case__wrap">
@@ -120,23 +129,25 @@ const Case = () => {
             }
             <div></div>
             <div className="set__case__control">
-                <Switch checked={modeDisplay} onChange={(e)=>{
+                {/* <Switch checked={modeDisplay} onChange={(e)=>{
                     setModeDisplay(e.target.checked);
                     localStorage.setItem("case_mode_display", e.target.checked ? 1 : 0)
-                }}/>
-                <img src={setImg} alt=""
-                    onClick={() => { setOpenSetting(!openSetting) }} />
-                {
+                }}/> */}
+                <Button onClick={printPDF}><Icon icon='print'/></Button>
+                <Button onClick={() => { setOpenSetting(!openSetting) }}><Icon icon="check-list"/></Button>
+                {/* <img src={setImg} alt=""
+                    onClick={() => { setOpenSetting(!openSetting) }} /> */}
+                {/* {
                     (checkRight(post.level, "editOwnCase") || checkRight(post.level, "")) &&
                     <div>
                         <img className="editImg" src={editImg} alt="" editSomeonesCase
                             onClick={() => {
                                 setEditActive(true)
                             }} />
-                    </div>}
+                    </div>} */}
             </div>
             
-            {modeDisplay ? <CaseLikePDF caseData={state}/> :
+            {/* {modeDisplay ? <CaseLikePDF caseData={state}/> : */}
             <>
             <div className="flex">
                 {(state.viewInfo.view_InfoBlock) && <CaseInfoBlock cg={cg} profileImg={state.meta?.profileImg?.link ? state.meta.profileImg.link.link : null} case_id={case_id} getCaseInfo={getCaseInfo} info={state} changeData={(key, value) => { handleDataChange(key, value) }} changeGeneral={(key, value) => { handleGeneralChange(key, value) }} />}
@@ -145,32 +156,32 @@ const Case = () => {
                 {state?.fieldsMeta && <FieldsBlock cg={cg} getCaseInfo={getCaseInfo} works={state.fieldsMeta.works} contacts={state.fieldsMeta.contacts} another={state.fieldsMeta.another} case_id={case_id}/>}
                 
             </div>
-            {(state.viewInfo.view_GroupConnection) &&
+            {(state.viewInfo.view_GroupConnection && (access.case_connection_view || access.super)) &&
                 <GroupConnections cg={cg} case_id={case_id} type={"case"}/>
             }
             <div className="info__column">
-                {(state.viewInfo.view_DetailedInfo) &&
+                {(state.viewInfo.view_DetailedInfo && (access.case_simple_info_view || access.super)) &&
                     <DetailedInfo cg={cg} info={state.data} case_id={case_id} changeData={(key, value) => { handleDataChange(key, value) }} />
                 }
-                {(state.viewInfo.view_Fields) &&
+                {(state.viewInfo.view_Fields && (access.case_simple_info_view || access.super)) &&
                     <Fields cg={cg} fields={state.fields} case_id={case_id} getCaseInfo={getCaseInfo} />
                 }
-                {(state.viewInfo.view_Plan) &&
+                {(state.viewInfo.view_Plan && (access.case_plan_view || access.super)) &&
                     <Plan cg={cg} plans={state.plans} case_id={case_id} getCaseInfo={getCaseInfo} />
                 }
-                {(state.viewInfo.view_Help) &&
+                {(state.viewInfo.view_Help && (access.case_help_view || access.super)) &&
                     <GiveHelps cg={cg} helps={state.helps} case_id={case_id} getCaseInfo={getCaseInfo} />
                 }
-                {(state.viewInfo.view_Notes) &&
+                {(state.viewInfo.view_Notes && (access.case_notes_view || access.super)) &&
                     <Notes cg={cg} case_id={case_id} getCaseInfo={getCaseInfo} notes={state.notes} />
                 }
-                {(state.viewInfo.view_Files) && <Files cg={cg} case_id={case_id} getCaseInfo={getCaseInfo} files={state.files} />}
-                {(state.viewInfo.view_Histories) && <Histories cg={cg} data={state.meta.history_files} getCaseInfo={getCaseInfo} case_id={case_id} />}
+                {(state.viewInfo.view_Files && (access.case_files_view || access.super)) && <Files cg={cg} case_id={case_id} getCaseInfo={getCaseInfo} files={state.files} />}
+                {(state.viewInfo.view_Histories && (access.case_media_view || access.super)) && <Histories cg={cg} data={state.meta.history_files} getCaseInfo={getCaseInfo} case_id={case_id} />}
             </div>
 
-            {!!state?.meta?.files?.length && (state.viewInfo.view_Gallery) &&
+            {!!state?.meta?.files?.length && (state.viewInfo.view_Gallery && (access.case_media_view || access.super)) &&
                 <GalleryBlock cg={cg} check={downloadGallery} data={state.meta.files} />}
-            {state.viewInfo.view_FileUploader &&
+            {state.viewInfo.view_FileUploader && (access.case_media_edit || access.super) &&
                 <div className="Uploader">
                     <p>Завантажити файл</p>
                     <div className="Uploader-content">
@@ -184,7 +195,8 @@ const Case = () => {
                 </div>
             }
             {settingsAlert && <SmallNotification isSuccess={true} text={"Показ елементів оновлено"} close={() => { setSettingsAlert(false) }} />}
-            </>}
+            </>
+
         </div>
     ) : (
         <>

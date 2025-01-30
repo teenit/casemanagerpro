@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { Button } from '@mui/material';
+import { Button, Icon } from '@mui/material';
 import { LANG } from '../../../services/config';
 import { formats, modules } from './constants';
 
@@ -52,7 +52,7 @@ const TextEditor = ({ saveHandler, val, close }) => {
           save()
           close()
         }}>{LANG.GLOBAL.save}</Button>
-        <Button color='error' variant='contained' onClick={close}>{LANG.GLOBAL.close}</Button>
+        <Button color='error' onClick={close}>{LANG.GLOBAL.close}</Button>
       </div>
     </div>
   );

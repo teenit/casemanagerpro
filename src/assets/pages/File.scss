@@ -52,8 +52,26 @@
         width: 100%;
         display: flex;
         justify-content: center;
-
-        >div {
+        &-control {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            right: 8px;
+            width: max-content;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-top: 60px;
+            padding-bottom: 60px;
+            justify-content: space-between;
+            &-up {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+             
+            }
+        }
+        &-block {
             width: 100%;
         }
     }

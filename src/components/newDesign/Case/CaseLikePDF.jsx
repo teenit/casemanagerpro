@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import React, { useRef } from "react";
 import withMarkBackImg from './../../../img/back-pdf-with-mark.png';
+import { apiResponse } from "../../Functions/get_apiObj";
 
 const CaseLikePDF = ({ caseData }) => {
     const pdfRef = useRef();
@@ -132,11 +133,17 @@ const CaseLikePDF = ({ caseData }) => {
             WindowPrint.close();
           });
       };
+
+      const getPDF = () => {
+        apiResponse({case_id: case_id}, 'mpdf/printcard.php').then((res)=>{
+          console.log(res)
+        })
+      }
       
 
     return (
         <>
-            <Button onClick={handlePrint}>Друк</Button>
+            <Button onClick={getPDF}>Друк</Button>
             <div ref={pdfRef} className="CaseLikePDF print-area">
                 <div className="CaseLikePDF-left">
                     {caseProfilePhoto && (

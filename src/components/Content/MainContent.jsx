@@ -74,11 +74,11 @@ const MainContent = () => {
         <Route path='/task' element={<Task />} />
         <Route path='/test' element={<TestPage />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/login_new' element={<LoginPage />} />
+        {/* <Route path='/login_new' element={<LoginPage />} /> */}
         <Route path='/transactions' element={<TransactionsPage />} />
         <Route path='/file/:id' element={<File />} />
         <Route path='/calendar' element={ access.calendar ? <MyBigCalendar /> :  <NotFound />} />
-        <Route path='/login' element={<LoginPage />} />
+        {/* <Route path='/login' element={<LoginPage />} /> */}
         <Route path='/google-drive' element={<GoogleDrivePage />} />
         <Route path='/fields' element={rights.a_super == 1 ? <FieldsPage /> : <NotFound />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}

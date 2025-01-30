@@ -7,7 +7,8 @@ import imgIcon from "../../../img/resources/img.svg"
 import pdfIcon from "../../../img/resources/pdf.svg"
 import videoIcon from "../../../img/resources/mp4.svg"
 import { NavLink } from 'react-router-dom';
-const Histories = ({ data, case_id, getCaseInfo }) => {
+import AccessCheck from '../../Functions/AccessCheck';
+const Histories = ({ data, case_id, getCaseInfo , cg }) => {
     const [open, setOpen] = useState(false);
     const [histories, setHistories] = useState(null)
     useEffect(() => {
@@ -58,9 +59,15 @@ const Histories = ({ data, case_id, getCaseInfo }) => {
             </NavLink>
         );
     };
+
+    const access = {
+        case_media_edit: AccessCheck("view_edit", "a_page_case_media", "edit"),
+    }
+
     
     return (
-        <div className="Histories">
+        <>
+       {histories && histories.length > 0 && <div className="Histories">
             <div className="Histories-title">
                 <div>Історії</div>
                 <Icon icon={"arrow_down"} addClass={"fs35"} onClick={openHandler} />
@@ -72,7 +79,8 @@ const Histories = ({ data, case_id, getCaseInfo }) => {
                     })
                         : <div>{LANG.no_records}</div>)}
             </div>
-        </div>
+        </div>}
+        </>
     )
 }
 

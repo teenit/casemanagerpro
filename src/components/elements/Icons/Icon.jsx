@@ -20,6 +20,8 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
+import PrintIcon from '@mui/icons-material/Print';
+import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
@@ -54,7 +56,7 @@ const Icon = ({ icon, addClass="", onClick }) => {
                 ico = <SettingsOutlined style={{ cursor: 'pointer' }} className={addClass} onClick={onClick} />;
                 break;
             case "print":
-                ico = <Print className={addClass} onClick={onClick} />;
+                ico = <PrintIcon className={addClass} onClick={onClick} />;
                 break;
             case "search":
                 ico = <Search className={addClass} onClick={onClick} />;
@@ -170,6 +172,9 @@ const Icon = ({ icon, addClass="", onClick }) => {
                 break;
             case "access":
                 ico = <VpnKeyIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "check-list":
+                ico = <ChecklistRtlIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             case "groups":
                 ico = <Diversity3Icon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;

@@ -8,7 +8,8 @@ import { Button } from '@mui/material'
 import Input from '../../elements/Inputs/Input'
 import { apiResponse } from '../../Functions/get_apiObj'
 import TextDescription from '../../elements/TextFormatters/TextDescription'
-const DetailedInfo = ({ info, changeData }) => {
+import AccessCheck from '../../Functions/AccessCheck'
+const DetailedInfo = ({ info, changeData, cg }) => {
     const [alert, setAlert] = useState({
         success: false,
         error: false,
@@ -52,9 +53,13 @@ const DetailedInfo = ({ info, changeData }) => {
         }
     }
 
-    const InfoBlock = ({ itemKey }) => {
+    const InfoBlock = ({ itemKey, editor }) => {
         const [value, setValue] = useState(dataState[itemKey])
         const [edit, setEdit] = useState(false)
+        const access = {
+            case_simple_info_edit: AccessCheck("view_edit", "a_page_case_simple_info", "edit"),
+            super: AccessCheck('super')
+        }
         return itemKey && (
             <div className='DetailedInfo-InfoBlock'>
                 <div className='DetailedInfo-InfoBlock-title'>
@@ -72,7 +77,7 @@ const DetailedInfo = ({ info, changeData }) => {
                             </span>
                         </div>
                         : <span onClick={() => { setEdit(!edit) }}>
-                            <Icon icon={"edit"} addClass={"default-icon"} />
+                            {(access.case_simple_info_edit && editor) && <Icon icon={"edit"} addClass={"default-icon"} />}
                         </span>}
 
                 </div>
@@ -94,7 +99,7 @@ const DetailedInfo = ({ info, changeData }) => {
             {open && <div className='content'>
                 {Object.keys(dataState).map((item, index) => {
                     return (
-                        <InfoBlock key={index} itemKey={item} />
+                        <InfoBlock editor={cg} key={index} itemKey={item} />
                     )
                 })}
                 <InfoBlock />

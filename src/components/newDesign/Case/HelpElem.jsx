@@ -15,7 +15,7 @@ import TextDescription from "../../elements/TextFormatters/TextDescription"
 import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 
-const HelpElem = ({ help, categories, getCaseInfo }) => {
+const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
 
     const [state, setState] = useState({
         ...help,
@@ -63,7 +63,7 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                     <div className="dates">
                         <div className="dates-start">
                             {
-                                state.editHelp
+                                state.editHelp && editor
                                     ?
                                     <>
                                         <Input
@@ -97,7 +97,7 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                             }
                         </div>
                     </div>
-                    <div className="controls">
+                    {editor && <div className="controls">
                         {
                             state.editHelp
                                 ?
@@ -109,11 +109,11 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                                     <Icon icon={"edit"} addClass={"default-icon"} />
                                 </span>
                         }
-                    </div>
+                    </div>}
                 </div>
                 <div className="task">
                     {
-                        state.editHelp
+                        state.editHelp && editor
                             ?
                             <div className="task-textarea">
                                 <Textarea
@@ -136,7 +136,7 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                     </div>
                     <div className="bottom-status">
                         {
-                            state.editHelp
+                            state.editHelp && editor
                                 ?
                                 <SelectStatus statuses={categories} value={state.category} type={"help"} onChange={(e) => changeHandler("category", e)} />
                                 :
@@ -152,7 +152,7 @@ const HelpElem = ({ help, categories, getCaseInfo }) => {
                 </div>
             </div>
             {
-                state.edit && <Modal
+                state.edit && editor && <Modal
                     header={LANG.give_help.edit_help}
                     closeHandler={() => changeHandler("edit", false)}
                     footer={

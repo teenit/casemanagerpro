@@ -10,8 +10,9 @@ import SelectStatus from "../../elements/Selects/SelectStatus";
 import HelpElem from "./HelpElem";
 import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
+import AccessCheck from "../../Functions/AccessCheck";
 
-const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
+const GiveHelps = ({ helps, case_id, getCaseInfo, cg }) => {
     const categories = useSelector(state => state.categories.help);
     const [open, setOpen] = useState(false);
     const [state, setState] = useState({
@@ -77,6 +78,9 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
                 });
             });
     };
+    const access = {
+        case_help_edit: AccessCheck("view_edit", "a_page_case_help", "edit"),
+    }
 
     return (
         <div className="Help">
@@ -85,9 +89,9 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
                     <div>{LANG.give_help.helping}</div>
                     <Icon icon="arrow_down" addClass="fs35 arrow" />
                 </div>
-                <span onClick={() => changeHandler("create", true)}>
+                {access.case_help_edit && <span onClick={() => changeHandler("create", true)}>
                     <Icon icon="add" />
-                </span>
+                </span>}
             </div>
             {open && (
                 <div className="content">
@@ -99,6 +103,7 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
                                     categories={categories}
                                     key={help.id}
                                     help={help}
+                                    editor={access.case_help_edit && cg}
                                 />
                             ))}
                         </div>
@@ -107,7 +112,7 @@ const GiveHelps = ({ helps, case_id, getCaseInfo }) => {
                     )}
                 </div>
             )}
-            {state.create && (
+            {state.create && access.case_help_edit && (
                 <Modal
                     header={LANG.give_help.add_help}
                     closeHandler={() => changeHandler("create", false)}

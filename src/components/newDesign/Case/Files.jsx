@@ -10,8 +10,9 @@ import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
 import FileSearch from "./FileSearch";
 import Hint from "../../elements/Hints/Hint";
+import AccessCheck from "../../Functions/AccessCheck";
 
-const Files = ({ case_id, getCaseInfo, files }) => {
+const Files = ({ case_id, getCaseInfo, files, cg }) => {
     const [filteredFiles, setFilteredFiles] = useState(null)
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({ success: false, error: false, message: "" });
@@ -70,11 +71,15 @@ const Files = ({ case_id, getCaseInfo, files }) => {
         return str.length > 20 ? str.slice(0, 20) + "..." : str;
     };
 
+    const access = {
+        case_files_edit: AccessCheck("view_edit", "a_page_case_files", "edit"),
+    }
+
 
     const File = ({ item }) => {
         const [hover, setHover] = useState(false);
         return (
-            <NavLink to={`/file/${item.id}`}>
+            <NavLink to={`/file/${item.id}?case_id=${case_id}`}>
                 <div className="Files-file" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                     <div className="Files-file-icon"></div>
                     {hover ? item.title : cutTitle(item.title)}
@@ -92,7 +97,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
                     <Icon icon="arrow_down" addClass="fs35 arrow" />
                 </div>
                 {/* <FileSearch files={files} filterFiles={(res) => { filterFiles(res) }} /> */}
-                <Icon icon="add" onClick={() => setModal(true)} />
+                {access.case_files_edit && <Icon icon="add" onClick={() => setModal(true)} />}
             </div>
             {open && (
                 <div className="Files-viewer">
@@ -105,7 +110,7 @@ const Files = ({ case_id, getCaseInfo, files }) => {
                 </div>
             )}
 
-            {modal && (
+            {modal && access.case_files_edit && (
                 <Modal
                     header={LANG.caseFiles.add}
                     closeHandler={() => setModal(false)}

@@ -8,13 +8,19 @@ import Textarea from '../../elements/Inputs/Textarea';
 import SmallNotification from '../../elements/Notifications/SmallNotification';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import AccessCheck from '../../Functions/AccessCheck';
 
-const GroupConnections = ({ case_id, type }) => {
+const GroupConnections = ({ case_id, type, cg }) => {
     const [open, setOpen] = useState(false);
     const openHandler = () => {
         localStorage.setItem("page_case_connections", !open);
         setOpen(!open);
     };
+    const access = {
+        case_connection_edit: AccessCheck("view_edit", "a_page_case_connection", "edit") && cg,
+        case_connection_view: AccessCheck("view_edit", "a_page_case_connection", "view"),
+        super: AccessCheck('super')
+    }
     useEffect(() => {
         let item = localStorage.getItem("page_case_connections");
         if (item) {
@@ -109,9 +115,9 @@ const GroupConnections = ({ case_id, type }) => {
                     <span>{LANG.groups.title_case}</span>
                     <Icon addClass={`fs16`} icon={'arrow_down'} />
                 </div>
-                <span onClick={() => modalHandler("add")}>
+                {(access.case_connection_edit || access.super) && <span onClick={() => modalHandler("add")}>
                     <Icon icon={"add"} />
-                </span>
+                </span>}
             </div>
             {open && <div className='GroupConnections-list'>
                 {connections.length > 0 ? connections.map((item, index) => {

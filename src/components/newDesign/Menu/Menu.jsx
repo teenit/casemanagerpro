@@ -5,6 +5,7 @@ import Icon from "../../elements/Icons/Icon";
 import logoImg from "../../../img/logo.svg";
 import { removeUser } from "../../../store/Slices/userSlice";
 import { useDispatch } from "react-redux";
+import AccessCheck from "../../Functions/AccessCheck";
 
 const Menu = () => {
     const menuItems = appConfig.menu;
@@ -25,6 +26,15 @@ const Menu = () => {
         //setOpened(true);
     };
 
+    const accessEx = (right) => {
+        if (right) {
+            let access = AccessCheck('yes_no', right);
+            return access;
+        } else {
+            return true
+        }
+    }
+
     return (
         <div className={`Menu ${opened ? "opened" : ""}`}>
             <div className="Menu-container">
@@ -44,15 +54,20 @@ const Menu = () => {
                     <div className="Menu-items-primary">
                         {menuItems.map((item) =>
                             !item.subMenu ? (
+                                <>
+                                {accessEx(item.access) && 
                                 <NavLink key={item.link} className="Menu-items-primary-item" to={item.link}>
                                     <Icon addClass="Menu-items-primary-item-ico" icon={item.icon} />
                                     {opened && <div className="Menu-title">{item.title}</div>}
                                 </NavLink>
+                                }
+                                </>
                             ) : (
                                 <div
                                     key={item.type}
                                     className={`Menu-items-submenu ${item.type === submenuOpened ? "opened-sub" : ""}`}
                                 >
+                                    {accessEx(item.access) && <>
                                     <div
                                         className="Menu-items-submenu-main"
                                         onClick={() => handleSubmenuToggle(item.type)}
@@ -70,6 +85,7 @@ const Menu = () => {
                                         </NavLink>
                                     ))}
                                     </div>
+                                    </>}
                                 </div>
                             )
                         )}

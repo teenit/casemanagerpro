@@ -9,8 +9,9 @@ import Modal from "../../Modals/Modal";
 import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
 import TextDescription from "../../elements/TextFormatters/TextDescription";
+import AccessCheck from "../../Functions/AccessCheck";
 
-const Active = ({ elem, handleEdit }) => {
+const Active = ({ elem, handleEdit, editor }) => {
     const [edit, setEdit] = useState(false);
     const [activeMessage, setActiveMessage] = useState(elem.text);
     const [activeColor, setActiveColor] = useState(elem.color);
@@ -44,7 +45,7 @@ const Active = ({ elem, handleEdit }) => {
                 ) : (
                     <TextDescription text={activeMessage}/>
                 )}
-                <div className="Notes-viewer-line-mess-edit">
+                {editor && <div className="Notes-viewer-line-mess-edit">
                     {edit ? (
                         <div>
                             <Icon icon="save" addClass="save-icon" onClick={() => {
@@ -60,20 +61,23 @@ const Active = ({ elem, handleEdit }) => {
                             <Icon icon="edit" addClass="default-icon" />
                         </span>
                     )}
-                </div>
+                </div>}
             </div>
         </div>
     );
 };
 
-const Notes = ({ notes, case_id, getCaseInfo }) => {
+const Notes = ({ notes, case_id, getCaseInfo, cg }) => {
     const [open, setOpen] = useState(false);
     const [noteMessage, setNoteMessage] = useState("");
     const [noteColor, setNoteColor] = useState("");
     const [alert, setAlert] = useState({ success: false, error: false, message: "" });
     const [actNote, setActNote] = useState(notes);
     const [modal, setModal] = useState(false);
-
+    const access = {
+        case_notes_edit: AccessCheck("view_edit", "a_page_case_notes", "edit"),
+        super: AccessCheck('super')
+    }
     useEffect(() => {
         const item = localStorage.getItem("page_case_notes");
         setOpen(item === "true");
@@ -133,15 +137,15 @@ const Notes = ({ notes, case_id, getCaseInfo }) => {
                     <div>Нотатки</div>
                     <Icon icon="arrow_down" addClass="fs35 arrow" />
                 </div>
-                <span onClick={() => setModal(true)}>
+                {(access.case_notes_edit || access.super) && <span onClick={() => setModal(true)}>
                     <Icon icon="add" />
-                </span>
+                </span>}
             </div>
             {open && (
                 <div className="Notes-viewer">
                     {actNote.length > 0 ? (
                         actNote.map((elem, index) => (
-                            <Active key={index} elem={elem} handleEdit={handleEdit} />
+                            <Active editor={access.case_notes_edit && cg} key={index} elem={elem} handleEdit={handleEdit} />
                         ))
                     ) : (
                         <p>{LANG.no_records}</p>
