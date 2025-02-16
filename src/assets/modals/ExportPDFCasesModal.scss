@@ -1,0 +1,33 @@
+.ExportPDFCasesModal {
+    display: flex;
+    gap: 10px;
+    padding-top: 5px;
+    position: relative;
+    &-loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 999;
+        background-color: #fff;
+    }
+    &-settings {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-right: solid 1px $second-color;
+        padding: 5px;
+        &-line {
+            display: flex;
+            align-items: center;
+            max-width: 400px;
+            label {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                cursor: pointer;
+            }
+        }
+    }
+}

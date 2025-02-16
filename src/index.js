@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(rootElem);
 root.render(
     <BrowserRouter>
     <Provider store={store}>
-    <App />
+        <App />
     </Provider>
     </BrowserRouter>
 );

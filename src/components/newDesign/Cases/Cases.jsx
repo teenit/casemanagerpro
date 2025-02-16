@@ -4,11 +4,12 @@ import GetCases from "../../Cases/GetCases";
 import Pagination from "../../elements/Pagination/Pagination";
 import { LANG } from "../../../services/config";
 import Table from "../../elements/Table/Table";
-import { MenuItem, Select, Switch } from "@mui/material";
+import { Button, MenuItem, Select, Switch } from "@mui/material";
 import HeaderFormatter from "../../elements/HeaderFormatter/HeaderFormatter";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Input from "../../elements/Inputs/Input";
+import ExportPDFCasesModal from "../../Modals/ExportPDFCasesModal";
 
 const columnsTable = [
     {
@@ -90,6 +91,9 @@ const Cases = () => {
         },
         search: ""
     });
+    const [listToExport, setListToExport] = useState([]);
+    const [listIds, setListIds] = [];
+    const [exportModal,setExportModal] = useState(false)
     const [totalCount, setTotalCount] = useState("hidden");
     const [view, setView] = useState("cards")
     useEffect(() => {
@@ -107,7 +111,6 @@ const Cases = () => {
             },
             search: options.search
         }, "case/get/cases-page-list.php").then((res) => {
-            console.log(res)
             setState([...res.list]);
         });
     };
@@ -198,6 +201,15 @@ const Cases = () => {
         return [...columnsTable, ...testArray];
     }
 
+    const exportCasesToPdf = () => {
+
+        apiResponse({ }, "case/get/cases-page-list.php").then((res) => {
+            setListToExport([...res.list]);
+            setExportModal(true);
+        });
+
+    }
+
     const casesColumns = prepareColumns(getColumns());
     return (
         <div className="ListCases">
@@ -241,6 +253,9 @@ const Cases = () => {
                                 }
                     }} />
                 </div>
+                <div>
+                    <Button onClick={exportCasesToPdf}>Export</Button>
+                </div>
             </div>
 
             {state.length > 0 && view === "cards" && (
@@ -273,6 +288,7 @@ const Cases = () => {
                     loadTotalCount={loadTotalCount}
                 />
             </div>
+           {exportModal && <ExportPDFCasesModal list={listToExport} close={()=>setExportModal(false)}/>}
         </div>
     );
 };
