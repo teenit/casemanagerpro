@@ -62,7 +62,7 @@ const columnsTable = [
         text: 'Адреса проживання',
         fixed: false,
         isHidden: false,
-        sort: false
+        sort: true
     },
     {
         dataField: 'active',
@@ -214,10 +214,23 @@ const Cases = () => {
     return (
         <div className="ListCases">
             <div className="ListCases-sort">
-                <Input label="Пошук" value={options.search} onChange={(e)=>{
-                    setOptions({ ...options, search: e.target.value.trim() });
-                }}/>
+                <div className="ListCases-sort-left">
+                    <Input size="small" label="Пошук" value={options.search} onChange={(e)=>{
+                        setOptions({ ...options, search: e.target.value.trim() });
+                    }}/>
+                </div>
+                <div className="ListCases-sort-right">
+                <div>Як таблицю
+                <Switch size="small" checked={view == 'table'} onChange={(e) => {
+                                if (e.target.checked) {
+                                    setView('table')
+                                } else {
+                                    setView('cards')
+                                }
+                    }} />
+                </div>
                 <Select
+                size="small"
                     value={options.sort.field}
                     onChange={(e) => {
                         setOptions({ ...options, sort: { ...options.sort, field: e.target.value } });
@@ -232,6 +245,7 @@ const Cases = () => {
                     })}
                 </Select>
                 <Select
+                size="small"
                     value={options.sort.order}
                     onChange={(e) => {
                         setOptions({ ...options, sort: { ...options.sort, order: e.target.value } });
@@ -244,18 +258,13 @@ const Cases = () => {
                         Від більшого до меншого
                     </MenuItem>
                 </Select>
-                <div>Як таблицю
-                <Switch checked={view == 'table'} onChange={(e) => {
-                                if (e.target.checked) {
-                                    setView('table')
-                                } else {
-                                    setView('cards')
-                                }
-                    }} />
+                
+                <div>   
+                    <Button size="small" onClick={exportCasesToPdf}>Export</Button>
                 </div>
-                <div>
-                    <Button onClick={exportCasesToPdf}>Export</Button>
                 </div>
+                
+                
             </div>
 
             {state.length > 0 && view === "cards" && (

@@ -127,8 +127,9 @@ const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
                 >
                     <div className="Plan-create">
                         <div className="Plan-create-date">
+                        
                             <Input
-                                type="datetime-local"
+                                type="datetime"
                                 label={LANG.start_time}
                                 value={state.start_time}
                                 variant="standard"

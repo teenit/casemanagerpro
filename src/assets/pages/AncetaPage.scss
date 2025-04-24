@@ -1,0 +1,54 @@
+.AncetaPage {
+  display: flex;
+  flex-direction: column;
+  &-title {
+    text-align: center;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    &-h2{
+      font-size: 22px;
+      font-weight: 600;
+      .InputBlock-default {
+        justify-content: center;
+      }
+    }
+    &-p {
+      font-size: 20px;
+      .InputBlock-default {
+        justify-content: center;
+      }
+    }
+  }
+  &-details {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    padding: 20px;
+    border: solid 1px $main-color;
+    border-radius: 8px;
+    margin: auto;
+    margin-top: 12px;
+  }
+  &-title-quest {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 20px;
+  }
+  &-questions {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    &-question {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      background-color: rgb(244, 250, 248);
+    }
+    &-new {
+      display: flex;
+    }
+  }
+}

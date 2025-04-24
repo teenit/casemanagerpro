@@ -76,6 +76,15 @@
     justify-content: center;
     /* width: 100%; */
     left: 8px;
+        a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #8f0101;
+            &:hover {
+                color: #fff;
+            }
+        }
         }
         overflow-y: auto;
         &-primary {

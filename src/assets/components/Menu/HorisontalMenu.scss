@@ -20,11 +20,14 @@
         display: flex;
         align-items: center;
         cursor: pointer;
+        gap: 8px;
         &-name {
             padding-right: 10px;
+            font-weight: 600;
             a {
                 font-size: 14px;
-                font-weight: 400;
+                font-weight: 600;
+                color: #666666;
             }
         }
         &-image {

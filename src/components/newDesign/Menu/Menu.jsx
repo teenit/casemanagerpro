@@ -97,6 +97,8 @@ const Menu = () => {
                             to="/login"
                         >
                             <Icon icon={'logout'}/>
+                            {opened && "Вийти"}
+                            
                             {/* <img className={s.logout} src={logoutImg} alt="" /> */}
                         </NavLink>
                     </div>

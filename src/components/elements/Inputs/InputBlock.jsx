@@ -8,7 +8,24 @@ import Textarea from "./Textarea"
 import SmallNotification from "../Notifications/SmallNotification";
 import Hint from "../Hints/Hint";
 import TextDescription from "../TextFormatters/TextDescription";
-const InputBlock = ({ hintMessage = null, maxLength = null, header = false, textarea = false, age = false, errorKey = null, saveHandler, disabled = false, inputType = "text", value = "", onChange, link = null, title = "", icon = null, label = "", titleDefault = "", showLable=false }) => {
+const InputBlock = ({ 
+    hintMessage = null, 
+    maxLength = null, 
+    header = false, 
+    textarea = false, 
+    age = false, 
+    errorKey = null, 
+    saveHandler, 
+    disabled = false, 
+    inputType = "text",
+     value = "", 
+     onChange, 
+     link = null, 
+     title = "", 
+     icon = null, 
+     label = "", 
+     titleDefault = "", 
+     showLable=false }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
     useEffect(() => {

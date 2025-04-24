@@ -1,10 +1,10 @@
-import { TextField } from "@mui/material";
+import { Input } from "@mui/material";
 import React from "react";
-const Input = ({value="", onChange, label="", type="text", variant="outlined", disabled=false, addClass="", size="normal", multiline = false}) =>{
+const InputPassword = ({value="", onChange, label="", type="text", variant="outlined", disabled=false, addClass="", size="normal", multiline = false}) =>{
 
     return (
         <div className={`Input ${addClass}`}>
-            <TextField
+            <Input
                 label={label}
                 value={value}
                 onChange={onChange}
@@ -19,4 +19,4 @@ const Input = ({value="", onChange, label="", type="text", variant="outlined", d
     )
 }
 
-export default Input;
+export default InputPassword;

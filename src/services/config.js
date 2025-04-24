@@ -474,7 +474,8 @@ export const LANG = {
     updateLog: "Оновленння програми",
     transactions: "Транзакції",
     administration: "Адміністрування",
-    fields: "Системні поля"
+    fields: "Системні поля",
+    ancets: "Анкети"
   },
   documents: "Додані документи",
   give_help: {
@@ -528,7 +529,44 @@ export const LANG = {
     "view_categories": "Відобразити категорії кейсу",
     "view_responsible": "Відобразити відповідального за кейс",
     "view_date_first_contact": "Відобразити дату першого контакту"
+  },
+  ratingScale10: {
+    one: "Дуже низько",
+    two: "Низько",
+    three: "Нижче середнього",
+    four: "Помірно",
+    five: "Середньо",
+    six: "Достатньо",
+    seven: "Вище середнього",
+    eight: "Високо",
+    nine: "Дуже високо",
+    ten: "Максимум"
+  },
+  ratingScale5: {
+    one: "Дуже погано",
+    two: "Погано",
+    three: "Нормально",
+    four: "Добре",
+    five: "Чудово"
+  },
+  ancets: {
+    type: "Тип",
+    remember: "Нагадувати раз ",
+    status: "Статус",
+    date_created: "Дата створення",
+    cases: "Для кейсів",
+    active_ancets: "Активні анкети",
+    question: "Питання",
+    add_new_question: "Додати нове питання",
+    question_description: "Надайте відповіді на питання, 1 - найнижча оцінка, 5 або 10 - найвижча оцінка, необхідно відповісти на всі питання",
+    remembers: {
+      week: "на ",
+      month: "в місяць",
+      year: "на рік",
+      cvartal: "на квартал"
+    }
   }
+
 
 };
 export const appConfig = {
@@ -1262,6 +1300,12 @@ export const appConfig = {
       access: 'a_page_groups'
     },
     {
+      title: LANG.pages.ancets,
+      link: "/ancets",
+      icon: "quiz",
+      access: 'super'
+    },
+    {
       title: LANG.pages.administration,
       icon: "settings",
       type: "settings",
@@ -1273,5 +1317,26 @@ export const appConfig = {
         }
       ]
     },
-  ]
+  ],
+  rating_scale:{
+    10: {
+      1: LANG.ratingScale10.one,
+      2: LANG.ratingScale10.two,
+      3: LANG.ratingScale10.three,
+      4: LANG.ratingScale10.four,
+      5: LANG.ratingScale10.five,
+      6: LANG.ratingScale10.six,
+      7: LANG.ratingScale10.seven,
+      8: LANG.ratingScale10.eight,
+      9: LANG.ratingScale10.nine,
+      10: LANG.ratingScale10.ten
+    },
+    5: {
+      1: LANG.ratingScale5.one,
+      2: LANG.ratingScale5.two,
+      3: LANG.ratingScale5.three,
+      4: LANG.ratingScale5.four,
+      5: LANG.ratingScale5.five
+    }
+  },
 }

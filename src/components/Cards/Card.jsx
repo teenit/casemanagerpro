@@ -48,7 +48,7 @@ const Card = (props) => {
                     <NavLink to={`mailto:${props.info.email}`}>{props.info.email}</NavLink>
                     </div>}
                     {props.info.potreba && <div className="card__description__potreba">
-                        <p dangerouslySetInnerHTML={{ __html: props.info.potreba }} />
+                        <p title={props.info.potreba} dangerouslySetInnerHTML={{ __html: props.info.potreba.slice(0,52) + (props.info.potreba.length > 50 ? "..." : "") }} />
                     </div>}
                 </div>
                 {(props.info.contractDate || props.info.contract_number) && <div className="card__info__status">

@@ -22,6 +22,7 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import PrintIcon from '@mui/icons-material/Print';
 import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
+import QuizIcon from '@mui/icons-material/Quiz';
 const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
@@ -178,6 +179,9 @@ const Icon = ({ icon, addClass="", onClick }) => {
                 break;
             case "groups":
                 ico = <Diversity3Icon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "quiz":
+                ico = <QuizIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             default:
                 ico = <StarRoundedIcon className={addClass} onClick={onClick} />;

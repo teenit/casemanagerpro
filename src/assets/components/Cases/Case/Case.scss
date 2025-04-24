@@ -1,3 +1,25 @@
+.Case {
+    &-modal {
+        &-body {
+            &-answer {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                &-description {
+                    text-align: left;
+                    font-size: 14px;
+                    color: #222222;
+                }
+                &-questions {
+                    font-size: 18px;
+                    font-weight: 900;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+}
+
 .media__content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

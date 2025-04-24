@@ -12,7 +12,7 @@ const SmallNotification = ({ isSuccess, text, close }) => {
 
   return (
     <div className='SmallNotification'>
-      <Alert variant="filled" severity={isSuccess?"success":"error"}>
+      <Alert sx={{zIndex: 9999}} variant="filled" severity={isSuccess?"success":"error"}>
         {text}
       </Alert>
     </div>

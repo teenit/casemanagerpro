@@ -32,6 +32,9 @@ import MyBigCalendar from "../newDesign/Calendar/MyBigCalendar";
 import TelegramPage from "../pages/TelegramPage";
 import FieldsPage from "../pages/FieldsPage";
 import GoogleDrivePage from "../pages/GoogleDrivePage";
+import AncetsPage from "../pages/AncetsPage";
+import AncetaPage from "../pages/AncetaPage";
+import AncetaPageWrapper from "../pages/AncetaPageWrapper";
 
 const MainContent = () => {
   const rights = useSelector(state => state.auth);
@@ -51,6 +54,7 @@ const MainContent = () => {
     phonebook: AccessCheck('page', "a_page_phonebook"),
   }
   const { isAuth } = useAuth();
+  const params = useParams()
   return isAuth ? (
     <div className='wrap__content'>
       <Routes>
@@ -76,10 +80,12 @@ const MainContent = () => {
         <Route path='/search' element={<Search />} />
         {/* <Route path='/login_new' element={<LoginPage />} /> */}
         <Route path='/transactions' element={<TransactionsPage />} />
+        <Route path='/ancets/:id' element={<AncetaPageWrapper />} />
         <Route path='/file/:id' element={<File />} />
         <Route path='/calendar' element={ access.calendar ? <MyBigCalendar /> :  <NotFound />} />
+        <Route path='/ancets' element={<AncetsPage />} />
         {/* <Route path='/login' element={<LoginPage />} /> */}
-        <Route path='/google-drive' element={<GoogleDrivePage />} />
+        {/* <Route path='/google-drive' element={<GoogleDrivePage />} /> */}
         <Route path='/fields' element={rights.a_super == 1 ? <FieldsPage /> : <NotFound />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />

@@ -5,8 +5,9 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../store/Slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { loadUserAuth } from "../../actions/auth";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import Registration from "../Auth/Registration";
+import InputPassword from "../elements/Inputs/InputPassword";
 
 const LoginPage = () => {
     const [state, setState] = useState({
@@ -201,13 +202,16 @@ const LoginPage = () => {
                 disabled={state.isLocked}
             />)}
             {!state.activeCode && (
-                <Input
-                    label={"Пароль"}
+                <>
+                <TextField
+                    label="Пароль"
                     value={state.password}
                     onChange={(e) => setState({ ...state, password: e.target.value })}
-                    type={'password'}
+                    type="password"
                     disabled={state.isLocked}
-                />
+                    />
+                </>
+                
             )}
             {state.activeCode && (
                 <Input

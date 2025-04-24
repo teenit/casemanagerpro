@@ -14,8 +14,13 @@
         justify-content: space-between;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: center;
-
+        &-right {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
     }
     &-table {
         width: 100%;

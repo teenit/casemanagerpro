@@ -27,16 +27,18 @@ import GalleryBlock from "../../blocks/GalleryBlock";
 import CaseSettings from "./CaseSettings";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 import AccessCheck from "../../Functions/AccessCheck";
-import { appConfig } from "../../../services/config";
+import { appConfig, LANG } from "../../../services/config";
 import PersonalInfo from "./PersonalInfo";
 import TextEditor from "../../elements/TextEditor/TextEditor";
 import Files from "./Files";
 import Fields from "./Fields";
 import Histories from "./Histories";
-import { Button, Switch } from "@mui/material";
+import { Button, Rating, Switch } from "@mui/material";
 import FieldsBlock from "./FieldsBlock";
 import CaseLikePDF from "./CaseLikePDF";
 import Icon from "../../elements/Icons/Icon";
+import Modal from "../../Modals/Modal";
+import FooterDefaultModal from "../../Modals/FooterDefaultModal";
 
 const Case = () => {
     const downloadGallery = AccessCheck('yes_no', 'a_page_case_media_download')
@@ -69,6 +71,60 @@ const Case = () => {
     const [editActive, setEditActive] = useState(null)
     const [openSetting, setOpenSetting] = useState(false)
     const [settingsAlert, setSettingsAlert] = useState(false)
+    const [ancetaForm, setAncetaForm] = useState({
+        showForm: false,
+        activeAnceta: false,
+        showQuestionForm: false,
+        list: [],
+        anceta: {},
+        questions: [],
+        answer: {}
+    });
+    const [errorAlert, setErrorAlert] = useState(false)
+    const [successAlert, setSuccessAlert] = useState(false)
+    const getAncetsList = (mode) => {
+        apiResponse({case_id: case_id, mode}, "ancets/get-list.php").then(res => {
+            if (res.status) {
+                setAncetaForm({...ancetaForm, list: res.ancets})
+            }
+        })
+    }
+    const getAnceta = (id) => {
+        apiResponse({case_id: case_id, anceta_id: id}, "ancets/get-by-id.php").then(res => {
+            if (res.status) {
+                setAncetaForm({...ancetaForm, anceta: res.anceta, questions: res.questions, showQuestionForm: true, showForm: false})
+            }
+        })
+    }
+
+    const prepareAnswerData = () => {
+        const {anceta, answer, questions} = ancetaForm;
+
+        const dataList = questions.map((item)=>{
+            return {
+                "ancet_id": anceta.id,
+                "question_id": item.id,
+                "client_id": case_id,
+                "answer": answer[item.id]
+            }
+        })
+        
+        return dataList;
+    }
+
+    const sendAncetaAnswer = () => {
+        const allExist = ancetaForm.questions.every(key => key.id in ancetaForm.answer);
+        if (!allExist) return setErrorAlert(true);
+
+        const data = prepareAnswerData();
+        console.log(data);
+        apiResponse({case_id: case_id, anceta_id: ancetaForm.anceta.id, answers: data}, "ancets/add-answers.php").then(res => {
+            if (res.status) {
+                setAncetaForm({...ancetaForm, anceta: {}, questions: [], showQuestionForm: false, showForm: false});
+                setSuccessAlert(true)
+            }
+        })
+    }
     const getCaseInfo = () => {
         apiResponse({ case_id: case_id }, "case/get-case-by-id.php").then(res => {
             const user_id = res?.general?.user_id;
@@ -84,6 +140,7 @@ const Case = () => {
     }
     useEffect(() => {
         getCaseInfo();
+        getAncetsList('cases');
     }, [case_id])
 
     const handleDataChange = (key, value) => {
@@ -107,6 +164,9 @@ const Case = () => {
                 document.body.removeChild(a);
             }
         })
+    }
+    const openAncetaForm = () => {
+        setAncetaForm({...ancetaForm, showForm: true})
     }
     const access = {
         case_connection_view: AccessCheck("view_edit", "a_page_case_connection", "view"),
@@ -133,6 +193,7 @@ const Case = () => {
                     setModeDisplay(e.target.checked);
                     localStorage.setItem("case_mode_display", e.target.checked ? 1 : 0)
                 }}/> */}
+                <Button disabled={ancetaForm.list.length == 0} onClick={openAncetaForm}><Icon icon='quiz'/></Button>
                 <Button onClick={printPDF}><Icon icon='print'/></Button>
                 <Button onClick={() => { setOpenSetting(!openSetting) }}><Icon icon="check-list"/></Button>
                 {/* <img src={setImg} alt=""
@@ -194,7 +255,56 @@ const Case = () => {
                     </div>
                 </div>
             }
+            {ancetaForm.showForm && 
+                <Modal 
+                    closeHandler={()=>{setAncetaForm({...ancetaForm, showForm: false})}}
+                    header={LANG.ancets.active_ancets}
+                >
+                    <div>
+                        {ancetaForm.list.map(item => {
+
+                            return (
+                                <Button key={item.id} onClick={()=>{getAnceta(item.id)}}> {item.name}</Button>
+                            )
+                        })}
+                    </div>
+                </Modal>
+            }
+            {ancetaForm.showQuestionForm && 
+                <Modal 
+                    closeHandler={()=>{setAncetaForm({...ancetaForm, showQuestionForm: false})}}
+                    header={ancetaForm.anceta.name}
+                    footer={<FooterDefaultModal 
+                        success={sendAncetaAnswer}
+                        close={()=>{setAncetaForm({...ancetaForm, showQuestionForm: false})}}/>}
+                >
+                    <div className="Case-modal-body-answer">
+                        <div className="Case-modal-body-answer-description">{LANG.ancets.question_description}</div>
+                        <div className="Case-modal-body-answer-questions">{LANG.ancets.question}:</div>
+                        {ancetaForm.questions.map((item, index) => {
+                            const number = index + 1;
+                            return (
+                                <div key={item.id} className="Case-modal-body-answer-questions-item">
+                                    <div className="Case-modal-body-answer-questions-item-question">{number}. {item.question}</div>
+                                    <div className="Case-modal-body-answer-questions-item-answer">
+                                    <Rating
+                                        name="simple-controlled"
+                                        value={ancetaForm.answer[item.id]}
+                                        onChange={(event, newValue) => {
+                                            setAncetaForm({...ancetaForm, answer: {...ancetaForm.answer, [item.id]: newValue}})
+                                        }}
+                                        max={item.type}
+                                    />
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </Modal>
+            }
             {settingsAlert && <SmallNotification isSuccess={true} text={"Показ елементів оновлено"} close={() => { setSettingsAlert(false) }} />}
+            {errorAlert && <SmallNotification isSuccess={false} text={"Не всі поля заповнено"} close={() => { setErrorAlert(false) }} />}
+            {successAlert && <SmallNotification isSuccess={true} text={"Успіх"} close={() => { setSuccessAlert(false) }} />}
             </>
 
         </div>
