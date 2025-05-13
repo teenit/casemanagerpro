@@ -22,7 +22,6 @@ class AncetaPage extends Component {
     }
     
     componentDidMount = () => {
-      console.log(this.props)
         this.loadAnceta()
     }
 
@@ -40,6 +39,14 @@ class AncetaPage extends Component {
       apiResponse({field, value, anceta_id: this.props.anceta_id}, "ancets/update-anceta-field.php").then((res)=>{
         if (res.status) {
           this.loadAnceta();
+        }
+    }) 
+    }
+
+    deleteAnceta = () => {
+      apiResponse({anceta_id: this.props.anceta_id}, "ancets/delete.php").then((res)=>{
+        if (res.status) {
+          window.location.href="/ancets"
         }
     }) 
     }
@@ -69,6 +76,9 @@ class AncetaPage extends Component {
       const {anceta, questions} = this.state
         return anceta ?  (
             <div className="AncetaPage">
+              <div className="AncetaPage-delete">
+                  <Button color="error" onClick={this.deleteAnceta}><Icon icon="delete"/>{LANG.ancets.delete_anceta}</Button>
+                </div>
                 <div className="AncetaPage-title">
                   <div className="AncetaPage-title-h2">
                     <InputBlock

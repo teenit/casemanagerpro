@@ -153,7 +153,7 @@ const PlanElem = ({ plan, editor }) => {
                                 <SelectStatusPlan value={state.status} onChange={(e) => changeHandler("status", e)} />
                                 :
                                 <div style={{
-                                    backgroundColor: appConfig.statusPlan[state.status].color
+                                    backgroundColor: appConfig.statusPlan[state.status]?.color
                                 }}>
                                     {LANG.status_plan[state.status]}
                                 </div>

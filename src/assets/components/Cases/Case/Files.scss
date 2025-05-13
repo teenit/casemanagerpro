@@ -29,10 +29,26 @@
         word-wrap: break-word;
         cursor: pointer;
         font-weight: bold;
+        padding: 5px;
+        border-radius: 8px;
+        box-sizing: border-box;
+        border: solid 2px transparent;
+        &:hover {
+            border: solid 2px #fff;
+        }
+        &-title {
+            font-weight: 600;
+            font-size: 14px;
+            width: 100%;
+            word-break: break-all;
+        }
         &-icon{
             width: 25px;
             height: 25px;
-            background-color: $main-color;
+           // background-color: $main-color;
+            &-elem {
+                color: $main-color;
+            }
         }
     }
 

@@ -36,7 +36,6 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
 
     const [state, setState] = useState({...data})
     const user = useSelector(state => state.user)
-    console.log(user)
     const checkEditEvent = AccessCheck("yes_no", "a_page_calendar_edit");
     const checkRemoveEvent = AccessCheck("yes_no", "a_page_calendar_remove");
     const handleChange = (key, value) => {
@@ -60,7 +59,6 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
             close();
         })   
     }
-    console.log(checkRemoveEvent)
     return(
         <Modal
             header={<div className="Modal--head-header">
@@ -94,7 +92,7 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
                         value={state.color} 
                         disabled={!edit}
                         addClass="w100"
-                        onChange={(e) => handleChange('color', e)}
+                        onChange={(e) => handleChange('color', e.target.value)}
                     /></>
                     }
                   
@@ -103,6 +101,7 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
                     <label>{LANG.GLOBAL.start}
                             <Input 
                                 value={state.start} 
+                                addClass="w100"
                                 type="time" 
                                 disabled={!edit}
                                 onChange={(e) => handleChange('start', e.target.value)}
@@ -111,6 +110,7 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
                         <label>{LANG.GLOBAL.end}
                             <Input 
                                 value={state.end} 
+                                addClass="w100"
                                 type="time" 
                                 disabled={!edit}
                                 onChange={(e) => handleChange('end', e.target.value)}

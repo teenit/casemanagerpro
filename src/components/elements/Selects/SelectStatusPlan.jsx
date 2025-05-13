@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem } from '@material-ui/core';
+import { MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import Select from '@mui/material/Select';
 import CatCheckBoxes from '../CheckBoxes/CatCheckBoxes';
@@ -19,8 +19,7 @@ const SelectStatusPlan = ({ value = 0, onChange}) => {
 
   return (
     <div className='Select'>
-        <FormControl>
-        <InputLabel id="demo-controlled-open-select-label">{LANG.status_task}</InputLabel>
+        {/* <InputLabel id="demo-controlled-open-select-label">{LANG.status_task}</InputLabel> */}
             <Select
                 labelId="plan_status"
                 id="plan_status"
@@ -38,10 +37,8 @@ const SelectStatusPlan = ({ value = 0, onChange}) => {
                 })
             }
             </Select>
-            {
-
-            }
-        </FormControl>
+       
+       
     </div>
   );
 };

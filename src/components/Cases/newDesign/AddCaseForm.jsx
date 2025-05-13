@@ -198,7 +198,7 @@ const GeneralForm = ({ stateGeneral, changeHandlerGeneral, handleSubmit, errorAl
                 </div>
                 <div>
                 <p>{LANG.case_data.sex}</p>
-                <Select value={stateGeneral.sex} onChange={(e)=>{changeHandlerGeneral("sex", e.target.value)}}>
+                <Select size="small" value={stateGeneral.sex} onChange={(e)=>{changeHandlerGeneral("sex", e.target.value)}}>
                         <MenuItem value="male">{LANG.selects.sex.male}</MenuItem>
                         <MenuItem value="female">{LANG.selects.sex.female}</MenuItem>
                         <MenuItem value="other">{LANG.selects.sex.other}</MenuItem>
@@ -209,6 +209,7 @@ const GeneralForm = ({ stateGeneral, changeHandlerGeneral, handleSubmit, errorAl
                 <div>
                     <p>{LANG.case_data.email}</p>
                     <Input
+                        addClass="w100"
                         value={stateGeneral.email}
                         onChange={(e) => changeHandlerGeneral("email", changeAps(e.target.value))}
                     />

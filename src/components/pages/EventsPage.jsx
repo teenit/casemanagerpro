@@ -9,6 +9,7 @@ import Icon from "../elements/Icons/Icon";
 import SmallNotification from "../elements/Notifications/SmallNotification";
 import { NavLink } from "react-router-dom";
 import ModalConfirm from "../Modals/ModalConfirm";
+import InputColor from "../elements/Inputs/InputColor";
 
 const DEFAULT_FORM_DATA = {
     title: '',
@@ -141,7 +142,7 @@ const EventsPage = () => {
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     />
-                    <Input
+                    <InputColor
                         type="color"
                         value={formData.color}
                         onChange={(e) => setFormData({ ...formData, color: e.target.value })}
@@ -166,7 +167,7 @@ const EventsPage = () => {
                             style={{ boxShadow: `0px 0px 5px 0px ${item.color ? item.color : "#000"}` }}
                         >
                             <div style={{ backgroundColor: item.color ? item.color : "#000" }} className="EventsPage-event-color"></div>
-                            <NavLink to={`/event_new/${item.event_id}`}>
+                            <NavLink to={`/event/${item.event_id}`}>
                                 <div className="EventsPage-event-title">{item.title}</div>
                             </NavLink>
                             <div>{description(item.description)}</div>

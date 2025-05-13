@@ -6,7 +6,7 @@ import Input from "../../elements/Inputs/Input";
 import Textarea from "../../elements/Inputs/Textarea";
 import InputColor from "../../elements/Inputs/InputColor";
 import { apiResponse } from "../../Functions/get_apiObj";
-import { MuiColorInput } from "mui-color-input";
+// import { MuiColorInput } from "mui-color-input";
 import ListCategories from "./ListCategories";
 import Modal from "../../Modals/Modal";
 import Icon from "../../elements/Icons/Icon";
@@ -82,7 +82,8 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
                                     value={state.categoryName}
                                     onChange={(e)=>changeHandler(e.target.value, "categoryName")}
                                 />
-                                <MuiColorInput className='w50' format="hex" value={state.categoryColor} onChange={(e)=>{ changeHandler(e, 'categoryColor')}} />
+                                <InputColor className='w50' format="hex" value={state.categoryColor} onChange={(e)=>{ changeHandler(e.target.value, 'categoryColor')}}/>
+                                {/* <MuiColorInput className='w50' format="hex" value={state.categoryColor} onChange={(e)=>{ changeHandler(e, 'categoryColor')}} /> */}
                             </div>
                             <div className="SettingsCategory--form-textarea">
         

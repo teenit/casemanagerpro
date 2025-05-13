@@ -164,7 +164,7 @@ const Notes = ({ notes, case_id, getCaseInfo, cg }) => {
                                 variant="contained">{LANG.save}</Button>
                         </div>}>
                     <div className="Notes-modal">
-                        <Input type="color" value={noteColor} onChange={(e) => setNoteColor(e.target.value)} />
+                        <Input addClass="w100" type="color" value={noteColor} onChange={(e) => setNoteColor(e.target.value)} />
                         <Textarea value={noteMessage} label={LANG.notes.text} onChange={(e) => setNoteMessage(e.target.value)} />
                     </div>
                 </Modal>

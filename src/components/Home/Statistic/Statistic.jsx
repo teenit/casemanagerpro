@@ -144,7 +144,7 @@ const Statistic = () =>{
           }
         })
        
-    },[])
+    },[categories.case])
  
     return (
         <div className={s.home__statistic}>

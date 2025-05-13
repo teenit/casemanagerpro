@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { MenuItem, Select } from "@mui/material";
 import { LANG } from "../../../services/config";
 
-const SelectBlock = ({ saveHandler, disabled = false, value = "", onChange, link = null, icon = null, label = "", titleDefault = "", selectOptions = [] }) => {
+const SelectBlock = ({ saveHandler, disabled = false, value = "", onChange, link = null, icon = null, label = "", titleDefault = "", selectOptions = [], size = 'small' }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [stateValue, setStateValue] = useState(value);
 
@@ -44,6 +44,7 @@ const SelectBlock = ({ saveHandler, disabled = false, value = "", onChange, link
                         {icon && <Icon icon={icon} addClass={"default-icon"} />}
                         <Select
                             value={stateValue}
+                            size={size}
                             onChange={(e) => {
                                 setStateValue(e.target.value);
                                 if (onChange) {

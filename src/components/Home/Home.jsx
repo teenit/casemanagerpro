@@ -2,9 +2,9 @@ import React from "react";
 import s from "./Home.module.css";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../hooks/use-auth";
-import Cases from "../Cases/Cases";
 import Statistic from "./Statistic/Statistic";
 import { NavLink } from "react-router-dom";
+import Cases from "../newDesign/Cases/Cases";
 
 const Home = ()=>{
     const dispatch = useDispatch();
@@ -53,8 +53,8 @@ const Home = ()=>{
                 </ul>
                 </div>
             </div>
-            <h1 className={s.text__center}>СТАТИСТИКА</h1>
-            <Statistic />
+            
+            <Cases />
         </div>
     ) : (
         <div className={s.home}>

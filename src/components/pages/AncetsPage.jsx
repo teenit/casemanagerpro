@@ -96,6 +96,7 @@ class AncetsPage extends Component {
         apiResponse(data, "ancets/create.php").then((res)=>{
             if (res.status) {
                 this.loadAncets()
+                this.setState({showCreateForm: false})
             }
         })
     }

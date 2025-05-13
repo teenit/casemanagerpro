@@ -35,6 +35,7 @@ import GoogleDrivePage from "../pages/GoogleDrivePage";
 import AncetsPage from "../pages/AncetsPage";
 import AncetaPage from "../pages/AncetaPage";
 import AncetaPageWrapper from "../pages/AncetaPageWrapper";
+import Statistic from "../Home/Statistic/Statistic";
 
 const MainContent = () => {
   const rights = useSelector(state => state.auth);
@@ -67,10 +68,10 @@ const MainContent = () => {
         <Route path="/resources" element={access.resources ? <Resources /> : <NotFound />} />
         <Route path="/access" element={access.access ? <AccessPage /> : <NotFound />} />
         <Route path="/access/:id" element={access.access ? <AccessPageRight /> : <NotFound />} />
-        <Route path='/events' element={access.events ? <Events /> : <NotFound />} />
-        <Route path='/events_new' element={access.events ? <EventsPage /> : <NotFound />} />
+        {/* <Route path='/events' element={access.events ? <Events /> : <NotFound />} /> */}
+        <Route path='/events' element={access.events ? <EventsPage /> : <NotFound />} />
+        {/* <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} /> */}
         <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} />
-        <Route path='/event_new/:id' element={access.event ? <EventPage /> : <NotFound />} />
         <Route path='/telegram' element={ <TelegramPage />} />
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
@@ -84,6 +85,7 @@ const MainContent = () => {
         <Route path='/file/:id' element={<File />} />
         <Route path='/calendar' element={ access.calendar ? <MyBigCalendar /> :  <NotFound />} />
         <Route path='/ancets' element={<AncetsPage />} />
+        <Route path='/statistic' element={<Statistic />} />
         {/* <Route path='/login' element={<LoginPage />} /> */}
         {/* <Route path='/google-drive' element={<GoogleDrivePage />} /> */}
         <Route path='/fields' element={rights.a_super == 1 ? <FieldsPage /> : <NotFound />} />

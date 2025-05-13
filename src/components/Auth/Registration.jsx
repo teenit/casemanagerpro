@@ -139,7 +139,7 @@ const Registration = ({ switchForms }) => {
             </div>
             <div className="reg__block">
                 <label>Тип користувача</label>
-                <Select name="userType" value={formData.userType} onChange={(e) => { handleChange("userType", e.target.value) }}>
+                <Select size="small" name="userType" value={formData.userType} onChange={(e) => { handleChange("userType", e.target.value) }}>
                     {selectOptions.map((item, index) => (
                         <MenuItem key={index} value={item.value}>{item.name}</MenuItem>
                     ))}

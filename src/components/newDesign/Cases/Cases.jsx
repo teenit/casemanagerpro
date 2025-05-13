@@ -216,7 +216,7 @@ const Cases = () => {
             <div className="ListCases-sort">
                 <div className="ListCases-sort-left">
                     <Input size="small" label="Пошук" value={options.search} onChange={(e)=>{
-                        setOptions({ ...options, search: e.target.value.trim() });
+                        setOptions({ ...options, search: e.target?.value?.trim() || null });
                     }}/>
                 </div>
                 <div className="ListCases-sort-right">

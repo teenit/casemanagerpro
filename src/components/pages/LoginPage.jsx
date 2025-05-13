@@ -200,6 +200,8 @@ const LoginPage = () => {
                 onChange={(e) => setState({ ...state, email: e.target.value })}
                 type={'email'}
                 disabled={state.isLocked}
+                addClass="w100"
+                size="normal"
             />)}
             {!state.activeCode && (
                 <>

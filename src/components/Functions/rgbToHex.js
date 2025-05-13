@@ -1,4 +1,5 @@
 export function rgbToHex(rgbString) {
+    return rgbString;
     const result = rgbString.match(/\d+/g);
     
     if (!result || result.length !== 3) {

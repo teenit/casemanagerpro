@@ -197,11 +197,12 @@ handleChangeRowsPerPage = (limit) => {
   render() {
    const columns = this.prepareColumns(this.columns);
 
-   return <div>
-        <Button variant='contained' onClick={()=>{this.setState({createFieldModal: true})}}>ADD</Button>
-        
+   return <div style={{display:"flex", flexDirection:"column", gap:"25px"}}>
+        <div style={{display:"flex", gap:"25px", justifyContent: "end"}}>
+        <Button onClick={()=>{this.setState({createFieldModal: true})}} size='small'><Icon icon={'add'}/> Створити поле</Button>
+        </div>
 
-<Table
+            <Table
                 columns={columns}
                 data={this.state.fields}
                 keyField={'id'}

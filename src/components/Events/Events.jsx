@@ -36,7 +36,6 @@ const Events = () => {
     //         getEvents();
     //     }).catch(err=>console.log(err))
     // }
-    console.log(events);
     
     return (
         <div className={s.wrap}>

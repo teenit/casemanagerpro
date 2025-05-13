@@ -90,7 +90,7 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
                     }>
                     <div className="AddGroup-split">
                         <Input value={state.name} type="text" label={LANG.GLOBAL.title} onChange={(e) => changeHandler("name", e.target.value)} />
-                        <InputColor value={state.color} onChange={(color) => changeHandler("color", rgbToHex(color))} />
+                        <InputColor value={state.color} onChange={(e) => changeHandler("color", rgbToHex(e.target.value))} />
                     </div>
                     <Textarea value={state.description} label={LANG.GLOBAL.description} onChange={(e) => changeHandler("description", e.target.value)} />
                     <div>

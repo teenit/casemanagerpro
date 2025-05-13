@@ -1,7 +1,7 @@
-import { FormControl, MenuItem } from '@material-ui/core';
 import React, { useState } from 'react';
 import Select from '@mui/material/Select';
 import { LANG } from '../../../services/config';
+import { MenuItem } from '@mui/material';
 
 
 const SelectStatus = ({ value = " ", onChange, statuses = {}, type}) => {
@@ -16,12 +16,13 @@ const SelectStatus = ({ value = " ", onChange, statuses = {}, type}) => {
 
   return (
     <div className='Select'>
-        <FormControl className='w100'>
             <Select
                 value={selectedValue}
                 label={LANG.status_task}
                 onChange={handleChange}
                 variant='standard'
+                size='small'
+                className='w100'
             >
             {
                 Object.keys(statuses).map((item,ind)=>{
@@ -29,10 +30,7 @@ const SelectStatus = ({ value = " ", onChange, statuses = {}, type}) => {
                 })
             }
             </Select>
-            {
-
-            }
-        </FormControl>
+        
     </div>
   );
 };

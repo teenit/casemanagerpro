@@ -1,8 +1,9 @@
-import { FormControl, InputLabel, MenuItem } from '@material-ui/core';
+// import { FormControl, InputLabel, MenuItem } from '@material-ui/core';
 import React, { useState } from 'react';
 import Select from '@mui/material/Select';
 import CatCheckBoxes from '../CheckBoxes/CatCheckBoxes';
 import { LANG } from '../../../services/config';
+import { MenuItem } from '@mui/material';
 
 
 const SelectAccess = ({ options = {}, value, onChange, title = "", label="" }) => {
@@ -19,8 +20,7 @@ const SelectAccess = ({ options = {}, value, onChange, title = "", label="" }) =
   return (
     <div className='SelectAccess'>
        <div className='SelectAccess-label'>{label}</div>
-        <FormControl>
-        <InputLabel id="demo-controlled-open-select-label">{title}</InputLabel>
+        {/* <InputLabel id="demo-controlled-open-select-label">{title}</InputLabel> */}
             <Select
                 labelId="demo-controlled-open-select-label"
                 id="demo-controlled-open-select"
@@ -35,9 +35,7 @@ const SelectAccess = ({ options = {}, value, onChange, title = "", label="" }) =
               }
            
           
-            </Select>
-        </FormControl>
-       
+            </Select>       
     </div>
   );
 };

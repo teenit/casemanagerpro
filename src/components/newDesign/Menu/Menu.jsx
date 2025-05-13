@@ -81,6 +81,7 @@ const Menu = () => {
                                     <div className="Menu-items-submenu-links closed">
                                     {item.subMenu.map((sub) => (
                                         <NavLink key={sub.link} className="Menu-items-submenu-link" to={sub.link}>
+                                            <Icon icon={sub.icon} addClass="Menu-items-submenu-main-icon" />
                                             <div className="Menu-title">{sub.title}</div>
                                         </NavLink>
                                     ))}

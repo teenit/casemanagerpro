@@ -1,6 +1,10 @@
 .AncetaPage {
   display: flex;
   flex-direction: column;
+  &-delete {
+    display: flex;
+    justify-content: end;
+  }
   &-title {
     text-align: center;
     margin: auto;

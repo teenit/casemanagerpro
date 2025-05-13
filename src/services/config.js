@@ -475,7 +475,8 @@ export const LANG = {
     transactions: "Транзакції",
     administration: "Адміністрування",
     fields: "Системні поля",
-    ancets: "Анкети"
+    ancets: "Анкети",
+    statistic: "Статистика"
   },
   documents: "Додані документи",
   give_help: {
@@ -550,6 +551,7 @@ export const LANG = {
     five: "Чудово"
   },
   ancets: {
+    delete_anceta: "Видалити анкету",
     type: "Тип",
     remember: "Нагадувати раз ",
     status: "Статус",
@@ -840,24 +842,24 @@ export const appConfig = {
   statusPlan: {
     0: {
       title: LANG.status_plan[0],
-      color: "#f2e8cf"
+      color: "#d2f2cf"
     },
     1: {
       title: LANG.status_plan[1],
-      color: "#ffba08"
+      color: "#fcf8bc"
     },
     2: {
       title: LANG.status_plan[2],
-      color: "#ca6702"
+      color: "#ffc5c5"
     },
-    3: {
-      title: LANG.status_plan[3],
-      color: "#d90429"
-    },
-    4: {
-      title: LANG.status_plan[4],
-      color: "#c9184a"
-    },
+    // 3: {
+    //   title: LANG.status_plan[3],
+    //   color: "#f78e8e"
+    // },
+    // 4: {
+    //   title: LANG.status_plan[4],
+    //   color: "#ff7777"
+    // },
     7: {
       title: LANG.status_plan[7],
       color: "#ff8fa3"
@@ -893,6 +895,11 @@ export const appConfig = {
     resources: {
       title: LANG.pages.resources,
       description: ""
+    },
+    statistic: {
+      title: LANG.pages.statistic,
+      description: "",
+      path: "/statistic"
     },
     phonebook: {
       title: LANG.pages.phonebook,
@@ -1266,34 +1273,6 @@ export const appConfig = {
       access: "a_page_event"
     },
     {
-      title: LANG.pages.transactions,
-      link: "/transactions",
-      icon: "transaction",
-      access: 'super'
-    },
-    {
-      title: LANG.pages.settings,
-      link: "/settings",
-      icon: "settings",
-      access: "a_page_settings"
-    },
-    {
-      title: LANG.pages.resources,
-      link: "/resources",
-      icon: "resource",
-      access: "a_page_resources"
-    },
-    {
-      title: LANG.pages.accesses,
-      link: "/access",
-      icon: "access",
-      access: "a_page_access"
-    },
-    // {
-    //     title: LANG.pages.cooperation,
-    //     link: "/cooperation"
-    // },
-    {
       title: LANG.pages.groups,
       link: "/groups",
       icon: "groups",
@@ -1306,6 +1285,36 @@ export const appConfig = {
       access: 'super'
     },
     {
+      title: LANG.pages.statistic,
+      link: "/statistic",
+      icon: "statistic",
+      access: "super"
+    },
+    {
+      title: LANG.pages.transactions,
+      link: "/transactions",
+      icon: "transaction",
+      access: 'super'
+    },
+    // {
+    //   title: LANG.pages.settings,
+    //   link: "/settings",
+    //   icon: "settings",
+    //   access: "a_page_settings"
+    // },
+    {
+      title: LANG.pages.resources,
+      link: "/resources",
+      icon: "resource",
+      access: "a_page_resources"
+    },
+    
+    // {
+    //     title: LANG.pages.cooperation,
+    //     link: "/cooperation"
+    // },
+  
+    {
       title: LANG.pages.administration,
       icon: "settings",
       type: "settings",
@@ -1314,7 +1323,19 @@ export const appConfig = {
         {
           title: LANG.pages.fields,
           link: "/fields"
-        }
+        },
+        {
+          title: LANG.pages.settings,
+          link: "/settings",
+          icon: "settings",
+          access: "a_page_settings"
+        },
+        {
+          title: LANG.pages.accesses,
+          link: "/access",
+          icon: "access",
+          access: "a_page_access"
+        },
       ]
     },
   ],

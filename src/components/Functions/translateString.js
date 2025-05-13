@@ -15,23 +15,30 @@ function transliterateString(key){
 }
 
 export function translateStringToLink(arg){
+  if (arg == null || arg == "") return "";
    return transliterateLink(arg)
 }
 
 export function translateString(arg){
+  if (arg == null || arg == "") return "";
     return transliterateString(arg)
  }
 
 export function changeAps(arg){
+  if (arg == null || arg == "") return "";
+
     let a = arg.replaceAll("'", "’");
     return a;
 }
 export function changeApsBr(arg){
+  if (arg == null || arg == "") return "";
+
     let a = arg.replaceAll("'", "’").replaceAll(/\n/g, "<br />");
     return a;
 }
 
 export function replaceParagraphTags(text) {
+  if (text == null || text == "") return "";
   // Видаляємо відкриваючі теги <p>
   let result = text.replace(/<p>/g, '');
 

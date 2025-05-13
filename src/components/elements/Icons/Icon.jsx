@@ -23,6 +23,8 @@ import Diversity3Icon from '@mui/icons-material/Diversity3';
 import PrintIcon from '@mui/icons-material/Print';
 import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 import QuizIcon from '@mui/icons-material/Quiz';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import BarChartIcon from '@mui/icons-material/BarChart';
 const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
@@ -182,6 +184,15 @@ const Icon = ({ icon, addClass="", onClick }) => {
                 break;
             case "quiz":
                 ico = <QuizIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "file":
+                ico = <InsertDriveFileIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "statistic":
+                ico = <BarChartIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+                break;
+            case "statistic":
+                ico = <BarChartIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
             default:
                 ico = <StarRoundedIcon className={addClass} onClick={onClick} />;

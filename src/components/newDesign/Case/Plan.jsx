@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
-import editImg from "./../../../img/icons/edit.svg";
-import saveImg from "./../../../img/icons/save-50.png";
 import Input from "../../elements/Inputs/Input";
 import 'moment/locale/uk';
 import moment from "moment";
-import { momentTime } from "../../../services/moment";
 import { LANG } from "../../../services/config";
 import Textarea from "../../elements/Inputs/Textarea";
-import { changeApsBr } from "../../Functions/translateString";
 import SelectStatusPlan from "../../elements/Selects/SelectStatusPlan";
 import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
 import Modal from "../../Modals/Modal";
-import SmallNotification from "../../elements/Notifications/SmallNotification";
-import { appConfig } from "../../../services/config";
-import plus from "../../../img/icons/plus.svg"
 import Icon from "../../elements/Icons/Icon";
 import PlanElem from "./PlanElem";
 import AccessCheck from "../../Functions/AccessCheck";
+
 const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
     const [open, setOpen] = useState(false)
     const openHandler = () => {
@@ -127,7 +121,22 @@ const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
                 >
                     <div className="Plan-create">
                         <div className="Plan-create-date">
-                        
+                            {/* <DateTimePicker
+                                label={LANG.start_time}
+                                value={moment(state.start_time)}
+                                onChange={(e) => {
+                                    console.log(e)
+                                    changeHandler("start_time", e.format('YYYY-MM-DD HH:mm'))
+                                }}
+                            />
+                             <DateTimePicker
+                                label={LANG.end_time}
+                                value={moment(state.end_time)}
+                                onChange={(e) => {
+                                    console.log(e)
+                                    changeHandler("end_time", e.format('YYYY-MM-DD HH:mm'))
+                                }}
+                            /> */}
                             <Input
                                 type="datetime"
                                 label={LANG.start_time}
@@ -136,8 +145,8 @@ const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
                                 onChange={(e) => {
                                     changeHandler("start_time", e.target.value)
                                 }}
-                            />
-                            <Input
+                            />  
+                             <Input
                                 type="datetime-local"
                                 label={LANG.end_time}
                                 value={state.end_time}

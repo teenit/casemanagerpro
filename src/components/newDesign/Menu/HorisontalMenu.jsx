@@ -18,7 +18,6 @@ const HorisontalMenu = ({ isMobile }) => {
         }
         return null; // Повертаємо null, якщо співпадіння не знайдено
     }
-    console.log(user)
     const titlePage = findByPath(useLocation().pathname)
     return (
         <div className="HorisontalMenu">

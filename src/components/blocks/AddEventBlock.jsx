@@ -55,7 +55,7 @@ const AddEventBlock = ({ successHandler }) => {
             <div className='AddEventBlock-inner'>
                 <div className="AddEventBlock-inner-split">
                     <Input type="text" label="Назва Події" value={event.title} onChange={(e) => { handleEventChange("title", e.target.value) }} />
-                    <InputColor value={event.color} onChange={(e) => { handleEventChange("color", e) }} />
+                    <InputColor value={event.color} onChange={(e) => { handleEventChange("color", e.target.value) }} />
                 </div>
                 <div className='AddEventBlock-inner-textarea'>
                     <Textarea label="Опис Події" value={event.description} onChange={(e) => { handleEventChange("description", e.target.value) }} />

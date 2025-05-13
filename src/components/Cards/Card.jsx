@@ -1,22 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NavLink } from 'react-router-dom';
-import defaultImg from './../../img/default_profile.png';
 import './cards.css';
 const Card = (props) => {
 
-    const CategoriesData = ({ categories }) => {
-
-        return (
-            <div className="categories__data">
-                {
-                    props.categories.map((item) => {
-                        if (categories.indexOf(item.id) !== -1) return <div key={item.id} className="category__circle" title={item.name} style={{ backgroundColor: item.color }} />
-                    })
-                }
-            </div>
-
-        )
-    }
 
     return (
         <div className="card">
@@ -42,13 +28,13 @@ const Card = (props) => {
                 <div className="card__description">
                     <div className="card__description__phones">
                         <NavLink to={`tel:${props.info.phone1}`}>{props.info.phone1}</NavLink>
-                        <NavLink to={`tel:${props.info.phone2}`}>{props.info.phone2}</NavLink>
+                        {/* <NavLink to={`tel:${props.info.phone2}`}>{props.info.phone2}</NavLink> */}
                     </div>
-                    {props.info.email && <div className="card__description__email">
+                    {/* {props.info.email && <div className="card__description__email">
                     <NavLink to={`mailto:${props.info.email}`}>{props.info.email}</NavLink>
-                    </div>}
+                    </div>} */}
                     {props.info.potreba && <div className="card__description__potreba">
-                        <p title={props.info.potreba} dangerouslySetInnerHTML={{ __html: props.info.potreba.slice(0,52) + (props.info.potreba.length > 50 ? "..." : "") }} />
+                        <div title={props.info.potreba} dangerouslySetInnerHTML={{ __html: props.info.potreba.slice(0,52) + (props.info.potreba.length > 50 ? "..." : "") }} />
                     </div>}
                 </div>
                 {(props.info.contractDate || props.info.contract_number) && <div className="card__info__status">

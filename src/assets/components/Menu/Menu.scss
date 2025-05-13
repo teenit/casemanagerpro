@@ -108,6 +108,7 @@
             }
         }
         &-submenu{
+            width: 100%;
             &-main {
                 display: flex;
                 padding: 10px;
@@ -133,16 +134,21 @@
             }
             &-link {
                 padding-left: 35px;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+                color: #fff;
             }
             &-links {
                 display: none;
                 flex-direction: column;
                 &.closed {
                     position: absolute;
-                    left: 40px;
+                    left: 0px;
                     background-color: $second-color;
                     color: #000;
                     z-index: 999;
+                   
                     .Menu-items-submenu-link {
                         padding: 5px 10px;
                        white-space: nowrap;

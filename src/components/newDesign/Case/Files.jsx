@@ -78,11 +78,13 @@ const Files = ({ case_id, getCaseInfo, files, cg }) => {
 
     const File = ({ item }) => {
         const [hover, setHover] = useState(false);
+        const title = cutTitle(item.title);
         return (
             <NavLink to={`/file/${item.id}?case_id=${case_id}`}>
                 <div className="Files-file" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-                    <div className="Files-file-icon"></div>
-                    {hover ? item.title : cutTitle(item.title)}
+                    <div className="Files-file-icon"><Icon addClass="Files-file-icon-elem" icon='file'/></div>
+                    {/* {hover ? item.title : cutTitle(item.title)} */}
+                   <div className="Files-file-title">{title}</div> 
                 </div>
             </NavLink>
         );

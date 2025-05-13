@@ -39,6 +39,9 @@ import CaseLikePDF from "./CaseLikePDF";
 import Icon from "../../elements/Icons/Icon";
 import Modal from "../../Modals/Modal";
 import FooterDefaultModal from "../../Modals/FooterDefaultModal";
+import { DateRange } from "@mui/icons-material";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DateField } from '@mui/x-date-pickers/DateField';
 
 const Case = () => {
     const downloadGallery = AccessCheck('yes_no', 'a_page_case_media_download')
@@ -221,6 +224,7 @@ const Case = () => {
                 <GroupConnections cg={cg} case_id={case_id} type={"case"}/>
             }
             <div className="info__column">
+                
                 {(state.viewInfo.view_DetailedInfo && (access.case_simple_info_view || access.super)) &&
                     <DetailedInfo cg={cg} info={state.data} case_id={case_id} changeData={(key, value) => { handleDataChange(key, value) }} />
                 }
@@ -262,9 +266,16 @@ const Case = () => {
                 >
                     <div>
                         {ancetaForm.list.map(item => {
-
+                            console.log(item)
                             return (
-                                <Button key={item.id} onClick={()=>{getAnceta(item.id)}}> {item.name}</Button>
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    columnGap:'20px'
+                                }}>
+                                    <Button key={item.id} onClick={()=>{getAnceta(item.id)}}> {item.name}</Button>
+                                </div>
+                                
                             )
                         })}
                     </div>
