@@ -10,6 +10,7 @@ import SmallNotification from "../elements/Notifications/SmallNotification";
 import { NavLink } from "react-router-dom";
 import ModalConfirm from "../Modals/ModalConfirm";
 import InputColor from "../elements/Inputs/InputColor";
+import EmptyData from "../EmptyData/EmptyData";
 
 const DEFAULT_FORM_DATA = {
     title: '',
@@ -61,6 +62,7 @@ const EventsPage = () => {
     const loadEvents = () => {
         apiResponse({ ...formData }, "events/get-events.php").then((res) => {
             setEvents([...res])
+            console.log(res)
         })
     }
 
@@ -182,6 +184,8 @@ const EventsPage = () => {
                     );
                 })}
             </div>
+            {events.length === 0 && <EmptyData buttonText={LANG.events_page.add_first_events} click={()=>{modalHandler("add")}}/>}
+            
             {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error"); }} />}
             {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success"); }} />}
         </div>

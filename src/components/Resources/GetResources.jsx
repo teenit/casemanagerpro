@@ -12,14 +12,15 @@ import { Button } from "@mui/material";
 import GetLinksBlock from "./GetLinksBlock";
 import Icon from "../elements/Icons/Icon";
 import AccessCheck from "../Functions/AccessCheck";
-
-const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDelete }) => {
+import EmptyData from "../EmptyData/EmptyData"
+import { LANG } from "../../services/config";
+const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDelete, showForm }) => {
     const [info, setInfo] = useState({});
     const [showList, setShowList] = useState({
         docs: false,
         media: false
     });
-const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
+    const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
     const showHandler = (key) => {
         setShowList({ ...showList, [key]: !showList[key] });
     };
@@ -79,7 +80,7 @@ const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
     };
 
     const cutTitle = (title) => {
-        return title.length<1?"Файл без назви":(title.length > 40 ? title.substring(0, 40) + "..." : title)
+        return title.length < 1 ? "Файл без назви" : (title.length > 40 ? title.substring(0, 40) + "..." : title)
     };
 
     const getImageByType = (type) => {
@@ -92,23 +93,23 @@ const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
                 return pptxImg;
             case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
                 return xlsxImg;
-    
+
             case "audio/mpeg":
                 return mp3Img;
-    
+
             case "video/mp4", "video/x-msvideo", "video/quicktime", "video/x-matroska":
                 return mp4Img;
-    
+
             case "application/zip", "application/x-rar-compressed", "application/x-7z-compressed":
                 return zipImg;
-    
-            case "text/html","text/css", "application/javascript", "application/json", "application/x-python-code", "application/x-java":
+
+            case "text/html", "text/css", "application/javascript", "application/json", "application/x-python-code", "application/x-java":
                 return codeImg;
             default:
                 return "";
         }
     };
-    
+
 
     const getPreview = (file) => {
         const type = file.type.split('/')[0]
@@ -148,8 +149,8 @@ const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
                 <img src={previewUrl} alt="Файл" onClick={open} />
                 <p className={s.titleH2} onClick={open}>{cutTitle(elem.title)}</p>
                 <p>{convertSize(elem.size)}</p>
-                {canDelete && <Icon icon={"delete"} addClass={"close-icon fs16"} onClick={() => { confirmDelete(elem) }}/>}
-                    
+                {canDelete && <Icon icon={"delete"} addClass={"close-icon fs16"} onClick={() => { confirmDelete(elem) }} />}
+
             </div>
         );
     });
@@ -161,27 +162,31 @@ const canDelete = AccessCheck('yes_no', 'a_page_resources_remove')
     return show && (
         <div className={s.wrap__cards__list}>
             {info.open ? <InfoModal /> : ""}
-            <GetLinksBlock confirmDelete={confirmDelete} links={links} />
+            <GetLinksBlock confirmDelete={confirmDelete} links={links} showForm={() => { showForm("link") }} />
             <div className={s.wrap__cards}>
                 <div className={s.cards__header}>
                     <div className={s.cards__title} onClick={() => { showHandler("docs") }}>
-                        <p>Документи</p>
+                        <span>{LANG.resources.documents}</span>
                         <Icon icon={"arrow_down"} />
                     </div>
                 </div>
                 <div className={s.inner__cards}>
-                    {showList.docs && File(docFiles)}
+                    {showList.docs && (docFiles.length > 0 ? File(docFiles) : <EmptyData icon={"no_results"}
+                        title={LANG.resources.no_files} buttonText={LANG.resources.add_first_file}
+                        click={() => { showForm("files") }} />)}
                 </div>
             </div>
             <div className={s.wrap__cards}>
                 <div className={s.cards__header}>
                     <div className={s.cards__title} onClick={() => { showHandler("media") }}>
-                        <p>Фото та Відео</p>
+                        <span>{LANG.resources.media}</span>
                         <Icon icon={"arrow_down"} />
                     </div>
                 </div>
                 <div className={s.inner__cards}>
-                    {showList.media && File(mediaFiles)}
+                    {showList.media && (mediaFiles.length > 0 ? File(mediaFiles) : <EmptyData icon={"no_results"}
+                        title={LANG.resources.no_files} buttonText={LANG.resources.add_first_file}
+                        click={() => { showForm("files") }} />)}
                 </div>
             </div>
         </div>

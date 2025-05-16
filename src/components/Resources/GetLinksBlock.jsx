@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { LANG } from "../../services/config";
 import Icon from "../elements/Icons/Icon";
 import AccessCheck from "../Functions/AccessCheck";
+import EmptyData from "../EmptyData/EmptyData";
 
-const GetLinksBlock = ({ links = [], confirmDelete }) => {
+const GetLinksBlock = ({ links = [], confirmDelete, showForm }) => {
     const [state, setState] = useState({
         showList: false
     });
-
     const canRemove = AccessCheck('yes_no', 'a_page_resources_remove');
 
     return (
@@ -34,6 +34,7 @@ const GetLinksBlock = ({ links = [], confirmDelete }) => {
                             );
                         })
                     }
+                    {links.length === 0 && <EmptyData title={LANG.resources.no_links} buttonText={LANG.resources.add_first_link} click={()=>{showForm("link")}}/>}
                 </div>
             }
 
