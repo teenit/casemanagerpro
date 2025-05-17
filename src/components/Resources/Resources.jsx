@@ -11,7 +11,10 @@ import AccessCheck from "../Functions/AccessCheck";
 import Icon from "../elements/Icons/Icon";
 
 const Resources = () => {
-    const [form, setForm] = useState(false)
+    const [form, setForm] = useState({
+        open:false,
+        type:"files"
+    })
     const [docFiles, setDocFiles] = useState([]);
     const [mediaFiles, setMediaFiles] = useState([]);
     const [alert, setAlert] = useState({
@@ -91,17 +94,20 @@ const Resources = () => {
         return { images, videos, others, links };
     }
 
+    const showForm = (type)=>{
+        setForm({...form,open:!form.open, type:type})
+    }
     return (
         <div className={s.wrapper}>
             <div className={s.title}>
                 <h1>Ресурси</h1>
-                {AccessCheck('yes_no', 'a_page_resources_upload') && <Icon icon={"add"} addClass={"fs40"} onClick={()=>{setForm(!form)}}/>}
+                {AccessCheck('yes_no', 'a_page_resources_upload') && <Icon icon={"add"} addClass={"fs40"} onClick={()=>{showForm(form.type)}}/>}
             </div>
             <div className={s.control}>
-                {form && <AddResources close={()=>{setForm(false)}} loadResources={loadResources}/>}
+                {form.open && <AddResources close={()=>{setForm(false)}} loadResources={loadResources} type={form.type}/>}
             </div>
             <div className={s.get__resources}>
-                <GetResources confirmDelete={confirmDelete} links={files.links} docFiles = {docFiles} mediaFiles={mediaFiles} show={show} loadGroups = {loadResources} />
+                <GetResources confirmDelete={confirmDelete} links={files.links} docFiles = {docFiles} mediaFiles={mediaFiles} show={show} loadGroups = {loadResources} showForm={showForm} />
             </div>
             {deleteModal && <ModalConfirm 
                 closeHandler={()=>{setDeleteModal(false)}} 

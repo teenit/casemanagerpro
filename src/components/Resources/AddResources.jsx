@@ -9,7 +9,7 @@ import { apiResponse } from "../Functions/get_apiObj";
 import { LANG } from "../../services/config";
 import { Label } from "@mui/icons-material";
 
-const AddResources = ({ close, loadResources }) => {
+const AddResources = ({ close, loadResources, type = "files" }) => {
     const [alert, setAlert] = useState({
         success: false,
         error: false,
@@ -20,8 +20,7 @@ const AddResources = ({ close, loadResources }) => {
         description: "",
         link: ""
     });
-
-    const [typeResource, setTypeResource] = useState('files');
+    const [typeResource, setTypeResource] = useState(type);
 
     const handleAlertChange = (key, message = "") => {
         setAlert({ ...alert, [key]: !alert[key], message });

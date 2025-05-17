@@ -25,12 +25,16 @@ import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 import QuizIcon from '@mui/icons-material/Quiz';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import SearchOffIcon from '@mui/icons-material/SearchOff';
 const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case "no_results":
+                ico = <SearchOffIcon fontSize='large' className={addClass} onClick={onClick} />
+                break;
             case "add_notification":
                 ico = <LibraryAddIcon className={addClass} onClick={onClick} />
                 break;
