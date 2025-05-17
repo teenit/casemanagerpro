@@ -3,11 +3,9 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 const AccessCheckCases = (cases) => {
-    console.log(cases)
     const rights = useSelector(state => state.auth);
     const categories = useSelector(state => state.categories.case);
     const userID = localStorage.getItem("id")
-    console.log(categories)
     if ((rights.a_super == 1 || rights.a_administartor == 1) && !!rights.a_blocked == false) return { look: cases, edit: cases };
     switch (rights["a_cases_get"]) {
         case 0:
