@@ -18,6 +18,9 @@
 /serve/uploads
 /serve/mpdf
 /serve/resources/uploads
+/serve
+/.vscode
+.vscode
 # misc
 .DS_Store
 .env.local
