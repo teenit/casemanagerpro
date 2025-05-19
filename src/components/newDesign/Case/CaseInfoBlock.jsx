@@ -177,7 +177,9 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                 <InputBlock
                                     value={dataState.happy_bd}
                                     age={true}
-                                    onChange={(e) => { handleDataChange("happy_bd", e.target.value) }}
+                                    onChange={(e) => { 
+                                        handleDataChange("happy_bd", e.target.value) 
+                                    }}
                                     icon={"birthday"}
                                     label={dataState.happy_bd}
                                     inputType={"date"}

@@ -26,12 +26,15 @@ const Input = ({
 
     const getValue = (type, val) => {
         let newVal = val;
-        if(type == "datetime-local" || type == "datetime") {
+        if (val) {
+            if(type == "datetime-local" || type == "datetime") {
             newVal = moment(val);
+            }
+            if (type == 'date' && val) {
+                newVal = moment(val);
+            }
         }
-        if (type == 'date') {
-            newVal = moment(val);
-        }
+       
 
         return newVal;
     }
@@ -71,7 +74,7 @@ const Input = ({
 
         if ((type == "datetime-local" || type == "datetime") && e) {
             event.target.value = e.format('YYYY-MM-DD HH:mm');
-        } else if (type == 'date'){
+        } else if (type == 'date' && e){
             event.target.value = e.format('YYYY-MM-DD');
         }
         else {
