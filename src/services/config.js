@@ -43,6 +43,8 @@ export const LANG = {
     another: "Інше",
     cases: "Кейси",
     users: "Користувачі",
+    no_fields:"Полів не знайдено",
+    add_field:"Додати перше поле",
     type_fields: {
       "int": "Число",
       "boolean": "Світчер",
@@ -70,7 +72,9 @@ export const LANG = {
     created_at: 'Дата створення',
     pending: "Очікується",
     completed: "Завершено успішно",
-    failed: "Завершено невдало"
+    failed: "Завершено невдало",
+    no_transactions:"Транзакцій не знайдено",
+    add_transaction:"Додати першу транзакцію"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Рівень доступу користувачів (Сторінки)",
@@ -237,7 +241,9 @@ export const LANG = {
     birthday: "Дата народження",
     address: "Адреса (факт)",
     categories: "Категорія",
-    noCategory: "Без категорії"
+    noCategory: "Без категорії",
+    no_cases:"Кейсів не знайдено",
+    add_case:"Додати перший кейс"
   },
   case_data: {
     first_name: "Ім'я",
@@ -575,6 +581,8 @@ export const LANG = {
     question: "Питання",
     add_new_question: "Додати нове питання",
     question_description: "Надайте відповіді на питання, 1 - найнижча оцінка, 5 або 10 - найвижча оцінка, необхідно відповісти на всі питання",
+    no_ancets: "Анкет не знайдено",
+    add_anceta:"Додати першу анкету",
     remembers: {
       week: "на ",
       month: "в місяць",

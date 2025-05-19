@@ -200,11 +200,11 @@ const Settings = () => {
                 <h1>Налаштування</h1>
             </div>
             <div className="SettingsPage-accordion">
-                {newVersion > version && updateProgramRight &&
+                {/* {newVersion > version && updateProgramRight &&
                     <Button disabled={disBtn} onClick={()=>{
                         setDisBtn(true)
                         updateCaseManager();
-                    }}>{LANG.footer.update} до версії <b style={{paddingLeft:"10px"}}> { newVersion}</b></Button>}
+                    }}>{LANG.footer.update} до версії <b style={{paddingLeft:"10px"}}> { newVersion}</b></Button>} */}
                 {usersTab && <Accordion expanded={expanded.users} id="expanded_users" onChange={() => {
                     expandedChange('users')
                 }}>

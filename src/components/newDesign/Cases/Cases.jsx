@@ -6,10 +6,11 @@ import { LANG } from "../../../services/config";
 import Table from "../../elements/Table/Table";
 import { Button, MenuItem, Select, Switch } from "@mui/material";
 import HeaderFormatter from "../../elements/HeaderFormatter/HeaderFormatter";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Input from "../../elements/Inputs/Input";
 import ExportPDFCasesModal from "../../Modals/ExportPDFCasesModal";
+import EmptyData from "../../EmptyData/EmptyData";
 
 const columnsTable = [
     {
@@ -211,6 +212,7 @@ const Cases = () => {
     }
 
     const casesColumns = prepareColumns(getColumns());
+    const navigate = useNavigate()
     return (
         <div className="ListCases">
             <div className="ListCases-sort">
@@ -282,9 +284,10 @@ const Cases = () => {
                     addClass="without-row-menu"
                     sortField={options.sort.field}
                     sortOrder={options.sort.order}
+                    emptyTable={<EmptyData title={LANG.casesList.no_cases} buttonText={LANG.casesList.add_case} click={()=>{navigate("/add-case")}}/>}
                 />
             </div>}
-            <div className = "ListCases-pagination">
+        {state.length > 0 && <div className = "ListCases-pagination">
                 <Pagination 
                     page={options.page}
                     count={state.length}
@@ -296,7 +299,8 @@ const Cases = () => {
                     totalCount={totalCount}
                     loadTotalCount={loadTotalCount}
                 />
-            </div>
+            </div>}
+
            {exportModal && <ExportPDFCasesModal list={listToExport} close={()=>setExportModal(false)}/>}
         </div>
     );

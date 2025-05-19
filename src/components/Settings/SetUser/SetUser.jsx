@@ -69,7 +69,7 @@ const SetUser = ({ categories, categoriesCont }) => {
                     <div>
                         {showName && <div className="set__user__name"><NavLink to={`/user/${user.id}`}>{user.userName}</NavLink></div>}
                         {showPhone && <div className=""><span>{user.phone}</span></div>}
-
+                        <div><span>{user.email}</span></div>
                     </div>
 
                    {viewChangeAccess && <Select

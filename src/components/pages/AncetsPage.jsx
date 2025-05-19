@@ -7,6 +7,8 @@ import { apiResponse } from "../Functions/get_apiObj";
 import { NavLink } from "react-router-dom";
 import HeaderFormatter from "../elements/HeaderFormatter/HeaderFormatter";
 import Table from "../elements/Table/Table";
+import EmptyData from "../EmptyData/EmptyData";
+import { LANG } from "../../services/config";
 const COLUMNS = [
     {
         dataField: 'id',
@@ -132,14 +134,16 @@ class AncetsPage extends Component {
             
         }) 
     }
-
+    formHandler = ()=>{
+        this.setState({ showCreateForm: true })
+    }
     render() {
         const { ancets } = this.state;
         const columns = this.prepareColumns(COLUMNS);
         return (
             <div className="AncetsPage">
                 <div className="AncetsPage-control">
-                    <Button onClick={() => this.setState({ showCreateForm: true })}>
+                    <Button onClick={this.formHandler}>
                         <Icon icon={'add'} />
                         Створити анкету
                     </Button>
@@ -150,6 +154,7 @@ class AncetsPage extends Component {
                         data={this.state.ancets}
                         keyField={'id'}
                         addClass="without-row-menu"
+                        emptyTable={<EmptyData title={LANG.ancets.no_ancets} buttonText={LANG.ancets.add_anceta} click={this.formHandler}/>}
                     />
                 </div>
                 {this.state.showCreateForm && <AddAncetsForm 

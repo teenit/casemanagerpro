@@ -10,6 +10,7 @@ import Table from '../elements/Table/Table';
 import Icon from '../elements/Icons/Icon';
 import Pagination from '../elements/Pagination/Pagination';
 import ModalConfirm from '../Modals/ModalConfirm';
+import EmptyData from '../EmptyData/EmptyData';
 
 class FieldsTable extends Component {
   constructor(props) {
@@ -193,13 +194,15 @@ handleChangeRowsPerPage = (limit) => {
     this.setState({sort:{...this.state.sort, page: 0, limit: limit}})
     this.getFields({...this.state.sort, limit: limit, page: 1});
 }
-
+modalHandler = ()=>{
+    this.setState({createFieldModal: true})
+}
   render() {
    const columns = this.prepareColumns(this.columns);
 
    return <div style={{display:"flex", flexDirection:"column", gap:"25px"}}>
         <div style={{display:"flex", gap:"25px", justifyContent: "end"}}>
-        <Button onClick={()=>{this.setState({createFieldModal: true})}} size='small'><Icon icon={'add'}/> Створити поле</Button>
+        <Button onClick={this.modalHandler} size='small'><Icon icon={'add'}/> Створити поле</Button>
         </div>
 
             <Table
@@ -208,8 +211,9 @@ handleChangeRowsPerPage = (limit) => {
                 keyField={'id'}
                 sortField={this.state.sort.field}
                 sortOrder={this.state.sort.order}
+                emptyTable={<EmptyData title={LANG.FIELDS.no_fields} buttonText={LANG.FIELDS.add_field} click={this.modalHandler}/>}
             />
-            <div className="mrauto wmc">
+            {this.state.fields.length > 0 && <div className="mrauto wmc">
                 <Pagination 
                     page={this.state.sort.page}
                     count={this.state.fields.length}
@@ -218,9 +222,9 @@ handleChangeRowsPerPage = (limit) => {
                     rowsPerPage={this.state.sort.limit}
                     onRowsPerPageChange={this.handleChangeRowsPerPage}
                     rowsPerPageOptions={[10, 25, 50, 100]}
-                    
                 />
-            </div>
+            </div>}
+            
 
 
 

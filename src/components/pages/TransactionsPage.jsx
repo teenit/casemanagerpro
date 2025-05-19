@@ -7,6 +7,7 @@ import Icon from "../elements/Icons/Icon"
 import ModalConfirm from "../Modals/ModalConfirm"
 import Pagination from "../elements/Pagination/Pagination";
 import HeaderFormatter from "../elements/HeaderFormatter/HeaderFormatter";
+import EmptyData from "../EmptyData/EmptyData";
 
 const TransactionsPage = () => {
     const [transactionId, setTransactionId] = useState(null)
@@ -229,12 +230,15 @@ const TransactionsPage = () => {
     // if (error) return <p>Помилка: {error}</p>;
 
     const transactionColumns = prepareColumns(columnsTable);
-
+const addTransaction = ()=>{
+    modalHandler("add")
+    setTransactionId(null)
+}
     return (
         <div className="Transactions">
             <div className="Transactions-title">
                 <div>Список транзакцій</div>
-                <Icon icon={"add"} addClass={"fs35"} onClick={() => { modalHandler("add"); setTransactionId(null) }} />
+                <Icon icon={"add"} addClass={"fs35"} onClick={addTransaction} />
             </div>
             <Table
                 columns={transactionColumns}
@@ -242,8 +246,9 @@ const TransactionsPage = () => {
                 keyField={'id'}
                 sortField={options.sort.field}
                 sortOrder={options.sort.order}
+                emptyTable={<EmptyData title={LANG.TRANSACTIONS.no_transactions} buttonText={LANG.TRANSACTIONS.add_transaction} click={addTransaction}/>}
             />
-            <div className="Transactions-pagination">
+            {transactions.length > 0 && <div className="Transactions-pagination">
                 <Pagination 
                     page={options.page}
                     count={transactions.length}
@@ -255,7 +260,8 @@ const TransactionsPage = () => {
                     totalCount={totalCount}
                     loadTotalCount={loadTotalCount}
                 />
-            </div>
+            </div>}
+
             {modal.active && modal.action == "delete" && <ModalConfirm text={"Ви впевнені, що хочете видалити цю транзакцію?"}
                 closeHandler={() => { modalHandler("") }} successHandler={() => { handleDelete(transactionId) }} />}
             {modal.active && modal.action !== "delete" && <AddTransaction id={transactionId} onTransactionAdded={handleTransactionAdded} action={modal.action} close={modalHandler} />}
