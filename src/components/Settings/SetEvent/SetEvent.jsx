@@ -9,25 +9,29 @@ import AddEventBlock from "../../blocks/AddEventBlock";
 import { LANG } from "../../../services/config";
 import Modal from "../../Modals/Modal"
 import { Button } from "@mui/material";
+import { apiResponse } from "../../Functions/get_apiObj";
 const SetEvent = ()=>{
     const [events,setEvents] = useState([])
     const [modal, setModal] = useState(false)
     const load = ()=>{
-        let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token"),
-            userName: localStorage.getItem("userName"),
-        }
-        axios({
-            url: serverAddres("event/get-events.php") ,
-            method: "POST",
-            header : {'Content-Type': 'application/json;charset=utf-8'},
-            data : JSON.stringify(obj),
+        apiResponse({userName: localStorage.getItem("userName")}, "event/get-events.php").then((data)=>{
+            setEvents(data)   
         })
-        .then((data)=>{ 
-            setEvents(data.data)   
-        })
-        .catch((error)=>console.log(error)) 
+        // let obj = {
+        //     id: localStorage.getItem("id"),
+        //     token: localStorage.getItem("token"),
+        //     userName: localStorage.getItem("userName"),
+        // }
+        // axios({
+        //     url: serverAddres("event/get-events.php") ,
+        //     method: "POST",
+        //     header : {'Content-Type': 'application/json;charset=utf-8'},
+        //     data : JSON.stringify(obj),
+        // })
+        // .then((data)=>{ 
+        //     setEvents(data.data)   
+        // })
+        // .catch((error)=>console.log(error)) 
     }
     useEffect(()=>{
        load()

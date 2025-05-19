@@ -108,18 +108,8 @@ const Settings = () => {
 
 
     useEffect(() => {
-        let obj = {
-            id: localStorage.getItem("id"),
-            token: localStorage.getItem("token")
-        }
-        axios({
-            url: serverAddres('user/page-setting.php'),
-            method: "POST",
-            header: { 'Content-Type': 'application/json;charset=utf-8' },
-            data: JSON.stringify(obj),
-        })
-            .then((data) => {
-                if (data.data?.message) {
+        apiResponse({},'user/page-setting.php').then((data)=>{
+             if (data?.data?.message) {
                     setPage({
                         effload: false,
                         message: data.data.message,
@@ -128,8 +118,7 @@ const Settings = () => {
                 } else {
                     setPage({ loading: false })
                 }
-            })
-            .catch((error) => console.log(error))
+        })
     }, [])
     const [settingsData, setSettingsData] = useState({
         phone: "",
