@@ -32,8 +32,8 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
         created_new_case: {
             title: "Новий кейс",
             icon: "add_notification",
-            icon_class: "notification-icon-yellow",
-            color: "#E9F4FE",
+            icon_class: "notification-icon-blue",
+            color: "#d9eafd",
            // link: `/case/${data.meta_value.case_id}`,
             click: () => { navigate(`/case/${data.meta_value.case_id}`) },
             showButton: true,
