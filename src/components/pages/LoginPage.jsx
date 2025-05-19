@@ -14,6 +14,7 @@ const LoginPage = () => {
         email: '',
         password: '',
         secretCode: '',
+        codeOrganisation: '',
         activeCode: false,
         isLocked: false,
         lockMessage: '',
@@ -87,8 +88,10 @@ const LoginPage = () => {
         apiResponse({
             login: state.email,
             password: state.password,
+            codeOrganisation: state.codeOrganisation,
             type: state.type,
-            secretCode: state.secretCode
+            secretCode: state.secretCode,
+            codeOrganisation: state.codeOrganisation
         }, 'user/login.php').then((res) => {
             if (res.status) {
                 if (res.message == "Authorization successful.") {
@@ -97,6 +100,7 @@ const LoginPage = () => {
                     localStorage.setItem("id", res.userData.user_id);
                     localStorage.setItem("userName", res.userData.userName);
                     localStorage.setItem("profilePhoto", res.userData.profilePhoto);
+                    localStorage.setItem("codeOrganisation", state.codeOrganisation);
                     dispatch(setUser({
                         email: res.userData.email,
                         id: res.userData.user_id,
@@ -158,6 +162,7 @@ const LoginPage = () => {
                 localStorage.setItem("id", data.userData.user_id);
                 localStorage.setItem("userName", data.userData.userName);
                 localStorage.setItem("profilePhoto", data.userData.profilePhoto);
+                localStorage.setItem("codeOrganisation", state.codeOrganisation);
                 dispatch(setUser({
                     email: data.userData.email,
                     id: data.userData.user_id,
@@ -194,6 +199,20 @@ const LoginPage = () => {
                 <span className={`LoginPage-switch ${!activeLogin && 'active'}`} onClick={()=>setActiveLogin(false)}>Реєстрація</span>
                 </div>
             {activeLogin ? <div className="LoginPage-form">
+            {!state.activeCode && (
+                <>
+                <TextField
+                    label="Код організації"
+                    value={state.codeOrganisation}
+                    onChange={(e) => {
+                        setState({ ...state, codeOrganisation: e.target.value })
+                    }}
+                    type="password"
+                    disabled={state.isLocked}
+                    />
+                </>
+                
+            )}
             {!state.activeCode && ( <Input
                 label={"Електронна пошта"}
                 value={state.email}

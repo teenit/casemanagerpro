@@ -16,7 +16,8 @@ const LoginForm = ({ show }) => {
     };
     const [inputData, setInputData] = useState({
         login: "",
-        password: ""
+        password: "",
+        codeOrganisation: ""
     });
     const handleInputDataChange = (key, value) => {
         setInputData({ ...inputData, [key]: value });
@@ -68,6 +69,7 @@ const LoginForm = ({ show }) => {
         <>
             <form action="" className="reg__form" onSubmit={checkForm}>
                 <div className="reg__split">
+                    <Input type="password" label={LANG.loginForm.code_organisation} value={inputData.codeOrganisation} onChange={(e) => { handleInputDataChange("codeOrganisation", e.target.value) }} />
                     <Input type="email" label={LANG.loginForm.emailLabel} value={inputData.login} onChange={(e) => { handleInputDataChange("login", e.target.value) }} />
                     <Input type="password" label={LANG.loginForm.passwordLabel} value={inputData.password} onChange={(e) => { handleInputDataChange("password", e.target.value) }} />
                 </div>

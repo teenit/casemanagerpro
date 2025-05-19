@@ -8,10 +8,12 @@ export const setFields = (data) => ({
 });
 
 export function loadFields () {
-    return dispatch => { // Додаємо параметр dispatch для відправки дії до редуктора
+    return (dispatch, getState) => { // Додаємо параметр dispatch для відправки дії до редуктора
+        const { auth } = getState();
+        if (auth.auth) {
         apiResponse({},"manage/fields/get-structure-list.php").then((data)=>{
-            console.log(data)
             if (data.status) dispatch(setFields(data.fields)); // Викликаємо setFields за допомогою dispatch
         });
+        }
     };
 }

@@ -4,6 +4,7 @@ import { serverAddres } from "./serverAddres";
 let obj = {
     id: localStorage.getItem("id"),
     token: localStorage.getItem("token"),
+    codeOrganisation: localStorage.getItem("codeOrganisation"),
 }
 
 export function get_apiObj(setState,url,objData){
@@ -24,6 +25,8 @@ export async function apiResponse(objTo, url){
 
     objTo.id = obj.id;
     objTo.token = obj.token;
+    if (!objTo.codeOrganisation) 
+        objTo.codeOrganisation = obj.codeOrganisation;
    return await axios({
          url: serverAddres(url),
          method: "POST",

@@ -8,9 +8,13 @@ export const setCategories = (data) => ({
 });
 
 export function loadCategories () {
-    return dispatch => { // Додаємо параметр dispatch для відправки дії до редуктора
-        apiResponse({},"manage/get-all-categories.php").then((data)=>{
-            if (data.status) dispatch(setCategories(data)); // Викликаємо setCategories за допомогою dispatch
-        });
+    return (dispatch, getState) => { 
+
+        const { auth } = getState();
+        if (auth.auth) {
+            apiResponse({},"manage/get-all-categories.php").then((data)=>{
+                if (data.status) dispatch(setCategories(data));
+            });
+        }
     };
 }
