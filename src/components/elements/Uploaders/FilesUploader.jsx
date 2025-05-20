@@ -54,7 +54,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const { id, token } = useSelector(state => state.user);
-
+  const codeOrganisation = localStorage.getItem("codeOrganisation")
   const alertHandler = (key) => {
     setAlert({ ...alert, [key]: !alert[key] });
   }
@@ -86,6 +86,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
 
     const metaObject = { ...meta, key: metaKey, id, token };
     formData.append('meta', JSON.stringify(metaObject));
+    formData.append('codeOrganisation', codeOrganisation);
     try {
       const response = await axios({
         url: serverAddres(getFromType()),

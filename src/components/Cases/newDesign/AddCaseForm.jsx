@@ -219,7 +219,7 @@ const GeneralForm = ({ stateGeneral, changeHandlerGeneral, handleSubmit, errorAl
                     <Input
                         type="date"
                         value={stateGeneral.happy_bd}
-                        onChange={(e) => changeHandlerGeneral("happy_bd", changeAps(e.target.value))}
+                        onChange={(e) => changeHandlerGeneral("happy_bd", e.target.value)}
                     />
                 </div>
             </div>

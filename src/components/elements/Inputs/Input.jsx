@@ -25,6 +25,7 @@ const Input = ({
     const Component = components[type] ? components[type] : TextField;
 
     const getValue = (type, val) => {
+        if (!val) return null;
         let newVal = val;
         if (val) {
             if(type == "datetime-local" || type == "datetime") {
