@@ -13,6 +13,8 @@ import { Button, MenuItem, Select } from "@mui/material";
 import Icon from "../../elements/Icons/Icon";
 import AccessCheck from "../../Functions/AccessCheck"
 import { NavLink } from "react-router-dom";
+import { LANG } from "../../../services/config";
+import SetUserModal from "./SetUserModal";
 let usersStr = "";
 
 
@@ -24,6 +26,7 @@ const SetUser = ({ categories, categoriesCont }) => {
     const [modal, setModal] = useState(false)
     const [modalInfo, setModalInfo] = useState(false)
     const [access, setAccess] = useState([]);
+    const[addModal, setAddModal] = useState(false)
     const showName = AccessCheck("yes_no", "a_page_settings_show_name");
     const showPhone = AccessCheck("yes_no", "a_page_settings_show_phones");
     const editChangeAccess = AccessCheck("view_edit", "a_page_settings_change_accesses", "edit");
@@ -62,6 +65,10 @@ const SetUser = ({ categories, categoriesCont }) => {
             loadData();
         })
     }
+const addModalHandler = ()=>{
+    setAddModal(!addModal)
+}
+
     const UsersData = ({ user, index, accessName }) => {
         return (
             <div className={`set__users__data__line ${index % 2 == 0 ? "arc" : ""}`}>
@@ -135,7 +142,7 @@ const SetUser = ({ categories, categoriesCont }) => {
             </div>
         )
     }
-
+const canAddUsers = AccessCheck('yes_no', 'a_page_settings_add_user')
     function changeSpecification(arg) {
 
         setSpecificate(arg)
@@ -149,16 +156,19 @@ const SetUser = ({ categories, categoriesCont }) => {
         <>
             <div className="set__users__wrap">
                 <div className="set__users__inner">
-           
+                    <div className="set__users__add">
+                            <div className="set__users__add__title">{LANG.set_user.add_user}</div>
+                            {canAddUsers && <Icon icon={"add"} onClick={addModalHandler}/>}
+                    </div>
                     <div className="set__users__data">
                         <div className="set__users__data__title">
                             <div className="set__users__data__title__text">
-                                <div><span>ПІБ</span></div>
-                                <div><span>Шаблон прав</span></div>
+                                <div><span>{LANG.set_user.name}</span></div>
+                                <div><span>{LANG.set_user.template}</span></div>
                             </div>
 
                             <div className="set__users__data__title__panel">
-                                <div><span>Панель керування</span></div>
+                                <div><span>{LANG.set_user.manage}</span></div>
                             </div>
                         </div>
                         <div className="set__users__data__lines">
@@ -183,9 +193,9 @@ const SetUser = ({ categories, categoriesCont }) => {
                     level={level}
                     user={specificate} /> : null}
             </div>
-
+            {addModal && <SetUserModal close={addModalHandler}/>}
             {modal && <ModalMessage header={modalInfo.message} footer={
-                <Button variant="contained" onClick={() => { setModal(false) }}>Зрозумів</Button>
+                <Button variant="contained" onClick={() => { setModal(false) }}>{LANG.GLOBAL.close}</Button>
             }>
             </ModalMessage>}
         </>

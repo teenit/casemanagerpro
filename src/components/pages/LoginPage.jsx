@@ -3,11 +3,7 @@ import Input from "../elements/Inputs/Input";
 import { apiResponse } from "../Functions/get_apiObj";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/Slices/userSlice";
-import { useNavigate } from "react-router-dom";
-import { loadUserAuth } from "../../actions/auth";
 import { Button, TextField } from "@mui/material";
-import Registration from "../Auth/Registration";
-import InputPassword from "../elements/Inputs/InputPassword";
 
 const LoginPage = () => {
     const [state, setState] = useState({
@@ -22,7 +18,6 @@ const LoginPage = () => {
         go: 1,
         type: 'login'
     });
-    const [activeLogin, setActiveLogin] = useState(true)
 
     useEffect(() => {
         const checkLockStatus = () => {
@@ -74,7 +69,6 @@ const LoginPage = () => {
         checkLockStatus();
     }, [state.go]);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const sendPassword = () => {
         const tries = parseInt(localStorage.getItem('tries')) || 0;
         const now = Math.floor(new Date().getTime() / 1000);
@@ -194,11 +188,9 @@ const LoginPage = () => {
     return (
         <div className="LoginPage">
             <div className="" >
-                <span className={`LoginPage-switch ${activeLogin && 'active'}`} onClick={()=>setActiveLogin(true)}>Авторизація</span>
-                <span>/</span>
-                <span className={`LoginPage-switch ${!activeLogin && 'active'}`} onClick={()=>setActiveLogin(false)}>Реєстрація</span>
+                <span className='LoginPage-switch'>Авторизація</span>
                 </div>
-            {activeLogin ? <div className="LoginPage-form">
+            <div className="LoginPage-form">
             {!state.activeCode && (
                 <>
                 <TextField
@@ -254,8 +246,7 @@ const LoginPage = () => {
                 disabled={isDisabled}>Увійти</Button>
             {state.isLocked && <p>{state.lockMessage}</p>}
             {state.remainingTime > 0 && <p>Залишилось часу: {formatTime(state.remainingTime)}</p>}
-            </div>: <Registration switchForms={()=>setActiveLogin(true)}/>
-            }
+            </div>
             
         </div>
     );

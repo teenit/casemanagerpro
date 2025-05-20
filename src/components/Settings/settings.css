@@ -23,6 +23,16 @@
     width: 90%;
     margin: auto;
 }
+.set__users__add{
+    display: flex;
+    align-items: center;
+    gap:10px;
+    padding-bottom: 15px;
+}
+.set__users__add__title{
+    font-size: 24px;
+    font-weight: 600;
+}
 .set__users__data__title__panel{
     text-align: center;
 }
