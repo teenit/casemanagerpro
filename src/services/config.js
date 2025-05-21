@@ -1,6 +1,7 @@
 export const LANG = {
   GLOBAL: {
     save: "Зберегти",
+    download:"Завантажити",
     cancel: "Відмінити",
     date: "Дата",
     title: "Назва",
@@ -345,7 +346,11 @@ export const LANG = {
     no_links: "Посилань не знайдено",
     add_first_link:"Додати перше посилання",
     documents: "Документи",
-    media: "Фото та Відео"
+    media: "Фото та Відео",
+    title:"Назва файлу:",
+    no_title:"Файл без назви",
+    size:"Розмір:",
+    desc:"Опис файлу:"
   },
   file: {
     alertMessages: {
