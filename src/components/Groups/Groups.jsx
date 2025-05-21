@@ -8,6 +8,8 @@ import { NavLink } from "react-router-dom";
 import AccessCheck from "../Functions/AccessCheck";
 import moment from "moment";
 import EmptyData from "../EmptyData/EmptyData";
+import { Button } from "@mui/material";
+import AddButton from "../elements/Buttons/AddButton";
 
 const GroupCard = ({ item, loadGroups }) => {
     const categories = useSelector(state => state.categories);
@@ -71,24 +73,20 @@ const Groups = () => {
         });
     };
 
-    const addHandler = ()=>{
+    const addHandler = () => {
         setAdd(!add)
     }
 
     return (
         <div className="Groups">
-            <div className="Groups-title">
-                <p>{appConfig.pages.groups.title}</p>
-                {AccessCheck('yes_no', 'a_group_create') && <Icon icon={"add"} onClick={addHandler} />}
-                {add && <AddGroup loadGroups={loadGroups} action={"add"} close={addHandler} />}
-            </div>
-            
+            {AccessCheck('yes_no', 'a_group_create') && <AddButton title={LANG.groups.add_first_group} click={addHandler}/>}
             <div className="Groups-list">
                 {groups.map((item, index) => (
                     <GroupCard loadGroups={loadGroups} key={index} item={item} />
                 ))}
             </div>
-                {groups.length===0 && <EmptyData buttonText={LANG.groups.add_first_group} click={addHandler}/>}
+            {add && <AddGroup loadGroups={loadGroups} action={"add"} close={addHandler} />}
+            {groups.length === 0 && <EmptyData buttonText={LANG.groups.add_first_group} click={addHandler} />}
         </div>
     );
 };

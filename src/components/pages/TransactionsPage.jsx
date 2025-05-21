@@ -8,6 +8,8 @@ import ModalConfirm from "../Modals/ModalConfirm"
 import Pagination from "../elements/Pagination/Pagination";
 import HeaderFormatter from "../elements/HeaderFormatter/HeaderFormatter";
 import EmptyData from "../EmptyData/EmptyData";
+import { Button } from "@mui/material";
+import AddButton from "../elements/Buttons/AddButton";
 
 const TransactionsPage = () => {
     const [transactionId, setTransactionId] = useState(null)
@@ -236,10 +238,7 @@ const addTransaction = ()=>{
 }
     return (
         <div className="Transactions">
-            <div className="Transactions-title">
-                <div>Список транзакцій</div>
-                <Icon icon={"add"} addClass={"fs35"} onClick={addTransaction} />
-            </div>
+                <AddButton title={LANG.TRANSACTIONS.add} click={addTransaction}/>
             <Table
                 columns={transactionColumns}
                 data={transactions}

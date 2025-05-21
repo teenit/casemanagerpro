@@ -9,6 +9,7 @@ import HeaderFormatter from "../elements/HeaderFormatter/HeaderFormatter";
 import Table from "../elements/Table/Table";
 import EmptyData from "../EmptyData/EmptyData";
 import { LANG } from "../../services/config";
+import AddButton from "../elements/Buttons/AddButton";
 const COLUMNS = [
     {
         dataField: 'id',
@@ -142,12 +143,7 @@ class AncetsPage extends Component {
         const columns = this.prepareColumns(COLUMNS);
         return (
             <div className="AncetsPage">
-                <div className="AncetsPage-control">
-                    <Button onClick={this.formHandler}>
-                        <Icon icon={'add'} />
-                        Створити анкету
-                    </Button>
-                </div>
+                <AddButton title={LANG.ancets.add} click={this.formHandler}/>
                 <div className="AncetsPage-list">
                     <Table
                         columns={columns}

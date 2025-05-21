@@ -11,7 +11,7 @@ import { NavLink } from "react-router-dom";
 import ModalConfirm from "../Modals/ModalConfirm";
 import InputColor from "../elements/Inputs/InputColor";
 import EmptyData from "../EmptyData/EmptyData";
-
+import AddButton from "../elements/Buttons/AddButton"
 const DEFAULT_FORM_DATA = {
     title: '',
     description: '',
@@ -104,10 +104,7 @@ const EventsPage = () => {
 
     return (
         <div className="EventsPage">
-            <div className="EventsPage-title">
-                <div>Події</div>
-                <Icon icon={"add"} addClass={"fs40"} onClick={() => modalHandler("add")} />
-            </div>
+            <AddButton title={LANG.events_page.add} click={()=>{modalHandler("add")}}/>
             
             {modal.modal && (
                 <Modal

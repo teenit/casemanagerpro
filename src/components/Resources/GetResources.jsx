@@ -14,6 +14,7 @@ import Icon from "../elements/Icons/Icon";
 import AccessCheck from "../Functions/AccessCheck";
 import EmptyData from "../EmptyData/EmptyData"
 import { LANG } from "../../services/config";
+import {serverAddres} from '../Functions/serverAddres'
 const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDelete, showForm }) => {
     const [info, setInfo] = useState({});
     const [showList, setShowList] = useState({
@@ -133,13 +134,15 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
             }
         }
         const previewUrl = getPreview(elem)
+        console.log(elem, "http://demo.case-crm.pro"+ elem.link);
+        
         const open = () => {
             setInfo({
                 open: true,
                 title: elem.title,
                 description: elem.description,
                 size: elem.size,
-                link: elem.link,
+                link: "http://demo.case-crm.pro"+ elem.link,
                 date: elem.date,
                 img: previewUrl
             });

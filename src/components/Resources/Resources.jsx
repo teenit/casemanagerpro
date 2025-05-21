@@ -9,27 +9,28 @@ import { LANG } from "../../services/config";
 import SmallNotification from "../elements/Notifications/SmallNotification";
 import AccessCheck from "../Functions/AccessCheck";
 import Icon from "../elements/Icons/Icon";
+import AddButton from "../elements/Buttons/AddButton";
 
 const Resources = () => {
     const [form, setForm] = useState({
-        open:false,
-        type:"files"
+        open: false,
+        type: "files"
     })
     const [docFiles, setDocFiles] = useState([]);
     const [mediaFiles, setMediaFiles] = useState([]);
     const [alert, setAlert] = useState({
-        success:false,
-        error:false
+        success: false,
+        error: false
     })
     const [files, setFiles] = useState([]);
     const [show, setShow] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false)
     const [activeResource, setActiveResource] = useState(null)
-    const alertHandler = (key)=>{
-        setAlert({...alert, [key]:!alert[key]})
+    const alertHandler = (key) => {
+        setAlert({ ...alert, [key]: !alert[key] })
     }
-    const loadResources = ()=>{
-        apiResponse({}, "resources/get-resource.php").then((res)=>{
+    const loadResources = () => {
+        apiResponse({}, "resources/get-resource.php").then((res) => {
             setFiles(sortFiles(res));
             setShow(true);
             const docTypes = [
@@ -52,24 +53,24 @@ const Resources = () => {
             setMediaFiles(res.filter(file => mediaTypes.includes(file.type)));
             setFiles(sortFiles(res))
         });
-        
+
     }
 
     const confirmDelete = (resource) => {
-        setActiveResource({...resource});
+        setActiveResource({ ...resource });
         setDeleteModal(true)
     }
 
     const deleteResource = () => {
 
         apiResponse({
-            resource_id:activeResource.resource_id
-        },"resources/delete-resource.php").then((res)=>{
-           
+            resource_id: activeResource.resource_id
+        }, "resources/delete-resource.php").then((res) => {
+
             setDeleteModal(false)
             loadResources()
             alertHandler("success")
-        }).catch((error)=>{
+        }).catch((error) => {
             alertHandler("error")
         })
     }
@@ -83,39 +84,36 @@ const Resources = () => {
                 images.push(file);
             } else if (file.type.startsWith('video/')) {
                 videos.push(file);
-            } else if (file.type == 'link'){
+            } else if (file.type == 'link') {
                 links.push(file)
             }
             else {
                 others.push(file);
             }
         });
-    
+
         return { images, videos, others, links };
     }
 
-    const showForm = (type)=>{
-        setForm({...form,open:!form.open, type:type})
+    const showForm = (type) => {
+        setForm({ ...form, open: !form.open, type: type })
     }
     return (
         <div className={s.wrapper}>
-            <div className={s.title}>
-                <h1>Ресурси</h1>
-                {AccessCheck('yes_no', 'a_page_resources_upload') && <Icon icon={"add"} addClass={"fs40"} onClick={()=>{showForm(form.type)}}/>}
-            </div>
+            {AccessCheck('yes_no', 'a_page_resources_upload') && <AddButton title={LANG.resources.add} click={()=>{showForm(form.type)}} />}
             <div className={s.control}>
-                {form.open && <AddResources close={()=>{setForm(false)}} loadResources={loadResources} type={form.type}/>}
+                {form.open && <AddResources close={() => { setForm(false) }} loadResources={loadResources} type={form.type} />}
             </div>
             <div className={s.get__resources}>
-                <GetResources confirmDelete={confirmDelete} links={files.links} docFiles = {docFiles} mediaFiles={mediaFiles} show={show} loadGroups = {loadResources} showForm={showForm} />
+                <GetResources confirmDelete={confirmDelete} links={files.links} docFiles={docFiles} mediaFiles={mediaFiles} show={show} loadGroups={loadResources} showForm={showForm} />
             </div>
-            {deleteModal && <ModalConfirm 
-                closeHandler={()=>{setDeleteModal(false)}} 
+            {deleteModal && <ModalConfirm
+                closeHandler={() => { setDeleteModal(false) }}
                 successHandler={deleteResource}
-                text={LANG.resources.confirm_delete + activeResource.title+"?"}
-                />}
-                {alert.success && <SmallNotification isSuccess={true} text={"Ресурс видалено"} close={()=>{alertHandler("success")}}/>}
-                {alert.error && <SmallNotification isSuccess={false} text={"Виникла помилка"} close={()=>{alertHandler("error")}}/>}
+                text={LANG.resources.confirm_delete + activeResource.title + "?"}
+            />}
+            {alert.success && <SmallNotification isSuccess={true} text={"Ресурс видалено"} close={() => { alertHandler("success") }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={"Виникла помилка"} close={() => { alertHandler("error") }} />}
         </div>
     )
 }

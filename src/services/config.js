@@ -74,7 +74,8 @@ export const LANG = {
     completed: "Завершено успішно",
     failed: "Завершено невдало",
     no_transactions:"Транзакцій не знайдено",
-    add_transaction:"Додати першу транзакцію"
+    add_transaction:"Додати першу транзакцію",
+    add:"Створити транзакцію"
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Рівень доступу користувачів (Сторінки)",
@@ -333,8 +334,10 @@ export const LANG = {
   events_page:{
     title:"Події",
     add_first_events:"Створити подію",
+    add:"Створити подію"
   },
   resources: {
+    add:"Додати ресурс",
     link_title: "Корисні посилання",
     confirm_delete: "Ви впевнені, що хочете видалити ресурс - ",
     no_files: "Файлів не знайдено",
@@ -611,6 +614,7 @@ export const LANG = {
     question_description: "Надайте відповіді на питання, 1 - найнижча оцінка, 5 або 10 - найвижча оцінка, необхідно відповісти на всі питання",
     no_ancets: "Анкет не знайдено",
     add_anceta:"Додати першу анкету",
+    add:"Створити анкету",
     remembers: {
       week: "на ",
       month: "в місяць",
