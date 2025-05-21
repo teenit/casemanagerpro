@@ -130,9 +130,12 @@ class SetUserModal extends Component {
             pass: ''
           }
         });
-        // this.props.close()
+        if (this.props.successHandler) 
+            this.props.successHandler();
+        
+        this.props.close()
       }
-    }).catch(console.log)
+    }).catch((error)=>console.log(error))
   };
 
   render() {

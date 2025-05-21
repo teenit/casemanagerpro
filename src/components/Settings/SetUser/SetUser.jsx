@@ -18,7 +18,7 @@ import SetUserModal from "./SetUserModal";
 let usersStr = "";
 
 
-const SetUser = ({ categories, categoriesCont }) => {
+const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUser }) => {
     const [users, setUsers] = useState(null);
     const [specificate, setSpecificate] = useState(null);
     const [activeSpecificate, setActiveSpecificate] = useState(false);
@@ -57,6 +57,10 @@ const SetUser = ({ categories, categoriesCont }) => {
         loadData();
     }, []);
 
+    // useEffect(() => {
+    //     setAddModal(addNewUser)
+    // }, addNewUser);
+
     const selectAccess = (user_id, access_id) => {
         apiResponse({
             user_id,
@@ -68,7 +72,7 @@ const SetUser = ({ categories, categoriesCont }) => {
 const addModalHandler = ()=>{
     setAddModal(!addModal)
 }
-
+console.log(addNewUser)
     const UsersData = ({ user, index, accessName }) => {
         return (
             <div className={`set__users__data__line ${index % 2 == 0 ? "arc" : ""}`}>
@@ -156,10 +160,9 @@ const canAddUsers = AccessCheck('yes_no', 'a_page_settings_add_user')
         <>
             <div className="set__users__wrap">
                 <div className="set__users__inner">
-                    <div className="set__users__add">
-                            <div className="set__users__add__title">{LANG.set_user.add_user}</div>
-                            {canAddUsers && <Icon icon={"add"} onClick={addModalHandler}/>}
-                    </div>
+                    {/* <div className="set__users__add">
+                        <Button size="small" disabled={!canAddUsers} onClick={addModalHandler}><Icon icon={"add"}/>{LANG.set_user.add_user}</Button>
+                    </div> */}
                     <div className="set__users__data">
                         <div className="set__users__data__title">
                             <div className="set__users__data__title__text">
@@ -193,7 +196,7 @@ const canAddUsers = AccessCheck('yes_no', 'a_page_settings_add_user')
                     level={level}
                     user={specificate} /> : null}
             </div>
-            {addModal && <SetUserModal close={addModalHandler}/>}
+            {addNewUser && <SetUserModal successHandler={loadData} close={closeAddNewUser}/>}
             {modal && <ModalMessage header={modalInfo.message} footer={
                 <Button variant="contained" onClick={() => { setModal(false) }}>{LANG.GLOBAL.close}</Button>
             }>
