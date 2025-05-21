@@ -50,6 +50,7 @@ const Settings = () => {
     const [selectedTelegramBot, setSelectedTelegramBot] = useState({
         ...DEFAULT_TELEGRAM_BOT
     }) 
+    const [addNewUser, setAddNewUser] = useState(false)
     function checkVersion() {
         let obj = {
             id: localStorage.getItem("id"),
@@ -190,6 +191,7 @@ const Settings = () => {
         //     console.log(res)
         // })
     }
+    const canAddUsers = AccessCheck('yes_no', 'a_page_settings_add_user')
     return page.loading ? (
         <div className="page__loading">
             <LoadingPage message={page.message} effload={page.effload} />
@@ -209,10 +211,23 @@ const Settings = () => {
                     expandedChange('users')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
-                        Користувачі
+                        <div className="SettingsPage-accordion-jcs">
+                            <div>Користувачі</div>
+                            <Button size="small" variant="outlined"
+                                disabled={!canAddUsers} 
+                                onClick={(e)=>{
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setAddNewUser(!addNewUser)
+                                }}
+                            >
+                                <Icon icon={"add"}/>{LANG.set_user.add_user}
+                            </Button>
+                        </div>
+                        
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SetUser categories={categories} categoriesCont={categoriesCont} />+
+                        <SetUser closeAddNewUser={()=>{setAddNewUser(false)}} addNewUser={addNewUser} categories={categories} categoriesCont={categoriesCont} />+
                     </AccordionDetails>
                 </Accordion>}
 

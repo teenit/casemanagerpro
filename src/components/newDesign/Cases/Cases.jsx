@@ -287,6 +287,7 @@ const Cases = () => {
                     emptyTable={<EmptyData title={LANG.casesList.no_cases} buttonText={LANG.casesList.add_case} click={()=>{navigate("/add-case")}}/>}
                 />
             </div>}
+        {state.length === 0 &&<EmptyData title={LANG.casesList.no_cases} buttonText={LANG.casesList.add_case} click={()=>{navigate("/add-case")}}/>}
         {state.length > 0 && <div className = "ListCases-pagination">
                 <Pagination 
                     page={options.page}
