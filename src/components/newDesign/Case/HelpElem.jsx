@@ -16,7 +16,7 @@ import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 
 const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
-
+console.log(help)
     const [state, setState] = useState({
         ...help,
         editHelp: false,
@@ -56,9 +56,15 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
             [key]: value
         })
     }
+    const deleteHelp = ()=>{
+        apiResponse({help_id:help.id}, "case/delete-help.php").then((res)=>{
+            alert("deleted")
+        })
+    }
     return (
         <div className="Help-content-element">
             <div className="str">
+                <button onClick={deleteHelp}>delete</button>
                 <div className="str-date">
                     <div className="dates">
                         <div className="dates-start">

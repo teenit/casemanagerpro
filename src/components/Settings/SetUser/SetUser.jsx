@@ -15,6 +15,7 @@ import AccessCheck from "../../Functions/AccessCheck"
 import { NavLink } from "react-router-dom";
 import { LANG } from "../../../services/config";
 import SetUserModal from "./SetUserModal";
+import ResetPassModal from "./ResetPassModal";
 let usersStr = "";
 
 
@@ -27,6 +28,10 @@ const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUse
     const [modalInfo, setModalInfo] = useState(false)
     const [access, setAccess] = useState([]);
     const[addModal, setAddModal] = useState(false)
+    const [resetPassModal,setResetPassModal] = useState({
+        userId: null,
+        active: false
+    })
     const showName = AccessCheck("yes_no", "a_page_settings_show_name");
     const showPhone = AccessCheck("yes_no", "a_page_settings_show_phones");
     const editChangeAccess = AccessCheck("view_edit", "a_page_settings_change_accesses", "edit");
@@ -69,9 +74,12 @@ const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUse
             loadData();
         })
     }
-const addModalHandler = ()=>{
-    setAddModal(!addModal)
-}
+    const resetPassModalHandler = (userId=null)=>{
+        setResetPassModal({
+            userId: userId,
+            active: !resetPassModal.active
+        })
+    }
     const UsersData = ({ user, index, accessName }) => {
         return (
             <div className={`set__users__data__line ${index % 2 == 0 ? "arc" : ""}`}>
@@ -137,11 +145,13 @@ const addModalHandler = ()=>{
                                 <Icon icon={"eye_off"} addClass={"default-icon"} />
                             </span>
                         ) : null}
-
+                        <Icon icon={"reset_pass"} onClick={()=>{resetPassModalHandler(user.id)}}/>
 
                     </div>
 
                 </div>
+
+                        {resetPassModal.active && resetPassModal.userId ==user.id && <ResetPassModal userId = {user.id} successHandler={loadData} close={()=>{setResetPassModal(!resetPassModal)}}/>}
             </div>
         )
     }

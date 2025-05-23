@@ -71,6 +71,7 @@ const InputBlock = ({
     const howOldIsCase = (birthday) => {
         const birthDate = moment(birthday);
         const age = moment().diff(birthDate, 'years');
+        console.log(age)
         return `, ${age} ${LANG.GLOBAL.years}`;
     };
 

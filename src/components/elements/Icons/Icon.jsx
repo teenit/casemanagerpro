@@ -26,12 +26,15 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
+import VpnKeyOffIcon from '@mui/icons-material/VpnKeyOff';
 const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case 'reset_pass':
+                ico = <VpnKeyOffIcon className={addClass} onClick={onClick} />
             case "no_results":
                 ico = <SearchOffIcon fontSize='large' className={addClass} onClick={onClick} />
                 break;
