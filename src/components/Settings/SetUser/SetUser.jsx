@@ -72,7 +72,6 @@ const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUse
 const addModalHandler = ()=>{
     setAddModal(!addModal)
 }
-console.log(addNewUser)
     const UsersData = ({ user, index, accessName }) => {
         return (
             <div className={`set__users__data__line ${index % 2 == 0 ? "arc" : ""}`}>

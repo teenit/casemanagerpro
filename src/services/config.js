@@ -945,7 +945,8 @@ export const appConfig = {
     },
     settings: {
       title: LANG.pages.settings,
-      description: ""
+      description: "",
+      path:"/settings"
     },
     // users:{
     //   title:LANG.pages.users,
@@ -953,7 +954,8 @@ export const appConfig = {
     // },
     resources: {
       title: LANG.pages.resources,
-      description: ""
+      description: "",
+      path:"/resources"
     },
     statistic: {
       title: LANG.pages.statistic,
@@ -1005,9 +1007,15 @@ export const appConfig = {
       title: LANG.pages.access,
       description: ""
     },
-    file: {
-      title: LANG.pages.file,
-      description: ""
+    ancets:{
+      title:"Анкети",
+      description:"",
+      path:"/ancets"
+    },
+    transactions:{
+      title:"Транзакції",
+      description:"",
+      path:"/transactions"
     }
   },
   mounths: {

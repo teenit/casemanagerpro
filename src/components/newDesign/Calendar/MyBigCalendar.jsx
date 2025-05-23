@@ -88,7 +88,7 @@ const EventTitle = (event) => {
 const transformEvents = (data) => {
   //console.log("Дані з API перед перетворенням:", data); // Логування даних з API
   return data.map(event => {
-    let test = moment(event.date).format("YYYY-MM-DD")
+    let test = moment(event.date, "DD-MM-YYYY").format("YYYY-MM-DD");
     test = currentYear + test.slice(4)
     
     let value = event.value;
@@ -151,15 +151,15 @@ const CustomToolbar = (toolbar) => {
   return (
     <div className="MyBigCalendar-custom-toolbar">
       <div>
-        <IconButton style={{transform: "rotate(180deg)"}}>
-          <Icon icon={'arrow_next'} onClick={goToBack}/>
+        <IconButton style={{transform: "rotate(180deg)"}} onClick={goToBack}>
+          <Icon icon={'arrow_next'}/>
         </IconButton>
         <Button onClick={goToToday}>
           <Icon icon={'today'} />
           Сьогодні  
         </Button>
-        <IconButton>
-          <Icon icon={'arrow_next'} onClick={goToNext}/>
+        <IconButton onClick={goToNext}>
+          <Icon icon={'arrow_next'}/>
         </IconButton>
       </div>
       <div className='MyBigCalendar-custom-toolbar-text'>
@@ -253,6 +253,7 @@ const CustomEvent = ({ event }) => {
           event: CustomEvent
         }}
         view={view} // Встановлюємо вигляд календаря
+        onView={setView}
         date={date} // Встановлюємо поточну дату
         selectable={true} // Дозволяємо вибір комірок
         onSelectSlot={handleSelectSlot} // Виклик функції при натисканні на комірку

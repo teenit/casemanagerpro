@@ -80,7 +80,7 @@ const Bell = () => {
                     setState({limit:10, page:0, more: true});
                     getNotifications()
                 }}/>
-                {unRead !== 0 && <span className={'Bell-click-count'}> {unRead} </span>}
+                {unRead !== 0 && <span className={'Bell-click-count'}></span>}
             </div>
             {active && <div className={s.wrap__bells}>
                 <div className={`${s.black} ${s.active}`} onClick={() => {

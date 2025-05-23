@@ -26,7 +26,7 @@ const SelectStatus = ({ value = " ", onChange, statuses = {}, type}) => {
             >
             {
                 Object.keys(statuses).map((item,ind)=>{
-                    return <MenuItem  key={item} selectedId={item} value={item} style={{backgroundColor:statuses[item].color}}>{statuses[item].name}</MenuItem>
+                    return <MenuItem  key={item} selectedid={item} value={item} style={{backgroundColor:statuses[item].color}}>{statuses[item].name}</MenuItem>
                 })
             }
             </Select>

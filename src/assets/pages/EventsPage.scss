@@ -1,6 +1,5 @@
 .EventsPage{
-    width: 80%;
-    margin: auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,7 +12,7 @@
         font-size: 32px;
     }
     &-events{
-        width: 100%;
+        width: 80%;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 30px;

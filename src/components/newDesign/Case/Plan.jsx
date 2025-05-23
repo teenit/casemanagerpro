@@ -31,8 +31,8 @@ const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
         }
     }, [])
     const [state, setState] = useState({
-        end_time: " ",
-        start_time: " ",
+        end_time: moment().format("YYYY-MM-DDTHH:mm"),
+        start_time: moment().format("YYYY-MM-DDTHH:mm"),
         status: 0,
         value: "",
         create: false

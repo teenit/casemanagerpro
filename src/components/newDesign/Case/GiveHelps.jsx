@@ -11,12 +11,13 @@ import HelpElem from "./HelpElem";
 import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
 import AccessCheck from "../../Functions/AccessCheck";
+import moment from "moment";
 
 const GiveHelps = ({ helps, case_id, getCaseInfo, cg }) => {
     const categories = useSelector(state => state.categories.help);
     const [open, setOpen] = useState(false);
     const [state, setState] = useState({
-        date_time: "",
+        date_time: moment().format("YYYY-MM-DDTHH:mm"),
         text: "",
         category: "",
         who: "",
@@ -81,7 +82,6 @@ const GiveHelps = ({ helps, case_id, getCaseInfo, cg }) => {
     const access = {
         case_help_edit: AccessCheck("view_edit", "a_page_case_help", "edit"),
     }
-
     return (
         <div className="Help">
             <div className="Help-title">

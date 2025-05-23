@@ -179,7 +179,7 @@ const GiveHelp = ({ level }) => {
     const handleDataChange = (key, value) => {
         setHelpData({ ...helpData, [key]: value })
     }
-    
+
     return (
         <div className="GiveHelp">
             <div className="GiveHelp-inner">

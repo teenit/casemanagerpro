@@ -23,6 +23,7 @@ import SetConfigItem from "./SetConfig/SetConfigItem";
 import Modal from "../Modals/Modal";
 import FilesUploader from "../elements/Uploaders/FilesUploader";
 import AccessCheck from "../Functions/AccessCheck";
+import AddButton from "../elements/Buttons/AddButton"
 const MODE = 'settings_page_';
 const DEFAULT_TELEGRAM_BOT = {
     bot_id: null,
@@ -359,13 +360,13 @@ const Settings = () => {
                     <AccordionDetails>
                         <AccordionBlock title={"Телеграм боти"}>
                             {
-                                telegramBots.map((item)=>{
+                                telegramBots.map((item, index)=>{
                                     return(
-                                        <>
+                                        <div key={index}>
                                         <div>{item.bot_name}</div>
                                         <div>{item.bot_token}</div>
                                         <div>{item.chat_id}</div>
-                                        </>
+                                        </div>
                                     )
                                 })
                             }

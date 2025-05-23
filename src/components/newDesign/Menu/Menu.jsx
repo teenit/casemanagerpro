@@ -54,14 +54,14 @@ const Menu = () => {
                     <div className="Menu-items-primary">
                         {menuItems.map((item) =>
                             !item.subMenu ? (
-                                <>
+                                <div key={item.link}>
                                 {accessEx(item.access) && 
                                 <NavLink key={item.link} className="Menu-items-primary-item" to={item.link}>
                                     <Icon addClass="Menu-items-primary-item-ico" icon={item.icon} />
                                     {opened && <div className="Menu-title">{item.title}</div>}
                                 </NavLink>
                                 }
-                                </>
+                                </div>
                             ) : (
                                 <div
                                     key={item.type}

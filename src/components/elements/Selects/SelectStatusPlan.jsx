@@ -33,7 +33,7 @@ const SelectStatusPlan = ({ value = 0, onChange}) => {
             >
             {
                 Object.keys(statuses).map((item,ind)=>{
-                    return <MenuItem  key={item} selectedId={item} value={item} style={{backgroundColor:statuses[item].color}}>{statuses[item].title}</MenuItem>
+                    return <MenuItem  key={item} selectedid={item} value={item} style={{backgroundColor:statuses[item].color}}>{statuses[item].title}</MenuItem>
                 })
             }
             </Select>
