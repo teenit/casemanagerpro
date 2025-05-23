@@ -33,8 +33,9 @@ const Icon = ({ icon, addClass="", onClick }) => {
     useEffect(() => {
         let ico = null;
         switch (icon) {
-            case 'reset_pass':
-                ico = <VpnKeyOffIcon className={addClass} onClick={onClick} />
+            case 'reset_password':
+                ico = <VpnKeyOffIcon fontSize='large' className={addClass} onClick={onClick} />
+                break;
             case "no_results":
                 ico = <SearchOffIcon fontSize='large' className={addClass} onClick={onClick} />
                 break;

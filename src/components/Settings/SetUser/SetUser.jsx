@@ -145,13 +145,13 @@ const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUse
                                 <Icon icon={"eye_off"} addClass={"default-icon"} />
                             </span>
                         ) : null}
-                        <Icon icon={"reset_pass"} onClick={()=>{resetPassModalHandler(user.id)}}/>
+                        <Icon icon="reset_password" addClass={"default-icon"} onClick={()=>{resetPassModalHandler(user.id)}}/>
 
                     </div>
 
                 </div>
 
-                        {resetPassModal.active && resetPassModal.userId ==user.id && <ResetPassModal userId = {user.id} successHandler={loadData} close={()=>{setResetPassModal(!resetPassModal)}}/>}
+                        {resetPassModal.active && resetPassModal.userId == user.id && <ResetPassModal userName ={user.userName} userId = {user.id} successHandler={loadData} close={()=>{setResetPassModal(!resetPassModal)}}/>}
             </div>
         )
     }

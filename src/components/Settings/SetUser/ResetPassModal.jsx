@@ -37,9 +37,9 @@ class ResetPassModal extends Component {
 
     validate = () => {
         if (this.state.formData.password !== this.state.formData.confirmPassword) {
-            this.alertHandler(false, "Паролі не співпадають")
+            this.alertHandler(false, LANG.set_user.alertMessages.dont_match)
         } else if (this.state.formData.password.length < 6) {
-            this.alertHandler(false, "Пароль повинен бути довжиною від 6 символів")
+            this.alertHandler(false, LANG.set_user.alertMessages.pass)
         } else {
             this.handleSubmit()
         }
@@ -51,13 +51,13 @@ class ResetPassModal extends Component {
             userId: this.props.userId
         }
         apiResponse(data, "user/reset-password.php").then((res) => {
-            this.alertHandler(true, "Пароль оновлено")
+            this.alertHandler(true, LANG.set_user.alertMessages.password_updated)
         })
     };
     alertHandler = (isSuccess, message) => {
         this.setState({
             alert: {
-                active: true,
+                active: !this.state.alert.active,
                 isSuccess: isSuccess,
                 message: message
             }
@@ -69,7 +69,7 @@ class ResetPassModal extends Component {
         return (
             <Modal
                 closeHandler={this.props.close}
-                header="Скинути пароль"
+                header={`${LANG.set_user.reset_password_for} ${this.props.userName}`}
                 footer={
                     <>
                         <Button variant="contained" onClick={this.validate}>{LANG.GLOBAL.save}</Button>
@@ -77,9 +77,9 @@ class ResetPassModal extends Component {
                     </>
                 }
             >
-                <form>
-                    <Input value={formData.password} label='Новий пароль' onChange={(e) => { this.handleChange("password", e.target.value) }} />
-                    <Input value={formData.confirmPassword} label='Підтвердити пароль' onChange={(e) => { this.handleChange("confirmPassword", e.target.value) }} />
+                <form className='ResetPassModal'>
+                    <Input type='password' value={formData.password} label={LANG.set_user.new_password} onChange={(e) => { this.handleChange("password", e.target.value) }} />
+                    <Input type='password' value={formData.confirmPassword} label={LANG.set_user.confirm_password} onChange={(e) => { this.handleChange("confirmPassword", e.target.value) }} />
                 {alert.active && <SmallNotification isSuccess={alert.isSuccess} text={alert.message} close={() => this.alertHandler(false, '')} />}
                 </form>
 
