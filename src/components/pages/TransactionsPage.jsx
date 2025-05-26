@@ -10,6 +10,7 @@ import HeaderFormatter from "../elements/HeaderFormatter/HeaderFormatter";
 import EmptyData from "../EmptyData/EmptyData";
 import { Button } from "@mui/material";
 import AddButton from "../elements/Buttons/AddButton";
+import ActionMenu from "../Portals/ActionMenu";
 
 const TransactionsPage = () => {
     const [transactionId, setTransactionId] = useState(null)
@@ -105,18 +106,52 @@ const TransactionsPage = () => {
             fixed: true,
             isHidden: false,
             formatter: (cell, row) => {
-                return <div className="Table-row-menu default">
-                    <Icon icon={"edit"} onClick={() => {
-                        modalHandler("edit")
-                        setTransactionId(row.id)
-                    }} />
-                    <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {
-                        modalHandler("delete")
-                        setTransactionId(row.id)
-                    }} />
-                </div>
+                const menuItems = [
+                    {
+                        title: LANG.GLOBAL.edit,
+                        isHidden: false,
+                        icon:"edit",
+                        click: ()=>{
+                            modalHandler("edit")
+                            setTransactionId(row.id)
+                        }
+                    },
+                    {
+                        itemType: 'divider'
+                    },
+                    {
+                        title: LANG.GLOBAL.delete,
+                        isHidden: false,
+                        icon: "delete",
+                        color: 'error',
+                        click: ()=>{
+                            modalHandler("delete")
+                            setTransactionId(row.id)
+                        }
+                    },
+                ]
+
+                return <ActionMenu menuItems={menuItems}/>
             }
         },
+        // {
+        //     dataField: 'row_menu',
+        //     text: '',
+        //     fixed: true,
+        //     isHidden: false,
+        //     formatter: (cell, row) => {
+        //         return <div className="Table-row-menu default">
+        //             <Icon icon={"edit"} onClick={() => {
+        //                 modalHandler("edit")
+        //                 setTransactionId(row.id)
+        //             }} />
+        //             <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {
+        //                 modalHandler("delete")
+        //                 setTransactionId(row.id)
+        //             }} />
+        //         </div>
+        //     }
+        // },
     ]
 
 

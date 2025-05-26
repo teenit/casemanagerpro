@@ -27,6 +27,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 import VpnKeyOffIcon from '@mui/icons-material/VpnKeyOff';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
@@ -202,6 +203,9 @@ const Icon = ({ icon, addClass="", onClick }) => {
             case "statistic":
                 ico = <BarChartIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
                 break;
+            case "menu-list":
+                ico = <MoreVertIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+            break;
             default:
                 ico = <StarRoundedIcon className={addClass} onClick={onClick} />;
         }

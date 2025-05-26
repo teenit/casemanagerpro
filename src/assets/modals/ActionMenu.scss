@@ -1,0 +1,39 @@
+.ActionMenu {
+  &-icon {
+    color: #565454;
+  }
+  .menu-list {
+    font-size: 20px;
+  }
+}
+.ActionMenu-container {
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 7px;
+    box-shadow: 0 0 1px 0 #000;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2px;
+    .divider {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      width: 100%;
+      &-line {
+        width: 100%;
+        height: 1px;
+        background-color: gray;
+      }
+
+    }
+    .icon {
+      font-size: 20px;
+    }
+    .btn-with-icon {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+}
