@@ -177,7 +177,7 @@ class PortalDropdown extends React.Component {
     newStyle.left = `${left}px`;
 
     // Блокуємо scroll сторінки
-    document.body.style.overflow = 'hidden';
+  //  document.body.style.overflow = 'hidden';
 
     this.setState({
         contentStyle: newStyle,
