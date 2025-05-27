@@ -6,6 +6,7 @@ import Icon from "../elements/Icons/Icon";
 import Modal from "../Modals/Modal";
 import FooterDefaultModal from "../Modals/FooterDefaultModal";
 import Input from "../elements/Inputs/Input";
+import { LANG } from "../../services/config";
 
 class AddAncetsForm extends Component {
     constructor(props) {
@@ -60,7 +61,7 @@ class AddAncetsForm extends Component {
 
         return (
             <Modal closeHandler={close}
-                header="Створити анкету"
+                header={LANG.ancets.add}
                 footer={<FooterDefaultModal close={close} success={this.save} />}
             >
                 <div>
@@ -68,7 +69,7 @@ class AddAncetsForm extends Component {
                         value={this.state.name}
                         onChange={(e) => this.setState({ name: e.target.value })}
                         type="text"
-                        label="Назва анкети"
+                        label={LANG.GLOBAL.title}
                         size="small"
                     />
                 </div>
@@ -77,7 +78,7 @@ class AddAncetsForm extends Component {
                         value={this.state.description}
                         onChange={(e) => this.setState({ description: e.target.value })}
                         type="textarea"
-                        label="Опис анкети"
+                        label={LANG.GLOBAL.description}
                         size="small"
                         multiline
                     />
@@ -89,26 +90,26 @@ class AddAncetsForm extends Component {
                       size="small"
                       className="w100"
                   >
-                      <MenuItem value={'cases'}>Для кейсів</MenuItem>
+                      <MenuItem value={'cases'}>{LANG.ancets.for_cases}</MenuItem>
                   </Select>
                 </div>
                 <div>
-                  Нагадувати
+                  {LANG.ancets.remind}
                   <Select
                       value={this.state.remember}
                       onChange={(e) => this.setState({remember: e.target.value})}
                       size="small"
                       className="w100"
                   >
-                      <MenuItem value={'week'}>1 раз на тиждень</MenuItem>
-                      <MenuItem value={'month'}>1 раз на місяць</MenuItem>
-                      <MenuItem value={'cvartal'}>1 раз на квартал</MenuItem>
-                      <MenuItem value={'year'}>1 раз на рік</MenuItem>
+                      <MenuItem value={'week'}>{LANG.ancets.remembers.week}</MenuItem>
+                      <MenuItem value={'month'}>{LANG.ancets.remembers.month}</MenuItem>
+                      <MenuItem value={'cvartal'}>{LANG.ancets.remembers.cvartal}</MenuItem>
+                      <MenuItem value={'year'}>{LANG.ancets.remembers.year}</MenuItem>
                   </Select>
                 </div>
                 <div>
                     <Button size="small" onClick={this.createQuestion}>
-                        <Icon icon="add" /> Створити питання
+                        <Icon icon="add" /> {LANG.ancets.create_question}
                     </Button>
                 </div>
                 <div>
@@ -118,7 +119,7 @@ class AddAncetsForm extends Component {
                                 value={item.question}
                                 onChange={(e) => this.updateQuestion(index, e.target.value)}
                                 type="text"
-                                label={`Питання ${index + 1}`}
+                                label={`${LANG.GLOBAL.question} ${index + 1}`}
                                 size="small"
                                 addClass="w100"
                             />

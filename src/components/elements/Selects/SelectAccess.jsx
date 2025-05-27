@@ -1,7 +1,5 @@
-// import { FormControl, InputLabel, MenuItem } from '@material-ui/core';
 import React, { useState } from 'react';
 import Select from '@mui/material/Select';
-import CatCheckBoxes from '../CheckBoxes/CatCheckBoxes';
 import { LANG } from '../../../services/config';
 import { MenuItem } from '@mui/material';
 

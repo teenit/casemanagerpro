@@ -18,7 +18,16 @@ export const LANG = {
     close: "Закрити",
     tags: "Теги",
     category: "Категорія",
-    type: "Тип"
+    type: "Тип",
+    file:"Файл",
+    link:"Посилання",
+    delete_confirm:"Ви впевнені, що хочети видалити цей запис?",
+    pick_all:"Обрати все",
+    question:"Питання",
+    alertMessages:{
+      delete_success:"Запис успішно видалено",
+      delete_error:"Не вдалося видалити запис"
+    }
   },
   SETTINGS: {
     title_category: "Назва категорії",
@@ -77,6 +86,43 @@ export const LANG = {
     no_transactions:"Транзакцій не знайдено",
     add_transaction:"Додати першу транзакцію",
     add:"Створити транзакцію"
+  },
+  ACCESS:{
+    events:{
+      look:"Дивитися івент",
+      edit:"Редагувати івент",
+      members:"Учасники івенту",
+      plan:"План івенту",
+      docs:"Документи до івенту"
+    },
+    access:{
+      look:"Перегляд шаблонів",
+      edit:"Редагування шаблонів прав",
+      look_rights:"Перегляд списку прав",
+      edit_rights:"Редагування списку прав"
+    }
+  },
+  MENU_NOTIFICATION:{
+    created_new_case:"створив новий кейс",
+    created_new_event:"створив нову подію",
+    changed_case_name:"змінив ім'я кейсу",
+    case:"У кейса",
+    notifications:{
+      new_case:"Новий кейс",
+      new_event:"Нова подія",
+      edit_case:"Редагування кейсу",
+      update:"Оновлення",
+      birthday:"День народження",
+      more:"Детальніше",
+    }
+  },
+  FILES_UPLOADER:{
+    download:"Завантажити файл",
+    send:"Відправити файл",
+    alertMessages:{
+      success:"Файли завантажено успішно",
+      error:"Неправильні дані"
+    }
   },
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Рівень доступу користувачів (Сторінки)",
@@ -350,7 +396,16 @@ export const LANG = {
     title:"Назва файлу:",
     no_title:"Файл без назви",
     size:"Розмір:",
-    desc:"Опис файлу:"
+    desc:"Опис файлу:",
+    resource_link:"Посилання на ресурс",
+    resource_type:"Тип ресурсу",
+    alertMessages:{
+      deleted_successfully:"Ресурс успішно видалено",
+      error:"Виникла помилка. Спробуйте ще раз",
+      added_successfully:"Ресурс додано",
+      no_data:"Введіть назву та посилання(якщо треба) на ресурс",
+      invalid_length:"Назва ресурсу не може перевищувати 150 символів"
+    }
   },
   file: {
     alertMessages: {
@@ -548,7 +603,7 @@ export const LANG = {
     details_help: "Деталі наданої допомоги",
     helping: "Надано допомогу",
     error_data: "Оберіть дату, статус, опис та надавача допомоги",
-    error: "Помилка при додаванні допомоги"
+    error: "Помилка при додаванні допомоги",
   },
   mounths: {
     jan: "Січень",
@@ -625,11 +680,14 @@ export const LANG = {
     no_ancets: "Анкет не знайдено",
     add_anceta:"Додати першу анкету",
     add:"Створити анкету",
+    for_cases:"Для кейсів",
+    remind:"Нагадувати",
+    create_question: "Створити питання",
     remembers: {
-      week: "на ",
-      month: "в місяць",
-      year: "на рік",
-      cvartal: "на квартал"
+      week: "1 раз на тиждень",
+      month: "1 раз на місяць",
+      cvartal: "1 раз на квартал",
+      year: "1 раз на рік",
     }
   }
 

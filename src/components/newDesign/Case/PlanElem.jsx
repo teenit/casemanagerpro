@@ -7,13 +7,15 @@ import Textarea from "../../elements/Inputs/Textarea";
 import SelectStatusPlan from "../../elements/Selects/SelectStatusPlan";
 import { LANG, appConfig } from "../../../services/config";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
+import ModalConfirm from "../../Modals/ModalConfirm";
 
-const PlanElem = ({ plan, editor }) => {
+const PlanElem = ({ plan, editor, getCaseInfo }) => {
     const [notification, setNotification] = useState({
         show: false,
         status: null,
         message: null
     });
+    const [confirmModal,setConfirmModal] = useState(false)
     const [state, setState] = useState({
         ...plan,
         editPlan: false
@@ -32,21 +34,11 @@ const PlanElem = ({ plan, editor }) => {
         const endDate = moment(state.end_time, "YYYY-MM-DDTHH:mm");
 
         if (startDate.isAfter(endDate)) {
-            return setNotification({
-                ...notification,
-                show: true,
-                status: false,
-                message: LANG.plan.error_date
-            });
+            return notificationHandler(false, LANG.plan.error_date)
         }
 
         if (state.end_time.length <= 1 || state.start_time.length <= 1) {
-            return setNotification({
-                ...notification,
-                show: true,
-                status: false,
-                message: LANG.plan.error
-            });
+            return notificationHandler(false, LANG.plan.error)
         }
 
         apiResponse({
@@ -67,7 +59,20 @@ const PlanElem = ({ plan, editor }) => {
             [key]: value
         });
     };
-
+const notificationHandler = (status, message) =>{
+            setNotification({
+            show: true,
+            status: status,
+            message: message
+        })
+}
+const deletePlan = ()=>{
+    apiResponse({plan_id:plan.id}, "case/delete-plan.php").then((res)=>{
+        getCaseInfo()
+    }).catch((err)=>{
+        notificationHandler(false, LANG.GLOBAL.alertMessages.delete_error)
+    })
+}
     return (
         <div className="Plan-content-element">
             <div className="str">
@@ -121,6 +126,7 @@ const PlanElem = ({ plan, editor }) => {
                                 </>
                                 
                         }
+                        <Icon icon={"delete"} addClass="delete-icon" onClick={()=>{setConfirmModal(!confirmModal)}}/>
                     </div>
                 </div>
                 <div className="task">
@@ -161,6 +167,8 @@ const PlanElem = ({ plan, editor }) => {
                     </div>
                 </div>
             </div>
+            {confirmModal && <ModalConfirm closeHandler={()=>{setConfirmModal(!confirmModal)}}
+                text={LANG.GLOBAL.delete_confirm} successHandler={deletePlan}/>}
             {
                 notification.show && (
                     <SmallNotification

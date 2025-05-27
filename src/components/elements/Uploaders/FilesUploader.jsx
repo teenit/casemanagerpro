@@ -144,12 +144,12 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
 
         <div className="FilesUploader-buttons">
           <label htmlFor="fileInput">
-            <img src={add} alt="Завантажити файл" />
+            <img src={add} alt={LANG.FILES_UPLOADER.download} />
           </label>
           <input style={{ display: "none" }} id="fileInput" multiple={multiple} type="file" onChange={handleFileChange} />
           {!uploading ? (
             <label htmlFor="submitInput" onClick={checkUpload}>
-              <img src={send} alt="Відправити файл" />
+              <img src={send} alt={LANG.FILES_UPLOADER.send} />
             </label>
           ) : (
             <img style={{ width: "30px" }} src={loadImg} />
@@ -157,8 +157,8 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
           <input disabled={uploading} style={{ display: "none" }} type="submit" id="submitInput" />
         </div>
 
-        {alert.success && <SmallNotification isSuccess={true} text="Файли завантажено успішно" close={() => alertHandler("success")} />}
-        {alert.error && <SmallNotification isSuccess={false} text="Неправильні дані" close={() => alertHandler("error")} />}
+        {alert.success && <SmallNotification isSuccess={true} text={LANG.FILES_UPLOADER.alertMessages.success} close={() => alertHandler("success")} />}
+        {alert.error && <SmallNotification isSuccess={false} text={LANG.FILES_UPLOADER.alertMessages.error} close={() => alertHandler("error")} />}
       </div>
 
       {fileSelect && (

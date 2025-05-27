@@ -112,8 +112,8 @@ const Resources = () => {
                 successHandler={deleteResource}
                 text={LANG.resources.confirm_delete + activeResource.title + "?"}
             />}
-            {alert.success && <SmallNotification isSuccess={true} text={"Ресурс видалено"} close={() => { alertHandler("success") }} />}
-            {alert.error && <SmallNotification isSuccess={false} text={"Виникла помилка"} close={() => { alertHandler("error") }} />}
+            {alert.success && <SmallNotification isSuccess={true} text={LANG.resources.alertMessages.deleted_successfully} close={() => { alertHandler("success") }} />}
+            {alert.error && <SmallNotification isSuccess={false} text={LANG.resources.alertMessages.error} close={() => { alertHandler("error") }} />}
         </div>
     )
 }

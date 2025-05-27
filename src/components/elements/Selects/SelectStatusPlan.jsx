@@ -1,7 +1,6 @@
 import { MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import Select from '@mui/material/Select';
-import CatCheckBoxes from '../CheckBoxes/CatCheckBoxes';
 import { LANG, appConfig } from '../../../services/config';
 
 

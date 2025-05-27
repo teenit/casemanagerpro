@@ -7,14 +7,11 @@ import pptxImg from "./../../img/resources/pptx.svg";
 import xlsxImg from "./../../img/resources/xlsx.svg";
 import codeImg from "./../../img/resources/code.svg";
 import zipImg from "./../../img/resources/zip.svg";
-import mp4Img from "./../../img/resources/mp4.svg";
-import { Button } from "@mui/material";
 import GetLinksBlock from "./GetLinksBlock";
 import Icon from "../elements/Icons/Icon";
 import AccessCheck from "../Functions/AccessCheck";
 import EmptyData from "../EmptyData/EmptyData";
 import { LANG } from "../../services/config";
-import { serverAddres } from "../Functions/serverAddres";
 import ResourcesModal from "./ResourcesModal";
 
 const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDelete, showForm }) => {
@@ -35,7 +32,7 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
     };
 
     const cutTitle = (title) => {
-        return title.length < 1 ? "Файл без назви" : (title.length > 40 ? title.substring(0, 40) + "..." : title);
+        return title.length < 1 ? LANG.resources.no_title : (title.length > 40 ? title.substring(0, 40) + "..." : title);
     };
 
     const getImageByType = (type) => {

@@ -8,11 +8,10 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 import Modal from "../../Modals/Modal";
 import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
-import FileSearch from "./FileSearch";
 import Hint from "../../elements/Hints/Hint";
 import AccessCheck from "../../Functions/AccessCheck";
 
-const Files = ({ case_id, getCaseInfo, files, cg }) => {
+const Files = ({ case_id, getCaseInfo, files}) => {
     const [filteredFiles, setFilteredFiles] = useState(null)
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({ success: false, error: false, message: "" });

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import SelectElem from "../../elements/Selects/SelectAccess";
+import { LANG } from "../../../services/config";
 
 const AccessBlockCase = ({accesses}) => {
 
-    const [selectedOption, setSelectedOption] = useState({ value: 'option1', label: 'Дивитися івент' });
+    const [selectedOption, setSelectedOption] = useState({ value: 'option1', label: LANG.ACCESS.events.look });
 
     const options = [
         [
@@ -56,23 +57,23 @@ const AccessBlockCase = ({accesses}) => {
     return (
         <div className="AccessBlockCase">
             <div className="AccessBlockCase-line">
-                <div className="AccessBlockCase-line-title">Дивитися івент</div>
+                <div className="AccessBlockCase-line-title">{LANG.ACCESS.events.look}</div>
                 <div className="AccessBlockCase-line-right"><SelectElem options={options[0]} defaultValue={accesses.a_page_event_watch} onChange={handleSelectChange} /></div> 
             </div>
             <div className="AccessBlockCase-line">
-                <div className="AccessBlockCase-line-title">Редагувати івент</div>
+                <div className="AccessBlockCase-line-title">{LANG.ACCESS.events.edit}</div>
                 <div className="AccessBlockCase-line-right"><SelectElem options={options[1]} defaultValue={accesses.a_page_event_edit} onChange={handleSelectChange} /></div> 
             </div>
             <div className="AccessBlockCase-line">
-                <div className="AccessBlockCase-line-title">Учасники івенту</div>
+                <div className="AccessBlockCase-line-title">{LANG.ACCESS.events.members}</div>
                 <div className="AccessBlockCase-line-right"><SelectElem options={options[2]} defaultValue={accesses.a_page_event_members} onChange={handleSelectChange} /></div> 
             </div>
             <div className="AccessBlockCase-line">
-                <div className="AccessBlockCase-line-title">План івенту</div>
+                <div className="AccessBlockCase-line-title">{LANG.ACCESS.events.plan}</div>
                 <div className="AccessBlockCase-line-right"><SelectElem options={options[3]} defaultValue={accesses.a_page_event_plan} onChange={handleSelectChange} /></div> 
             </div>
             <div className="AccessBlockCase-line">
-                <div className="AccessBlockCase-line-title">Документи до івенту</div>
+                <div className="AccessBlockCase-line-title">{LANG.ACCESS.events.docs}</div>
                 <div className="AccessBlockCase-line-right"><SelectElem options={options[4]} defaultValue={accesses.a_page_event_documents} onChange={handleSelectChange} /></div> 
             </div>
         </div>

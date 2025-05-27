@@ -102,7 +102,7 @@ const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
             {open && <div className="content">
                 {plans.length > 0 ? <div className="Plan-content">
                     {
-                        plans.map(plan => <PlanElem editor={access.case_plan_edit && cg} key={plan.id} plan={plan} />)
+                        plans.map(plan => <PlanElem getCaseInfo={getCaseInfo} editor={access.case_plan_edit && cg} key={plan.id} plan={plan} />)
                     }
                 </div>:<p>{LANG.no_records}</p>}
 

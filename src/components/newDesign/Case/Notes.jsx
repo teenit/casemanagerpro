@@ -10,62 +10,9 @@ import { LANG } from "../../../services/config";
 import { apiResponse } from "../../Functions/get_apiObj";
 import TextDescription from "../../elements/TextFormatters/TextDescription";
 import AccessCheck from "../../Functions/AccessCheck";
+import NoteElem from "./NoteElem";
 
-const Active = ({ elem, handleEdit, editor }) => {
-    const [edit, setEdit] = useState(false);
-    const [activeMessage, setActiveMessage] = useState(elem.text);
-    const [activeColor, setActiveColor] = useState(elem.color);
 
-    return (
-        <div className="Notes-viewer-line">
-            <div className="Notes-viewer-line-data">
-                <div className="Notes-viewer-line-data-title">
-                    <NavLink to={`/user?${elem.user_id}`}>{elem.userName}</NavLink>
-                </div>
-                <span>{elem.date_created}</span>
-                <div
-                    className="Notes-viewer-line-data-color"
-                    style={{ backgroundColor: activeColor }}
-                />
-            </div>
-            <div className="Notes-viewer-line-mess">
-                {edit ? (
-                    <div className="Notes-viewer-line-mess-input">
-                        <Input
-                            type="color"
-                            value={activeColor}
-                            onChange={(e) => setActiveColor(e.target.value)}
-                        />
-                        <Textarea
-                            value={activeMessage}
-                            label={LANG.notes.text}
-                            onChange={(e) => setActiveMessage(e.target.value)}
-                        />
-                    </div>
-                ) : (
-                    <TextDescription text={activeMessage}/>
-                )}
-                {editor && <div className="Notes-viewer-line-mess-edit">
-                    {edit ? (
-                        <div>
-                            <Icon icon="save" addClass="save-icon" onClick={() => {
-                                if(activeMessage.length>=1){
-                                    setEdit(false);
-                                }
-                                handleEdit(activeMessage, activeColor, elem);
-                            }} />
-                            <Icon icon="close" addClass="close-icon" onClick={() => setEdit(false)} />
-                        </div>
-                    ) : (
-                        <span onClick={() => setEdit(true)}>
-                            <Icon icon="edit" addClass="default-icon" />
-                        </span>
-                    )}
-                </div>}
-            </div>
-        </div>
-    );
-};
 
 const Notes = ({ notes, case_id, getCaseInfo, cg }) => {
     const [open, setOpen] = useState(false);
@@ -87,7 +34,7 @@ const Notes = ({ notes, case_id, getCaseInfo, cg }) => {
         setActNote([...notes]);
     }, [notes]);
 
-    const openHandler = () => {
+    const openHandler = (active) => {
         const newState = !open;
         localStorage.setItem("page_case_notes", newState);
         setOpen(newState);
@@ -98,37 +45,22 @@ const Notes = ({ notes, case_id, getCaseInfo, cg }) => {
     };
 
     const addNote = () => {
+        if(noteMessage.length<1){
+            return handleAlertChange("error", LANG.notes.error_data)
+        }
         apiResponse({ text: noteMessage, color: noteColor, case_id }, "case/create-note.php").then((res) => {
             if (res.status) {
                 handleAlertChange("success", LANG.notes.success);
-                openHandler()
                 getCaseInfo();
                 setModal(false);
+            if(!open) openHandler()
             } else {
                 handleAlertChange("error", LANG.notes.error);
             }
         });
     };
 
-    const updateNote = (text, color, elem) => {
-        if (text.length < 1) return handleAlertChange("error", LANG.notes.error_data);
-        apiResponse({ ...elem, text, color, case_id }, "case/update-note.php").then((res) => {
-            if (res.status) {
-                handleAlertChange("success", LANG.notes.success);
-                getCaseInfo();
-            } else {
-                handleAlertChange("error", LANG.notes.error);
-            }
-        });
-    };
 
-    const handleEdit = (value, color, elem) => {
-        if (value.length < 1) {
-            handleAlertChange("error", LANG.notes.error_data);
-        } else {
-            updateNote(value, color, elem);
-        }
-    };
 
     return (
         <div className="Notes">
@@ -145,7 +77,7 @@ const Notes = ({ notes, case_id, getCaseInfo, cg }) => {
                 <div className="Notes-viewer">
                     {actNote.length > 0 ? (
                         actNote.map((elem, index) => (
-                            <Active editor={access.case_notes_edit && cg} key={index} elem={elem} handleEdit={handleEdit} />
+                            <NoteElem case_id={case_id} getCaseInfo={getCaseInfo} editor={access.case_notes_edit && cg} key={index} elem={elem}  />
                         ))
                     ) : (
                         <p>{LANG.no_records}</p>

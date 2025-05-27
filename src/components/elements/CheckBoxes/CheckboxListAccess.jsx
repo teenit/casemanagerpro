@@ -8,6 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
 import Hint from "../Hints/Hint"
+import { LANG } from '../../../services/config';
 export default function CheckboxListAccess({allMas, checkedMas, onChange, onCheckedAll, checkedAll = false}) {
   const [checked, setChecked] = useState([checkedMas]);
   const [allMasElements, setAllMasElements] = useState(allMas());
@@ -49,7 +50,7 @@ export default function CheckboxListAccess({allMas, checkedMas, onChange, onChec
         {checkedAll && <div className='CheckboxListAccess-all'>
           <label><Checkbox size='small'
                   onChange={allChecked}
-                /> Обрати все</label>
+                /> {LANG.GLOBAL.pick_all}</label>
         </div>}
          <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {allMasElements.map((item) => {

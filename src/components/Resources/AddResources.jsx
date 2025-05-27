@@ -31,17 +31,17 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
     };
 
     const successHandler = () => {
-        handleAlertChange("success", "Ресурс додано");
+        handleAlertChange("success", LANG.resources.alertMessages.added_successfully);
         close();
         loadResources();
     };
 
     const addLinkResource = () => {
         if (meta.title.length < 1 || (typeResource === "link" && meta.link.length < 1)) {
-            return handleAlertChange('error', "Введіть назву та посилання(якщо треба) на ресурс");
+            return handleAlertChange('error', LANG.resources.alertMessages.no_data);
         }
         if (meta.title.length > 150) {
-            return handleAlertChange('error', `Назва ресурсу не може перевищувати 150 символів. Поточна довжина: ${meta.title.length} символів`)
+            return handleAlertChange('error', LANG.resources.alertMessages.invalid_length)
         }
         apiResponse({
             resource: {
@@ -53,7 +53,7 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
             type: "link"
         }, "resources/add-links-resource.php").then((res) => {
             if (res.status) successHandler();
-            else handleAlertChange('error', "Помилка при додаванні ресурсу");
+            else handleAlertChange('error', LANG.resources.alertMessages.error);
         });
     };
 
@@ -61,7 +61,7 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
         <>
             <Modal
                 closeHandler={close}
-                header="Додати ресурс"
+                header={LANG.resources.add}
                 footer={
                     <div className="Modal--footer">
                         <Button onClick={close} color="error" variant="contained">{LANG.cancel}</Button>
@@ -70,19 +70,19 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
                 }
             >
                 <div className="AddResources">
-                    <span>Тип ресурсу</span>
+                    <span>{LANG.resources.resource_type}</span>
                     <Select value={typeResource} onChange={(e) => setTypeResource(e.target.value)}>
-                        <MenuItem value={'files'}>Файл</MenuItem>
-                        <MenuItem value={'link'}>Посилання</MenuItem>
+                        <MenuItem value={'files'}>{LANG.GLOBAL.file}</MenuItem>
+                        <MenuItem value={'link'}>{LANG.GLOBAL.link}</MenuItem>
                     </Select>
                     <Input
                         type="text"
-                        label="Назва Ресурсу"
+                        label={LANG.GLOBAL.title}
                         value={meta.title}
                         onChange={(e) => handleMetaChange("title", e.target.value)}
                     />
                     <Textarea
-                        label="Опис Ресурсу"
+                        label={LANG.GLOBAL.description}
                         value={meta.description}
                         onChange={(e) => handleMetaChange("description", e.target.value)}
                     />
@@ -98,7 +98,7 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
                     />}
                     {typeResource === 'link' && <Input
                         type="text"
-                        label="Посилання на ресурс"
+                        label={LANG.resources.resource_link}
                         value={meta.link}
                         onChange={(e) => handleMetaChange("link", e.target.value)}
                     />}

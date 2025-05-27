@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Icon from "../Icons/Icon";
 import { NavLink } from "react-router-dom";
 import { MenuItem, Select } from "@mui/material";
-import { LANG } from "../../../services/config";
 
 const SelectBlock = ({ saveHandler, disabled = false, value = "", onChange, link = null, icon = null, label = "", titleDefault = "", selectOptions = [], size = 'small' }) => {
     const [showEdit, setShowEdit] = useState(false);

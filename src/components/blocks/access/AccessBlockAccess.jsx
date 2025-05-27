@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SelectElem from "../../elements/Selects/SelectAccess";
+import { LANG } from "../../../services/config";
 
 const AccessBlockCase = ({accesses}) => {
 
@@ -41,19 +42,19 @@ const AccessBlockCase = ({accesses}) => {
     return (
         <div className="AccessBlockCase">
             <div className="AccessBlockCase-line">
-                <div className="AccessBlockCase-line-title">Перегляд шаблонів</div>
+                <div className="AccessBlockCase-line-title">{LANG.ACCESS.access.look}</div>
                 <div className="AccessBlockCase-line-right"><SelectElem options={selectedOption[0]} defaultValue={accesses.a_page_access_watch_roles} onChange={handleSelectChange} /></div> 
             </div>
             <div className="AccessBlockCase-line">
-                <div className="AccessBlockCase-line-title">Редагування шаблонів прав</div>
+                <div className="AccessBlockCase-line-title">{LANG.ACCESS.access.edit}</div>
                 <div className="AccessBlockCase-line-right"><SelectElem options={selectedOption[1]} defaultValue={accesses.a_page_access_edit_roles} onChange={handleSelectChange} /></div> 
             </div>
             <div className="AccessBlockCase-line">
-                <div className="AccessBlockCase-line-title">Перегляд списку прав</div>
+                <div className="AccessBlockCase-line-title">{LANG.ACCESS.access.look_rights}</div>
                 <div className="AccessBlockCase-line-right"><SelectElem options={selectedOption[2]} defaultValue={accesses.a_page_access_watch_permissions} onChange={handleSelectChange} /></div> 
             </div>
             <div className="AccessBlockCase-line">
-                <div className="AccessBlockCase-line-title">Редагування списку прав</div>
+                <div className="AccessBlockCase-line-title">{LANG.ACCESS.access.edit_rights}</div>
                 <div className="AccessBlockCase-line-right"><SelectElem options={selectedOption[3]} defaultValue={accesses.a_page_access_edit_permissions} onChange={handleSelectChange} /></div> 
             </div>
         </div>

@@ -14,9 +14,9 @@ import Icon from "../../elements/Icons/Icon"
 import TextDescription from "../../elements/TextFormatters/TextDescription"
 import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
-
+import ModalConfirm from "../../Modals/ModalConfirm"
 const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
-console.log(help)
+    console.log(help)
     const [state, setState] = useState({
         ...help,
         editHelp: false,
@@ -27,6 +27,7 @@ console.log(help)
         status: null,
         message: null
     })
+    const [confirmModal, setConfirmModal] = useState(false)
     const getCategory = (id) => {
         const category = Object.values(categories).find(item => item.id === id)
         return {
@@ -41,11 +42,7 @@ console.log(help)
             help_id: state.id
         }, "case/update-help.php").then((res) => {
             setState({ ...state, edit: false })
-            setNotification({
-                show: true,
-                status: res.status,
-                message: res.message
-            })
+            notificationHandler(res.status, res.message)
             getCaseInfo();
         })
 
@@ -56,15 +53,23 @@ console.log(help)
             [key]: value
         })
     }
-    const deleteHelp = ()=>{
-        apiResponse({help_id:help.id}, "case/delete-help.php").then((res)=>{
-            alert("deleted")
+    const deleteHelp = () => {
+        apiResponse({ help_id: help.id }, "case/delete-help.php").then((res) => {
+            getCaseInfo()
+        }).catch((err) => {
+            notificationHandler(false, LANG.GLOBAL.alertMessages.delete_error)
+        })
+    }
+    const notificationHandler = (status, message) => {
+        setNotification({
+            show: true,
+            status: status,
+            message: message
         })
     }
     return (
         <div className="Help-content-element">
             <div className="str">
-                <button onClick={deleteHelp}>delete</button>
                 <div className="str-date">
                     <div className="dates">
                         <div className="dates-start">
@@ -94,7 +99,7 @@ console.log(help)
                                     :
                                     <>
                                         <span> {state.date_time && moment(state.date_time).format("DD-MM-YYYY")} </span>
-                                            {state.who && <NavLink to={`/user/${state.user_id}`}>{state.who}</NavLink>}
+                                        {state.who && <NavLink to={`/user/${state.user_id}`}>{state.who}</NavLink>}
                                         <div className="dates-start-category">
                                             <span> {state.category && getCategory(state.category).name} </span>
                                             <span className="Help-content-element-color" style={{ backgroundColor: getCategory(state.category).color }}></span>
@@ -115,6 +120,7 @@ console.log(help)
                                     <Icon icon={"edit"} addClass={"default-icon"} />
                                 </span>
                         }
+                        <Icon icon={"delete"} addClass="delete-icon" onClick={() => { setConfirmModal(!confirmModal) }} />
                     </div>}
                 </div>
                 <div className="task">
@@ -204,6 +210,10 @@ console.log(help)
 
                     </div>
                 </Modal>
+            }
+            {
+                confirmModal && <ModalConfirm closeHandler={() => { setConfirmModal(!confirmModal) }}
+                    text={LANG.GLOBAL.delete_confirm} successHandler={deleteHelp} />
             }
             {
                 notification.show && <SmallNotification isSuccess={notification.status} text={notification.message} close={() => setNotification({ show: false })} />
