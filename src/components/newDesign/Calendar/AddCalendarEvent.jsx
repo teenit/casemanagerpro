@@ -43,7 +43,7 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
     }
 
     const sendForm = () => {
-        if (state.key === "happyCase") return alert("Ви не можете змінити цю подію")
+        if (state.key === "happyCase") return alert(LANG.calendar.alertMessages.cant_edit)
         apiResponse({...state}, "calendar/add.php").then((res)=>{
             loadEvents()
             close();
@@ -51,9 +51,9 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
     }
 
     const deleteEvent = () => {
-        let check = window.confirm("Видалити подію " + state.title + " ?");
+        let check = window.confirm(`${LANG.calendar.delete} ${state.title}?`);
         if (!check) return;
-        if (state.key === "happyCase" || state.userID !== localStorage.getItem('id')) return alert("Ви не можете видалити цю подію")
+        if (state.key === "happyCase" || state.userID !== localStorage.getItem('id')) return alert(LANG.calendar.alertMessages.cant_delete)
         apiResponse({calendar_id: state.calendar_id}, "calendar/delete.php").then((res)=>{
             loadEvents()
             close();

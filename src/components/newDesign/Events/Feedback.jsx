@@ -30,7 +30,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
     const deleteFeedback = (feedback_id) => {
        
         apiResponse({ meta_id: feedback_id }, "events/delete-meta.php").then((res) => {
-            alertHandler("success", "Зворотній зв'язок видалено")
+            alertHandler("success", LANG.EVENT_PAGE.alertMessages.feedback_deleted)
             getEventData()
         })
     };
@@ -43,7 +43,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
         }
         apiResponse({ meta_value: JSON.stringify(obj), meta_id: feedback_id }, "events/update-event-meta.php").then((res) => {
             modalHandler("edit")
-            alertHandler("success", "Зворотній зв'язок оновлено")
+            alertHandler("success", LANG.EVENT_PAGE.alertMessages.feedback_updated)
             getEventData()
         })
     };
@@ -61,7 +61,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
 
             {modals.edit && (
                 <Modal
-                    header={"Редагувати зворотній зв'язок"}
+                    header={LANG.EVENT_PAGE.edit_feedback}
                     closeHandler={() => { modalHandler("edit") }}
                     footer={
                         <>
@@ -71,7 +71,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
                     }>
                     <div>
                         <Textarea
-                            label="Зворотній зв'язок"
+                            label={LANG.EVENT_PAGE.feedback}
                             value={editingFeedback}
                             onChange={(e) => setEditingFeedback(e.target.value)}
                         />
@@ -83,7 +83,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
                 <ModalConfirm
                     closeHandler={() => { modalHandler("delete") }}
                     successHandler={() => { deleteFeedback(item.feedback_id) }}
-                    text={"Ви впевнені, що хочете видалити цей зворотній зв'язок?"}
+                    text={LANG.EVENT_PAGE.confirm_delete_feedback}
                 />
             )}
             {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => alertHandler("success")} />}

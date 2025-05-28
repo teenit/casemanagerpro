@@ -52,9 +52,9 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
 
     const checkForm = () => {
         if (state.name.length < 1) {
-            alertHandler("error", "Введіть назву групи");
+            alertHandler("error", LANG.groups.alertMessages.no_title);
         } else if(state.name.length>50){
-            alertHandler("error", `Назва групи повинна бути дожиною до 50 символів. Поточна довжина: ${state.name.length} символів`)
+            alertHandler("error", LANG.groups.alertMessages.too_long)
         }else {
             successHandler();
         }
@@ -65,14 +65,14 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
             apiResponse({ ...state }, "groups/add-group.php").then((res) => {
                 loadGroups()
                 close()
-                alertHandler("success", "Групу додано");
+                alertHandler("success", LANG.groups.alertMessages.group_added);
             });
         }else{
             
             apiResponse({ ...state, group_id:id }, "groups/edit-group.php").then((res) => {
                 loadGroups()
                 close();
-                alertHandler("success", "Інформацію про групу оновлено");
+                alertHandler("success", LANG.groups.alertMessages.group_edited);
             });
         }
         

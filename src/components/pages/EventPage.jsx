@@ -69,7 +69,7 @@ const EventPage = () => {
 
                     <div className="EventPage-members">
                         <div className="EventPage-members-title">
-                            <div>Приймають участь</div>
+                            <div>{LANG.EVENT_PAGE.take_part}</div>
                             <Icon icon="add" addClass={"fs40"} onClick={() => { modalHandler("addMember") }} />
                         </div>
                         {state && <EventMembers
@@ -88,7 +88,7 @@ const EventPage = () => {
 
                     {canAddMedia && (
                         <div className="EventPage-addFiles">
-                            <div>Завантаження файлів</div>
+                            <div>{LANG.EVENT_PAGE.upload}</div>
                             <FilesUploader
                                 successHandler={uploadFiles}
                                 multiple={true}

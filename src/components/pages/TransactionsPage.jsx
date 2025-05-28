@@ -263,7 +263,7 @@ const TransactionsPage = () => {
         }));
     };
 
-    if (loading) return <p>Завантаження...</p>;
+    if (loading) return <p>{LANG.GLOBAL.loading}</p>;
     // if (error) return <p>Помилка: {error}</p>;
 
     const transactionColumns = prepareColumns(columnsTable);
@@ -296,7 +296,7 @@ const addTransaction = ()=>{
                 />
             </div>}
 
-            {modal.active && modal.action == "delete" && <ModalConfirm text={"Ви впевнені, що хочете видалити цю транзакцію?"}
+            {modal.active && modal.action == "delete" && <ModalConfirm text={LANG.TRANSACTIONS.confirm_delete}
                 closeHandler={() => { modalHandler("") }} successHandler={() => { handleDelete(transactionId) }} />}
             {modal.active && modal.action !== "delete" && <AddTransaction id={transactionId} onTransactionAdded={handleTransactionAdded} action={modal.action} close={modalHandler} />}
         </div>

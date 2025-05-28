@@ -5,6 +5,7 @@ import UserPagination from "./UserPagination/UserPagination";
 import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
 import AccessCheckCases from "../../Functions/AccessCheckCases";
+import { LANG } from "../../../services/config";
 
 const UserCasesList = ({ userAddId }) => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -61,9 +62,9 @@ const UserCasesList = ({ userAddId }) => {
 
       <div className="added_contact">
         <div className="added_contact_wrap">
-          <h4 className="added_contact_title">Створені кейси</h4>
+          <h4 className="added_contact_title">{LANG.user_case_list.title}</h4>
           <Button>
-            <NavLink to="/add-case">Створити кейс</NavLink>
+            <NavLink to="/add-case">{LANG.user_case_list.add}</NavLink>
           </Button>
         </div>
         <ul className="added_contact_list">
@@ -84,7 +85,7 @@ const UserCasesList = ({ userAddId }) => {
       </div>
 
       <div className="added_all_contact">
-        <h4 className="added_contact_title">Доступні кейси</h4>
+        <h4 className="added_contact_title">{LANG.user_case_list.avaible}</h4>
 
         <ul className="added_contact_list">
           {currentCase.map(({ id, name }) => (

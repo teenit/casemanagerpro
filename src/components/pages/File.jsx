@@ -236,22 +236,22 @@ const File = () => {
             titleDefault={LANG.file.description}
           />
           <div className='File-info-tags'>
-            {tags && (tags.length > 0 ? tags.map(tag => <Tag key={tag} name={tag} />) : <div>Додати тег</div>)}
+            {tags && (tags.length > 0 ? tags.map(tag => <Tag key={tag} name={tag} />) : <div>{LANG.file.add_tag}</div>)}
             {access.file_edit && <Icon icon={"add"} addClass={"fs35"} onClick={() => { setModal(true) }} />}
 
           </div>
         </div>
       </div>
       {/* {edit.text && access.file_edit && <Button variant='contained' color='error' onClick={() => { setConfirm(true) }}>Видалити файл</Button>} */}
-      {modal && <Modal closeHandler={closeModal} header={<span className='File-modal-header'>Додати теги <Hint text={LANG.hints.tag} /></span>} footer={
+      {modal && <Modal closeHandler={closeModal} header={<span className='File-modal-header'>{LANG.file.add_tags} <Hint text={LANG.hints.tag} /></span>} footer={
         <>
           <Button variant='contained' color='error' onClick={closeModal}>{LANG.GLOBAL.cancel}</Button>
           <Button variant='contained' onClick={addTag}>{LANG.GLOBAL.save}</Button>
         </>
       }>
-        <Input value={newTag} onChange={(e) => { setNewTag(e.target.value) }} label='Ваші теги' />
+        <Input value={newTag} onChange={(e) => { setNewTag(e.target.value) }} label={LANG.file.your_tags} />
       </Modal>}
-      {confirm && <ModalConfirm text={"Ви впевнені, що хочете видалити цей файл?"} successHandler={deleteHandler} closeHandler={() => { setConfirm(false) }} />}
+      {confirm && <ModalConfirm text={LANG.file.confirm_delete} successHandler={deleteHandler} closeHandler={() => { setConfirm(false) }} />}
       {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success", "") }} />}
       {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error", "") }} />}
     </div>}

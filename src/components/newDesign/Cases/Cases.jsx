@@ -15,14 +15,14 @@ import EmptyData from "../../EmptyData/EmptyData";
 const columnsTable = [
     {
         dataField: 'id',
-        text: 'Номер',
+        text: LANG.casesList.caseNumber,
         fixed: false,
         isHidden: false,
         sort: true,
     },
     {
         dataField: 'name',
-        text: "Ім'я",
+        text: LANG.casesList.pib,
         fixed: false,
         isHidden: false,
         sort: true,
@@ -30,7 +30,7 @@ const columnsTable = [
     },
     {
         dataField: 'contract_number',
-        text: 'Договір',
+        text: LANG.casesList.contract,
         fixed: false,
         isHidden: false,
         sort: true,
@@ -40,7 +40,7 @@ const columnsTable = [
     },
     {
         dataField: 'email',
-        text: 'EMAIL',
+        text: LANG.casesList.email,
         fixed: false,
         isHidden: false,
         sort: true,
@@ -50,7 +50,7 @@ const columnsTable = [
     },
     {
         dataField: 'phone1',
-        text: "Телефон",
+        text: LANG.casesList.phone,
         fixed: false,
         isHidden: false,
         sort: false,
@@ -60,19 +60,19 @@ const columnsTable = [
     },
     {
         dataField: 'addressLive',
-        text: 'Адреса проживання',
+        text: LANG.casesList.address,
         fixed: false,
         isHidden: false,
         sort: true
     },
     {
         dataField: 'active',
-        text: 'Статус',
+        text: LANG.casesList.status,
         fixed: false,
         isHidden: false,
         sort: true,
         formatter: (cell, row)=>{
-            return <div style={{color: cell == 0 ? "red" : "green"}}>{ cell == 0 ? "Деактивовано" : "Активовано"}</div>
+            return <div style={{color: cell == 0 ? "red" : "green"}}>{ cell == 0 ? LANG.casesList.inactive : LANG.casesList.active}</div>
         }
     }
 ];
@@ -254,15 +254,15 @@ const Cases = () => {
                     }}
                 >
                     <MenuItem value={"ASC"}>
-                        Від меншого до більшого
+                        {LANG.casesList.ascending}
                     </MenuItem>
                     <MenuItem value={"DESC"}>
-                        Від більшого до меншого
+                        {LANG.casesList.descending}
                     </MenuItem>
                 </Select>
                 
                 <div>   
-                    <Button size="small" onClick={exportCasesToPdf}>Export</Button>
+                    <Button size="small" onClick={exportCasesToPdf}>{LANG.casesList.export}</Button>
                 </div>
                 </div>
                 

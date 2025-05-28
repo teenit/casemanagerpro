@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import ModalConfirm from '../../Modals/ModalConfirm'
 import Icon from '../../elements/Icons/Icon'
 import { apiResponse } from '../../Functions/get_apiObj'
+import { LANG } from '../../../services/config'
 
 
 const EventMembers = ({ getEventData, event_id, managers, members, membersNew = [], managersNew = [] }) => {
@@ -36,7 +37,7 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
                     <div className="EventPage-MemberItem-right">
                         <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
                         <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {setModalDelete({
-                            ...modalDelete,show:true, meta_id: item.meta_id, body: <b>Ви впевнені, що хочече видалити організатора {item.name} ?</b>
+                            ...modalDelete,show:true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteOrgConfirm} {item.name} ?</b>
                         }) }} />
                     </div>
                 </div>
@@ -52,7 +53,7 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
                         {/* <div className="EventPage-MemberItem-right-role">role</div> */}
                         <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
                         <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {setModalDelete({
-                            ...modalDelete,show:true, meta_id: item.meta_id, body: <b>Ви впевнені, що хочече видалити організатора {item.name} ?</b>
+                            ...modalDelete,show:true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteMemberConfirm} {item.name} ?</b>
                         }) }} />
                     </div>
                 </div>
@@ -70,7 +71,7 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
                     <div className="EventPage-MemberItem-right">
                         <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
                         <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {setModalDelete({
-                            ...modalDelete,show:true, meta_id: item.meta_id, body: <b>Ви впевнені, що хочече видалити організатора {item.name} ?</b>
+                            ...modalDelete,show:true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteMemberConfirm} {item.name} ?</b>
                         }) }} />
                     </div>
                 </div>
@@ -84,7 +85,7 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
     return (
         <div className="EventPage-members-inner">
             <div className="EventPage-members-inner-block">
-                <div className="EventPage-members-inner-block-title">Організатори</div>
+                <div className="EventPage-members-inner-block-title">{LANG.EVENT_PAGE.organisators}</div>
                 <div className="EventPage-members-inner-block-members">
                     {managers && managers.length > 0 && managers.map((item, index) => {
                         return <MemberItem key={index} item={item} type="manager" />
@@ -98,7 +99,7 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
             </div>
 
             <div className="EventPage-members-inner-block">
-                <div className="EventPage-members-inner-block-title">Учасники</div>
+                <div className="EventPage-members-inner-block-title">{LANG.EVENT_PAGE.members}</div>
                 <div className="EventPage-members-inner-block-members">
                     {members && members.length > 0 && members.map((item, index) => {
                         return <MemberItem key={index} item={item} type="member" />

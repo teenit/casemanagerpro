@@ -1,11 +1,12 @@
 import React from "react";
+import { LANG } from "../../services/config";
 
 const NotFound = () => {
 
     return (
         <div className="NotFound">
             <div className="NotFound-title">404</div>
-            <div className="NotFound-text">Ця сторінка не існує! Перевірте правильність посилання або <a href="/">поверніться на головну</a>.</div>
+            <div className="NotFound-text">{LANG.NOT_FOUND.start} <a href="/">{LANG.NOT_FOUND.end}</a>.</div>
         </div>
     )
 }

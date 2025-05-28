@@ -35,9 +35,9 @@ const AccessPage = () => {
     }, []);
 
     const addNewAccess = () => {
-        if (addAccess.name.length < 1) return alertHandler("error", "Введіть назву шаблону права")
+        if (addAccess.name.length < 1) return alertHandler("error", LANG.ACCESS_PAGE.error_no_name)
         apiResponse({ name: changeAps(addAccess.name), description: changeApsBr(addAccess.description) }, "access/add-access.php").then((res) => {
-            alertHandler("success", "Шаблон прав додано")
+            alertHandler("success", LANG.ACCESS_PAGE.success_added)
             loadList()
             setModal(false)
         })

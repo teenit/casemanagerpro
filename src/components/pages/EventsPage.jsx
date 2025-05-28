@@ -72,10 +72,10 @@ const EventsPage = () => {
 
     const updateEvent = () => {
         if (formData.title === DEFAULT_FORM_DATA.title) {
-            return alertHandler("error", "Введіть назву події")
+            return alertHandler("error", LANG.events_page.alertMessages.no_title)
         }
         if (formData.title.length >= 100) {
-            return alertHandler("error", `Назва події повинна бути довжиною до 100 символів. Поточна довжина: ${formData.title.length} символів`)
+            return alertHandler("error", LANG.events_page.alertMessages.too_long)
         }
 
         const link = modal.action === "add" ? "events/create.php" : "events/update.php"
@@ -99,7 +99,7 @@ const EventsPage = () => {
     };
 
     const description = (str) => {
-        return str.length > 0 ? (str.length > 50 ? str.slice(0, 50) + "..." : str) : "Без опису";
+        return str.length > 0 ? (str.length > 50 ? str.slice(0, 50) + "..." : str) : LANG.GLOBAL.no_description;
     };
 
     return (
@@ -109,7 +109,7 @@ const EventsPage = () => {
             {modal.modal && (
                 <Modal
                     closeHandler={() => setModal({ modal: false, action: "", currentEvent: null })}
-                    header={modal.action === "add" ? "Створити подію" : "Редагувати подію"}
+                    header={modal.action === "add" ? LANG.events_page.add: LANG.events_page.edit}
                     footer={
                         <>
                             <Button variant="contained" color="error" onClick={() => setModal({ modal: false, action: "", currentEvent: null })}>
@@ -153,7 +153,7 @@ const EventsPage = () => {
                 <ModalConfirm
                     closeHandler={() => setDeleteModal(false)}
                     successHandler={deleteEvent}
-                    text={`Ви впевнені, що хочете видалити подію "${eventToDelete?.title}"?`}
+                    text={`${LANG.events_page.confirm_delete} "${eventToDelete?.title}"?`}
                 />
             )}
 

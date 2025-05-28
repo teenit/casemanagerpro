@@ -1,11 +1,13 @@
 export const LANG = {
   GLOBAL: {
+    add: "Додати",
     save: "Зберегти",
-    download:"Завантажити",
+    download: "Завантажити",
     cancel: "Відмінити",
     date: "Дата",
     title: "Назва",
     description: "Опис",
+    no_description:"Без опису",
     color: "Колір",
     confirm_title: "Підтвердити дію",
     delete: "Видалити",
@@ -19,14 +21,24 @@ export const LANG = {
     tags: "Теги",
     category: "Категорія",
     type: "Тип",
-    file:"Файл",
-    link:"Посилання",
-    delete_confirm:"Ви впевнені, що хочети видалити цей запис?",
-    pick_all:"Обрати все",
-    question:"Питання",
-    alertMessages:{
-      delete_success:"Запис успішно видалено",
-      delete_error:"Не вдалося видалити запис"
+    file: "Файл",
+    link: "Посилання",
+    name:"Ім'я",
+    delete_confirm: "Ви впевнені, що хочети видалити цей запис?",
+    pick_all: "Обрати все",
+    question: "Питання",
+    status: "Статус",
+    saving: "Збереження...",
+    loading:"Завантаження...",
+    remember:"Нагадувати",
+    activated:"Активовано",
+    deactivated:"Деактивовано",
+    email:"Електронна пошта",
+    password:"Пароль",
+    alertMessages: {
+      error: "Виникла помилка. Будь ласка, спробуйте пізніше",
+      delete_success: "Запис успішно видалено",
+      delete_error: "Не вдалося видалити запис"
     }
   },
   SETTINGS: {
@@ -36,6 +48,10 @@ export const LANG = {
     title_category_case: "Категорії кейсів",
     title_category_case_helps: "Категорії наданої допомоги",
     title_category_groups: "Категорії груп",
+  },
+  FIELDS_TABLE:{
+    confirm_delete_start:"Підтвердіть дію з видалення поля",
+    confirm_delete_end:"Ця дія видалить поле та пов'язані з ним дані"
   },
   FIELDS: {
     field_type: "Тип поля",
@@ -53,8 +69,8 @@ export const LANG = {
     another: "Інше",
     cases: "Кейси",
     users: "Користувачі",
-    no_fields:"Полів не знайдено",
-    add_field:"Додати перше поле",
+    no_fields: "Полів не знайдено",
+    add_field: "Додати перше поле",
     type_fields: {
       "int": "Число",
       "boolean": "Світчер",
@@ -83,45 +99,72 @@ export const LANG = {
     pending: "Очікується",
     completed: "Завершено успішно",
     failed: "Завершено невдало",
-    no_transactions:"Транзакцій не знайдено",
-    add_transaction:"Додати першу транзакцію",
-    add:"Створити транзакцію"
+    no_transactions: "Транзакцій не знайдено",
+    add_transaction: "Додати першу транзакцію",
+    add: "Створити транзакцію",
+    edit: "Редагувати транзакцію",
+    sum: "Сума",
+    type: "Тип транзакції",
+    placement: "Розташування",
+    method: "Метод оплати",
+    card: "Картка",
+    currency: "Готівка",
+    pending: "Очікується",
+    ended: "Завершено",
+    failed: "Не вдалося",
+    id: "ID посилання",
+    confirm_delete:"Ви впевнені, що хочете видалити цю транзакцію?",
+    alertMessages: {
+      error: "Не вдалося завантажити транзакції",
+      invalid: "Введіть суму та тип транзакції"
+    }
   },
-  ACCESS:{
-    events:{
-      look:"Дивитися івент",
-      edit:"Редагувати івент",
-      members:"Учасники івенту",
-      plan:"План івенту",
-      docs:"Документи до івенту"
+  ACCESS: {
+    events: {
+      look: "Дивитися івент",
+      edit: "Редагувати івент",
+      members: "Учасники івенту",
+      plan: "План івенту",
+      docs: "Документи до івенту"
     },
-    access:{
-      look:"Перегляд шаблонів",
-      edit:"Редагування шаблонів прав",
-      look_rights:"Перегляд списку прав",
-      edit_rights:"Редагування списку прав"
+    access: {
+      look: "Перегляд шаблонів",
+      edit: "Редагування шаблонів прав",
+      look_rights: "Перегляд списку прав",
+      edit_rights: "Редагування списку прав"
     }
   },
-  MENU_NOTIFICATION:{
-    created_new_case:"створив новий кейс",
-    created_new_event:"створив нову подію",
-    changed_case_name:"змінив ім'я кейсу",
-    case:"У кейса",
-    notifications:{
-      new_case:"Новий кейс",
-      new_event:"Нова подія",
-      edit_case:"Редагування кейсу",
-      update:"Оновлення",
-      birthday:"День народження",
-      more:"Детальніше",
+  ACCESS_PAGE: {
+    add:"Додати права",
+    error_no_role_name:"Введіть назву ролі",
+    error_no_name: "Введіть назву шаблону права",
+    success_updated:"Шаблон прав оновлено",
+    success_added: "Шаблон прав додано",
+  },
+  NOT_FOUND:{
+    start:"Ця сторінка не існує! Перевірте правильність посилання або",
+    end:"поверніться на головну"
+  },
+  MENU_NOTIFICATION: {
+    created_new_case: "створив новий кейс",
+    created_new_event: "створив нову подію",
+    changed_case_name: "змінив ім'я кейсу",
+    case: "У кейса",
+    notifications: {
+      new_case: "Новий кейс",
+      new_event: "Нова подія",
+      edit_case: "Редагування кейсу",
+      update: "Оновлення",
+      birthday: "День народження",
+      more: "Детальніше",
     }
   },
-  FILES_UPLOADER:{
-    download:"Завантажити файл",
-    send:"Відправити файл",
-    alertMessages:{
-      success:"Файли завантажено успішно",
-      error:"Неправильні дані"
+  FILES_UPLOADER: {
+    download: "Завантажити файл",
+    send: "Відправити файл",
+    alertMessages: {
+      success: "Файли завантажено успішно",
+      error: "Неправильні дані"
     }
   },
   settings_to_page: "Налаштування до сторінки",
@@ -268,10 +311,21 @@ export const LANG = {
     forgetPass: "Забули пароль -"
   },
   loginForm: {
+    auth: "Авторизація",
     emailLabel: "Логін",
     emailMinLengthMessage: "Логін повинен бути довжиною більше ніж 8 символів",
     passwordLabel: "Пароль",
     passwordMinLengthMessage: "Пароль повинен бути довжиною більше ніж 5 символів",
+    try_again:"Доступ до аккаунту заблоковано. Спробуйте ще раз через",
+    locked_for_hour:'Too many failed attempts. Account locked for 1 hour.',
+    locked_for_5min:'Too many failed attempts. Account locked for 5 minutes.',
+    incorrect_password:"Неправильний пароль. Спробуйте ще раз",
+    minutes:"хвилин",
+    seconds:"секунд",
+    org_code:"Код організації",
+    code:"Код",
+    enter:"Увійти",
+    time_remained:"Залишилось часу"
   },
   galleryBlock: {
     name: "Назва",
@@ -282,16 +336,23 @@ export const LANG = {
   addEvent: "Створення події",
   cases: "Немає доступних кейсів",
   casesList: {
-    caseNumber: "№ кейсу",
-    pib: "ПІБ",
+    ascending: "За зростанням",
+    descending: "За спаданням",
+    export: "Експорт",
+    active: "Активовано",
+    inactive: "Деактивовано",
+    caseNumber: "Номер",
+    pib: "Ім'я",
     phone: "Телефон",
     email: "Пошта",
+    contract: "Договір",
     birthday: "Дата народження",
-    address: "Адреса (факт)",
+    address: "Адреса проживання",
+    status: "Статус",
     categories: "Категорія",
     noCategory: "Без категорії",
-    no_cases:"Кейсів не знайдено",
-    add_case:"Додати перший кейс"
+    no_cases: "Кейсів не знайдено",
+    add_case: "Додати перший кейс"
   },
   case_data: {
     first_name: "Ім'я",
@@ -321,6 +382,16 @@ export const LANG = {
     noCategory: "Без категорії"
   },
   calendar: {
+    delete: "Видалити подію",
+    month: "Місяць",
+    week: "Тиждень",
+    day: "День",
+    only_events: "Тільки події",
+    alertMessages: {
+      cant_edit: "Ви не можете змінити цю подію",
+      cant_delete: "Ви не можете видалити цю подію",
+      error_get: "Помилка при отриманні даних календаря",
+    },
     weekDays: {
       Monday: "ПН",
       Tuesday: "ВТ",
@@ -330,7 +401,7 @@ export const LANG = {
       Saturday: "СБ",
       Sunday: "НД"
     },
-    month: {
+    months: {
       January: "Січень",
       February: "Лютий",
       March: "Березень",
@@ -368,43 +439,78 @@ export const LANG = {
     info: "Інформація про групу",
     add: "Додати групу для кейсу",
     title_case: "Групи кейсу",
-    add_first_group:"Створити групу",
+    add_first_group: "Створити групу",
     group: {
       members: "Учасники групи",
-      confirm: "Ви впевнені, що хочете видалити зі списку учасників користувача"
+      confirm: "Ви впевнені, що хочете видалити зі списку учасників користувача",
+      date_created: "Дата створення групи",
+      favorites: "Додати в обране "
     },
     alertMessages: {
       error: "Оберіть групу, яку хочете додати",
-      success: "Зв'язок створено"
+      success: "Зв'язок створено",
+      no_title: "Введіть назву групи",
+      too_long: "Назва групи повинна бути дожиною до 50 символів",
+      group_added: "Групу успішно додано",
+      group_updated: "Інформацію про групу оновлено",
     }
   },
-  events_page:{
-    title:"Події",
-    add_first_events:"Створити подію",
-    add:"Створити подію"
+  events_page: {
+    title: "Події",
+    add_first_events: "Створити першу подію",
+    add: "Створити подію",
+    edit:"Редагувати подію",
+    confirm_delete:"Ви впевнені, що хочете видалити подію",
+    alertMessages:{
+      no_title:"Введіть назву події",
+      too_long:"Назва події повинна бути довжиною до 100 символів"
+    }
+  },
+  EVENT_PAGE: {
+    take_part:"Беруть участь",
+    upload:"Завантаження файлів",
+    organisators: "Організатори",
+    members: "Учасники",
+    deleteOrgConfirm: "Ви впевнені, що хочете видалити організатора",
+    deleteMemberConfirm: "Ви впевнені, що хочете видалити учасника",
+    date: "Дата проведення",
+    feedback: "Зворотній зв'язок",
+    no_feedback: "Немає зворотнього зв'язку",
+    confirm_delete_plan: "Ви впевнені, що хочете видалити план",
+    plans: "Плани",
+    no_plans: "Планів не знайдено",
+    edit_feedback: "Редагувати зворотній зв'язок",
+    confirm_delete_feedback: "Ви впевнені, що хочете видалити зворотній зв'язок?",
+    alertMessages: {
+      feedback_empty: "Введіть текст зворотнього зв'язку",
+      feedback_success: "Зворотній зв'язок додано",
+      feedback_deleted: "Зворотній зв'язок видалено",
+      feedback_updated: "Зворотній зв'язок оновлено",
+      plan_deleted: "План видалено",
+    }
   },
   resources: {
-    add:"Додати ресурс",
+    add: "Додати ресурс",
     link_title: "Корисні посилання",
     confirm_delete: "Ви впевнені, що хочете видалити ресурс - ",
     no_files: "Файлів не знайдено",
-    add_first_file:"Додати перший файл",
+    add_first_file: "Додати перший файл",
     no_links: "Посилань не знайдено",
-    add_first_link:"Додати перше посилання",
+    add_first_link: "Додати перше посилання",
     documents: "Документи",
     media: "Фото та Відео",
-    title:"Назва файлу:",
-    no_title:"Файл без назви",
-    size:"Розмір:",
-    desc:"Опис файлу:",
-    resource_link:"Посилання на ресурс",
-    resource_type:"Тип ресурсу",
-    alertMessages:{
-      deleted_successfully:"Ресурс успішно видалено",
-      error:"Виникла помилка. Спробуйте ще раз",
-      added_successfully:"Ресурс додано",
-      no_data:"Введіть назву та посилання(якщо треба) на ресурс",
-      invalid_length:"Назва ресурсу не може перевищувати 150 символів"
+    title: "Назва файлу:",
+    no_title: "Файл без назви",
+    size: "Розмір:",
+    desc: "Опис файлу:",
+    resource_link: "Посилання на ресурс",
+    resource_type: "Тип ресурсу",
+    alertMessages: {
+      deleted_successfully: "Ресурс успішно видалено",
+      error: "Виникла помилка. Спробуйте ще раз",
+      added_successfully: "Ресурс додано",
+      no_data: "Введіть назву та посилання(якщо треба) на ресурс",
+      invalid_length: "Назва ресурсу не може перевищувати 150 символів"
     }
   },
   file: {
@@ -412,6 +518,10 @@ export const LANG = {
       success: "Дані оновлено",
       error: "Виникла помилка"
     },
+    add_tag:"Додати тег",
+    your_tags:'Ваші теги',
+    confirm_delete:"Ви впевнені, що хочете видалити цей файл?",
+    add_tags:"Додати теги",
     name: "Назва файлу",
     withoutName: "Файл без назви",
     last_updated: "Останнє редагування",
@@ -419,16 +529,25 @@ export const LANG = {
     description: "Опис",
     empty_file: "Поки що в файлі немає інформації"
   },
-  set_user:{
-    reset_password_for:"Скинути пароль для",
-    add_user:"Додати користувача",
-    name:"ПІБ",
-    template:"Шаблон прав",
-    manage:"Панель керування",
-    user_type:"Тип користувача",
-    new_password:"Новий пароль",
-    confirm_password:"Підтвердити пароль",
-    alertMessages:{
+  user_case_list:{
+    title:"Створені кейси",
+    add:"Створити кейс",
+    avaible:"Доступні кейси"
+  },
+  pagination:{
+    left:"Назад",
+    right:"Вперед"
+  },
+  set_user: {
+    reset_password_for: "Скинути пароль для",
+    add_user: "Додати користувача",
+    name: "ПІБ",
+    template: "Шаблон прав",
+    manage: "Панель керування",
+    user_type: "Тип користувача",
+    new_password: "Новий пароль",
+    confirm_password: "Підтвердити пароль",
+    alertMessages: {
       required: "Обов'язково до заповнення",
       pib: "ПІБ повинен бути довжиною мінімум 3 символа",
       phone: "Номер телефону повинен бути довжиною мінімум 10 символів",
@@ -436,21 +555,21 @@ export const LANG = {
       adress: "Адреса повинна бути довжиною мінімум 5 символів",
       work: "Назва роботи повиннна бути довжиною мінімум 3 символа",
       pass: "Пароль повинен бути довжиною мінімум 6 символів",
-      success:"Користувача успішно зареєстровано",
-      dont_match:"Паролі не співпадають",
-      password_updated:"Пароль оновлено"
+      success: "Користувача успішно зареєстровано",
+      dont_match: "Паролі не співпадають",
+      password_updated: "Пароль оновлено"
     },
     phone: "Номер телефону",
-    adress:"Адреса",
-    work:"Спеціалізація / Робота",
-    password:"Пароль",
-    about:"Розкажіть про себе",
-    volonter:"Волонтер",
-    manager:"Менеджер",
-    specialist:"Залучений спеціаліст",
-    fsr:"ФСР",
-    worker:"Працівник",
-    admin:"Адміністратор"
+    adress: "Адреса",
+    work: "Спеціалізація / Робота",
+    password: "Пароль",
+    about: "Розкажіть про себе",
+    volonter: "Волонтер",
+    manager: "Менеджер",
+    specialist: "Залучений спеціаліст",
+    fsr: "ФСР",
+    worker: "Працівник",
+    admin: "Адміністратор"
   },
   hints: {
     phone: "Номер телефону може бути як і з префіксом країни, так і без нього",
@@ -460,7 +579,7 @@ export const LANG = {
     auth: "Двофакторна аутентифікація — це метод захисту облікового запису, який вимагає два різні типи підтвердження особи для доступу, зазвичай поєднуючи те, що користувач знає (наприклад, пароль), з тим, що він має (наприклад, мобільний пристрій).",
     tag: "Введіть теги файлу, розділяючи кожен з них комою. Кожен тег повинен відрізнятися один від одного, бути довжиною менше за 50 символів та не може бути порожнім"
   },
-  emptyData:{
+  emptyData: {
     "notFound": "Записів не знайдено",
   },
   access: {
@@ -666,6 +785,16 @@ export const LANG = {
     four: "Добре",
     five: "Чудово"
   },
+  ANCETA_PAGE:{
+    question:"Питання",
+    activated:"Активовано",
+    deactivated:"Деактивовано"
+  },
+  ANCETS_PAGE:{
+    questions_amount:"Кіл-ть питань",
+    created:"Анкету створено",
+    type:"Тип анкети"
+  },
   ancets: {
     delete_anceta: "Видалити анкету",
     type: "Тип",
@@ -678,10 +807,10 @@ export const LANG = {
     add_new_question: "Додати нове питання",
     question_description: "Надайте відповіді на питання, 1 - найнижча оцінка, 5 або 10 - найвижча оцінка, необхідно відповісти на всі питання",
     no_ancets: "Анкет не знайдено",
-    add_anceta:"Додати першу анкету",
-    add:"Створити анкету",
-    for_cases:"Для кейсів",
-    remind:"Нагадувати",
+    add_anceta: "Додати першу анкету",
+    add: "Створити анкету",
+    for_cases: "Для кейсів",
+    remind: "Нагадувати",
     create_question: "Створити питання",
     remembers: {
       week: "1 раз на тиждень",
@@ -1009,7 +1138,7 @@ export const appConfig = {
     settings: {
       title: LANG.pages.settings,
       description: "",
-      path:"/settings"
+      path: "/settings"
     },
     // users:{
     //   title:LANG.pages.users,
@@ -1018,7 +1147,7 @@ export const appConfig = {
     resources: {
       title: LANG.pages.resources,
       description: "",
-      path:"/resources"
+      path: "/resources"
     },
     statistic: {
       title: LANG.pages.statistic,
@@ -1070,15 +1199,15 @@ export const appConfig = {
       title: LANG.pages.access,
       description: ""
     },
-    ancets:{
-      title:"Анкети",
-      description:"",
-      path:"/ancets"
+    ancets: {
+      title: "Анкети",
+      description: "",
+      path: "/ancets"
     },
-    transactions:{
-      title:"Транзакції",
-      description:"",
-      path:"/transactions"
+    transactions: {
+      title: "Транзакції",
+      description: "",
+      path: "/transactions"
     }
   },
   mounths: {
@@ -1438,12 +1567,12 @@ export const appConfig = {
       icon: "resource",
       access: "a_page_resources"
     },
-    
+
     // {
     //     title: LANG.pages.cooperation,
     //     link: "/cooperation"
     // },
-  
+
     {
       title: LANG.pages.administration,
       icon: "settings",
@@ -1469,7 +1598,7 @@ export const appConfig = {
       ]
     },
   ],
-  rating_scale:{
+  rating_scale: {
     10: {
       1: LANG.ratingScale10.one,
       2: LANG.ratingScale10.two,

@@ -167,10 +167,10 @@ const CustomToolbar = (toolbar) => {
       </div>
       <div>
 
-        <Button onClick={goToMonthView} variant={activeViewCalendar === "month" ? "outlined" : "text"}>Місяць</Button>
-        <Button onClick={goToWeekView} variant={activeViewCalendar === "week" ? "outlined" : "text"}>Тиждень</Button>
-        <Button onClick={goToDayView} variant={activeViewCalendar === "day" ? "outlined" : "text"}>День</Button>
-        <Button onClick={goToAgendaView} variant={activeViewCalendar === "agenda" ? "outlined" : "text"}>Тільки події</Button>
+        <Button onClick={goToMonthView} variant={activeViewCalendar === "month" ? "outlined" : "text"}>{LANG.calendar.month}</Button>
+        <Button onClick={goToWeekView} variant={activeViewCalendar === "week" ? "outlined" : "text"}>{LANG.calendar.week}</Button>
+        <Button onClick={goToDayView} variant={activeViewCalendar === "day" ? "outlined" : "text"}>{LANG.calendar.day}</Button>
+        <Button onClick={goToAgendaView} variant={activeViewCalendar === "agenda" ? "outlined" : "text"}>{LANG.calendar.only_events}</Button>
       </div>
 
       

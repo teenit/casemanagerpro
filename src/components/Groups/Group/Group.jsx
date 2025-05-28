@@ -3,7 +3,6 @@ import { NavLink, useParams } from 'react-router-dom';
 import { apiResponse } from '../../Functions/get_apiObj';
 import Icon from '../../elements/Icons/Icon';
 import { LANG } from '../../../services/config';
-import SettingsModal from './SettingsModal';
 import ModalConfirm from '../../Modals/ModalConfirm';
 import { useSelector } from 'react-redux'
 import { Switch } from '@mui/material';
@@ -110,19 +109,19 @@ const Group = () => {
                 </div>
 
                 <div className='Group-info-stats'>
-                    <div className='Group-info-title'>Інформація про групу</div>
+                    <div className='Group-info-title'>{LANG.groups.info}</div>
                     <div className='Group-info-inner'>
                         <div className='Group-info-stats-item'>
                             <Icon icon={"date_created"} addClass={"default-icon"} />
                             <div className='Group-info-stats-item-text'>
-                                <div>Дата створення</div>
+                                <div>{LANG.groups.group.date_created}</div>
                                 <span>{data.group?.groupDateCreated}</span>
                             </div>
                         </div>
                         {showFavourite && <div className='Group-info-stats-item'>
                             <Icon icon={"date_created"} addClass={"default-icon"} />
                             <div className='Group-info-stats-item-text'>
-                                 <div>Додати в обране  
+                                 <div>{LANG.groups.group.favorites}
                                     <Switch checked={data.group?.is_favourite == 1 ? true : false} onChange={(e) => {
                                         if (e.target.checked) {
                                             saveHandler("is_favourite", 1);
@@ -136,7 +135,7 @@ const Group = () => {
                         <div className='Group-info-stats-item'>
                             <Icon icon={"categories"} addClass={"default-icon"} />
                             <div className='Group-info-stats-item-text'>
-                                <div>Категорія</div>
+                                <div>{LANG.GLOBAL.category}</div>
                                 <span>{getString(data.group?.groupCategories)}</span>
                             </div>
                         </div>

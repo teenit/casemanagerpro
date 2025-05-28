@@ -4,6 +4,7 @@ import { apiResponse } from "../Functions/get_apiObj";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/Slices/userSlice";
 import { Button, TextField } from "@mui/material";
+import { LANG } from "../../services/config";
 
 const LoginPage = () => {
     const [state, setState] = useState({
@@ -29,7 +30,9 @@ const LoginPage = () => {
                 setState(prevState => ({
                     ...prevState,
                     isLocked: true,
-                    lockMessage: `Account is locked. Try again in ${Math.ceil(remainingTime / 60)} minute${Math.ceil(remainingTime / 60) > 1 ? 's' : ''}.`,
+                    lockMessage: `${LANG.loginForm.try_again} 
+                    ${Math.ceil(remainingTime / 60)} ${LANG.loginForm.minutes}${Math.ceil(remainingTime / 60) > 1
+                            ? LANG.loginForm.seconds : ''}.`,
                     remainingTime
                 }));
 
@@ -109,14 +112,14 @@ const LoginPage = () => {
                     } else {
                         window.location.reload();
                     }
-                   
+
                 } else {
                     setState({ ...state, activeCode: true, type: 'secretCode' });
                     // Reset tries on successful login
                     localStorage.removeItem('tries');
                     localStorage.removeItem('lockUntil');
                 }
-              
+
             } else {
                 let updatedTries = tries + 1;
                 localStorage.setItem('tries', updatedTries);
@@ -127,7 +130,7 @@ const LoginPage = () => {
                     setState({
                         ...state,
                         isLocked: true,
-                        lockMessage: 'Too many failed attempts. Account locked for 1 hour.',
+                        lockMessage: LANG.loginForm.locked_for_hour,
                         remainingTime: 3600,
                         go: now + 3600
                     });
@@ -137,19 +140,19 @@ const LoginPage = () => {
                     setState({
                         ...state,
                         isLocked: true,
-                        lockMessage: 'Too many failed attempts. Account locked for 5 minutes.',
+                        lockMessage: LANG.loginForm.locked_for_5min,
                         remainingTime: 300,
                         go: now + 300
                     });
                 } else {
-                    alert('Incorrect password. Try again.');
+                    alert(LANG.loginForm.incorrect_password);
                 }
             }
         });
     };
 
     const sendSecretCode = () => {
-        apiResponse({...state, login: state.email}, 'user/login.php').then((data)=>{
+        apiResponse({ ...state, login: state.email }, 'user/login.php').then((data) => {
             if (data.status) {
                 localStorage.setItem("token", data.userData.token);
                 localStorage.setItem("email", data.userData.email);
@@ -165,7 +168,7 @@ const LoginPage = () => {
                     profilePhoto: data.userData.profilePhoto,
                     access: data.access
                 }));
-                
+
                 if (window.location.pathname == "/login") {
                     window.location.href = "/";
                 } else {
@@ -173,7 +176,7 @@ const LoginPage = () => {
                 }
             }
         })
-        
+
     };
 
     // Determine if the login button should be disabled
@@ -188,66 +191,66 @@ const LoginPage = () => {
     return (
         <div className="LoginPage">
             <div className="" >
-                <span className='LoginPage-switch'>Авторизація</span>
-                </div>
-            <div className="LoginPage-form">
-            {!state.activeCode && (
-                <>
-                <TextField
-                    label="Код організації"
-                    value={state.codeOrganisation}
-                    onChange={(e) => {
-                        setState({ ...state, codeOrganisation: e.target.value })
-                    }}
-                    type="password"
-                    disabled={state.isLocked}
-                    />
-                </>
-                
-            )}
-            {!state.activeCode && ( <Input
-                label={"Електронна пошта"}
-                value={state.email}
-                onChange={(e) => setState({ ...state, email: e.target.value })}
-                type={'email'}
-                disabled={state.isLocked}
-                addClass="w100"
-                size="normal"
-            />)}
-            {!state.activeCode && (
-                <>
-                <TextField
-                    label="Пароль"
-                    value={state.password}
-                    onChange={(e) => setState({ ...state, password: e.target.value })}
-                    type="password"
-                    disabled={state.isLocked}
-                    />
-                </>
-                
-            )}
-            {state.activeCode && (
-                <Input
-                    label={"Код"}
-                    value={state.secretCode}
-                    onChange={(e) => setState({ ...state, secretCode: e.target.value })}
-                    type={'text'}
-                />
-            )}
-            <Button 
-                variant='contained'
-                onClick={()=>{
-                    if (state.type == 'secretCode') {
-                        sendSecretCode();
-                    } else {
-                        sendPassword();
-                    }
-                }} 
-                disabled={isDisabled}>Увійти</Button>
-            {state.isLocked && <p>{state.lockMessage}</p>}
-            {state.remainingTime > 0 && <p>Залишилось часу: {formatTime(state.remainingTime)}</p>}
+                <span className='LoginPage-switch'>{LANG.loginForm.auth}</span>
             </div>
-            
+            <div className="LoginPage-form">
+                {!state.activeCode && (
+                    <>
+                        <TextField
+                            label={LANG.loginForm.org_code}
+                            value={state.codeOrganisation}
+                            onChange={(e) => {
+                                setState({ ...state, codeOrganisation: e.target.value })
+                            }}
+                            type="password"
+                            disabled={state.isLocked}
+                        />
+                    </>
+
+                )}
+                {!state.activeCode && (<Input
+                    label={LANG.GLOBAL.email}
+                    value={state.email}
+                    onChange={(e) => setState({ ...state, email: e.target.value })}
+                    type={'email'}
+                    disabled={state.isLocked}
+                    addClass="w100"
+                    size="normal"
+                />)}
+                {!state.activeCode && (
+                    <>
+                        <TextField
+                            label={LANG.GLOBAL.password}
+                            value={state.password}
+                            onChange={(e) => setState({ ...state, password: e.target.value })}
+                            type="password"
+                            disabled={state.isLocked}
+                        />
+                    </>
+
+                )}
+                {state.activeCode && (
+                    <Input
+                        label={LANG.loginForm.code}
+                        value={state.secretCode}
+                        onChange={(e) => setState({ ...state, secretCode: e.target.value })}
+                        type={'text'}
+                    />
+                )}
+                <Button
+                    variant='contained'
+                    onClick={() => {
+                        if (state.type == 'secretCode') {
+                            sendSecretCode();
+                        } else {
+                            sendPassword();
+                        }
+                    }}
+                    disabled={isDisabled}>{LANG.loginForm.enter}</Button>
+                {state.isLocked && <p>{state.lockMessage}</p>}
+                {state.remainingTime > 0 && <p>${LANG.loginForm.time_remained}: {formatTime(state.remainingTime)}</p>}
+            </div>
+
         </div>
     );
 }

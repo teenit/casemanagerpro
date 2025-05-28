@@ -8,6 +8,7 @@ import Icon from "../../elements/Icons/Icon";
 import AddPlan from "../../Modals/EventModals/AddPlan";
 import ModalConfirm from "../../Modals/ModalConfirm";
 import TextDescription from "../../elements/TextFormatters/TextDescription";
+import { LANG } from "../../../services/config";
 
 const EventPlan = (props) => {
     const [alert, setAlert] = useState({
@@ -31,7 +32,7 @@ const EventPlan = (props) => {
     };
 
     const addFeedback = () => {
-        if (feedback.trim().length < 1) return alertHandler("error", "Зворотній зв'язок не може бути порожнім");
+        if (feedback.trim().length < 1) return alertHandler("error", LANG.EVENT_PAGE.alertMessages.feedback_empty);
         apiResponse({
             event_id: props.event_id,
             meta_key: 'event_feedback',
@@ -42,13 +43,13 @@ const EventPlan = (props) => {
             })
         }, "events/add-event-meta.php").then((res) => {
             setFeedback('');
-            alertHandler("success", "Зворотній зв'язок додано");
+            alertHandler("success", LANG.EVENT_PAGE.alertMessages.feedback_success);
             props.getEventData();
         });
     };
     const deletePlan = ()=>{
         apiResponse({ meta_id: props.plan.plan_id }, "events/delete-meta.php").then((res) => {
-            alertHandler("success", "План видалено")
+            alertHandler("success", LANG.EVENT_PAGE.alertMessages.plan_deleted)
             props.getEventData()
         })
     }
@@ -78,32 +79,32 @@ const EventPlan = (props) => {
             <div className="EventPlan-inner">
                 <div className="EventPlan-inner-text">
                     <div className="EventPlan-inner-text-item">
-                        <div className="EventPlan-inner-text-item-title">Дата проведення</div>
+                        <div className="EventPlan-inner-text-item-title">{LANG.EVENT_PAGE.date}</div>
                         <div>{`${props.plan.startDate} - ${props.plan.endDate}`}</div>
                     </div>
                     <div className="EventPage-inner-text-item">
-                        <div className="EventPlan-inner-text-item-title">Опис</div>
+                        <div className="EventPlan-inner-text-item-title">{LANG.GLOBAL.description}</div>
                         <TextDescription text={props.plan.description}/>
                         
 
                     </div>
                     <div className="EventPage-inner-text-item">
-                        <div className="EventPlan-inner-text-item-title">Зворотній зв'язок</div>
+                        <div className="EventPlan-inner-text-item-title">{LANG.EVENT_PAGE.feedback}</div>
                         <div className="EventPlan-inner-feedbacks">
                         {feedbacks && feedbacks.length > 0 ? feedbacks.map((item, index) => {
                             return <Feedback key={index} item={item} event_id={props.event_id} getEventData={props.getEventData} />
-                        }) : <div>Немає зворотнього зв'язку</div>}
+                        }) : <div>{LANG.EVENT_PAGE.no_feedback}</div>}
                         </div>
                     </div>
                 </div>
                 <div className="EventPlan-addFeedback">
-                    <Textarea value={feedback} label="Зворотній зв'язок" onChange={(e) => setFeedback(e.target.value)} />
+                    <Textarea value={feedback} label={LANG.EVENT_PAGE.feedback} onChange={(e) => setFeedback(e.target.value)} />
                     <div className="EventPlan-addFeedback-button">
-                        <Button variant="contained" onClick={addFeedback}>Додати</Button>
+                        <Button variant="contained" onClick={addFeedback}>{LANG.GLOBAL.add}</Button>
                     </div>
                 </div>
             </div>
-            {modals.delete && <ModalConfirm closeHandler={()=>{modalsHandler("delete")}} successHandler={deletePlan} text={`Ви впевнені, що хочете видалити план ${props.plan.title}?`}/> }
+            {modals.delete && <ModalConfirm closeHandler={()=>{modalsHandler("delete")}} successHandler={deletePlan} text={`${LANG.EVENT_PAGE.confirm_delete_plan} ${props.plan.title}?`}/> }
             {modals.edit && <AddPlan getEventData={props.getEventData} action="edit" event_id={props.event_id} close={()=>{modalsHandler("edit")}} data={props.plan}/>}
             {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => alertHandler("success")} />}
             {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => alertHandler("error")} />}

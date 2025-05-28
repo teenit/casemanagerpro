@@ -57,13 +57,13 @@ const AccessPageRight = () => {
       if (res.status) {
         setNotif({
           show: true,
-          text: "Права оновлено",
+          text: LANG.ACCESS_PAGE.success_updated,
           isSuccess: true
         })
       } else {
         setNotif({
           show: true,
-          text: "Сталася помилка, спробуйте пізніше",
+          text: LANG.GLOBAL.alertMessages.error,
           isSuccess: false
         })
       }

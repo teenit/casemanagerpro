@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ModalMessage from '../Modals/ModalMessage'
 import { apiResponse } from '../Functions/get_apiObj'
+import { LANG } from '../../services/config'
 const AccessPageModal = ({ close }) => {
     const [data,setData] = useState({
         name:"",
@@ -19,15 +20,15 @@ const AccessPageModal = ({ close }) => {
                     <div className='AccessPage-modal-cross-c1'></div>
                     <div className='AccessPage-modal-cross-c2'></div>
                 </div>
-                <h2>Додати права</h2>
+                <h2>{LANG.ACCESS_PAGE.add}</h2>
                 <div className='AccessPage-modal-option'>
-                    <p>Ім'я</p>
+                    <p>{LANG.GLOBAL.name}</p>
                     <input type="text" value={data.name} onChange={(e)=>{
                     setData({...data,name:e.target.value})
                 }} />
                 </div>
                 <div className='AccessPage-modal-option'>
-                    <p>Опис</p>
+                    <p>{LANG.GLOBAL.description}</p>
                     <textarea name="" id="" cols="50" rows="10" onChange={(e)=>{
                     setData({...data,desc:e.target.value})
                 }}></textarea>
@@ -36,9 +37,9 @@ const AccessPageModal = ({ close }) => {
                     if(data.name.length>0){
                         close()
                     }else{
-                        alert("Помилка: введіть назву ролі.")
+                        alert(LANG.ACCESS_PAGE.error_no_role_name)
                     }
-                }}>Зберегти</button>
+                }}>{LANG.GLOBAL.save}</button>
             </div>
         </ModalMessage>
     )

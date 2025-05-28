@@ -104,10 +104,11 @@ class AncetaPage extends Component {
                 <div className="AncetaPage-details">
                   <div className="AncetaPage-details-type">{LANG.ancets.type}: {LANG.ancets[anceta.type]}</div>
                   <div className="AncetaPage-details-remember">{LANG.ancets.remember} {LANG.ancets.remembers[anceta.remember]}</div>
-                  <div className="AncetaPage-details-status">{LANG.ancets.status}: {anceta.active == 0 ? "Деактивовано" : "Активовано"}</div>
+                  <div className="AncetaPage-details-status">{LANG.ancets.status}: {anceta.active == 0 ? LANG.GLOBAL.deactivated 
+                  : LANG.GLOBAL.activated}</div>
                   <div className="AncetaPage-details-date">{LANG.ancets.date_created}: {anceta.created_at}</div>
                 </div>
-                <div className="AncetaPage-title-quest">Питання:</div>
+                <div className="AncetaPage-title-quest">{`${LANG.ANCETA_PAGE.question}:`}</div>
                 <div className="AncetaPage-questions">
                   
                   {questions.map((item, index)=>{

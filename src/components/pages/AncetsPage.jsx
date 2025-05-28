@@ -20,7 +20,7 @@ const COLUMNS = [
     },
     {
         dataField: 'name',
-        text: "Назва",
+        text: LANG.GLOBAL.title,
         fixed: false,
         isHidden: false,
         sort: false,
@@ -28,7 +28,7 @@ const COLUMNS = [
     },
     {
         dataField: 'description',
-        text: 'Опис',
+        text: LANG.GLOBAL.description,
         fixed: false,
         isHidden: false,
         sort: false,
@@ -38,14 +38,14 @@ const COLUMNS = [
     },
     {
         dataField: 'question_count',
-        text: 'Кіл-ть питань',
+        text: LANG.ANCETS_PAGE.questions_amount,
         fixed: false,
         isHidden: false,
         sort: false
     },
     {
         dataField: 'type',
-        text: 'Тип анкети',
+        text: LANG.ANCETS_PAGE.type,
         fixed: false,
         isHidden: false,
         sort: false,
@@ -55,7 +55,7 @@ const COLUMNS = [
     },
     {
         dataField: 'remember',
-        text: "Надувати",
+        text: LANG.GLOBAL.remember,
         fixed: false,
         isHidden: false,
         sort: false,
@@ -65,19 +65,19 @@ const COLUMNS = [
     },
     {
         dataField: 'created_at',
-        text: 'Анкету створено',
+        text: LANG.ANCETS_PAGE.created,
         fixed: false,
         isHidden: false,
         sort: false
     },
     {
         dataField: 'active',
-        text: 'Статус',
+        text: LANG.GLOBAL.status,
         fixed: false,
         isHidden: false,
         sort: false,
         formatter: (cell, row)=>{
-            return <div style={{color: cell == 0 ? "red" : "green"}}>{ cell == 0 ? "Деактивовано" : "Активовано"}</div>
+            return <div style={{color: cell == 0 ? "red" : "green"}}>{ cell == 0 ? LANG.GLOBAL.deactivated : LANG.GLOBAL.activated}</div>
         }
     }
 ];

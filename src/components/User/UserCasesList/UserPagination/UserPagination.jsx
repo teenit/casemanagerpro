@@ -1,6 +1,7 @@
 import React from "react";
 import arrowLeft from '../../../../img/icons/slider-arrow-left.svg'
 import arrowRight from '../../../../img/icons/slider-arrow-right.svg'
+import { LANG } from "../../../../services/config";
 
 const UserPagination = ({ casesPerPage, totalCases, paginate, activeKey }) => {
   const pageNumber = [];
@@ -13,7 +14,7 @@ const UserPagination = ({ casesPerPage, totalCases, paginate, activeKey }) => {
     <div className="pagination__wrap">
       <ul className="user_pagination">
         <div className="arrow__wrap">
-          <img src={arrowLeft} alt="Стрілка вліво" onClick={()=>{
+          <img src={arrowLeft} alt={LANG.pagination.left} onClick={()=>{
             if(activeKey!==1){
               paginate(activeKey - 1);
             }
@@ -30,7 +31,7 @@ const UserPagination = ({ casesPerPage, totalCases, paginate, activeKey }) => {
           </li>
         ))}
         <div className="arrow__wrap">
-          <img src={arrowRight} alt="Стрілка вправо" onClick={()=>{
+          <img src={arrowRight} alt={LANG.pagination.right} onClick={()=>{
             if(activeKey!==pageNumber.length){
               paginate(activeKey + 1);
             }

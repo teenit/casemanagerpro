@@ -311,7 +311,7 @@ modalHandler = ()=>{
          {this.state.confirmDelete && <ModalConfirm 
             closeHandler = {()=>this.setState({confirmDelete: false})} 
             successHandler = {this.deleteField} 
-            text={`Підтвердіть дію з видалення поля ${this.state.name}. Ця дія видалить поле та пов'язані з ним дані.`}/>}
+            text={`${LANG.FIELDS_TABLE.confirm_delete_start} ${this.state.name}. ${LANG.FIELDS_TABLE.confirm_delete_end}.`}/>}
     </div>
   }
 }

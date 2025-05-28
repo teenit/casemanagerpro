@@ -40,11 +40,11 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                 if (res.status) {
                     setTransactionData({ ...res.transaction });
                 } else {
-                    alertHandler("Не вдалося завантажити дані транзакції");
+                    alertHandler(LANG.TRANSACTIONS.alertMessages.error);
                 }
             })
             .catch(() => {
-                alertHandler("Помилка при завантаженні даних.");
+                alertHandler(LANG.TRANSACTIONS.alertMessages.error);
             });
     };
 
@@ -57,7 +57,7 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
     const handleSubmit = () => {
 
         if (transactionData.amount.trim() === "" || transactionData.transaction_type.trim() === "") {
-            return alertHandler("Введіть суму та тип транзакції");
+            return alertHandler(LANG.TRANSACTIONS.alertMessages.invalid);
         }
 
         setLoading(true);
@@ -83,7 +83,7 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
             }
         })
             .catch(() => {
-                alertHandler("Виникла помилка. Будь ласка, спробуйте пізніше");
+                alertHandler(LANG.TRANSACTIONS.alertMessages.error);
             })
             .finally(() => {
                 setLoading(false);
@@ -92,11 +92,11 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
 
     return (
         <Modal
-            header={id ? "Редагувати транзакцію" : "Додати транзакцію"}
+            header={id ? LANG.TRANSACTIONS.edit : LANG.TRANSACTIONS.add}
             footer={
                 <>
                     <Button variant="contained" onClick={handleSubmit} disabled={loading}>
-                        {loading ? "Зберігається..." : LANG.GLOBAL.save}
+                        {loading ? LANG.GLOBAL.saving : LANG.GLOBAL.save}
                     </Button>
                     <Button variant="contained" color="error" onClick={close} disabled={loading}>
                         {LANG.GLOBAL.cancel}
@@ -109,7 +109,7 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                 <div className="AddTransaction-split">
                     <Input
                         type="number"
-                        label="Сума"
+                        label={LANG.TRANSACTIONS.sum}
                         name="amount"
                         value={transactionData.amount}
                         onChange={(e) => dataHandler("amount", e.target.value)}
@@ -129,14 +129,14 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                 <div className="AddTransaction-split">
                     <Input
                         type="text"
-                        label="Тип транзакції"
+                        label={LANG.TRANSACTIONS.type}
                         name="transaction_type"
                         value={transactionData.transaction_type}
                         onChange={(e) => dataHandler("transaction_type", e.target.value)}
                     />
                     <Input
                         type="text"
-                        label="Розташування"
+                        label={LANG.TRANSACTIONS.placement}
                         name="location"
                         value={transactionData.location}
                         onChange={(e) => dataHandler("location", e.target.value)}
@@ -144,38 +144,38 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                 </div>
                 <div className="AddTransaction-split">
                     <div className="AddTransaction-select">
-                        <label>Метод оплати</label>
+                        <label>{LANG.TRANSACTIONS.payment_method}</label>
                         <Select
                             name="payment_method"
                             value={transactionData.payment_method}
                             onChange={(e) => dataHandler("payment_method", e.target.value)}
                         >
-                            <MenuItem value="card">Карта</MenuItem>
-                            <MenuItem value="currency">Готівка</MenuItem>
+                            <MenuItem value="card">{LANG.TRANSACTIONS.card}</MenuItem>
+                            <MenuItem value="currency">{LANG.TRANSACTIONS.currency}</MenuItem>
                         </Select>
                     </div>
                     <div className="AddTransaction-select">
-                        <label>Статус</label>
+                        <label>{LANG.GLOBAL.status}</label>
                         <Select
                             name="status"
                             value={transactionData.status}
                             onChange={(e) => dataHandler("status", e.target.value)}
                         >
-                            <MenuItem value="pending">Очікується</MenuItem>
-                            <MenuItem value="completed">Завершено</MenuItem>
-                            <MenuItem value="failed">Не вдалося</MenuItem>
+                            <MenuItem value="pending">{LANG.TRANSACTIONS.pending}</MenuItem>
+                            <MenuItem value="completed">{LANG.TRANSACTIONS.ended}</MenuItem>
+                            <MenuItem value="failed">{LANG.TRANSACTIONS.failed}</MenuItem>
                         </Select>
                     </div>
                 </div>
                 <Input
                     type="number"
-                    label="ID посилання"
+                    label={LANG.TRANSACTIONS.id}
                     name="reference_id"
                     value={transactionData.reference_id}
                     onChange={(e) => dataHandler("reference_id", e.target.value)}
                 />
                 <Textarea
-                    label="Опис"
+                    label={LANG.GLOBAL.description}
                     name="description"
                     value={transactionData.description}
                     onChange={(e) => dataHandler("description", e.target.value)}
