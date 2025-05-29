@@ -26,7 +26,6 @@ const Bell = () => {
     })
     const getNotifications = ()=>{
         apiResponse({limit: state.limit, page:state.page + 1},"notifications/get.php").then((res)=>{
-           //return console.log(res)
             setState({...state, page:state.page + 1, more: res.length < state.limit ? false : true})
             setNotifications([...notifications, ...res])
         })

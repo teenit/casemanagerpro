@@ -94,7 +94,6 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
         headers: { 'Content-Type': 'multipart/form-data' },
         data: formData,
         onUploadProgress: event => {
-          console.log(Math.round(event.loaded * 100 / event.total));
         }
       });
       setSelectedFiles([]);

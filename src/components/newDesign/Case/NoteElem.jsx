@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Input from '../../elements/Inputs/Input';
 import Textarea from '../../elements/Inputs/Textarea';
@@ -7,45 +7,71 @@ import TextDescription from '../../elements/TextFormatters/TextDescription';
 import { LANG } from '../../../services/config';
 import { apiResponse } from '../../Functions/get_apiObj';
 import SmallNotification from '../../elements/Notifications/SmallNotification';
-import ModalConfirm from "../../Modals/ModalConfirm"
+import ModalConfirm from '../../Modals/ModalConfirm';
+import Modal from '../../Modals/Modal';
+import { Button } from '@mui/material';
+import ActionMenu from '../../Portals/ActionMenu';
 
 const NoteElem = ({ elem, editor, getCaseInfo, case_id }) => {
-    const [edit, setEdit] = useState(false);
-    const [activeMessage, setActiveMessage] = useState(elem.text);
-    const [activeColor, setActiveColor] = useState(elem.color);
-    const [confirmModal, setConfirmModal] = useState(false)
+    const [editModal, setEditModal] = useState(false);
+    const [noteMessage, setNoteMessage] = useState(elem.text);
+    const [noteColor, setNoteColor] = useState(elem.color);
+    const [confirmModal, setConfirmModal] = useState(false);
     const [alert, setAlert] = useState({ active: false, isSuccess: false, message: "" });
-    console.log(activeMessage)
-    const alertHandler = (isSuccess=false, message="") => {
-        setAlert({ active: !alert.active, isSuccess: isSuccess, message: message })
-    }
-    
-        const updateNote = (text, color, elem) => {
-        apiResponse({ ...elem, text, color, case_id }, "case/update-note.php").then((res) => {
+                const menuItems = [
+                    {
+                        title: LANG.GLOBAL.edit,
+                        isHidden: false,
+                        icon:"edit",
+                        click: ()=>{
+                            setEditModal(!editModal)
+                        }
+                    },
+                    {
+                        itemType: 'divider'
+                    },
+                    {
+                        title: LANG.GLOBAL.delete,
+                        isHidden: false,
+                        icon: "delete",
+                        color: 'error',
+                        click: ()=>{
+                            setConfirmModal(!confirmModal)
+                        }
+                    },
+                ]
+    const alertHandler = (isSuccess = false, message = "") => {
+        setAlert({ active: true, isSuccess, message });
+
+        setTimeout(() => {
+            setAlert({ active: false, isSuccess: false, message: "" });
+        }, 3000);
+    };
+
+    const updateNote = () => {
+        if (noteMessage.trim().length < 1) {
+            alertHandler(false, LANG.notes.error_data);
+            return;
+        }
+
+        apiResponse({ ...elem, text: noteMessage, color: noteColor, case_id }, "case/update-note.php").then((res) => {
             if (res.status) {
-                alertHandler(true, LANG.notes.success);
                 getCaseInfo();
+                setEditModal(false);
             } else {
                 alertHandler(false, LANG.notes.error);
             }
         });
     };
 
-    const handleEdit = (value, color, elem) => {
-        if (value.length < 1) {
-            alertHandler(false, LANG.notes.error_data);
-        } else {
-            updateNote(value, color, elem);
-        }
+    const deleteNote = () => {
+        apiResponse({ note_id: elem.note_id }, "case/delete-note.php").then(() => {
+            getCaseInfo();
+        }).catch(() => {
+            alertHandler(false, LANG.GLOBAL.alertMessages.delete_error);
+        });
     };
-    console.log(elem)
-    const deleteNote = ()=>{
-        apiResponse({note_id:elem.note_id}, "case/delete-note.php").then((res)=>{
-            getCaseInfo()
-        }).catch((err)=>{
-            alertHandler(false, LANG.GLOBAL.alertMessages.delete_error)
-        })
-    }
+
     return (
         <div className="Notes-viewer-line">
             <div className="Notes-viewer-line-data">
@@ -55,53 +81,62 @@ const NoteElem = ({ elem, editor, getCaseInfo, case_id }) => {
                 <span>{elem.date_created}</span>
                 <div
                     className="Notes-viewer-line-data-color"
-                    style={{ backgroundColor: activeColor }}
+                    style={{ backgroundColor: elem.color }}
                 />
             </div>
             <div className="Notes-viewer-line-mess">
-                {edit ? (
-                    <div className="Notes-viewer-line-mess-input">
+                <TextDescription text={elem.text} />
+                    {editor && <ActionMenu menuItems={menuItems}/>}
+            </div>
+
+            {editModal && (
+                <Modal
+                    header={LANG.notes.edit}
+                    closeHandler={() => setEditModal(false)}
+                    footer={
+                        <div className="Modal--footer">
+                            <Button onClick={() => setEditModal(false)} color="error" variant="contained">
+                                {LANG.cancel}
+                            </Button>
+                            <Button onClick={updateNote} variant="contained">
+                                {LANG.save}
+                            </Button>
+                        </div>
+                    }
+                >
+                    <div className="Notes-modal">
                         <Input
-                        addClass='w100'
+                            addClass="w100"
                             type="color"
-                            value={activeColor}
-                            onChange={(e) => setActiveColor(e.target.value)}
+                            value={noteColor}
+                            onChange={(e) => setNoteColor(e.target.value)}
                         />
                         <Textarea
-                            value={activeMessage}
+                            value={noteMessage}
                             label={LANG.notes.text}
-                            onChange={(e) => setActiveMessage(e.target.value)}
+                            onChange={(e) => setNoteMessage(e.target.value)}
                         />
                     </div>
-                ) : (
-                    <TextDescription text={activeMessage} />
-                )}
-                <div className="controls" style={{display: "flex"}}>
-                {editor && <div className="Notes-viewer-line-mess-edit">
-                    {edit ? (
-                        <div>
-                            <Icon icon="save" addClass="save-icon" onClick={() => {
-                                if (activeMessage.length >= 1) {
-                                    setEdit(false);
-                                }
-                                handleEdit(activeMessage, activeColor, elem);
-                            }} />
-                            <Icon icon="close" addClass="close-icon" onClick={() => setEdit(false)} />
-                        </div>
-                    ) : (
-                        <span onClick={() => setEdit(true)}>
-                            <Icon icon="edit" addClass="default-icon" />
-                        </span>
-                    )}
-                </div>}
-                <Icon icon={"delete"} addClass='delete-icon' onClick={()=>{setConfirmModal(!confirmModal)}}/>
-                </div>
-            </div>
-            {confirmModal && <ModalConfirm closeHandler={()=>{setConfirmModal(!confirmModal)}}
-                text={LANG.GLOBAL.delete_confirm} successHandler={deleteNote}/>}
-            {alert.active && <SmallNotification isSuccess={alert.isSuccess} text={alert.message} close={alertHandler}/>}
+                </Modal>
+            )}
+
+            {confirmModal && (
+                <ModalConfirm
+                    closeHandler={() => setConfirmModal(false)}
+                    text={LANG.GLOBAL.delete_confirm}
+                    successHandler={deleteNote}
+                />
+            )}
+
+            {alert.active && (
+                <SmallNotification
+                    isSuccess={alert.isSuccess}
+                    text={alert.message}
+                    close={() => setAlert({ active: false, isSuccess: false, message: "" })}
+                />
+            )}
         </div>
     );
 };
 
-export default NoteElem
+export default NoteElem;

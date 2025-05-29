@@ -135,7 +135,6 @@ const Settings = () => {
     }
     const saveConfig = ()=>{
         apiResponse({config: config}, "config/create.php").then((res)=>{
-            console.log(res)
         })
     }
 
@@ -179,7 +178,6 @@ const Settings = () => {
     }
    
     const addTelegramBot = () => {
-       // return console.log(selectedTelegramBot)
         apiResponse({...selectedTelegramBot}, "telegram/create-telegram-bot.php").then((res)=>{
             if (res.status) {
                 setSelectedTelegramBot({...selectedTelegramBot, modal: false});
@@ -189,7 +187,6 @@ const Settings = () => {
 
     const sendInTelegram = () => {
         // apiResponse({bot_id: 1, message: "test message"}, "telegram/send-message-in-telegram.php").then((res)=>{
-        //     console.log(res)
         // })
     }
     const canAddUsers = AccessCheck('yes_no', 'a_page_settings_add_user')

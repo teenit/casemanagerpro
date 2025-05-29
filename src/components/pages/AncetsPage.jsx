@@ -10,6 +10,7 @@ import Table from "../elements/Table/Table";
 import EmptyData from "../EmptyData/EmptyData";
 import { LANG } from "../../services/config";
 import AddButton from "../elements/Buttons/AddButton";
+import ActionMenu from "../Portals/ActionMenu";
 const COLUMNS = [
     {
         dataField: 'id',
@@ -24,7 +25,7 @@ const COLUMNS = [
         fixed: false,
         isHidden: false,
         sort: false,
-        formatter: (cell, row) => <NavLink to={'/ancets/'+row.id}>{cell}</NavLink>
+        formatter: (cell, row) => <NavLink to={'/ancets/' + row.id}>{cell}</NavLink>
     },
     {
         dataField: 'description',
@@ -76,8 +77,8 @@ const COLUMNS = [
         fixed: false,
         isHidden: false,
         sort: false,
-        formatter: (cell, row)=>{
-            return <div style={{color: cell == 0 ? "red" : "green"}}>{ cell == 0 ? LANG.GLOBAL.deactivated : LANG.GLOBAL.activated}</div>
+        formatter: (cell, row) => {
+            return <div style={{ color: cell == 0 ? "red" : "green" }}>{cell == 0 ? LANG.GLOBAL.deactivated : LANG.GLOBAL.activated}</div>
         }
     }
 ];
@@ -90,16 +91,16 @@ class AncetsPage extends Component {
             ancets: [],
         };
     }
-    
+
     componentDidMount = () => {
         this.loadAncets()
     }
 
     createAnceta = (data) => {
-        apiResponse(data, "ancets/create.php").then((res)=>{
+        apiResponse(data, "ancets/create.php").then((res) => {
             if (res.status) {
                 this.loadAncets()
-                this.setState({showCreateForm: false})
+                this.setState({ showCreateForm: false })
             }
         })
     }
@@ -114,10 +115,10 @@ class AncetsPage extends Component {
         if (typeof column.headerFormatter !== 'function' && column.sort) {
             column.headerFormatter = (field, order) => {
                 return (
-                    <HeaderFormatter 
-                        sortOrder={order} 
-                        sortField={field} 
-                        text={column.text} 
+                    <HeaderFormatter
+                        sortOrder={order}
+                        sortField={field}
+                        text={column.text}
                         dataField={column.dataField}
                     />
                 );
@@ -128,14 +129,14 @@ class AncetsPage extends Component {
 
     loadAncets = () => {
 
-        apiResponse({}, "ancets/get-list.php").then((res)=>{
+        apiResponse({}, "ancets/get-list.php").then((res) => {
             if (res.status) {
-                this.setState({ancets: res.ancets})
+                this.setState({ ancets: res.ancets })
             }
-            
-        }) 
+
+        })
     }
-    formHandler = ()=>{
+    formHandler = () => {
         this.setState({ showCreateForm: true })
     }
     render() {
@@ -143,18 +144,18 @@ class AncetsPage extends Component {
         const columns = this.prepareColumns(COLUMNS);
         return (
             <div className="AncetsPage">
-                <AddButton title={LANG.ancets.add} click={this.formHandler}/>
+                <AddButton title={LANG.ancets.add} click={this.formHandler} />
                 <div className="AncetsPage-list">
                     <Table
                         columns={columns}
                         data={this.state.ancets}
                         keyField={'id'}
                         addClass="without-row-menu"
-                        emptyTable={<EmptyData title={LANG.ancets.no_ancets} buttonText={LANG.ancets.add_anceta} click={this.formHandler}/>}
+                        emptyTable={<EmptyData title={LANG.ancets.no_ancets} buttonText={LANG.ancets.add_anceta} click={this.formHandler} />}
                     />
                 </div>
-                {this.state.showCreateForm && <AddAncetsForm 
-                    close={()=>{this.setState({ showCreateForm: false })}}
+                {this.state.showCreateForm && <AddAncetsForm
+                    close={() => { this.setState({ showCreateForm: false }) }}
                     success={this.createAnceta}
                 />}
             </div>

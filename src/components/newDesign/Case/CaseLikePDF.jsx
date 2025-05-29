@@ -136,7 +136,6 @@ const CaseLikePDF = ({ caseData }) => {
 
       const getPDF = () => {
         apiResponse({case_id: case_id}, 'mpdf/printcard.php').then((res)=>{
-          console.log(res)
         })
       }
       

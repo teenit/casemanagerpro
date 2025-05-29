@@ -52,7 +52,6 @@ const CaseOLD = () => {
             let res = data.data;
             if(res?.message){
                 setPage({...page,message:res.message})
-                return console.log(res.message)
                 }
                 res.contact = JSON.parse(res.contact);
                 res.activity = JSON.parse(res.activity);

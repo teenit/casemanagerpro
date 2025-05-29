@@ -62,7 +62,6 @@ const EventsPage = () => {
     const loadEvents = () => {
         apiResponse({ ...formData }, "events/get-events.php").then((res) => {
             setEvents([...res])
-            console.log(res)
         })
     }
 

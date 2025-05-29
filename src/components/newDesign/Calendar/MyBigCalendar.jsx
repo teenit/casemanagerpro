@@ -60,9 +60,7 @@ const MyBigCalendar = () => {
       month: currentMonth + 1, // moment.js місяці починаються з 0, тому додаємо 1
       year: currentYear
     }, "user/get-cal-month.php").then((res) => {
-     // console.log("API відповідь:", res); // Логування API відповіді
       const transformedEvents = transformEvents(res);
-     // console.log("Трансформовані події:", transformedEvents); // Логування трансформованих подій
       setEvents(transformedEvents);
     }).catch((error) => {
       console.error("Помилка отримання даних:", error);
@@ -86,7 +84,6 @@ const EventTitle = (event) => {
 
   // Функція для перетворення JSON у події для react-big-calendar
 const transformEvents = (data) => {
-  //console.log("Дані з API перед перетворенням:", data); // Логування даних з API
   return data.map(event => {
     let test = moment(event.date, "DD-MM-YYYY").format("YYYY-MM-DD");
     test = currentYear + test.slice(4)

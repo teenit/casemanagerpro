@@ -120,7 +120,6 @@ const Case = () => {
         if (!allExist) return setErrorAlert(true);
 
         const data = prepareAnswerData();
-        console.log(data);
         apiResponse({case_id: case_id, anceta_id: ancetaForm.anceta.id, answers: data}, "ancets/add-answers.php").then(res => {
             if (res.status) {
                 setAncetaForm({...ancetaForm, anceta: {}, questions: [], showQuestionForm: false, showForm: false});
@@ -266,7 +265,6 @@ const Case = () => {
                 >
                     <div>
                         {ancetaForm.list.map(item => {
-                            console.log(item)
                             return (
                                 <div style={{
                                     display: 'flex',

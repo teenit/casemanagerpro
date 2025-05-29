@@ -33,7 +33,6 @@ const UserCasesList = ({ userAddId }) => {
 
   useEffect(() => {
     apiResponse({}, "case/get/cases-page-list.php").then((res) => {
-      console.log(res)
       setCases([...res.list]);
     });
   }, []);

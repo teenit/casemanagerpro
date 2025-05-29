@@ -57,7 +57,6 @@ const AddCaseForm = () => {
 
     function checkChanges(obj){
         const hasChanges = (JSON.stringify(initialStateData) !== JSON.stringify(obj));
-        console.log(JSON.stringify(initialStateData), JSON.stringify(obj));
         setIsDataEmpty({...isDataEmpty,data:!hasChanges});
     }
 

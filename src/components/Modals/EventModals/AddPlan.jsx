@@ -61,8 +61,6 @@ const AddPlan = ({ close, event_id, action = "add", data, getEventData }) => {
         if (plan.title.length < 1 || plan.startDate.length < 1 || plan.endDate.length < 1 || plan.startTime.length < 1 || plan.endTime.length < 1) {
             return alertHandler("error", "Введіть назву, дату початку і дату кінця плану");
         }
-        // console.log(plan.plan_id);
-
         createPlan()
     }
     const createPlan = () => {

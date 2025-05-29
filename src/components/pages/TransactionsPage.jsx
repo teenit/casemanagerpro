@@ -3,12 +3,10 @@ import { apiResponse } from "../Functions/get_apiObj";
 import AddTransaction from "../newDesign/Transactions/AddTransaction";
 import Table from "../elements/Table/Table";
 import { LANG } from "../../services/config";
-import Icon from "../elements/Icons/Icon"
 import ModalConfirm from "../Modals/ModalConfirm"
 import Pagination from "../elements/Pagination/Pagination";
 import HeaderFormatter from "../elements/HeaderFormatter/HeaderFormatter";
 import EmptyData from "../EmptyData/EmptyData";
-import { Button } from "@mui/material";
 import AddButton from "../elements/Buttons/AddButton";
 import ActionMenu from "../Portals/ActionMenu";
 
@@ -207,7 +205,6 @@ const TransactionsPage = () => {
     }
 
     const handleEdit = (transactionId) => {
-        console.log("Edit transaction:", transactionId);
     };
 
     const handleDelete = (transactionId) => {

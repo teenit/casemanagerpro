@@ -13,7 +13,6 @@ const CaseSettings = ({ views, successHandler, handleGeneralChange, isActive }) 
     };
 
     const handleSave = () => {
-        //  return  console.log(state)
         apiResponse({
             value: JSON.stringify(state),
             key: "case_view_info"

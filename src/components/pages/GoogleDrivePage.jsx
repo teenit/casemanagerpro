@@ -115,7 +115,6 @@ function GoogleDriveFileManager() {
       if (response.error) {
         console.error("Error uploading file:", response.error);
       } else {
-        console.log("File uploaded successfully:", response);
         loadFiles(currentDriveId, currentFolderId); // Оновлюємо список файлів після завантаження
       }
     });

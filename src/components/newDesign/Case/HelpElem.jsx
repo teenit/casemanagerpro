@@ -15,8 +15,10 @@ import TextDescription from "../../elements/TextFormatters/TextDescription"
 import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 import ModalConfirm from "../../Modals/ModalConfirm"
+import ActionMenu from "../../Portals/ActionMenu"
+
 const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
-    console.log(help)
+    const [confirmModal, setConfirmModal] = useState(false)
     const [state, setState] = useState({
         ...help,
         editHelp: false,
@@ -27,7 +29,28 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
         status: null,
         message: null
     })
-    const [confirmModal, setConfirmModal] = useState(false)
+    const menuItems = [
+        {
+            title: LANG.GLOBAL.edit,
+            isHidden: false,
+            icon: "edit",
+            click: () => {
+                setState({ ...state, edit: true })
+            }
+        },
+        {
+            itemType: 'divider'
+        },
+        {
+            title: LANG.GLOBAL.delete,
+            isHidden: false,
+            icon: "delete",
+            color: 'error',
+            click: () => {
+                setConfirmModal(!confirmModal)
+            }
+        },
+    ]
     const getCategory = (id) => {
         const category = Object.values(categories).find(item => item.id === id)
         return {
@@ -42,7 +65,11 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
             help_id: state.id
         }, "case/update-help.php").then((res) => {
             setState({ ...state, edit: false })
-            notificationHandler(res.status, res.message)
+            setNotification({
+                show: true,
+                status: res.status,
+                message: res.message
+            })
             getCaseInfo();
         })
 
@@ -56,15 +83,6 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
     const deleteHelp = () => {
         apiResponse({ help_id: help.id }, "case/delete-help.php").then((res) => {
             getCaseInfo()
-        }).catch((err) => {
-            notificationHandler(false, LANG.GLOBAL.alertMessages.delete_error)
-        })
-    }
-    const notificationHandler = (status, message) => {
-        setNotification({
-            show: true,
-            status: status,
-            message: message
         })
     }
     return (
@@ -108,20 +126,7 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
                             }
                         </div>
                     </div>
-                    {editor && <div className="controls">
-                        {
-                            state.editHelp
-                                ?
-                                <span onClick={saveHandler} >
-                                    <Icon icon={"save"} addClass={"save-icon"} />
-                                </span>
-                                :
-                                <span onClick={() => { setState({ ...state, edit: true }) }}  >
-                                    <Icon icon={"edit"} addClass={"default-icon"} />
-                                </span>
-                        }
-                        <Icon icon={"delete"} addClass="delete-icon" onClick={() => { setConfirmModal(!confirmModal) }} />
-                    </div>}
+                    <ActionMenu menuItems={menuItems}/>
                 </div>
                 <div className="task">
                     {
@@ -212,11 +217,11 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
                 </Modal>
             }
             {
-                confirmModal && <ModalConfirm closeHandler={() => { setConfirmModal(!confirmModal) }}
-                    text={LANG.GLOBAL.delete_confirm} successHandler={deleteHelp} />
+                notification.show && <SmallNotification isSuccess={notification.status} text={notification.message} close={() => setNotification({ show: false })} />
             }
             {
-                notification.show && <SmallNotification isSuccess={notification.status} text={notification.message} close={() => setNotification({ show: false })} />
+                confirmModal && <ModalConfirm closeHandler={() => { setConfirmModal(!confirmModal) }}
+                    text={LANG.GLOBAL.delete_confirm} successHandler={deleteHelp} />
             }
         </div>
     )

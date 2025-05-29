@@ -57,13 +57,10 @@ const File = () => {
     
     let obj = { file_id: file_id };
     for (const [key, value] of searchParams.entries()) {
-      console.log(key, value)
       obj[key] = value;
     }
-    console.log(searchParams.get('case_id'))
   
     apiResponse(obj, "manage/files/get-by-id.php").then((res) => {
-      console.log(res)
       if (!res?.status) {
         setError(true);
         setLoading(false);

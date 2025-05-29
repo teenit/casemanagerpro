@@ -107,7 +107,6 @@ const Event = () => {
         })
             .then((data) => {
                 setEvent(data.data)
-                console.log(data);
                 if (data.data?.id) {
                     getUsers(data.data.id, "eventMemberUser")
                     getUsers(data.data.id, "eventMemberCase")

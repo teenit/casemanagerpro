@@ -24,6 +24,8 @@ export const LANG = {
     file: "Файл",
     link: "Посилання",
     name:"Ім'я",
+    phone:"Телефон",
+    about:"Про себе",
     delete_confirm: "Ви впевнені, що хочети видалити цей запис?",
     pick_all: "Обрати все",
     question: "Питання",
@@ -54,6 +56,7 @@ export const LANG = {
     confirm_delete_end:"Ця дія видалить поле та пов'язані з ним дані"
   },
   FIELDS: {
+    add:"Створити поле",
     field_type: "Тип поля",
     create_field: "Додати нове поле",
     block_view: "Блок відображення",
@@ -252,6 +255,7 @@ export const LANG = {
   plan: {
     task: "Задача плану",
     create: "Створити план",
+    edit:"Редагувати план",
     error: "Оберіть дату початку та кінця дати",
     error_date: "Дата початку повинна бути раніше дати кінця"
   },

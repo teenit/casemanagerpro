@@ -112,7 +112,7 @@ const TelegramPage = () => {
                     >
                 <div className="TelegramPage-form">
                     <div className="TelegramPage-form-selects">
-                        {bots.length > 0 && <Select name="bot" value={state.bot_id} onChange={(e) => { console.log(e.target.value); setState({...state, bot_id: e.target.value}) }}>
+                        {bots.length > 0 && <Select name="bot" value={state.bot_id} onChange={(e) => { setState({...state, bot_id: e.target.value}) }}>
                             <MenuItem value={0}>Оберіть бота</MenuItem>
                             {
                                 bots.map((item)=><MenuItem key={item.id} value={item.id}>{item.bot_name}</MenuItem>)

@@ -20,7 +20,6 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
     newPassTo: "",
     changeError: ""
   });
-  console.log(url)
   const [alert, setAlert] = useState({
     success: false,
     error: false,
@@ -112,23 +111,23 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
         }} />
 
         <div className="User-info">
-          <InputBlock value={data.userName} header={true} title="Ім'я" label={data.userName}
+          <InputBlock value={data.userName} header={true} title={LANG.GLOBAL.name} label={data.userName}
             onChange={(e) => { handleChangeValue("userName", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("userName", value) }}
           />
-          <InputBlock titleDefault="Номер телефону" hintMessage={LANG.hints.phone} value={data.phone} title="Номер телефону"
+          <InputBlock titleDefault={LANG.GLOBAL.phone} hintMessage={LANG.hints.phone} value={data.phone} title={LANG.GLOBAL.phone}
             label={data.phone} icon={"phone"}
             link={`tel:${data.phone}`} onChange={(e) => { handleChangeValue("phone", e.target.value) }} inputType="number"
             saveHandler={(value) => { handleSaveData("phone", value) }}
           />
 
-          <InputBlock disabled titleDefault="Електронна пошта" hintMessage={LANG.hints.disabled} value={data.email}
-            title="Електронна пошта"
+          <InputBlock disabled titleDefault={LANG.GLOBAL.email} hintMessage={LANG.hints.disabled} value={data.email}
+            title={LANG.GLOBAL.email}
             label={data.email} icon={"email"}
             link={`mailto:${data.email}`} inputType="email"
           />
 
-          <InputBlock titleDefault="Про себе" value={data.datas} title="Про себе" label={data.datas} icon={"book"}
+          <InputBlock titleDefault={LANG.GLOBAL.about} value={data.datas} title={LANG.GLOBAL.about} label={data.datas} icon={"book"}
             onChange={(e) => { handleChangeValue("datas", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("datas", value) }}
           />

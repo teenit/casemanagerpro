@@ -125,7 +125,6 @@ const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
                                 label={LANG.start_time}
                                 value={moment(state.start_time)}
                                 onChange={(e) => {
-                                    console.log(e)
                                     changeHandler("start_time", e.format('YYYY-MM-DD HH:mm'))
                                 }}
                             />
@@ -133,7 +132,6 @@ const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
                                 label={LANG.end_time}
                                 value={moment(state.end_time)}
                                 onChange={(e) => {
-                                    console.log(e)
                                     changeHandler("end_time", e.format('YYYY-MM-DD HH:mm'))
                                 }}
                             /> */}

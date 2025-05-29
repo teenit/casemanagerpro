@@ -38,7 +38,6 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
       headers: { 'Content-Type': 'multipart/form-data' },
       data: formData,
       onUploadProgress: event => {
-        console.log(Math.round(event.loaded * 100 / event.total));
       }
     })
       .then((response) => {
