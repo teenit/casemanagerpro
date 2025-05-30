@@ -36,3 +36,9 @@
         }
     }
 }
+@media screen and (max-width:720px){
+    .SettingsCategory--form-inputs{
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: none;
+    }
+}

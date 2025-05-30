@@ -95,3 +95,16 @@
             font-size: 16px;
     }
 }
+
+@media screen and (max-width:400px){
+    .Notes-viewer-line{
+        flex-direction: column;
+        &-data{
+            flex-direction: row;
+            align-items: center;
+            padding: 0;
+            border: none;
+            gap: 5px;
+        }
+    }
+}

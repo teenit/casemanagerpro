@@ -8,6 +8,7 @@ import ModalConfirm from '../../Modals/ModalConfirm';
 import { apiResponse } from '../../Functions/get_apiObj';
 import SmallNotification from '../../elements/Notifications/SmallNotification';
 import TextDescription from '../../elements/TextFormatters/TextDescription';
+import ActionMenu from '../../Portals/ActionMenu';
 
 
 const Feedback = ({ item, event_id, getEventData }) => {
@@ -28,7 +29,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
         setModals({ ...modals, [key]: !modals[key] });
     };
     const deleteFeedback = (feedback_id) => {
-       
+
         apiResponse({ meta_id: feedback_id }, "events/delete-meta.php").then((res) => {
             alertHandler("success", LANG.EVENT_PAGE.alertMessages.feedback_deleted)
             getEventData()
@@ -37,9 +38,9 @@ const Feedback = ({ item, event_id, getEventData }) => {
 
     const editFeedback = (feedback_id) => {
         let obj = {
-            event_id:event_id,
-            value:editingFeedback,
-            plan_id:item.plan_id
+            event_id: event_id,
+            value: editingFeedback,
+            plan_id: item.plan_id
         }
         apiResponse({ meta_value: JSON.stringify(obj), meta_id: feedback_id }, "events/update-event-meta.php").then((res) => {
             modalHandler("edit")
@@ -47,18 +48,33 @@ const Feedback = ({ item, event_id, getEventData }) => {
             getEventData()
         })
     };
+    const menuItems = [
+        {
+            title: LANG.GLOBAL.edit,
+            isHidden: false,
+            icon: "edit",
+            click: () => {
+                setEditingFeedback(item.value)
+                modalHandler("edit");
+            }
+        },
+        {
+            itemType: 'divider'
+        },
+        {
+            title: LANG.GLOBAL.delete,
+            isHidden: false,
+            icon: "delete",
+            color: 'error',
+            click: () => {
+                modalHandler("delete")
+            }
+        },
+    ]
     return (
         <div className="EventPlan-feedback">
-            <TextDescription text={item.value}/>
-            
-            <div className="EventPlan-feedback-panel">
-                <Icon icon={"edit"} addClass={"default-icon"} onClick={() => {
-                    setEditingFeedback(item.value)
-                    modalHandler("edit");
-                }} />
-                <Icon icon={"delete"} addClass={"close-icon"} onClick={() => { modalHandler("delete") }} />
-            </div>
-
+            <TextDescription text={item.value} />
+            <ActionMenu menuItems={menuItems} />
             {modals.edit && (
                 <Modal
                     header={LANG.EVENT_PAGE.edit_feedback}

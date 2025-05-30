@@ -169,11 +169,11 @@
     .file__card{
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: space-between;
         gap: 15px;
-        background-color: #a8a8a877;
-        border-radius: 15px;
-        overflow: hidden;
+    }
+    .file__size{
+        display: none;
     }
     .wrap__cards img{
         width: 100px;
@@ -183,9 +183,6 @@
         grid-template-columns: 1fr;
         max-width: 70%;
         width: 100%;
-    }
-    .file__card:nth-child(2n) {
-        background-color: rgba(168, 170, 170, 0.215);
     }
     .add__form__wrap{
         width: 100%;

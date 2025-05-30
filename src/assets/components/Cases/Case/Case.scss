@@ -173,7 +173,9 @@
     }
 }
 @media (max-width: 600px) {
-
+.set__case__control{
+    justify-content: center;
+}
     .connections__wrap {
         grid-template-columns: 1fr;
         row-gap: 30px;

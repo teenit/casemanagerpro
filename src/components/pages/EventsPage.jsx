@@ -11,7 +11,9 @@ import { NavLink } from "react-router-dom";
 import ModalConfirm from "../Modals/ModalConfirm";
 import InputColor from "../elements/Inputs/InputColor";
 import EmptyData from "../EmptyData/EmptyData";
-import AddButton from "../elements/Buttons/AddButton"
+import AddButton from "../elements/Buttons/AddButton";
+import ActionMenu from "../Portals/ActionMenu";
+
 const DEFAULT_FORM_DATA = {
     title: '',
     description: '',
@@ -25,10 +27,10 @@ const EventsPage = () => {
         modal: false,
         action: "",
         currentEvent: null
-    })
+    });
 
-    const [deleteModal, setDeleteModal] = useState(false)
-    const [eventToDelete, setEventToDelete] = useState(null)
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [eventToDelete, setEventToDelete] = useState(null);
 
     const modalHandler = (action = "", event = null) => {
         setModal({
@@ -41,74 +43,77 @@ const EventsPage = () => {
         } else if (action === "add") {
             setFormData({ ...DEFAULT_FORM_DATA });
         }
-    }
+    };
 
     const [alert, setAlert] = useState({
         error: false,
         success: false,
         message: ""
-    })
+    });
 
     const alertHandler = (key, message = "") => {
-        setAlert({ ...alert, [key]: !alert[key], message: message });
-    }
+        setAlert((prev) => ({
+            ...prev,
+            [key]: !prev[key],
+            message: message
+        }));
+    };
 
-    const [formData, setFormData] = useState({
-        ...DEFAULT_FORM_DATA
-    })
-
+    const [formData, setFormData] = useState({ ...DEFAULT_FORM_DATA });
     const [events, setEvents] = useState([]);
 
     const loadEvents = () => {
-        apiResponse({ ...formData }, "events/get-events.php").then((res) => {
-            setEvents([...res])
-        })
-    }
+        apiResponse({}, "events/get-events.php").then((res) => {
+            setEvents([...res]);
+        });
+    };
 
     useEffect(() => {
-        loadEvents()
-    }, [])
+        loadEvents();
+    }, []);
 
     const updateEvent = () => {
         if (formData.title === DEFAULT_FORM_DATA.title) {
-            return alertHandler("error", LANG.events_page.alertMessages.no_title)
+            return alertHandler("error", LANG.events_page.alertMessages.no_title);
         }
         if (formData.title.length >= 100) {
-            return alertHandler("error", LANG.events_page.alertMessages.too_long)
+            return alertHandler("error", LANG.events_page.alertMessages.too_long);
         }
 
-        const link = modal.action === "add" ? "events/create.php" : "events/update.php"
+        const link = modal.action === "add" ? "events/create.php" : "events/update.php";
 
-        apiResponse({ ...formData, event_id: modal.currentEvent?.event_id }, link).then((res) => {
-            loadEvents()
-            modalHandler()
+        apiResponse({ ...formData, event_id: modal.currentEvent?.event_id }, link).then(() => {
+            loadEvents();
+            modalHandler();
         });
     };
 
     const confirmDelete = (event) => {
         setEventToDelete(event);
-        setDeleteModal(true)
+        setDeleteModal(true);
     };
 
     const deleteEvent = () => {
-        apiResponse({ event_id: eventToDelete.event_id, status:0 }, "events/update.php").then(() => {
+        apiResponse({ event_id: eventToDelete.event_id, status: 0 }, "events/update.php").then(() => {
             setDeleteModal(false);
             loadEvents();
         });
     };
 
     const description = (str) => {
-        return str.length > 0 ? (str.length > 50 ? str.slice(0, 50) + "..." : str) : LANG.GLOBAL.no_description;
+        return str.length > 0
+            ? (str.length > 50 ? str.slice(0, 50) + "..." : str)
+            : LANG.GLOBAL.no_description;
     };
 
     return (
         <div className="EventsPage">
-            <AddButton title={LANG.events_page.add} click={()=>{modalHandler("add")}}/>
-            
+            <AddButton title={LANG.events_page.add} click={() => modalHandler("add")} />
+
             {modal.modal && (
                 <Modal
                     closeHandler={() => setModal({ modal: false, action: "", currentEvent: null })}
-                    header={modal.action === "add" ? LANG.events_page.add: LANG.events_page.edit}
+                    header={modal.action === "add" ? LANG.events_page.add : LANG.events_page.edit}
                     footer={
                         <>
                             <Button variant="contained" color="error" onClick={() => setModal({ modal: false, action: "", currentEvent: null })}>
@@ -158,32 +163,55 @@ const EventsPage = () => {
 
             <div className="EventsPage-events">
                 {events.map((item, index) => {
+                    const menuItems = [
+                        {
+                            title: LANG.GLOBAL.edit,
+                            isHidden: false,
+                            icon: "edit",
+                            click: () => modalHandler("edit", item)
+                        },
+                        {
+                            itemType: 'divider'
+                        },
+                        {
+                            title: LANG.GLOBAL.delete,
+                            isHidden: false,
+                            icon: "delete",
+                            color: 'error',
+                            click: () => confirmDelete(item)
+                        },
+                    ];
+
                     return (
                         <div
                             key={index}
                             className="EventsPage-event"
-                            style={{ boxShadow: `0px 0px 5px 0px ${item.color ? item.color : "#000"}` }}
+                            style={{ boxShadow: `0px 0px 5px 0px ${item.color || "#000"}` }}
                         >
-                            <div style={{ backgroundColor: item.color ? item.color : "#000" }} className="EventsPage-event-color"></div>
+                            <div style={{ backgroundColor: item.color || "#000" }} className="EventsPage-event-color"></div>
                             <NavLink to={`/event/${item.event_id}`}>
                                 <div className="EventsPage-event-title">{item.title}</div>
                             </NavLink>
                             <div>{description(item.description)}</div>
                             <div className="EventsPage-event-split">
                                 <div className="EventsPage-event-split-date">{item.date_created}</div>
-                                <div>
-                                    <Icon icon={"edit"} addClass={"default-icon"} onClick={() => modalHandler("edit", item)} />
-                                    <Icon icon={"delete"} addClass={"close-icon"} onClick={() => confirmDelete(item)} />
-                                </div>
+                                <ActionMenu menuItems={menuItems} />
                             </div>
                         </div>
                     );
                 })}
             </div>
-            {events.length === 0 && <EmptyData buttonText={LANG.events_page.add_first_events} click={()=>{modalHandler("add")}}/>}
-            
-            {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error"); }} />}
-            {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success"); }} />}
+
+            {events.length === 0 && (
+                <EmptyData buttonText={LANG.events_page.add_first_events} click={() => modalHandler("add")} />
+            )}
+
+            {alert.error && (
+                <SmallNotification isSuccess={false} text={alert.message} close={() => alertHandler("error")} />
+            )}
+            {alert.success && (
+                <SmallNotification isSuccess={true} text={alert.message} close={() => alertHandler("success")} />
+            )}
         </div>
     );
 };
