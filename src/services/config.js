@@ -7,7 +7,7 @@ export const LANG = {
     date: "Дата",
     title: "Назва",
     description: "Опис",
-    no_description:"Без опису",
+    no_description: "Без опису",
     color: "Колір",
     confirm_title: "Підтвердити дію",
     delete: "Видалити",
@@ -23,20 +23,20 @@ export const LANG = {
     type: "Тип",
     file: "Файл",
     link: "Посилання",
-    name:"Ім'я",
-    phone:"Телефон",
-    about:"Про себе",
+    name: "Ім'я",
+    phone: "Телефон",
+    about: "Про себе",
     delete_confirm: "Ви впевнені, що хочети видалити цей запис?",
     pick_all: "Обрати все",
     question: "Питання",
     status: "Статус",
     saving: "Збереження...",
-    loading:"Завантаження...",
-    remember:"Нагадувати",
-    activated:"Активовано",
-    deactivated:"Деактивовано",
-    email:"Електронна пошта",
-    password:"Пароль",
+    loading: "Завантаження...",
+    remember: "Нагадувати",
+    activated: "Активовано",
+    deactivated: "Деактивовано",
+    email: "Електронна пошта",
+    password: "Пароль",
     alertMessages: {
       error: "Виникла помилка. Будь ласка, спробуйте пізніше",
       delete_success: "Запис успішно видалено",
@@ -51,12 +51,12 @@ export const LANG = {
     title_category_case_helps: "Категорії наданої допомоги",
     title_category_groups: "Категорії груп",
   },
-  FIELDS_TABLE:{
-    confirm_delete_start:"Підтвердіть дію з видалення поля",
-    confirm_delete_end:"Ця дія видалить поле та пов'язані з ним дані"
+  FIELDS_TABLE: {
+    confirm_delete_start: "Підтвердіть дію з видалення поля",
+    confirm_delete_end: "Ця дія видалить поле та пов'язані з ним дані"
   },
   FIELDS: {
-    add:"Створити поле",
+    add: "Створити поле",
     field_type: "Тип поля",
     create_field: "Додати нове поле",
     block_view: "Блок відображення",
@@ -116,7 +116,7 @@ export const LANG = {
     ended: "Завершено",
     failed: "Не вдалося",
     id: "ID посилання",
-    confirm_delete:"Ви впевнені, що хочете видалити цю транзакцію?",
+    confirm_delete: "Ви впевнені, що хочете видалити цю транзакцію?",
     alertMessages: {
       error: "Не вдалося завантажити транзакції",
       invalid: "Введіть суму та тип транзакції"
@@ -138,15 +138,15 @@ export const LANG = {
     }
   },
   ACCESS_PAGE: {
-    add:"Додати права",
-    error_no_role_name:"Введіть назву ролі",
+    add: "Додати права",
+    error_no_role_name: "Введіть назву ролі",
     error_no_name: "Введіть назву шаблону права",
-    success_updated:"Шаблон прав оновлено",
+    success_updated: "Шаблон прав оновлено",
     success_added: "Шаблон прав додано",
   },
-  NOT_FOUND:{
-    start:"Ця сторінка не існує! Перевірте правильність посилання або",
-    end:"поверніться на головну"
+  NOT_FOUND: {
+    start: "Ця сторінка не існує! Перевірте правильність посилання або",
+    end: "поверніться на головну"
   },
   MENU_NOTIFICATION: {
     created_new_case: "створив новий кейс",
@@ -255,7 +255,7 @@ export const LANG = {
   plan: {
     task: "Задача плану",
     create: "Створити план",
-    edit:"Редагувати план",
+    edit: "Редагувати план",
     error: "Оберіть дату початку та кінця дати",
     error_date: "Дата початку повинна бути раніше дати кінця"
   },
@@ -320,16 +320,16 @@ export const LANG = {
     emailMinLengthMessage: "Логін повинен бути довжиною більше ніж 8 символів",
     passwordLabel: "Пароль",
     passwordMinLengthMessage: "Пароль повинен бути довжиною більше ніж 5 символів",
-    try_again:"Доступ до аккаунту заблоковано. Спробуйте ще раз через",
-    locked_for_hour:'Too many failed attempts. Account locked for 1 hour.',
-    locked_for_5min:'Too many failed attempts. Account locked for 5 minutes.',
-    incorrect_password:"Неправильний пароль. Спробуйте ще раз",
-    minutes:"хвилин",
-    seconds:"секунд",
-    org_code:"Код організації",
-    code:"Код",
-    enter:"Увійти",
-    time_remained:"Залишилось часу"
+    try_again: "Доступ до аккаунту заблоковано. Спробуйте ще раз через",
+    locked_for_hour: 'Too many failed attempts. Account locked for 1 hour.',
+    locked_for_5min: 'Too many failed attempts. Account locked for 5 minutes.',
+    incorrect_password: "Неправильний пароль. Спробуйте ще раз",
+    minutes: "хвилин",
+    seconds: "секунд",
+    org_code: "Код організації",
+    code: "Код",
+    enter: "Увійти",
+    time_remained: "Залишилось часу"
   },
   galleryBlock: {
     name: "Назва",
@@ -463,16 +463,16 @@ export const LANG = {
     title: "Події",
     add_first_events: "Створити першу подію",
     add: "Створити подію",
-    edit:"Редагувати подію",
-    confirm_delete:"Ви впевнені, що хочете видалити подію",
-    alertMessages:{
-      no_title:"Введіть назву події",
-      too_long:"Назва події повинна бути довжиною до 100 символів"
+    edit: "Редагувати подію",
+    confirm_delete: "Ви впевнені, що хочете видалити подію",
+    alertMessages: {
+      no_title: "Введіть назву події",
+      too_long: "Назва події повинна бути довжиною до 100 символів"
     }
   },
   EVENT_PAGE: {
-    take_part:"Беруть участь",
-    upload:"Завантаження файлів",
+    take_part: "Беруть участь",
+    upload: "Завантаження файлів",
     organisators: "Організатори",
     members: "Учасники",
     deleteOrgConfirm: "Ви впевнені, що хочете видалити організатора",
@@ -522,10 +522,10 @@ export const LANG = {
       success: "Дані оновлено",
       error: "Виникла помилка"
     },
-    add_tag:"Додати тег",
-    your_tags:'Ваші теги',
-    confirm_delete:"Ви впевнені, що хочете видалити цей файл?",
-    add_tags:"Додати теги",
+    add_tag: "Додати тег",
+    your_tags: 'Ваші теги',
+    confirm_delete: "Ви впевнені, що хочете видалити цей файл?",
+    add_tags: "Додати теги",
     name: "Назва файлу",
     withoutName: "Файл без назви",
     last_updated: "Останнє редагування",
@@ -533,14 +533,14 @@ export const LANG = {
     description: "Опис",
     empty_file: "Поки що в файлі немає інформації"
   },
-  user_case_list:{
-    title:"Створені кейси",
-    add:"Створити кейс",
-    avaible:"Доступні кейси"
+  user_case_list: {
+    title: "Створені кейси",
+    add: "Створити кейс",
+    avaible: "Доступні кейси"
   },
-  pagination:{
-    left:"Назад",
-    right:"Вперед"
+  pagination: {
+    left: "Назад",
+    right: "Вперед"
   },
   set_user: {
     reset_password_for: "Скинути пароль для",
@@ -789,15 +789,15 @@ export const LANG = {
     four: "Добре",
     five: "Чудово"
   },
-  ANCETA_PAGE:{
-    question:"Питання",
-    activated:"Активовано",
-    deactivated:"Деактивовано"
+  ANCETA_PAGE: {
+    question: "Питання",
+    activated: "Активовано",
+    deactivated: "Деактивовано"
   },
-  ANCETS_PAGE:{
-    questions_amount:"Кіл-ть питань",
-    created:"Анкету створено",
-    type:"Тип анкети"
+  ANCETS_PAGE: {
+    questions_amount: "Кіл-ть питань",
+    created: "Анкету створено",
+    type: "Тип анкети"
   },
   ancets: {
     delete_anceta: "Видалити анкету",

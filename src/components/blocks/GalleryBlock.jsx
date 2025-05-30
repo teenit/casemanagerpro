@@ -5,6 +5,7 @@ import VideoPlayer from "react-video-js-player";
 import OpenPhoto from '../Galery/OpenPhoto';
 import { LANG } from '../../services/config';
 import Icon from '../elements/Icons/Icon';
+import Table from '../elements/Table/Table';
 
 const GalleryBlock = ({ data, check }) => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -73,7 +74,50 @@ const GalleryBlock = ({ data, check }) => {
             return sizeInMB.toFixed(2) + " MB";
         }
     }
-
+    const columnsTable = [
+        {
+            dataField: 'name',
+            text: LANG.galleryBlock.name,
+            fixed: false,
+            isHidden: false,
+            sort: false,
+            formatter: (cell, row) => {
+                return <div>{cell}</div>
+            }
+        },
+        {
+            dataField: 'type',
+            text: LANG.galleryBlock.type,
+            fixed: false,
+            isHidden: false,
+            sort: false,
+            formatter: (cell, row) => {
+                return <div>{getType(row.type)}</div>
+            }
+        },
+        {
+            dataField: 'size',
+            text: LANG.galleryBlock.size,
+            fixed: false,
+            isHidden: false,
+            sort: false,
+            formatter: (cell, row) => {
+                return <div>{convertSize(row.size)}</div>
+            }
+        },
+        {
+            dataField: 'download',
+            text:LANG.galleryBlock.download,
+            fixed: false,
+            isHidden: false,
+            sort: false,
+            formatter: (cell, row) => {
+                return check && <td><a download={row.name} href={row.link}>
+                    <Icon icon={"download"} addClass={"default-icon"} />
+                </a></td>
+            }
+        }
+    ];
     return (
         <div className='GalleryBlock'>
             {imagesAndVideos.length > 0 && <>
@@ -101,14 +145,15 @@ const GalleryBlock = ({ data, check }) => {
             </>}
             {otherFiles.length > 0 && <>
                 <h1>{LANG.documents}</h1>
-                <table className='Table'>
+                <Table columns={columnsTable} data={otherFiles}/>
+                {/* <table className='Table'>
                     <thead>
                         <tr>
                             <td>{LANG.galleryBlock.name}</td>
                             <td>{LANG.galleryBlock.type}</td>
                             <td>{LANG.galleryBlock.size}</td>
                             {check && <td>{LANG.galleryBlock.download}</td>}
-                            
+
                         </tr>
                     </thead>
                     <tbody>
@@ -119,13 +164,13 @@ const GalleryBlock = ({ data, check }) => {
                                     <td>{getType(item.type)}</td>
                                     <td>{convertSize(item.size)}</td>
                                     {check && <td><a download={item.name} href={item.link}>
-                                        <Icon icon={"download"} addClass={"default-icon"}/>
-                                        </a></td>}
+                                        <Icon icon={"download"} addClass={"default-icon"} />
+                                    </a></td>}
                                 </tr>
                             );
                         })}
                     </tbody>
-                </table>
+                </table> */}
             </>}
             {
                 openedPhoto.show && <OpenPhoto url={openedPhoto.url} close={() => { setOpenedPhoto({ url: "", show: false }) }} />
