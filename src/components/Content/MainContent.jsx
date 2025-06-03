@@ -36,6 +36,7 @@ import AncetsPage from "../pages/AncetsPage";
 import AncetaPage from "../pages/AncetaPage";
 import AncetaPageWrapper from "../pages/AncetaPageWrapper";
 import Statistic from "../Home/Statistic/Statistic";
+import UsersPage from "../pages/UsersPage";
 
 const MainContent = () => {
   const rights = useSelector(state => state.auth);
@@ -53,6 +54,7 @@ const MainContent = () => {
     settings: AccessCheck('page', "a_page_settings"),
     user: AccessCheck('page', "a_page_user"),
     phonebook: AccessCheck('page', "a_page_phonebook"),
+    users: AccessCheck('yes_no', 'a_page_settings_tab_users')
   }
   const { isAuth } = useAuth();
   const params = useParams()
@@ -89,6 +91,7 @@ const MainContent = () => {
         {/* <Route path='/login' element={<LoginPage />} /> */}
         {/* <Route path='/google-drive' element={<GoogleDrivePage />} /> */}
         <Route path='/fields' element={rights.a_super == 1 ? <FieldsPage /> : <NotFound />} />
+        <Route path='/users' element={access.users?<UsersPage />:<NotFound/>}/>
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />

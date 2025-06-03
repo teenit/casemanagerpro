@@ -48,10 +48,13 @@ class ResetPassModal extends Component {
     handleSubmit = () => {
         const data = {
             password: this.state.formData.password,
-            userId: this.props.userId
+            userId: this.props.id
         }
         apiResponse(data, "user/reset-password.php").then((res) => {
             this.alertHandler(true, LANG.set_user.alertMessages.password_updated)
+            setTimeout(()=>{
+                this.props.close()
+            }, 1500)
         })
     };
     alertHandler = (isSuccess, message) => {

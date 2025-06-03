@@ -1,16 +1,21 @@
 import React from "react";
 import Cell from "./Cell";
 
-const Row = ({ columns = [], data = {} }) => {
+const Row = ({rowStyle=null, columns = [], data = {} }) => {
     const getCell = (column) => {
         if (column.formatter) {
             return column.formatter(data[column.dataField], data);
         }
         return data[column.dataField];
     };
-
+const getStyle = ()=>{
+    if(rowStyle && rowStyle.condition(data)){
+        return rowStyle.class
+    }
+    return ''
+}
     return (
-        <tr>
+        <tr className={`${getStyle()}`}>
             {columns.map((item) => (
                 <Cell key={item.dataField} cell={getCell(item)} breakWord={item?.breakWord}/>
             ))}

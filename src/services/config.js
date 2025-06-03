@@ -24,6 +24,7 @@ export const LANG = {
     file: "Файл",
     link: "Посилання",
     name: "Ім'я",
+    pib:"ПІБ",
     phone: "Телефон",
     about: "Про себе",
     delete_confirm: "Ви впевнені, що хочети видалити цей запис?",
@@ -143,6 +144,15 @@ export const LANG = {
     error_no_name: "Введіть назву шаблону права",
     success_updated: "Шаблон прав оновлено",
     success_added: "Шаблон прав додано",
+  },
+  USERS_PAGE:{
+    add_user:"Додати користувача",
+    access:"Шаблон прав",
+    reset_password:"Скинути пароль",
+    deactivate:"Деактивувати",
+    activate:"Активувати",
+    no_level:"Права не встановлено",
+    set_access:"Встановити рівень доступу"
   },
   NOT_FOUND: {
     start: "Ця сторінка не існує! Перевірте правильність посилання або",
@@ -715,7 +725,8 @@ export const LANG = {
     administration: "Адміністрування",
     fields: "Системні поля",
     ancets: "Анкети",
-    statistic: "Статистика"
+    statistic: "Статистика",
+    users:"Користувачі"
   },
   documents: "Додані документи",
   give_help: {
@@ -1180,6 +1191,10 @@ export const appConfig = {
       title: LANG.pages.user,
       description: ""
     },
+    users: {
+      title: LANG.pages.users,
+      description: ""
+    },
     accesses: {
       title: LANG.pages.accesses,
       description: "",
@@ -1576,7 +1591,12 @@ export const appConfig = {
     //     title: LANG.pages.cooperation,
     //     link: "/cooperation"
     // },
-
+    {
+      title: LANG.pages.users,
+      link: "/users",
+      icon: "sex",
+      access:"a_page_settings_tab_users"
+    },
     {
       title: LANG.pages.administration,
       icon: "settings",
