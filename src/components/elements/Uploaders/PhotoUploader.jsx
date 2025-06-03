@@ -30,7 +30,9 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
     formData.append(`files[0]`, file);
 
     const metaObject = { ...meta };
+    const orgCode = localStorage.getItem('codeOrganisation');
     formData.append('meta', JSON.stringify(metaObject));
+    formData.append('codeOrganisation', orgCode);
     const serverLink = meta.type=="case"?"upload-files.php":"upload-files-user.php"
     axios({
       url: serverAddres(serverLink),
@@ -41,7 +43,7 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
       }
     })
       .then((response) => {
-        
+        console.log(response)
         handleAlertChange("success");
         successHandler(response.data);
         setUploading(false);
