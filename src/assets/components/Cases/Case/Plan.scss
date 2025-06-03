@@ -112,16 +112,7 @@
         gap: 24px;
     }
 }
-@media screen and (max-width:720px){
-
-    .dates-start{
-        flex-direction: row;
-    }
-}
 @media screen and (max-width:500px){
-    .Plan {
-       
-    }
     .Plan-title{
         flex-direction: row;
         .fs30.arrow{
@@ -134,4 +125,11 @@
                 display: none;
             }
     }
+    .Plan-content-element .bottom{
+        flex-direction: column;
+    }
+    .Plan-content-element .dates-start{
+    flex-direction: column;
+    gap: 5px !important;
+}
 }

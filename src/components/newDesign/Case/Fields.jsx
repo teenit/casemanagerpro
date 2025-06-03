@@ -10,6 +10,7 @@ import { apiResponse } from '../../Functions/get_apiObj';
 import ModalConfirm from "../../Modals/ModalConfirm";
 import AccessCheck from '../../Functions/AccessCheck';
 import { useSelector } from 'react-redux';
+import ActionMenu from '../../Portals/ActionMenu';
 
 const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
     const [alert, setAlert] = useState({
@@ -117,16 +118,37 @@ const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
     }
 
     const InfoBlock = ({ item }) => {
+            const menuItems = [
+                {
+                    title: LANG.GLOBAL.edit,
+                    isHidden: false,
+                    icon: "edit",
+                    click: () => {
+                        handleEdit(item)
+                    }
+                },
+                {
+                    itemType: 'divider'
+                },
+                {
+                    title: LANG.GLOBAL.delete,
+                    isHidden: false,
+                    icon: "delete",
+                    color: 'error',
+                    click: () => {
+                        handleModalChange("confirm", item.id)
+                    }
+                },
+            ]
         const user = useSelector(state=>state.auth);
 
         return (
             <div className='Fields-InfoBlock'>
                 <div className='Fields-InfoBlock-title'>
                     <div className='Fields-InfoBlock-title-block'>{item.title}</div>
-                    {((access.case_simple_info_edit && item.user_id === user.id) || access.super) && <div className='Fields-InfoBlock-panel'>
-                        <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { handleEdit(item) }} />
-                        <Icon icon={"delete"} addClass={"close-icon"} onClick={() => { handleModalChange("confirm", item.id) }} />
-                    </div>}
+                    {((access.case_simple_info_edit && item.user_id === user.id) || access.super) && 
+                    <ActionMenu menuItems={menuItems}/>
+                    }
                 </div>
                 <span>{item.description}</span>
             </div>

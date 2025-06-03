@@ -3,6 +3,7 @@
     margin-top: 25px;
     display: flex;
     flex-direction: column;
+    border: solid 3px $second-color;
     &-title {
         width: 100%;
         background-color: $second-color;
@@ -10,7 +11,7 @@
         justify-content: space-between;
         align-items: center;
         font-weight: bold;
-        border-radius: 5px;
+        border-radius:0px 0px 10px 10px;
         padding: 0px 15px;
         position: relative;
         &-panel {
@@ -39,7 +40,7 @@
 
         &-item {
             width: 100%;
-            padding: 10px 0px;
+            padding: 10px 5px;
             background-color: #fff;
             display: flex;
             justify-content: space-between;

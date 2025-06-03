@@ -9,6 +9,7 @@ import AddPlan from "../../Modals/EventModals/AddPlan";
 import ModalConfirm from "../../Modals/ModalConfirm";
 import TextDescription from "../../elements/TextFormatters/TextDescription";
 import { LANG } from "../../../services/config";
+import ActionMenu from "../../Portals/ActionMenu";
 
 const EventPlan = (props) => {
     const [alert, setAlert] = useState({
@@ -58,7 +59,28 @@ const EventPlan = (props) => {
         // Замінюємо всі нові рядки на <br> для HTML
         return text.replace(/\n/g, '<br />');
       };
-      
+          const menuItems = [
+              {
+                  title: LANG.GLOBAL.edit,
+                  isHidden: false,
+                  icon: "edit",
+                  click: () => {
+                      modalsHandler("edit")
+                  }
+              },
+              {
+                  itemType: 'divider'
+              },
+              {
+                  title: LANG.GLOBAL.delete,
+                  isHidden: false,
+                  icon: "delete",
+                  color: 'error',
+                  click: () => {
+                      modalsHandler("delete")
+                  }
+              },
+          ]
     return (
         <div className="EventPlan">
             <div className="EventPlan-header">
@@ -68,10 +90,7 @@ const EventPlan = (props) => {
                     </div>
                     <div className="EventPlan-header-details">
                         <div>{`${props.plan.startTime}-${props.plan.endTime}`}</div>
-                        <div>
-                            <Icon icon={"edit"} onClick={()=>{modalsHandler("edit")}}/>
-                            <Icon icon={"delete"} addClass={"close-icon"} onClick={()=>{modalsHandler("delete")}}/>
-                        </div>
+                        <ActionMenu menuItems={menuItems}/>
                     </div>
                    
                 </div>

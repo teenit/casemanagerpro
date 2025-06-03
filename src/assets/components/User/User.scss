@@ -265,6 +265,7 @@
         gap: 20px;
         width: 95%;
         margin: auto;
+        padding: 0;
     }
 
     .pagination__wrap{
@@ -293,8 +294,13 @@
         text-align: center;
     }
 }
+
 @media screen and (max-width:500px){
-    .added_contact_list{
-        grid-template-columns: 1fr;
+    .user_pagination{
+        margin: 0;
+        padding: 0;
+    }
+    .user_pagination>li{
+        display: none;
     }
 }

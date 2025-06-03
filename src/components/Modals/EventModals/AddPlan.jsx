@@ -22,10 +22,10 @@ const AddPlan = ({ close, event_id, action = "add", data, getEventData }) => {
 
     const [plan, setPlan] = useState({
         title: "",
-        startDate: "",
-        startTime: "",
-        endDate: "",
-        endTime: "",
+        startDate: moment().format("DD-MM-YYYY"),
+        startTime: " ",
+        endDate: moment().format("DD-MM-YYYY"),
+        endTime: " ",
         description: "",
         event_id: event_id
     });

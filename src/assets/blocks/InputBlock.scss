@@ -54,3 +54,11 @@
     }
 
 }
+@media screen and (max-width: 500px){
+    .InputBlock{
+        &-editer{
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+}

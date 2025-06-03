@@ -60,9 +60,6 @@
 
 @media screen and (max-width:500px){
     .Fields{
-        .fs35.arrow  {
-            display: none;
-        }
         &-InfoBlock{
             &-title{
                 flex-direction: row;
@@ -72,10 +69,9 @@
         &-title{
             flex-direction: row;
             &-panel{
-                max-width: 100%;
-                font-size: 16px;
+                max-width: fit-content;
+                font-size: 12px;
                 word-wrap: break-word;
-                word-break: break-all;
                 flex-direction: row;
             }
         }

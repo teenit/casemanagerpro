@@ -180,3 +180,14 @@
         grid-template-columns: 1fr;
     }
 }
+
+@media screen and (max-width:500px){
+    .EventPage-MemberItem{
+        &-line{
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+}

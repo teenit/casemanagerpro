@@ -95,8 +95,10 @@
     }
     &--split{
         display: grid;
+        align-items: center;
         grid-template-columns: 1fr 1fr;
         gap: 25px;
+
     }
     &--footer {
         display: flex;
@@ -117,4 +119,12 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
+}
+
+@media screen and (max-width: 600px){
+    .Modal--split{
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: none;
+        gap: 10px;
+    }
 }
