@@ -9,6 +9,7 @@ import { apiResponse } from "../Functions/get_apiObj";
 import ResetPassModal from "../Settings/SetUser/ResetPassModal";
 import EditUserModal from "../Modals/Settings/EditUserModal";
 import AccessCheck from "../Functions/AccessCheck";
+import Pagination from "../elements/Pagination/Pagination";
 
 class UsersPage extends Component {
     constructor(props) {
@@ -17,8 +18,9 @@ class UsersPage extends Component {
             modals: {
                 addUser: false,
                 resetPass: false,
-                editUser: false
+                editUser: false,
             },
+            editUserTitle: LANG.USERS_PAGE.set_access,
             users: [],
             accessList: [],
             currentUser: null,
@@ -36,16 +38,16 @@ class UsersPage extends Component {
     componentDidMount() {
         this.loadData();
         apiResponse({}, 'access/get-list.php').then((res) => {
-            this.setState({ accessList: res });
+            this.setState({ accessList: res })
         });
 
         this.setState({
             access: {
-                edit: ()=>AccessCheck("view_edit", "a_page_settings_change_accesses", "edit"),
-                show_name: ()=>AccessCheck("yes_no", "a_page_settings_show_name"),
-                show_phone: ()=>AccessCheck("yes_no", "a_page_settings_show_phones"),
-                activate: ()=>AccessCheck("yes_no", "a_page_settings_activate_users"),
-                deactivate: ()=>AccessCheck("yes_no", "a_page_settings_deactivate_users")
+                edit: () => AccessCheck("view_edit", "a_page_settings_change_accesses", "edit"),
+                show_name: () => AccessCheck("yes_no", "a_page_settings_show_name"),
+                show_phone: () => AccessCheck("yes_no", "a_page_settings_show_phones"),
+                activate: () => AccessCheck("yes_no", "a_page_settings_activate_users"),
+                deactivate: () => AccessCheck("yes_no", "a_page_settings_deactivate_users")
             }
         });
     }
@@ -54,30 +56,41 @@ class UsersPage extends Component {
         this.setState({ loading: true });
         apiResponse({}, "user/get-users.php").then((res) => {
             this.setState({ users: res })
+            console.log(res)
         }).catch((err) => {
             console.error(err)
-        }).finally(() => {
-            this.setState({ loading: false })
-        });
-    };
-
-    activateUser = (arg, userID, text, keyt) => {
-        this.setState({ loading: true });
-        apiResponse({
-            activate: arg,
-            userId: userID,
-            text: text,
-            keyt: keyt
-        }, "user/activate.php").then(() => {
-            this.loadData()
-        }).finally(() => {
-            this.setState({ loading: false })
-        });
+        })
+        this.setState({ loading: false })
     };
 
     modalHandler = (name) => {
         this.setState({ modals: { ...this.state.modals, [name]: !this.state.modals[name] } })
     };
+    activateUser = (arg, userID, text, keyt) => {
+        this.setState({ loading: true });
+
+        apiResponse({
+            activate: arg,
+            userId: userID,
+            text: text,
+            keyt: keyt
+        }, "user/activate.php")
+            .then(() => {
+                let user = this.state.users.find(item => item.id === userID)
+                if (arg === "true" && (user.access==="0" || user.access==null)) {
+                    this.modalHandler("editUser")
+                    this.setState({ currentUser: user, editUserTitle: `${LANG.USERS_PAGE.wish_set_access} ${user.userName}?` })
+                    console.log(this.state.editUserTitle, `${LANG.USERS_PAGE.wish_set_access} ${user.userName}?`)
+                }
+            })
+            .finally(() => {
+                this.loadData()
+                this.setState({ loading: false });
+            });
+    };
+
+
+
 
     getStatusData = (row) => {
         if (row.active === "true" && this.state.access.deactivate) {
@@ -100,7 +113,6 @@ class UsersPage extends Component {
                 }
             };
         }
-        return { isHidden: true };
     };
 
     getAccess = (access) => {
@@ -114,7 +126,9 @@ class UsersPage extends Component {
             {
                 dataField: 'id',
                 text: "ID",
-                sort: true
+                sort: true,
+                fixed: false,
+                isHidden: false,
             },
             show_name && {
                 dataField: 'name',
@@ -166,9 +180,6 @@ class UsersPage extends Component {
                     const menuItems = [
                         this.getStatusData(row),
                         (this.state.access.activate && this.state.access.deactivate) && {
-                            itemType: 'divider'
-                        },
-                        (this.state.access.activate && this.state.access.deactivate) && {
                             title: LANG.USERS_PAGE.reset_password,
                             isHidden: false,
                             icon: "reset_password",
@@ -178,10 +189,7 @@ class UsersPage extends Component {
                             }
                         },
                         this.state.access.edit && {
-                            itemType: 'divider'
-                        },
-                        this.state.access.edit && {
-                            title: LANG.GLOBAL.edit,
+                            title: LANG.USERS_PAGE.set_access,
                             isHidden: false,
                             icon: "edit",
                             click: () => {
@@ -205,15 +213,14 @@ class UsersPage extends Component {
 
         return (
             <div className="UsersPage">
-                {access.activate && <AddButton title={LANG.USERS_PAGE.add_user} click={() => this.modalHandler("addUser")}/>}
-                <Table rowStyle={{ class: "table-active", condition: (row) => row.active === "true" }} columns={this.tableColumns} data={users}/>
+                {access.activate && <AddButton title={LANG.USERS_PAGE.add_user} click={() => this.modalHandler("addUser")} />}
+                <Table rowStyle={{ class: "table-active", condition: (row) => row.active === "true" }} columns={this.tableColumns} data={users} />
                 {modals.addUser && <SetUserModal successHandler={this.loadData} close={() => this.modalHandler("addUser")} />}
-                {modals.resetPass && canResetPassword && currentUser && <ResetPassModal close={() => this.modalHandler("resetPass")} {...currentUser}/>}
+                {modals.resetPass && canResetPassword && currentUser && <ResetPassModal close={() => this.modalHandler("resetPass")} {...currentUser} />}
                 {modals.editUser && access.edit && currentUser && <EditUserModal close={() => this.modalHandler("editUser")} {...currentUser}
-                accessList={accessList} successHandler={this.loadData}
-                deactivate={(user_id) => {this.activateUser("false", user_id, "Деактивовано", "deactivateUsers");}}
-                activate={(user_id) => {this.activateUser("true", user_id, "Активовано", "activeNewUser");}}
-                
+                    accessList={accessList} successHandler={this.loadData} title={this.state.editUserTitle}
+                    deactivate={(user_id) => { this.activateUser("false", user_id, "Деактивовано", "deactivateUsers"); }}
+
                 />}
             </div>
         );

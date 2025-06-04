@@ -142,7 +142,7 @@ class SetUserModal extends Component {
     return (
       <Modal
         closeHandler={this.props.close}
-        header="Зареєструвати користувача"
+        header={LANG.USERS_PAGE.set_user}
         footer={
           <>
             <Button variant="contained" onClick={this.handleSubmit}>{LANG.GLOBAL.save}</Button>

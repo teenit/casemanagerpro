@@ -20,22 +20,19 @@ class EditUserModal extends Component {
             if(this.state.access === "0"){
                 this.props.deactivate(this.props.id)
             }
-            if(this.props.active=="false" && this.state.access !== "0"){
-                this.props.activate(this.props.id)
-            }
             this.props.close()
             this.props.successHandler()
         })
     }
     render() {
         return (
-            <Modal closeHandler={this.props.close} header={LANG.USERS_PAGE.set_access}
+            <Modal closeHandler={this.props.close} header={this.props.title}
                 footer={<>
                     <Button variant="contained" onClick={this.saveHandler}>{LANG.GLOBAL.save}</Button>
                     <Button variant="contained" color="error" onClick={this.props.close}>{LANG.GLOBAL.cancel}</Button>
                 </>}>
                 <Select
-                    value={this.state.access}
+                    value={this.state.access || "0"}
                     onChange={(e) => { this.accessHandler(e.target.value) }}
                 >
                     <MenuItem value={"0"}>{LANG.USERS_PAGE.no_level}</MenuItem>

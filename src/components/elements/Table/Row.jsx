@@ -9,7 +9,7 @@ const Row = ({rowStyle=null, columns = [], data = {} }) => {
         return data[column.dataField];
     };
 const getStyle = ()=>{
-    if(rowStyle && rowStyle.condition(data)){
+    if(rowStyle.condition && rowStyle.condition(data)){
         return rowStyle.class
     }
     return ''
