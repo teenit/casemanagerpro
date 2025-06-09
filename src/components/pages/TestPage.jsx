@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import CustomInput from "../elements/Inputs/CustomInput";
+import { Button } from "@mui/material";
+import moment from "moment/moment";
+import { apiResponse } from "../Functions/get_apiObj";
+import Input from "../elements/Inputs/Input";
 
 const TestPage = () => {
     const [state, setState] = useState([
@@ -560,6 +564,34 @@ const TestPage = () => {
             ]
         }
     ])
+    const [taskId, setTaskId] = useState(1)
+
+    const createTask = () => {
+        let obj = {
+            from: 1,
+            to: 2,
+            title: "test_" + Math.random(),
+            description: "descript_test" + Math.random(),
+            dead_line: '2025-06-20 17:00',
+            status: 1,
+            reviewer_id: 1,
+            action: "add_task"
+        }
+
+        apiResponse({...obj}, 'tasks/task.php').then((res)=>{
+            console.log(res)
+        })
+    }
+
+    const getTask = () => {
+        let obj = {
+            action: "get_task",
+            task_id: taskId
+        }
+        apiResponse({...obj}, 'tasks/task.php').then((res)=>{
+            console.log(res)
+        })
+    }
     return(
         <div className="TestPage">
             {/* <div className="main">Структура компанії</div>
@@ -605,9 +637,21 @@ const TestPage = () => {
                 }
             </div> */}
 
-            <CustomInput 
+            {/* <CustomInput 
                 label={"Тест лабел"} 
-            />
+            /> */}
+            <Button onClick={createTask}>
+                Create task
+            </Button>
+            <div>
+            <Button onClick={getTask}>
+                Get task
+            </Button>
+            <Input value={taskId} onChange={(e)=>{
+                setTaskId(e.target.value)
+            }}/>
+            </div>
+           
         </div>
     )
 }
