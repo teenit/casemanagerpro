@@ -55,17 +55,14 @@ class TasksPage extends Component {
         };
 
         apiResponse(obj, 'tasks/task.php').then((res) => {
-            console.log(res)
             this.setState({ tasks: res.data });
             this.setState({ loading: false })
-
         });
     }
     getUsers = () => {
         this.setState({ loading: true })
 
         apiResponse({ action: "get_users_list" }, "user/users.php").then((res) => {
-            console.log(res)
             this.setState({ users: res.data })
             this.setState({ loading: false })
 
@@ -311,15 +308,12 @@ class TasksPage extends Component {
                     </Box>
 
                     <div role="tabpanel" style={{ paddingTop: "15px" }}>
-                        {this.state.loading ? <p>{LANG.GLOBAL.loading}</p> :
-                            <Table rowStyle={this.rowStyle} columns={this.tableColumns} data={this.state.tasks} keyField="id"
+                            <Table loading={this.state.loading} rowStyle={this.rowStyle} columns={this.tableColumns} data={this.state.tasks} keyField="id"
                                 sortField={this.state.sort.field}
                                 sortOrder={this.state.sort.order}
                                 emptyTable={<EmptyData title={LANG.TASKS_PAGE.not_found} buttonText={LANG.TASKS_PAGE.add}
                                     click={() => { this.modalHandler("add_task") }} />}
-                            />}
-
-
+                            />
 
                     </div>
                 </Box>
