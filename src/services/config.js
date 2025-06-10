@@ -12,6 +12,7 @@ export const LANG = {
     confirm_title: "Підтвердити дію",
     delete: "Видалити",
     skip: "Пропустити",
+    finish:"Завершити",
     start: "Початок",
     end: "Кінець",
     link: "Посилання",
@@ -24,20 +25,26 @@ export const LANG = {
     file: "Файл",
     link: "Посилання",
     name: "Ім'я",
-    pib:"ПІБ",
+    pib: "ПІБ",
     phone: "Телефон",
     about: "Про себе",
     delete_confirm: "Ви впевнені, що хочети видалити цей запис?",
     pick_all: "Обрати все",
     question: "Питання",
     status: "Статус",
+    yes:"Так",
+    no:"Ні",
     saving: "Збереження...",
     loading: "Завантаження...",
+    search:"Пошук...",
     remember: "Нагадувати",
     activated: "Активовано",
     deactivated: "Деактивовано",
     email: "Електронна пошта",
     password: "Пароль",
+    unknown_user:"Невідомий користувач",
+    date_created:"Дата створення",
+    date_updated:"Дата оновлення",
     alertMessages: {
       error: "Виникла помилка. Будь ласка, спробуйте пізніше",
       delete_success: "Запис успішно видалено",
@@ -145,16 +152,16 @@ export const LANG = {
     success_updated: "Шаблон прав оновлено",
     success_added: "Шаблон прав додано",
   },
-  USERS_PAGE:{
-    add_user:"Додати користувача",
-    access:"Шаблон прав",
-    reset_password:"Скинути пароль",
-    deactivate:"Деактивувати",
-    activate:"Активувати",
-    no_level:"Права не встановлено",
-    set_access:"Встановити рівень доступу",
-    wish_set_access:"Бажаєте встановити шаблон прав для",
-    set_user:"Зареєструвати користувача"
+  USERS_PAGE: {
+    add_user: "Додати користувача",
+    access: "Шаблон прав",
+    reset_password: "Скинути пароль",
+    deactivate: "Деактивувати",
+    activate: "Активувати",
+    no_level: "Права не встановлено",
+    set_access: "Встановити рівень доступу",
+    wish_set_access: "Бажаєте встановити шаблон прав для",
+    set_user: "Зареєструвати користувача"
   },
   NOT_FOUND: {
     start: "Ця сторінка не існує! Перевірте правильність посилання або",
@@ -505,6 +512,34 @@ export const LANG = {
       plan_deleted: "План видалено",
     }
   },
+  TASKS_PAGE: {
+    add: "Додати завдання",
+    edit:"Редагувати завдання",
+    dead_line: "Дедлайн",
+    from: "Від кого",
+    to: "Хто виконує",
+    reviewer: "Хто оцінює",
+    archive: "В архів",
+    unarchive: "З архіву",
+    is_archived:"В архіві",
+    not_found: "Завдань не знайдено",
+    priority_text: "Пріорітет",
+    info: "Інформація про завдання",
+    invalid_data:"Введіть назву та дедлайн таску",
+    active:"Активно",
+    finished:"Завершено",
+    priority: {
+      3: "Високий",
+      2: "Середній",
+      1: "Низький"
+    },
+    tabs: {
+      all: "Усі",
+      active: "Активні",
+      finished: "Завершені",
+      archived: "Архівовані"
+    }
+  },
   resources: {
     add: "Додати ресурс",
     link_title: "Корисні посилання",
@@ -728,7 +763,8 @@ export const LANG = {
     fields: "Системні поля",
     ancets: "Анкети",
     statistic: "Статистика",
-    users:"Користувачі"
+    users: "Користувачі",
+    tasks: "Таск-менеджер"
   },
   documents: "Додані документи",
   give_help: {
@@ -923,6 +959,11 @@ export const appConfig = {
     }
   },
   newAccess: {
+    // tasks:{
+    //   view_edit:[
+    //     "a_task_manager"
+    //   ]
+    // },
     access: {
       yes_no: [
         "a_super",
@@ -1157,10 +1198,10 @@ export const appConfig = {
       description: "",
       path: "/settings"
     },
-    // users:{
-    //   title:LANG.pages.users,
-    //   description:""
-    // },
+    users: {
+      title: LANG.pages.users,
+      description: ""
+    },
     resources: {
       title: LANG.pages.resources,
       description: "",
@@ -1195,7 +1236,13 @@ export const appConfig = {
     },
     users: {
       title: LANG.pages.users,
-      description: ""
+      description: "",
+      path: "/users"
+    },
+    tasks: {
+      title: LANG.pages.tasks,
+      description: "",
+      path: "/tasks"
     },
     accesses: {
       title: LANG.pages.accesses,
@@ -1596,8 +1643,14 @@ export const appConfig = {
     {
       title: LANG.pages.users,
       link: "/users",
-      icon: "sex",
-      access:"a_page_settings_tab_users"
+      icon: "users",
+      access: "a_page_settings_tab_users"
+    },
+    {
+      title: LANG.pages.tasks,
+      link: "/tasks",
+      icon: "task",
+      access: "a_task_manager"
     },
     {
       title: LANG.pages.administration,

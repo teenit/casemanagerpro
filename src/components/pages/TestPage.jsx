@@ -585,7 +585,7 @@ const TestPage = () => {
 
     const getTask = () => {
         let obj = {
-            action: "get_task",
+            action: "get_tasks",
             task_id: taskId
         }
         apiResponse({...obj}, 'tasks/task.php').then((res)=>{

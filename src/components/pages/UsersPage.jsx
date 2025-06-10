@@ -204,7 +204,11 @@ class UsersPage extends Component {
             }
         ];
     }
-
+    get rowStyle (){
+        return [
+            { class: "table-green", condition: (row) => row.active === "true" }
+        ]
+    }
     render() {
         const { modals, users, currentUser, access, accessList, loading } = this.state
         const canResetPassword = access.activate && access.deactivate
@@ -214,7 +218,7 @@ class UsersPage extends Component {
         return (
             <div className="UsersPage">
                 {access.activate && <AddButton title={LANG.USERS_PAGE.add_user} click={() => this.modalHandler("addUser")} />}
-                <Table rowStyle={{ class: "table-active", condition: (row) => row.active === "true" }} columns={this.tableColumns} data={users} />
+                <Table rowStyle={this.rowStyle} columns={this.tableColumns} data={users} />
                 {modals.addUser && <SetUserModal successHandler={this.loadData} close={() => this.modalHandler("addUser")} />}
                 {modals.resetPass && canResetPassword && currentUser && <ResetPassModal close={() => this.modalHandler("resetPass")} {...currentUser} />}
                 {modals.editUser && access.edit && currentUser && <EditUserModal close={() => this.modalHandler("editUser")} {...currentUser}

@@ -2,7 +2,7 @@ import React from "react";
 import Row from "./Row";
 import Cell from "./Cell";
 
-const Table = ({rowStyle={}, columns = [], data = [], keyField, addClass = "", sortField = "", sortOrder = "", emptyTable = null }) => {
+const Table = ({rowStyle=[], columns = [], data = [], keyField, addClass = "", sortField = "", sortOrder = "", emptyTable = null }) => {
     return (
         <div className={`Table ${addClass}`}>
             <table>

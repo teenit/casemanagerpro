@@ -1,0 +1,17 @@
+.Tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    &-header{
+display: flex;
+align-items: center;
+    }
+    &-info{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        &-title{
+            font-weight: 600;
+        }
+    }
+}

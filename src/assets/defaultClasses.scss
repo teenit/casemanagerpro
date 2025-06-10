@@ -110,6 +110,16 @@ color: $main-color;
 .css-hlbajn-MuiRating-label {
     color: $main-color;
 }
-.table-active{
-    background-color: rgb(215, 244, 215);
+.table-green{
+    background-color: rgb(218, 236, 218);
+}
+.table-red{
+    background-color: rgb(231, 200, 200);
+}
+.in-row{
+    white-space: nowrap;
+}
+.users-select{
+    max-height: 100px;
+    overflow-y: auto;
 }

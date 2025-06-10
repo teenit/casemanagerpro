@@ -1,0 +1,15 @@
+.SearchInput{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    &-results{
+        max-height: 100px;
+        overflow-y: auto;
+        &-item{
+            padding: 0px 5px;
+            &:nth-child(even){
+                background-color: var(--second-color);
+            }
+        }
+    }
+}

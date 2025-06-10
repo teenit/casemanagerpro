@@ -28,12 +28,27 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 import VpnKeyOffIcon from '@mui/icons-material/VpnKeyOff';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import GroupsIcon from '@mui/icons-material/Groups';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
 const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case 'archive':
+                ico = <ArchiveIcon fontSize='large' className={addClass} onClick={onClick} />
+                break;
+            case 'unarchive':
+                ico = <UnarchiveIcon fontSize='large' className={addClass} onClick={onClick} />
+                break;
+            case 'users':
+                ico = <GroupsIcon fontSize='large' className={addClass} onClick={onClick} />
+                break;
+            case 'task':
+                ico = <AssignmentIcon fontSize='large' className={addClass} onClick={onClick} />
+                break;
             case 'reset_password':
                 ico = <VpnKeyOffIcon fontSize='large' className={addClass} onClick={onClick} />
                 break;

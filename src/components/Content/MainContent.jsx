@@ -37,6 +37,7 @@ import AncetaPage from "../pages/AncetaPage";
 import AncetaPageWrapper from "../pages/AncetaPageWrapper";
 import Statistic from "../Home/Statistic/Statistic";
 import UsersPage from "../pages/UsersPage";
+import TasksPage from "../pages/TasksPage";
 
 const MainContent = () => {
   const rights = useSelector(state => state.auth);
@@ -54,7 +55,8 @@ const MainContent = () => {
     settings: AccessCheck('page', "a_page_settings"),
     user: AccessCheck('page', "a_page_user"),
     phonebook: AccessCheck('page', "a_page_phonebook"),
-    users: AccessCheck('yes_no', 'a_page_settings_tab_users')
+    users: AccessCheck('yes_no', 'a_page_settings_tab_users'),
+    tasks: AccessCheck('view_edit', 'a_task_manager', 'view')
   }
   const { isAuth } = useAuth();
   const params = useParams()
@@ -74,10 +76,10 @@ const MainContent = () => {
         <Route path='/events' element={access.events ? <EventsPage /> : <NotFound />} />
         {/* <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} /> */}
         <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} />
-        <Route path='/telegram' element={ <TelegramPage />} />
+        <Route path='/telegram' element={<TelegramPage />} />
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
-        <Route path='/group/:id' element={access.group ? <Group />  : <NotFound />} />
+        <Route path='/group/:id' element={access.group ? <Group /> : <NotFound />} />
         <Route path='/task' element={<Task />} />
         <Route path='/test' element={<TestPage />} />
         <Route path='/search' element={<Search />} />
@@ -85,13 +87,14 @@ const MainContent = () => {
         <Route path='/transactions' element={<TransactionsPage />} />
         <Route path='/ancets/:id' element={<AncetaPageWrapper />} />
         <Route path='/file/:id' element={<File />} />
-        <Route path='/calendar' element={ access.calendar ? <MyBigCalendar /> :  <NotFound />} />
+        <Route path='/calendar' element={access.calendar ? <MyBigCalendar /> : <NotFound />} />
         <Route path='/ancets' element={<AncetsPage />} />
         <Route path='/statistic' element={<Statistic />} />
         {/* <Route path='/login' element={<LoginPage />} /> */}
         {/* <Route path='/google-drive' element={<GoogleDrivePage />} /> */}
         <Route path='/fields' element={rights.a_super == 1 ? <FieldsPage /> : <NotFound />} />
-        <Route path='/users' element={access.users?<UsersPage />:<NotFound/>}/>
+        <Route path='/users' element={access.users ? <UsersPage /> : <NotFound />} />
+        <Route path='/tasks' element={access.tasks ? <TasksPage /> : <NotFound />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />
