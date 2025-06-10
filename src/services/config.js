@@ -528,6 +528,8 @@ export const LANG = {
     invalid_data:"Введіть назву та дедлайн таску",
     active:"Активно",
     finished:"Завершено",
+    finish:"Завершити",
+    make_active:"Зробити активним",
     priority: {
       3: "Високий",
       2: "Середній",

@@ -25,13 +25,12 @@ const Input = ({
     const Component = components[type] ? components[type] : TextField;
 
     const getValue = (type, val) => {
-        if (!val) return '';
         let newVal = val;
-        if (val) {
-            if(type == "datetime-local" || type == "datetime" || type == 'date') {
-                newVal = moment(val) || moment().format("YYYY-MM-DDTHH:mm");
-            }
+        
+        if(type == "datetime-local" || type == "datetime" || type == 'date') {
+            newVal = moment(val) || moment().format("YYYY-MM-DDTHH:mm");
         }
+        
         return newVal;
     }
 

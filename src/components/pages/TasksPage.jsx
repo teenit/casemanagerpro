@@ -16,6 +16,7 @@ import Modal from "../Modals/Modal";
 import SearchInput from "../elements/Inputs/SearchInput";
 import Pagination from "../elements/Pagination/Pagination";
 import AccessCheck from "../Functions/AccessCheck";
+import { RampRightSharp } from "@mui/icons-material";
 class TasksPage extends Component {
     constructor(props) {
         super(props)
@@ -34,6 +35,7 @@ class TasksPage extends Component {
                 field: 'id',
                 order: 'ASC'
             },
+            search: "",
             users: {},
             access: {
                 edit: false
@@ -48,7 +50,8 @@ class TasksPage extends Component {
             action: "get_tasks",
             main_mode: this.tabData[this.state.tabValue]?.mode,
             sort: this.state.sort.order,
-            order: this.state.sort.field
+            order: this.state.sort.field,
+            search: this.state.search
         };
 
         apiResponse(obj, 'tasks/task.php').then((res) => {
@@ -74,7 +77,8 @@ class TasksPage extends Component {
         })
     }
     finishTask = (data) => {
-        apiResponse({ ...data, action: "edit_task", task_id: data.id, is_finished: 1 }, 'tasks/task.php').then((res) => {
+        const actionFinished = data.is_finished? 0 : 1
+        apiResponse({ ...data, action: "edit_task", task_id: data.id, is_finished: actionFinished }, 'tasks/task.php').then((res) => {
             this.loadData()
         })
     }
@@ -94,6 +98,7 @@ class TasksPage extends Component {
         });
 
     }
+
     handleSortClick = (field) => {
         const { sort } = this.state;
         const newOrder = sort.field === field && sort.order === 'ASC' ? 'DESC' : 'ASC';
@@ -108,14 +113,11 @@ class TasksPage extends Component {
         //Не удалять event
         this.setState({ tabValue: value }, this.loadData);
     };
-    searchHandler = (data) => {
-        if (data.length == 0) return this.loadData()
-        const users = data.map(item => Number(item.id))
-        const newTasks = this.state.tasks.filter(item => users.includes(item.from) || users.includes(item.to)
-            || users.includes(item.reviewer_id))
-        console.log(data, users, newTasks)
-        this.setState({ tasks: newTasks })
+    searchHandler(value) {
+        this.setState({ search: value }, this.loadData);
     }
+
+
     get tableColumns() {
         return [
             {
@@ -237,8 +239,8 @@ class TasksPage extends Component {
                                 this.setState({ current_task: row })
                             }
                         },
-                        edit && row.is_finished == 0 && {
-                            title: LANG.GLOBAL.finish,
+                        edit&&{
+                            title: row.is_finished?LANG.TASKS_PAGE.make_active:LANG.TASKS_PAGE.finish,
                             isHidden: false,
                             icon: "save",
                             click: () => {
@@ -292,7 +294,6 @@ class TasksPage extends Component {
     render() {
         const { modals, tabValue, current_task, loading } = this.state
 
-        if (loading) return <p>{LANG.GLOBAL.loading}</p>
 
         return (
             <div className="Tasks">
@@ -310,12 +311,15 @@ class TasksPage extends Component {
                     </Box>
 
                     <div role="tabpanel" style={{ paddingTop: "15px" }}>
-                        <Table rowStyle={this.rowStyle} columns={this.tableColumns} data={this.state.tasks} keyField="id"
-                            sortField={this.state.sort.field}
-                            sortOrder={this.state.sort.order}
-                            emptyTable={<EmptyData title={LANG.TASKS_PAGE.not_found} buttonText={LANG.TASKS_PAGE.add}
-                                click={() => { this.modalHandler("add_task") }} />}
-                        />
+                        {this.state.loading ? <p>{LANG.GLOBAL.loading}</p> :
+                            <Table rowStyle={this.rowStyle} columns={this.tableColumns} data={this.state.tasks} keyField="id"
+                                sortField={this.state.sort.field}
+                                sortOrder={this.state.sort.order}
+                                emptyTable={<EmptyData title={LANG.TASKS_PAGE.not_found} buttonText={LANG.TASKS_PAGE.add}
+                                    click={() => { this.modalHandler("add_task") }} />}
+                            />}
+
+
 
                     </div>
                 </Box>

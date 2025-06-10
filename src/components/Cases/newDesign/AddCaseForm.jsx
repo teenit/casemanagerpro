@@ -33,7 +33,7 @@ const AddCaseForm = () => {
         phone2: "",
         sex:" ",
         email: "",
-        happy_bd: " ",
+        happy_bd: "",
     });
     const initialStateData = {
         case_id: id,
@@ -81,6 +81,7 @@ const AddCaseForm = () => {
     }
     
     function handleSubmit() {
+        console.log(stateData)
         if (stateGeneral.first_name.length < 1) {
             setErrorAlert({...errorAlert,status:true,text:LANG.add_case.alertMessages.name});
         } else {
@@ -158,21 +159,21 @@ const GeneralForm = ({ stateGeneral, changeHandlerGeneral, handleSubmit, errorAl
             <div className="AddCaseForm-inner-line-three w100">
                 <div >
                     <p>{LANG.case_data.first_name} <span className="required">*</span></p>
-                    <Input
+                    <Input addClass="w100"
                         value={stateGeneral.first_name}
                         onChange={(e) => changeHandlerGeneral("first_name", changeAps(e.target.value))}
                     />
                 </div>
                 <div>
                     <p>{LANG.case_data.middle_name}</p>
-                    <Input
+                    <Input addClass="w100"
                         value={stateGeneral.middle_name}
                         onChange={(e) => changeHandlerGeneral("middle_name", changeAps(e.target.value))}
                     />
                 </div>
                 <div>
                     <p>{LANG.case_data.last_name}</p>
-                    <Input
+                    <Input addClass="w100"
                         value={stateGeneral.last_name}
                         onChange={(e) => changeHandlerGeneral("last_name", changeAps(e.target.value))}
                     />
@@ -181,7 +182,7 @@ const GeneralForm = ({ stateGeneral, changeHandlerGeneral, handleSubmit, errorAl
             <div className="AddCaseForm-inner-line-three w100">
                 <div>
                     <p>{LANG.case_data.phone} 1</p>
-                    <Input
+                    <Input addClass="w100"
                         type="number"
                         value={stateGeneral.phone1}
                         onChange={(e) => changeHandlerGeneral("phone1", changeAps(e.target.value))}
@@ -189,15 +190,15 @@ const GeneralForm = ({ stateGeneral, changeHandlerGeneral, handleSubmit, errorAl
                 </div>
                 <div>
                     <p>{LANG.case_data.phone} 2</p>
-                    <Input
+                    <Input addClass="w100"
                         type="number"
                         value={stateGeneral.phone2}
                         onChange={(e) => changeHandlerGeneral("phone2", changeAps(e.target.value))}
                     />
                 </div>
-                <div>
+                <div >
                 <p>{LANG.case_data.sex}</p>
-                <Select size="small" value={stateGeneral.sex} onChange={(e)=>{changeHandlerGeneral("sex", e.target.value)}}>
+                <Select className="w100" size="small" value={stateGeneral.sex} onChange={(e)=>{changeHandlerGeneral("sex", e.target.value)}}>
                         <MenuItem value="male">{LANG.selects.sex.male}</MenuItem>
                         <MenuItem value="female">{LANG.selects.sex.female}</MenuItem>
                         <MenuItem value="other">{LANG.selects.sex.other}</MenuItem>
@@ -215,7 +216,7 @@ const GeneralForm = ({ stateGeneral, changeHandlerGeneral, handleSubmit, errorAl
                 </div>
                 <div>
                     <p>{LANG.case_data.birthday}</p>
-                    <Input
+                    <Input addClass="w100"
                         type="date"
                         value={stateGeneral.happy_bd}
                         onChange={(e) => changeHandlerGeneral("happy_bd", e.target.value)}
@@ -232,23 +233,23 @@ const DataForm = ({ stateData, changeHandlerData, handleCheckboxChange, checkedM
     return (
         <div className="AddCaseForm-inner">
             <div className="AddCaseForm-inner-line-three w100">
-                <div className="w100">
+                <div>
                     <p>{LANG.case_data.address_registered}</p>
-                    <Input
+                    <Input addClass="w100"
                         value={stateData.address_registered}
                         onChange={(e) => changeHandlerData("address_registered", changeAps(e.target.value))}
                     />
                 </div>
-                <div className="w100">
+                <div>
                     <p>{LANG.case_data.address_live}</p>
-                    <Input
+                    <Input addClass="w100"
                         value={stateData.address_live}
                         onChange={(e) => changeHandlerData("address_live", changeAps(e.target.value))}
                     />
                 </div>
-                <div className="w100">
+                <div>
                     <p>{LANG.case_data.channel}</p>
-                    <Input
+                    <Input addClass="w100"
                         value={stateData.channel}
                         onChange={(e) => changeHandlerData("channel", changeAps(e.target.value))}
                     />
@@ -257,23 +258,23 @@ const DataForm = ({ stateData, changeHandlerData, handleCheckboxChange, checkedM
             <div className="AddCaseForm-inner-line-three w100">
                 <div className="w100">
                     <p>{LANG.case_data.first_contact}</p>
-                    <Input
+                    <Input addClass="w100"
                         type="date"
                         value={stateData.date_first_contact}
-                        onChange={(e) => changeHandlerData("date_first_contact", changeAps(e.target.value))}
+                        onChange={(e) => changeHandlerData("date_first_contact", e.target.value)}
                     />
                 </div>
                 <div className="w100">
                     <p>{LANG.case_data.contract_date}</p>
-                    <Input
+                    <Input addClass="w100"
                         type="date"
                         value={stateData.contract_date}
-                        onChange={(e) => changeHandlerData("contract_date", changeAps(e.target.value))}
+                        onChange={(e) => changeHandlerData("contract_date", e.target.value)}
                     />
                 </div>
                 <div className="w100">
                     <p>{LANG.case_data.contract_number}</p>
-                    <Input
+                    <Input addClass="w100"
                         type="number"
                         value={stateData.contract_number}
                         onChange={(e) => changeHandlerData("contract_number", changeAps(e.target.value))}

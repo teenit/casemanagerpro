@@ -30,14 +30,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 50px;
-            .Input{
-                div{
-                    width: 100%;
-                }
-            }
-            >div>div{
-                width: 100%;
-            }
         }
         &-line-two{
             display: grid;

@@ -16,11 +16,7 @@ class SearchInput extends Component {
 
     }
     search = () => {
-        apiResponse({ val: this.state.value }, "user/search.php")
-            .then((data) => {
-                this.props.handler(data)
-            })
-            .catch((error) => console.log(error))
+        this.props.handler(this.state.value)
     }
     render() {
         return (
