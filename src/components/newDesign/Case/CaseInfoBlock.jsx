@@ -253,7 +253,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
 
             </div>
             <PersonalInfo cg={cg} case_id={case_id} getCaseInfo={getCaseInfo} info={info} changeData={changeData} changeGeneral={changeGeneral} />
-            {alert && <SmallNotification isSuccess={true} text={"Дані збережено успішно"} close={() => setAlert(false)} />}
+            {alert && <SmallNotification isSuccess={true} text={LANG.GLOBAL.alertMessages.updated_success} close={() => setAlert(false)} />}
         </div>
     );
 };

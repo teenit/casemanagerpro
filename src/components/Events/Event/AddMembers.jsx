@@ -39,7 +39,7 @@ const AddMembers = ({ modalHandler, getEventData }) => {
 
     function addUser() {
         if (user.userName === "" || (!userInSystem && user.phone === "")) {
-            return alertHandler("error", "Введіть користувача та його номер телефону (якщо користувач новий)");
+            return alertHandler("error", LANG.ADD_MEMBERS.invalid_data);
         }
     
         let usersKey = role === "manager" ? "event_user_manager" : "event_case_member";
@@ -77,7 +77,7 @@ const AddMembers = ({ modalHandler, getEventData }) => {
     
 
     return (
-        <Modal closeHandler={() => { modalHandler(); }} header={"Додати учасника"} footer={
+        <Modal closeHandler={() => { modalHandler(); }} header={LANG.ADD_MEMBERS.add} footer={
             <>
                 <Button variant="contained" color="error" onClick={() => { modalHandler(); }}>{LANG.GLOBAL.cancel}</Button>
                 <Button variant="contained" onClick={addUser}>{LANG.GLOBAL.save}</Button>
@@ -86,18 +86,18 @@ const AddMembers = ({ modalHandler, getEventData }) => {
             <div className="Modal--content">
                 <div className={s.add__user__wrap}>
                     <Select value={role} onChange={(e) => { setRole(e.target.value); }}>
-                        <MenuItem value={"manager"}>Організатор</MenuItem>
-                        <MenuItem value={"member"}>Учасник</MenuItem>
+                        <MenuItem value={"manager"}>{LANG.ADD_MEMBERS.organisator}</MenuItem>
+                        <MenuItem value={"member"}>{LANG.ADD_MEMBERS.member}</MenuItem>
                     </Select>
                     <Select value={userInSystem} onChange={(e) => { setUserInSystem(e.target.value); }}>
-                        <MenuItem value={true}>Існуючий</MenuItem>
-                        <MenuItem value={false}>Новий</MenuItem>
+                        <MenuItem value={true}>{LANG.ADD_MEMBERS.existing}</MenuItem>
+                        <MenuItem value={false}>{LANG.ADD_MEMBERS.new}</MenuItem>
                     </Select>
 
                     {userInSystem ?
                         <div className={s.add__user__form}>
                             <div className={s.add__user__results}>
-                                <Input value={user.userName} label="Пошук користувача..." type="text" onChange={(e) => {
+                                <Input addClass="w100" value={user.userName} label={LANG.GLOBAL.search} type="text" onChange={(e) => {
                                     search(e.target.value);
                                     setUser({ ...user, userName: e.target.value });
                                 }} />
@@ -118,13 +118,13 @@ const AddMembers = ({ modalHandler, getEventData }) => {
                         </div>
                         :
                         <div className={s.add__user__form}>
-                            <Input value={user.userName} label="ПІБ" type="text" onChange={(e) => {
+                            <Input value={user.userName} label={LANG.GLOBAL.pib} type="text" onChange={(e) => {
                                 setUser({ ...user, userName: e.target.value });
                             }} />
-                            <Input label="Номер телефону" value={user.phone} type="number" onChange={(e) => {
+                            <Input label={LANG.GLOBAL.phone} value={user.phone} type="number" onChange={(e) => {
                                 setUser({ ...user, phone: e.target.value });
                             }} />
-                            <Input value={user.position} label="Позиція на івенті" type="text" onChange={(e) => {
+                            <Input value={user.position} label={LANG.ADD_MEMBERS.position} type="text" onChange={(e) => {
                                 setUser({ ...user, position: e.target.value });
                             }} />
                         </div>

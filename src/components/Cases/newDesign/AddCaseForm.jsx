@@ -81,7 +81,6 @@ const AddCaseForm = () => {
     }
     
     function handleSubmit() {
-        console.log(stateData)
         if (stateGeneral.first_name.length < 1) {
             setErrorAlert({...errorAlert,status:true,text:LANG.add_case.alertMessages.name});
         } else {

@@ -6,6 +6,7 @@ import Input from '../../elements/Inputs/Input';
 import { apiResponse } from "../../Functions/get_apiObj";
 import { Button } from "@mui/material";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
+import { LANG } from "../../../services/config";
 
 const SearchCase = ({ eventID, getUsers }) => {
     const [sCase, setSCase] = useState({ userName: "", phone: "", id: 0 });
@@ -74,7 +75,7 @@ const SearchCase = ({ eventID, getUsers }) => {
             {userInSystem ?
                 <div className={s.add__user__search}>
                     <Input
-                        label="Пошук учасника..."
+                        label={LANG.GLOBAL.search}
                         value={sCase.userName}
                         className={s.search__inp}
                         type="text"
@@ -105,7 +106,7 @@ const SearchCase = ({ eventID, getUsers }) => {
                 <div className={s.add__user__form}>
                     <Input
                         value={sCase.userName}
-                        label="ПІБ"
+                        label={LANG.GLOBAL.pib}
                         type="text"
                         onChange={(e) => {
                             setSCase({ ...sCase, userName: e.target.value });
@@ -113,7 +114,7 @@ const SearchCase = ({ eventID, getUsers }) => {
                     />
                     <Input
                         value={sCase.phone}
-                        label="Номер телефону"
+                        label={LANG.GLOBAL.phone}
                         type="number"
                         onChange={(e) => {
                             setSCase({ ...sCase, phone: e.target.value.trim() });
@@ -122,10 +123,10 @@ const SearchCase = ({ eventID, getUsers }) => {
                 </div>
             }
             <div className={s.button__wrap}>
-                <Button variant="contained" onClick={addUser}>Додати учасника</Button>
+                <Button variant="contained" onClick={addUser}>{LANG.ADD_MEMBERS.add}</Button>
             </div>
-            {alert.error&&<SmallNotification isSuccess={false} text={"Перевірте правильність даних"} close={()=>{alertHandler("error")}}/>}
-            {alert.success&&<SmallNotification isSuccess={true} text={"Учасника додано"} close={()=>{alertHandler("success")}}/>}
+            {alert.error&&<SmallNotification isSuccess={false} text={LANG.ADD_MEMBERS.error_data} close={()=>{alertHandler("error")}}/>}
+            {alert.success&&<SmallNotification isSuccess={true} text={LANG.ADD_MEMBERS.success} close={()=>{alertHandler("success")}}/>}
         </div>
     )
 }

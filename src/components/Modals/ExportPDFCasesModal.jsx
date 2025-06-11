@@ -27,7 +27,7 @@ const ExportPDFCasesModal = (props) => {
     })
     const [loading, setLoading] = useState(false);
     const exportPdf = () => {
-        if (selected.length == 0) return setError({status: true, message: "Не обрано жодного кейсу на експорт"});
+        if (selected.length == 0) return setError({status: true, message: LANG.exportPDFcasesModal.no_file_selected});
         setLoading(true);
         apiResponse({case_ids: selected, ...settings},"mpdf/mas-printcard.php" ).then((res)=>{
             if (res.status) {
@@ -53,7 +53,7 @@ const ExportPDFCasesModal = (props) => {
 
     return (
         <Modal
-            header="Експорт кейсів у ПДФ"
+            header={LANG.exportPDFcasesModal.title}
             closeHandler={close}
             footer={!loading && <>
                 <Button variant="contained" color="error" onClick={close}>{LANG.GLOBAL.cancel}</Button>
@@ -65,30 +65,30 @@ const ExportPDFCasesModal = (props) => {
             <div className="ExportPDFCasesModal">
                 {loading && <LoadingPage addClass="ExportPDFCasesModal-loading h-auto" effload={true}/>}
                 <div className="ExportPDFCasesModal-settings">
-                    <div className="ExportPDFCasesModal-settings-line">Налаштування</div>
+                    <div className="ExportPDFCasesModal-settings-line">{LANG.exportPDFcasesModal.settings}</div>
                     <div className="ExportPDFCasesModal-settings-line">
                         <label>
                             <Checkbox size="small" value={settings.setPasswordPdf} onChange={(e)=>updateSettings("setPasswordPdf", e.target.checked)}/>
-                            {!settings.setPasswordPdf ? <span>Встановити пароль на ПДФ файл</span> : <Input disabled={!settings.setPasswordPdf} size="small" addClass="w100"  label="Пароль на ПДФ файл" value={settings.passwordToPdf} onChange={(e)=>updateSettings("passwordToPdf", e.target.value)}/>}
+                            {!settings.setPasswordPdf ? <span>{LANG.exportPDFcasesModal.set_password}</span> : <Input disabled={!settings.setPasswordPdf} size="small" addClass="w100"  label={LANG.exportPDFcasesModal.pdf_pass} value={settings.passwordToPdf} onChange={(e)=>updateSettings("passwordToPdf", e.target.value)}/>}
                         </label>
                         
                     </div>
                     <div className="ExportPDFCasesModal-settings-line">
                         <label>
                             <Checkbox size="small" value={settings.setPasswordArchive} onChange={(e)=>updateSettings("setPasswordArchive", e.target.checked)}/>
-                            {!settings.setPasswordArchive ? <span>Встановити пароль на архів</span> : <Input disabled={!settings.setPasswordArchive} size="small" addClass="w100" label="Пароль на архів" value={settings.passwordToArchive} onChange={(e)=>updateSettings("passwordToArchive", e.target.value)}/>}
+                            {!settings.setPasswordArchive ? <span>{LANG.exportPDFcasesModal.set_archive_pass}</span> : <Input disabled={!settings.setPasswordArchive} size="small" addClass="w100" label={LANG.exportPDFcasesModal.archive_pass} value={settings.passwordToArchive} onChange={(e)=>updateSettings("passwordToArchive", e.target.value)}/>}
                         </label>
                     </div>
                     <div className="ExportPDFCasesModal-settings-line">
                         <label>
                             <Checkbox size="small" value={settings.enabledWaterMarkImage} onChange={(e)=>updateSettings("enabledWaterMarkImage", e.target.checked)}/>
-                            <span>Встановити водяний знак (картинка)</span>
+                            <span>{LANG.exportPDFcasesModal.watermark_image}</span>
                         </label>
                     </div>
                     <div className="ExportPDFCasesModal-settings-line">
                         <label>
                             <Checkbox size="small" value={settings.enabledWaterMarkText} onChange={(e)=>updateSettings("enabledWaterMarkText", e.target.checked)}/>
-                            <span>Встановити водяний знак (текст)</span>
+                            <span>{LANG.exportPDFcasesModal.watermark_text}</span>
                         </label>
                     </div>
                 </div>

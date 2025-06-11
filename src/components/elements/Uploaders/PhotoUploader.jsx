@@ -43,7 +43,6 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
       }
     })
       .then((response) => {
-        console.log(response)
         handleAlertChange("success");
         successHandler(response.data);
         setUploading(false);

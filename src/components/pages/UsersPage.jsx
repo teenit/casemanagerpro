@@ -56,7 +56,6 @@ class UsersPage extends Component {
         this.setState({ loading: true });
         apiResponse({}, "user/get-users.php").then((res) => {
             this.setState({ users: res })
-            console.log(res)
         }).catch((err) => {
             console.error(err)
         })
@@ -80,7 +79,6 @@ class UsersPage extends Component {
                 if (arg === "true" && (user.access==="0" || user.access==null)) {
                     this.modalHandler("editUser")
                     this.setState({ currentUser: user, editUserTitle: `${LANG.USERS_PAGE.wish_set_access} ${user.userName}?` })
-                    console.log(this.state.editUserTitle, `${LANG.USERS_PAGE.wish_set_access} ${user.userName}?`)
                 }
             })
             .finally(() => {

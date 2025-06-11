@@ -2,16 +2,35 @@
     display: flex;
     flex-direction: column;
     gap: 25px;
-    &-header{
-display: flex;
-align-items: center;
+
+    &-header {
+        display: flex;
+        align-items: center;
     }
-    &-info{
+
+    &-info {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        &-title{
+
+        &-title {
             font-weight: 600;
         }
     }
+}
+
+@media screen and (max-width:450px){
+.Tasks{
+    &-header{
+        flex-direction: column;
+        gap: 10px;
+        >.AddButton{
+            justify-content: center !important;
+        }
+    }
+    &-tabs{
+        max-width: 100px;
+        overflow-x: auto;
+    }
+}
 }

@@ -46,6 +46,7 @@ export const LANG = {
     date_created:"Дата створення",
     date_updated:"Дата оновлення",
     alertMessages: {
+      updated_success:"Дані збережено успішно",
       error: "Виникла помилка. Будь ласка, спробуйте пізніше",
       delete_success: "Запис успішно видалено",
       delete_error: "Не вдалося видалити запис"
@@ -357,6 +358,30 @@ export const LANG = {
     download: "Завантажити"
   },
   addEvent: "Створення події",
+  ADD_MEMBERS:{
+    invalid_data:"Введіть користувача та його номер телефону (якщо користувач новий)",
+    add:"Додати учасника",
+    add_organisator:"Додати учасника (організатора) івента",
+    organisator:"Організатор",
+    member:"Учасник",
+    members:"Учасники",
+    existing:"Існуючий",
+    new:"Новий",
+    position:"Позиція на івенті",
+    success:"Учасника додано",
+    error_data: "Перевірте правильність даних"
+  },
+  exportPDFcasesModal:{
+    no_file_selected:"Не обрано жодного кейсу на експорт",
+    title:"Експорт кейсів у ПДФ",
+    settings:"Налаштування",
+    set_password:"Встановити пароль на ПДФ файл",
+    set_archive_pass:"Встановити пароль на архів",
+    pdf_pass:"Пароль на ПДФ файл",
+    archive_pass:"Пароль на архів",
+    watermark_image:"Встановити водяний знак (картинка)",
+    watermark_text:"Встановити водяний знак (текст)"
+  },
   cases: "Немає доступних кейсів",
   casesList: {
     ascending: "За зростанням",
@@ -365,6 +390,7 @@ export const LANG = {
     active: "Активовано",
     inactive: "Деактивовано",
     caseNumber: "Номер",
+    photo:"Фотографія кейсу",
     pib: "Ім'я",
     phone: "Телефон",
     email: "Пошта",

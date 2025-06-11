@@ -31,15 +31,13 @@ class TaskModal extends Component {
     }
     editTask = () => {
         let updated_at = moment().format("dd-MM-YYYY hh:mm:ss")
-        apiResponse({ ...this.state.data, action: "edit_task", task_id: this.state.data.id, updated_at:updated_at }, 'tasks/task.php').then((res) => {
-            console.log(res)
+        apiResponse({ ...this.state.data, action: "edit_task", task_id: this.state.data.id, updated_at: updated_at }, 'tasks/task.php').then((res) => {
             this.props.close()
             this.props.loadData()
         })
     }
     addTask = () => {
         apiResponse({ ...this.state.data, action: "add_task" }, 'tasks/task.php').then((res) => {
-            console.log(res)
             this.props.close()
             this.props.loadData()
         })
@@ -47,9 +45,9 @@ class TaskModal extends Component {
     validate = () => {
         const { title, dead_line } = this.state.data
         if (title.length > 0 && dead_line.length > 0) {
-            if(this.props.data){
+            if (this.props.data) {
                 this.editTask()
-            }else{
+            } else {
                 this.addTask()
             }
         } else {
@@ -79,7 +77,7 @@ class TaskModal extends Component {
         return (
             <>
                 <Modal
-                    header={this.props.data?LANG.TASKS_PAGE.edit:LANG.TASKS_PAGE.add}
+                    header={this.props.data ? LANG.TASKS_PAGE.edit : LANG.TASKS_PAGE.add}
                     closeHandler={this.props.close}
                     footer={
                         <>
@@ -94,7 +92,7 @@ class TaskModal extends Component {
                 >
                     <>
                         <div className="Modal--split">
-                            <Input
+                            <Input addClass="w100"
                                 value={data.title}
                                 label={LANG.GLOBAL.title}
                                 onChange={(e) => this.dataHandler("title", e.target.value)}
@@ -112,6 +110,7 @@ class TaskModal extends Component {
 
                         <div className="Modal--split">
                             <Input
+                                addClass="w100"
                                 type="datetime-local"
                                 value={data.dead_line}
                                 label={LANG.TASKS_PAGE.dead_line}

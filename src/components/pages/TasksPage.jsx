@@ -74,7 +74,7 @@ class TasksPage extends Component {
         })
     }
     finishTask = (data) => {
-        const actionFinished = data.is_finished? 0 : 1
+        const actionFinished = data.is_finished ? 0 : 1
         apiResponse({ ...data, action: "edit_task", task_id: data.id, is_finished: actionFinished }, 'tasks/task.php').then((res) => {
             this.loadData()
         })
@@ -236,8 +236,8 @@ class TasksPage extends Component {
                                 this.setState({ current_task: row })
                             }
                         },
-                        edit&&{
-                            title: row.is_finished?LANG.TASKS_PAGE.make_active:LANG.TASKS_PAGE.finish,
+                        edit && {
+                            title: row.is_finished ? LANG.TASKS_PAGE.make_active : LANG.TASKS_PAGE.finish,
                             isHidden: false,
                             icon: "save",
                             click: () => {
@@ -299,24 +299,41 @@ class TasksPage extends Component {
                     <AddButton title={LANG.TASKS_PAGE.add} click={() => { this.modalHandler("add_task") }} />
                 </div>
                 <Box sx={{ width: "100%" }}>
-                    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                        <Tabs value={tabValue} onChange={this.tabHandler}>
-                            {this.tabData.map((item, index) => {
-                                return <Tab key={index} label={item.title} value={item.value} />
-                            })}
+                    <Box sx={{ borderBottom: 1, borderColor: "divider", overflowX: "auto", whiteSpace: "nowrap" }}>
+                        <Tabs
+                            value={tabValue}
+                            onChange={this.tabHandler}
+                            variant="scrollable"
+                            scrollButtons="auto"
+                        >
+                            {this.tabData.map((item, index) => (
+                                <Tab key={index} label={item.title} value={item.value} />
+                            ))}
                         </Tabs>
                     </Box>
 
                     <div role="tabpanel" style={{ paddingTop: "15px" }}>
-                            <Table loading={this.state.loading} rowStyle={this.rowStyle} columns={this.tableColumns} data={this.state.tasks} keyField="id"
-                                sortField={this.state.sort.field}
-                                sortOrder={this.state.sort.order}
-                                emptyTable={<EmptyData title={LANG.TASKS_PAGE.not_found} buttonText={LANG.TASKS_PAGE.add}
-                                    click={() => { this.modalHandler("add_task") }} />}
-                            />
-
+                        <Table
+                            loading={this.state.loading}
+                            rowStyle={this.rowStyle}
+                            columns={this.tableColumns}
+                            data={this.state.tasks}
+                            keyField="id"
+                            sortField={this.state.sort.field}
+                            sortOrder={this.state.sort.order}
+                            emptyTable={
+                                <EmptyData
+                                    title={LANG.TASKS_PAGE.not_found}
+                                    buttonText={LANG.TASKS_PAGE.add}
+                                    click={() => {
+                                        this.modalHandler("add_task");
+                                    }}
+                                />
+                            }
+                        />
                     </div>
                 </Box>
+
                 {/* <Pagination/> */}
                 {modals.add_task && <TaskModal users={this.state.users} loadData={this.loadData} close={() => { this.modalHandler("add_task") }} />}
                 {modals.edit_task && <TaskModal users={this.state.users} data={this.state.current_task} loadData={this.loadData} close={() => { this.modalHandler("edit_task") }} />}
@@ -327,14 +344,14 @@ class TasksPage extends Component {
                     <div className="Tasks-info">
                         <div><span className="Tasks-info-title">{LANG.GLOBAL.title}</span>: {current_task.title}</div>
                         <div><span className="Tasks-info-title">{LANG.GLOBAL.description}</span>: {current_task.description || LANG.GLOBAL.no_description}</div>
-                        <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.dead_line}</span>: {current_task.dead_line}</div>
+                        {/* <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.dead_line}</span>: {current_task.dead_line}</div>
                         <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.from}</span>: {<NavLink to={`/user/${current_task.from}`}>{this.state.users[current_task.from]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
                         <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.to}</span>: {<NavLink to={`/user/${current_task.to}`}>{this.state.users[current_task.to]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
                         <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.reviewer}</span>: {<NavLink to={`/user/${current_task.reviewer_id}`}>{this.state.users[current_task.reviewer_id]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
                         <div><span className="Tasks-info-title">{LANG.GLOBAL.date_created}</span>: {current_task.date_created}</div>
                         <div><span className="Tasks-info-title">{LANG.GLOBAL.date_updated}</span>: {current_task.updated_at}</div>
                         <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.is_archived}</span>: {current_task.is_archived == "1" ? LANG.GLOBAL.yes : LANG.GLOBAL.no}</div>
-                        <div><span className="Tasks-info-title">{LANG.GLOBAL.status}</span>: {current_task.is_finished == 0 ? LANG.TASKS_PAGE.active : LANG.TASKS_PAGE.finished}</div>
+                        <div><span className="Tasks-info-title">{LANG.GLOBAL.status}</span>: {current_task.is_finished == 0 ? LANG.TASKS_PAGE.active : LANG.TASKS_PAGE.finished}</div> */}
                     </div>
                 </Modal>}
             </div>

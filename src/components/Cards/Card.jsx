@@ -1,14 +1,14 @@
 import React from "react";
 import { NavLink } from 'react-router-dom';
 import './cards.css';
+import { LANG } from "../../services/config";
 const Card = (props) => {
-
 
     return (
         <div className="card">
             <div className="card__img">
                 <div className="card__img__img">
-                    <NavLink to={"/case/" + props.info.id}><img src={props.img} alt="Фотграфія кейсу" /></NavLink>
+                    <NavLink to={"/case/" + props.info.id}><img src={props.img} alt={LANG.casesList.photo} /></NavLink>
                 </div>
                 <div className="card__categories">
                     <div className="card__categories__inner">

@@ -579,7 +579,6 @@ const TestPage = () => {
         }
 
         apiResponse({...obj}, 'tasks/task.php').then((res)=>{
-            console.log(res)
         })
     }
 
@@ -589,7 +588,6 @@ const TestPage = () => {
             task_id: taskId
         }
         apiResponse({...obj}, 'tasks/task.php').then((res)=>{
-            console.log(res)
         })
     }
     return(
