@@ -6,24 +6,18 @@
     grid-template-rows: max-content 1fr;
 
     &-header {
-        padding: 10px 0px;
+        padding: 10px;
         border-radius: 10px 10px 7.5px 7.5px;
         background-color: $second-color;
         display: flex;
-        justify-content: center;
-        &-title {
-            width: 90%;
-            font-weight: bold;
+        align-items: center;
+        justify-content: space-between;
+        &-left{
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            word-break: break-all;
             flex-direction: column;
-            &-left{
-                display: flex;
-                align-items: center;
-                gap: 7.5px;
-            }
+            gap: 5px;
+            font-weight: bold;
+            word-break: break-all;
         }
         &-details {
             display: flex;

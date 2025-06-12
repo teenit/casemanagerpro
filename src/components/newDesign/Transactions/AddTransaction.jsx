@@ -115,7 +115,7 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                         onChange={(e) => dataHandler("amount", e.target.value)}
                     />
                     <div className="AddTransaction-select">
-                        <Select
+                        <Select size="small"
                             name="currency"
                             value={transactionData.currency}
                             onChange={(e) => dataHandler("currency", e.target.value)}
@@ -145,7 +145,7 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                 <div className="AddTransaction-split">
                     <div className="AddTransaction-select">
                         <label>{LANG.TRANSACTIONS.payment_method}</label>
-                        <Select
+                        <Select size="small"
                             name="payment_method"
                             value={transactionData.payment_method}
                             onChange={(e) => dataHandler("payment_method", e.target.value)}
@@ -156,7 +156,7 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                     </div>
                     <div className="AddTransaction-select">
                         <label>{LANG.GLOBAL.status}</label>
-                        <Select
+                        <Select size="small"
                             name="status"
                             value={transactionData.status}
                             onChange={(e) => dataHandler("status", e.target.value)}
@@ -168,6 +168,7 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                     </div>
                 </div>
                 <Input
+                    addClass="w100"
                     type="number"
                     label={LANG.TRANSACTIONS.id}
                     name="reference_id"
@@ -175,6 +176,7 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                     onChange={(e) => dataHandler("reference_id", e.target.value)}
                 />
                 <Textarea
+                    addClass="w100"
                     label={LANG.GLOBAL.description}
                     name="description"
                     value={transactionData.description}

@@ -181,7 +181,7 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo, c
                                     <Icon icon={"save"} addClass={"save-icon"} />
                                 </span>
                                 <span onClick={() => handleEditChange("categories")}>
-                                    <Icon icon={"close"} addClass={"close-icon"} />
+                                    <Icon icon={"close"} addClass={"delete-icon"} />
                                 </span>
                             </>
                         ) : (

@@ -125,7 +125,7 @@ const InputBlock = ({
                             setShowEdit(false)
                             setStateValue(value)
                         }}>
-                            <Icon icon={"close"} addClass={"close-icon"} />
+                            <Icon icon={"close"} addClass={"delete-icon"} />
                         </span>
                     </div>
                 </div>

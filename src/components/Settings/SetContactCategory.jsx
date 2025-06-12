@@ -84,7 +84,7 @@ const SetContactCategory = ({cats})=>{
                 <span onClick={()=>{
                     if(page.effload) deleteCategory(category);
                 }}>
-                    <Icon icon={"delete"} addClass={"close-icon"}/>
+                    <Icon icon={"delete"} addClass={"delete-icon"}/>
                 </span>
             </div>
         </div>

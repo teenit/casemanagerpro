@@ -13,7 +13,7 @@ class SelectUsers extends Component {
         return (
             <FormControl fullWidth>
                 <InputLabel>{this.props.title}</InputLabel>
-                <Select
+                <Select size="small"
                     value={this.props.value}
                     label={this.props.title}
                     onChange={this.props.onChange}

@@ -140,7 +140,6 @@ class AncetsPage extends Component {
         this.setState({ showCreateForm: true })
     }
     render() {
-        const { ancets } = this.state;
         const columns = this.prepareColumns(COLUMNS);
         return (
             <div className="AncetsPage">

@@ -2,4 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  &-modal{
+    &-questions{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
 }

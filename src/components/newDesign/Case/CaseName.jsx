@@ -90,7 +90,7 @@ const CaseName = ({ dataState, view, id, getCaseInfo, editor }) => {
                                         <Icon icon={"save"} addClass={"save-icon"} />
                                     </span>
                                     <span onClick={() => setEditName(false)}>
-                                        <Icon icon={"close"} addClass={"close-icon"} />
+                                        <Icon icon={"close"} addClass={"delete-icon"} />
                                     </span>
                                 </div>
                             </div>

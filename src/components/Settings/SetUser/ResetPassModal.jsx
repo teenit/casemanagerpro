@@ -81,8 +81,8 @@ class ResetPassModal extends Component {
                 }
             >
                 <form className='ResetPassModal'>
-                    <Input type='password' value={formData.password} label={LANG.set_user.new_password} onChange={(e) => { this.handleChange("password", e.target.value) }} />
-                    <Input type='password' value={formData.confirmPassword} label={LANG.set_user.confirm_password} onChange={(e) => { this.handleChange("confirmPassword", e.target.value) }} />
+                    <Input addClass='w100' type='password' value={formData.password} label={LANG.set_user.new_password} onChange={(e) => { this.handleChange("password", e.target.value) }} />
+                    <Input addClass='w100' type='password' value={formData.confirmPassword} label={LANG.set_user.confirm_password} onChange={(e) => { this.handleChange("confirmPassword", e.target.value) }} />
                 {alert.active && <SmallNotification isSuccess={alert.isSuccess} text={alert.message} close={() => this.alertHandler(false, '')} />}
                 </form>
 

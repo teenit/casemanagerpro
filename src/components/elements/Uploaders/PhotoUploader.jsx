@@ -62,7 +62,7 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
         </label>
         <input style={{ display: "none" }} type="submit" id="submitInput" />
         <label className='label' htmlFor="" onClick={close}>
-          <Icon icon={"close"} addClass={"close-icon"} />
+          <Icon icon={"close"} addClass={"delete-icon"} />
         </label>
       </div>
       <div className='PhotoUploader-img'>

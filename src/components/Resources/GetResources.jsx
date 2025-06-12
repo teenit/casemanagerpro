@@ -97,7 +97,7 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
                 <p className={s.titleH2} onClick={open}>{cutTitle(item.title)}</p>
                 <p className={s.file__size}>{convertSize(item.size)}</p>
                 {canDelete && (
-                    <Icon icon={"delete"} addClass={"close-icon fs16"} onClick={() => confirmDelete(item)} />
+                    <Icon icon={"delete"} addClass={"delete-icon fs16"} onClick={() => confirmDelete(item)} />
                 )}
             </div>
         );

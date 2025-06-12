@@ -11,6 +11,10 @@ import EditUserModal from "../Modals/Settings/EditUserModal";
 import AccessCheck from "../Functions/AccessCheck";
 import Pagination from "../elements/Pagination/Pagination";
 
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Icon from "../elements/Icons/Icon";
+
 class UsersPage extends Component {
     constructor(props) {
         super(props);
@@ -31,7 +35,11 @@ class UsersPage extends Component {
                 show_phone: false,
                 activate: false,
                 deactivate: false
-            }
+            },
+            visibleEmails: {},    // для хранения видимости email по id пользователя
+            visiblePhones: {},    // для хранения видимости телефона по id пользователя
+            hoverEmail: null,     // id пользователя, над email которого навели
+            hoverPhone: null      // id пользователя, над телефоном которого навели
         };
     }
 
@@ -65,6 +73,7 @@ class UsersPage extends Component {
     modalHandler = (name) => {
         this.setState({ modals: { ...this.state.modals, [name]: !this.state.modals[name] } })
     };
+
     activateUser = (arg, userID, text, keyt) => {
         this.setState({ loading: true });
 
@@ -76,7 +85,7 @@ class UsersPage extends Component {
         }, "user/activate.php")
             .then(() => {
                 let user = this.state.users.find(item => item.id === userID)
-                if (arg === "true" && (user.access==="0" || user.access==null)) {
+                if (arg === "true" && (user.access === "0" || user.access == null)) {
                     this.modalHandler("editUser")
                     this.setState({ currentUser: user, editUserTitle: `${LANG.USERS_PAGE.wish_set_access} ${user.userName}?` })
                 }
@@ -86,9 +95,6 @@ class UsersPage extends Component {
                 this.setState({ loading: false });
             });
     };
-
-
-
 
     getStatusData = (row) => {
         if (row.active === "true" && this.state.access.deactivate) {
@@ -111,6 +117,41 @@ class UsersPage extends Component {
                 }
             };
         }
+    };
+
+    maskPhone = (phone) => {
+        const visibleChars = 3;
+        if (phone.length <= visibleChars) return phone;
+        return phone.slice(0, visibleChars) + '*'.repeat(phone.length - visibleChars);
+    };
+
+    maskEmail = (email) => {
+        const visibleChars = 3;
+        const atIndex = email.indexOf('@');
+        if (atIndex === -1) return email;
+        const start = email.slice(0, visibleChars);
+        const maskedPart = '***';
+        const domainPart = email.slice(atIndex);
+        return start + maskedPart + domainPart;
+    };
+
+
+    toggleEmailVisibility = (userId) => {
+        this.setState((prevState) => ({
+            visibleEmails: {
+                ...prevState.visibleEmails,
+                [userId]: !prevState.visibleEmails[userId]
+            }
+        }));
+    };
+
+    togglePhoneVisibility = (userId) => {
+        this.setState((prevState) => ({
+            visiblePhones: {
+                ...prevState.visiblePhones,
+                [userId]: !prevState.visiblePhones[userId]
+            }
+        }));
     };
 
     getAccess = (access) => {
@@ -140,17 +181,61 @@ class UsersPage extends Component {
                 dataField: 'phone',
                 text: LANG.casesList.phone,
                 sort: false,
-                formatter: (cell) => (
-                    <a href={`tel:${cell}`}>{cell}</a>
-                )
+                formatter: (cell, row) => {
+                    const isVisible = this.state.visiblePhones[row.id];
+                    const displayPhone = isVisible ? cell : this.maskPhone(cell);
+
+                    return (
+                        <div
+                            className="UsersPage-mask"
+                            onMouseEnter={() => this.setState({ hoverPhone: row.id })}
+                            onMouseLeave={() => this.setState({ hoverPhone: null })}
+                        >
+                            <a href={`tel:${cell}`} className="UsersPage-mask-content">
+                                {displayPhone}
+                            </a>
+                            <span className="UsersPage-mask-icon"
+                                style={{
+                                    visibility: this.state.hoverPhone === row.id ? "visible" : "hidden",
+                                    opacity: this.state.hoverPhone === row.id ? 1 : 0,
+                                }}
+                                onClick={() => this.togglePhoneVisibility(row.id)}
+                            >
+                                {isVisible ? <Icon icon={"eye"} addClass="hide-icon" /> : <Icon icon={"eye_off"} addClass="hide-icon" />}
+                            </span>
+                        </div>
+                    );
+                }
             },
             {
                 dataField: 'email',
                 text: LANG.casesList.email,
                 sort: true,
-                formatter: (cell) => (
-                    <a href={`mailto:${cell}`}>{cell}</a>
-                )
+                formatter: (cell, row) => {
+                    const isVisible = this.state.visibleEmails[row.id];
+                    const displayEmail = isVisible ? cell : this.maskEmail(cell);
+
+                    return (
+                        <div
+                            className="UsersPage-mask"
+                            onMouseEnter={() => this.setState({ hoverEmail: row.id })}
+                            onMouseLeave={() => this.setState({ hoverEmail: null })}
+                        >
+                            <a href={`mailto:${cell}`} className="UsersPage-mask-content">
+                                {displayEmail}
+                            </a>
+                            <span className="UsersPage-mask-icon"
+                                style={{
+                                    visibility: this.state.hoverEmail === row.id ? "visible" : "hidden",
+                                    opacity: this.state.hoverEmail === row.id ? 1 : 0,
+                                }}
+                                onClick={() => this.toggleEmailVisibility(row.id)}
+                            >
+                                {isVisible ? <Icon icon={"eye"} addClass="hide-icon" /> : <Icon icon={"eye_off"} addClass="hide-icon" />}
+                            </span>
+                        </div>
+                    );
+                }
             },
             {
                 dataField: 'access',
@@ -202,11 +287,13 @@ class UsersPage extends Component {
             }
         ];
     }
-    get rowStyle (){
+
+    get rowStyle() {
         return [
             { class: "table-green", condition: (row) => row.active === "true" }
         ]
     }
+
     render() {
         const { modals, users, currentUser, access, accessList, loading } = this.state
         const canResetPassword = access.activate && access.deactivate
@@ -219,13 +306,15 @@ class UsersPage extends Component {
                 <Table rowStyle={this.rowStyle} columns={this.tableColumns} data={users} />
                 {modals.addUser && <SetUserModal successHandler={this.loadData} close={() => this.modalHandler("addUser")} />}
                 {modals.resetPass && canResetPassword && currentUser && <ResetPassModal close={() => this.modalHandler("resetPass")} {...currentUser} />}
-                {modals.editUser && access.edit && currentUser && <EditUserModal close={() => this.modalHandler("editUser")} {...currentUser}
-                    accessList={accessList} successHandler={this.loadData} title={this.state.editUserTitle}
-                    deactivate={(user_id) => { this.activateUser("false", user_id, "Деактивовано", "deactivateUsers"); }}
-
+                {modals.editUser && access.edit && currentUser && <EditUserModal
+                    close={() => this.modalHandler("editUser")}
+                    {...currentUser}
+                    accessList={accessList}
+                    title={this.state.editUserTitle}
+                    successHandler={this.loadData}
                 />}
             </div>
-        );
+        )
     }
 }
 

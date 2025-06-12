@@ -181,7 +181,7 @@ const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
                     <Button variant="contained" onClick={handleSubmit}>{LANG.save}</Button>
                 </div>
             }>
-                <Input value={formData.title} onChange={(e) => { handleFormChange("title", e.target.value) }} label={LANG.GLOBAL.title} />
+                <Input addClass='w100' value={formData.title} onChange={(e) => { handleFormChange("title", e.target.value) }} label={LANG.GLOBAL.title} />
                 <Textarea value={formData.description} onChange={(e) => { handleFormChange("description", e.target.value) }} label={LANG.GLOBAL.description} />
             </Modal>}
             {modal.confirm && <ModalConfirm closeHandler={() => { handleModalChange("confirm") }} successHandler={handleDelete}

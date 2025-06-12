@@ -17,12 +17,12 @@ const EventPlan = (props) => {
         error: false,
         message: ""
     });
-    const [modals,setModals] = useState({
-        edit:false,
-        delete:false
+    const [modals, setModals] = useState({
+        edit: false,
+        delete: false
     })
-    const modalsHandler = (key)=>{
-        setModals({...modals, [key]:!modals[key]})
+    const modalsHandler = (key) => {
+        setModals({ ...modals, [key]: !modals[key] })
     }
     const feedbacks = props.feedbacks[props.plan.plan_id]
 
@@ -48,7 +48,7 @@ const EventPlan = (props) => {
             props.getEventData();
         });
     };
-    const deletePlan = ()=>{
+    const deletePlan = () => {
         apiResponse({ meta_id: props.plan.plan_id }, "events/delete-meta.php").then((res) => {
             alertHandler("success", LANG.EVENT_PAGE.alertMessages.plan_deleted)
             props.getEventData()
@@ -58,42 +58,37 @@ const EventPlan = (props) => {
     const formatTextWithLineBreaks = (text) => {
         // Замінюємо всі нові рядки на <br> для HTML
         return text.replace(/\n/g, '<br />');
-      };
-          const menuItems = [
-              {
-                  title: LANG.GLOBAL.edit,
-                  isHidden: false,
-                  icon: "edit",
-                  click: () => {
-                      modalsHandler("edit")
-                  }
-              },
-              {
-                  itemType: 'divider'
-              },
-              {
-                  title: LANG.GLOBAL.delete,
-                  isHidden: false,
-                  icon: "delete",
-                  color: 'error',
-                  click: () => {
-                      modalsHandler("delete")
-                  }
-              },
-          ]
+    };
+    const menuItems = [
+        {
+            title: LANG.GLOBAL.edit,
+            isHidden: false,
+            icon: "edit",
+            click: () => {
+                modalsHandler("edit")
+            }
+        },
+        {
+            itemType: 'divider'
+        },
+        {
+            title: LANG.GLOBAL.delete,
+            isHidden: false,
+            icon: "delete",
+            color: 'error',
+            click: () => {
+                modalsHandler("delete")
+            }
+        },
+    ]
     return (
         <div className="EventPlan">
             <div className="EventPlan-header">
-                <div className="EventPlan-header-title">
-                    <div className="EventPlan-header-title-left">
-                        <div>{props.plan.title}</div> 
-                    </div>
-                    <div className="EventPlan-header-details">
-                        <div>{`${props.plan.startTime}-${props.plan.endTime}`}</div>
-                        <ActionMenu menuItems={menuItems}/>
-                    </div>
-                   
+                <div className="EventPlan-header-left">
+                    <div>{props.plan.title}</div>
+                    <div>{`${props.plan.startTime}-${props.plan.endTime}`}</div>
                 </div>
+                <ActionMenu menuItems={menuItems} />
             </div>
             <div className="EventPlan-inner">
                 <div className="EventPlan-inner-text">
@@ -103,16 +98,16 @@ const EventPlan = (props) => {
                     </div>
                     <div className="EventPage-inner-text-item">
                         <div className="EventPlan-inner-text-item-title">{LANG.GLOBAL.description}</div>
-                        <TextDescription text={props.plan.description}/>
-                        
+                        <TextDescription text={props.plan.description} />
+
 
                     </div>
                     <div className="EventPage-inner-text-item">
                         <div className="EventPlan-inner-text-item-title">{LANG.EVENT_PAGE.feedback}</div>
                         <div className="EventPlan-inner-feedbacks">
-                        {feedbacks && feedbacks.length > 0 ? feedbacks.map((item, index) => {
-                            return <Feedback key={index} item={item} event_id={props.event_id} getEventData={props.getEventData} />
-                        }) : <div>{LANG.EVENT_PAGE.no_feedback}</div>}
+                            {feedbacks && feedbacks.length > 0 ? feedbacks.map((item, index) => {
+                                return <Feedback key={index} item={item} event_id={props.event_id} getEventData={props.getEventData} />
+                            }) : <div>{LANG.EVENT_PAGE.no_feedback}</div>}
                         </div>
                     </div>
                 </div>
@@ -123,8 +118,8 @@ const EventPlan = (props) => {
                     </div>
                 </div>
             </div>
-            {modals.delete && <ModalConfirm closeHandler={()=>{modalsHandler("delete")}} successHandler={deletePlan} text={`${LANG.EVENT_PAGE.confirm_delete_plan} ${props.plan.title}?`}/> }
-            {modals.edit && <AddPlan getEventData={props.getEventData} action="edit" event_id={props.event_id} close={()=>{modalsHandler("edit")}} data={props.plan}/>}
+            {modals.delete && <ModalConfirm closeHandler={() => { modalsHandler("delete") }} successHandler={deletePlan} text={`${LANG.EVENT_PAGE.confirm_delete_plan} ${props.plan.title}?`} />}
+            {modals.edit && <AddPlan getEventData={props.getEventData} action="edit" event_id={props.event_id} close={() => { modalsHandler("edit") }} data={props.plan} />}
             {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => alertHandler("success")} />}
             {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => alertHandler("error")} />}
         </div>

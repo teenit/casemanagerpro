@@ -75,7 +75,7 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
                         <MenuItem value={'files'}>{LANG.GLOBAL.file}</MenuItem>
                         <MenuItem value={'link'}>{LANG.GLOBAL.link}</MenuItem>
                     </Select>
-                    <Input
+                    <Input addClass="w100"
                         type="text"
                         label={LANG.GLOBAL.title}
                         value={meta.title}

@@ -62,7 +62,7 @@ const Group = () => {
                 {showPhone && <NavLink to={`tel:${item.phone1}`}>{item.phone1}</NavLink>}
                 <div title={item.why}>{cutString(item.why)}</div>
                 {/* <span style={{ opacity: editMember }}>
-                    <Icon icon={'delete'} addClass={'close-icon'} onClick={() => { modalHandler('delete'); }} />
+                    <Icon icon={'delete'} addClass={'delete-icon'} onClick={() => { modalHandler('delete'); }} />
                 </span> */}
                 {/* {modal.delete && <ModalConfirm successHandler={() => { deleteHandler(index); }} closeHandler={() => { modalHandler('delete'); }}
                     text={`${LANG.groups.group.confirm} ${item.name}?`} />} */}

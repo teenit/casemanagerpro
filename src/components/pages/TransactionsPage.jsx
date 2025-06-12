@@ -143,7 +143,7 @@ const TransactionsPage = () => {
         //                 modalHandler("edit")
         //                 setTransactionId(row.id)
         //             }} />
-        //             <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {
+        //             <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {
         //                 modalHandler("delete")
         //                 setTransactionId(row.id)
         //             }} />

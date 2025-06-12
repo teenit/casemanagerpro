@@ -100,10 +100,7 @@ const Resources = () => {
     }
     return (
         <div className={s.wrapper}>
-            {AccessCheck('yes_no', 'a_page_resources_upload') && <AddButton title={LANG.resources.add} click={()=>{showForm(form.type)}} />}
-            <div className={s.control}>
-                {form.open && <AddResources close={() => { setForm(false) }} loadResources={loadResources} type={form.type} />}
-            </div>
+            {AccessCheck('yes_no', 'a_page_resources_upload') && <AddButton title={LANG.resources.add} click={() => { showForm(form.type) }} />}
             <div className={s.get__resources}>
                 <GetResources confirmDelete={confirmDelete} links={files.links} docFiles={docFiles} mediaFiles={mediaFiles} show={show} loadGroups={loadResources} showForm={showForm} />
             </div>
@@ -112,6 +109,7 @@ const Resources = () => {
                 successHandler={deleteResource}
                 text={LANG.resources.confirm_delete + activeResource.title + "?"}
             />}
+            {form.open && <AddResources close={() => { setForm(false) }} loadResources={loadResources} type={form.type} />}
             {alert.success && <SmallNotification isSuccess={true} text={LANG.resources.alertMessages.deleted_successfully} close={() => { alertHandler("success") }} />}
             {alert.error && <SmallNotification isSuccess={false} text={LANG.resources.alertMessages.error} close={() => { alertHandler("error") }} />}
         </div>

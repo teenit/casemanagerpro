@@ -73,7 +73,7 @@ const DetailedInfo = ({ info, changeData, cg }) => {
                                 <Icon icon={"save"} addClass={"save-icon"} />
                             </span>
                             <span onClick={() => { setEdit(!edit) }}>
-                                <Icon icon={"close"} addClass={"close-icon"} />
+                                <Icon icon={"close"} addClass={"delete-icon"} />
                             </span>
                         </div>
                         : <span onClick={() => { setEdit(!edit) }}>

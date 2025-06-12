@@ -121,7 +121,7 @@ const File = () => {
   const Tag = ({ name }) => {
     return (
       <div className="File-tag">
-        {access.file_edit && <Icon icon={"close"} addClass={"close-icon"} onClick={() => removeTag(name)} />}
+        {access.file_edit && <Icon icon={"close"} addClass={"delete-icon"} onClick={() => removeTag(name)} />}
         <span>{name}</span>
       </div>
     );
@@ -246,7 +246,7 @@ const File = () => {
           <Button variant='contained' onClick={addTag}>{LANG.GLOBAL.save}</Button>
         </>
       }>
-        <Input value={newTag} onChange={(e) => { setNewTag(e.target.value) }} label={LANG.file.your_tags} />
+        <Input addClass='w100' value={newTag} onChange={(e) => { setNewTag(e.target.value) }} label={LANG.file.your_tags} />
       </Modal>}
       {confirm && <ModalConfirm text={LANG.file.confirm_delete} successHandler={deleteHandler} closeHandler={() => { setConfirm(false) }} />}
       {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success", "") }} />}

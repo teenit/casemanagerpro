@@ -64,7 +64,7 @@ const SelectBlock = ({ saveHandler, disabled = false, value = "", onChange, link
                             <Icon icon={"save"} addClass={"save-icon"} />
                         </span>
                         <span onClick={() => { setShowEdit(false) }}>
-                            <Icon icon={"close"} addClass={"close-icon"} />
+                            <Icon icon={"close"} addClass={"delete-icon"} />
                         </span>
                     </div>
                 </div>

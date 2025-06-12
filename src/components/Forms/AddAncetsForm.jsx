@@ -7,6 +7,7 @@ import Modal from "../Modals/Modal";
 import FooterDefaultModal from "../Modals/FooterDefaultModal";
 import Input from "../elements/Inputs/Input";
 import { LANG } from "../../services/config";
+import Textarea from "../elements/Inputs/Textarea";
 
 class AddAncetsForm extends Component {
     constructor(props) {
@@ -66,6 +67,7 @@ class AddAncetsForm extends Component {
             >
                 <div>
                     <Input
+                        addClass="w100"
                         value={this.state.name}
                         onChange={(e) => this.setState({ name: e.target.value })}
                         type="text"
@@ -74,7 +76,7 @@ class AddAncetsForm extends Component {
                     />
                 </div>
                 <div>
-                    <Input
+                    <Textarea addClass="w100"
                         value={this.state.description}
                         onChange={(e) => this.setState({ description: e.target.value })}
                         type="textarea"
@@ -84,37 +86,37 @@ class AddAncetsForm extends Component {
                     />
                 </div>
                 <div>
-                  <Select
-                      value={this.state.type}
-                      onChange={(e) => this.setState({type: e.target.value})}
-                      size="small"
-                      className="w100"
-                  >
-                      <MenuItem value={'cases'}>{LANG.ancets.for_cases}</MenuItem>
-                  </Select>
+                    <Select
+                        value={this.state.type}
+                        onChange={(e) => this.setState({ type: e.target.value })}
+                        size="small"
+                        className="w100"
+                    >
+                        <MenuItem value={'cases'}>{LANG.ancets.for_cases}</MenuItem>
+                    </Select>
                 </div>
                 <div>
-                  {LANG.ancets.remind}
-                  <Select
-                      value={this.state.remember}
-                      onChange={(e) => this.setState({remember: e.target.value})}
-                      size="small"
-                      className="w100"
-                  >
-                      <MenuItem value={'week'}>{LANG.ancets.remembers.week}</MenuItem>
-                      <MenuItem value={'month'}>{LANG.ancets.remembers.month}</MenuItem>
-                      <MenuItem value={'cvartal'}>{LANG.ancets.remembers.cvartal}</MenuItem>
-                      <MenuItem value={'year'}>{LANG.ancets.remembers.year}</MenuItem>
-                  </Select>
+                    {LANG.ancets.remind}
+                    <Select
+                        value={this.state.remember}
+                        onChange={(e) => this.setState({ remember: e.target.value })}
+                        size="small"
+                        className="w100"
+                    >
+                        <MenuItem value={'week'}>{LANG.ancets.remembers.week}</MenuItem>
+                        <MenuItem value={'month'}>{LANG.ancets.remembers.month}</MenuItem>
+                        <MenuItem value={'cvartal'}>{LANG.ancets.remembers.cvartal}</MenuItem>
+                        <MenuItem value={'year'}>{LANG.ancets.remembers.year}</MenuItem>
+                    </Select>
                 </div>
                 <div>
                     <Button size="small" onClick={this.createQuestion}>
                         <Icon icon="add" /> {LANG.ancets.create_question}
                     </Button>
                 </div>
-                <div>
+                <div className="AncetsPage-modal-questions">
                     {questions.map((item, index) => (
-                        <div key={index} className="flex w100" style={{ marginTop: "10px", display: "flex", alignItems: "center" }}>
+                        <div key={index} className="flex w100" style={{  gap:"10px" }}>
                             <Input
                                 value={item.question}
                                 onChange={(e) => this.updateQuestion(index, e.target.value)}

@@ -124,7 +124,7 @@ const GroupConnections = ({ case_id, type, cg }) => {
                     return (
                         <div key={index} className='GroupConnections-list-item'>
                             <span><NavLink to={`/group/${item.group_id}`}>{item.name}</NavLink>: {item.why}</span>
-                            <Icon addClass={"close-icon"} icon={'delete'} onClick={() => deleteGroupConnect(item.id)}/>
+                            <Icon addClass={"delete-icon"} icon={'delete'} onClick={() => deleteGroupConnect(item.id)}/>
                         </div>
                     )
                 }) : <p style={{ margin: "15px 0px" }}>{LANG.no_records}</p>}

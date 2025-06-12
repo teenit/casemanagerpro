@@ -94,22 +94,22 @@ const AddPlan = ({ close, event_id, action = "add", data, getEventData }) => {
                     <Button variant="contained" onClick={validate}>{LANG.GLOBAL.save}</Button>
                 </>
             }>
-                <Input value={plan.title} label='Назва плану' onChange={(e) => { planHandler("title", e.target.value) }} />
+                <Input addClass='w100' value={plan.title} label={LANG.GLOBAL.title} onChange={(e) => { planHandler("title", e.target.value) }} />
                 <div className='Modal--label'>
                     <div><b>Початок плану</b></div>
                     <div className='Modal--split'>
-                        <Input type='date' value={plan.startDate} onChange={(e) => { planHandler("startDate", e.target.value) }} />
-                        <Input type='time' value={plan.startTime} onChange={(e) => { planHandler("startTime", e.target.value) }} />
+                        <Input size='large' type='date' value={plan.startDate} onChange={(e) => { planHandler("startDate", e.target.value) }} />
+                        <Input addClass='w100' type='time' value={plan.startTime} onChange={(e) => { planHandler("startTime", e.target.value) }} />
                     </div>
                 </div>
                 <div className='Modal--label'>
                     <div><b>Кінець плану</b></div>
                     <div className='Modal--split'>
-                        <Input type='date' value={plan.endDate} onChange={(e) => { planHandler("endDate", e.target.value) }} />
-                        <Input type='time' value={plan.endTime} onChange={(e) => { planHandler("endTime", e.target.value) }} />
+                        <Input size='large' type='date' value={plan.endDate} onChange={(e) => { planHandler("endDate", e.target.value) }} />
+                        <Input type='time' addClass='w100' value={plan.endTime} onChange={(e) => { planHandler("endTime", e.target.value) }} />
                     </div>
                 </div>
-                <Textarea value={plan.description} label='Опис плану' onChange={(e) => { planHandler("description", e.target.value) }} />
+                <Textarea value={plan.description} label={LANG.GLOBAL.description} onChange={(e) => { planHandler("description", e.target.value) }} />
             </Modal>
             {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success") }} />}
             {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error") }} />}

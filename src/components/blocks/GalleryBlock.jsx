@@ -6,6 +6,10 @@ import OpenPhoto from '../Galery/OpenPhoto';
 import { LANG } from '../../services/config';
 import Icon from '../elements/Icons/Icon';
 import Table from '../elements/Table/Table';
+import ActionMenu from '../Portals/ActionMenu';
+import ModalConfirm from '../Modals/ModalConfirm';
+import { apiResponse } from '../Functions/get_apiObj';
+import { Button } from '@mui/material';
 
 const GalleryBlock = ({ data, check }) => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -14,11 +18,14 @@ const GalleryBlock = ({ data, check }) => {
     const [imagesAndVideos, setImagesAndVideos] = useState([]);
     const [otherFiles, setOtherFiles] = useState([]);
     const [openedPhoto, setOpenedPhoto] = useState({ url: "", show: false });
-
+    const [confirmDelete, setConfirmDelete] = useState({
+        current_file: null,
+        active: false
+    })
     const handleResize = () => {
         setWidth(window.innerWidth);
     };
-
+console.log(data)
     useEffect(() => {
         window.addEventListener('resize', handleResize);
         return () => {
@@ -33,7 +40,7 @@ const GalleryBlock = ({ data, check }) => {
         };
         data.forEach(item => {
             if (item.type.startsWith("application/")) {
-                obj.docs.push(item);
+                obj.docs.push(item.data);
             } else {
                 obj.media.push(item);
             }
@@ -74,6 +81,15 @@ const GalleryBlock = ({ data, check }) => {
             return sizeInMB.toFixed(2) + " MB";
         }
     }
+    const confirmDeleteHandler = (file = null) => {
+        setConfirmDelete({ ...confirmDelete, active: !confirmDelete.active, current_file: file })
+    }
+    const deleteHandler = () => {
+        console.log(data)
+        apiResponse({ action: "delete_case" }, "files/file.php").then((res) => {
+            console.log(res)
+        })
+    }
     const columnsTable = [
         {
             dataField: 'name',
@@ -107,17 +123,47 @@ const GalleryBlock = ({ data, check }) => {
         },
         {
             dataField: 'download',
-            text:LANG.galleryBlock.download,
+            text: LANG.galleryBlock.download,
             fixed: false,
             isHidden: false,
             sort: false,
             formatter: (cell, row) => {
-                return check && <td><a download={row.name} href={row.link}>
+                return check && <a download={row.name} href={row.link}>
                     <Icon icon={"download"} addClass={"default-icon"} />
-                </a></td>
+                </a>
+            }
+        },
+        {
+            dataField: "menu_row",
+            text: "",
+            fixed: false,
+            formatter: (cell, row) => {
+                const menuItems = [
+                    {
+                        title: LANG.GLOBAL.delete,
+                        isHidden: false,
+                        icon: "delete",
+                        color: 'error',
+                        click: () => {
+                            confirmDeleteHandler()
+                        }
+                    }
+                ]
+                return <ActionMenu menuItems={menuItems}/>
             }
         }
     ];
+    const menuItems = [
+        {
+            title: LANG.GLOBAL.delete,
+            isHidden: false,
+            icon: "delete",
+            color: 'error',
+            click: () => {
+                confirmDeleteHandler()
+            }
+        }
+    ]
     return (
         <div className='GalleryBlock'>
             {imagesAndVideos.length > 0 && <>
@@ -136,7 +182,8 @@ const GalleryBlock = ({ data, check }) => {
                         } else {
                             return (
                                 <div className='GalleryBlock-grid-img-wrap' key={index}>
-                                    <img onClick={() => { setOpenedPhoto({ url: item.link, show: true }) }} src={item.link} alt="Фотографія" />
+                                    <img onClick={() => { setOpenedPhoto({ url: item.link, show: true }) }} src={item.link} alt={LANG.case_files.photo} />
+                                    <ActionMenu menuItems={menuItems} />
                                 </div>
                             );
                         }
@@ -145,7 +192,7 @@ const GalleryBlock = ({ data, check }) => {
             </>}
             {otherFiles.length > 0 && <>
                 <h1>{LANG.documents}</h1>
-                <Table columns={columnsTable} data={otherFiles}/>
+                <Table columns={columnsTable} data={otherFiles} />
                 {/* <table className='Table'>
                     <thead>
                         <tr>
@@ -172,6 +219,8 @@ const GalleryBlock = ({ data, check }) => {
                     </tbody>
                 </table> */}
             </>}
+            {confirmDelete.active && <ModalConfirm text={LANG.case_files.delete_confirm}
+                closeHandler={() => { confirmDeleteHandler() }} successHandler={deleteHandler} />}
             {
                 openedPhoto.show && <OpenPhoto url={openedPhoto.url} close={() => { setOpenedPhoto({ url: "", show: false }) }} />
             }

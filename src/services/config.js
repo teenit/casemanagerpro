@@ -61,6 +61,7 @@ export const LANG = {
     title_category_groups: "Категорії груп",
   },
   FIELDS_TABLE: {
+    add:"Додати нове поле",
     confirm_delete_start: "Підтвердіть дію з видалення поля",
     confirm_delete_end: "Ця дія видалить поле та пов'язані з ним дані"
   },
@@ -265,6 +266,10 @@ export const LANG = {
       other: "Інше",
     },
   },
+  case_files:{
+    delete_confirm:"Ви впевнені, що хочете видалити цей файл?",
+    photo:"Фотографія"
+  },
   footer: {
     email: "Якщо виникли проблеми, пропозиції - пишіть на поштову скриньку",
     phone: "Якщо питання супер термінове - дзвоніть за номером",
@@ -371,6 +376,11 @@ export const LANG = {
     success:"Учасника додано",
     error_data: "Перевірте правильність даних"
   },
+  FIELDS_BLOCK:{
+    work:"Робочі дані",
+    contact:"Контактні дані",
+    out_of_group:"Дані поза групою"
+  },
   exportPDFcasesModal:{
     no_file_selected:"Не обрано жодного кейсу на експорт",
     title:"Експорт кейсів у ПДФ",
@@ -473,6 +483,7 @@ export const LANG = {
     },
     add_event: {
       title: "Додати подію",
+      edit:"Редагувати подію",
       for_all: "Для всіх",
       repeat: "Повторювати кожного року",
       alertMessages: {
@@ -481,6 +492,7 @@ export const LANG = {
       },
     }
   },
+  
   groups: {
     amount: "Кількість об'єктів",
     desc: "Опис групи:",

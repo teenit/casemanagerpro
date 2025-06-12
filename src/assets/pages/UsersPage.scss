@@ -1,5 +1,23 @@
-.UsersPage{
+.UsersPage {
     display: flex;
     flex-direction: column;
     gap: 25px;
+
+    &-mask {
+        display:flex;
+        align-items: center;
+        position: relative;
+        &-content{
+            flex-grow: 1;
+            text-decoration: none;
+        }
+        &-icon{
+            cursor: pointer;
+            margin-left: 8;
+            width: 24;
+            display: flex;
+            justify-content: center;
+            transition: opacity 0.2s;
+        }
+    }
 }

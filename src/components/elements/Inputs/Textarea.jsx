@@ -1,9 +1,9 @@
 import { TextField } from "@mui/material";
 import React from "react";
 
-const Textarea = ({ value = "", onChange, label = "" }) => {
+const Textarea = ({ value = "", onChange, label = "", addClass="" }) => {
     return (
-        <div className="TextArea">
+        <div className={`TextArea ${addClass}`}>
             <TextField
                 label={label}
                 value={value || ""}

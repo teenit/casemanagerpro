@@ -44,7 +44,8 @@ class TaskModal extends Component {
     }
     validate = () => {
         const { title, dead_line } = this.state.data
-        if (title.length > 0 && dead_line.length > 0) {
+        console.log(dead_line)
+        if (title.length > 0 && dead_line.length>1) {
             if (this.props.data) {
                 this.editTask()
             } else {

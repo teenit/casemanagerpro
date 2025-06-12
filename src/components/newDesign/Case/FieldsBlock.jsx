@@ -4,6 +4,7 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import InputBlock from "../../elements/Inputs/InputBlock";
 import { Switch } from "@mui/material";
 import AccessCheck from "../../Functions/AccessCheck";
+import { LANG } from "../../../services/config";
 
 const FieldsBlockGroup = ({options, case_id, title="", getCaseInfo, right = null}) => {
 
@@ -72,9 +73,9 @@ const FieldsBlock = ({works, contacts, another, case_id, getCaseInfo, cg = false
         simple_info_view: AccessCheck("view_edit", "a_page_case_simple_info", "view"),
     }
     return(<div className="FieldsBlock">
-        {works.length > 0 && access.simple_info_view && <FieldsBlockGroup right={access.simple_info_edit} getCaseInfo={getCaseInfo} title="Робочі дані" options={works} case_id={case_id}/>}
-        {contacts.length > 0 && access.contact_info_view && <FieldsBlockGroup right={access.contact_info_edit} getCaseInfo={getCaseInfo} title="Контактні дані" options={contacts} case_id={case_id}/>}
-        {another.length > 0 && access.another_info_view && <FieldsBlockGroup right={access.another_info_edit} getCaseInfo={getCaseInfo} title="Дані поза групою" options={another} case_id={case_id}/>}
+        {works.length > 0 && access.simple_info_view && <FieldsBlockGroup right={access.simple_info_edit} getCaseInfo={getCaseInfo} title={LANG.FIELDS_BLOCK.work} options={works} case_id={case_id}/>}
+        {contacts.length > 0 && access.contact_info_view && <FieldsBlockGroup right={access.contact_info_edit} getCaseInfo={getCaseInfo} title={LANG.FIELDS_BLOCK.contact} options={contacts} case_id={case_id}/>}
+        {another.length > 0 && access.another_info_view && <FieldsBlockGroup right={access.another_info_edit} getCaseInfo={getCaseInfo} title={LANG.FIELDS_BLOCK.out_of_group} options={another} case_id={case_id}/>}
     </div>)
 }
 

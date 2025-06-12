@@ -62,7 +62,9 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
     return(
         <Modal
             header={<div className="Modal--head-header">
-                {edit || state.key == 'happyCase' ? <div className="title">{LANG.calendar.add_event.title}</div> : (!checkEditEvent && user.id !== state.userID) ? "" :<Button onClick={setEdit} startIcon={<Icon icon={'edit'}/>}>Редагувати подію</Button>}
+                {edit || state.key == 'happyCase' ? <div className="title">{LANG.calendar.add_event.title}</div> :
+                 (!checkEditEvent && user.id !== state.userID) ? "" 
+                 :<Button onClick={setEdit} startIcon={<Icon icon={'edit'}/>}>{LANG.calendar.add_event.edit}</Button>}
             </div>}
             closeHandler={close}
             footer={ <div className="Modal--footer" style={{justifyContent:"space-between",width:"100%"}}>
@@ -146,7 +148,7 @@ const AddCalendarEvent = ({data={}, loadEvents, close, edit = true, setEdit=()=>
                     </label>
                 </div>
                 <div className="one-element">
-                    <Input 
+                    <Input addClass="w100"
                         value={state.link} 
                         type="text" 
                         disabled={!edit}

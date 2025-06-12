@@ -60,10 +60,13 @@ const AccessPage = () => {
                         <h3>{LANG.access_text.modal_header}</h3>
                     }
                     footer={
-                        <Button variant="contained" className="button" onClick={addNewAccess}>{LANG.save}</Button>
+                        <>
+                        <Button variant="contained" onClick={addNewAccess}>{LANG.save}</Button>
+                        <Button variant="contained" color="error" onClick={() => { setModal(false) }}>{LANG.cancel}</Button>
+                        </>
                     }
                 >
-                    <Input value={addAccess.name} onChange={e => setAccess({ ...addAccess, name: e.target.value })} label={LANG.access_text.add_name} type="text" />
+                    <Input addClass="w100" value={addAccess.name} onChange={e => setAccess({ ...addAccess, name: e.target.value })} label={LANG.access_text.add_name} type="text" />
                     <Textarea value={addAccess.description} onChange={e => setAccess({ ...addAccess, description: e.target.value })} label={LANG.access_text.add_description} />
 
                 </Modal>

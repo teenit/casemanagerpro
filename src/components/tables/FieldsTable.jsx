@@ -247,7 +247,7 @@ class FieldsTable extends Component {
 
             {this.state.createFieldModal &&
                 <Modal
-                    header={"Add new Field"}
+                    header={LANG.FIELDS_TABLE.add}
                     closeHandler={() => this.setState({ createFieldModal: false })}
                     footer={<>
                         <Button variant="contained" color="error" onClick={() => { this.setState({ createFieldModal: false }) }}>{LANG.GLOBAL.cancel}</Button>
@@ -258,18 +258,18 @@ class FieldsTable extends Component {
                         }}>{LANG.GLOBAL.save}</Button>
                     </>}
                 >
-                    <Input
+                    <Input addClass='w100'
                         label={LANG.FIELDS.field_name}
                         value={this.state.name}
                         onChange={(e) => this.setState({ name: e.target.value })}
                     />
 
-                    <Input
+                    <Input addClass='w100'
                         label={LANG.FIELDS.unique}
                         value={this.state.unique}
                         onChange={(e) => this.setState({ unique: e.target.value.trim() })}
                     />
-                    <Input
+                    <Input addClass='w100'
                         label={LANG.FIELDS.icon_field}
                         value={this.state.icon}
                         onChange={(e) => this.setState({ icon: e.target.value })}

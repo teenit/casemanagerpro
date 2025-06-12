@@ -153,7 +153,7 @@ const CustomToolbar = (toolbar) => {
         </IconButton>
         <Button onClick={goToToday}>
           <Icon icon={'today'} />
-          Сьогодні  
+          {LANG.calendar.today}
         </Button>
         <IconButton onClick={goToNext}>
           <Icon icon={'arrow_next'}/>

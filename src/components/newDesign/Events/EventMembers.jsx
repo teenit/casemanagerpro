@@ -36,7 +36,7 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
                     <NavLink to={`/user/${item.user_id}`}>{item.name}</NavLink>
                     <div className="EventPage-MemberItem-right">
                         <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
-                        <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {setModalDelete({
+                        <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {setModalDelete({
                             ...modalDelete,show:true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteOrgConfirm} {item.name} ?</b>
                         }) }} />
                     </div>
@@ -52,7 +52,7 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
                     <div className="EventPage-MemberItem-right">
                         {/* <div className="EventPage-MemberItem-right-role">role</div> */}
                         <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
-                        <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {setModalDelete({
+                        <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {setModalDelete({
                             ...modalDelete,show:true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteMemberConfirm} {item.name} ?</b>
                         }) }} />
                     </div>
@@ -70,7 +70,7 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
                     <div>{item.name}</div>
                     <div className="EventPage-MemberItem-right">
                         <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
-                        <Icon icon={"delete"} addClass={"close-icon"} onClick={() => {setModalDelete({
+                        <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {setModalDelete({
                             ...modalDelete,show:true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteMemberConfirm} {item.name} ?</b>
                         }) }} />
                     </div>

@@ -122,13 +122,13 @@ const Files = ({ case_id, getCaseInfo, files}) => {
                         </div>
                     }>
                     <div className="Files-modal">
-                        <Input label={LANG.GLOBAL.title} value={data.title} onChange={(e) => dataHandler("title", e.target.value)} />
+                        <Input addClass="w100" label={LANG.GLOBAL.title} value={data.title} onChange={(e) => dataHandler("title", e.target.value)} />
                         <Textarea label={LANG.GLOBAL.description} value={data.description} onChange={(e) => dataHandler("description", e.target.value)} />
                         <div className="Files-modal-caption">
                             <span>{LANG.GLOBAL.tags}</span>
                             <Hint text={LANG.hints.tag} placement="right" />
                         </div>
-                        <Input value={data.tag} onChange={(e) => dataHandler("tag", e.target.value)} />
+                        <Input addClass="w100" value={data.tag} onChange={(e) => dataHandler("tag", e.target.value)} />
                     </div>
                 </Modal>
             )}

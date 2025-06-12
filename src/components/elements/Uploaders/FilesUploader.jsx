@@ -134,7 +134,7 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
                   <img className='FilesUploader-files-preview' src={FORMAT[ext(file.name)].imgUrl} alt={`File type: ${ext(file.name)}`} />
                 )}
                 <span onClick={() => handleDelete(index)}>
-                  <Icon icon={"close"} addClass={"close-icon"} />
+                  <Icon icon={"close"} addClass={"delete-icon"} />
                 </span>
               </div>
             ))}

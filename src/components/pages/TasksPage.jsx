@@ -16,7 +16,6 @@ import Modal from "../Modals/Modal";
 import SearchInput from "../elements/Inputs/SearchInput";
 import Pagination from "../elements/Pagination/Pagination";
 import AccessCheck from "../Functions/AccessCheck";
-import { RampRightSharp } from "@mui/icons-material";
 class TasksPage extends Component {
     constructor(props) {
         super(props)
@@ -90,11 +89,12 @@ class TasksPage extends Component {
         this.getUsers()
         this.setState({
             access: {
-                edit: () => AccessCheck('view_edit', 'a_task_manager', 'view')
+                edit: () => AccessCheck('view_edit', 'a_task_manager', 'edit')
             }
         });
 
     }
+
 
     handleSortClick = (field) => {
         const { sort } = this.state;
@@ -140,7 +140,7 @@ class TasksPage extends Component {
                     return <div style={{ cursor: "pointer" }} title={cell} onClick={() => {
                         this.modalHandler("info")
                         this.setState({ current_task: row })
-                    }}>{this.cutTitle(cell)}</div>
+                    }}>{this.cutTitle(cell, 50)}</div>
                 },
                 headerFormatter: () =>
                     <HeaderFormatter
@@ -156,7 +156,10 @@ class TasksPage extends Component {
                 text: LANG.GLOBAL.description,
                 sort: false,
                 formatter: (cell, row) => {
-                    return <div title={cell}>{this.cutTitle(cell) || LANG.GLOBAL.no_description}</div>
+                    return <div style={{ cursor: "pointer" }} title={cell} onClick={() => {
+                        this.modalHandler("info")
+                        this.setState({ current_task: row })
+                    }}>{this.cutTitle(cell, 75) || LANG.GLOBAL.no_description}</div>
                 },
             },
             {
@@ -285,8 +288,8 @@ class TasksPage extends Component {
             { class: "table-red", condition: (row) => moment().isAfter(moment(row.dead_line)) }
         ]
     }
-    cutTitle = (str) => {
-        return str.length > 75 ? str.slice(0, 75) + "..." : str
+    cutTitle = (str, length) => {
+        return str.length > length ? str.slice(0, length) + "..." : str
     }
     render() {
         const { modals, tabValue, current_task, loading } = this.state
