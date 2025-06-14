@@ -38,7 +38,7 @@ class TasksPage extends Component {
             users: {},
             access: {
                 edit: false
-            }
+            },
         };
 
     }

@@ -44,7 +44,6 @@ class TaskModal extends Component {
     }
     validate = () => {
         const { title, dead_line } = this.state.data
-        console.log(dead_line)
         if (title.length > 0 && dead_line.length>1) {
             if (this.props.data) {
                 this.editTask()
@@ -126,7 +125,7 @@ class TaskModal extends Component {
                         <div className="Modal--split">
                             <FormControl>
                                 <InputLabel>{LANG.TASKS_PAGE.priority_text}</InputLabel>
-                                <Select
+                                <Select size="small"
                                     label={LANG.TASKS_PAGE.priority_text}
                                     value={data.priority}
                                     onChange={(e) => this.dataHandler("priority", e.target.value)}

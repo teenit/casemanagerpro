@@ -27,7 +27,7 @@ const GetLinksBlock = ({ links = [], confirmDelete, showForm }) => {
                                 <div key={item.resource_id} className="GetLinksBlock-list-item">
                                     <div className="GetLinksBlock-list-item-title">
                                         <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
-                                        {canRemove && <span className="delete-icon" onClick={() => confirmDelete(item)}><Icon icon={'delete'} /></span>}
+                                        {canRemove && <Icon icon={'delete'} onClick={() => confirmDelete(item)} addClass="delete-icon"  />}
                                     </div>
                                     <div className="GetLinksBlock-list-item-description">{item.description}</div>
                                 </div>

@@ -20,7 +20,7 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
         color: appConfig.default.color,
         categories: []
     });
-    const getGroupsCategories = ()=>{
+    const getGroupsCategories = () => {
         return Object.values(categories.groups)
     }
     const handleCheckboxChange = (value) => {
@@ -34,71 +34,70 @@ const AddGroup = ({ action, data, id, close, loadGroups }) => {
         setState({ ...state, categories: [...categories] });
     };
     useEffect(() => {
-        if (action === "add") {
-            setState({ name: "", description: "", color: appConfig.default.color, categories:[] });
+        if (data) {
+            setState({ name: "", description: "", color: appConfig.default.color, categories: [], ...data });
         } else {
-            setState(data);
+            setState({ name: "", description: "", color: appConfig.default.color, categories: [] });
         }
-    }, [action, data]);
+    }, []);
 
     const [alert, setAlert] = useState({
         success: false,
         error: false,
-        message:""
+        message: ""
     });
     const alertHandler = (key, message) => {
-        setAlert({...alert,[key]:!alert[key], message:message});
+        setAlert({ ...alert, [key]: !alert[key], message: message });
     };
 
     const checkForm = () => {
+        console.log(state)
         if (state.name.length < 1) {
             alertHandler("error", LANG.groups.alertMessages.no_title);
-        } else if(state.name.length>50){
+        } else if (state.name.length > 50) {
             alertHandler("error", LANG.groups.alertMessages.too_long)
-        }else {
+        } else {
             successHandler();
         }
     };
 
     const successHandler = () => {
-        if (action === "add") {
+        if (data) {
+            apiResponse({ ...state, group_id: id }, "groups/edit-group.php").then((res) => {
+                loadGroups()
+                close();
+                alertHandler("success", LANG.groups.alertMessages.group_edited);
+            });
+        } else {
             apiResponse({ ...state }, "groups/add-group.php").then((res) => {
                 loadGroups()
                 close()
                 alertHandler("success", LANG.groups.alertMessages.group_added);
             });
-        }else{
-            
-            apiResponse({ ...state, group_id:id }, "groups/edit-group.php").then((res) => {
-                loadGroups()
-                close();
-                alertHandler("success", LANG.groups.alertMessages.group_edited);
-            });
         }
-        
+
     };
 
     const changeHandler = (key, value) => {
-        setState({ ...state, [key]: value});
+        setState({ ...state, [key]: value });
     };
-
     return (
         <>
-            
-                <Modal closeHandler={close}
-                    footer={<Button variant="contained" onClick={checkForm}>{LANG.GLOBAL.save}</Button>
-                    }>
-                    <div className="AddGroup-split">
-                        <Input value={state.name} type="text" label={LANG.GLOBAL.title} onChange={(e) => changeHandler("name", e.target.value)} />
-                        <InputColor value={state.color} onChange={(e) => changeHandler("color", rgbToHex(e.target.value))} />
-                    </div>
-                    <Textarea value={state.description} label={LANG.GLOBAL.description} onChange={(e) => changeHandler("description", e.target.value)} />
-                    <div>
-                        <span>{LANG.categories.category}</span>
-                        <CheckboxListAccess allMas={getGroupsCategories} checkedMas={state.categories} onChange={(value)=>{handleCheckboxChange(value)}}/>
-                    </div>
-                </Modal>
-        
+
+            <Modal closeHandler={close}
+                footer={<Button variant="contained" onClick={checkForm}>{LANG.GLOBAL.save}</Button>
+                }>
+                <div className="AddGroup-split">
+                    <Input value={state.name} type="text" label={LANG.GLOBAL.title} onChange={(e) => changeHandler("name", e.target.value)} />
+                    <InputColor value={state.color} onChange={(e) => changeHandler("color", rgbToHex(e.target.value))} />
+                </div>
+                <Textarea value={state.description} label={LANG.GLOBAL.description} onChange={(e) => changeHandler("description", e.target.value)} />
+                <div>
+                    <span>{LANG.categories.category}</span>
+                    <CheckboxListAccess allMas={getGroupsCategories} checkedMas={state.categories} onChange={(value) => { handleCheckboxChange(value) }} />
+                </div>
+            </Modal>
+
 
             {alert.success && (
                 <SmallNotification isSuccess={true} text={alert.message} close={() => alertHandler("success")} />

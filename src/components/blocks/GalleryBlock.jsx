@@ -25,7 +25,6 @@ const GalleryBlock = ({ data, check }) => {
     const handleResize = () => {
         setWidth(window.innerWidth);
     };
-console.log(data)
     useEffect(() => {
         window.addEventListener('resize', handleResize);
         return () => {
@@ -85,9 +84,7 @@ console.log(data)
         setConfirmDelete({ ...confirmDelete, active: !confirmDelete.active, current_file: file })
     }
     const deleteHandler = () => {
-        console.log(data)
         apiResponse({ action: "delete_case" }, "files/file.php").then((res) => {
-            console.log(res)
         })
     }
     const columnsTable = [
@@ -167,7 +164,7 @@ console.log(data)
     return (
         <div className='GalleryBlock'>
             {imagesAndVideos.length > 0 && <>
-                <div>{LANG.gallery}</div>
+                <div className='GalleryBlock-title'>{LANG.gallery}</div>
                 <div className='GalleryBlock-grid' style={{
                     gridTemplateRows: `repeat(${imgRows}, 1fr)`,
                     gridTemplateColumns: `repeat(${imgColumns}, 1fr)`,
@@ -191,7 +188,7 @@ console.log(data)
                 </div>
             </>}
             {otherFiles.length > 0 && <>
-                <h1>{LANG.documents}</h1>
+                <div className='GalleryBlock-title'>{LANG.documents}</div>
                 <Table columns={columnsTable} data={otherFiles} />
                 {/* <table className='Table'>
                     <thead>

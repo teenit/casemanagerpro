@@ -33,6 +33,9 @@ const TransactionsPage = () => {
     const modalHandler = (action = "") => {
         setModal({ ...modal, active: !modal.active, action: action })
     }
+    const cutTitle = (str, length) => {
+        return str.length > length ? str.slice(0, length) : str
+    }
     const columnsTable = [
         {
             dataField: 'id',
@@ -55,7 +58,10 @@ const TransactionsPage = () => {
             fixed: false,
             isHidden: false,
             sort: true,
-            breakWord: true
+            breakWord: true,
+            formatter: (cell, row) => {
+                return <div>{cutTitle(cell, 75) || LANG.GLOBAL.no_description}</div>
+            }
         },
         {
             dataField: 'amount',
@@ -80,7 +86,7 @@ const TransactionsPage = () => {
             fixed: false,
             isHidden: false,
             sort: true,
-            formatter: (cell, row)=>{
+            formatter: (cell, row) => {
                 return <div className={`status ${cell}`}>{LANG.TRANSACTIONS[cell]}</div>
             }
         },
@@ -108,8 +114,8 @@ const TransactionsPage = () => {
                     {
                         title: LANG.GLOBAL.edit,
                         isHidden: false,
-                        icon:"edit",
-                        click: ()=>{
+                        icon: "edit",
+                        click: () => {
                             modalHandler("edit")
                             setTransactionId(row.id)
                         }
@@ -122,14 +128,14 @@ const TransactionsPage = () => {
                         isHidden: false,
                         icon: "delete",
                         color: 'error',
-                        click: ()=>{
+                        click: () => {
                             modalHandler("delete")
                             setTransactionId(row.id)
                         }
                     },
                 ]
 
-                return <ActionMenu menuItems={menuItems}/>
+                return <ActionMenu menuItems={menuItems} />
             }
         },
         // {
@@ -166,10 +172,10 @@ const TransactionsPage = () => {
         if (typeof column.headerFormatter !== 'function' && column.sort) {
             column.headerFormatter = (field, order) => {
                 return (
-                    <HeaderFormatter 
-                        sortOrder={order} 
-                        sortField={field} 
-                        text={column.text} 
+                    <HeaderFormatter
+                        sortOrder={order}
+                        sortField={field}
+                        text={column.text}
                         dataField={column.dataField}
                         onSortClick={handleSortClick}
                     />
@@ -199,7 +205,7 @@ const TransactionsPage = () => {
     };
 
     const loadTotalCount = () => {
-        apiResponse({}, "transactions/get-total-count.php").then((res)=>{
+        apiResponse({}, "transactions/get-total-count.php").then((res) => {
             if (res.status) setTotalCount(+res.total);
         })
     }
@@ -264,23 +270,23 @@ const TransactionsPage = () => {
     // if (error) return <p>Помилка: {error}</p>;
 
     const transactionColumns = prepareColumns(columnsTable);
-const addTransaction = ()=>{
-    modalHandler("add")
-    setTransactionId(null)
-}
+    const addTransaction = () => {
+        modalHandler("add")
+        setTransactionId(null)
+    }
     return (
         <div className="Transactions">
-                <AddButton title={LANG.TRANSACTIONS.add} click={addTransaction}/>
+            <AddButton title={LANG.TRANSACTIONS.add} click={addTransaction} />
             <Table
                 columns={transactionColumns}
                 data={transactions}
                 keyField={'id'}
                 sortField={options.sort.field}
                 sortOrder={options.sort.order}
-                emptyTable={<EmptyData title={LANG.TRANSACTIONS.no_transactions} buttonText={LANG.TRANSACTIONS.add_transaction} click={addTransaction}/>}
+                emptyTable={<EmptyData title={LANG.TRANSACTIONS.no_transactions} buttonText={LANG.TRANSACTIONS.add_transaction} click={addTransaction} />}
             />
             {transactions.length > 0 && <div className="Transactions-pagination">
-                <Pagination 
+                <Pagination
                     page={options.page}
                     count={transactions.length}
                     nextPage={handleNextPage}

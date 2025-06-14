@@ -48,10 +48,10 @@ const GroupCard = ({ item, loadGroups }) => {
                         : <span>{LANG.categories.noCategory}</span>}
                 </div>
             </div>
-            <div className="GroupCard-split">
+            {/* <div className="GroupCard-split">
                 {accessEdit && <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEdit(!edit) }} />}
                 <div className="GroupCard-split-date">{moment(item.date_created).format('DD-MM-YYYY')}</div>
-            </div>
+            </div> */}
             {edit && <AddGroup loadGroups={loadGroups} action={"edit"} data={data} id={item.id} close={() => { setEdit(false) }} />}
         </div>
     );

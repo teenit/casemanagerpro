@@ -73,7 +73,7 @@ const Input = ({
             event.target.value = e.format('YYYY-MM-DD');
         }
         else {
-            event.target.value = e?.target?.value || null
+            event.target.value = e?.target?.value || ""
         }
 
         onChange(event);
