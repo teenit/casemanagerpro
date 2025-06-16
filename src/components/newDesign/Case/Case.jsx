@@ -170,6 +170,12 @@ const Case = () => {
     const openAncetaForm = () => {
         setAncetaForm({...ancetaForm, showForm: true})
     }
+    const deleteCase = () => {
+        apiResponse({case_id: case_id, action: "simple_delete"}, "case/case.php").then((res)=>{
+            console.log(res)
+        })
+    }
+    
     const access = {
         case_connection_view: AccessCheck("view_edit", "a_page_case_connection", "view"),
         case_simple_info_view: AccessCheck("view_edit", "a_page_case_simple_info", "view"),
@@ -198,6 +204,7 @@ const Case = () => {
                 <Button disabled={ancetaForm.list.length == 0} onClick={openAncetaForm}><Icon icon='quiz'/></Button>
                 <Button onClick={printPDF}><Icon icon='print'/></Button>
                 <Button onClick={() => { setOpenSetting(!openSetting) }}><Icon icon="check-list"/></Button>
+                <Button onClick={deleteCase}><Icon icon="delete"/></Button>
                 {/* <img src={setImg} alt=""
                     onClick={() => { setOpenSetting(!openSetting) }} /> */}
                 {/* {
