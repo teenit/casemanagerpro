@@ -1,8 +1,8 @@
 .wrap__bells{
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 40px);
     position: fixed;
-    top: 60px;
+    top: 40px;
     left: 0;
     display: grid;
     grid-template-columns: calc(100% - 500px) 500px;

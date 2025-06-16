@@ -96,7 +96,7 @@ const howOldIsCase = (birthday) => {
 };
 const getImage = (data) => {
   if (!data && !data?.profileImg?.link) return images.default
-  if (data?.profileImg?.link) return serverAddres(data.profileImg.link)
+  if (data?.profileImg?.link) return data.profileImg.link
   if (data && data?.sex && data.sex.trim().length>0) {
       const age = howOldIsCase(data.happyBD)
       if (age) {

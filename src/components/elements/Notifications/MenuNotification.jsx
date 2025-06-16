@@ -24,11 +24,15 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
                 </div>
             case "birthday":
                 return <div>{LANG.MENU_NOTIFICATION.case} <NavLink to={`/case/${data.case_id}`}>№{data.case_id} {data.case_name}</NavLink> {data.when} <b>{data.years} років</b> {data.happy_day}</div>
+            case "created_new_task": 
+                return <div>Нова задача: {item?.task_name}</div>
             default:
+                return <></>
                 break;
         }
 
     }
+
     const notificationType = {
         created_new_case: {
             title: LANG.MENU_NOTIFICATION.notifications.new_case,
@@ -73,14 +77,21 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             icon_class: "notification-icon-purple",
             color: "#9747FF",
             type: 'birthday'
+        },
+        created_new_task: {
+            title: "Нова задача",
+            icon: "add_notification",
+            icon_class: "notification-icon-blue",
+            color: "#d900fd",
+            type: 'case-created'
         }
     }
     return (
-        <div className={`MenuNotification ${!isUnread && 'MenuNotification-read'} ${notificationType[key].type}`}>
+        <div className={`MenuNotification ${!isUnread && 'MenuNotification-read'} ${notificationType[key]?.type}`}>
             <div className='MenuNotification-header'>
                 <div className="MenuNotification-header-title">
-                    <Icon icon={notificationType[key].icon} addClass={notificationType[key].icon_class} />
-                    <div>{notificationType[key].title}</div>
+                    <Icon icon={notificationType[key]?.icon} addClass={notificationType[key]?.icon_class} />
+                    <div>{notificationType[key]?.title}</div>
                 </div>
                 {isUnread && data.meta_key !== 'birthday' && <div className="MenuNotification-header-unread" onClick={() => { read(data.notification_id) }}>Нове</div>}
 

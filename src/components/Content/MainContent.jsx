@@ -38,6 +38,8 @@ import AncetaPageWrapper from "../pages/AncetaPageWrapper";
 import Statistic from "../Home/Statistic/Statistic";
 import UsersPage from "../pages/UsersPage";
 import TasksPage from "../pages/TasksPage";
+import TaskPage from "../pages/TaskPage";
+import WrapperParams from "../pages/WrapperParams";
 
 const MainContent = () => {
   const rights = useSelector(state => state.auth);
@@ -56,7 +58,8 @@ const MainContent = () => {
     user: AccessCheck('page', "a_page_user"),
     phonebook: AccessCheck('page', "a_page_phonebook"),
     users: AccessCheck('yes_no', 'a_page_settings_tab_users'),
-    tasks: AccessCheck('view_edit', 'a_task_manager', 'view')
+    tasks: AccessCheck('view_edit', 'a_task_manager', 'view'),
+    task: AccessCheck('view_edit', 'a_task_manager', 'view'),
   }
   const { isAuth } = useAuth();
   const params = useParams()
@@ -76,6 +79,7 @@ const MainContent = () => {
         <Route path='/events' element={access.events ? <EventsPage /> : <NotFound />} />
         {/* <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} /> */}
         <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} />
+        <Route path='/task/:id' element={access.task ? <WrapperParams component = {TaskPage}/> : <NotFound />} />
         <Route path='/telegram' element={<TelegramPage />} />
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
