@@ -12,7 +12,7 @@ import { rgbToHex } from "../Functions/rgbToHex";
 import { useSelector } from "react-redux";
 import CheckboxListAccess from "../elements/CheckBoxes/CheckboxListAccess";
 
-const AddGroup = ({ action, data, id, close, loadGroups }) => {
+const AddGroup = ({ data, id, close, loadGroups }) => {
     const categories = useSelector(state => state.categories);
     const [state, setState] = useState({
         name: "",

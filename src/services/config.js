@@ -557,7 +557,7 @@ export const LANG = {
   TASKS_PAGE: {
     add: "Додати завдання",
     edit:"Редагувати завдання",
-    dead_line: "Дедлайн",
+    dead_line: "Термін виконання",
     from: "Від кого",
     to: "Хто виконує",
     reviewer: "Хто оцінює",
@@ -567,7 +567,7 @@ export const LANG = {
     not_found: "Завдань не знайдено",
     priority_text: "Пріорітет",
     info: "Інформація про завдання",
-    invalid_data:"Введіть назву та дедлайн таску",
+    invalid_data:"Введіть назву та термін виконання таску",
     active:"Активно",
     finished:"Завершено",
     finish:"Завершити",

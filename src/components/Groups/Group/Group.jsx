@@ -178,8 +178,9 @@ const navigate = useNavigate()
             {modal.edit && <AddGroup data={{
                 name: data.group.groupName,
                 description: data.group.groupDescription,
-                categories: data.group.groupCategories
-            }} close={()=>{modalHandler("edit")}} action={"edit"} 
+                categories: data.group.groupCategories,
+                color:data.group.groupColor
+            }} close={()=>{modalHandler("edit")}}
             id={data.group.group_id} loadGroups={getGroupData}/>}
             {modal.confirm_delete_group && <ModalConfirm text={LANG.groups.group.delete_confirm} successHandler={deleteGroup} closeHandler={() => { modalHandler("confirm_delete_group") }} />}
             {modal.confirm_delete_user && <ModalConfirm text={LANG.groups.group.confirm} successHandler={deleteUser}  closeHandler={() => { modalHandler("confirm_delete_user") }} />}

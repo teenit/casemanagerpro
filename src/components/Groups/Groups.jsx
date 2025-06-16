@@ -84,7 +84,7 @@ const Groups = () => {
                     <GroupCard loadGroups={loadGroups} key={index} item={item} />
                 ))}
             </div>
-            {add && <AddGroup loadGroups={loadGroups} action={"add"} close={addHandler} />}
+            {add && <AddGroup loadGroups={loadGroups} close={addHandler} />}
             {groups.length === 0 && <EmptyData buttonText={LANG.groups.add_first_group} click={addHandler} />}
         </div>
     );
