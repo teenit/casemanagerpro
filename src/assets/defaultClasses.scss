@@ -37,7 +37,11 @@ color: $main-color;
 }
 .hide-icon{
     font-size:18px !important;
-
+}
+.watch-task-icon{
+    font-size: 22px !important;
+    color: $main-color;
+    cursor: pointer;
 }
 .delete-icon{
     color: #8f0101;

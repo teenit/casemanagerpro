@@ -558,9 +558,10 @@ export const LANG = {
     add: "Додати завдання",
     edit:"Редагувати завдання",
     dead_line: "Термін виконання",
+    updated_at:"Останнє змінення",
     from: "Від кого",
     to: "Хто виконує",
-    reviewer: "Хто оцінює",
+    reviewer_id: "Хто оцінює",
     archive: "В архів",
     unarchive: "З архіву",
     is_archived:"В архіві",
@@ -583,6 +584,17 @@ export const LANG = {
       finished: "Завершені",
       archived: "Архівовані"
     }
+  },
+  TASK_PAGE:{
+    edit_task:"Редагувати завдання",
+    delete_task:"Видалити завдання",
+    edit_feedback:"Редаугвати зворотній зв'язок",
+    confirm_delete:"Ви впевнені, що хочете видалити це завдання?",
+    feedbacks:"Історія завдання",
+    is_read:"Прочитано",
+    rating:"Оцінка",
+    created_feedback:"Створив",
+    empty_feedback:"Не можна додати порожній зворотній зв'язок"
   },
   resources: {
     add: "Додати ресурс",

@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const WrapperParams = ({ component: Component }) => {
   const params = useParams();
-  return <Component params={params} />;
+  const navigate = useNavigate()
+  return <Component params={params} navigate={navigate} />;
 };
 
 export default WrapperParams;

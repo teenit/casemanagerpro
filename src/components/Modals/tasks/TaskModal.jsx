@@ -136,7 +136,7 @@ class TaskModal extends Component {
                                 </Select>
                             </FormControl>
 
-                            <SelectUsers title={LANG.TASKS_PAGE.reviewer} value={data.reviewer_id} menuItems={this.props.users}
+                            <SelectUsers title={LANG.TASKS_PAGE.reviewer_id} value={data.reviewer_id} menuItems={this.props.users}
                                 onChange={(e) => { this.dataHandler("reviewer_id", e.target.value) }} />
                         </div>
                     </>

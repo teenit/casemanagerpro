@@ -16,6 +16,7 @@ import Modal from "../Modals/Modal";
 import SearchInput from "../elements/Inputs/SearchInput";
 import Pagination from "../elements/Pagination/Pagination";
 import AccessCheck from "../Functions/AccessCheck";
+import Icon from "../elements/Icons/Icon";
 class TasksPage extends Component {
     constructor(props) {
         super(props)
@@ -133,14 +134,24 @@ class TasksPage extends Component {
                     />
             },
             {
+                dataField: 'watch',
+                text: "",
+                sort: false,
+                fixed: false,
+                isHidden: false,
+                formatter: (cell, row) => {
+                    return <Icon icon={"eye"} addClass="watch-task-icon" onClick={() => {
+                        this.modalHandler("info")
+                        this.setState({ current_task: row })
+                    }} />
+                }
+            },
+            {
                 dataField: 'title',
                 text: LANG.GLOBAL.title,
                 sort: true,
                 formatter: (cell, row) => {
-                    return <div style={{ cursor: "pointer" }} title={cell} onClick={() => {
-                        this.modalHandler("info")
-                        this.setState({ current_task: row })
-                    }}>{this.cutTitle(cell, 50)}</div>
+                    return <NavLink to={`/task/${row.id}`}>{this.cutTitle(cell, 50)}</NavLink>
                 },
                 headerFormatter: () =>
                     <HeaderFormatter
@@ -156,10 +167,7 @@ class TasksPage extends Component {
                 text: LANG.GLOBAL.description,
                 sort: false,
                 formatter: (cell, row) => {
-                    return <div style={{ cursor: "pointer" }} title={cell} onClick={() => {
-                        this.modalHandler("info")
-                        this.setState({ current_task: row })
-                    }}>{this.cutTitle(cell, 75) || LANG.GLOBAL.no_description}</div>
+                    return <div title={cell}>{this.cutTitle(cell, 75) || LANG.GLOBAL.no_description}</div>
                 },
             },
             {
@@ -175,7 +183,8 @@ class TasksPage extends Component {
                         onSortClick={this.handleSortClick}
                     />,
                 formatter: (cell, row) => {
-                    return <div className="in-row">{moment(cell).format('DD-MM-YYYY HH:MM')}</div>
+                    let color = moment().isAfter(moment(row.dead_line)) ? "red" : "black"
+                    return <div className="in-row" style={{ color: color }}>{moment(cell).format('DD-MM-YYYY HH:MM')}</div>
                 }
             },
             {
@@ -204,7 +213,7 @@ class TasksPage extends Component {
             },
             {
                 dataField: 'reviewer',
-                text: LANG.TASKS_PAGE.reviewer,
+                text: LANG.TASKS_PAGE.reviewer_id,
                 sort: false,
                 formatter: (cell, row) => {
                     return <NavLink to={`/user/${row.reviewer_id}`}>{this.state.users[row.reviewer_id] || LANG.GLOBAL.unknown_user}</NavLink>
@@ -214,6 +223,14 @@ class TasksPage extends Component {
                 dataField: 'date_created',
                 text: LANG.GLOBAL.date_created,
                 sort: true,
+                headerFormatter: () =>
+                    <HeaderFormatter
+                        text={LANG.GLOBAL.date_created}
+                        dataField="date_created"
+                        sortField={this.state.sort.field}
+                        sortOrder={this.state.sort.order}
+                        onSortClick={this.handleSortClick}
+                    />,
             },
             {
                 dataField: 'priority',
@@ -285,7 +302,8 @@ class TasksPage extends Component {
     }
     get rowStyle() {
         return [
-            { class: "table-red", condition: (row) => moment().isAfter(moment(row.dead_line)) }
+            // { class: "table-red", condition: (row) => moment().isAfter(moment(row.dead_line)) },
+            { class: "table-green", condition: (row) => !row.is_finished }
         ]
     }
     cutTitle = (str, length) => {
@@ -293,7 +311,6 @@ class TasksPage extends Component {
     }
     render() {
         const { modals, tabValue, current_task, loading } = this.state
-
 
         return (
             <div className="Tasks">
@@ -350,7 +367,7 @@ class TasksPage extends Component {
                         {/* <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.dead_line}</span>: {current_task.dead_line}</div>
                         <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.from}</span>: {<NavLink to={`/user/${current_task.from}`}>{this.state.users[current_task.from]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
                         <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.to}</span>: {<NavLink to={`/user/${current_task.to}`}>{this.state.users[current_task.to]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
-                        <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.reviewer}</span>: {<NavLink to={`/user/${current_task.reviewer_id}`}>{this.state.users[current_task.reviewer_id]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
+                        <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.reviewer_id}</span>: {<NavLink to={`/user/${current_task.reviewer_id}`}>{this.state.users[current_task.reviewer_id]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
                         <div><span className="Tasks-info-title">{LANG.GLOBAL.date_created}</span>: {current_task.date_created}</div>
                         <div><span className="Tasks-info-title">{LANG.GLOBAL.date_updated}</span>: {current_task.updated_at}</div>
                         <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.is_archived}</span>: {current_task.is_archived == "1" ? LANG.GLOBAL.yes : LANG.GLOBAL.no}</div>
