@@ -46,6 +46,7 @@ class TaskPage extends Component {
         };
 
         apiResponse(obj, 'tasks/task.php').then((res) => {
+            console.log(res.data)
             this.setState({ task: res.data });
             this.setState({ loading: false });
             this.loadFeedback();
