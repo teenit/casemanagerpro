@@ -32,6 +32,10 @@ div {
 .bold {
     font-weight: 900;
   }
+.large{
+    font-size: xx-large !important;
+    cursor: pointer;
+}
 .default-icon{
 color: $main-color;
 }

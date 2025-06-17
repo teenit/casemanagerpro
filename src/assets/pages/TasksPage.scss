@@ -11,7 +11,18 @@
     &-info {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
+        &-header{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+        &-feedbacks{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
         &-title {
             font-weight: 600;
         }

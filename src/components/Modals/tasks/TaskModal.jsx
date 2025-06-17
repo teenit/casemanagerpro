@@ -17,9 +17,9 @@ class TaskModal extends Component {
                 title: "",
                 description: "",
                 dead_line: " ",
-                from: 20,
-                to: 20,
-                reviewer_id: 20,
+                from: " ",
+                to: " ",
+                reviewer_id: " ",
                 priority: 2
             },
             alert: {
@@ -43,8 +43,8 @@ class TaskModal extends Component {
         })
     }
     validate = () => {
-        const { title, dead_line } = this.state.data
-        if (title.length > 0 && dead_line.length>1) {
+        const { title, dead_line, from, to, reviewer_id } = this.state.data
+        if (title.length > 0 && dead_line.length>1 && from!==" " && to!==" " && reviewer_id!==" ") {
             if (this.props.data) {
                 this.editTask()
             } else {

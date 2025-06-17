@@ -17,6 +17,7 @@ import SearchInput from "../elements/Inputs/SearchInput";
 import Pagination from "../elements/Pagination/Pagination";
 import AccessCheck from "../Functions/AccessCheck";
 import Icon from "../elements/Icons/Icon";
+import WrapperParams from "./WrapperParams";
 class TasksPage extends Component {
     constructor(props) {
         super(props)
@@ -28,6 +29,7 @@ class TasksPage extends Component {
                 info: false
             },
             current_task: null,
+            current_feedbacks: null,
             tasks: [],
             tabValue: 0,
             loading: false,
@@ -114,7 +116,12 @@ class TasksPage extends Component {
     searchHandler(value) {
         this.setState({ search: value }, this.loadData);
     }
-
+    loadFeedback = (data) => {
+        console.log(data)
+        apiResponse({ task_id: data.id, action: "get_feedback_list" }, "tasks/task.php").then((res) => {
+            this.setState({ current_feedbacks: res.data })
+        })
+    }
 
     get tableColumns() {
         return [
@@ -143,6 +150,7 @@ class TasksPage extends Component {
                     return <Icon icon={"eye"} addClass="watch-task-icon" onClick={() => {
                         this.modalHandler("info")
                         this.setState({ current_task: row })
+                        this.loadFeedback(row)
                     }} />
                 }
             },
@@ -310,7 +318,7 @@ class TasksPage extends Component {
         return str.length > length ? str.slice(0, length) + "..." : str
     }
     render() {
-        const { modals, tabValue, current_task, loading } = this.state
+        const { modals, tabValue, current_task, loading , users} = this.state
 
         return (
             <div className="Tasks">
@@ -362,8 +370,17 @@ class TasksPage extends Component {
                 {modals.info && <Modal header={LANG.TASKS_PAGE.info} closeHandler={() => { this.modalHandler("info") }}
                     footer={<Button variant="contained" color="error" onClick={() => { this.modalHandler("info") }}>{LANG.GLOBAL.close}</Button>}>
                     <div className="Tasks-info">
-                        <div><span className="Tasks-info-title">{LANG.GLOBAL.title}</span>: {current_task.title}</div>
-                        <div><span className="Tasks-info-title">{LANG.GLOBAL.description}</span>: {current_task.description || LANG.GLOBAL.no_description}</div>
+                        <div className="Tasks-info-header">
+                            <div className="Tasks-info-title">{current_task.title}</div>
+                            <div>{current_task.description || LANG.GLOBAL.no_description}</div>
+                        </div>
+                        <div>{LANG.TASKS_PAGE.feedbacks}</div>
+                        <div className="Tasks-info-feedbacks">
+                            {this.state.current_feedbacks && this.state.current_feedbacks.map((item, index) => {
+                                return <div key={index}><span className="bold">{users[item.user_id]} {LANG.TASKS_PAGE.on} {item.date_created}: </span>{item.feedback}</div>
+                            })}
+                        </div>
+
                         {/* <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.dead_line}</span>: {current_task.dead_line}</div>
                         <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.from}</span>: {<NavLink to={`/user/${current_task.from}`}>{this.state.users[current_task.from]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
                         <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.to}</span>: {<NavLink to={`/user/${current_task.to}`}>{this.state.users[current_task.to]}</NavLink> || LANG.GLOBAL.unknown_user}</div>

@@ -38,10 +38,10 @@ const Icon = ({ icon, addClass="", onClick }) => {
         let ico = null;
         switch (icon) {
             case 'archive':
-                ico = <ArchiveIcon fontSize='large' className={addClass} onClick={onClick} />
+                ico = <ArchiveIcon className={addClass} onClick={onClick} />
                 break;
             case 'unarchive':
-                ico = <UnarchiveIcon fontSize='large' className={addClass} onClick={onClick} />
+                ico = <UnarchiveIcon className={addClass} onClick={onClick} />
                 break;
             case 'users':
                 ico = <GroupsIcon fontSize='large' className={addClass} onClick={onClick} />
