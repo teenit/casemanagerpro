@@ -2,7 +2,7 @@ import { Alert, IconButton } from '@mui/material'
 import React, { useEffect } from 'react'
 
 const SmallNotification = ({ isSuccess, text, close }) => {
-  const timeout = text.length>50?5000:3000
+  const timeout = text.length>100?5000:3000
   useEffect(() => {
     const timer = setTimeout(() => {
       close()

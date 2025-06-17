@@ -21,7 +21,7 @@ class SelectUsers extends Component {
                         PaperProps: {
                             style: {
                                 maxHeight: 100,
-                                overflowY: "auto"
+                                overflowY: "auto",
                             }
                         }
                     }}

@@ -13,6 +13,7 @@ import Icon from "../elements/Icons/Icon";
 import ModalConfirm from "../Modals/ModalConfirm"
 import Modal from "../Modals/Modal";
 import SmallNotification from "../elements/Notifications/SmallNotification";
+import ActionMenu from '../Portals/ActionMenu'
 class TaskPage extends Component {
     constructor(props) {
         super(props)
@@ -23,7 +24,8 @@ class TaskPage extends Component {
             modals: {
                 edit_task: false,
                 edit_feedback: false,
-                confirm_delete_task: false
+                confirm_delete_task: false,
+                confirm_delete_feedback: false
             },
             current_feedback: null,
             feedback: "",
@@ -75,15 +77,30 @@ class TaskPage extends Component {
             this.props.navigate("/tasks")
         })
     }
-    finishTask = (data) => {
-        const actionFinished = data.is_finished ? 0 : 1
-        apiResponse({ ...data, action: "edit_task", task_id: data.id, is_finished: actionFinished }, 'tasks/task.php').then((res) => {
+    finishTask = () => {
+        const { task } = this.state
+        const actionFinished = task.is_finished ? 0 : 1
+        apiResponse({ ...task, action: "edit_task", task_id: task.id, is_finished: actionFinished }, 'tasks/task.php').then((res) => {
             this.loadData()
         })
     }
-    archiveHandler = (data) => {
-        const actionArchive = data.is_archived ? 0 : 1
-        apiResponse({ ...data, action: "edit_task", task_id: data.id, is_archived: actionArchive }, 'tasks/task.php').then((res) => {
+    archiveHandler = () => {
+        const { task } = this.state
+        const actionArchive = task.is_archived ? 0 : 1
+        apiResponse({ ...task, action: "edit_task", task_id: task.id, is_archived: actionArchive }, 'tasks/task.php').then((res) => {
+            this.loadData()
+        })
+    }
+    editFeedback = () => {
+        let feedback = this.state.current_feedback
+        apiResponse({ ...feedback, action: "edit_feedback", feedback_id: feedback.id }, 'tasks/task.php').then((res) => {
+            this.modalHandler("edit_feedback")
+            this.loadData()
+        })
+    }
+    deleteFeedback = () => {
+        let feedback = this.state.current_feedback
+        apiResponse({ action: "delete_feedback", feedback_id: feedback.id }, "tasks/task.php").then((res) => {
             this.loadData()
         })
     }
@@ -101,68 +118,86 @@ class TaskPage extends Component {
     alertHandler = (isSuccess = false, message = "") => {
         this.setState({ alert: { ...!this.state.alert, active: !this.state.alert.active, isSuccess: isSuccess, message: message } })
     }
+    getMenuItems = (feedback) => [
+        {
+            title: LANG.GLOBAL.edit,
+            isHidden: false,
+            icon: "edit",
+            click: () => {
+                this.setState({ current_feedback: feedback }, () => {
+                    this.modalHandler("edit_feedback");
+                });
+            }
+        },
+        {
+            itemType: "divider"
+        },
+        {
+            title: LANG.GLOBAL.delete,
+            isHidden: false,
+            icon: "delete",
+            color: 'error',
+            click: () => {
+                this.setState({ current_feedback: feedback }, () => {
+                    this.modalHandler("confirm_delete_feedback");
+                });
+            }
+        }
+    ];
+
     render() {
         const { loading, task, feedbacks, users, modals, current_feedback } = this.state;
 
-        console.log(this.state)
 
         return !loading ? (
             <div className="Task">
                 <div className="Task-control">
-                    <Button variant="contained" onClick={() => { this.modalHandler("edit_task") }}>{LANG.TASK_PAGE.edit_task}</Button>
-                    <Button variant="contained" color="error" onClick={() => { this.modalHandler("confirm_delete_task") }}>
-                        {LANG.TASK_PAGE.delete_task}</Button>
+                    <Icon icon={"edit"} addClass="default-icon large" onClick={() => { this.modalHandler("edit_task") }} />
+                    <Icon icon={task.is_archived ? "unarchive" : "archive"} addClass="default-icon large" onClick={this.archiveHandler} />
+                    <Icon icon={task.is_finished?"close":"save"} addClass="default-icon large" onClick={this.finishTask} />
+                    <Icon icon={"delete"} addClass="delete-icon large" onClick={() => { this.modalHandler("confirm_delete_task") }} />
                 </div>
                 <div className="Task-details">
                     {task.dead_line && (
-                        <div>
-                            <span className="bold">{LANG.TASKS_PAGE.dead_line}: </span>
-                            {task.dead_line}
+                        <div>{LANG.TASKS_PAGE.dead_line}:
+                            <span className="bold"> {task.dead_line}</span>
                         </div>)}
 
                     {task.from && users?.[task.from] && (
-                        <div>
-                            <span className="bold">{LANG.TASKS_PAGE.from}: </span>
-                            <NavLink to={`/user/${task.from}`}>{users[task.from]}</NavLink>
+                        <div>{LANG.TASKS_PAGE.from}:
+                            <NavLink to={`/user/${task.from}`}> {users[task.from]}</NavLink>
                         </div>)}
 
                     {task.to && users?.[task.to] && (
-                        <div>
-                            <span className="bold">{LANG.TASKS_PAGE.to}: </span>
-                            <NavLink to={`/user/${task.to}`}>{users[task.to]}</NavLink>
+                        <div>{LANG.TASKS_PAGE.to}:
+                            <NavLink to={`/user/${task.to}`}> {users[task.to]}</NavLink>
                         </div>)}
 
                     {task.reviewer_id && users?.[task.reviewer_id] && (
-                        <div>
-                            <span className="bold">{LANG.TASKS_PAGE.reviewer_id}: </span>
-                            <NavLink to={`/user/${task.reviewer_id}`}>{users[task.reviewer_id]}</NavLink>
+                        <div>{LANG.TASKS_PAGE.reviewer_id}:
+                            <NavLink to={`/user/${task.reviewer_id}`}> {users[task.reviewer_id]}</NavLink>
                         </div>)}
 
                     {task.date_created && (
-                        <div>
-                            <span className="bold">{LANG.GLOBAL.date_created}: </span>
-                            {task.date_created}
+                        <div>{LANG.GLOBAL.date_created}:
+                            <span className="bold"> {task.date_created} </span>
                         </div>)}
 
                     {task.updated_at && (
-                        <div>
-                            <span className="bold">{LANG.TASKS_PAGE.updated_at}: </span>
-                            {task.updated_at}
+                        <div>{LANG.TASKS_PAGE.updated_at}:
+                            <span className="bold"> {task.updated_at}</span>
                         </div>)}
 
                     {task.priority && (
-                        <div>
-                            <span className="bold">{LANG.TASKS_PAGE.priority_text}: </span>
-                            {LANG.TASKS_PAGE.priority[task.priority]}
+                        <div>{LANG.TASKS_PAGE.priority_text}:
+                            <span className="bold"> {LANG.TASKS_PAGE.priority[task.priority]} </span>
                         </div>)}
 
-                    <div>
-                        <span className="bold">{LANG.TASKS_PAGE.finished}: </span>
-                        {task.is_finished ? LANG.GLOBAL.yes : LANG.GLOBAL.no}
+                    <div>{LANG.TASKS_PAGE.finished}:
+                        <span className="bold">{Boolean(task.is_finished) ? LANG.GLOBAL.yes : LANG.GLOBAL.no} </span>
                     </div>
-                    <div>
-                        <span className="bold">{LANG.TASKS_PAGE.is_archived}: </span>
-                        {task.is_archived ? LANG.GLOBAL.yes : LANG.GLOBAL.no}
+                    <div>{LANG.TASKS_PAGE.is_archived}:
+                        <span className="bold">{Boolean(task.is_archived) ? LANG.GLOBAL.yes : LANG.GLOBAL.no} </span>
                     </div>
                 </div>
 
@@ -195,12 +230,13 @@ class TaskPage extends Component {
                                     <span className="bold">{LANG.TASK_PAGE.rating}: </span>
                                     {item.rating}
                                 </div>}
+                                {item.date_stamp && <div>
+                                    <span className="bold">{LANG.TASK_PAGE.date_stamp}: </span>
+                                    {item.date_stamp}
+                                </div>}
                             </div>
                             <div className="Task-feedbacks-feedback-text">{item.feedback}
-                                <Icon icon={"edit"} addClass="default-icon" onClick={() => {
-                                    this.modalHandler("edit_feedback")
-                                    this.setState({ current_feedback: item })
-                                }} />
+                                <ActionMenu menuItems={this.getMenuItems(item)} />
                             </div>
                         </div>
                     })}
@@ -220,10 +256,14 @@ class TaskPage extends Component {
                 {modals.confirm_delete_task && <ModalConfirm text={LANG.TASK_PAGE.confirm_delete}
                     closeHandler={() => { this.modalHandler("confirm_delete_task") }} successHandler={this.deleteTask} />
                 }
+                {modals.confirm_delete_feedback && <ModalConfirm text={LANG.TASK_PAGE.confirm_delete_feedback}
+                    closeHandler={() => { this.modalHandler("confirm_delete_feedback") }} successHandler={this.deleteFeedback} />
+                }
                 {modals.edit_feedback && <Modal closeHandler={() => { this.modalHandler("edit_feedback") }} header={LANG.TASK_PAGE.edit_feedback}
                     footer={<>
-                        <Button variant="contained">{LANG.GLOBAL.save}</Button>
-                        <Button variant="contained" color="error">{LANG.GLOBAL.cancel}</Button>
+                        <Button variant="contained" color="error" onClick={() => this.modalHandler("edit_feedback")}>
+                            {LANG.GLOBAL.cancel}</Button>
+                        <Button variant="contained" onClick={this.editFeedback}>{LANG.GLOBAL.save}</Button>
                     </>}>
                     <Textarea addClass="w100"
                         type="text"
