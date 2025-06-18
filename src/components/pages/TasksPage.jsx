@@ -317,7 +317,7 @@ class TasksPage extends Component {
         return str.length > length ? str.slice(0, length) + "..." : str
     }
     render() {
-        const { modals, tabValue, current_task, loading , users} = this.state
+        const { modals, tabValue, current_task, loading, users } = this.state
 
         return (
             <div className="Tasks">
@@ -350,6 +350,7 @@ class TasksPage extends Component {
                             sortOrder={this.state.sort.order}
                             emptyTable={
                                 <EmptyData
+                                    access={this.state.access.edit}
                                     title={LANG.TASKS_PAGE.not_found}
                                     buttonText={LANG.TASKS_PAGE.add}
                                     click={() => {

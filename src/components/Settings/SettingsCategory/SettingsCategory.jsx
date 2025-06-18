@@ -61,7 +61,7 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
                 {checkAddRight && <div className="add" onClick={()=>setAddModal(true)}><Icon icon={'add'}/></div>}
             </div>
             {
-                showList && <ListCategories categories={categories}/>
+                showList && <ListCategories categories={categories} loadCategories={()=>{getCategories(categoryKey)}}/>
             }
             
             {
@@ -70,7 +70,7 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
                     header={title}
                     closeHandler={()=>setAddModal(false)}
                     footer={<div className="SettingsCategory--form-button">
-                <Button disabled = {state.categoryName == "" && true} variant="contained" onClick={clickHandler}>Зберегти</Button>
+                <Button disabled = {state.categoryName == "" && true} variant="contained" onClick={clickHandler}>{LANG.GLOBAL.save}</Button>
             </div>}
                 >
                 {

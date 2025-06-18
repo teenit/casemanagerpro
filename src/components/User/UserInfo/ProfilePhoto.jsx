@@ -68,24 +68,23 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
 
     apiResponse({ ...obj }, "user/update-user.php")
       .then((res) => {
-        handleAlertChange("success", "Дані успішно оновлено");
-        getUser()
+        window.location.reload()
       })
       .catch((error) => console.log(error));
   };
 
   const checkPass = () => {
     if (pass.newPass !== pass.newPassTo) {
-      handlePassObjChange("changeError", "Паролі не збігаються");
-      handleAlertChange("error", "Паролі не збігаються");
+      handlePassObjChange("changeError",LANG.USER_PAGE.alert_messages.doesnt_match);
+      handleAlertChange("error", LANG.USER_PAGE.alert_messages.doesnt_match);
       return;
     } else if (pass.newPass.length < 6) {
-      handlePassObjChange("changeError", "Довжина паролю повинна бути більше 6 символів");
-      handleAlertChange("error", "Довжина паролю повинна бути більше 6 символів");
+      handlePassObjChange("changeError", LANG.USER_PAGE.alert_messages.too_short);
+      handleAlertChange("error", LANG.USER_PAGE.alert_messages.too_short);
       return;
     } else if (pass.olderPass.length < 1) {
-      handlePassObjChange("changeError", "Введіть свій старий пароль для підтвердження особистості");
-      handleAlertChange("error", "Введіть свій старий пароль для підтвердження особистості");
+      handlePassObjChange("changeError",LANG.USER_PAGE.alert_messages.old_pass );
+      handleAlertChange("error", LANG.USER_PAGE.alert_messages.old_pass);
       return;
     }
     let passObj = {
@@ -93,7 +92,7 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
       olderPass: pass.olderPass
     };
     apiResponse({ ...passObj }, "user/change-pass.php").then(() => {
-      handleAlertChange("success", "Пароль успішно змінено. Через декілька секунд вас перекине на сторінку логіну");
+      handleAlertChange("success", );
       setTimeout(() => {
         dispatch(removeUser());
       }, 10000)
@@ -134,10 +133,10 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
         </div>
       </div>
       {changePass && <div className="User-pass">
-        <p>Змінити пароль</p>
+        <p>{LANG.USER_PAGE.change_pass}</p>
         <div className="User-pass-form">
           <Input
-            label="Введіть старий пароль"
+            label={LANG.USER_PAGE.old_pass}
             type="password"
             id="change__pass__older"
             value={pass.olderPass}
@@ -146,7 +145,7 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
             }}
           />
           <Input
-            label="Введіть новий пароль"
+            label={LANG.USER_PAGE.new_pass}
             type="password"
             id="change__pass"
             value={pass.newPass}
@@ -155,7 +154,7 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
             }}
           />
           <Input
-            label="Повторіть пароль"
+            label={LANG.USER_PAGE.confirm_pass}
             type="password"
             id="change__passto"
             value={pass.newPassTo}
@@ -164,7 +163,7 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
             }}
           />
           <div>
-            <Button variant="contained" onClick={checkPass}>Надіслати запит</Button>
+            <Button variant="contained" onClick={checkPass}>{LANG.USER_PAGE.send}</Button>
           </div>
         </div>
       </div>}

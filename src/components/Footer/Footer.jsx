@@ -9,9 +9,10 @@ import logo from "../../img/logo.svg";
 import facebook from "../../img/icons/facebook.svg"
 import instagram from "../../img/icons/instagram.svg"
 import telegram from "../../img/icons/telegram.svg"
+import moment from "moment";
 
 const Footer = () => {
-
+    const currentYear = moment().format("yyyy")
     const [version, setVersion] = useState(false)
     const [newVersion, setNewVersion] = useState(false)
 
@@ -45,18 +46,18 @@ const Footer = () => {
 
                     <div className="footer__top__row">
                         <div className="footer__top__logo">
-                            <a href="/"><img src={logo} alt="Логотип Case Manager" /></a>
+                            <a href="/"><img src={logo} alt={LANG.footer.logo} /></a>
                             <span>Case Manager</span>
                         </div>
-                        <div className="footer__gray">Наші контакти:</div>
+                        <div className="footer__gray">{LANG.footer.contacts}</div>
                     </div>
                     <div className="footer__top__contacts">
                         <div className="footer__top__contact">
-                            <p className="footer__contact">{LANG.footer.email}</p>
+                            <div className="footer__contact">{LANG.footer.email}</div>
                             <a href="mailto:teenitclub@gmail.com">teenitclub@gmail.com</a>
                         </div>
                         <div className="footer__top__contact">
-                            <p className="footer__contact">{LANG.footer.phone}</p>
+                            <div className="footer__contact">{LANG.footer.phone}</div>
                             <a href="tel:+380932080760">+380932080760</a>
 
                         </div>
@@ -71,11 +72,11 @@ const Footer = () => {
                     </span>
 
                     <div className="footer__copyright">
-                        <div className="footer__copyright__text">© Case Manager | 2024 | powered by <a href="https://studio.itclub.in.ua" target="_blank">IT Club Studio</a></div>
+                        <div className="footer__copyright__text">© Case Manager | {currentYear} | powered by <a href="https://studio.itclub.in.ua" target="_blank">IT Club Studio</a></div>
                         <div className="footer__socials">
-                            <a href="#"><img src={facebook} alt="Посилання на Facebook" /></a>
-                            <a href="#"><img src={instagram} alt="Посилання на Instagram" /></a>
-                            <a href="#"><img src={telegram} alt="Посилання на Telegram" /></a>
+                            <a href="#"><img src={facebook} alt={LANG.footer.facebook} /></a>
+                            <a href="#"><img src={instagram} alt={LANG.footer.instagram} /></a>
+                            <a href="#"><img src={telegram} alt={LANG.footer.telegram} /></a>
                         </div>
                     </div>
 

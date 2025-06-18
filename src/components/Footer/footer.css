@@ -40,7 +40,7 @@ footer{
 .footer__top__contacts{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 25px;
 }
 .footer__top__contact{
     display: flex;

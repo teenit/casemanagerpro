@@ -182,10 +182,10 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                     value={transactionData.description}
                     onChange={(e) => dataHandler("description", e.target.value)}
                 />
-            </form>
             {alert.active && (
                 <SmallNotification isSuccess={false} text={alert.message} close={alertHandler} />
             )}
+            </form>
         </Modal>
     );
 };

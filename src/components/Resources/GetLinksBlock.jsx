@@ -9,7 +9,7 @@ const GetLinksBlock = ({ links = [], confirmDelete, showForm }) => {
         showList: false
     });
     const canRemove = AccessCheck('yes_no', 'a_page_resources_remove');
-
+    const canUpload = AccessCheck('yes_no', "a_page_resources_upload")
     return (
         <div className="GetLinksBlock">
             <div className="GetLinksBlock-header">
@@ -34,7 +34,7 @@ const GetLinksBlock = ({ links = [], confirmDelete, showForm }) => {
                             );
                         })
                     }
-                    {links.length === 0 && <EmptyData title={LANG.resources.no_links} buttonText={LANG.resources.add_first_link} click={()=>{showForm("link")}}/>}
+                    {links.length === 0 && <EmptyData access={canUpload} title={LANG.resources.no_links} buttonText={LANG.resources.add_first_link} click={()=>{showForm("link")}}/>}
                 </div>
             }
 

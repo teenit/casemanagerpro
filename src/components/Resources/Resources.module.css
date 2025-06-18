@@ -76,6 +76,7 @@
     cursor: pointer;
 }
 .wrap__cards{
+    height: max-content;
     display: flex;
     flex-direction: column;
     border: solid 1px var(--second-color);

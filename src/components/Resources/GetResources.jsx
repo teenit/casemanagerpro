@@ -26,6 +26,7 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
     });
 
     const canDelete = AccessCheck("yes_no", "a_page_resources_remove");
+    const canUpload = AccessCheck('yes_no', "a_page_resources_upload")
 
     const showHandler = (key) => {
         setShowList({ ...showList, [key]: !showList[key] });
@@ -87,7 +88,7 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
         const open = () => {
             setModal({
                 active: true,
-                info: {...item, img:previewUrl},
+                info: { ...item, img: previewUrl },
             });
         };
 
@@ -127,6 +128,7 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
                             ))
                         ) : (
                             <EmptyData
+                            access={canUpload}
                                 icon={"no_results"}
                                 title={LANG.resources.no_files}
                                 buttonText={LANG.resources.add_first_file}
@@ -152,6 +154,7 @@ const GetResources = ({ docFiles, mediaFiles, links, show, loadGroups, confirmDe
                             ))
                         ) : (
                             <EmptyData
+                            access={canUpload}
                                 icon={"no_results"}
                                 title={LANG.resources.no_files}
                                 buttonText={LANG.resources.add_first_file}

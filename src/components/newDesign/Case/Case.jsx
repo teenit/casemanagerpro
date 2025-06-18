@@ -190,7 +190,7 @@ const Case = () => {
     return state && state.general ? (
         <div className="case__wrap">
             {!state?.general?.active && <div className="case-deactivate">
-                <div className="">Кейс деактивовано, хочете активувати? <Button variant="contained" onClick={()=>handleGeneralChange("active", 1)}>ТАК</Button></div>
+                <div>{LANG.CASE_PAGE.deactivated} <Button variant="contained" onClick={()=>handleGeneralChange("active", 1)}>{LANG.GLOBAL.yes}</Button></div>
             </div>}
             {
                 openSetting && !!state?.general?.active && <CaseSettings isActive={state.general.active} handleGeneralChange={handleGeneralChange} successHandler={getCaseInfo} views={state.viewInfoActive ? {} : state.viewInfo} />
@@ -204,7 +204,7 @@ const Case = () => {
                 <Button disabled={ancetaForm.list.length == 0} onClick={openAncetaForm}><Icon icon='quiz'/></Button>
                 <Button onClick={printPDF}><Icon icon='print'/></Button>
                 <Button onClick={() => { setOpenSetting(!openSetting) }}><Icon icon="check-list"/></Button>
-                <Button onClick={deleteCase}><Icon icon="delete"/></Button>
+                {access.super && <Button onClick={deleteCase}><Icon icon="delete" addClass="delete-icon"/></Button>}
                 {/* <img src={setImg} alt=""
                     onClick={() => { setOpenSetting(!openSetting) }} /> */}
                 {/* {
@@ -254,7 +254,7 @@ const Case = () => {
                 <GalleryBlock cg={cg} check={downloadGallery} data={state.meta.files} />}
             {state.viewInfo.view_FileUploader && (access.case_media_edit || access.super) &&
                 <div className="Uploader">
-                    <p>Завантажити файл</p>
+                    <p>{LANG.CASE_PAGE.upload}</p>
                     <div className="Uploader-content">
                         <FilesUploader successHandler={getCaseInfo} multiple={false} meta={{
                             key: ["case_files", "history_case_files"],

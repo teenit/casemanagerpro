@@ -198,7 +198,6 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo, c
             {info.viewInfo.view_responsible && access.responsible_view && (
                 <div className="PersonalInfo-line">
                     <div className="PersonalInfo-line-select">
-                        <Icon icon="categories" addClass={"default-icon"} />
                         <SelectBlock
                             value={dataState.responsible_id}
                             onChange={(val) => handleDataChange("responsible_id", val)}

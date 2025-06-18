@@ -144,6 +144,7 @@ class AncetsPage extends Component {
         return (
             <div className="AncetsPage">
                 <AddButton title={LANG.ancets.add} click={this.formHandler} />
+                {/* access needed */}
                 <div className="AncetsPage-list">
                     <Table
                         columns={columns}

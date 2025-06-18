@@ -82,7 +82,7 @@ const InputBlock = ({
                     {showLable && <b>{title}: </b>}
                     <div className="case-info-card-text">
                         <div title={titleDefault}>
-                            {link && (label !== "" && label !== null) ? (
+                            {link && (label !== "" && label !== null && value) ? (
                                 <NavLink to={link}>
                                     {label}
                                 </NavLink>

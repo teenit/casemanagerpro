@@ -4,7 +4,7 @@ import Icon from '../elements/Icons/Icon'
 import { LANG } from '../../services/config'
 
 
-const EmptyData = ({icon = "no_results", title=LANG.emptyData.notFound, buttonText, click}) => {
+const EmptyData = ({icon = "no_results", title=LANG.emptyData.notFound, buttonText, click, access}) => {
   return (
     <div className="EmptyData">
         <div className="EmptyData-icon">
@@ -12,7 +12,7 @@ const EmptyData = ({icon = "no_results", title=LANG.emptyData.notFound, buttonTe
         </div>
         <div className="EmptyData-bottom">
             <div className="EmptyData-bottom-title">{title}</div>
-            {buttonText && <Button variant='outlined' onClick={click}>{buttonText}</Button>}
+            {buttonText && access && <Button variant='outlined' onClick={click}>{buttonText}</Button>}
         </div>
 
     </div>

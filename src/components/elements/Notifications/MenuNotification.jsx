@@ -25,7 +25,7 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             case "birthday":
                 return <div>{LANG.MENU_NOTIFICATION.case} <NavLink to={`/case/${data.case_id}`}>№{data.case_id} {data.case_name}</NavLink> {data.when} <b>{data.years} років</b> {data.happy_day}</div>
             case "created_new_task": 
-                return <div>Нова задача: {item?.task_name}</div>
+                return <div>{LANG.MENU_NOTIFICATION.notifications.new_task}: <NavLink to={`/task/${item?.task_id}`}>{item?.task_name}</NavLink></div>
             default:
                 return <></>
                 break;
@@ -79,7 +79,7 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             type: 'birthday'
         },
         created_new_task: {
-            title: "Нова задача",
+            title: LANG.MENU_NOTIFICATION.notifications.new_task,
             icon: "add_notification",
             icon_class: "notification-icon-blue",
             color: "#d900fd",
@@ -114,7 +114,7 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
                         </div>
                     </button> */}
                     <div className='notification-delete'>
-                        <Icon icon={'delete'} addClass={'notification-delete'} onClick={() => deleteNotification(data.notification_id)} />
+                        <Icon icon={'delete'} addClass={'delete-icon'} onClick={() => deleteNotification(data.notification_id)} />
                     </div>
 
                 </div></>}

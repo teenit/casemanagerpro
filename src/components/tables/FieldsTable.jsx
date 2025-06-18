@@ -220,6 +220,7 @@ class FieldsTable extends Component {
         return <div style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
             <div style={{ display: "flex", gap: "25px", justifyContent: "end" }}>
                 <Button onClick={this.modalHandler} size='small'><Icon icon={'add'} />{LANG.FIELDS.add}</Button>
+                {/* access needed */}
             </div>
 
             <Table

@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/use-auth";
 import Statistic from "./Statistic/Statistic";
 import { NavLink } from "react-router-dom";
 import Cases from "../newDesign/Cases/Cases";
+import { LANG } from "../../services/config";
 
 const Home = ()=>{
     const dispatch = useDispatch();
@@ -16,10 +17,10 @@ const Home = ()=>{
                 <ul className={s.ul}>
                     
                     <li className={s.li}>
-                        <NavLink className={s.a} to="/cases">Кейси</NavLink>
+                        <NavLink className={s.a} to="/cases">{LANG.pages.cases}</NavLink>
                     </li>
                     <li className={s.li}>
-                        <NavLink className={s.a} to="/add-case">Додати кейс</NavLink>
+                        <NavLink className={s.a} to="/add-case">{LANG.pages.addCase}</NavLink>
 
                     </li>
                     {/* <li className={s.li}>
@@ -27,10 +28,10 @@ const Home = ()=>{
 
                     </li> */}
                     <li className={s.li}>
-                        <NavLink className={s.a} to="/calendar">Календар</NavLink>
+                        <NavLink className={s.a} to="/calendar">{LANG.pages.calendar}</NavLink>
                     </li>
                     <li className={s.li}>
-                        <NavLink className={s.a} to="/events">Події</NavLink>
+                        <NavLink className={s.a} to="/events">{LANG.pages.events}</NavLink>
                     </li>
                     {/* <li className={s.li}>
                         <NavLink className={s.a} to="/search">Розширений пошук</NavLink>
@@ -39,7 +40,7 @@ const Home = ()=>{
                         <NavLink className={s.a} to="/settings">Налаштування</NavLink>
                     </li> */}
                     <li className={s.li}>
-                        <NavLink className={s.a} to="/resources">Ресурси</NavLink>
+                        <NavLink className={s.a} to="/groups">{LANG.pages.groups}</NavLink>
                     </li>
                     {/* <li className={s.li}>
                         <NavLink className={s.a} to="/cooperation">Коаліція</NavLink>
@@ -48,7 +49,7 @@ const Home = ()=>{
                         <NavLink className={s.a} to="/access">Рівні доступу</NavLink>
                     </li> */}
                     <li className={s.li}>
-                        <NavLink className={s.a} to="/groups">Групи</NavLink>
+                        <NavLink className={s.a} to="/tasks">{LANG.pages.tasks}</NavLink>
                     </li>
                 </ul>
                 </div>

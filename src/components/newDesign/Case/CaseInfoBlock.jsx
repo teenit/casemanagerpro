@@ -138,7 +138,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     onChange={(e) => { handleDataChange("phone1", e.target.value) }}
                                     link={`tel:${dataState.phone1}`}
                                     icon={"phone"}
-                                    label={dataState.phone1}
+                                    label={dataState.phone1 || LANG.GLOBAL.phone}
                                     inputType={"number"}
                                     saveHandler={(val) => saveHandler("phone1", val, "general")}
                                     titleDefault={LANG.case_data.phone}
@@ -152,7 +152,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     onChange={(e) => { handleDataChange("phone2", e.target.value) }}
                                     link={`tel:${dataState.phone2}`}
                                     icon={"phone"}
-                                    label={dataState.phone2}
+                                    label={dataState.phone2 || LANG.GLOBAL.phone}
                                     inputType={"number"}
                                     saveHandler={(val) => saveHandler("phone2", val, "general")}
                                     titleDefault={LANG.case_data.phone}
@@ -166,7 +166,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
                                     onChange={(e) => { handleDataChange("email", e.target.value) }}
                                     link={`mailto:${dataState.email}`}
                                     icon={"email"}
-                                    label={dataState.email}
+                                    label={dataState.email || LANG.GLOBAL.email}
                                     inputType={"text"}
                                     saveHandler={(val) => saveHandler("email", val, "general")}
                                     titleDefault={LANG.case_data.email}

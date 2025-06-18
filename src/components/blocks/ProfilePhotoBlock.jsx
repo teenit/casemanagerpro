@@ -3,10 +3,13 @@ import Icon from "../elements/Icons/Icon";
 import PhotoUploader from "../elements/Uploaders/PhotoUploader";
 import defaultImg from "../../img/default_profile.png";
 import { serverAddres } from "../Functions/serverAddres";
-
+import { apiResponse } from "../Functions/get_apiObj";
+import ModalConfirm from "../Modals/ModalConfirm"
+import { LANG } from "../../services/config";
 const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true }) => {
     const [hover, setHover] = useState(false);
     const [edit, setEdit] = useState(false);
+    const [confirmDelete, setConfrimDelete] = useState(false)
     const [file, setFile] = useState(null);
     const [state, setState] = useState(profileImg);
     const moment = require("moment");
@@ -65,7 +68,11 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true }) => 
         }
         return images.default;
     };
-
+    const deletePhoto = () => {
+        apiResponse({ case_id: meta.case_id, action:"delete_main_photo" }, "case/case.php").then((res) => {
+            window.location.reload()
+        })
+    }
     return (
         <div
             className="ProfilePhotoBlock"
@@ -79,6 +86,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true }) => 
                             <label htmlFor="fileInput">
                                 <Icon icon={"edit"} addClass={"default-icon fs35"} />
                             </label>
+                            {state && <Icon icon={"delete"} addClass={"delete-icon fs35"} onClick={()=>{setConfrimDelete(true)}} />}
                             <input
                                 type="file"
                                 name="fileInput"
@@ -111,6 +119,8 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true }) => 
                     file={file}
                 />
             )}
+            {confirmDelete && <ModalConfirm closeHandler={()=>{setConfrimDelete(false)}} text={LANG.CASE_PAGE.delete_photo}
+            successHandler={deletePhoto} />} 
         </div>
     );
 };

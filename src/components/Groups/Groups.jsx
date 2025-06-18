@@ -10,9 +10,8 @@ import moment from "moment";
 import EmptyData from "../EmptyData/EmptyData";
 import AddButton from "../elements/Buttons/AddButton";
 
-const GroupCard = ({ item, loadGroups }) => {
+const GroupCard = ({ item, loadGroups, access }) => {
     const categories = useSelector(state => state.categories);
-    const accessEdit = AccessCheck("view_edit", "a_page_groups", "edit");
     const [empty, setEmpty] = useState(false)
     const [edit, setEdit] = useState(false);
     const [data, setData] = useState({
@@ -52,13 +51,14 @@ const GroupCard = ({ item, loadGroups }) => {
                 {accessEdit && <Icon icon={"edit"} addClass={"default-icon"} onClick={() => { setEdit(!edit) }} />}
                 <div className="GroupCard-split-date">{moment(item.date_created).format('DD-MM-YYYY')}</div>
             </div> */}
-            {edit && <AddGroup loadGroups={loadGroups} action={"edit"} data={data} id={item.id} close={() => { setEdit(false) }} />}
+            {edit && access && <AddGroup loadGroups={loadGroups} action={"edit"} data={data} id={item.id} close={() => { setEdit(false) }} />}
         </div>
     );
 };
 
 const Groups = () => {
     const categories = useSelector(state => state.categories);
+    const accessEdit = AccessCheck("view_edit", "a_page_groups", "edit");
     const [add, setAdd] = useState(false);
     const [groups, setGroups] = useState([]);
 
@@ -78,14 +78,14 @@ const Groups = () => {
 
     return (
         <div className="Groups">
-            {AccessCheck('yes_no', 'a_group_create') && <AddButton title={LANG.groups.add_first_group} click={addHandler}/>}
+            {AccessCheck('yes_no', 'a_group_create') && <AddButton title={LANG.groups.add_first_group} click={addHandler} />}
             <div className="Groups-list">
                 {groups.map((item, index) => (
-                    <GroupCard loadGroups={loadGroups} key={index} item={item} />
+                    <GroupCard access={accessEdit} loadGroups={loadGroups} key={index} item={item} />
                 ))}
             </div>
             {add && <AddGroup loadGroups={loadGroups} close={addHandler} />}
-            {groups.length === 0 && <EmptyData buttonText={LANG.groups.add_first_group} click={addHandler} />}
+            {groups.length === 0 && <EmptyData access={accessEdit} buttonText={LANG.groups.add_first_group} click={addHandler} />}
         </div>
     );
 };

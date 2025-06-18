@@ -12,7 +12,7 @@ export const LANG = {
     confirm_title: "Підтвердити дію",
     delete: "Видалити",
     skip: "Пропустити",
-    finish:"Завершити",
+    finish: "Завершити",
     start: "Початок",
     end: "Кінець",
     link: "Посилання",
@@ -32,21 +32,21 @@ export const LANG = {
     pick_all: "Обрати все",
     question: "Питання",
     status: "Статус",
-    yes:"Так",
-    no:"Ні",
+    yes: "Так",
+    no: "Ні",
     saving: "Збереження...",
     loading: "Завантаження...",
-    search:"Пошук...",
+    search: "Пошук...",
     remember: "Нагадувати",
     activated: "Активовано",
     deactivated: "Деактивовано",
     email: "Електронна пошта",
     password: "Пароль",
-    unknown_user:"Невідомий користувач",
-    date_created:"Дата створення",
-    date_updated:"Дата оновлення",
+    unknown_user: "Невідомий користувач",
+    date_created: "Дата створення",
+    date_updated: "Дата оновлення",
     alertMessages: {
-      updated_success:"Дані збережено успішно",
+      updated_success: "Дані збережено успішно",
       error: "Виникла помилка. Будь ласка, спробуйте пізніше",
       delete_success: "Запис успішно видалено",
       delete_error: "Не вдалося видалити запис"
@@ -59,9 +59,11 @@ export const LANG = {
     title_category_case: "Категорії кейсів",
     title_category_case_helps: "Категорії наданої допомоги",
     title_category_groups: "Категорії груп",
+    edit: "Редагувати категорію",
+    confirm_delete: "Ви впевнені, що хочете видалити цю категорію?"
   },
   FIELDS_TABLE: {
-    add:"Додати нове поле",
+    add: "Додати нове поле",
     confirm_delete_start: "Підтвердіть дію з видалення поля",
     confirm_delete_end: "Ця дія видалить поле та пов'язані з ним дані"
   },
@@ -130,6 +132,12 @@ export const LANG = {
     alertMessages: {
       error: "Не вдалося завантажити транзакції",
       invalid: "Введіть суму та тип транзакції"
+    },
+    tabs: {
+      all: "Усі",
+      pending: "Очікується",
+      completed: "Завершено успішно",
+      failed: "Завершено невдало",
     }
   },
   ACCESS: {
@@ -177,12 +185,14 @@ export const LANG = {
     notifications: {
       new_case: "Новий кейс",
       new_event: "Нова подія",
+      new_task: "Нова задача",
       edit_case: "Редагування кейсу",
       update: "Оновлення",
       birthday: "День народження",
       more: "Детальніше",
     }
   },
+
   FILES_UPLOADER: {
     download: "Завантажити файл",
     send: "Відправити файл",
@@ -191,6 +201,7 @@ export const LANG = {
       error: "Неправильні дані"
     }
   },
+
   settings_to_page: "Налаштування до сторінки",
   access_users_pages: "Рівень доступу користувачів (Сторінки)",
   forbidden: "Заборонено",
@@ -266,16 +277,21 @@ export const LANG = {
       other: "Інше",
     },
   },
-  case_files:{
-    delete_confirm:"Ви впевнені, що хочете видалити цей файл?",
-    photo:"Фотографія"
+  case_files: {
+    delete_confirm: "Ви впевнені, що хочете видалити цей файл?",
+    photo: "Фотографія"
   },
   footer: {
     email: "Якщо виникли проблеми, пропозиції - пишіть на поштову скриньку",
     phone: "Якщо питання супер термінове - дзвоніть за номером",
     updateAvaible: "Доступне оновлення",
     update: "Оновити програму",
-    lastVersion: "У вас остання версія програми"
+    lastVersion: "У вас остання версія програми",
+    contacts: "Наші контакти:",
+    facebook: "Посилання на Facebook",
+    instagram: "Посилання на Instagram",
+    telegram: "Посилання на Telegram",
+    logo: "Логотип Case Manager"
   },
   plan: {
     task: "Задача плану",
@@ -363,34 +379,34 @@ export const LANG = {
     download: "Завантажити"
   },
   addEvent: "Створення події",
-  ADD_MEMBERS:{
-    invalid_data:"Введіть користувача та його номер телефону (якщо користувач новий)",
-    add:"Додати учасника",
-    add_organisator:"Додати учасника (організатора) івента",
-    organisator:"Організатор",
-    member:"Учасник",
-    members:"Учасники",
-    existing:"Існуючий",
-    new:"Новий",
-    position:"Позиція на івенті",
-    success:"Учасника додано",
+  ADD_MEMBERS: {
+    invalid_data: "Введіть користувача та його номер телефону (якщо користувач новий)",
+    add: "Додати учасника",
+    add_organisator: "Додати учасника (організатора) івента",
+    organisator: "Організатор",
+    member: "Учасник",
+    members: "Учасники",
+    existing: "Існуючий",
+    new: "Новий",
+    position: "Позиція на івенті",
+    success: "Учасника додано",
     error_data: "Перевірте правильність даних"
   },
-  FIELDS_BLOCK:{
-    work:"Робочі дані",
-    contact:"Контактні дані",
-    out_of_group:"Дані поза групою"
+  FIELDS_BLOCK: {
+    work: "Робочі дані",
+    contact: "Контактні дані",
+    out_of_group: "Дані поза групою"
   },
-  exportPDFcasesModal:{
-    no_file_selected:"Не обрано жодного кейсу на експорт",
-    title:"Експорт кейсів у ПДФ",
-    settings:"Налаштування",
-    set_password:"Встановити пароль на ПДФ файл",
-    set_archive_pass:"Встановити пароль на архів",
-    pdf_pass:"Пароль на ПДФ файл",
-    archive_pass:"Пароль на архів",
-    watermark_image:"Встановити водяний знак (картинка)",
-    watermark_text:"Встановити водяний знак (текст)"
+  exportPDFcasesModal: {
+    no_file_selected: "Не обрано жодного кейсу на експорт",
+    title: "Експорт кейсів у ПДФ",
+    settings: "Налаштування",
+    set_password: "Встановити пароль на ПДФ файл",
+    set_archive_pass: "Встановити пароль на архів",
+    pdf_pass: "Пароль на ПДФ файл",
+    archive_pass: "Пароль на архів",
+    watermark_image: "Встановити водяний знак (картинка)",
+    watermark_text: "Встановити водяний знак (текст)"
   },
   cases: "Немає доступних кейсів",
   casesList: {
@@ -400,7 +416,7 @@ export const LANG = {
     active: "Активовано",
     inactive: "Деактивовано",
     caseNumber: "Номер",
-    photo:"Фотографія кейсу",
+    photo: "Фотографія кейсу",
     pib: "Ім'я",
     phone: "Телефон",
     email: "Пошта",
@@ -436,6 +452,11 @@ export const LANG = {
     responsible: "Відповідальний за кейс",
     date_first_contact: "Дата першого контакту"
   },
+  CASE_PAGE: {
+    deactivated: "Кейс деактивовано, хочете активувати?",
+    upload: "Завантажити файл",
+    delete_photo: "Ви впевнені, що хочете видалити фото кейсу?"
+  },
   categories: {
     category: "Категорія",
     noCategory: "Без категорії"
@@ -446,8 +467,8 @@ export const LANG = {
     week: "Тиждень",
     day: "День",
     only_events: "Тільки події",
-    info:"Інформація про подію",
-    confirm_delete:"Ви впевнені, що хочете видалити цю подію?",
+    info: "Інформація про подію",
+    confirm_delete: "Ви впевнені, що хочете видалити цю подію?",
     alertMessages: {
       cant_edit: "Ви не можете змінити цю подію",
       cant_delete: "Ви не можете видалити цю подію",
@@ -485,7 +506,7 @@ export const LANG = {
     },
     add_event: {
       title: "Додати подію",
-      edit:"Редагувати подію",
+      edit: "Редагувати подію",
       for_all: "Для всіх",
       repeat: "Повторювати кожного року",
       alertMessages: {
@@ -494,7 +515,7 @@ export const LANG = {
       },
     }
   },
-  
+
   groups: {
     amount: "Кількість об'єктів",
     desc: "Опис групи:",
@@ -508,8 +529,8 @@ export const LANG = {
       confirm: "Ви впевнені, що хочете видалити зі списку учасників користувача?",
       date_created: "Дата створення групи",
       favorites: "Додати в обране ",
-      edit:"Редагувати групу",
-      delete_confirm:"Ви впевнені, що хочете видалити групу?"
+      edit: "Редагувати групу",
+      delete_confirm: "Ви впевнені, що хочете видалити групу?"
     },
     alertMessages: {
       error: "Оберіть групу, яку хочете додати",
@@ -556,25 +577,25 @@ export const LANG = {
   },
   TASKS_PAGE: {
     add: "Додати завдання",
-    edit:"Редагувати завдання",
+    edit: "Редагувати завдання",
     dead_line: "Термін виконання",
-    updated_at:"Останнє змінення",
+    updated_at: "Останнє змінення",
     from: "Від кого",
     to: "Хто виконує",
     reviewer_id: "Хто оцінює",
     archive: "В архів",
     unarchive: "З архіву",
-    is_archived:"В архіві",
+    is_archived: "В архіві",
     not_found: "Завдань не знайдено",
     priority_text: "Пріорітет",
     info: "Інформація про завдання",
-    invalid_data:"Введіть назву, термін виконання та того, хто дає, виконує та оцінює завдання",
-    active:"Активно",
-    finished:"Завершено",
-    finish:"Завершити",
-    make_active:"Зробити активним",
-    on:"о",
-    feedbacks:"Зворотні зв'язки",
+    invalid_data: "Введіть назву, термін виконання та того, хто дає, виконує та оцінює завдання",
+    active: "Активно",
+    finished: "Завершено",
+    finish: "Завершити",
+    make_active: "Зробити активним",
+    on: "о",
+    feedbacks: "Зворотні зв'язки",
     priority: {
       3: "Високий",
       2: "Середній",
@@ -587,18 +608,18 @@ export const LANG = {
       archived: "Архівовані"
     }
   },
-  TASK_PAGE:{
-    edit_task:"Редагувати завдання",
-    delete_task:"Видалити завдання",
-    edit_feedback:"Редаугвати зворотній зв'язок",
-    confirm_delete:"Ви впевнені, що хочете видалити це завдання?",
-    confirm_delete_feedback:"Ви впевнені, що хочете видалити цей зворотній зв'язок?",
-    feedbacks:"Історія завдання",
-    is_read:"Прочитано",
-    rating:"Оцінка",
-    date_stamp:"Фактична дата виконання",
-    created_feedback:"Створив",
-    empty_feedback:"Не можна додати порожній зворотній зв'язок"
+  TASK_PAGE: {
+    edit_task: "Редагувати завдання",
+    delete_task: "Видалити завдання",
+    edit_feedback: "Редаугвати зворотній зв'язок",
+    confirm_delete: "Ви впевнені, що хочете видалити це завдання?",
+    confirm_delete_feedback: "Ви впевнені, що хочете видалити цей зворотній зв'язок?",
+    feedbacks: "Історія завдання",
+    is_read: "Прочитано",
+    rating: "Оцінка",
+    date_stamp: "Фактична дата виконання",
+    created_feedback: "Створив",
+    empty_feedback: "Не можна додати порожній зворотній зв'язок"
   },
   resources: {
     add: "Додати ресурс",
@@ -648,6 +669,19 @@ export const LANG = {
   pagination: {
     left: "Назад",
     right: "Вперед"
+  },
+  USER_PAGE: {
+    change_pass: "Змінити пароль",
+    old_pass: "Старий пароль",
+    new_pass: "Новий пароль",
+    confirm_pass: "Повторіть пароль",
+    send: "Надіслати запит",
+    alert_messages: {
+      doesnt_match: "Паролі не збігаються",
+      too_short: "Довжина паролю повинна бути більше 6 символів",
+      old_pass: "Введіть свій старий пароль для підтвердження особистості",
+      success_pass: "Пароль успішно змінено. Через декілька секунд вас перекине на сторінку логіну"
+    }
   },
   set_user: {
     reset_password_for: "Скинути пароль для",

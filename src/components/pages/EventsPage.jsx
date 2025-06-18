@@ -109,7 +109,7 @@ const EventsPage = () => {
     return (
         <div className="EventsPage">
             <AddButton title={LANG.events_page.add} click={() => modalHandler("add")} />
-
+            {/* access needed */}
             {modal.modal && (
                 <Modal
                     closeHandler={() => setModal({ modal: false, action: "", currentEvent: null })}

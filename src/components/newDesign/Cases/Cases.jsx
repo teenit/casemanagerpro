@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import Input from "../../elements/Inputs/Input";
 import ExportPDFCasesModal from "../../Modals/ExportPDFCasesModal";
 import EmptyData from "../../EmptyData/EmptyData";
+import AccessCheck from "../../Functions/AccessCheck";
 
 const columnsTable = [
     {
@@ -213,6 +214,7 @@ const Cases = () => {
 
     const casesColumns = prepareColumns(getColumns());
     const navigate = useNavigate()
+    const accessAdd = AccessCheck('yes_no', 'a_page_case_add')
     return (
         <div className="ListCases">
             <div className="ListCases-sort">
@@ -284,10 +286,10 @@ const Cases = () => {
                     addClass="without-row-menu"
                     sortField={options.sort.field}
                     sortOrder={options.sort.order}
-                    emptyTable={<EmptyData title={LANG.casesList.no_cases} buttonText={LANG.casesList.add_case} click={()=>{navigate("/add-case")}}/>}
+                    emptyTable={<EmptyData access={accessAdd} title={LANG.casesList.no_cases} buttonText={LANG.casesList.add_case} click={()=>{navigate("/add-case")}}/>}
                 />
             </div>}
-        {state.length === 0 &&<EmptyData title={LANG.casesList.no_cases} buttonText={LANG.casesList.add_case} click={()=>{navigate("/add-case")}}/>}
+        {state.length === 0 &&<EmptyData access={accessAdd} title={LANG.casesList.no_cases} buttonText={LANG.casesList.add_case} click={()=>{navigate("/add-case")}}/>}
         {state.length > 0 && <div className = "ListCases-pagination">
                 <Pagination 
                     page={options.page}
