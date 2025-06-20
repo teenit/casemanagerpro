@@ -301,14 +301,14 @@ const DataForm = ({ stateData, changeHandlerData, handleCheckboxChange, checkedM
                     onChange={(e) => changeHandlerData("history", changeApsBr(e.target.value))}
                 />
             </div>
-            <div className="w100">
+            {/* <div className="w100">
                 <p>{LANG.case_data.category}</p>
                 <CheckboxListAccess
                     allMas={()=>{return categories}} 
                     checkedMas={checkedMas}
                     onChange={(value)=>{handleCheckboxChange(value, checkedMas)}}
                 />
-            </div>
+            </div> */}
             <div className="w100">
                 <p>{LANG.case_data.comment}</p>
                 <Textarea rows={10} cols={70}

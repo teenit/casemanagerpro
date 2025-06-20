@@ -16,6 +16,7 @@ const ListCategories = ({ categories, loadCategories }) => {
         edit: false,
         confirm_delete: false,
     });
+    const [totalConnection, setTotalConnection] = useState(0)
 
     const modalHandler = (key, value = null) => {
         setModals({ ...modals, [key]: !modals[key] });
@@ -49,6 +50,15 @@ const ListCategories = ({ categories, loadCategories }) => {
         });
     };
 
+    const getAmountConnections = (category_id) => {
+
+         apiResponse({ category_id, action: "get_amount_connection" }, "manage/category.php").then((res) => {
+            if (res.status) {
+                setTotalConnection(res.data.count);
+            }
+        });
+    }
+
     return (
         <div className="ListCategories">
             {categories.map((item, ind) => {
@@ -65,7 +75,10 @@ const ListCategories = ({ categories, loadCategories }) => {
                         isHidden: false,
                         icon: "delete",
                         color: "error",
-                        click: () => modalHandler("confirm_delete", item),
+                        click: () => {
+                            modalHandler("confirm_delete", item);
+                            getAmountConnections(item.id);
+                        },
                     },
                 ];
 
@@ -123,7 +136,7 @@ const ListCategories = ({ categories, loadCategories }) => {
 
             {modals.confirm_delete && currentCategory && (
                 <ModalConfirm
-                    text={LANG.SETTINGS.confirm_delete}
+                    text={LANG.SETTINGS.confirm_delete + ". Всього зв'язків за цією категорією: " + totalConnection}
                     closeHandler={() => modalHandler("confirm_delete")}
                     successHandler={deleteCategory}
                 />

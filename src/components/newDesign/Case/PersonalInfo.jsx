@@ -95,6 +95,16 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo, c
         }
     };
 
+    const updateCategories = (value) => {
+        apiResponse({categories: value, case_id, action: "update_case_categories"}, "case/case.php").then((res)=>{
+            setAlert(res.status);
+            if (res.status) {
+                getCaseInfo();
+                handleEditChange('categories');
+            } 
+        })
+    }
+
     return (
         <div className="PersonalInfo">
             {info.viewInfo.view_date_created && access.simple_info_view && <div className="PersonalInfo-line">
@@ -177,7 +187,7 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo, c
                         </div>
                         {editState.categories ? (
                             <>
-                                <span onClick={() => saveHandler("categories", dataState.categories, "data")}>
+                                <span onClick={() => updateCategories(dataState.categories)}>
                                     <Icon icon={"save"} addClass={"save-icon"} />
                                 </span>
                                 <span onClick={() => handleEditChange("categories")}>
