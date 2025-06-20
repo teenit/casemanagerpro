@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { apiResponse } from "../../Functions/get_apiObj";
 import FilesUploader from "../../elements/Uploaders/FilesUploader";
 import CasePhoto from "../../Cases/Case/Info/CasePhoto";
@@ -42,6 +42,7 @@ import FooterDefaultModal from "../../Modals/FooterDefaultModal";
 import { DateRange } from "@mui/icons-material";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DateField } from '@mui/x-date-pickers/DateField';
+import ModalConfirm from "../../Modals/ModalConfirm";
 
 const Case = () => {
     const downloadGallery = AccessCheck('yes_no', 'a_page_case_media_download')
@@ -71,6 +72,7 @@ const Case = () => {
     let params = useParams();
     const case_id = params.id;
     const [state, setState] = useState()
+    const [confirmDeleteCase, setConfirmDeleteCase] = useState(false)
     const [editActive, setEditActive] = useState(null)
     const [openSetting, setOpenSetting] = useState(false)
     const [settingsAlert, setSettingsAlert] = useState(false)
@@ -170,9 +172,12 @@ const Case = () => {
     const openAncetaForm = () => {
         setAncetaForm({...ancetaForm, showForm: true})
     }
+    const navigate = useNavigate();
     const deleteCase = () => {
         apiResponse({case_id: case_id, action: "simple_delete"}, "case/case.php").then((res)=>{
-            console.log(res)
+            if (res.status) {
+                navigate('/')
+            }
         })
     }
     
@@ -204,7 +209,7 @@ const Case = () => {
                 <Button disabled={ancetaForm.list.length == 0} onClick={openAncetaForm}><Icon icon='quiz'/></Button>
                 <Button onClick={printPDF}><Icon icon='print'/></Button>
                 <Button onClick={() => { setOpenSetting(!openSetting) }}><Icon icon="check-list"/></Button>
-                {access.super && <Button onClick={deleteCase}><Icon icon="delete" addClass="delete-icon"/></Button>}
+                
                 {/* <img src={setImg} alt=""
                     onClick={() => { setOpenSetting(!openSetting) }} /> */}
                 {/* {
@@ -318,10 +323,20 @@ const Case = () => {
                     </div>
                 </Modal>
             }
+            <div style={{
+                display: 'flex',
+                justifyContent: "end"
+            }}>{access.super && <Button color="error" onClick={()=>setConfirmDeleteCase(true)}><Icon icon="delete" addClass="delete-icon"/>{LANG.CASE_PAGE.delete_case}</Button>}</div>
+            
             {settingsAlert && <SmallNotification isSuccess={true} text={"Показ елементів оновлено"} close={() => { setSettingsAlert(false) }} />}
             {errorAlert && <SmallNotification isSuccess={false} text={"Не всі поля заповнено"} close={() => { setErrorAlert(false) }} />}
             {successAlert && <SmallNotification isSuccess={true} text={"Успіх"} close={() => { setSuccessAlert(false) }} />}
             </>
+          {confirmDeleteCase && <ModalConfirm
+                closeHandler={()=>setConfirmDeleteCase(false)}
+                text={LANG.CASE_PAGE.confirm_case_delete}
+                successHandler={deleteCase}
+            />}
 
         </div>
     ) : (

@@ -455,7 +455,9 @@ export const LANG = {
   CASE_PAGE: {
     deactivated: "Кейс деактивовано, хочете активувати?",
     upload: "Завантажити файл",
-    delete_photo: "Ви впевнені, що хочете видалити фото кейсу?"
+    delete_photo: "Ви впевнені, що хочете видалити фото кейсу?",
+    delete_case: "Видалити кейс",
+    confirm_case_delete: "Ви впевнені, що хочете видалити кейс?"
   },
   categories: {
     category: "Категорія",
