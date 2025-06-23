@@ -70,6 +70,7 @@ const PersonalInfo = ({ case_id, info, changeGeneral, changeData, getCaseInfo, c
     };
 
     const handleCheckboxChange = (value, options) => {
+        console.log(value, options)
         let categories = [];
         if (options.includes(value)) {
             categories = options.filter(element => element !== value);

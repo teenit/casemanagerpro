@@ -2,8 +2,9 @@ import React from "react";
 import { NavLink } from 'react-router-dom';
 import './cards.css';
 import { LANG } from "../../services/config";
+import { useSelector } from "react-redux";
 const Card = (props) => {
-
+    console.log(props.info.categories)
     return (
         <div className="card">
             <div className="card__img">

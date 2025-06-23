@@ -155,7 +155,7 @@ class TaskPage extends Component {
                 <div className="Task-control">
                     <Icon icon={"edit"} addClass="default-icon large" onClick={() => { this.modalHandler("edit_task") }} />
                     <Icon icon={task.is_archived ? "unarchive" : "archive"} addClass="default-icon large" onClick={this.archiveHandler} />
-                    <Icon icon={task.is_finished?"close":"save"} addClass="default-icon large" onClick={this.finishTask} />
+                    <Icon icon={task.is_finished ? "close" : "save"} addClass="default-icon large" onClick={this.finishTask} />
                     <Icon icon={"delete"} addClass="delete-icon large" onClick={() => { this.modalHandler("confirm_delete_task") }} />
                 </div>
                 <div className="Task-details">
@@ -195,10 +195,10 @@ class TaskPage extends Component {
                         </div>)}
 
                     <div>{LANG.TASKS_PAGE.finished}:
-                        <span className="bold">{Boolean(task.is_finished) ? LANG.GLOBAL.yes : LANG.GLOBAL.no} </span>
+                        <span className="bold"> {Boolean(task.is_finished) ? LANG.GLOBAL.yes : LANG.GLOBAL.no} </span>
                     </div>
                     <div>{LANG.TASKS_PAGE.is_archived}:
-                        <span className="bold">{Boolean(task.is_archived) ? LANG.GLOBAL.yes : LANG.GLOBAL.no} </span>
+                        <span className="bold"> {Boolean(task.is_archived) ? LANG.GLOBAL.yes : LANG.GLOBAL.no} </span>
                     </div>
                 </div>
 
@@ -211,30 +211,44 @@ class TaskPage extends Component {
                     {feedbacks && feedbacks.map((item, index) => {
                         return <div key={index} className="Task-feedbacks-feedback">
                             <div className="Task-feedbacks-feedback-info">
-                                {item.user_id && <div>
-                                    <span className="bold">{LANG.TASK_PAGE.created_feedback}: </span>
-                                    <NavLink to={`/user/${item.user_id}`}>{users[item.user_id]}</NavLink>
-                                </div>}
-                                {item.category_feedback && <div>
-                                    <span className="bold">{LANG.GLOBAL.category}: </span>
-                                    {item.category_feedback}
-                                </div>}
-                                {item.date_created && <div>
-                                    <span className="bold">{LANG.GLOBAL.date_created}: </span>
-                                    {item.date_created}
-                                </div>}
+                                {item.user_id && (
+                                    <div>
+                                        {LANG.TASK_PAGE.created_feedback}:{" "}
+                                        <span className="bold">
+                                            <NavLink to={`/user/${item.user_id}`}>{users[item.user_id]}</NavLink>
+                                        </span>
+                                    </div>
+                                )}
+
+                                {item.category_feedback && (
+                                    <div>
+                                        {LANG.GLOBAL.category}: <span className="bold">{item.category_feedback}</span>
+                                    </div>
+                                )}
+
+                                {item.date_created && (
+                                    <div>
+                                        {LANG.GLOBAL.date_created}: <span className="bold">{item.date_created}</span>
+                                    </div>
+                                )}
+
                                 <div>
-                                    <span className="bold">{LANG.TASK_PAGE.is_read}: </span>
-                                    {item.is_read ? LANG.GLOBAL.yes : LANG.GLOBAL.no}
+                                    {LANG.TASK_PAGE.is_read}:{" "}
+                                    <span className="bold">{item.is_read ? LANG.GLOBAL.yes : LANG.GLOBAL.no}</span>
                                 </div>
-                                {item.rating && <div>
-                                    <span className="bold">{LANG.TASK_PAGE.rating}: </span>
-                                    {item.rating}
-                                </div>}
-                                {item.date_stamp && <div>
-                                    <span className="bold">{LANG.TASK_PAGE.date_stamp}: </span>
-                                    {item.date_stamp}
-                                </div>}
+
+                                {item.rating && (
+                                    <div>
+                                        {LANG.TASK_PAGE.rating}: <span className="bold">{item.rating}</span>
+                                    </div>
+                                )}
+
+                                {item.date_stamp && (
+                                    <div>
+                                        {LANG.TASK_PAGE.date_stamp}: <span className="bold">{item.date_stamp}</span>
+                                    </div>
+                                )}
+
                             </div>
                             <div className="Task-feedbacks-feedback-text">{item.feedback}
                                 <ActionMenu menuItems={this.getMenuItems(item)} />

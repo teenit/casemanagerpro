@@ -6,7 +6,7 @@ import { serverAddres } from "../Functions/serverAddres";
 import { apiResponse } from "../Functions/get_apiObj";
 import ModalConfirm from "../Modals/ModalConfirm"
 import { LANG } from "../../services/config";
-const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true }) => {
+const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remove = true }) => {
     const [hover, setHover] = useState(false);
     const [edit, setEdit] = useState(false);
     const [confirmDelete, setConfrimDelete] = useState(false)
@@ -86,7 +86,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true }) => 
                             <label htmlFor="fileInput">
                                 <Icon icon={"edit"} addClass={"default-icon fs35"} />
                             </label>
-                            {state && <Icon icon={"delete"} addClass={"delete-icon fs35"} onClick={()=>{setConfrimDelete(true)}} />}
+                            {state && remove && <Icon icon={"delete"} addClass={"delete-icon fs35"} onClick={()=>{setConfrimDelete(true)}} />}
                             <input
                                 type="file"
                                 name="fileInput"

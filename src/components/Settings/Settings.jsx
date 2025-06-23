@@ -197,7 +197,7 @@ const Settings = () => {
     ) : (
         <div className="page">
             <div className="page__title">
-                <h1>Налаштування</h1>
+                <h1>{LANG.SETTINGS.settings}</h1>
             </div>
             <div className="SettingsPage-accordion">
                 {/* {newVersion > version && updateProgramRight &&
@@ -210,7 +210,7 @@ const Settings = () => {
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
                         <div className="SettingsPage-accordion-jcs">
-                            <div>Користувачі</div>
+                            <div>{LANG.SETTINGS.users}</div>
                             <Button size="small" variant="outlined"
                                 disabled={!canAddUsers} 
                                 onClick={(e)=>{
@@ -233,7 +233,7 @@ const Settings = () => {
                     expandedChange('categories')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
-                        Категорії
+                        {LANG.SETTINGS.categories}
                     </AccordionSummary>
                     <AccordionDetails>
                         <SettingsCategory
@@ -266,7 +266,7 @@ const Settings = () => {
                     </AccordionDetails>
                 </Accordion>}
 
-                {eventsTab && <Accordion expanded={expanded.events} id="expanded_events" onChange={() => {
+                {/* {eventsTab && <Accordion expanded={expanded.events} id="expanded_events" onChange={() => {
                     expandedChange('events')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
@@ -275,12 +275,12 @@ const Settings = () => {
                     <AccordionDetails>
                         <SetEvent />
                     </AccordionDetails>
-                </Accordion>}
+                </Accordion>} */}
                 {configurationsTab && <Accordion expanded={expanded.config} id="expanded_config" onChange={() => {
                     expandedChange('config')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
-                        Конфігурації програми
+                        {LANG.SETTINGS.configurations}
                     </AccordionSummary>
                     <AccordionDetails>
                         {/* <AccordionBlock disabled = {JSON.stringify(initialSettingsData)==JSON.stringify(settingsData)} title={"Системні налаштування"}>
@@ -330,7 +330,7 @@ const Settings = () => {
                     expandedChange('special')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
-                        Суперадміністратор 
+                        {LANG.SETTINGS.superadmin} 
                     </AccordionSummary>
                     <AccordionDetails>
                         <AccordionBlock title={"Видалення запису з таблиці"}>
@@ -352,7 +352,7 @@ const Settings = () => {
                     expandedChange('telegram')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
-                        Налаштування з телеграм 
+                        {LANG.SETTINGS.telegram}
                     </AccordionSummary>
                     <AccordionDetails>
                         <AccordionBlock title={"Телеграм боти"}>
@@ -374,23 +374,23 @@ const Settings = () => {
                     
                 </Accordion>}
             </div>
-            {selectedTelegramBot.modal && <Modal closeHandler={() => {setSelectedTelegramBot({...selectedTelegramBot, modal: false}) }} header={"Додати учасника"} footer={
+            {selectedTelegramBot.modal && <Modal closeHandler={() => {setSelectedTelegramBot({...selectedTelegramBot, modal: false}) }} header={LANG.SETTINGS.add_bot} footer={
             <>
                 <Button variant="contained" color="error" onClick={() => { setSelectedTelegramBot({...selectedTelegramBot, modal: false}) }}>{LANG.GLOBAL.cancel}</Button>
                 <Button variant="contained" onClick={addTelegramBot}>{LANG.GLOBAL.save}</Button>
             </>
              }>
             <div style={{paddingTop:"15px"}}>
-                <Input value={selectedTelegramBot.bot_name} label="Ім'я телеграм бота" onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, bot_name: e.target.value})}}/>
+                <Input value={selectedTelegramBot.bot_name} label={LANG.SETTINGS.title_bot} onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, bot_name: e.target.value})}}/>
             </div>
             <div>
-                <Input value={selectedTelegramBot.bot_token} label="Токен телеграм бота" onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, bot_token: e.target.value})}}/>
+                <Input value={selectedTelegramBot.bot_token} label={LANG.SETTINGS.token_bot} onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, bot_token: e.target.value})}}/>
             </div>
             <div>
-                <Input value={selectedTelegramBot.chat_id} label="Chat ID телеграм бота" onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, chat_id: e.target.value})}}/>
+                <Input value={selectedTelegramBot.chat_id} label={LANG.SETTINGS.chat_id_bot} onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, chat_id: e.target.value})}}/>
             </div>
             <div>
-                <label htmlFor=""> Активувати
+                <label htmlFor=""> {LANG.SETTINGS.activate}
                 <Switch 
                     
                     checked={selectedTelegramBot.is_active == 1 ? true : false}

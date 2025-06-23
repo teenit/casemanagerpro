@@ -59,12 +59,12 @@ class SetUserModal extends Component {
     } else if (!formData.userEmail || formData.userEmail.length < 5 || !formData.userEmail.includes('@')) {
       this.setAlert(false, LANG.set_user.alertMessages.email);
       valid = false;
-    } else if (formData.userAddress && formData.userAddress.length < 5) {
-      this.setAlert(false, LANG.set_user.alertMessages.adress);
-      valid = false;
-    } else if (!formData.userWork || formData.userWork.length < 3) {
-      this.setAlert(false, LANG.set_user.alertMessages.work);
-      valid = false;
+    // } else if (formData.userAddress && formData.userAddress.length < 5) {
+    //   this.setAlert(false, LANG.set_user.alertMessages.adress);
+    //   valid = false;
+    // } else if (!formData.userWork || formData.userWork.length < 3) {
+    //   this.setAlert(false, LANG.set_user.alertMessages.work);
+    //   valid = false;
     } else if (!formData.pass || formData.pass.length < 6) {
       this.setAlert(false, LANG.set_user.alertMessages.pass);
       valid = false;

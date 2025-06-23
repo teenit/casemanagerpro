@@ -92,7 +92,7 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
       olderPass: pass.olderPass
     };
     apiResponse({ ...passObj }, "user/change-pass.php").then(() => {
-      handleAlertChange("success", );
+      handleAlertChange("success", LANG.USER_PAGE.alert_messages.success_pass);
       setTimeout(() => {
         dispatch(removeUser());
       }, 10000)
@@ -107,7 +107,7 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
           key: "user_profile_img",
           user_id: localStorage.getItem("id"),
           type: "user"
-        }} />
+        }} remove={false} />
 
         <div className="User-info">
           <InputBlock value={data.userName} header={true} title={LANG.GLOBAL.name} label={data.userName}

@@ -68,11 +68,12 @@ const InputBlock = ({
         }
     };
 
-    const howOldIsCase = (birthday) => {
-        const birthDate = moment(birthday);
-        const age = moment().diff(birthDate, 'years');
-        return `, ${age} ${LANG.GLOBAL.years}`;
-    };
+const howOldIsCase = (birthday) => {
+    const birthDate = moment(birthday, 'DD-MM-YYYY', true);
+    if (!birthDate.isValid()) return '';
+    const age = moment().diff(birthDate, 'years');
+    return `, ${age} ${LANG.GLOBAL.years}`;
+};
 
     return (
         <div className="InputBlock">

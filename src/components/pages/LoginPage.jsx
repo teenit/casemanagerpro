@@ -31,8 +31,7 @@ const LoginPage = () => {
                     ...prevState,
                     isLocked: true,
                     lockMessage: `${LANG.loginForm.try_again} 
-                    ${Math.ceil(remainingTime / 60)} ${LANG.loginForm.minutes}${Math.ceil(remainingTime / 60) > 1
-                            ? LANG.loginForm.seconds : ''}.`,
+                    ${Math.ceil(remainingTime / 60)} ${LANG.loginForm.minutes}.`,
                     remainingTime
                 }));
 
@@ -248,7 +247,7 @@ const LoginPage = () => {
                     }}
                     disabled={isDisabled}>{LANG.loginForm.enter}</Button>
                 {state.isLocked && <p>{state.lockMessage}</p>}
-                {state.remainingTime > 0 && <p>${LANG.loginForm.time_remained}: {formatTime(state.remainingTime)}</p>}
+                {state.remainingTime > 0 && <p>{LANG.loginForm.time_remained}: {formatTime(state.remainingTime)}</p>}
             </div>
 
         </div>

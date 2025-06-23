@@ -4,7 +4,7 @@ import Icon from '../elements/Icons/Icon'
 import { LANG } from '../../services/config'
 
 
-const EmptyData = ({icon = "no_results", title=LANG.emptyData.notFound, buttonText, click, access}) => {
+const EmptyData = ({icon = "no_results", title=LANG.emptyData.notFound, buttonText, click, access=true}) => {
   return (
     <div className="EmptyData">
         <div className="EmptyData-icon">

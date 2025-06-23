@@ -37,6 +37,10 @@ class TasksPage extends Component {
                 field: 'id',
                 order: 'ASC'
             },
+            options: {
+                page: 0,
+                limit: 10
+            },
             search: "",
             users: {},
             access: {
@@ -53,7 +57,9 @@ class TasksPage extends Component {
             main_mode: this.tabData[this.state.tabValue]?.mode,
             sort: this.state.sort.order,
             order: this.state.sort.field,
-            search: this.state.search
+            search: this.state.search,
+            page:this.state.options.page+1,
+            limit:this.state.options.limit
         };
 
         apiResponse(obj, 'tasks/task.php').then((res) => {
@@ -116,6 +122,17 @@ class TasksPage extends Component {
     searchHandler(value) {
         this.setState({ search: value }, this.loadData);
     }
+    handleNextPage = () => {
+        this.setState(prev => ({ options: { ...prev.options, page: prev.options.page + 1 } }), this.loadData);
+    };
+
+    handlePrevPage = () => {
+        this.setState(prev => ({ options: { ...prev.options, page: Math.max(prev.page - 1, 0) } }), this.loadData);
+    };
+
+    handleChangeRowsPerPage = (newLimit) => {
+        this.setState(prev => ({ options: { ...prev.options, page: 0, limit: newLimit } }), this.loadData);
+    };
     loadFeedback = (data) => {
         apiResponse({ task_id: data.id, action: "get_feedback_list" }, "tasks/task.php").then((res) => {
             this.setState({ current_feedbacks: res.data })
@@ -361,8 +378,19 @@ class TasksPage extends Component {
                         />
                     </div>
                 </Box>
-
-                {/* <Pagination/> */}
+                <div className="Tasks-pagonation">
+                {this.state.tasks.length > 0 && <Pagination
+                    page={this.state.options.page}
+                    count={this.state.tasks.length}
+                    nextPage={this.handleNextPage}
+                    prewPage={this.handlePrevPage}
+                    rowsPerPage={this.state.options.limit}
+                    onRowsPerPageChange={this.handleChangeRowsPerPage}
+                    rowsPerPageOptions={[10, 25, 50, 100]}
+                    // totalCount={totalCount}
+                    // loadTotalCount={loadTotalCount}
+                />}
+                </div>
                 {modals.add_task && <TaskModal users={this.state.users} loadData={this.loadData} close={() => { this.modalHandler("add_task") }} />}
                 {modals.edit_task && <TaskModal users={this.state.users} data={this.state.current_task} loadData={this.loadData} close={() => { this.modalHandler("edit_task") }} />}
                 {modals.confirm_delete && <ModalConfirm text={LANG.GLOBAL.delete_confirm} closeHandler={() => { this.modalHandler("confirm_delete") }}
@@ -374,7 +402,7 @@ class TasksPage extends Component {
                             <div className="Tasks-info-title">{current_task.title}</div>
                             <div>{current_task.description || LANG.GLOBAL.no_description}</div>
                         </div>
-                        <div>{LANG.TASKS_PAGE.feedbacks}</div>
+                        {this.state.current_feedbacks.length > 0 && <div>{LANG.TASKS_PAGE.feedbacks}</div>}
                         <div className="Tasks-info-feedbacks">
                             {this.state.current_feedbacks && this.state.current_feedbacks.map((item, index) => {
                                 return <div key={index}><span className="bold">{users[item.user_id]} {LANG.TASKS_PAGE.on} {item.date_created}: </span>{item.feedback}</div>

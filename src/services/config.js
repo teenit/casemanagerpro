@@ -53,6 +53,17 @@ export const LANG = {
     }
   },
   SETTINGS: {
+    settings:"Налаштування",
+    users:"Користувачі",
+    categories:"Категорії",
+    configurations:"Конфігурації програми",
+    superadmin:"Суперадміністратор",
+    telegram:"Налаштування з телеграм",
+    activate:"Активувати",
+    title_bot:"Ім'я телеграм бота",
+    token_bot:"Токен телеграм бота",
+    chat_id_bot:"Chat ID телеграм бота",
+    add_bot:"Додати учасника",
     title_category: "Назва категорії",
     description_category: "Опис категорії",
     color_category: "Колір категорії",
@@ -613,7 +624,7 @@ export const LANG = {
   TASK_PAGE: {
     edit_task: "Редагувати завдання",
     delete_task: "Видалити завдання",
-    edit_feedback: "Редаугвати зворотній зв'язок",
+    edit_feedback: "Редагувати зворотній зв'язок",
     confirm_delete: "Ви впевнені, що хочете видалити це завдання?",
     confirm_delete_feedback: "Ви впевнені, що хочете видалити цей зворотній зв'язок?",
     feedbacks: "Історія завдання",
@@ -967,7 +978,7 @@ export const LANG = {
       cvartal: "1 раз на квартал",
       year: "1 раз на рік",
     }
-  }
+  },
 
 
 };

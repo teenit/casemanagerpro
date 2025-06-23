@@ -150,7 +150,6 @@
     font-size: 14px;
 }
 .file__card{
-    word-break: break-all;
     word-wrap: break-word;
 }
 @media  screen and (max-width:720px) {

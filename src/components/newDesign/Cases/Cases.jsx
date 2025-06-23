@@ -113,6 +113,7 @@ const Cases = () => {
             },
             search: options.search
         }, "case/get/cases-page-list.php").then((res) => {
+            console.log(res)
             setState([...res.list]);
         });
     };
