@@ -210,7 +210,7 @@ get tableColumns() {
                             }}
                             onClick={() => this.toggleNameVisibility(row.id)}
                         >
-                            {isVisible ? <Icon icon={"eye"} addClass="hide-icon" /> : <Icon icon={"eye_off"} addClass="hide-icon" />}
+                            {isVisible ? <Icon icon={"eye_off"} addClass="hide-icon" /> : <Icon icon={"eye"} addClass="hide-icon" />}
                         </span>
                     </div>
                 );
@@ -240,7 +240,7 @@ get tableColumns() {
                             }}
                             onClick={() => this.togglePhoneVisibility(row.id)}
                         >
-                            {isVisible ? <Icon icon={"eye"} addClass="hide-icon" /> : <Icon icon={"eye_off"} addClass="hide-icon" />}
+                            {isVisible ? <Icon icon={"eye_off"} addClass="hide-icon" /> : <Icon icon={"eye"} addClass="hide-icon" />}
                         </span>
                     </div>
                 );
@@ -270,7 +270,7 @@ get tableColumns() {
                             }}
                             onClick={() => this.toggleEmailVisibility(row.id)}
                         >
-                            {isVisible ? <Icon icon={"eye"} addClass="hide-icon" /> : <Icon icon={"eye_off"} addClass="hide-icon" />}
+                            {isVisible ? <Icon icon={"eye_off"} addClass="hide-icon" /> : <Icon icon={"eye"} addClass="hide-icon" />}
                         </span>
                     </div>
                 );
