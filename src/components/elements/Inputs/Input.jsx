@@ -52,9 +52,10 @@ const Input = ({
             elementProps.slotProps.textField = {
                 size: size,
                 variant: variant,
+                error: false
                
             }
-            elementProps.minDate = moment('0000-01-01')
+            elementProps.minDate = moment('')
         }
 
         return elementProps;
