@@ -34,7 +34,7 @@ const columnsTable = [
         text: LANG.casesList.contract,
         fixed: false,
         isHidden: false,
-        sort: true,
+        sort: false,
         formatter: (cell, row) => {
             return <div>{cell} {row.contractDate}</div>
         }
@@ -64,7 +64,7 @@ const columnsTable = [
         text: LANG.casesList.address,
         fixed: false,
         isHidden: false,
-        sort: true
+        sort: false
     },
     {
         dataField: 'active',

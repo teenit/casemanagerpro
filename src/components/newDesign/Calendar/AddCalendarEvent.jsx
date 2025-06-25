@@ -18,9 +18,8 @@ const CalendarInfoBlock = ({ data }) => {
     const [state, setState] = useState({ ...data })
     return (
         <div className="CalendarInfoBlock">
-            <div>
-                <NavLink style={{ color: state.color }} to={"/" + state.link}>{state.title}</NavLink>
-            </div>
+            {state.key == "happyCase" ? <NavLink style={{ color: state.color }} to={"/" + state.link}>{state.title}</NavLink>
+                : <div style={{ color: state.color, fontWeight:"700" }}>{state.title}</div>}
             <div>
                 {
                     !state.allDay ? <div>{`${state.day < 10 ? "0" + +state.day : state.day}-${+state.month < 10 ? "0" + +state.month : state.month}-${state.year} ${state.start} -> ${state.end}`}</div>
@@ -89,7 +88,7 @@ const AddCalendarEvent = ({ data = {}, loadEvents, close, edit = true, setEdit =
                     <div className="two-element">
                         {!edit ?
                             <>
-                                <div ><NavLink style={{ color: state.color }} to={"/" + state.link}>{state.title}</NavLink></div>
+                                <div><NavLink style={{ color: state.color }} to={"/" + state.link}>{state.title}</NavLink></div>
                             </>
                             :
                             <>

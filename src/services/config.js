@@ -438,7 +438,7 @@ export const LANG = {
     categories: "Категорія",
     noCategory: "Без категорії",
     no_cases: "Кейсів не знайдено",
-    add_case: "Додати перший кейс"
+    add_case: "Додати кейс"
   },
   case_data: {
     first_name: "Ім'я",
