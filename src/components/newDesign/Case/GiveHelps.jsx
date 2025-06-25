@@ -51,7 +51,7 @@ const GiveHelps = ({ helps, case_id, getCaseInfo, cg }) => {
     const createHelp = () => {
         const { date_time, text, category, who } = state;
 
-        if (!date_time || !text || !category || !who) {
+        if (!date_time || !text || !category || !who || text.trim().length == 0 || who.trim().length == 0) {
             setNotification({
                 show: true,
                 status: false,

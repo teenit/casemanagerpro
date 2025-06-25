@@ -118,7 +118,7 @@ export const LANG = {
   TRANSACTIONS: {
     transaction_type: 'Тип транзакції',
     description: 'Опис',
-    amount: 'Суму',
+    amount: 'Сума',
     payment_method: 'Метод оплати',
     status: 'Статус',
     created_at: 'Дата створення',
@@ -400,7 +400,8 @@ export const LANG = {
     existing: "Існуючий",
     new: "Новий",
     position: "Позиція на івенті",
-    success: "Учасника додано",
+    success_member: "Учасника додано",
+    success_organisator: "Організітора додано",
     error_data: "Перевірте правильність даних"
   },
   FIELDS_BLOCK: {

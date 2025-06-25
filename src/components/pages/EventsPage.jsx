@@ -135,11 +135,11 @@ const EventsPage = () => {
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     />
-                    <Input addClass="w100"
+                    {/* <Input addClass="w100"
                         label={LANG.GLOBAL.type}
                         value={formData.type}
                         onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                    />
+                    /> */}
                     <Input addClass="w100"
                         label={LANG.GLOBAL.category}
                         value={formData.category}

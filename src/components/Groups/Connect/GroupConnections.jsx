@@ -56,10 +56,15 @@ const GroupConnections = ({ case_id, type, cg }) => {
     };
     useEffect(() => {
         apiResponse({}, "groups/get-case-groups.php").then((res) => {
-            setAllGroups([...res]);
+            setAllGroups(res);
+            setData(prev => ({
+                ...prev,
+                group_id: res.length > 0 ? res[0].id : ""
+            }));
         });
         loadConnections();
     }, []);
+
 
     const dataHandler = (key, value) => {
         let val = key === "group_id" ? Number(value) : value;
@@ -88,11 +93,20 @@ const GroupConnections = ({ case_id, type, cg }) => {
         apiResponse({ ...data, client_id: case_id, type: type }, "groups/add-group-connect.php").then((res) => {
             alertHandler("success", LANG.groups.alertMessages.success);
             modalHandler("add");
+            setOpen(true);
             dataHandler("why", "");
-            setOpen(true)
-            loadConnections();
+            apiResponse({ ...data, client_id: case_id, type: type }, "groups/get-group-connect-by-case-id.php").then((res) => {
+                setConnections(res);
+                const unused = allGroups.filter(item => !res.some(conn => item.name === conn.name));
+                if (unused.length > 0) {
+                    setData(prev => ({ ...prev, group_id: unused[0].id }));
+                } else {
+                    setData(prev => ({ ...prev, group_id: "" }));
+                }
+            });
         });
     };
+
 
     const getUnusedGroups = () => {
         return allGroups.filter(item => !connections.some(conn => item.name === conn.name));
@@ -124,7 +138,7 @@ const GroupConnections = ({ case_id, type, cg }) => {
                     return (
                         <div key={index} className='GroupConnections-list-item'>
                             <span><NavLink to={`/group/${item.group_id}`}>{item.name}</NavLink>: {item.why}</span>
-                            <Icon addClass={"delete-icon"} icon={'delete'} onClick={() => deleteGroupConnect(item.id)}/>
+                            <Icon addClass={"delete-icon"} icon={'delete'} onClick={() => deleteGroupConnect(item.id)} />
                         </div>
                     )
                 }) : <p style={{ margin: "15px 0px" }}>{LANG.no_records}</p>}

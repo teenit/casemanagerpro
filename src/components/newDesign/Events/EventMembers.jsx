@@ -22,23 +22,24 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
     }
 
     const deleteHandler = () => {
-        apiResponse({meta_id: modalDelete.meta_id},"events/delete-meta.php").then((res)=>{
+        apiResponse({ meta_id: modalDelete.meta_id }, "events/delete-meta.php").then((res) => {
             getEventData();
             closeModalDelete();
         })
     }
 
     const MemberItem = ({ item, type }) => {
-        
         return type == "manager" ? (
             <div className="EventPage-MemberItem">
                 <div className='EventPage-MemberItem-line'>
                     <NavLink to={`/user/${item.user_id}`}>{item.name}</NavLink>
                     <div className="EventPage-MemberItem-right">
                         <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
-                        <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {setModalDelete({
-                            ...modalDelete,show:true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteOrgConfirm} {item.name} ?</b>
-                        }) }} />
+                        <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {
+                            setModalDelete({
+                                ...modalDelete, show: true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteOrgConfirm} {item.name} ?</b>
+                            })
+                        }} />
                     </div>
                 </div>
                 <div className='EventPage-MemberItem-role'>
@@ -52,9 +53,11 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
                     <div className="EventPage-MemberItem-right">
                         {/* <div className="EventPage-MemberItem-right-role">role</div> */}
                         <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
-                        <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {setModalDelete({
-                            ...modalDelete,show:true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteMemberConfirm} {item.name} ?</b>
-                        }) }} />
+                        <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {
+                            setModalDelete({
+                                ...modalDelete, show: true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteMemberConfirm} {item.name} ?</b>
+                            })
+                        }} />
                     </div>
                 </div>
                 <div className='EventPage-MemberItem-role'>
@@ -63,24 +66,27 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
             </div>
         )
     }
-    const MemberItemNew = ({ item }) => {
+    const MemberItemNew = ({ item, type }) => {
         return (
             <div className="EventPage-MemberItem without-in-system">
                 <div className='EventPage-MemberItem-line'>
                     <div>{item.name}</div>
                     <div className="EventPage-MemberItem-right">
                         <div><a href={`tel:${item.phone}`}>{item.phone}</a></div>
-                        <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {setModalDelete({
-                            ...modalDelete,show:true, meta_id: item.meta_id, body: <b>{LANG.EVENT_PAGE.deleteMemberConfirm} {item.name} ?</b>
-                        }) }} />
+                        <Icon icon={"delete"} addClass={"delete-icon"} onClick={() => {
+                            setModalDelete({
+                                ...modalDelete, show: true, meta_id: item.meta_id, body:
+                                    <b>{type == "member" ? LANG.EVENT_PAGE.deleteMemberConfirm : LANG.EVENT_PAGE.deleteOrgConfirm} {item.name} ?</b>
+                            })
+                        }} />
                     </div>
                 </div>
                 <div className='EventPage-MemberItem-role'>
                     <div>{item.role}</div>
                 </div>
-               
+
             </div>
-        ) 
+        )
     }
     return (
         <div className="EventPage-members-inner">
@@ -91,8 +97,8 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
                         return <MemberItem key={index} item={item} type="manager" />
                     })}
                     {
-                        managersNew && managersNew.length > 0 && managersNew.map((item,index)=>{
-                            return <MemberItemNew key={index + item.name + item.phone} item={item}/>
+                        managersNew && managersNew.length > 0 && managersNew.map((item, index) => {
+                            return <MemberItemNew key={index + item.name + item.phone} item={item} type="manager" />
                         })
                     }
                 </div>
@@ -105,20 +111,20 @@ const EventMembers = ({ getEventData, event_id, managers, members, membersNew = 
                         return <MemberItem key={index} item={item} type="member" />
                     })}
                     {
-                        membersNew && membersNew.length > 0 && membersNew.map((item,index)=>{
-                            return <MemberItemNew key={index + item.name + item.phone} item={item}/>
+                        membersNew && membersNew.length > 0 && membersNew.map((item, index) => {
+                            return <MemberItemNew key={index + item.name + item.phone} item={item} type="member" />
                         })
                     }
                 </div>
             </div>
             {
-                modalDelete.show && 
-                    <ModalConfirm
-                        closeHandler={closeModalDelete}
-                        successHandler={deleteHandler}
-                        text={modalDelete.body}
-                    />
-                    
+                modalDelete.show &&
+                <ModalConfirm
+                    closeHandler={closeModalDelete}
+                    successHandler={deleteHandler}
+                    text={modalDelete.body}
+                />
+
             }
         </div>
     )

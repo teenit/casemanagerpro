@@ -51,7 +51,7 @@ const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
     };
 
     const handleSubmit = () => {
-        if (formData.title.length < 1 || formData.description.length < 1) {
+        if (formData.title.trim().length < 1 || formData.description.trim().length < 1) {
             return handleAlertChange("error", LANG.fields.alertMessages.errorAddEmpty);
         }
         if (formData.title.length > 125) {

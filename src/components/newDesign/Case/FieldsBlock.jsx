@@ -19,15 +19,15 @@ const FieldsBlockGroup = ({options, case_id, title="", getCaseInfo, right = null
             <div className="FieldsBlockGroup-inner">
                 <div className="FieldsBlockGroup-inner-title">{title}</div>
                 <div className="FieldsBlockGroup-inner-options">
-                {options.map((field)=>{
+                {options.map((field, index)=>{
 
-                    return(<>
+                    return(<div key={index}>
                         {(field.type === "date" || 
                         field.type === "string" ||
                         field.type === "int" || 
                         field.type === "email" ||
                         field.type === "text" ||
-                        field.type === "phone") && <div key={field.id}>
+                        field.type === "phone") && <div key={field.id} style={{paddingTop:"10px"}}>
                             <InputBlock
                                 inputType={(field.type === "string" || field.type === "int" || field.type === "phone") ? "text" : field.type}
                                 saveHandler={(value)=>{
@@ -54,7 +54,7 @@ const FieldsBlockGroup = ({options, case_id, title="", getCaseInfo, right = null
                                 }
                             }} />
                             </div>}
-                    </>)
+                    </div>)
                 })}
                 </div>
             </div>

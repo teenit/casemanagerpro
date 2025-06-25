@@ -7,7 +7,7 @@ import Input from "../../elements/Inputs/Input";
 import Textarea from "../../elements/Inputs/Textarea";
 import SmallNotification from "../../elements/Notifications/SmallNotification";
 
-const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
+const AddTransaction = ({ onTransactionAdded, close, id = null }) => {
     const [transactionData, setTransactionData] = useState({
         transaction_type: "",
         amount: "",
@@ -77,7 +77,6 @@ const AddTransaction = ({ onTransactionAdded, action, close, id = null }) => {
                     payment_method: "card",
                     location: "",
                 });
-                close()
             } else {
                 alertHandler(res.message);
             }

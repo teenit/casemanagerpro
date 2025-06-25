@@ -38,13 +38,12 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         sex: info.general.sex,
         date_first_contact: info.data.date_first_contact
     });
-
     useEffect(() => {
         setDataState({
             phone1: info.general.phone1,
             phone2: info.general.phone2,
             happy_bd: info.general.happy_bd === "0000-00-00" ? "" : info.general.happy_bd,
-            email: info.general.email,
+            email: info.general.email||"",
             address_live: info.data.address_live,
             address_registered: info.data.address_registered,
             date_created: info.general.date_created,

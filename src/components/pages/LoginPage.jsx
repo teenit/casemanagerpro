@@ -177,7 +177,15 @@ const LoginPage = () => {
         })
 
     };
-
+    const keyDownHandler = (e) => {
+        if (e.key === 'Enter') {
+            if (state.type === 'secretCode') {
+                sendSecretCode();
+            } else {
+                sendPassword();
+            }
+        }
+    }
     // Determine if the login button should be disabled
     const isDisabled = !state.email || !state.password || state.isLocked;
 
@@ -192,7 +200,10 @@ const LoginPage = () => {
             <div className="" >
                 <span className='LoginPage-switch'>{LANG.loginForm.auth}</span>
             </div>
-            <div className="LoginPage-form">
+            <div
+                className="LoginPage-form"
+                onKeyDown={(e) => {keyDownHandler(e)}}>
+
                 {!state.activeCode && (
                     <>
                         <TextField

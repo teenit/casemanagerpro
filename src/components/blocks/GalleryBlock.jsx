@@ -180,7 +180,7 @@ const GalleryBlock = ({ data, check }) => {
                             return (
                                 <div className='GalleryBlock-grid-img-wrap' key={index}>
                                     <img onClick={() => { setOpenedPhoto({ url: item.link, show: true }) }} src={item.link} alt={LANG.case_files.photo} />
-                                    <ActionMenu menuItems={menuItems} />
+                                    <div style={{height:"max-content"}}><ActionMenu menuItems={menuItems} /></div>
                                 </div>
                             );
                         }

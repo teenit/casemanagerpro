@@ -16,6 +16,7 @@ import SmallNotification from "../../elements/Notifications/SmallNotification";
 
 const CalendarInfoBlock = ({ data }) => {
     const [state, setState] = useState({ ...data })
+
     return (
         <div className="CalendarInfoBlock">
             {state.key == "happyCase" ? <NavLink style={{ color: state.color }} to={"/" + state.link}>{state.title}</NavLink>
@@ -34,7 +35,6 @@ const CalendarInfoBlock = ({ data }) => {
 }
 
 const AddCalendarEvent = ({ data = {}, loadEvents, close, edit = true, setEdit = () => { } }) => {
-
     const [state, setState] = useState({ ...data })
     const [modalConfirm, setModalConfirm] = useState(false)
     const [alert, setAlert] = useState({
@@ -54,7 +54,8 @@ const AddCalendarEvent = ({ data = {}, loadEvents, close, edit = true, setEdit =
 
     const sendForm = () => {
         if (state.key === "happyCase") return alertHandler(false, LANG.calendar.alertMessages.cant_edit)
-        apiResponse({ ...state }, "calendar/add.php").then((res) => {
+        if (state.title.trim().length==0) return alertHandler(false, "Введіть назву події")
+        apiResponse({ ...state, color:state.color||"#000" }, "calendar/add.php").then((res) => {
             loadEvents()
             close();
         })

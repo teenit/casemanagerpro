@@ -45,10 +45,10 @@ const Notes = ({ notes, case_id, getCaseInfo, cg }) => {
     };
 
     const addNote = () => {
-        if(noteMessage.length<1){
+        if(noteMessage.trim().length<1){
             return handleAlertChange("error", LANG.notes.error_data)
         }
-        apiResponse({ text: noteMessage, color: noteColor, case_id }, "case/create-note.php").then((res) => {
+        apiResponse({ text: noteMessage, color: noteColor||"#000", case_id }, "case/create-note.php").then((res) => {
             if (res.status) {
                 handleAlertChange("success", LANG.notes.success);
                 getCaseInfo();

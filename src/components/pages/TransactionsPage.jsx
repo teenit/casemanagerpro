@@ -31,9 +31,9 @@ const TransactionsPage = () => {
 
     const tabData = [
         { title: LANG.TRANSACTIONS.tabs.all, value: 0, mode: "all" },
-        { title: LANG.TRANSACTIONS.tabs.pending, value: 1, mode: "pending" },
-        { title: LANG.TRANSACTIONS.tabs.failed, value: 2, mode: "failed" },
-        { title: LANG.TRANSACTIONS.tabs.completed, value: 3, mode: "completed" }
+        // { title: LANG.TRANSACTIONS.tabs.pending, value: 1, mode: "pending" },
+        // { title: LANG.TRANSACTIONS.tabs.failed, value: 2, mode: "failed" },
+        // { title: LANG.TRANSACTIONS.tabs.completed, value: 3, mode: "completed" }
     ];
 
     const modalHandler = (action = "") => {
