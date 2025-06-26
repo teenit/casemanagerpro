@@ -9,6 +9,7 @@ import { LANG } from "../../services/config";
 import { Button, Divider, MenuItem, Select } from "@mui/material";
 import Input from "../elements/Inputs/Input";
 import Icon from "../elements/Icons/Icon";
+import ModalConfirm from "../Modals/ModalConfirm"
 class AncetaPage extends Component {
     constructor(props) {
         super(props);
@@ -17,14 +18,17 @@ class AncetaPage extends Component {
             loader: true,
             questions: [],
             newQuestion: null,
-            newType: null
+            newType: null,
+            confirm_delete:false
         };
     }
     
     componentDidMount = () => {
         this.loadAnceta()
     }
-
+    modalHandler = (key)=>{
+      this.setState({[key]:!this.state[key]})
+    }
     loadAnceta = () => {
         apiResponse({anceta_id: this.props.anceta_id}, "ancets/get-by-id.php").then((res)=>{
             if (res.status) {
@@ -77,7 +81,7 @@ class AncetaPage extends Component {
         return anceta ?  (
             <div className="AncetaPage">
               <div className="AncetaPage-delete">
-                  <Button color="error" onClick={this.deleteAnceta}><Icon icon="delete"/>{LANG.ancets.delete_anceta}</Button>
+                  <Button color="error" onClick={()=>{this.modalHandler("confirm_delete")}}><Icon icon="delete"/>{LANG.ancets.delete_anceta}</Button>
                 </div>
                 <div className="AncetaPage-title">
                   <div className="AncetaPage-title-h2">
@@ -95,7 +99,7 @@ class AncetaPage extends Component {
                       value={anceta?.description}
                       onChange={(e) => { this.setState({anceta: {...anceta, description: e.target.value}}) }}
                       icon={""}
-                      label={anceta?.description}
+                      label={anceta?.description||LANG.GLOBAL.no_description}
                       inputType={"text"}
                       saveHandler={(val) => this.updateAncetaField("description", val)}
                     />
@@ -137,7 +141,7 @@ class AncetaPage extends Component {
                           type="text"
                           label={LANG.ancets.add_new_question}
                           size="small"
-                          addClass="w100"
+                          addClass="w100 h100"
                       />
                       <Select
                           value={this.state.newType}
@@ -151,6 +155,8 @@ class AncetaPage extends Component {
                       <Button disabled={(!this.state.newQuestion || !this.state.newType)} size="small" onClick={this.addNewQuestion}><Icon icon="add"/></Button>
                     </div>
                 </div>
+                {this.state.confirm_delete && <ModalConfirm text={LANG.ANCETA_PAGE.confirm_delete} closeHandler={()=>{this.modalHandler("confirm_delete")}}
+                  successHandler={this.deleteAnceta}/>}
             </div>
         ): <div>
           {this.state.loader ? <LoadingPage /> : <NotFound />}

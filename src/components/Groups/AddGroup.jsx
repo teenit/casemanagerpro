@@ -51,7 +51,6 @@ const AddGroup = ({ data, id, close, loadGroups }) => {
     };
 
     const checkForm = () => {
-        console.log(state)
         if (state.name.length < 1) {
             alertHandler("error", LANG.groups.alertMessages.no_title);
         } else if (state.name.length > 50) {

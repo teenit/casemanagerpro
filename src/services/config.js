@@ -53,17 +53,18 @@ export const LANG = {
     }
   },
   SETTINGS: {
-    settings:"Налаштування",
-    users:"Користувачі",
-    categories:"Категорії",
-    configurations:"Конфігурації програми",
-    superadmin:"Суперадміністратор",
-    telegram:"Налаштування з телеграм",
-    activate:"Активувати",
-    title_bot:"Ім'я телеграм бота",
-    token_bot:"Токен телеграм бота",
-    chat_id_bot:"Chat ID телеграм бота",
-    add_bot:"Додати учасника",
+    settings: "Налаштування",
+    users: "Користувачі",
+    categories: "Категорії",
+    configurations: "Конфігурації програми",
+    superadmin: "Суперадміністратор",
+    telegram: "Налаштування з телеграм",
+    activate: "Активувати",
+    telegram_bots:"Телеграм боти",
+    title_bot: "Ім'я телеграм бота",
+    token_bot: "Токен телеграм бота",
+    chat_id_bot: "Chat ID телеграм бота",
+    add_bot: "Додати учасника",
     title_category: "Назва категорії",
     description_category: "Опис категорії",
     color_category: "Колір категорії",
@@ -71,12 +72,29 @@ export const LANG = {
     title_category_case_helps: "Категорії наданої допомоги",
     title_category_groups: "Категорії груп",
     edit: "Редагувати категорію",
-    confirm_delete: "Ви впевнені, що хочете видалити цю категорію?"
+    confirm_delete: "Ви впевнені, що хочете видалити цю категорію?",
+    delete_field:"Видалення запису з таблиці",
+    table_name:"Назва таблиці",
+    id_meta:"Унікальний ID",
+    delete_field:"Видалити запис",
+    invalid_bot_data:"Введіть ім'я, токен та ID чату",
+    general:"Загальні налаштування"
   },
   FIELDS_TABLE: {
     add: "Додати нове поле",
+    edit:"Редагувати поле",
     confirm_delete_start: "Підтвердіть дію з видалення поля",
-    confirm_delete_end: "Ця дія видалить поле та пов'язані з ним дані"
+    confirm_delete_end: "Ця дія видалить поле та пов'язані з ним дані",
+    invalid_data: "Введіть назву, ID, тип, блок та область відображення поля",
+    block_view:{
+      works:"Робочі дані",
+      contacts:"Контактні дані",
+      another:"Інше"
+    },
+    group:{
+      cases:"Кейси",
+      users:"Користувачі"
+    }
   },
   FIELDS: {
     add: "Створити поле",
@@ -407,7 +425,7 @@ export const LANG = {
   FIELDS_BLOCK: {
     work: "Робочі дані",
     contact: "Контактні дані",
-    out_of_group: "Дані поза групою"
+    out_of_group: "Дані поза групою",
   },
   exportPDFcasesModal: {
     no_file_selected: "Не обрано жодного кейсу на експорт",
@@ -949,12 +967,17 @@ export const LANG = {
   ANCETA_PAGE: {
     question: "Питання",
     activated: "Активовано",
-    deactivated: "Деактивовано"
+    deactivated: "Деактивовано",
+    confirm_delete: "Ви впевнені, що хочете видалити цю анкету?"
   },
   ANCETS_PAGE: {
     questions_amount: "Кіл-ть питань",
     created: "Анкету створено",
-    type: "Тип анкети"
+    type: "Тип анкети",
+    invalid_name: "Введіть назву анкети",
+    types: {
+      cases: "Кейси"
+    },
   },
   ancets: {
     delete_anceta: "Видалити анкету",
