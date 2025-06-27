@@ -258,11 +258,7 @@ export const LANG = {
   a_page_case_add_notes: "Додавати нотатки до кейсу",
   a_page_case_hidden: "Приховати інформацію",
   access_text: {
-    title: "Рівні доступу",
-    add_template: "Додати рівень доступу",
-    add_name: "Назва нового рівня доступу",
-    add_description: "Опис нового рівня доступу",
-    modal_header: "Додати новий рівень доступу"
+    add_template: "Додати шаблон прав",
   },
   status_plan: {
     0: "Задачу створено",
@@ -539,6 +535,7 @@ export const LANG = {
     add_event: {
       title: "Додати подію",
       edit: "Редагувати подію",
+      delete:"Видалити подію",
       for_all: "Для всіх",
       repeat: "Повторювати кожного року",
       alertMessages: {
@@ -1343,10 +1340,10 @@ export const appConfig = {
       description: "",
       path: "/statistic"
     },
-    phonebook: {
-      title: LANG.pages.phonebook,
-      description: ""
-    },
+    // phonebook: {
+    //   title: LANG.pages.phonebook,
+    //   description: ""
+    // },
     calendar: {
       title: LANG.pages.calendar,
       description: "",

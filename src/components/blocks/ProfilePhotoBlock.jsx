@@ -102,7 +102,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remov
                         src={getImage()}
                         alt="Profile"
                         onError={(e) => {
-                            e.target.src = images.default; // Встановлення дефолтного зображення у разі помилки
+                            e.target.src = images.default;
                         }}
                     />
                 </div>

@@ -239,6 +239,14 @@ class TasksPage extends Component {
                 dataField: 'to',
                 text: LANG.TASKS_PAGE.to,
                 sort: true,
+                 headerFormatter: () =>
+                    <HeaderFormatter
+                        text={LANG.TASKS_PAGE.to}
+                        dataField="to"
+                        sortField={this.state.sort.field}
+                        sortOrder={this.state.sort.order}
+                        onSortClick={this.handleSortClick}
+                    />,
                 formatter: (cell, row) => {
                     return <NavLink to={`/user/${row.to}`}>{this.state.users[row.to] || LANG.GLOBAL.unknown_user}</NavLink>
                 }
@@ -247,6 +255,14 @@ class TasksPage extends Component {
                 dataField: 'reviewer',
                 text: LANG.TASKS_PAGE.reviewer_id,
                 sort: false,
+                 headerFormatter: () =>
+                    <HeaderFormatter
+                        text={LANG.TASKS_PAGE.reviewer_id}
+                        dataField="reviewer"
+                        sortField={this.state.sort.field}
+                        sortOrder={this.state.sort.order}
+                        onSortClick={this.handleSortClick}
+                    />,
                 formatter: (cell, row) => {
                     return <NavLink to={`/user/${row.reviewer_id}`}>{this.state.users[row.reviewer_id] || LANG.GLOBAL.unknown_user}</NavLink>
                 }

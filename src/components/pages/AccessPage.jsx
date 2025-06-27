@@ -9,8 +9,9 @@ import { LANG } from "../../services/config";
 import { changeAps, changeApsBr } from "../Functions/translateString";
 import SmallNotification from "../elements/Notifications/SmallNotification"
 import AccessCheck from "../Functions/AccessCheck";
+import AddButton from "../elements/Buttons/AddButton"
 const AccessPage = () => {
-
+    const canCreate = AccessCheck('yes_no', 'a_page_access_create')
     const [modal, setModal] = useState(false)
     const [state, setState] = useState([])
     const [addAccess, setAccess] = useState({
@@ -45,9 +46,7 @@ const AccessPage = () => {
 
     return (
         <div className="AccessPage">
-            <div className="AccessPage-title">
-                <span>{LANG.access_text.title}</span>
-            </div>
+            {canCreate && <AddButton title={LANG.access_text.add_template} click={()=>{setModal(true)}}/>}
             <div className="AccessPage-templates">
                 {state.map((item) => {
                     return <NavLink key={item.id} state={item} to={item.id} className="AccessPage-templates-row"><span>{item.name}</span></NavLink>
@@ -56,9 +55,7 @@ const AccessPage = () => {
 
             {
                 modal && <Modal closeHandler={() => { setModal(false) }}
-                    header={
-                        <h3>{LANG.access_text.modal_header}</h3>
-                    }
+                    header={LANG.access_text.add_template}
                     footer={
                         <>
                         <Button variant="contained" onClick={addNewAccess}>{LANG.save}</Button>
@@ -66,14 +63,11 @@ const AccessPage = () => {
                         </>
                     }
                 >
-                    <Input addClass="w100" value={addAccess.name} onChange={e => setAccess({ ...addAccess, name: e.target.value })} label={LANG.access_text.add_name} type="text" />
-                    <Textarea value={addAccess.description} onChange={e => setAccess({ ...addAccess, description: e.target.value })} label={LANG.access_text.add_description} />
+                    <Input addClass="w100" value={addAccess.name} onChange={e => setAccess({ ...addAccess, name: e.target.value })} label={LANG.GLOBAL.title} type="text" />
+                    <Textarea value={addAccess.description} onChange={e => setAccess({ ...addAccess, description: e.target.value })} label={LANG.GLOBAL.description} />
 
                 </Modal>
             }
-            {AccessCheck('yes_no', 'a_page_access_create') && <Button variant="contained" onClick={() => {
-                setModal(true)
-            }}>{LANG.access_text.add_template}</Button>}
             
             {alert.error && <SmallNotification isSuccess={false} text={alert.message} close={() => { alertHandler("error") }} />}
             {alert.success && <SmallNotification isSuccess={true} text={alert.message} close={() => { alertHandler("success") }} />}

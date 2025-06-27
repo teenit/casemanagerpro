@@ -237,7 +237,7 @@ const Settings = () => {
 
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SetUser closeAddNewUser={() => { setAddNewUser(false) }} addNewUser={addNewUser} categories={categories} categoriesCont={categoriesCont} />+
+                        <SetUser closeAddNewUser={() => { setAddNewUser(false) }} addNewUser={addNewUser} categories={categories} categoriesCont={categoriesCont} />
                     </AccordionDetails>
                 </Accordion>}
 
@@ -373,7 +373,7 @@ const Settings = () => {
                                 telegramBots.map((item, index) => {
                                     return (
                                         <div key={index}>
-                                            <div>{item.bot_name}</div>
+                                            <div className="bold">{item.bot_name}</div>
                                             <div>{item.bot_token}</div>
                                             <div>{item.chat_id}</div>
                                         </div>

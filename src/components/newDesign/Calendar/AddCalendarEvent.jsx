@@ -20,7 +20,7 @@ const CalendarInfoBlock = ({ data }) => {
     return (
         <div className="CalendarInfoBlock">
             {state.key == "happyCase" ? <NavLink style={{ color: state.color }} to={"/" + state.link}>{state.title}</NavLink>
-                : <div style={{ color: state.color, fontWeight:"700" }}>{state.title}</div>}
+                : <div style={{ color: state.color, fontWeight: "700" }}>{state.title}</div>}
             <div>
                 {
                     !state.allDay ? <div>{`${state.day < 10 ? "0" + +state.day : state.day}-${+state.month < 10 ? "0" + +state.month : state.month}-${state.year} ${state.start} -> ${state.end}`}</div>
@@ -54,8 +54,8 @@ const AddCalendarEvent = ({ data = {}, loadEvents, close, edit = true, setEdit =
 
     const sendForm = () => {
         if (state.key === "happyCase") return alertHandler(false, LANG.calendar.alertMessages.cant_edit)
-        if (state.title.trim().length==0) return alertHandler(false, "Введіть назву події")
-        apiResponse({ ...state, color:state.color||"#000" }, "calendar/add.php").then((res) => {
+        if (state.title.trim().length == 0) return alertHandler(false, "Введіть назву події")
+        apiResponse({ ...state, color: state.color || "#000" }, "calendar/add.php").then((res) => {
             loadEvents()
             close();
         })
@@ -73,7 +73,12 @@ const AddCalendarEvent = ({ data = {}, loadEvents, close, edit = true, setEdit =
             header={<div className="Modal--head-header">
                 {edit || state.key == 'happyCase' ? <div className="title">{LANG.calendar.info}</div> :
                     (!checkEditEvent && user.id !== state.userID) ? ""
-                        : <Button onClick={setEdit} startIcon={<Icon icon={'edit'} />}>{LANG.calendar.add_event.edit}</Button>}
+                        : <>
+                            <Button onClick={setEdit} startIcon={<Icon icon={'edit'} />}>{LANG.calendar.add_event.edit}</Button>
+                            {state.calendar_id && !(!checkRemoveEvent && user.id !== state.userID) &&
+                                <Button color="error" onClick={() => { setModalConfirm(true) }} startIcon={<Icon icon={'delete'} />}>{LANG.calendar.add_event.delete}</Button>}
+                        </>
+                }
             </div>}
             closeHandler={close}
             footer={state.key !== "happyCase" ? <div className="Modal--footer" style={{ justifyContent: "space-between", width: "100%" }}>
@@ -165,8 +170,6 @@ const AddCalendarEvent = ({ data = {}, loadEvents, close, edit = true, setEdit =
                             label={LANG.GLOBAL.link}
                             onChange={(e) => handleChange('link', e.target.value)}
                         />
-                        {edit && state.calendar_id && !(!checkRemoveEvent && user.id !== state.userID) &&
-                            <Icon icon={'delete'} addClass={'delete-icon'} onClick={() => { setModalConfirm(true) }} />}
                     </div>
                     {alert.active && <SmallNotification isSuccess={alert.isSuccess} text={alert.message} close={() => { alertHandler() }} />}
                 </div>}
