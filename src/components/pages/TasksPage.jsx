@@ -33,6 +33,7 @@ class TasksPage extends Component {
             tasks: [],
             tabValue: 0,
             loading: false,
+            totalCount: null,
             sort: {
                 field: 'id',
                 order: 'ASC'
@@ -79,6 +80,13 @@ class TasksPage extends Component {
     deleteTask = () => {
         apiResponse({ task_id: this.state.current_task.id, action: "delete_task" }, "tasks/task.php").then((res) => {
             this.loadData()
+        })
+    }
+    loadTotalCount = () => {
+        apiResponse({ action: "get_total_count" }, "tasks/task.php").then((res) => {
+            if (res.status) {
+                this.setState({totalCount: res.data?.total || null})
+            }
         })
     }
     finishTask = (data) => {
@@ -387,8 +395,8 @@ class TasksPage extends Component {
                         rowsPerPage={this.state.options.limit}
                         onRowsPerPageChange={this.handleChangeRowsPerPage}
                         rowsPerPageOptions={[10, 25, 50, 100]}
-                    // totalCount={totalCount}
-                    // loadTotalCount={loadTotalCount}
+                        totalCount={this.state.totalCount}
+                        loadTotalCount={this.loadTotalCount}
                     />}
                 </div>
                 {modals.add_task && <TaskModal users={this.state.users} loadData={this.loadData} close={() => { this.modalHandler("add_task") }} />}

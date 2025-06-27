@@ -590,6 +590,11 @@ const TestPage = () => {
         apiResponse({...obj}, 'tasks/task.php').then((res)=>{
         })
     }
+    const getStatistics = () => {
+        apiResponse({action: 'get_service_statistics'}, 'statistics/statistic.php').then((res)=>{
+            console.log(res)
+        })
+    }
     return(
         <div className="TestPage">
             {/* <div className="main">Структура компанії</div>
@@ -644,6 +649,9 @@ const TestPage = () => {
             <div>
             <Button onClick={getTask}>
                 Get task
+            </Button>
+             <Button onClick={getStatistics}>
+                Get statistics
             </Button>
             <Input value={taskId} onChange={(e)=>{
                 setTaskId(e.target.value)
