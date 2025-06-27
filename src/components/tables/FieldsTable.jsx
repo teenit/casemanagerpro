@@ -12,7 +12,7 @@ import Pagination from '../elements/Pagination/Pagination';
 import ModalConfirm from '../Modals/ModalConfirm';
 import EmptyData from '../EmptyData/EmptyData';
 import ActionMenu from '../Portals/ActionMenu';
-
+import SmallNotification from "../elements/Notifications/SmallNotification"
 class FieldsTable extends Component {
     constructor(props) {
         super(props);
@@ -33,6 +33,11 @@ class FieldsTable extends Component {
                 order: "DESC",
                 page: 0,
                 limit: 10
+            },
+            alert: {
+                active: false,
+                isSuccess: false,
+                message: ""
             }
         };
     }
@@ -64,14 +69,21 @@ class FieldsTable extends Component {
             text: LANG.FIELDS.field_type,
             fixed: false,
             isHidden: false,
-            sort: true
+            sort: true,
+            formatter:(cell,row)=>{
+                const title = appConfig.fields.find(item=>item.key==cell).label
+                return <div>{title}</div>
+            }
         },
         {
             dataField: 'block_view',
             text: LANG.FIELDS.block_view,
             fixed: false,
             isHidden: false,
-            sort: true
+            sort: true,
+            formatter:(cell,row)=>{
+                return <div>{LANG.FIELDS_TABLE.block_view[cell]}</div>
+            }
         },
         {
             dataField: 'group',
@@ -80,7 +92,7 @@ class FieldsTable extends Component {
             isHidden: false,
             sort: true,
             formatter: (cell, row) => {
-                return <div>{cell}</div>
+                return <div>{LANG.FIELDS_TABLE.group[cell]}</div>
             }
         },
         {
@@ -151,12 +163,12 @@ class FieldsTable extends Component {
     saveField = () => {
         const { type, group, block_view, sorted, unique, name, icon, id } = this.state;
         if (type == "" || group == "" || block_view == "" || unique == "" || name == "") {
-            return alert("FAIL");
+            return this.alertHandler(false, LANG.FIELDS_TABLE.invalid_data)
         }
         apiResponse({
             type: type, group: group, block_view: block_view, sorted: sorted ? 1 : 0, unique: unique, name: name, icon: icon, field_id: id
         }, `manage/fields/${this.state.id ? "update" : "create"}.php`).then((res) => {
-            this.setState({ id: null });
+            this.setState({ id: null, createFieldModal: false });
             if (res.status) this.getFields({ ...this.state.sort });
         })
     }
@@ -214,7 +226,18 @@ class FieldsTable extends Component {
     modalHandler = () => {
         this.setState({ createFieldModal: true })
     }
+    alertHandler = (isSuccess = false, message = "") => {
+        const { alert } = this.state
+        this.setState({
+            alert: {
+                active: !alert.active,
+                isSuccess: isSuccess,
+                message: message
+            }
+        })
+    }
     render() {
+        const { alert } = this.state
         const columns = this.prepareColumns(this.columns);
 
         return <div style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
@@ -248,14 +271,12 @@ class FieldsTable extends Component {
 
             {this.state.createFieldModal &&
                 <Modal
-                    header={LANG.FIELDS_TABLE.add}
+                    header={this.state.id?LANG.FIELDS_TABLE.edit:LANG.FIELDS_TABLE.add}
                     closeHandler={() => this.setState({ createFieldModal: false })}
                     footer={<>
                         <Button variant="contained" color="error" onClick={() => { this.setState({ createFieldModal: false }) }}>{LANG.GLOBAL.cancel}</Button>
                         <Button variant="contained" onClick={() => {
                             this.saveField();
-                            this.setState({ createFieldModal: false })
-
                         }}>{LANG.GLOBAL.save}</Button>
                     </>}
                 >
@@ -282,7 +303,6 @@ class FieldsTable extends Component {
                             label={LANG.FIELDS.group_field}
                             value={this.state.group}
                             onChange={(e) => { this.setState({ group: e.target.value }) }}
-                            variant="standard"
                         >
                             {this.state.group == "" && <MenuItem value=''></MenuItem>}
                             <MenuItem value='cases'>{LANG.FIELDS.cases}</MenuItem>
@@ -297,7 +317,6 @@ class FieldsTable extends Component {
                             label={LANG.FIELDS.block_view}
                             value={this.state.block_view}
                             onChange={(e) => { this.setState({ block_view: e.target.value }) }}
-                            variant="standard"
                         >
                             {this.state.block_view == "" && <MenuItem value=''></MenuItem>}
                             <MenuItem value='contacts'>{LANG.FIELDS.contacts}</MenuItem>
@@ -313,7 +332,6 @@ class FieldsTable extends Component {
                             label={LANG.FIELDS.field_type}
                             value={this.state.type}
                             onChange={(e) => { this.setState({ type: e.target.value }) }}
-                            variant="standard"
                         >
                             {this.state.type == "" && <MenuItem value=''></MenuItem>}
                             {appConfig.fields.map((item) => <MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>)}
@@ -330,6 +348,7 @@ class FieldsTable extends Component {
                 closeHandler={() => this.setState({ confirmDelete: false })}
                 successHandler={this.deleteField}
                 text={`${LANG.FIELDS_TABLE.confirm_delete_start} ${this.state.name}. ${LANG.FIELDS_TABLE.confirm_delete_end}.`} />}
+            {alert.active && <SmallNotification isSuccess={alert.isSuccess} text={alert.message} close={() => { this.alertHandler() }} />}
         </div>
     }
 }

@@ -34,7 +34,7 @@ const COLUMNS = [
         isHidden: false,
         sort: false,
         formatter: (cell, row) => {
-            return <div>{cell}</div>
+            return <div>{cell||LANG.GLOBAL.no_description}</div>
         }
     },
     {
@@ -51,7 +51,7 @@ const COLUMNS = [
         isHidden: false,
         sort: false,
         formatter: (cell, row) => {
-            return <div>{cell}</div>
+            return <div>{LANG.ANCETS_PAGE.types[cell]}</div>
         }
     },
     {
@@ -61,7 +61,7 @@ const COLUMNS = [
         isHidden: false,
         sort: false,
         formatter: (cell, row) => {
-            return <div>{cell}</div>
+            return <div>{LANG.ancets.remembers[cell]}</div>
         }
     },
     {

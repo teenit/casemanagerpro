@@ -8,7 +8,7 @@ import FooterDefaultModal from "../Modals/FooterDefaultModal";
 import Input from "../elements/Inputs/Input";
 import { LANG } from "../../services/config";
 import Textarea from "../elements/Inputs/Textarea";
-
+import SmallNotification from "../elements/Notifications/SmallNotification"
 class AddAncetsForm extends Component {
     constructor(props) {
         super(props);
@@ -17,10 +17,24 @@ class AddAncetsForm extends Component {
             description: "",
             type: "cases",
             remember: "month",
-            questions: []
+            questions: [],
+            alert: {
+                active: false,
+                isSuccess: false,
+                message: ""
+            }
         };
     }
-
+    alertHandler = (isSuccess = false, message = "") => {
+        this.setState({
+            alert: {
+                ...this.state.alert,
+                active: !this.state.alert.active,
+                isSuccess: isSuccess,
+                message: message
+            }
+        })
+    }
     createQuestion = () => {
         this.setState((prevState) => ({
             questions: [
@@ -31,6 +45,7 @@ class AddAncetsForm extends Component {
     };
 
     save = () => {
+        if (this.state.name.trim().length == 0) return this.alertHandler(false, LANG.ANCETS_PAGE.invalid_name)
         this.props.success(this.state);
     };
 
@@ -58,7 +73,7 @@ class AddAncetsForm extends Component {
 
     render() {
         const { close } = this.props;
-        const { questions } = this.state;
+        const { questions, alert } = this.state;
 
         return (
             <Modal closeHandler={close}
@@ -116,7 +131,7 @@ class AddAncetsForm extends Component {
                 </div>
                 <div className="AncetsPage-modal-questions">
                     {questions.map((item, index) => (
-                        <div key={index} className="flex w100" style={{  gap:"10px" }}>
+                        <div key={index} className="flex w100" style={{ gap: "10px" }}>
                             <Input
                                 value={item.question}
                                 onChange={(e) => this.updateQuestion(index, e.target.value)}
@@ -138,6 +153,7 @@ class AddAncetsForm extends Component {
                             </Button>
                         </div>
                     ))}
+                    {alert.active && <SmallNotification isSuccess={alert.isSuccess} text={alert.message} close={() => { this.alertHandler() }} />}
                 </div>
             </Modal>
         );

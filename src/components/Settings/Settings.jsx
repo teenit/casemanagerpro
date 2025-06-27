@@ -24,13 +24,14 @@ import Modal from "../Modals/Modal";
 import FilesUploader from "../elements/Uploaders/FilesUploader";
 import AccessCheck from "../Functions/AccessCheck";
 import AddButton from "../elements/Buttons/AddButton"
+import SmallNotification from "../elements/Notifications/SmallNotification";
 const MODE = 'settings_page_';
 const DEFAULT_TELEGRAM_BOT = {
     bot_id: null,
     bot_name: "",
-    chat_id:"",
-    is_active:"",
-    bot_token:"",
+    chat_id: "",
+    is_active: "",
+    bot_token: "",
     type: "chanel"
 }
 const Settings = () => {
@@ -41,17 +42,22 @@ const Settings = () => {
     const [version, setVersion] = useState(false)
     const [newVersion, setNewVersion] = useState(false)
     const [disBtn, setDisBtn] = useState(false)
-    const [config, setConfig] = useState({...appConfig.defaultConfig})
+    const [config, setConfig] = useState({ ...appConfig.defaultConfig })
     const [activeConfig, setActiveConfig] = useState({});
     const [deleteMeta, setDeleteMeta] = useState({
         tableName: "",
-        idMeta:""
+        idMeta: ""
     })
     const [telegramBots, setTelegramBots] = useState([]);
     const [selectedTelegramBot, setSelectedTelegramBot] = useState({
         ...DEFAULT_TELEGRAM_BOT
-    }) 
+    })
     const [addNewUser, setAddNewUser] = useState(false)
+    const [alert, setAlert] = useState({
+        active: false,
+        isSuccess: false,
+        message: ""
+    })
     function checkVersion() {
         let obj = {
             id: localStorage.getItem("id"),
@@ -70,12 +76,12 @@ const Settings = () => {
     }
     useEffect(() => {
         apiResponse({}, "manage/get-version.php").then((data) => {
-                setVersion(data.version);
-                checkVersion()
+            setVersion(data.version);
+            checkVersion()
         })
-        apiResponse({}, "config/get-active-config.php").then((res)=>{
-            
-            if (res.status) setActiveConfig({...res.configs})
+        apiResponse({}, "config/get-active-config.php").then((res) => {
+
+            if (res.status) setActiveConfig({ ...res.configs })
         })
         loadTelegramBots();
     }, []);
@@ -110,38 +116,38 @@ const Settings = () => {
 
 
     useEffect(() => {
-        apiResponse({},'user/page-setting.php').then((data)=>{
-             if (data?.data?.message) {
-                    setPage({
-                        effload: false,
-                        message: data.data.message,
-                        loading: true
-                    })
-                } else {
-                    setPage({ loading: false })
-                }
+        apiResponse({}, 'user/page-setting.php').then((data) => {
+            if (data?.data?.message) {
+                setPage({
+                    effload: false,
+                    message: data.data.message,
+                    loading: true
+                })
+            } else {
+                setPage({ loading: false })
+            }
         })
     }, [])
     const [settingsData, setSettingsData] = useState({
         phone: "",
         email: "",
         key: "",
-        auth:false,
-        lightTheme:true
+        auth: false,
+        lightTheme: true
     })
-    const initialSettingsData = {...settingsData}
+    const initialSettingsData = { ...settingsData }
     const settingsHandler = (key, value) => {
         setSettingsData({ ...settingsData, [key]: value })
     }
-    const saveConfig = ()=>{
-        apiResponse({config: config}, "config/create.php").then((res)=>{
+    const saveConfig = () => {
+        apiResponse({ config: config }, "config/create.php").then((res) => {
         })
     }
 
     const getConfig = () => {
-        apiResponse({}, "config/get-active-config.php").then((res)=>{
-            
-            if (res.status) setActiveConfig({...res.configs})
+        apiResponse({}, "config/get-active-config.php").then((res) => {
+
+            if (res.status) setActiveConfig({ ...res.configs })
         })
     }
     const generateKey = () => {
@@ -158,33 +164,39 @@ const Settings = () => {
         apiResponse({
             key: key,
             value: sendValue
-        }, "config/create-config.php").then((res)=>{
-            if(res.status) getConfig()
+        }, "config/create-config.php").then((res) => {
+            if (res.status) getConfig()
         })
     }
 
     const deleteMetaToServer = () => {
-        apiResponse({...deleteMeta}, "manage/delete_meta.php").then((res)=>{
+        apiResponse({ ...deleteMeta }, "manage/delete_meta.php").then((res) => {
             alert(res.message)
         })
     }
 
     const loadTelegramBots = () => {
-        apiResponse({}, "telegram/get-telegram-bot-list.php").then((res)=>{
+        apiResponse({}, "telegram/get-telegram-bot-list.php").then((res) => {
             if (res.status) {
                 setTelegramBots([...res.data])
             }
         })
     }
-   
+
     const addTelegramBot = () => {
-        apiResponse({...selectedTelegramBot}, "telegram/create-telegram-bot.php").then((res)=>{
+        if (selectedTelegramBot.bot_name.trim().length == 0 || selectedTelegramBot.bot_token.trim().length == 0 || selectedTelegramBot.chat_id.trim().length == 0) {
+            return alertHandler(false, LANG.SETTINGS.invalid_bot_data)
+        }
+        apiResponse({ ...selectedTelegramBot }, "telegram/create-telegram-bot.php").then((res) => {
             if (res.status) {
-                setSelectedTelegramBot({...selectedTelegramBot, modal: false});
+                setSelectedTelegramBot({ ...selectedTelegramBot, modal: false });
+                loadTelegramBots()
             }
         })
     }
-
+    const alertHandler = (isSuccess = false, message = "") => {
+        setAlert({ ...alert, active: !alert.active, isSuccess: isSuccess, message: message })
+    }
     const sendInTelegram = () => {
         // apiResponse({bot_id: 1, message: "test message"}, "telegram/send-message-in-telegram.php").then((res)=>{
         // })
@@ -212,20 +224,20 @@ const Settings = () => {
                         <div className="SettingsPage-accordion-jcs">
                             <div>{LANG.SETTINGS.users}</div>
                             <Button size="small" variant="outlined"
-                                disabled={!canAddUsers} 
-                                onClick={(e)=>{
+                                disabled={!canAddUsers}
+                                onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     setAddNewUser(!addNewUser)
                                 }}
                             >
-                                <Icon icon={"add"}/>{LANG.set_user.add_user}
+                                <Icon icon={"add"} />{LANG.set_user.add_user}
                             </Button>
                         </div>
-                        
+
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SetUser closeAddNewUser={()=>{setAddNewUser(false)}} addNewUser={addNewUser} categories={categories} categoriesCont={categoriesCont} />+
+                        <SetUser closeAddNewUser={() => { setAddNewUser(false) }} addNewUser={addNewUser} categories={categories} categoriesCont={categoriesCont} />+
                     </AccordionDetails>
                 </Accordion>}
 
@@ -307,46 +319,47 @@ const Settings = () => {
                                 </span>
                             </div>
                         </AccordionBlock> */}
-                        <AccordionBlock title={"Загальні налаштування"}>
+                        <AccordionBlock title={LANG.SETTINGS.general}>
                             {
-                                config.system.map((item)=><SetConfigItem 
-                                key={item.config_key} 
-                                type={item.type} 
-                                label={item.label} 
-                                description={item.description}
-                                value={activeConfig[item.config_key] !== undefined ? activeConfig[item.config_key] : item.value} 
-                                config_key={item.config_key} 
-                                onChange = {(value)=>{
-                                    saveConfigItem(item.config_key, value)
-                                }}
+                                config.system.map((item) => <SetConfigItem
+                                    key={item.config_key}
+                                    type={item.type}
+                                    label={item.label}
+                                    description={item.description}
+                                    value={activeConfig[item.config_key] !== undefined ? activeConfig[item.config_key] : item.value}
+                                    config_key={item.config_key}
+                                    onChange={(value) => {
+                                        saveConfigItem(item.config_key, value)
+                                    }}
                                 />)
                             }
-                          
+
                         </AccordionBlock>
                     </AccordionDetails>
-                    
+
                 </Accordion>}
                 {superTab && <Accordion expanded={expanded.special} id="expanded_special" onChange={() => {
                     expandedChange('special')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
-                        {LANG.SETTINGS.superadmin} 
+                        {LANG.SETTINGS.superadmin}
                     </AccordionSummary>
                     <AccordionDetails>
-                        <AccordionBlock title={"Видалення запису з таблиці"}>
+                        <AccordionBlock title={LANG.SETTINGS.delete_field}>
                             <div style={{
-                                display:"flex",
-                                gap:"10px",
-                                flexDirection:"column"
+                                display: "flex",
+                                gap: "10px",
+                                flexDirection: "column",
+                                marginTop: "10px"
                             }}>
-                                <Input label="Table name" value={deleteMeta.tableName} onChange={(e)=>{setDeleteMeta({...deleteMeta, tableName:e.target.value})}}/>
-                                <Input label="Id meta" value={deleteMeta.idMeta} onChange={(e)=>{setDeleteMeta({...deleteMeta, idMeta:e.target.value})}}/>
-                                <Button variant="contained" onClick={deleteMetaToServer}>Видалити запис</Button>
+                                <Input label={LANG.SETTINGS.table_name} value={deleteMeta.tableName} onChange={(e) => { setDeleteMeta({ ...deleteMeta, tableName: e.target.value }) }} />
+                                <Input label={LANG.SETTINGS.id_meta} value={deleteMeta.idMeta} onChange={(e) => { setDeleteMeta({ ...deleteMeta, idMeta: e.target.value }) }} />
+                                <Button variant="contained" onClick={deleteMetaToServer}>{LANG.SETTINGS.delete_field}</Button>
                             </div>
-                          
+
                         </AccordionBlock>
                     </AccordionDetails>
-                    
+
                 </Accordion>}
                 {telegramTab && <Accordion expanded={expanded.telegram} id="expanded_telegram" onChange={() => {
                     expandedChange('telegram')
@@ -355,51 +368,52 @@ const Settings = () => {
                         {LANG.SETTINGS.telegram}
                     </AccordionSummary>
                     <AccordionDetails>
-                        <AccordionBlock title={"Телеграм боти"}>
+                        <AccordionBlock title={LANG.SETTINGS.telegram_bots}>
                             {
-                                telegramBots.map((item, index)=>{
-                                    return(
+                                telegramBots.map((item, index) => {
+                                    return (
                                         <div key={index}>
-                                        <div>{item.bot_name}</div>
-                                        <div>{item.bot_token}</div>
-                                        <div>{item.chat_id}</div>
+                                            <div>{item.bot_name}</div>
+                                            <div>{item.bot_token}</div>
+                                            <div>{item.chat_id}</div>
                                         </div>
                                     )
                                 })
                             }
-                           <Button onClick={()=>{setSelectedTelegramBot({...selectedTelegramBot, modal: true})}}>Додати</Button>
-                          
+                            <Button onClick={() => { setSelectedTelegramBot({ ...selectedTelegramBot, modal: true }) }}>{LANG.GLOBAL.add}</Button>
+
                         </AccordionBlock>
                     </AccordionDetails>
-                    
+
                 </Accordion>}
             </div>
-            {selectedTelegramBot.modal && <Modal closeHandler={() => {setSelectedTelegramBot({...selectedTelegramBot, modal: false}) }} header={LANG.SETTINGS.add_bot} footer={
-            <>
-                <Button variant="contained" color="error" onClick={() => { setSelectedTelegramBot({...selectedTelegramBot, modal: false}) }}>{LANG.GLOBAL.cancel}</Button>
-                <Button variant="contained" onClick={addTelegramBot}>{LANG.GLOBAL.save}</Button>
-            </>
-             }>
-            <div style={{paddingTop:"15px"}}>
-                <Input value={selectedTelegramBot.bot_name} label={LANG.SETTINGS.title_bot} onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, bot_name: e.target.value})}}/>
-            </div>
-            <div>
-                <Input value={selectedTelegramBot.bot_token} label={LANG.SETTINGS.token_bot} onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, bot_token: e.target.value})}}/>
-            </div>
-            <div>
-                <Input value={selectedTelegramBot.chat_id} label={LANG.SETTINGS.chat_id_bot} onChange={(e)=>{setSelectedTelegramBot({...selectedTelegramBot, chat_id: e.target.value})}}/>
-            </div>
-            <div>
-                <label htmlFor=""> {LANG.SETTINGS.activate}
-                <Switch 
-                    
-                    checked={selectedTelegramBot.is_active == 1 ? true : false}
-                    onChange={(e)=>{
-                        setSelectedTelegramBot({...selectedTelegramBot, is_active: e.target.checked ? 1 : 0})
-                    }}
-                /></label>
-            </div>
-        </Modal>}
+            {selectedTelegramBot.modal && <Modal closeHandler={() => { setSelectedTelegramBot({ ...selectedTelegramBot, modal: false }) }} header={LANG.SETTINGS.add_bot} footer={
+                <>
+                    <Button variant="contained" color="error" onClick={() => { setSelectedTelegramBot({ ...selectedTelegramBot, modal: false }) }}>{LANG.GLOBAL.cancel}</Button>
+                    <Button variant="contained" onClick={addTelegramBot}>{LANG.GLOBAL.save}</Button>
+                </>
+            }>
+                <div style={{ paddingTop: "15px" }}>
+                    <Input addClass="w100" value={selectedTelegramBot.bot_name} label={LANG.SETTINGS.title_bot} onChange={(e) => { setSelectedTelegramBot({ ...selectedTelegramBot, bot_name: e.target.value }) }} />
+                </div>
+                <div>
+                    <Input addClass="w100" value={selectedTelegramBot.bot_token} label={LANG.SETTINGS.token_bot} onChange={(e) => { setSelectedTelegramBot({ ...selectedTelegramBot, bot_token: e.target.value }) }} />
+                </div>
+                <div>
+                    <Input addClass="w100" value={selectedTelegramBot.chat_id} label={LANG.SETTINGS.chat_id_bot} onChange={(e) => { setSelectedTelegramBot({ ...selectedTelegramBot, chat_id: e.target.value }) }} />
+                </div>
+                <div>
+                    <label htmlFor=""> {LANG.SETTINGS.activate}
+                        <Switch
+
+                            checked={selectedTelegramBot.is_active == 1 ? true : false}
+                            onChange={(e) => {
+                                setSelectedTelegramBot({ ...selectedTelegramBot, is_active: e.target.checked ? 1 : 0 })
+                            }}
+                        /></label>
+                </div>
+            </Modal>}
+            {alert.active && <SmallNotification isSuccess={alert.isSuccess} text={alert.message} close={alertHandler} />}
         </div>
 
     )
