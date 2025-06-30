@@ -18,6 +18,7 @@ import Pagination from "../elements/Pagination/Pagination";
 import AccessCheck from "../Functions/AccessCheck";
 import Icon from "../elements/Icons/Icon";
 import WrapperParams from "./WrapperParams";
+import TextDescription from "../elements/TextFormatters/TextDescription";
 class TasksPage extends Component {
     constructor(props) {
         super(props)
@@ -200,7 +201,9 @@ class TasksPage extends Component {
                 text: LANG.GLOBAL.description,
                 sort: false,
                 formatter: (cell, row) => {
-                    return <div title={cell}>{this.cutTitle(cell, 75) || LANG.GLOBAL.no_description}</div>
+                    return <div style={{maxHeight:"50px", overflowY:"auto"}} title={cell}>
+                        <TextDescription text={cell || LANG.GLOBAL.no_description}/>
+                    </div>
                 },
             },
             {

@@ -8,6 +8,7 @@ import { apiResponse } from "../../Functions/get_apiObj"
 import SmallNotification from "../../elements/Notifications/SmallNotification"
 import SelectUsers from "../../elements/Selects/SelectUsers"
 import moment from "moment"
+import SmallTextEditor from "../../elements/TextEditor/SmallTextEditor"
 
 class TaskModal extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class TaskModal extends Component {
         this.state = {
             data: this.props.data || {
                 title: "",
-                description: "",
+                description: LANG.GLOBAL.description,
                 dead_line: " ",
                 from: " ",
                 to: " ",
@@ -101,12 +102,12 @@ class TaskModal extends Component {
                                 onChange={(e) => { this.dataHandler("from", e.target.value) }} />
 
                         </div>
-
-                        <Textarea
+                        <SmallTextEditor value={data.description} onChange={(e) => this.dataHandler("description", e)}/>
+                        {/* <Textarea
                             value={data.description}
                             label={LANG.GLOBAL.description}
                             onChange={(e) => this.dataHandler("description", e.target.value)}
-                        />
+                        /> */}
 
                         <div className="Modal--split">
                             <Input

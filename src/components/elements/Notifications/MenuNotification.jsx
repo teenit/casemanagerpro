@@ -50,7 +50,7 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             icon: "add_notification",
             icon_class: "notification-icon-purple",
             color: "#E9F4FE",
-            click: () => { navigate(`/event_new/${data.meta_value.event_id}`) },
+            click: () => { navigate(`/event/${data.meta_value.event_id}`) },
             showButton: true,
             buttonText: LANG.MENU_NOTIFICATION.notifications.more,
             type: 'event-created'
