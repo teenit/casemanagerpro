@@ -1788,12 +1788,13 @@ export const appConfig = {
       subMenu: [
         {
           title: LANG.pages.fields,
-          link: "/fields"
+          link: "/fields",
+          icon:"fields"
         },
         {
           title: LANG.pages.settings,
           link: "/settings",
-          icon: "settings",
+          icon: "settings_2",
           access: "a_page_settings"
         },
         {

@@ -31,12 +31,23 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import GroupsIcon from '@mui/icons-material/Groups';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
+import TaskIcon from '@mui/icons-material/Task';
+import ContactsIcon from '@mui/icons-material/Contacts';
+import CelebrationIcon from '@mui/icons-material/Celebration';
+import DnsIcon from '@mui/icons-material/Dns';
+import TuneIcon from '@mui/icons-material/Tune';
 const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
     useEffect(() => {
         let ico = null;
         switch (icon) {
+            case 'settings_2':
+                ico = <TuneIcon className={addClass} onClick={onClick} />
+                break;
+            case 'fields':
+                ico = <DnsIcon className={addClass} onClick={onClick} />
+                break;
             case 'archive':
                 ico = <ArchiveIcon className={addClass} onClick={onClick} />
                 break;
@@ -44,10 +55,10 @@ const Icon = ({ icon, addClass="", onClick }) => {
                 ico = <UnarchiveIcon className={addClass} onClick={onClick} />
                 break;
             case 'users':
-                ico = <GroupsIcon fontSize='large' className={addClass} onClick={onClick} />
+                ico = <ContactsIcon fontSize='large' className={addClass} onClick={onClick} />
                 break;
             case 'task':
-                ico = <AssignmentIcon fontSize='large' className={addClass} onClick={onClick} />
+                ico = <TaskIcon fontSize='large' className={addClass} onClick={onClick} />
                 break;
             case 'reset_password':
                 ico = <VpnKeyOffIcon fontSize='large' className={addClass} onClick={onClick} />
@@ -104,7 +115,7 @@ const Icon = ({ icon, addClass="", onClick }) => {
                 ico = <ExitToApp fontSize='large' className={addClass} onClick={onClick} />;
                 break;
             case "event":
-                ico = <EventIcon fontSize='large' className={addClass} onClick={onClick} />;
+                ico = <CelebrationIcon fontSize='large' className={addClass} onClick={onClick} />;
                 break;
             case "add_case":
                 ico = <PersonAddAlt1Icon fontSize='large' className={addClass} onClick={onClick} />;
