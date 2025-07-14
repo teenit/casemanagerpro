@@ -3,6 +3,8 @@ import Icon from "../../elements/Icons/Icon"
 import { LANG } from '../../../services/config';
 import pptxIcon from "../../../img/resources/pptx.svg"
 import docxIcon from "../../../img/resources/docx.svg"
+import xlsxIcon from "../../../img/resources/xlsx.svg"
+import codeIcon from "../../../img/resources/code.svg"
 import imgIcon from "../../../img/resources/img.svg"
 import pdfIcon from "../../../img/resources/pdf.svg"
 import videoIcon from "../../../img/resources/mp4.svg"
@@ -23,14 +25,16 @@ const Histories = ({ data, case_id, getCaseInfo , cg }) => {
         setOpen(newState);
     };
     const HistoryItem = ({ item }) => {
-        const getIcon = (item) => {            
-            switch (item.type) {
+        const getIcon = (item) => {     
+            switch (item.mime_type) {
                 case "application/msword":
                 case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
                     return docxIcon;
                 case "application/vnd.ms-powerpoint":
                 case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
                     return pptxIcon;
+                case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                    return xlsxIcon;
                 case "application/pdf":
                     return pdfIcon;
                 case "video/mp4":
@@ -42,6 +46,7 @@ const Histories = ({ data, case_id, getCaseInfo , cg }) => {
                     return item.link;
     
                 default:
+                    return codeIcon;
                     break;
             }
         }
@@ -54,7 +59,7 @@ const Histories = ({ data, case_id, getCaseInfo , cg }) => {
             <NavLink to={item.link} target='_blank'>
                 <div className='Histories-HistoryItem'>
                     <img src={getIcon(item)} alt="icon" />
-                    <div>{cutTitle(item.name)}</div>
+                    <div>{cutTitle(item?.title)}</div>
                 </div>
             </NavLink>
         );

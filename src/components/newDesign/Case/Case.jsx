@@ -180,6 +180,16 @@ const Case = () => {
             }
         })
     }
+
+    const deleteCaseFile = (file) => {
+        const meta_id = file.meta_id;
+        const uid = file.uid;
+        apiResponse({ action: "delete_file_by_uid", uid, meta_id  }, "case/case.php").then((res) => {
+            if (res.status) {
+                getCaseInfo();
+            }
+        })
+    }
     
     const access = {
         case_connection_view: AccessCheck("view_edit", "a_page_case_connection", "view"),
@@ -256,7 +266,7 @@ const Case = () => {
             </div>
 
             {!!state?.meta?.files?.length && (state.viewInfo.view_Gallery && (access.case_media_view || access.super)) &&
-                <GalleryBlock cg={cg} check={downloadGallery} data={state.meta.files} />}
+                <GalleryBlock cg={cg} check={downloadGallery} data={state.meta.files} deleteMedia={deleteCaseFile}/>}
             {state.viewInfo.view_FileUploader && (access.case_media_edit || access.super) &&
                 <div className="Uploader">
                     <p>{LANG.CASE_PAGE.upload}</p>

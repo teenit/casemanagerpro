@@ -56,6 +56,14 @@ const EventPage = () => {
         getEventData();
     };
 
+    const deleteEventFile = (file) => {
+        apiResponse({ action: "delete_file_by_uid", uid: file.uid, meta_id: file.meta_id  }, "events/event.php").then((res) => {
+            if (res.status) {
+                getEventData();
+            }
+        })
+    }
+
     return !notFound ? (
         <div className="EventPage">
             {loader ? (
@@ -84,7 +92,7 @@ const EventPage = () => {
 
                     {state && <EventPlans getEventData={getEventData} feedbacks={state.event_feedbacks} plans={state.event_plans} event_id={params.id} />}
 
-                    {state?.event_files?.length > 0 && <GalleryBlock data={state.event_files} check={downloadGallery} />}
+                    {state?.event_files?.length > 0 && <GalleryBlock deleteMedia={deleteEventFile} data={state.event_files} check={downloadGallery} />}
 
                     {canAddMedia && (
                         <div className="EventPage-addFiles">

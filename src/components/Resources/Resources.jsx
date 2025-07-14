@@ -80,11 +80,11 @@ const Resources = () => {
         const others = [];
         const links = []
         arg.forEach(file => {
-            if (file.type.startsWith('image/')) {
+            if (file?.type?.startsWith('image/')) {
                 images.push(file);
-            } else if (file.type.startsWith('video/')) {
+            } else if (file?.type?.startsWith('video/')) {
                 videos.push(file);
-            } else if (file.type == 'link') {
+            } else if (file?.type == 'link') {
                 links.push(file)
             }
             else {

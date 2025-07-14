@@ -111,7 +111,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remov
                     close={() => setEdit(false)}
                     successHandler={(data) => {
                         setEdit(false);
-                        setState(data[0].link);
+                        // setState(data[0].link);
                         window.location.reload();
                     }}
                     multiple={false}
