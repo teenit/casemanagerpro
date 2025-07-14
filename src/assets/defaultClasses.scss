@@ -103,6 +103,8 @@ color: $main-color;
 }
 .notification-delete{
     color: #f00;
+    display: flex;
+    justify-content: flex-end;
 }
 .notification-icon{
     &-button{
