@@ -592,7 +592,6 @@ const TestPage = () => {
     }
     const getStatistics = () => {
         apiResponse({action: 'get_service_statistics'}, 'statistics/statistic.php').then((res)=>{
-            console.log(res)
         })
     }
     return(

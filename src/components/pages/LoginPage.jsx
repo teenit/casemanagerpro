@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../store/Slices/userSlice";
 import { Button, TextField } from "@mui/material";
 import { LANG } from "../../services/config";
-
+import SmallNotification from "../elements/Notifications/SmallNotification"
 const LoginPage = () => {
     const [state, setState] = useState({
         email: '',
@@ -20,6 +20,14 @@ const LoginPage = () => {
         type: 'login'
     });
 
+    const [alert, setAlert] = useState({
+        active:false,
+        isSuccess:false,
+        message:""
+    })
+    const alertHandler = (isSuccess=false, message="")=>{
+        setAlert({...alert, active:!alert.active, isSuccess:isSuccess, message:message})
+    }
     useEffect(() => {
         const checkLockStatus = () => {
             const lockUntil = parseInt(localStorage.getItem('lockUntil')) || 0;
@@ -77,8 +85,7 @@ const LoginPage = () => {
 
         // Check if the account is locked
         if (state.isLocked) {
-            alert(state.lockMessage);
-            return;
+            return alertHandler(false, state.lockMessage)
         }
 
         apiResponse({
@@ -144,7 +151,7 @@ const LoginPage = () => {
                         go: now + 300
                     });
                 } else {
-                    alert(LANG.loginForm.incorrect_password);
+                    alertHandler(false, LANG.loginForm.incorrect_password);
                 }
             }
         });
@@ -258,7 +265,8 @@ const LoginPage = () => {
                     }}
                     disabled={isDisabled}>{LANG.loginForm.enter}</Button>
                 {state.isLocked && <p>{state.lockMessage}</p>}
-                {state.remainingTime > 0 && <p>{LANG.loginForm.time_remained}: {formatTime(state.remainingTime)}</p>}
+                {/* {state.remainingTime > 0 && <p>{LANG.loginForm.time_remained}: {formatTime(state.remainingTime)}</p>} */}
+                {alert.active && <SmallNotification isSuccess={alert.isSuccess} text={alert.message} close={alertHandler}/>}
             </div>
 
         </div>

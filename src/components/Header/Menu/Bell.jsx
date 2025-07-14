@@ -56,6 +56,13 @@ const Bell = () => {
         return () => clearInterval(intervalId); 
     }, [location.pathname])
 
+    const toggleBodyScroll = (status)=>{
+        if(status){
+            document.body.style.overflowY="hidden"
+        }else{
+            document.body.style.overflowY="auto"
+        }
+    }
 
     const readNotification = (id) => {
         apiResponse({notification_id:id}, "notifications/mark-read.php").then((res)=>{
@@ -76,14 +83,17 @@ const Bell = () => {
             <div className={'Bell-click'}>
                 <Icon addClass="Bell-click-img" icon={'notification'} onClick={() => {
                     setActive(!active)
+                    toggleBodyScroll(!active)
                     setState({limit:10, page:0, more: true});
                     getNotifications()
                 }}/>
                 {unRead !== 0 && <span className={'Bell-click-count'}></span>}
             </div>
             {active && <div className={s.wrap__bells}>
-                <div className={`${s.black} ${s.active}`} onClick={() => {
+                <div className={`${s.black}
+                 ${s.active}`} onClick={() => {
                     setActive(!active)
+                    toggleBodyScroll(!active)
                 }}></div>
                 <div className={`${s.items} ${s.active}`}>
                     <div className={s.items__header}>

@@ -50,7 +50,7 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             icon: "add_notification",
             icon_class: "notification-icon-purple",
             color: "#E9F4FE",
-            click: () => { navigate(`/event_new/${data.meta_value.event_id}`) },
+            click: () => { navigate(`/event/${data.meta_value.event_id}`) },
             showButton: true,
             buttonText: LANG.MENU_NOTIFICATION.notifications.more,
             type: 'event-created'
@@ -86,6 +86,11 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             type: 'case-created'
         }
     }
+    const getOptionStyles = (key)=>{
+        if(key){
+            return "1fr 1fr"
+        }else return "1fr"
+    }
     return (
         <div className={`MenuNotification ${!isUnread && 'MenuNotification-read'} ${notificationType[key]?.type}`}>
             <div className='MenuNotification-header'>
@@ -99,7 +104,7 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             <div className='MenuNotification-inner'>
                 <GetMessage />
                 {data.meta_key !== 'birthday' && <><div className='MenuNotification-inner-date'>{data.date_created}</div>
-                <div className='MenuNotification-inner-options'>
+                <div className='MenuNotification-inner-options' style={{gridTemplateColumns: getOptionStyles(notificationType[key].showButton)}}>
                     {!!notificationType[key].showButton && typeof notificationType[key].click == 'function' &&
                         <button onClick={notificationType[key].click} className='MenuNotification-button MenuNotification-inner-options-more'>
                             <div className='MenuNotification-button-content'>

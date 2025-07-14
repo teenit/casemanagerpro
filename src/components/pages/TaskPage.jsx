@@ -14,6 +14,9 @@ import ModalConfirm from "../Modals/ModalConfirm"
 import Modal from "../Modals/Modal";
 import SmallNotification from "../elements/Notifications/SmallNotification";
 import ActionMenu from '../Portals/ActionMenu'
+import TextEditor from "../elements/TextEditor/TextEditor"
+import SmallTextEditor from "../elements/TextEditor/SmallTextEditor"
+import TextDescription from "../elements/TextFormatters/TextDescription";
 class TaskPage extends Component {
     constructor(props) {
         super(props)
@@ -203,7 +206,7 @@ class TaskPage extends Component {
 
                 <div className="Task-info">
                     <div className="Task-info-title">{task.title}</div>
-                    <div className="Task-info-description">{task.description}</div>
+                    <TextDescription text={task.description}/>
                 </div>
                 <div className="Task-feedbacks">
                     <div className="Task-feedbacks-title">{LANG.TASK_PAGE.feedbacks}</div>
@@ -249,18 +252,15 @@ class TaskPage extends Component {
                                 )}
 
                             </div>
-                            <div className="Task-feedbacks-feedback-text">{item.feedback}
+                            <div className="Task-feedbacks-feedback-text">
+                                <TextDescription text={item.feedback}/>
                                 <ActionMenu menuItems={this.getMenuItems(item)} />
                             </div>
                         </div>
                     })}
+
                     <div className="Task-feedbacks-add">
-                        <Textarea addClass="w100"
-                            type="text"
-                            value={this.state.feedback}
-                            onChange={(e) => { this.setState({ feedback: e.target.value }) }}
-                            multiline={true}
-                        />
+                        <SmallTextEditor value={this.state.feedback} onChange={(e) => { this.setState({ feedback: e }) }}/>
                         <Button variant="contained" onClick={this.addFeedback}>{LANG.GLOBAL.add}</Button>
                     </div>
                 </div>
