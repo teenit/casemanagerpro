@@ -15,3 +15,10 @@
 .amount__cases__wr > h2{
     text-align: center;
 }
+.service__statistic {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    font-size: 12px;
+    justify-content: center;
+}

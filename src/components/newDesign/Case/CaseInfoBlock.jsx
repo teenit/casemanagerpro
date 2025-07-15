@@ -100,6 +100,14 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         }
     };
 
+    const deleteCaseProfilePhoto = () => {
+         apiResponse({ case_id: case_id, action:"delete_main_photo" }, "case/case.php").then((res) => {
+            if (res.status) {
+                getCaseInfo(case_id)
+            }
+        })
+    }
+
     const selectOptions = [
         { value: "male", label: LANG.selects.sex.male },
         { value: "female", label: LANG.selects.sex.female },
@@ -116,7 +124,7 @@ const CaseInfoBlock = ({ case_id, info, changeGeneral, changeData, getCaseInfo, 
         <div className="CaseInfoBlock">
             <div className="CaseInfoBlock-media">
                 {info.viewInfo.view_ProfilePhoto && access.contact_info_view && (
-                    <ProfilePhotoBlock editor={access.contact_info_edit} data={{
+                    <ProfilePhotoBlock editor={access.contact_info_edit} deleteProfilePhoto={deleteCaseProfilePhoto} data={{
                         sex: dataState.sex,
                         age: dataState.happy_bd
                     }} profileImg={profileImg} meta={{
