@@ -26,6 +26,8 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
                 return <div>{LANG.MENU_NOTIFICATION.case} <NavLink to={`/case/${data.case_id}`}>№{data.case_id} {data.case_name}</NavLink> {data.when} <b>{data.years} років</b> {data.happy_day}</div>
             case "created_new_task": 
                 return <div>{LANG.MENU_NOTIFICATION.notifications.new_task}: <NavLink to={`/task/${item?.task_id}`}>{item?.task_name}</NavLink></div>
+            case "created_new_task_feedback": 
+                return <div>{LANG.MENU_NOTIFICATION.notifications.new_task_feedback}: <NavLink to={`/task/${item?.task_id}`}>{item?.task_name}</NavLink></div>
             default:
                 return <></>
                 break;
@@ -84,7 +86,14 @@ const MenuNotification = ({ data, read, deleteNotification }) => {
             icon_class: "notification-icon-blue",
             color: "#d900fd",
             type: 'case-created'
-        }
+        },
+        created_new_task_feedback: {
+            title: LANG.MENU_NOTIFICATION.notifications.new_task_feedback,
+            icon: "add_notification",
+            icon_class: "notification-icon-blue",
+            color: "#c2e4ff",
+            type: 'case-created'
+        },
     }
     const getOptionStyles = (key)=>{
         if(key){

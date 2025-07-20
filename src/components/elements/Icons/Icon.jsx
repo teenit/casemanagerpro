@@ -36,6 +36,7 @@ import ContactsIcon from '@mui/icons-material/Contacts';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import DnsIcon from '@mui/icons-material/Dns';
 import TuneIcon from '@mui/icons-material/Tune';
+import CachedIcon from '@mui/icons-material/Cached';
 const Icon = ({ icon, addClass="", onClick }) => {
     const [state, setState] = useState(null);
 
@@ -231,6 +232,9 @@ const Icon = ({ icon, addClass="", onClick }) => {
                 break;
             case "menu-list":
                 ico = <MoreVertIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
+            break;
+            case "refresh":
+                ico = <CachedIcon style={{ cursor: "pointer" }} className={addClass} onClick={onClick} />;
             break;
             default:
                 ico = <StarRoundedIcon className={addClass} onClick={onClick} />;

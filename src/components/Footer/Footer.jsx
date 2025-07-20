@@ -10,6 +10,8 @@ import facebook from "../../img/icons/facebook.svg"
 import instagram from "../../img/icons/instagram.svg"
 import telegram from "../../img/icons/telegram.svg"
 import moment from "moment";
+import { Button } from "@mui/material";
+import Icon from "../elements/Icons/Icon";
 
 const Footer = () => {
     const currentYear = moment().format("yyyy")
@@ -70,6 +72,11 @@ const Footer = () => {
                         {newVersion > version ? <p>{LANG.footer.updateAvaible} {newVersion}</p> : <p>{LANG.footer.lastVersion}</p>}
 
                     </span> */}
+                    <Button variant="contained" color="warning" onClick={()=>{
+                        window.localStorage.clear();
+                        window.sessionStorage.clear();
+                        window.location.reload();
+                    }}><Icon icon={'refresh'}/> Очистити кеш</Button>
 
                     <div className="footer__copyright">
                         <div className="footer__copyright__text">© Case Manager | {currentYear} | powered by <a href="https://studio.itclub.in.ua" target="_blank">IT Club Studio</a></div>

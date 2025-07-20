@@ -286,10 +286,33 @@ const Cases = () => {
                     addClass="without-row-menu"
                     sortField={options.sort.field}
                     sortOrder={options.sort.order}
-                    emptyTable={<EmptyData access={accessAdd} title={LANG.casesList.no_cases} buttonText={LANG.casesList.add_case} click={()=>{navigate("/add-case")}}/>}
+                    emptyTable={<EmptyData 
+                        access={accessAdd} 
+                        title={LANG.casesList.no_cases} 
+                        buttonText={LANG.casesList.add_case} 
+                        click={()=>{
+                            if (options.page !== 0) {
+                                setOptions((prevOptions) => ({
+                                    ...prevOptions,
+                                    page: 0,
+                                }));
+                            } else {
+                                navigate("/add-case")
+                            }
+                            
+                        }}/>}
                 />
             </div>}
-        {state.length === 0 &&<EmptyData access={accessAdd} title={LANG.casesList.no_cases} buttonText={LANG.casesList.add_case} click={()=>{navigate("/add-case")}}/>}
+        {state.length === 0 &&<EmptyData access={accessAdd} title={LANG.casesList.no_cases} buttonText={options.page !== 0 ? "Скинути фільтри" : LANG.casesList.add_case} click={()=>{
+            if (options.page !== 1) {
+                                setOptions((prevOptions) => ({
+                                    ...prevOptions,
+                                    page: 0,
+                                }));
+                            } else {
+                                navigate("/add-case")
+                            }
+        }}/>}
         {state.length > 0 && <div className = "ListCases-pagination">
                 <Pagination 
                     page={options.page}
