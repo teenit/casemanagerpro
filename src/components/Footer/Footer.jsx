@@ -65,19 +65,19 @@ const Footer = () => {
 
                 </div>
                 <div className="footer__bottom">
-                    <span>
+                    {/* <span>
                         <p><b>Version - {version}</b></p>
                         {newVersion > version ? <p>{LANG.footer.updateAvaible} {newVersion}</p> : <p>{LANG.footer.lastVersion}</p>}
 
-                    </span>
+                    </span> */}
 
                     <div className="footer__copyright">
                         <div className="footer__copyright__text">© Case Manager | {currentYear} | powered by <a href="https://studio.itclub.in.ua" target="_blank">IT Club Studio</a></div>
-                        <div className="footer__socials">
+                        {/* <div className="footer__socials">
                             <a href="#"><img src={facebook} alt={LANG.footer.facebook} /></a>
                             <a href="#"><img src={instagram} alt={LANG.footer.instagram} /></a>
                             <a href="#"><img src={telegram} alt={LANG.footer.telegram} /></a>
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>
