@@ -432,7 +432,7 @@ class TasksPage extends Component {
                     <div className="Tasks-info">
                         <div className="Tasks-info-header">
                             <div className="Tasks-info-title">{current_task.title}</div>
-                            <div>{current_task.description || LANG.GLOBAL.no_description}</div>
+                            <TextDescription text={current_task.description || LANG.GLOBAL.no_description}/>
                         </div>
                         {Array.isArray(this.state.current_feedbacks) && this.state.current_feedbacks.length > 0 && (
                             <div>{LANG.TASKS_PAGE.feedbacks}</div>
