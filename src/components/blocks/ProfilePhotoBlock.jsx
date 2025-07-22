@@ -6,7 +6,7 @@ import { serverAddres } from "../Functions/serverAddres";
 import { apiResponse } from "../Functions/get_apiObj";
 import ModalConfirm from "../Modals/ModalConfirm"
 import { LANG } from "../../services/config";
-const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remove = true }) => {
+const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remove = true, deleteProfilePhoto = () =>{} }) => {
     const [hover, setHover] = useState(false);
     const [edit, setEdit] = useState(false);
     const [confirmDelete, setConfrimDelete] = useState(false)
@@ -69,9 +69,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remov
         return images.default;
     };
     const deletePhoto = () => {
-        apiResponse({ case_id: meta.case_id, action:"delete_main_photo" }, "case/case.php").then((res) => {
-            window.location.reload()
-        })
+       deleteProfilePhoto()
     }
     return (
         <div
@@ -111,7 +109,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remov
                     close={() => setEdit(false)}
                     successHandler={(data) => {
                         setEdit(false);
-                        setState(data[0].link);
+                       // setState(data[0].link);
                         window.location.reload();
                     }}
                     multiple={false}
@@ -120,7 +118,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remov
                 />
             )}
             {confirmDelete && <ModalConfirm closeHandler={()=>{setConfrimDelete(false)}} text={LANG.CASE_PAGE.delete_photo}
-            successHandler={deletePhoto} />} 
+            successHandler={deleteProfilePhoto} />} 
         </div>
     );
 };

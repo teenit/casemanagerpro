@@ -11,7 +11,7 @@ import ModalConfirm from '../Modals/ModalConfirm';
 import { apiResponse } from '../Functions/get_apiObj';
 import { Button } from '@mui/material';
 
-const GalleryBlock = ({ data, check }) => {
+const GalleryBlock = ({ data, check, deleteMedia = () => {} }) => {
     const [width, setWidth] = useState(window.innerWidth);
     const [imgRows, setImgRows] = useState(0);
     const [imgColumns, setImgColumns] = useState(3)
@@ -33,13 +33,14 @@ const GalleryBlock = ({ data, check }) => {
     }, []);
 
     const sortFiles = (data) => {
+
         let obj = {
             docs: [],
             media: []
         };
-        data.forEach(item => {
-            if (item.type.startsWith("application/")) {
-                obj.docs.push(item.data);
+        data?.forEach(item => {
+            if (item?.mime_type?.startsWith("application/")) {
+                obj.docs.push(item);
             } else {
                 obj.media.push(item);
             }
@@ -51,8 +52,8 @@ const GalleryBlock = ({ data, check }) => {
         setImgRows(value);
     };
 
-    useEffect(() => {
-        let columns = 3;
+    const loadData = () => {
+    let columns = 3;
         if (width < 720 && width > 520) {
             columns = 2;
         } else if (width < 520) {
@@ -64,9 +65,14 @@ const GalleryBlock = ({ data, check }) => {
         let sortedFiles = sortFiles(data);
         setImagesAndVideos([...sortedFiles.media]);
         setOtherFiles([...sortedFiles.docs]);
+    }
+
+    useEffect(() => {
+       loadData();
     }, [data, width]);
 
     const getType = (str) => {
+        if (!str) return '';
         let slashIndex = str.indexOf("/");
         return str.slice(0, slashIndex);
     };
@@ -84,12 +90,11 @@ const GalleryBlock = ({ data, check }) => {
         setConfirmDelete({ ...confirmDelete, active: !confirmDelete.active, current_file: file })
     }
     const deleteHandler = () => {
-        apiResponse({ action: "delete_case" }, "files/file.php").then((res) => {
-        })
+        deleteMedia(confirmDelete.current_file);
     }
     const columnsTable = [
         {
-            dataField: 'name',
+            dataField: 'title',
             text: LANG.galleryBlock.name,
             fixed: false,
             isHidden: false,
@@ -99,13 +104,13 @@ const GalleryBlock = ({ data, check }) => {
             }
         },
         {
-            dataField: 'type',
+            dataField: 'mime_type',
             text: LANG.galleryBlock.type,
             fixed: false,
             isHidden: false,
             sort: false,
             formatter: (cell, row) => {
-                return <div>{getType(row.type)}</div>
+                return <div>{getType(row?.mime_type)}</div>
             }
         },
         {
@@ -115,7 +120,7 @@ const GalleryBlock = ({ data, check }) => {
             isHidden: false,
             sort: false,
             formatter: (cell, row) => {
-                return <div>{convertSize(row.size)}</div>
+                return <div>{convertSize(row.file_size)}</div>
             }
         },
         {
@@ -142,7 +147,7 @@ const GalleryBlock = ({ data, check }) => {
                         icon: "delete",
                         color: 'error',
                         click: () => {
-                            confirmDeleteHandler()
+                            confirmDeleteHandler(row)
                         }
                     }
                 ]
@@ -150,17 +155,7 @@ const GalleryBlock = ({ data, check }) => {
             }
         }
     ];
-    const menuItems = [
-        {
-            title: LANG.GLOBAL.delete,
-            isHidden: false,
-            icon: "delete",
-            color: 'error',
-            click: () => {
-                confirmDeleteHandler()
-            }
-        }
-    ]
+
     return (
         <div className='GalleryBlock'>
             {imagesAndVideos.length > 0 && <>
@@ -170,10 +165,22 @@ const GalleryBlock = ({ data, check }) => {
                     gridTemplateColumns: `repeat(${imgColumns}, 1fr)`,
                 }}>
                     {imagesAndVideos.map((item, index) => {
-                        if (item.type.startsWith("video/")) {
+                        const menuItems = [
+                            {
+                                title: LANG.GLOBAL.delete,
+                                isHidden: false,
+                                icon: "delete",
+                                color: 'error',
+                                click: () => {
+                                    confirmDeleteHandler(item)
+                                }
+                            }
+                        ]
+                        if (item?.mime_type?.startsWith("video/")) {
                             return (
                                 <div className='GalleryBlock-grid-img-wrap' key={index}>
                                     <VideoPlayer className="video" src={item.link} />
+                                    <div style={{height:"max-content"}}><ActionMenu menuItems={menuItems} /></div>
                                 </div>
                             );
                         } else {
@@ -190,31 +197,6 @@ const GalleryBlock = ({ data, check }) => {
             {otherFiles.length > 0 && <>
                 <div className='GalleryBlock-title'>{LANG.documents}</div>
                 <Table columns={columnsTable} data={otherFiles} />
-                {/* <table className='Table'>
-                    <thead>
-                        <tr>
-                            <td>{LANG.galleryBlock.name}</td>
-                            <td>{LANG.galleryBlock.type}</td>
-                            <td>{LANG.galleryBlock.size}</td>
-                            {check && <td>{LANG.galleryBlock.download}</td>}
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {otherFiles.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.name}</td>
-                                    <td>{getType(item.type)}</td>
-                                    <td>{convertSize(item.size)}</td>
-                                    {check && <td><a download={item.name} href={item.link}>
-                                        <Icon icon={"download"} addClass={"default-icon"} />
-                                    </a></td>}
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table> */}
             </>}
             {confirmDelete.active && <ModalConfirm text={LANG.case_files.delete_confirm}
                 closeHandler={() => { confirmDeleteHandler() }} successHandler={deleteHandler} />}

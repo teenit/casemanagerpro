@@ -33,9 +33,10 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
     const orgCode = localStorage.getItem('codeOrganisation');
     formData.append('meta', JSON.stringify(metaObject));
     formData.append('codeOrganisation', orgCode);
-    const serverLink = meta.type=="case"?"upload-files.php":"upload-files-user.php"
+    formData.append('action', 'upload_file');
+   
     axios({
-      url: serverAddres(serverLink),
+      url: serverAddres('upload/upload.php'),
       method: "POST",
       headers: { 'Content-Type': 'multipart/form-data' },
       data: formData,

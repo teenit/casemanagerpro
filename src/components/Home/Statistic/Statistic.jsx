@@ -51,6 +51,7 @@ const Statistic = () =>{
     const [happy, setHappy] = useState(null)
     const [caseCategiries, setCaseCategories] = useState(null)
     const categories = useSelector(state => state.categories);
+    const [service, setService] = useState(null);
     const [groups, setGroups] = useState(null)
     useEffect(()=>{
         // AmountCases().then((res) => {
@@ -143,11 +144,26 @@ const Statistic = () =>{
             });
           }
         })
+
+        apiResponse({action: 'get_service_statistics'},'statistics/statistic.php' ).then((res) => {
+          if (res.status) {
+            setService(res.data);
+          }
+         
+        })
        
     },[categories.case])
  
     return (
         <div className={s.home__statistic}>
+          {service && 
+            <div className={s.service__statistic}>
+              <span>Cases: <b> {service.cases.size} / {service.cases.total}</b></span>
+              <span>Users:  <b>{service.users.size} / {service.users.total}</b></span>
+              <span>Memory:  <b>{service.memory.size} / {service.memory.total}</b></span>
+              <span>Price: <b> {service.price.price} </b></span>
+            </div>
+          }
             <div className={s.amount__cases__wr}>
                 {/* <h2>Кількість унікальних кейсів у програмі <span className={s.amount}>{amountCases}</span></h2> */}
                 <div className={s.stats__grid}>

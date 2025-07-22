@@ -215,6 +215,7 @@ export const LANG = {
       new_case: "Новий кейс",
       new_event: "Нова подія",
       new_task: "Нова задача",
+      new_task_feedback: "Новий зворотній зв'язок до задачі",
       edit_case: "Редагування кейсу",
       update: "Оновлення",
       birthday: "День народження",

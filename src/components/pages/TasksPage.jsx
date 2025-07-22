@@ -66,6 +66,7 @@ class TasksPage extends Component {
         apiResponse(obj, 'tasks/task.php').then((res) => {
             this.setState({ tasks: res.data });
             this.setState({ loading: false })
+            this.loadTotalCount();
         });
     }
     getUsers = () => {
@@ -83,7 +84,7 @@ class TasksPage extends Component {
         })
     }
     loadTotalCount = () => {
-        apiResponse({ action: "get_total_count" }, "tasks/task.php").then((res) => {
+        apiResponse({ action: "get_total_count",main_mode: this.tabData[this.state.tabValue]?.mode }, "tasks/task.php").then((res) => {
             if (res.status) {
                 this.setState({ totalCount: res.data?.total || null })
             }
@@ -358,7 +359,6 @@ class TasksPage extends Component {
     }
     get rowStyle() {
         return [
-            // { class: "table-red", condition: (row) => moment().isAfter(moment(row.dead_line)) },
             { class: "table-green", condition: (row) => !row.is_finished }
         ]
     }
@@ -440,18 +440,10 @@ class TasksPage extends Component {
 
                         <div className="Tasks-info-feedbacks">
                             {this.state.current_feedbacks && this.state.current_feedbacks.map((item, index) => {
-                                return <div key={index}><span className="bold">{users[item.user_id]} {LANG.TASKS_PAGE.on} {item.date_created}: </span>{item.feedback}</div>
+                                return <div key={index}><span className="bold">{users[item.user_id]} {LANG.TASKS_PAGE.on} {item.date_created}: </span> <TextDescription text={item.feedback}/></div>
                             })}
                         </div>
 
-                        {/* <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.dead_line}</span>: {current_task.dead_line}</div>
-                        <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.from}</span>: {<NavLink to={`/user/${current_task.from}`}>{this.state.users[current_task.from]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
-                        <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.to}</span>: {<NavLink to={`/user/${current_task.to}`}>{this.state.users[current_task.to]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
-                        <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.reviewer_id}</span>: {<NavLink to={`/user/${current_task.reviewer_id}`}>{this.state.users[current_task.reviewer_id]}</NavLink> || LANG.GLOBAL.unknown_user}</div>
-                        <div><span className="Tasks-info-title">{LANG.GLOBAL.date_created}</span>: {current_task.date_created}</div>
-                        <div><span className="Tasks-info-title">{LANG.GLOBAL.date_updated}</span>: {current_task.updated_at}</div>
-                        <div><span className="Tasks-info-title">{LANG.TASKS_PAGE.is_archived}</span>: {current_task.is_archived == "1" ? LANG.GLOBAL.yes : LANG.GLOBAL.no}</div>
-                        <div><span className="Tasks-info-title">{LANG.GLOBAL.status}</span>: {current_task.is_finished == 0 ? LANG.TASKS_PAGE.active : LANG.TASKS_PAGE.finished}</div> */}
                     </div>
                 </Modal>}
             </div>

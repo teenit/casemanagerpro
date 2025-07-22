@@ -30,6 +30,7 @@ export async function apiResponse(objTo, url){
    return await axios({
          url: serverAddres(url),
          method: "POST",
+         credentials: 'include',
          header: {'application/x-www-form-urlencoded': 'application/json;charset=utf-8'},
          data: JSON.stringify(objTo),
          onUploadProgress: (event) => {

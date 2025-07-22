@@ -84,12 +84,13 @@ function FilesUploader({ multiple = true, successHandler = () => { }, meta = nul
     const formData = new FormData();
     selectedFiles.forEach((file, i) => formData.append(`files[${i}]`, file));
 
-    const metaObject = { ...meta, key: metaKey, id, token };
+    const metaObject = { ...meta, key: metaKey, id, token, type };
     formData.append('meta', JSON.stringify(metaObject));
     formData.append('codeOrganisation', codeOrganisation);
+    formData.append('action', 'upload_file');
     try {
       const response = await axios({
-        url: serverAddres(getFromType()),
+        url: serverAddres('upload/upload.php'),
         method: "POST",
         headers: { 'Content-Type': 'multipart/form-data' },
         data: formData,
