@@ -17,7 +17,6 @@ import SearchInput from "../elements/Inputs/SearchInput";
 import Pagination from "../elements/Pagination/Pagination";
 import AccessCheck from "../Functions/AccessCheck";
 import Icon from "../elements/Icons/Icon";
-import WrapperParams from "./WrapperParams";
 import TextDescription from "../elements/TextFormatters/TextDescription";
 class TasksPage extends Component {
     constructor(props) {
@@ -86,7 +85,7 @@ class TasksPage extends Component {
     loadTotalCount = () => {
         apiResponse({ action: "get_total_count" }, "tasks/task.php").then((res) => {
             if (res.status) {
-                this.setState({totalCount: res.data?.total || null})
+                this.setState({ totalCount: res.data?.total || null })
             }
         })
     }
@@ -103,16 +102,19 @@ class TasksPage extends Component {
         })
     }
     componentDidMount() {
-        this.loadData()
-        this.getUsers()
+        const savedMode = localStorage.getItem('tasks_mode');
+        const tabIndex = this.tabData.findIndex(tab => tab.mode === savedMode);
+
         this.setState({
+            tabValue: tabIndex !== -1 ? tabIndex : 0,
             access: {
                 edit: () => AccessCheck('view_edit', 'a_task_manager', 'edit')
             }
+        }, () => {
+            this.loadData();
+            this.getUsers();
         });
-
     }
-
 
     handleSortClick = (field) => {
         const { sort } = this.state;
@@ -125,9 +127,12 @@ class TasksPage extends Component {
         this.setState({ modals: { ...this.state.modals, [key]: !this.state.modals[key] } })
     }
     tabHandler = (event, value) => {
-        //Не удалять event
+        const mode = this.tabData[value]?.mode;
+        localStorage.setItem('tasks_mode', mode);
+
         this.setState({ tabValue: value }, this.loadData);
     };
+
     searchHandler(value) {
         this.setState({ search: value }, this.loadData);
     }
@@ -201,8 +206,8 @@ class TasksPage extends Component {
                 text: LANG.GLOBAL.description,
                 sort: false,
                 formatter: (cell, row) => {
-                    return <div style={{maxHeight:"50px", overflowY:"auto"}} title={cell}>
-                        <TextDescription text={cell || LANG.GLOBAL.no_description}/>
+                    return <div style={{ maxHeight: "50px", overflowY: "auto" }} title={cell}>
+                        <TextDescription text={cell || LANG.GLOBAL.no_description} />
                     </div>
                 },
             },
@@ -242,7 +247,7 @@ class TasksPage extends Component {
                 dataField: 'to',
                 text: LANG.TASKS_PAGE.to,
                 sort: true,
-                 headerFormatter: () =>
+                headerFormatter: () =>
                     <HeaderFormatter
                         text={LANG.TASKS_PAGE.to}
                         dataField="to"
@@ -258,7 +263,7 @@ class TasksPage extends Component {
                 dataField: 'reviewer',
                 text: LANG.TASKS_PAGE.reviewer_id,
                 sort: false,
-                 headerFormatter: () =>
+                headerFormatter: () =>
                     <HeaderFormatter
                         text={LANG.TASKS_PAGE.reviewer_id}
                         dataField="reviewer"

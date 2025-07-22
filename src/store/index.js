@@ -12,6 +12,7 @@ export const store = configureStore({
         access:accessReducer,
         categories: categoriesReducer,
         auth: authReducer,
-        fields: fieldsReducer
+        fields: fieldsReducer,
+
     }
 })

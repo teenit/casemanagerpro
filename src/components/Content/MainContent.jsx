@@ -98,7 +98,7 @@ const MainContent = () => {
         {/* <Route path='/google-drive' element={<GoogleDrivePage />} /> */}
         <Route path='/fields' element={rights.a_super == 1 ? <FieldsPage /> : <NotFound />} />
         <Route path='/users' element={access.users ? <UsersPage /> : <NotFound />} />
-        <Route path='/tasks' element={access.tasks ? <TasksPage /> : <NotFound />} />
+        <Route path='/tasks' element={access.tasks ? <WrapperParams component = {TasksPage}/> : <NotFound />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />
