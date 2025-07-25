@@ -71,7 +71,7 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
             >
                 <div className="AddResources">
                     <span>{LANG.resources.resource_type}</span>
-                    <Select value={typeResource} onChange={(e) => setTypeResource(e.target.value)}>
+                    <Select value={typeResource} onChange={(e) => setTypeResource(e.target.value)} size="small">
                         <MenuItem value={'files'}>{LANG.GLOBAL.file}</MenuItem>
                         <MenuItem value={'link'}>{LANG.GLOBAL.link}</MenuItem>
                     </Select>
@@ -96,7 +96,7 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
                             description: meta.description
                         }}
                     />}
-                    {typeResource === 'link' && <Input
+                    {typeResource === 'link' && <Input addClass="w100"
                         type="text"
                         label={LANG.resources.resource_link}
                         value={meta.link}

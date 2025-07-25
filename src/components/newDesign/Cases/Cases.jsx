@@ -27,7 +27,7 @@ const columnsTable = [
         fixed: false,
         isHidden: false,
         sort: true,
-        formatter: (cell, row) => <NavLink to={'/case/'+row.id}>{cell}</NavLink>
+        formatter: (cell, row) => <NavLink to={'/case/' + row.id}>{cell}</NavLink>
     },
     {
         dataField: 'contract_number',
@@ -72,8 +72,8 @@ const columnsTable = [
         fixed: false,
         isHidden: false,
         sort: true,
-        formatter: (cell, row)=>{
-            return <div style={{color: cell == 0 ? "red" : "green"}}>{ cell == 0 ? LANG.casesList.inactive : LANG.casesList.active}</div>
+        formatter: (cell, row) => {
+            return <div style={{ color: cell == 0 ? "red" : "green" }}>{cell == 0 ? LANG.casesList.inactive : LANG.casesList.active}</div>
         }
     }
 ];
@@ -95,7 +95,7 @@ const Cases = () => {
     });
     const [listToExport, setListToExport] = useState([]);
     const [listIds, setListIds] = [];
-    const [exportModal,setExportModal] = useState(false)
+    const [exportModal, setExportModal] = useState(false)
     const [totalCount, setTotalCount] = useState("hidden");
     const [view, setView] = useState("cards")
     useEffect(() => {
@@ -168,10 +168,10 @@ const Cases = () => {
         if (typeof column.headerFormatter !== 'function' && column.sort) {
             column.headerFormatter = (field, order) => {
                 return (
-                    <HeaderFormatter 
-                        sortOrder={order} 
-                        sortField={field} 
-                        text={column.text} 
+                    <HeaderFormatter
+                        sortOrder={order}
+                        sortField={field}
+                        text={column.text}
                         dataField={column.dataField}
                         onSortClick={handleSortClick}
                     />
@@ -182,18 +182,18 @@ const Cases = () => {
     };
 
     const getColumns = () => {
-        const testArray = [...fields.works, ...fields.contacts, ...fields.another].map((item)=>{
+        const testArray = [...fields.works, ...fields.contacts, ...fields.another].map((item) => {
             return {
                 dataField: 'field' + item.id,
                 text: item.name,
                 fixed: false,
                 isHidden: false,
                 sort: false,
-                formatter: (cell, row)=>{
-                    
+                formatter: (cell, row) => {
+
                     return (
                         <>
-                            {item.type == "boolean" && <div>{cell == 1 ? "Так" : cell == undefined ? "" : "Ні" }</div>}
+                            {item.type == "boolean" && <div>{cell == 1 ? "Так" : cell == undefined ? "" : "Ні"}</div>}
                             {item.type !== "boolean" && <div>{cell}</div>}
                         </>
                     )
@@ -205,7 +205,7 @@ const Cases = () => {
 
     const exportCasesToPdf = () => {
 
-        apiResponse({ }, "case/get/cases-page-list.php").then((res) => {
+        apiResponse({}, "case/get/cases-page-list.php").then((res) => {
             setListToExport([...res.list]);
             setExportModal(true);
         });
@@ -219,63 +219,63 @@ const Cases = () => {
         <div className="ListCases">
             <div className="ListCases-sort">
                 <div className="ListCases-sort-left">
-                    <Input size="small" label="Пошук" value={options.search} onChange={(e)=>{
+                    <Input size="small" label="Пошук" value={options.search} onChange={(e) => {
                         setOptions({ ...options, search: e.target?.value?.trim() || null });
-                    }}/>
-                </div>
-                <div className="ListCases-sort-right">
-                <div>Як таблицю
-                <Switch size="small" checked={view == 'table'} onChange={(e) => {
-                                if (e.target.checked) {
-                                    setView('table')
-                                } else {
-                                    setView('cards')
-                                }
                     }} />
                 </div>
-                <Select
-                size="small"
-                    value={options.sort.field}
-                    onChange={(e) => {
-                        setOptions({ ...options, sort: { ...options.sort, field: e.target.value } });
-                    }}
-                >
-                    {columnsTable.map((item) => {
-                        if (item.sort) return (
-                            <MenuItem key={item.dataField} value={item.dataField}>
-                                За {item.text}
-                            </MenuItem>
-                        );
-                    })}
-                </Select>
-                <Select
-                size="small"
-                    value={options.sort.order}
-                    onChange={(e) => {
-                        setOptions({ ...options, sort: { ...options.sort, order: e.target.value } });
-                    }}
-                >
-                    <MenuItem value={"ASC"}>
-                        {LANG.casesList.ascending}
-                    </MenuItem>
-                    <MenuItem value={"DESC"}>
-                        {LANG.casesList.descending}
-                    </MenuItem>
-                </Select>
-                
-                <div>   
-                    <Button size="small" onClick={exportCasesToPdf}>{LANG.casesList.export}</Button>
+                <div className="ListCases-sort-right">
+                    <div>Як таблицю
+                        <Switch size="small" checked={view == 'table'} onChange={(e) => {
+                            if (e.target.checked) {
+                                setView('table')
+                            } else {
+                                setView('cards')
+                            }
+                        }} />
+                    </div>
+                    <Select
+                        size="small"
+                        value={options.sort.field}
+                        onChange={(e) => {
+                            setOptions({ ...options, sort: { ...options.sort, field: e.target.value } });
+                        }}
+                    >
+                        {columnsTable.map((item) => {
+                            if (item.sort) return (
+                                <MenuItem key={item.dataField} value={item.dataField}>
+                                    За {item.text}
+                                </MenuItem>
+                            );
+                        })}
+                    </Select>
+                    <Select
+                        size="small"
+                        value={options.sort.order}
+                        onChange={(e) => {
+                            setOptions({ ...options, sort: { ...options.sort, order: e.target.value } });
+                        }}
+                    >
+                        <MenuItem value={"ASC"}>
+                            {LANG.casesList.ascending}
+                        </MenuItem>
+                        <MenuItem value={"DESC"}>
+                            {LANG.casesList.descending}
+                        </MenuItem>
+                    </Select>
+
+                    <div>
+                        <Button size="small" onClick={exportCasesToPdf}>{LANG.casesList.export}</Button>
+                    </div>
                 </div>
-                </div>
-                
-                
+
+
             </div>
 
             {state.length > 0 && view === "cards" && (
-                <GetCases 
-                    posts={state} 
-                    postsChange={() => {}} 
-                    loadCasesMore={loadCases} 
+                <GetCases
+                    posts={state}
+                    postsChange={() => { }}
+                    loadCasesMore={loadCases}
                 />
             )}
             {view === 'table' && <div className="ListCases-table">
@@ -286,11 +286,11 @@ const Cases = () => {
                     addClass="without-row-menu"
                     sortField={options.sort.field}
                     sortOrder={options.sort.order}
-                    emptyTable={<EmptyData 
-                        access={accessAdd} 
-                        title={LANG.casesList.no_cases} 
-                        buttonText={LANG.casesList.add_case} 
-                        click={()=>{
+                    emptyTable={<EmptyData
+                        access={accessAdd}
+                        title={LANG.casesList.no_cases}
+                        buttonText={LANG.casesList.add_case}
+                        click={() => {
                             if (options.page !== 0) {
                                 setOptions((prevOptions) => ({
                                     ...prevOptions,
@@ -299,22 +299,22 @@ const Cases = () => {
                             } else {
                                 navigate("/add-case")
                             }
-                            
-                        }}/>}
+
+                        }} />}
                 />
             </div>}
-        {state.length === 0 &&<EmptyData access={accessAdd} title={LANG.casesList.no_cases} buttonText={options.page !== 0 ? "Скинути фільтри" : LANG.casesList.add_case} click={()=>{
-            if (options.page !== 1) {
-                                setOptions((prevOptions) => ({
-                                    ...prevOptions,
-                                    page: 0,
-                                }));
-                            } else {
-                                navigate("/add-case")
-                            }
-        }}/>}
-        {state.length > 0 && <div className = "ListCases-pagination">
-                <Pagination 
+            {state.length === 0 && view === 'cards' && <EmptyData access={accessAdd} title={LANG.casesList.no_cases} buttonText={options.page !== 0 ? "Скинути фільтри" : LANG.casesList.add_case} click={() => {
+                if (options.page !== 1) {
+                    setOptions((prevOptions) => ({
+                        ...prevOptions,
+                        page: 0,
+                    }));
+                } else {
+                    navigate("/add-case")
+                }
+            }} />}
+            {state.length > 0 && <div className="ListCases-pagination">
+                <Pagination
                     page={options.page}
                     count={state.length}
                     nextPage={handleNextPage}
@@ -327,7 +327,7 @@ const Cases = () => {
                 />
             </div>}
 
-           {exportModal && <ExportPDFCasesModal list={listToExport} close={()=>setExportModal(false)}/>}
+            {exportModal && <ExportPDFCasesModal list={listToExport} close={() => setExportModal(false)} />}
         </div>
     );
 };

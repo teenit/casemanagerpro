@@ -23,6 +23,7 @@ export const modules = {
     ['bold', 'italic', 'underline', 'strike', 'blockquote'], // Стилі тексту
     [{ list: 'ordered' }, { list: 'bullet' }], // Списки
     [{ color: LIST_OF_COLOURS }, { background: LIST_OF_COLOURS }], // Кольори тексту та фону
+    ['link'], 
     ['clean'], // Скидання стилів
   ],
   clipboard: { matchVisual: false },
@@ -46,4 +47,5 @@ export const formats = [
   'bullet',
   'color',
   'background',
+  'link'
 ];

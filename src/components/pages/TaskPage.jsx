@@ -147,11 +147,11 @@ class TaskPage extends Component {
             }
         }
     ];
-
+    getActivatedUsers = ()=> {
+        return this.state.users
+    }
     render() {
         const { loading, task, feedbacks, users, modals, current_feedback } = this.state;
-
-
         return !loading ? (
             <div className="Task">
                 <div className="Task-control">
@@ -265,7 +265,7 @@ class TaskPage extends Component {
                     </div>
                 </div>
                 {modals.edit_task &&
-                    <TaskModal users={this.state.users} data={this.state.task} loadData={this.loadData} close={() => { this.modalHandler("edit_task") }} />
+                    <TaskModal users={this.getActivatedUsers()} data={this.state.task} loadData={this.loadData} close={() => { this.modalHandler("edit_task") }} />
                 }
                 {modals.confirm_delete_task && <ModalConfirm text={LANG.TASK_PAGE.confirm_delete}
                     closeHandler={() => { this.modalHandler("confirm_delete_task") }} successHandler={this.deleteTask} />
@@ -279,12 +279,7 @@ class TaskPage extends Component {
                             {LANG.GLOBAL.cancel}</Button>
                         <Button variant="contained" onClick={this.editFeedback}>{LANG.GLOBAL.save}</Button>
                     </>}>
-                    <Textarea addClass="w100"
-                        type="text"
-                        value={current_feedback.feedback}
-                        onChange={(e) => { this.editFeedbackHandler("feedback", e.target.value) }}
-                        multiline={true}
-                    />
+                    <SmallTextEditor value={current_feedback.feedback} onChange={(e) => { this.editFeedbackHandler("feedback", e) }}/>
                 </Modal>}
                 {this.state.alert.active && <SmallNotification isSuccess={this.state.alert.isSuccess} text={this.state.alert.message}
                     close={() => { this.alertHandler() }} />}

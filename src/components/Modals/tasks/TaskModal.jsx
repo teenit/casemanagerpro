@@ -73,7 +73,6 @@ class TaskModal extends Component {
 
     render() {
         const { data, alert } = this.state
-        const users = Object.keys(this.props.users)
 
         return (
             <>

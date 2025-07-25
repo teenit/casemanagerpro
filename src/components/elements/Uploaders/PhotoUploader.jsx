@@ -5,6 +5,7 @@ import defaultImg from "../../../img/default_profile.png";
 import Icon from "../Icons/Icon";
 import SmallNotification from "../Notifications/SmallNotification";
 import { LANG } from '../../../services/config';
+import LoadingPage from '../../Loading/LoadingPage';
 
 
 function PhotoUploader({ multiple = false, successHandler = () => { }, meta = null, close = () => { }, file }) {
@@ -67,7 +68,7 @@ function PhotoUploader({ multiple = false, successHandler = () => { }, meta = nu
         </label>
       </div>
       <div className='PhotoUploader-img'>
-        <img className='img' src={URL.createObjectURL(file)} alt="preview" />
+        {uploading ? <LoadingPage/> : <img className='img' src={URL.createObjectURL(file)} alt="preview" />}
       </div>
       {alert.success && (
         <SmallNotification
