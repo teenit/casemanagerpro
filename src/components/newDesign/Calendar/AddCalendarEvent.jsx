@@ -71,14 +71,26 @@ const AddCalendarEvent = ({ data = {}, loadEvents, close, edit = true, setEdit =
     return (
         <Modal
             header={<div className="Modal--head-header">
-                {edit || state.key == 'happyCase' ? <div className="title">{LANG.calendar.info}</div> :
-                    (!checkEditEvent && user.id !== state.userID) ? ""
-                        : <>
-                            <Button onClick={setEdit} startIcon={<Icon icon={'edit'} />}>{LANG.calendar.add_event.edit}</Button>
-                            {state.calendar_id && !(!checkRemoveEvent && user.id !== state.userID) &&
-                                <Button color="error" onClick={() => { setModalConfirm(true) }} startIcon={<Icon icon={'delete'} />}>{LANG.calendar.add_event.delete}</Button>}
-                        </>
-                }
+                {edit || state.key === 'happyCase' ? (
+                    <div className="title">{LANG.calendar.info}</div>
+                ) : user.id === state.userID && (
+                    <>
+                        {checkEditEvent && <Button onClick={setEdit} startIcon={<Icon icon="edit" />}>
+                            {LANG.calendar.add_event.edit}
+                        </Button>}
+
+                        {state.calendar_id && checkRemoveEvent && (
+                            <Button
+                                color="error"
+                                onClick={() => setModalConfirm(true)}
+                                startIcon={<Icon icon="delete" />}
+                            >
+                                {LANG.calendar.add_event.delete}
+                            </Button>
+                        )}
+                    </>
+                )}
+
             </div>}
             closeHandler={close}
             footer={state.key !== "happyCase" ? <div className="Modal--footer" style={{ justifyContent: "space-between", width: "100%" }}>

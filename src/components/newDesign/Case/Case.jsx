@@ -200,6 +200,7 @@ const Case = () => {
         case_files_view: AccessCheck("view_edit", "a_page_case_files", "view"),
         case_media_view: AccessCheck("view_edit", "a_page_case_media", "view"),
         case_media_edit: AccessCheck("view_edit", "a_page_case_media", "edit"),
+        case_export_pdf: AccessCheck("yes_no", "a_page_case_export_pdf"),
         super: AccessCheck('super')
     }
     return state && state.general ? (
@@ -217,7 +218,7 @@ const Case = () => {
                     localStorage.setItem("case_mode_display", e.target.checked ? 1 : 0)
                 }}/> */}
                 <Button disabled={ancetaForm.list.length == 0} onClick={openAncetaForm}><Icon icon='quiz'/></Button>
-                <Button onClick={printPDF}><Icon icon='print'/></Button>
+                {access.case_export_pdf && <Button onClick={printPDF}><Icon icon='print'/></Button>}
                 <Button onClick={() => { setOpenSetting(!openSetting) }}><Icon icon="check-list"/></Button>
                 
                 {/* <img src={setImg} alt=""

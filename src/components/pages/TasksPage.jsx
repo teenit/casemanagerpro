@@ -423,8 +423,8 @@ class TasksPage extends Component {
                         loadTotalCount={this.loadTotalCount}
                     />}
                 </div>
-                {modals.add_task && <TaskModal users={this.state.users} loadData={this.loadData} close={() => { this.modalHandler("add_task") }} />}
-                {modals.edit_task && <TaskModal users={this.state.users} data={this.state.current_task} loadData={this.loadData} close={() => { this.modalHandler("edit_task") }} />}
+                {modals.add_task && <TaskModal loadData={this.loadData} close={() => { this.modalHandler("add_task") }} />}
+                {modals.edit_task && <TaskModal data={this.state.current_task} loadData={this.loadData} close={() => { this.modalHandler("edit_task") }} />}
                 {modals.confirm_delete && <ModalConfirm text={LANG.GLOBAL.delete_confirm} closeHandler={() => { this.modalHandler("confirm_delete") }}
                     successHandler={this.deleteTask} />}
                 {modals.info && <Modal header={LANG.TASKS_PAGE.info} closeHandler={() => { this.modalHandler("info") }}

@@ -9,8 +9,9 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import ModalConfirm from "../../Modals/ModalConfirm";
 import ActionMenu from "../../Portals/ActionMenu";
 import { LANG } from "../../../services/config";
+import AccessCheck from "../../Functions/AccessCheck";
 
-const ListCategories = ({ categories, loadCategories }) => {
+const ListCategories = ({ categories, loadCategories, rights }) => {
     const [currentCategory, setCurrentCategory] = useState(null);
     const [modals, setModals] = useState({
         edit: false,
@@ -58,12 +59,11 @@ const ListCategories = ({ categories, loadCategories }) => {
             }
         });
     }
-
     return (
         <div className="ListCategories">
             {categories.map((item, ind) => {
                 const menuItems = [
-                    {
+                    AccessCheck("view_edit", rights.edit, "edit") &&{
                         title: LANG.GLOBAL.edit,
                         isHidden: false,
                         icon: "edit",
@@ -80,7 +80,7 @@ const ListCategories = ({ categories, loadCategories }) => {
                             getAmountConnections(item.id);
                         },
                     },
-                ];
+                ].filter(Boolean);
 
                 return (
                     <div className="ListCategories--item" key={item.id} title={item.description}>

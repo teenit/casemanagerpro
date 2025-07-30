@@ -21,7 +21,6 @@ const File = () => {
   const [modal, setModal] = useState(false);
   const [tags, setTags] = useState();
   const [confirm, setConfirm] = useState(false);
-  const editCheck = AccessCheck("view_edit", "a_page_file", "edit");
   const access = {
     file_edit: AccessCheck("view_edit", "a_page_file", "edit")
   }
@@ -139,6 +138,7 @@ const File = () => {
     {!loading && !error && <div className='File'>
      <div className='File-header'>
         <InputBlock
+          disabled={!access.file_edit}
           header={true}
           value={data?.title ? data?.title : ""}
           label={data?.title}
@@ -154,7 +154,7 @@ const File = () => {
       <div className='File-editor-control'>
         <div className='File-editor-control-up'>
           <div className='File-editor-control-up-btn edit'>
-            {access.file_edit && editCheck && !edit.text &&
+            {access.file_edit && !edit.text &&
               <Button className="button"  onClick={() => { editHandler("text") }}><Icon icon={'edit'} /></Button>}
            
           </div>
@@ -177,7 +177,7 @@ const File = () => {
       </div>
         {data && (
           <div className='File-editor-block'>
-            {editCheck && edit.text ? (
+            {edit.text ? (
               <TextEditor
                 close={() => { editHandler("text") }}
                 val={data.value}
@@ -221,8 +221,8 @@ const File = () => {
             titleDefault={LANG.file.date_created}
           />
           <InputBlock
-            disabled={!editCheck}
-            hintMessage={!editCheck && LANG.hints.disabled}
+            disabled={!access.file_edit}
+            hintMessage={!access.file_edit && LANG.hints.disabled}
             textarea={true}
             value={data?.description}
             onChange={(e) => { dataHandler("description", e.target.value) }}
@@ -233,7 +233,7 @@ const File = () => {
             titleDefault={LANG.file.description}
           />
           <div className='File-info-tags'>
-            {tags && (tags.length > 0 ? tags.map(tag => <Tag key={tag} name={tag} />) : <div>{LANG.file.add_tag}</div>)}
+            {tags && (tags.length > 0 ? tags.map(tag => <Tag key={tag} name={tag} />) : access.file_edit && <div>{LANG.file.add_tag}</div>)}
             {access.file_edit && <Icon icon={"add"} addClass={"fs35"} onClick={() => { setModal(true) }} />}
 
           </div>

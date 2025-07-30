@@ -48,7 +48,8 @@ const Bell = () => {
     }
 
     useEffect(() => {
-        setActive(false)        
+        setActive(false) 
+        toggleBodyScroll(false)
         getNotifications()
         getContUnRead()
         const intervalId = setInterval(getContUnRead, 60000);

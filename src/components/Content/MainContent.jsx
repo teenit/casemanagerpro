@@ -60,6 +60,8 @@ const MainContent = () => {
     users: AccessCheck('yes_no', 'a_page_settings_tab_users'),
     tasks: AccessCheck('view_edit', 'a_task_manager', 'view'),
     task: AccessCheck('view_edit', 'a_task_manager', 'view'),
+    file: AccessCheck('view_edit', "a_page_file", "view"),
+    fields: AccessCheck('yes_no', "a_super")
   }
   const { isAuth } = useAuth();
   const params = useParams()
@@ -79,7 +81,7 @@ const MainContent = () => {
         <Route path='/events' element={access.events ? <EventsPage /> : <NotFound />} />
         {/* <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} /> */}
         <Route path='/event/:id' element={access.event ? <EventPage /> : <NotFound />} />
-        <Route path='/task/:id' element={access.task ? <WrapperParams component = {TaskPage}/> : <NotFound />} />
+        <Route path='/task/:id' element={access.task ? <WrapperParams component={TaskPage} /> : <NotFound />} />
         <Route path='/telegram' element={<TelegramPage />} />
         <Route path='/cooperation' element={<Cooperation />} />
         <Route path='/groups' element={access.groups ? <Groups /> : <NotFound />} />
@@ -90,15 +92,15 @@ const MainContent = () => {
         {/* <Route path='/login_new' element={<LoginPage />} /> */}
         <Route path='/transactions' element={<TransactionsPage />} />
         <Route path='/ancets/:id' element={<AncetaPageWrapper />} />
-        <Route path='/file/:id' element={<File />} />
+        <Route path='/file/:id' element={access.file ? <File /> : <NotFound />} />
         <Route path='/calendar' element={access.calendar ? <MyBigCalendar /> : <NotFound />} />
         <Route path='/ancets' element={<AncetsPage />} />
         <Route path='/statistic' element={<Statistic />} />
         {/* <Route path='/login' element={<LoginPage />} /> */}
         {/* <Route path='/google-drive' element={<GoogleDrivePage />} /> */}
-        <Route path='/fields' element={rights.a_super == 1 ? <FieldsPage /> : <NotFound />} />
-        <Route path='/users' element={access.users ? <UsersPage /> : <NotFound />} />
-        <Route path='/tasks' element={access.tasks ? <WrapperParams component = {TasksPage}/> : <NotFound />} />
+        <Route path='/fields' element={access.fields ? <FieldsPage /> : <NotFound />} />
+        <Route path='/users' element={access.users ? <WrapperParams component={UsersPage}/> : <NotFound />} />
+        <Route path='/tasks' element={access.tasks ? <WrapperParams component={TasksPage} /> : <NotFound />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />

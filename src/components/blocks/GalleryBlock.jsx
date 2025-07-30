@@ -10,8 +10,9 @@ import ActionMenu from '../Portals/ActionMenu';
 import ModalConfirm from '../Modals/ModalConfirm';
 import { apiResponse } from '../Functions/get_apiObj';
 import { Button } from '@mui/material';
+import AccessCheck from '../Functions/AccessCheck';
 
-const GalleryBlock = ({ data, check, deleteMedia = () => {} }) => {
+const GalleryBlock = ({ cg=true, data, check, deleteMedia = () => {} }) => {
     const [width, setWidth] = useState(window.innerWidth);
     const [imgRows, setImgRows] = useState(0);
     const [imgColumns, setImgColumns] = useState(3)
@@ -123,14 +124,14 @@ const GalleryBlock = ({ data, check, deleteMedia = () => {} }) => {
                 return <div>{convertSize(row.file_size)}</div>
             }
         },
-        {
+        check && {
             dataField: 'download',
             text: LANG.galleryBlock.download,
             fixed: false,
             isHidden: false,
             sort: false,
             formatter: (cell, row) => {
-                return check && <a download={row.name} href={row.link}>
+                return <a download={row.name} href={row.link}>
                     <Icon icon={"download"} addClass={"default-icon"} />
                 </a>
             }
@@ -141,7 +142,7 @@ const GalleryBlock = ({ data, check, deleteMedia = () => {} }) => {
             fixed: false,
             formatter: (cell, row) => {
                 const menuItems = [
-                    {
+                    cg&&{
                         title: LANG.GLOBAL.delete,
                         isHidden: false,
                         icon: "delete",

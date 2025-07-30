@@ -10,6 +10,7 @@ import ModalConfirm from "../../Modals/ModalConfirm";
 import TextDescription from "../../elements/TextFormatters/TextDescription";
 import { LANG } from "../../../services/config";
 import ActionMenu from "../../Portals/ActionMenu";
+import AccessCheck from "../../Functions/AccessCheck";
 
 const EventPlan = (props) => {
     const [alert, setAlert] = useState({
@@ -25,7 +26,11 @@ const EventPlan = (props) => {
         setModals({ ...modals, [key]: !modals[key] })
     }
     const feedbacks = props.feedbacks[props.plan.plan_id]
-
+    const access = {
+        add_feedback: AccessCheck('yes_no', "a_page_event_add_feedback"),
+        edit_plan: AccessCheck("view_edit", "a_page_event_plan", "edit"),
+        view_feedbacks: AccessCheck("view_edit", "a_page_event_feedback", "view"),
+    }
     const [feedback, setFeedback] = useState('');
 
     const alertHandler = (key, message = "") => {
@@ -88,7 +93,7 @@ const EventPlan = (props) => {
                     <div>{props.plan.title}</div>
                     <div>{`${props.plan.startTime}-${props.plan.endTime}`}</div>
                 </div>
-                <ActionMenu menuItems={menuItems} />
+                {access.edit_plan && <ActionMenu menuItems={menuItems} />}
             </div>
             <div className="EventPlan-inner">
                 <div className="EventPlan-inner-text">
@@ -102,21 +107,23 @@ const EventPlan = (props) => {
 
 
                     </div>
-                    <div className="EventPage-inner-text-item">
+                    {access.view_feedbacks && <div className="EventPage-inner-text-item">
                         <div className="EventPlan-inner-text-item-title">{LANG.EVENT_PAGE.feedback}</div>
                         <div className="EventPlan-inner-feedbacks">
                             {feedbacks && feedbacks.length > 0 ? feedbacks.map((item, index) => {
                                 return <Feedback key={index} item={item} event_id={props.event_id} getEventData={props.getEventData} />
                             }) : <div>{LANG.EVENT_PAGE.no_feedback}</div>}
                         </div>
-                    </div>
+                    </div>}
+
                 </div>
-                <div className="EventPlan-addFeedback">
+                {access.add_feedback && access.view_feedbacks && <div className="EventPlan-addFeedback">
                     <Textarea value={feedback} label={LANG.EVENT_PAGE.feedback} onChange={(e) => setFeedback(e.target.value)} />
                     <div className="EventPlan-addFeedback-button">
                         <Button variant="contained" onClick={addFeedback}>{LANG.GLOBAL.add}</Button>
                     </div>
-                </div>
+                </div>}
+
             </div>
             {modals.delete && <ModalConfirm closeHandler={() => { modalsHandler("delete") }} successHandler={deletePlan} text={`${LANG.EVENT_PAGE.confirm_delete_plan} ${props.plan.title}?`} />}
             {modals.edit && <AddPlan getEventData={props.getEventData} action="edit" event_id={props.event_id} close={() => { modalsHandler("edit") }} data={props.plan} />}

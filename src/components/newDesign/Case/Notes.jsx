@@ -22,7 +22,7 @@ const Notes = ({ notes, case_id, getCaseInfo, cg }) => {
     const [actNote, setActNote] = useState(notes);
     const [modal, setModal] = useState(false);
     const access = {
-        case_notes_edit: AccessCheck("view_edit", "a_page_case_notes", "edit"),
+        case_notes_edit: AccessCheck("view_edit", "a_page_case_notes", "edit") && cg,
         super: AccessCheck('super')
     }
     useEffect(() => {
@@ -77,7 +77,7 @@ const Notes = ({ notes, case_id, getCaseInfo, cg }) => {
                 <div className="Notes-viewer">
                     {actNote.length > 0 ? (
                         actNote.map((elem, index) => (
-                            <NoteElem case_id={case_id} getCaseInfo={getCaseInfo} editor={access.case_notes_edit && cg} key={index} elem={elem}  />
+                            <NoteElem case_id={case_id} getCaseInfo={getCaseInfo} editor={access.case_notes_edit} key={index} elem={elem}  />
                         ))
                     ) : (
                         <p>{LANG.no_records}</p>

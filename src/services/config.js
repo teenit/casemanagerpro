@@ -388,9 +388,9 @@ export const LANG = {
     passwordLabel: "Пароль",
     passwordMinLengthMessage: "Пароль повинен бути довжиною більше ніж 5 символів",
     try_again: "Доступ до аккаунту заблоковано. Спробуйте ще раз через",
-    locked_for_hour: 'Too many failed attempts. Account locked for 1 hour.',
-    locked_for_5min: 'Too many failed attempts. Account locked for 5 minutes.',
-    incorrect_password: "Неправильний пароль. Спробуйте ще раз",
+    locked_for_hour: 'Спроби вичерпано. Аккаунт заблоковано на 1 годину',
+    locked_for_5min: 'Спроби вичерпано. Аккаунт заблоковано на 5 хвилин',
+    incorrect_password: "Помилка - перевірте правильність введених даних",
     minutes: "хвилин",
     seconds: "секунд",
     org_code: "Код організації",
@@ -791,7 +791,7 @@ export const LANG = {
     "a_page_cases": "Доступ до сторінки кейси",
     "a_page_cases_print": "Друк списку кейсів",
     "a_page_cases_mask": "Маскувати контактні дані кейсів",
-    "a_page_cases_look_list": "Переглядати список кейсів як список",
+    "a_page_cases_look_list": "Переглядати кейси як таблицю",
     "a_page_cases_sort": "Відображати панель сортування кейсів",
     "a_page_resources": "Доступ до сторінки ресурси",
     "a_page_resources_upload": "Додавати нові ресурси",
@@ -1790,7 +1790,8 @@ export const appConfig = {
         {
           title: LANG.pages.fields,
           link: "/fields",
-          icon:"fields"
+          icon:"fields",
+          access:"a_super"
         },
         {
           title: LANG.pages.settings,

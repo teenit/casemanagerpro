@@ -97,7 +97,7 @@ class TaskModal extends Component {
                                 label={LANG.GLOBAL.title}
                                 onChange={(e) => this.dataHandler("title", e.target.value)}
                             />
-                            <SelectUsers title={LANG.TASKS_PAGE.from} value={data.from} menuItems={this.props.users}
+                            <SelectUsers title={LANG.TASKS_PAGE.from} value={data.from} 
                                 onChange={(e) => { this.dataHandler("from", e.target.value) }} />
 
                         </div>
@@ -117,7 +117,7 @@ class TaskModal extends Component {
                                 onChange={(e) => this.dataHandler("dead_line", e.target.value)}
                             />
 
-                            <SelectUsers title={LANG.TASKS_PAGE.to} value={data.to} menuItems={this.props.users}
+                            <SelectUsers title={LANG.TASKS_PAGE.to} value={data.to}
                                 onChange={(e) => { this.dataHandler("to", e.target.value) }} />
                         </div>
 
@@ -136,7 +136,7 @@ class TaskModal extends Component {
                                 </Select>
                             </FormControl>
 
-                            <SelectUsers title={LANG.TASKS_PAGE.reviewer_id} value={data.reviewer_id} menuItems={this.props.users}
+                            <SelectUsers title={LANG.TASKS_PAGE.reviewer_id} value={data.reviewer_id}
                                 onChange={(e) => { this.dataHandler("reviewer_id", e.target.value) }} />
                         </div>
                     </>

@@ -17,12 +17,15 @@ import EventPlans from "../newDesign/Events/EventPlans";
 import EventMembers from "../newDesign/Events/EventMembers";
 import LoadingPage from "../Loading/LoadingPage";
 import NotFound from "./NotFound";
+import AccessCheck from "../Functions/AccessCheck";
 
 const EventPage = () => {
     const params = useParams();
-    const downloadGallery = useAccessCheck('yes_no', 'a_page_event_media');
-    const canAddMedia = useAccessCheck('yes_no', 'a_page_event_add_media');
-
+const access = {
+    download_gallery: AccessCheck('yes_no', 'a_page_event_media'),
+    add_media: AccessCheck('yes_no', 'a_page_event_add_media'),
+    view_media: AccessCheck('view_edit', "a_page_event_media", "view")
+}
     const [event, setEvent] = useState(null);
     const [state, setState] = useState(null);
     const [modal, setModal] = useState({
@@ -92,9 +95,9 @@ const EventPage = () => {
 
                     {state && <EventPlans getEventData={getEventData} feedbacks={state.event_feedbacks} plans={state.event_plans} event_id={params.id} />}
 
-                    {state?.event_files?.length > 0 && <GalleryBlock deleteMedia={deleteEventFile} data={state.event_files} check={downloadGallery} />}
+                    {state?.event_files?.length > 0 && access.view_media && <GalleryBlock deleteMedia={deleteEventFile} data={state.event_files} check={access.download_gallery} />}
 
-                    {canAddMedia && (
+                    {access.add_media && (
                         <div className="EventPage-addFiles">
                             <div>{LANG.EVENT_PAGE.upload}</div>
                             <FilesUploader

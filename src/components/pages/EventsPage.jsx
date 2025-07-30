@@ -13,6 +13,7 @@ import InputColor from "../elements/Inputs/InputColor";
 import EmptyData from "../EmptyData/EmptyData";
 import AddButton from "../elements/Buttons/AddButton";
 import ActionMenu from "../Portals/ActionMenu";
+import AccessCheck from "../Functions/AccessCheck";
 
 const DEFAULT_FORM_DATA = {
     title: '',
@@ -31,7 +32,10 @@ const EventsPage = () => {
 
     const [deleteModal, setDeleteModal] = useState(false);
     const [eventToDelete, setEventToDelete] = useState(null);
-
+    const access = {
+        create: AccessCheck('yes_no', "a_page_event_create"),
+        remove: AccessCheck('yes_no', "a_page_event_remove"),
+    }
     const modalHandler = (action = "", event = null) => {
         setModal({
             modal: !modal.modal,
@@ -108,8 +112,7 @@ const EventsPage = () => {
 
     return (
         <div className="EventsPage">
-            <AddButton title={LANG.events_page.add} click={() => modalHandler("add")} />
-            {/* access needed */}
+            {access.create && <AddButton title={LANG.events_page.add} click={() => modalHandler("add")} />}
             {modal.modal && (
                 <Modal
                     closeHandler={() => setModal({ modal: false, action: "", currentEvent: null })}
@@ -173,14 +176,14 @@ const EventsPage = () => {
                         {
                             itemType: 'divider'
                         },
-                        {
+                        access.remove && {
                             title: LANG.GLOBAL.delete,
                             isHidden: false,
                             icon: "delete",
                             color: 'error',
                             click: () => confirmDelete(item)
                         },
-                    ];
+                    ].filter(Boolean);
 
                     return (
                         <div

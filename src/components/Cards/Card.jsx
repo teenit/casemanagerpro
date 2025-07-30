@@ -2,7 +2,9 @@ import React from "react";
 import { NavLink } from 'react-router-dom';
 import './cards.css';
 import { LANG } from "../../services/config";
+import AccessCheck from "../Functions/AccessCheck";
 const Card = (props) => {
+    const accessPersonalInfo = AccessCheck('yes_no', "a_page_cases_mask")
     return (
         <div className="card">
             <div className="card__img">
@@ -26,7 +28,7 @@ const Card = (props) => {
                 </div>
                 <div className="card__description">
                     <div className="card__description__phones">
-                        <NavLink to={`tel:${props.info.phone1}`}>{props.info.phone1}</NavLink>
+                        {accessPersonalInfo && <NavLink to={`tel:${props.info.phone1}`}>{props.info.phone1}</NavLink>}
                         {/* <NavLink to={`tel:${props.info.phone2}`}>{props.info.phone2}</NavLink> */}
                     </div>
                     {/* {props.info.email && <div className="card__description__email">

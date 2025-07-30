@@ -209,10 +209,13 @@ const handleEventSelect = (e) => {
   setShowEventModal(true);
   setEditEvent(false)
 }
-
+const access = {
+  show_happy_bd: AccessCheck("yes_no", "a_page_calendar_look_cases_HB")
+}
 const CustomEvent = ({ event }) => {
   const invertedColor = invertColor(event.resource.color); // Інверсія кольору для контрасту
-  return (
+
+  return ((event.resource.key !== "happyCase" || access.show_happy_bd) &&
     <div 
       style={{ 
         backgroundColor: event.resource.color, 

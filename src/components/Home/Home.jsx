@@ -6,10 +6,12 @@ import Statistic from "./Statistic/Statistic";
 import { NavLink } from "react-router-dom";
 import Cases from "../newDesign/Cases/Cases";
 import { LANG } from "../../services/config";
+import AccessCheck from "../Functions/AccessCheck";
 
 const Home = ()=>{
     const dispatch = useDispatch();
     const {isAuth, email, data} = useAuth();
+    const accessCases = AccessCheck('yes_no', "a_page_cases")
     return isAuth ? (
         <div>
             <div className={s.menu__wrap}>
@@ -55,7 +57,7 @@ const Home = ()=>{
                 </div>
             </div>
             
-            <Cases />
+            {accessCases && <Cases />}
         </div>
     ) : (
         <div className={s.home}>

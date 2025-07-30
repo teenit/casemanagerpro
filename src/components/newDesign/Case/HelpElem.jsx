@@ -16,6 +16,7 @@ import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 import ModalConfirm from "../../Modals/ModalConfirm"
 import ActionMenu from "../../Portals/ActionMenu"
+import AccessCheck from "../../Functions/AccessCheck"
 
 const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
     const [confirmModal, setConfirmModal] = useState(false)
@@ -30,7 +31,7 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
         message: null
     })
     const menuItems = [
-        {
+        editor&&{
             title: LANG.GLOBAL.edit,
             isHidden: false,
             icon: "edit",
@@ -41,7 +42,7 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
         {
             itemType: 'divider'
         },
-        {
+        editor&&{
             title: LANG.GLOBAL.delete,
             isHidden: false,
             icon: "delete",
@@ -50,7 +51,7 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
                 setConfirmModal(!confirmModal)
             }
         },
-    ]
+    ].filter(Boolean)
     const getCategory = (id) => {
         const category = Object.values(categories).find(item => item.id === id)
         return {

@@ -202,6 +202,12 @@ const Settings = () => {
         // })
     }
     const canAddUsers = AccessCheck('yes_no', 'a_page_settings_add_user')
+    const access = {
+        add_users: AccessCheck('yes_no', 'a_page_settings_add_user'),
+        view_cases: AccessCheck("view_edit", "a_page_settings_case_categories", "view"),
+        view_help: AccessCheck("view_edit", "a_page_settings_help_categories", "view"),
+        view_group: AccessCheck("view_edit", "a_page_settings_group_categories", "view")
+    }
     return page.loading ? (
         <div className="page__loading">
             <LoadingPage message={page.message} effload={page.effload} />
@@ -248,33 +254,37 @@ const Settings = () => {
                         {LANG.SETTINGS.categories}
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SettingsCategory
+                        {access.view_cases && <SettingsCategory
                             title={LANG.SETTINGS.title_category_case}
                             categoryColor="#1976d2"
                             categoryKey="case"
                             rights={{
                                 add: "a_page_settings_category_case_add",
                                 remove: "a_page_settings_category_case_remove",
+                                edit:"a_page_settings_case_categories"
                             }}
-                        />
-                        <SettingsCategory
+                        />}
+                        {access.view_help && <SettingsCategory
                             title={LANG.SETTINGS.title_category_case_helps}
                             categoryColor="#1976d2"
                             categoryKey="case_helps"
                             rights={{
                                 add: "a_page_settings_category_help_add",
                                 remove: "a_page_settings_category_help_remove",
+                                edit:"a_page_settings_help_categories"
                             }}
-                        />
-                        <SettingsCategory
+                        />}
+                        {access.view_group && <SettingsCategory
                             title={LANG.SETTINGS.title_category_groups}
                             categoryColor="#1976d2"
                             categoryKey="groups"
                             rights={{
                                 add: "a_page_settings_category_group_add",
                                 remove: "a_page_settings_category_group_remove",
+                                edit:"a_page_settings_group_categories"
                             }}
-                        />
+                        />}
+                        
                     </AccordionDetails>
                 </Accordion>}
 

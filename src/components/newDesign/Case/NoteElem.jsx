@@ -11,6 +11,7 @@ import ModalConfirm from '../../Modals/ModalConfirm';
 import Modal from '../../Modals/Modal';
 import { Button } from '@mui/material';
 import ActionMenu from '../../Portals/ActionMenu';
+import AccessCheck from '../../Functions/AccessCheck';
 
 const NoteElem = ({ elem, editor, getCaseInfo, case_id }) => {
     const [editModal, setEditModal] = useState(false);
@@ -18,28 +19,28 @@ const NoteElem = ({ elem, editor, getCaseInfo, case_id }) => {
     const [noteColor, setNoteColor] = useState(elem.color);
     const [confirmModal, setConfirmModal] = useState(false);
     const [alert, setAlert] = useState({ active: false, isSuccess: false, message: "" });
-                const menuItems = [
-                    {
-                        title: LANG.GLOBAL.edit,
-                        isHidden: false,
-                        icon:"edit",
-                        click: ()=>{
-                            setEditModal(!editModal)
-                        }
-                    },
-                    {
-                        itemType: 'divider'
-                    },
-                    {
-                        title: LANG.GLOBAL.delete,
-                        isHidden: false,
-                        icon: "delete",
-                        color: 'error',
-                        click: ()=>{
-                            setConfirmModal(!confirmModal)
-                        }
-                    },
-                ]
+    const menuItems = [
+        {
+            title: LANG.GLOBAL.edit,
+            isHidden: false,
+            icon: "edit",
+            click: () => {
+                setEditModal(!editModal)
+            }
+        },
+        {
+            itemType: 'divider'
+        },
+        {
+            title: LANG.GLOBAL.delete,
+            isHidden: false,
+            icon: "delete",
+            color: 'error',
+            click: () => {
+                setConfirmModal(!confirmModal)
+            }
+        },
+    ]
     const alertHandler = (isSuccess = false, message = "") => {
         setAlert({ active: true, isSuccess, message });
 
@@ -86,7 +87,7 @@ const NoteElem = ({ elem, editor, getCaseInfo, case_id }) => {
             </div>
             <div className="Notes-viewer-line-mess">
                 <TextDescription text={elem.text} />
-                    {editor && <ActionMenu menuItems={menuItems}/>}
+                {editor && <ActionMenu menuItems={menuItems} />}
             </div>
 
             {editModal && (

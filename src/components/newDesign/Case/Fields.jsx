@@ -113,13 +113,13 @@ const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
     };
 
     const access = {
-        case_simple_info_edit: AccessCheck("view_edit", "a_page_case_simple_info", "edit"),
+        case_simple_info_edit: AccessCheck("view_edit", "a_page_case_simple_info", "edit") &&cg,
         super: AccessCheck('super')
     }
 
     const InfoBlock = ({ item }) => {
             const menuItems = [
-                {
+               access.case_simple_info_edit&& {
                     title: LANG.GLOBAL.edit,
                     isHidden: false,
                     icon: "edit",
@@ -130,7 +130,7 @@ const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
                 {
                     itemType: 'divider'
                 },
-                {
+                access.case_simple_info_edit &&{
                     title: LANG.GLOBAL.delete,
                     isHidden: false,
                     icon: "delete",
@@ -139,7 +139,7 @@ const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
                         handleModalChange("confirm", item.id)
                     }
                 },
-            ]
+            ].filter(Boolean)
         const user = useSelector(state=>state.auth);
 
         return (

@@ -80,7 +80,7 @@ const GiveHelps = ({ helps, case_id, getCaseInfo, cg }) => {
             });
     };
     const access = {
-        case_help_edit: AccessCheck("view_edit", "a_page_case_help", "edit"),
+        case_help_edit: AccessCheck("view_edit", "a_page_case_help", "edit") && cg,
     }
     return (
         <div className="Help">

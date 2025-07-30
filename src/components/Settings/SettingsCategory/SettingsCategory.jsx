@@ -19,6 +19,7 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
         categoryColor:categoryColor,
         categoryKey:categoryKey,
     })
+    console.log(rights)
     const [addModal, setAddModal] = useState(false)
     const [showList, setShowList] = useState(false)
     const [categories, setCategories]  = useState([]);
@@ -61,7 +62,7 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
                 {checkAddRight && <div className="add" onClick={()=>setAddModal(true)}><Icon icon={'add'}/></div>}
             </div>
             {
-                showList && <ListCategories categories={categories} loadCategories={()=>{getCategories(categoryKey)}}/>
+                showList && <ListCategories rights={rights} categories={categories} loadCategories={()=>{getCategories(categoryKey)}}/>
             }
             
             {

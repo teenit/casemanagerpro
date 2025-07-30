@@ -13,13 +13,16 @@ const User = () => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [changePass, setChangePass] = useState(false);
-  const accessCheckPass = () => { AccessCheck('yes_no', 'a_page_user_change_pass') }
+  const access = {
+    check_pass: AccessCheck('yes_no', 'a_page_user_change_pass'),
+    view_others: AccessCheck('yes_no', "a_page_user_users"),
+  }
   const params = useParams()
   const currentUserId = useSelector(state => state.user.id);
   const getUser = () => {
     setLoading(true)
     apiResponse({ userId: params.id }, "user/get-user.php").then((data) => {
-      if (params.id == currentUserId && accessCheckPass) {
+      if (params.id == currentUserId && access.check_pass) {
         setChangePass(true)
       }
       setUser({ ...data });
@@ -29,26 +32,29 @@ const User = () => {
   useEffect(() => {
     getUser()
   }, [params.id]);
-  
+
   return loading ? (
-    <LoadingPage effload={true} message={LANG.GLOBAL.loading}/>
+    <LoadingPage effload={true} message={LANG.GLOBAL.loading} />
+  ) : (!user.status || (user.id !== currentUserId && !access.view_others)) ? (
+    <NotFound effload={true} message={"Доступ обмежено"} />
   ) : (
     <div className="User">
-      {user.status && <ProfilePhoto
-        url={user?.profileUrl?.link == "/default-img.png" ? defaultImg : user.profileUrl.link}
-        getUser={getUser}
-        changePass={changePass}
-        user={user}
-      />}
-      {user.id == currentUserId &&
-        <UserCasesList userAddId={user.id} />
-      }
-      {
-        !user.status && <NotFound effload={true} message={"Доступ обмежено"} />
-      }
-
+      {user.status && (
+        <ProfilePhoto
+          url={
+            user?.profileUrl?.link === "/default-img.png"
+              ? defaultImg
+              : user.profileUrl.link
+          }
+          getUser={getUser}
+          changePass={changePass}
+          user={user}
+        />
+      )}
+      {user.id === currentUserId && <UserCasesList userAddId={user.id} />}
     </div>
   );
+
 };
 
 export default User;

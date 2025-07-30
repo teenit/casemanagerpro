@@ -21,7 +21,7 @@ const Group = () => {
     const showName = AccessCheck("yes_no", "a_page_group_names");
     const showPhone = AccessCheck("yes_no", "a_page_group_phones");
     const showFavourite = AccessCheck("yes_no", "a_page_group_favourite");
-
+    const editGroup = AccessCheck("view_edit", "a_page_groups", "edit")
     const modalHandler = (key) => {
         setModal({ ...modal, [key]: !modal[key] });
     };
@@ -82,7 +82,7 @@ const navigate = useNavigate()
         }
     }
     const menuItems = [
-        {
+        editGroup && {
             title: LANG.GLOBAL.edit,
             isHidden: false,
             icon: "edit",
@@ -101,7 +101,7 @@ const navigate = useNavigate()
                 modalHandler("confirm_delete_group")
             }
         }
-    ]
+    ].filter(Boolean)
     const deleteUser = () => {
         apiResponse({ connect_id: currentUser.connect_id }, "groups/delete-group-connect.php").then((res) => {
             getGroupData()

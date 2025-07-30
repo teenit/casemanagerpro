@@ -214,7 +214,13 @@ const Cases = () => {
 
     const casesColumns = prepareColumns(getColumns());
     const navigate = useNavigate()
-    const accessAdd = AccessCheck('yes_no', 'a_page_case_add')
+    const access = {
+        add: AccessCheck('yes_no', 'a_page_case_add'),
+        print: AccessCheck('yes_no', "a_page_cases_print"),
+        mask: AccessCheck('yes_no', "a_page_cases_mask"),
+        look_list: AccessCheck('yes_no', "a_page_cases_look_list"),
+        sort: AccessCheck('yes_no', "a_page_cases_sort"),
+    }
     return (
         <div className="ListCases">
             <div className="ListCases-sort">
@@ -224,7 +230,7 @@ const Cases = () => {
                     }} />
                 </div>
                 <div className="ListCases-sort-right">
-                    <div>Як таблицю
+                    {access.look_list && <div>Як таблицю
                         <Switch size="small" checked={view == 'table'} onChange={(e) => {
                             if (e.target.checked) {
                                 setView('table')
@@ -232,8 +238,9 @@ const Cases = () => {
                                 setView('cards')
                             }
                         }} />
-                    </div>
-                    <Select
+                    </div>}
+                    
+                    {access.sort && <Select
                         size="small"
                         value={options.sort.field}
                         onChange={(e) => {
@@ -247,8 +254,9 @@ const Cases = () => {
                                 </MenuItem>
                             );
                         })}
-                    </Select>
-                    <Select
+                    </Select>}
+                    
+                    {access.sort && <Select
                         size="small"
                         value={options.sort.order}
                         onChange={(e) => {
@@ -261,11 +269,9 @@ const Cases = () => {
                         <MenuItem value={"DESC"}>
                             {LANG.casesList.descending}
                         </MenuItem>
-                    </Select>
-
-                    <div>
-                        <Button size="small" onClick={exportCasesToPdf}>{LANG.casesList.export}</Button>
-                    </div>
+                    </Select>}
+                    
+                        {access.print && <Button size="small" onClick={exportCasesToPdf}>{LANG.casesList.export}</Button>}
                 </div>
 
 
@@ -287,7 +293,7 @@ const Cases = () => {
                     sortField={options.sort.field}
                     sortOrder={options.sort.order}
                     emptyTable={<EmptyData
-                        access={accessAdd}
+                        access={access.add}
                         title={LANG.casesList.no_cases}
                         buttonText={LANG.casesList.add_case}
                         click={() => {
@@ -303,7 +309,7 @@ const Cases = () => {
                         }} />}
                 />
             </div>}
-            {state.length === 0 && view === 'cards' && <EmptyData access={accessAdd} title={LANG.casesList.no_cases} buttonText={options.page !== 0 ? "Скинути фільтри" : LANG.casesList.add_case} click={() => {
+            {state.length === 0 && view === 'cards' && <EmptyData access={access.add} title={LANG.casesList.no_cases} buttonText={options.page !== 0 ? "Скинути фільтри" : LANG.casesList.add_case} click={() => {
                 if (options.page !== 1) {
                     setOptions((prevOptions) => ({
                         ...prevOptions,

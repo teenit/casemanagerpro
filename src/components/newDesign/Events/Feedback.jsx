@@ -9,6 +9,7 @@ import { apiResponse } from '../../Functions/get_apiObj';
 import SmallNotification from '../../elements/Notifications/SmallNotification';
 import TextDescription from '../../elements/TextFormatters/TextDescription';
 import ActionMenu from '../../Portals/ActionMenu';
+import AccessCheck from '../../Functions/AccessCheck';
 
 
 const Feedback = ({ item, event_id, getEventData }) => {
@@ -25,6 +26,10 @@ const Feedback = ({ item, event_id, getEventData }) => {
         edit: false,
         delete: false
     });
+    const access = {
+        edit_feedbacks: AccessCheck("view_edit", "a_page_event_feedback", "edit"),
+
+    }
     const modalHandler = (key) => {
         setModals({ ...modals, [key]: !modals[key] });
     };
@@ -74,7 +79,7 @@ const Feedback = ({ item, event_id, getEventData }) => {
     return (
         <div className="EventPlan-feedback">
             <TextDescription text={item.value} />
-            <ActionMenu menuItems={menuItems} />
+            {access.edit_feedbacks && <ActionMenu menuItems={menuItems} />}
             {modals.edit && (
                 <Modal
                     header={LANG.EVENT_PAGE.edit_feedback}
