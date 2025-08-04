@@ -49,9 +49,11 @@ const User = () => {
           getUser={getUser}
           changePass={changePass}
           user={user}
+          isChangePhoto={user.id == currentUserId}
         />
       )}
-      {user.id === currentUserId && <UserCasesList userAddId={user.id} />}
+      <div className=""></div>
+      {user.id == currentUserId && <UserCasesList userAddId={user.id} />}
     </div>
   );
 

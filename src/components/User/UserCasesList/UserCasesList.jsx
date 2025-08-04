@@ -46,8 +46,8 @@ const UserCasesList = ({ userAddId }) => {
     setCreatedCasesPage(pageNumber);
     setCreatedCasesSelected(pageNumber);
   };
-
-  const addCases = cases.filter((item) => item.user_id === +userAddId);
+  console.log(cases)
+  const addCases = cases.filter((item) => +item.user_id === +userAddId);
   const lastCaseIndex = currentPage * casesPerPage;
   const firstCaseIndex = lastCaseIndex - casesPerPage;
   const accessCases = AccessCheckCases(cases).look;

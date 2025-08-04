@@ -6,7 +6,7 @@ import { serverAddres } from "../Functions/serverAddres";
 import { apiResponse } from "../Functions/get_apiObj";
 import ModalConfirm from "../Modals/ModalConfirm"
 import { LANG } from "../../services/config";
-const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remove = true, deleteProfilePhoto = () =>{} }) => {
+const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remove = true, deleteProfilePhoto = () =>{}, isChange = true }) => {
     const [hover, setHover] = useState(false);
     const [edit, setEdit] = useState(false);
     const [confirmDelete, setConfrimDelete] = useState(false)
@@ -79,7 +79,7 @@ const ProfilePhotoBlock = ({ profileImg, meta, data = null, editor = true, remov
         >
             {!edit ? (
                 <div>
-                    {hover && editor && (
+                    {hover && editor &&  isChange && (
                         <div className="ProfilePhotoBlock-hover">
                             <label htmlFor="fileInput">
                                 <Icon icon={"edit"} addClass={"default-icon fs35"} />

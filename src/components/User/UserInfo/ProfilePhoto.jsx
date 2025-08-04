@@ -12,7 +12,7 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import { useParams } from "react-router-dom";
 import { LANG } from "../../../services/config";
 
-const ProfilePhoto = ({ getUser, changePass, url, user }) => {
+const ProfilePhoto = ({ getUser, changePass, url, user, isChangePhoto = false }) => {
   const params = useParams()
   const [pass, setPass] = useState({
     olderPass: "",
@@ -103,7 +103,7 @@ const ProfilePhoto = ({ getUser, changePass, url, user }) => {
   return (
     <div className="ProfilePhoto">
       <div className="ProfilePhoto-left">
-        <ProfilePhotoBlock profileImg={url} meta={{
+        <ProfilePhotoBlock profileImg={url} isChange={isChangePhoto} meta={{
           key: "user_profile_img",
           user_id: localStorage.getItem("id"),
           type: "user"
