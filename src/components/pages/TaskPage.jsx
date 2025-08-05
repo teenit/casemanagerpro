@@ -234,10 +234,10 @@ class TaskPage extends Component {
                                     </div>
                                 )}
 
-                                <div>
+                                {/* <div>
                                     {LANG.TASK_PAGE.is_read}:{" "}
                                     <span className="bold">{item.is_read ? LANG.GLOBAL.yes : LANG.GLOBAL.no}</span>
-                                </div>
+                                </div> */}
 
                                 {item.rating && (
                                     <div>

@@ -11,7 +11,7 @@ import { apiResponse } from "../../Functions/get_apiObj";
 import Hint from "../../elements/Hints/Hint";
 import AccessCheck from "../../Functions/AccessCheck";
 
-const Files = ({ case_id, getCaseInfo, files}) => {
+const Files = ({ case_id, getCaseInfo, files, cg}) => {
     const [filteredFiles, setFilteredFiles] = useState(null)
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({ success: false, error: false, message: "" });
@@ -71,7 +71,7 @@ const Files = ({ case_id, getCaseInfo, files}) => {
     };
 
     const access = {
-        case_files_edit: AccessCheck("view_edit", "a_page_case_files", "edit"),
+        case_files_edit: AccessCheck("view_edit", "a_page_case_files", "edit") && cg,
     }
 
 

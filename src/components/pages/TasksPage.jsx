@@ -84,7 +84,7 @@ class TasksPage extends Component {
         })
     }
     loadTotalCount = () => {
-        apiResponse({ action: "get_total_count",main_mode: this.tabData[this.state.tabValue]?.mode }, "tasks/task.php").then((res) => {
+        apiResponse({ action: "get_total_count", main_mode: this.tabData[this.state.tabValue]?.mode }, "tasks/task.php").then((res) => {
             if (res.status) {
                 this.setState({ totalCount: res.data?.total || null })
             }
@@ -103,11 +103,23 @@ class TasksPage extends Component {
         })
     }
     componentDidMount() {
-        const savedMode = localStorage.getItem('tasks_mode');
-        const tabIndex = this.tabData.findIndex(tab => tab.mode === savedMode);
+        const tabIndex = this.tabData.findIndex(tab => tab.mode === localStorage.getItem('tasks_mode'));
+        const mode = this.tabData[tabIndex].mode;
+
+        const key = `tasks_filter_${mode}`
+        const savedFilters = JSON.parse(localStorage.getItem(key)) || {};
 
         this.setState({
-            tabValue: tabIndex !== -1 ? tabIndex : 0,
+            tabValue: tabIndex,
+            sort: {
+                field: savedFilters.sortField || 'id',
+                order: savedFilters.sortOrder || 'ASC'
+            },
+            options: {
+                page: savedFilters.page || 0,
+                limit: savedFilters.limit || 10
+            },
+            search: savedFilters.search || "",
             access: {
                 edit: () => AccessCheck('view_edit', 'a_task_manager', 'edit')
             }
@@ -117,10 +129,27 @@ class TasksPage extends Component {
         });
     }
 
+    storageHandler = () => {
+        const mode = this.tabData[this.state.tabValue]?.mode;
+        const key = `tasks_filter_${mode}`;
+        const storageObj = {
+            sortField: this.state.sort.field,
+            sortOrder: this.state.sort.order,
+            search: this.state.search,
+            page: this.state.options.page,
+            limit: this.state.options.limit
+        };
+        localStorage.setItem(key, JSON.stringify(storageObj));
+    }
+
+
     handleSortClick = (field) => {
         const { sort } = this.state;
         const newOrder = sort.field === field && sort.order === 'ASC' ? 'DESC' : 'ASC';
-        this.setState({ sort: { field, order: newOrder } }, this.loadData)
+        this.setState({ sort: { field, order: newOrder } }, () => {
+            this.storageHandler()
+            this.loadData()
+        });
 
     };
 
@@ -128,26 +157,60 @@ class TasksPage extends Component {
         this.setState({ modals: { ...this.state.modals, [key]: !this.state.modals[key] } })
     }
     tabHandler = (event, value) => {
-        const mode = this.tabData[value]?.mode;
-        localStorage.setItem('tasks_mode', mode);
+        const mode = this.tabData[value]?.mode
+        localStorage.setItem('tasks_mode', mode)
 
-        this.setState({ tabValue: value }, this.loadData);
+        const key = `tasks_filter_${mode}`;
+        const savedFilters = JSON.parse(localStorage.getItem(key)) || {};
+        this.setState({
+            tabValue: value,
+            sort: {
+                field: savedFilters.sortField || 'id',
+                order: savedFilters.sortOrder || 'ASC'
+            },
+            options: {
+                page: savedFilters.page || 0,
+                limit: savedFilters.limit || 10,
+            },
+            search: savedFilters.search || ""
+        }, () => {
+            this.loadData();
+        });
     };
 
+
     searchHandler(value) {
-        this.setState({ search: value }, this.loadData);
+        this.setState({ search: value }, () => {
+            this.storageHandler()
+            this.loadData()
+        });
     }
     handleNextPage = () => {
-        this.setState(prev => ({ options: { ...prev.options, page: prev.options.page + 1 } }), this.loadData);
+        this.setState(prev => ({
+            options: { ...prev.options, page: prev.options.page + 1 }
+        }), () => {
+            this.storageHandler()
+            this.loadData()
+        });
     };
 
     handlePrevPage = () => {
 
-        this.setState(prev => ({ options: { ...prev.options, page: Math.max(prev.options.page - 1, 0) } }), this.loadData);
+        this.setState(prev => ({
+            options: { ...prev.options, page: Math.max(prev.options.page - 1, 0) }
+        }), () => {
+            this.storageHandler()
+            this.loadData()
+        });
     };
 
     handleChangeRowsPerPage = (newLimit) => {
-        this.setState(prev => ({ options: { ...prev.options, page: 0, limit: newLimit } }), this.loadData);
+        this.setState(prev => ({
+            options: { ...prev.options, page: 0, limit: newLimit }
+        }), () => {
+            this.storageHandler()
+            this.loadData()
+        });
     };
     loadFeedback = (data) => {
         apiResponse({ task_id: data.id, action: "get_feedback_list" }, "tasks/task.php").then((res) => {
@@ -371,7 +434,7 @@ class TasksPage extends Component {
         return (
             <div className="Tasks">
                 <div className="Tasks-header">
-                    <SearchInput handler={(data) => { this.searchHandler(data) }} />
+                    <SearchInput handler={(data) => { this.searchHandler(data) }} value={this.state.search} key={this.state.tabValue} />
                     <AddButton title={LANG.TASKS_PAGE.add} click={() => { this.modalHandler("add_task") }} />
                 </div>
                 <Box sx={{ width: "100%" }}>
@@ -432,7 +495,7 @@ class TasksPage extends Component {
                     <div className="Tasks-info">
                         <div className="Tasks-info-header">
                             <div className="Tasks-info-title">{current_task.title}</div>
-                            <TextDescription text={current_task.description || LANG.GLOBAL.no_description}/>
+                            <TextDescription text={current_task.description || LANG.GLOBAL.no_description} />
                         </div>
                         {Array.isArray(this.state.current_feedbacks) && this.state.current_feedbacks.length > 0 && (
                             <div>{LANG.TASKS_PAGE.feedbacks}</div>
@@ -440,7 +503,7 @@ class TasksPage extends Component {
 
                         <div className="Tasks-info-feedbacks">
                             {this.state.current_feedbacks && this.state.current_feedbacks.map((item, index) => {
-                                return <div key={index}><span className="bold">{users[item.user_id]} {LANG.TASKS_PAGE.on} {item.date_created}: </span> <TextDescription text={item.feedback}/></div>
+                                return <div key={index}><span className="bold">{users[item.user_id]} {LANG.TASKS_PAGE.on} {item.date_created}: </span> <TextDescription text={item.feedback} /></div>
                             })}
                         </div>
 
