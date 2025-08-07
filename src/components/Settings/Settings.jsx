@@ -348,7 +348,7 @@ const Settings = () => {
                     </AccordionDetails>
 
                 </Accordion>}
-                {superTab && <Accordion expanded={expanded.special} id="expanded_special" onChange={() => {
+                {/* {superTab && <Accordion expanded={expanded.special} id="expanded_special" onChange={() => {
                     expandedChange('special')
                 }}>
                     <AccordionSummary expandIcon={<Icon icon={'arrow_down'} />}>
@@ -370,7 +370,7 @@ const Settings = () => {
                         </AccordionBlock>
                     </AccordionDetails>
 
-                </Accordion>}
+                </Accordion>} */}
                 {telegramTab && <Accordion expanded={expanded.telegram} id="expanded_telegram" onChange={() => {
                     expandedChange('telegram')
                 }}>

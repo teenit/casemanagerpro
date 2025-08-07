@@ -64,8 +64,10 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
                 header={LANG.resources.add}
                 footer={
                     <div className="Modal--footer">
-                        <Button onClick={close} color="error" variant="contained">{LANG.cancel}</Button>
-                        {typeResource !== 'files' && <Button onClick={addLinkResource} variant="contained">{LANG.GLOBAL.save}</Button>}
+                        {typeResource !== 'files' &&<>
+                         <Button onClick={close} color="error" variant="contained">{LANG.cancel}</Button>
+                         <Button onClick={addLinkResource} variant="contained">{LANG.GLOBAL.save}</Button>
+                        </>}
                     </div>
                 }
             >

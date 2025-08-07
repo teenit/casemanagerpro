@@ -102,8 +102,23 @@ class TasksPage extends Component {
             this.loadData()
         })
     }
+    get tabData() {
+        return [
+            { title: LANG.TASKS_PAGE.tabs.all, value: 0, mode: "all" },
+            { title: LANG.TASKS_PAGE.tabs.active, value: 1, mode: "active" },
+            { title: LANG.TASKS_PAGE.tabs.finished, value: 2, mode: "finished" },
+            { title: LANG.TASKS_PAGE.tabs.archived, value: 3, mode: "archived" }
+        ]
+    }
+    get rowStyle() {
+        return [
+            { class: "table-green", condition: (row) => !row.is_finished }
+        ]
+    }
     componentDidMount() {
-        const tabIndex = this.tabData.findIndex(tab => tab.mode === localStorage.getItem('tasks_mode'));
+       
+        let tabIndex = this.tabData.findIndex(tab => tab.mode === localStorage.getItem('tasks_mode'));
+        tabIndex = tabIndex < 0 ? 0 : tabIndex;
         const mode = this.tabData[tabIndex].mode;
 
         const key = `tasks_filter_${mode}`
@@ -270,7 +285,7 @@ class TasksPage extends Component {
                 text: LANG.GLOBAL.description,
                 sort: false,
                 formatter: (cell, row) => {
-                    return <div style={{ maxHeight: "50px", overflowY: "auto" }} title={cell}>
+                    return <div style={{maxHeight: "50px", overflow: "hidden"}}>
                         <TextDescription text={cell || LANG.GLOBAL.no_description} />
                     </div>
                 },
@@ -412,19 +427,7 @@ class TasksPage extends Component {
             }
         ];
     }
-    get tabData() {
-        return [
-            { title: LANG.TASKS_PAGE.tabs.all, value: 0, mode: "all" },
-            { title: LANG.TASKS_PAGE.tabs.active, value: 1, mode: "active" },
-            { title: LANG.TASKS_PAGE.tabs.finished, value: 2, mode: "finished" },
-            { title: LANG.TASKS_PAGE.tabs.archived, value: 3, mode: "archived" }
-        ]
-    }
-    get rowStyle() {
-        return [
-            { class: "table-green", condition: (row) => !row.is_finished }
-        ]
-    }
+
     cutTitle = (str, length) => {
         return str.length > length ? str.slice(0, length) + "..." : str
     }
