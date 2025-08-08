@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import React from "react";
 
-const AccessCheck = (type, right, option="") => {
+const AccessCheck = (type, right, option = "") => {
     const rights = useSelector(state => state.auth);
-    if (type === "super" && rights.a_super == 1) return true; 
-    if (type === "admin" && rights.a_administartor == 1) return true; 
-    if ((rights.a_super == 1 || rights.a_administartor == 1) && !!rights.a_blocked == false) return true;
+    if ((type === "super" && rights.a_super == 1) ||
+        (type === "admin" && rights.a_administartor == 1) ||
+        ((rights.a_super == 1 || rights.a_administartor == 1) && rights.a_blocked != 1)) return true;
+
     if (type == 'page') {
 
         if (!!rights[right]) return true;

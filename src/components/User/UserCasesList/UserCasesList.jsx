@@ -4,8 +4,8 @@ import UserCasesListItem from "./UserCasesListItem/UserCasesListItem";
 import UserPagination from "./UserPagination/UserPagination";
 import { Button } from "@mui/material";
 import { apiResponse } from "../../Functions/get_apiObj";
-import AccessCheckCases from "../../Functions/AccessCheckCases";
 import { LANG } from "../../../services/config";
+import useAccessCheckCases from "../../Functions/AccessCheckCases";
 
 const UserCasesList = ({ userAddId }) => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -46,11 +46,10 @@ const UserCasesList = ({ userAddId }) => {
     setCreatedCasesPage(pageNumber);
     setCreatedCasesSelected(pageNumber);
   };
-  console.log(cases)
   const addCases = cases.filter((item) => +item.user_id === +userAddId);
   const lastCaseIndex = currentPage * casesPerPage;
   const firstCaseIndex = lastCaseIndex - casesPerPage;
-  const accessCases = AccessCheckCases(cases).look;
+  const accessCases = useAccessCheckCases(cases).look;
   const currentCase = accessCases.slice(firstCaseIndex, lastCaseIndex);
 
   const lastCreatedCaseIndex = createdCasesPage * createdCasesPerPage;

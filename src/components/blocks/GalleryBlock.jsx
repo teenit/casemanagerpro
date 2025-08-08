@@ -136,13 +136,13 @@ const GalleryBlock = ({ cg=true, data, check, deleteMedia = () => {} }) => {
                 </a>
             }
         },
-        {
+        cg&&{
             dataField: "menu_row",
             text: "",
             fixed: false,
             formatter: (cell, row) => {
                 const menuItems = [
-                    cg&&{
+                    {
                         title: LANG.GLOBAL.delete,
                         isHidden: false,
                         icon: "delete",
@@ -167,7 +167,7 @@ const GalleryBlock = ({ cg=true, data, check, deleteMedia = () => {} }) => {
                 }}>
                     {imagesAndVideos.map((item, index) => {
                         const menuItems = [
-                            {
+                            cg&&{
                                 title: LANG.GLOBAL.delete,
                                 isHidden: false,
                                 icon: "delete",
@@ -176,7 +176,7 @@ const GalleryBlock = ({ cg=true, data, check, deleteMedia = () => {} }) => {
                                     confirmDeleteHandler(item)
                                 }
                             }
-                        ]
+                        ].filter(Boolean)
                         if (item?.mime_type?.startsWith("video/")) {
                             return (
                                 <div className='GalleryBlock-grid-img-wrap' key={index}>

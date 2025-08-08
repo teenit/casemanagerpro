@@ -19,7 +19,6 @@ const SettingsCategory = ({title = "",categoryName = "", categoryDescription = "
         categoryColor:categoryColor,
         categoryKey:categoryKey,
     })
-    console.log(rights)
     const [addModal, setAddModal] = useState(false)
     const [showList, setShowList] = useState(false)
     const [categories, setCategories]  = useState([]);

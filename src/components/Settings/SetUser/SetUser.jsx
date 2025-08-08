@@ -19,7 +19,7 @@ import ResetPassModal from "./ResetPassModal";
 let usersStr = "";
 
 
-const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUser }) => {
+const SetUser = ({ categories, categoriesCont, addNewUser = false, closeAddNewUser }) => {
     const [users, setUsers] = useState(null);
     const [specificate, setSpecificate] = useState(null);
     const [activeSpecificate, setActiveSpecificate] = useState(false);
@@ -27,8 +27,8 @@ const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUse
     const [modal, setModal] = useState(false)
     const [modalInfo, setModalInfo] = useState(false)
     const [access, setAccess] = useState([]);
-    const[addModal, setAddModal] = useState(false)
-    const [resetPassModal,setResetPassModal] = useState({
+    const [addModal, setAddModal] = useState(false)
+    const [resetPassModal, setResetPassModal] = useState({
         userId: null,
         active: false
     })
@@ -74,7 +74,7 @@ const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUse
             loadData();
         })
     }
-    const resetPassModalHandler = (userId=null)=>{
+    const resetPassModalHandler = (userId = null) => {
         setResetPassModal({
             userId: userId,
             active: !resetPassModal.active
@@ -90,7 +90,7 @@ const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUse
                         <div><span>{user.email}</span></div>
                     </div>
 
-                   {viewChangeAccess && <Select
+                    {viewChangeAccess && <Select
                         value={user.access ? user.access : 0}
                         onChange={(e) => {
                             selectAccess(user.id, e.target.value)
@@ -122,40 +122,45 @@ const SetUser = ({ categories, categoriesCont, addNewUser = false,closeAddNewUse
                         }} >
                             <Icon icon={"book"} addClass={"default-icon fs35"} />
                         </span> */}
-                        {user.active === "true" && AccessCheck('yes_no', 'a_page_settings_deactivate_users') ? (
-                            <span onClick={() => {
-                                if (user.id === localStorage.getItem("id") || user?.type === "root") {
-                                    setModal(true);
-                                    setModalInfo({ message: "Ви не можете деактивувати даний обліковий запис" });
-                                } else {
-                                    activateUser("false", user.id, "Деактивовано", "deactivateUsers");
-                                }
-                            }}>
-                                <Icon icon={"eye"} addClass={"default-icon"} />
-                            </span>
-                        ) : AccessCheck('yes_no', 'a_page_settings_activate_users') ? (
-                            <span onClick={() => {
-                                if (user.id === localStorage.getItem("id") || user?.type === "root") {
-                                    setModal(true);
-                                    setModalInfo({ message: "Ви не можете активувати даний обліковий запис" });
-                                } else {
-                                    activateUser("true", user.id, "Активовано", "activeNewUser");
-                                }
-                            }}>
-                                <Icon icon={"eye_off"} addClass={"default-icon"} />
-                            </span>
-                        ) : null}
-                        <Icon icon="reset_password" addClass={"default-icon"} onClick={()=>{resetPassModalHandler(user.id)}}/>
+                        {user.active === "true" ? (
+                            AccessCheck('yes_no', 'a_page_settings_deactivate_users') && (
+                                <span onClick={() => {
+                                    if (user.id === localStorage.getItem("id") || user?.type === "root") {
+                                        setModal(true);
+                                        setModalInfo({ message: "Ви не можете деактивувати даний обліковий запис" });
+                                    } else {
+                                        activateUser("false", user.id, "Деактивовано", "deactivateUsers");
+                                    }
+                                }}>
+                                    <Icon icon={"eye"} addClass={"default-icon"} />
+                                </span>
+                            )
+                        ) : (
+                            AccessCheck('yes_no', 'a_page_settings_activate_users') && (
+                                <span onClick={() => {
+                                    if (user.id === localStorage.getItem("id") || user?.type === "root") {
+                                        setModal(true);
+                                        setModalInfo({ message: "Ви не можете активувати даний обліковий запис" });
+                                    } else {
+                                        activateUser("true", user.id, "Активовано", "activeNewUser");
+                                    }
+                                }}>
+                                    <Icon icon={"eye_off"} addClass={"default-icon"} />
+                                </span>
+                            )
+                        )}
+
+                        <Icon icon="reset_password" addClass={"default-icon"} onClick={() => { resetPassModalHandler(user.id) }} />
 
                     </div>
 
                 </div>
 
-                        {resetPassModal.active && resetPassModal.userId == user.id && <ResetPassModal userName ={user.userName} userId = {user.id} successHandler={loadData} close={()=>{setResetPassModal(!resetPassModal)}}/>}
+                {resetPassModal.active && resetPassModal.userId == user.id && <ResetPassModal userName={user.userName} userId={user.id} successHandler={loadData} close={() => { setResetPassModal(!resetPassModal) }} />}
             </div>
         )
     }
-const canAddUsers = AccessCheck('yes_no', 'a_page_settings_add_user')
+    const canAddUsers = AccessCheck('yes_no', 'a_page_settings_add_user')
     function changeSpecification(arg) {
 
         setSpecificate(arg)
@@ -205,7 +210,7 @@ const canAddUsers = AccessCheck('yes_no', 'a_page_settings_add_user')
                     level={level}
                     user={specificate} /> : null}
             </div>
-            {addNewUser && <SetUserModal successHandler={loadData} close={closeAddNewUser}/>}
+            {addNewUser && <SetUserModal successHandler={loadData} close={closeAddNewUser} />}
             {modal && <ModalMessage header={modalInfo.message} footer={
                 <Button variant="contained" onClick={() => { setModal(false) }}>{LANG.GLOBAL.close}</Button>
             }>
