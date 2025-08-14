@@ -1,0 +1,50 @@
+.ResourcesPage {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    &-header {
+        display: flex;
+        align-items: center;
+    }
+
+    &-info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        &-header{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+        &-feedbacks{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        &-title {
+            font-weight: 600;
+        }
+    }
+    &-pagination{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width:450px){
+.ResourcesPage{
+    &-header{
+        flex-direction: column;
+        gap: 10px;
+        >.AddButton{
+            justify-content: center !important;
+        }
+    }
+    &-tabs{
+        max-width: 100px;
+        overflow-x: auto;
+    }
+}
+}

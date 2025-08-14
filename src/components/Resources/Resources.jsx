@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import AddResources from "./AddResources";
 import GetResources from "./GetResources";
 import s from './Resources.module.css';
 import { apiResponse } from "../Functions/get_apiObj";
@@ -10,6 +9,7 @@ import SmallNotification from "../elements/Notifications/SmallNotification";
 import AccessCheck from "../Functions/AccessCheck";
 import Icon from "../elements/Icons/Icon";
 import AddButton from "../elements/Buttons/AddButton";
+import ResourceModal from "./ResourceModal";
 
 const Resources = () => {
     const [form, setForm] = useState({
@@ -109,7 +109,7 @@ const Resources = () => {
                 successHandler={deleteResource}
                 text={LANG.resources.confirm_delete + activeResource.title + "?"}
             />}
-            {form.open && <AddResources close={() => { setForm(false) }} loadResources={loadResources} type={form.type} />}
+            {form.open && <ResourceModal close={() => { setForm(false) }} loadResources={loadResources} type={form.type} />}
             {alert.success && <SmallNotification isSuccess={true} text={LANG.resources.alertMessages.deleted_successfully} close={() => { alertHandler("success") }} />}
             {alert.error && <SmallNotification isSuccess={false} text={LANG.resources.alertMessages.error} close={() => { alertHandler("error") }} />}
         </div>

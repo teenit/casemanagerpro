@@ -16,6 +16,7 @@ export const LANG = {
     start: "Початок",
     end: "Кінець",
     link: "Посилання",
+    size:"Розмір",
     years: "років",
     edit: "Редагувати",
     close: "Закрити",
@@ -665,8 +666,16 @@ export const LANG = {
     no_title: "Файл без назви",
     size: "Розмір:",
     desc: "Опис файлу:",
+    uploaded_at:"Дата завантаження",
+    who_uploaded:"Хто завантажив",
     resource_link: "Посилання на ресурс",
     resource_type: "Тип ресурсу",
+    tabs:{
+      all:"Усі",
+      media:"Медіа",
+      docs:"Документи",
+      links:"Посилання"
+    },
     alertMessages: {
       deleted_successfully: "Ресурс успішно видалено",
       error: "Виникла помилка. Спробуйте ще раз",

@@ -8,8 +8,9 @@ import { Button, MenuItem, Select } from "@mui/material";
 import { apiResponse } from "../Functions/get_apiObj";
 import { LANG } from "../../services/config";
 import { Label } from "@mui/icons-material";
+import SmallTextEditor from "../elements/TextEditor/SmallTextEditor";
 
-const AddResources = ({ close, loadResources, type = "files" }) => {
+const ResourceModal = ({ close, loadResources, type = "files" }) => {
     const [alert, setAlert] = useState({
         success: false,
         error: false,
@@ -83,11 +84,12 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
                         value={meta.title}
                         onChange={(e) => handleMetaChange("title", e.target.value)}
                     />
-                    <Textarea
+                    <SmallTextEditor value={meta.description} onChange={(e) => handleMetaChange("description", e)}/>
+                    {/* <Textarea
                         label={LANG.GLOBAL.description}
                         value={meta.description}
                         onChange={(e) => handleMetaChange("description", e.target.value)}
-                    />
+                    /> */}
                     {typeResource === 'files' && <FilesUploader
                         multiple={true}
                         type="resource"
@@ -112,4 +114,4 @@ const AddResources = ({ close, loadResources, type = "files" }) => {
     );
 };
 
-export default AddResources;
+export default ResourceModal;

@@ -36,7 +36,7 @@ class TasksPage extends Component {
             totalCount: null,
             sort: {
                 field: 'id',
-                order: 'ASC'
+                order: 'DESC'
             },
             options: {
                 page: 0,
@@ -128,7 +128,7 @@ class TasksPage extends Component {
             tabValue: tabIndex,
             sort: {
                 field: savedFilters.sortField || 'id',
-                order: savedFilters.sortOrder || 'ASC'
+                order: savedFilters.sortOrder || 'DESC'
             },
             options: {
                 page: savedFilters.page || 0,
@@ -181,7 +181,7 @@ class TasksPage extends Component {
             tabValue: value,
             sort: {
                 field: savedFilters.sortField || 'id',
-                order: savedFilters.sortOrder || 'ASC'
+                order: savedFilters.sortOrder || 'DESC'
             },
             options: {
                 page: savedFilters.page || 0,

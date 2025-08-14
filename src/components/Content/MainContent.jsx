@@ -40,6 +40,7 @@ import UsersPage from "../pages/UsersPage";
 import TasksPage from "../pages/TasksPage";
 import TaskPage from "../pages/TaskPage";
 import WrapperParams from "../pages/WrapperParams";
+import ResourcesPage from "../pages/ResourcesPage";
 
 const MainContent = () => {
   const rights = useSelector(state => state.auth);
@@ -99,8 +100,9 @@ const MainContent = () => {
         {/* <Route path='/login' element={<LoginPage />} /> */}
         {/* <Route path='/google-drive' element={<GoogleDrivePage />} /> */}
         <Route path='/fields' element={access.fields ? <FieldsPage /> : <NotFound />} />
-        <Route path='/users' element={access.users ? <WrapperParams component={UsersPage}/> : <NotFound />} />
+        <Route path='/users' element={access.users ? <WrapperParams component={UsersPage} /> : <NotFound />} />
         <Route path='/tasks' element={access.tasks ? <WrapperParams component={TasksPage} /> : <NotFound />} />
+        <Route path='/resources_new' element={access.resources ? <WrapperParams component={ResourcesPage} /> : <NotFound />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />
