@@ -17,6 +17,16 @@ import { apiResponse } from "../Functions/get_apiObj";
 import Pagination from "../elements/Pagination/Pagination";
 import ModalConfirm from "../Modals/ModalConfirm"
 import EditResourcesModal from "../Modals/Resources/EditResourcesModal";
+import ResourcesModal from "../Resources/ResourcesModal";
+import docxImg from "./../../img/resources/docx.svg";
+import mp3Img from "./../../img/resources/mp3.svg";
+import pdfImg from "./../../img/resources/pdf.svg";
+import pptxImg from "./../../img/resources/pptx.svg";
+import xlsxImg from "./../../img/resources/xlsx.svg";
+import codeImg from "./../../img/resources/code.svg";
+import zipImg from "./../../img/resources/zip.svg";
+import imgImg from "./../../img/resources/img.svg";
+import Icon from "../elements/Icons/Icon";
 class ResourcesPage extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +38,7 @@ class ResourcesPage extends Component {
         add_resource: false,
         edit_resource: false,
         confirm_delete: false,
+        open: false
       },
       access: {},
       sort: {
@@ -39,8 +50,6 @@ class ResourcesPage extends Component {
         limit: 10,
       },
       files: [],
-      docFiles: [],
-      mediaFiles: [],
       totalCount: 0,
       users: {},
       current_resource: null,
@@ -50,7 +59,7 @@ class ResourcesPage extends Component {
   get tabData() {
     return [
       { title: LANG.resources.tabs.all, value: 0, mode: "all" },
-      { title: LANG.resources.tabs.docs , value: 1, mode: "documents" },
+      { title: LANG.resources.tabs.docs, value: 1, mode: "documents" },
       { title: LANG.resources.tabs.media, value: 2, mode: "media" },
       { title: LANG.resources.tabs.links, value: 3, mode: "links" },
     ];
@@ -80,7 +89,6 @@ class ResourcesPage extends Component {
         access: {
           upload: () => AccessCheck("yes_no", "a_page_resources_upload"),
           remove: () => AccessCheck("yes_no", "a_page_resources_remove"),
-          download: () => AccessCheck("yes_no", "a_page_resources_download"),
           edit: () => AccessCheck("yes_no", "a_page_resources_edit"),
         },
       },
@@ -118,23 +126,9 @@ class ResourcesPage extends Component {
     };
 
     apiResponse(obj, "resources/get-resource.php").then((res) => {
-
-      const docTypes = [
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "application/vnd.ms-excel",
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "application/vnd.ms-powerpoint",
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        "application/pdf",
-      ];
-      const mediaTypes = ["image/png", "image/jpeg", "image/jpg", "video/mp4", "video/quicktime"];
-
       this.setState(
         {
           files: res,
-          docFiles: res.filter((file) => docTypes.includes(file.type)),
-          mediaFiles: res.filter((file) => mediaTypes.includes(file.type)),
           loading: false,
         },
         () => {
@@ -258,12 +252,44 @@ class ResourcesPage extends Component {
       return (size / (1024 * 1024)).toFixed(2) + " MB";
     }
   };
-
+  getPreview = (resource) => {
+    switch (resource.type) {
+      case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        return docxImg;
+      case "application/pdf":
+        return pdfImg;
+      case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+        return pptxImg;
+      case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+        return xlsxImg;
+      case "audio/mpeg":
+        return mp3Img;
+      case "application/zip":
+      case "application/x-rar-compressed":
+      case "application/x-7z-compressed":
+        return zipImg;
+      case "text/html":
+      case "text/css":
+      case "application/javascript":
+      case "application/json":
+      case "application/x-python-code":
+      case "application/x-java":
+        return codeImg;
+      case "image/png":
+      case "image/jpg":
+      case "image/jpeg":
+      case "image/svg":
+      case "image/webp":
+        return imgImg;
+      default:
+        return "";
+    }
+  }
   get tableColumns() {
-    const { edit, remove, download } = this.state.access;
+    const { edit, remove } = this.state.access;
     return [
       {
-        dataField: "id",
+        dataField: "resource_id",
         text: "ID",
         sort: true,
         fixed: false,
@@ -271,7 +297,7 @@ class ResourcesPage extends Component {
         headerFormatter: () => (
           <HeaderFormatter
             text="ID"
-            dataField="id"
+            dataField="resource_id"
             sortField={this.state.sort.field}
             sortOrder={this.state.sort.order}
             onSortClick={this.handleSortClick}
@@ -279,11 +305,24 @@ class ResourcesPage extends Component {
         ),
       },
       {
+        dataField: "preview",
+        text: LANG.GLOBAL.type,
+        sort: true,
+        fixed: false,
+        isHidden: false,
+        formatter: (cell, row) => {
+          return row.type === "link" ? <Icon icon="eye" addClass="default-icon" /> : <img src={this.getPreview(row)} alt={row.title} />
+        }
+      },
+      {
         dataField: "title",
         text: LANG.GLOBAL.title,
         sort: true,
         formatter: (cell, row) => {
-          return download ? <a href={row.link} target="_blank">{this.cutTitle(cell, 25)}</a> : <div>{this.cutTitle(cell, 25)}</div>
+          return row.type === "link" ? <a href={row.link} target="_blank">{this.cutTitle(row.title)}</a>
+            : <div style={{ cursor: "pointer" }} onClick={() => {
+              this.setState({ current_resource: row }, this.modalHandler("open"))
+            }}>{this.cutTitle(row.title)}</div>
         },
         headerFormatter: () => (
           <HeaderFormatter
@@ -300,7 +339,7 @@ class ResourcesPage extends Component {
         text: LANG.GLOBAL.description,
         sort: false,
         formatter: (cell) => (
-          <div style={{ maxHeight: "50px", overflow: "hidden" }}>
+          <div style={{ maxHeight: "50px", maxWidth: "300px", overflow: "hidden" }}>
             <TextDescription text={cell || LANG.GLOBAL.no_description} />
           </div>
         ),
@@ -359,12 +398,12 @@ class ResourcesPage extends Component {
                 this.setState({ current_resource: row }, () => this.modalHandler("edit_resource"));
               },
             },
-            // download && {
+            // download && row.type!=="link"&&{
             //   title: LANG.GLOBAL.download,
             //   isHidden: false,
             //   icon: "download",
-            //   formatter: (cell, row) => {
-            //     return <a target="_blank" href={row.link} download rel="noreferrer">{LANG.GLOBAL.download}</a>
+            //   click:()=>{
+            //     window.open(row.link, "_blank");
             //   }
             // },
             remove && {
@@ -440,10 +479,11 @@ class ResourcesPage extends Component {
         </div>
 
         {modals.add_resource && <ResourceModal close={() => { this.modalHandler("add_resource") }} loadResources={this.loadResources} />}
-        {modals.edit_resource && <EditResourcesModal close={()=>{this.modalHandler("edit_resource")}} 
-        resource={this.state.current_resource} loadResources={this.loadResources}/>}
+        {modals.edit_resource && <EditResourcesModal close={() => { this.modalHandler("edit_resource") }}
+          resource={this.state.current_resource} loadResources={this.loadResources} />}
         {modals.confirm_delete && <ModalConfirm closeHandler={() => { this.modalHandler("confirm_delete") }}
           text={LANG.resources.confirm_delete + this.state.current_resource.title + "?"} successHandler={this.deleteResource} />}
+        {modals.open && <ResourcesModal info={this.state.current_resource} close={() => { this.modalHandler("open") }} />}
       </div>
     );
   }

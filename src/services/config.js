@@ -2,7 +2,7 @@ export const LANG = {
   GLOBAL: {
     add: "Додати",
     save: "Зберегти",
-    download: "Завантажити",
+    download: "Скачати",
     cancel: "Відмінити",
     date: "Дата",
     title: "Назва",
@@ -553,6 +553,7 @@ export const LANG = {
     date_created: "Дата створення групи:",
     info: "Інформація про групу",
     add: "Додати групу для кейсу",
+    error_connect:"Причина зв'язку повинна бути довжиною до 150 символів",
     title_case: "Групи кейсу",
     add_first_group: "Створити групу",
     group: {
@@ -670,6 +671,7 @@ export const LANG = {
     who_uploaded:"Хто завантажив",
     resource_link: "Посилання на ресурс",
     resource_type: "Тип ресурсу",
+    edit_resource:"Редагувати ресурс",
     tabs:{
       all:"Усі",
       media:"Медіа",
@@ -754,6 +756,19 @@ export const LANG = {
     fsr: "ФСР",
     worker: "Працівник",
     admin: "Адміністратор"
+  },
+  STATISTICS:{
+    categoryAmount:'Кількість категорій кейсів',
+    free:'Вільно',
+    taken:'Зайнято',
+    created:'Створено',
+    avaible:'Доступно',
+    avaible_cases:'Доступних кейсів',
+    favorite_groups:'Обрані групи',
+    cases:"Кейси",
+    users:"Користувачі",
+    memory:"Пам'ять",
+    price:"Ціна"
   },
   hints: {
     phone: "Номер телефону може бути як і з префіксом країни, так і без нього",
@@ -1344,6 +1359,11 @@ export const appConfig = {
       title: LANG.pages.resources,
       description: "",
       path: "/resources"
+    },
+    resources_new: {
+      title: LANG.pages.resources,
+      description: "",
+      path: "/resources_new"
     },
     statistic: {
       title: LANG.pages.statistic,

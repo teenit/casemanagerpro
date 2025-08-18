@@ -83,7 +83,7 @@ const GroupConnections = ({ case_id, type, cg }) => {
         if (data.group_id === "") {
             alertHandler("error", LANG.groups.alertMessages.error);
         } else if (data.why.length > 150) {
-            alertHandler("error", `Причина зв'язку повинна бути довжиною до 150 символів. Поточна довжина: ${data.why.length} символів`);
+            alertHandler("error", `${LANG.groups.error_connect}`);
         } else {
             successHandler();
         }

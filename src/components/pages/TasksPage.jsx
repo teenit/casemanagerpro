@@ -285,7 +285,7 @@ class TasksPage extends Component {
                 text: LANG.GLOBAL.description,
                 sort: false,
                 formatter: (cell, row) => {
-                    return <div style={{maxHeight: "50px", overflow: "hidden"}}>
+                    return <div style={{maxHeight: "50px", maxWidth:"300px", overflow: "hidden"}}>
                         <TextDescription text={cell || LANG.GLOBAL.no_description} />
                     </div>
                 },

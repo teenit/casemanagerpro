@@ -41,7 +41,6 @@ const Settings = () => {
     const [categoriesCont, setCategoriesCont] = useState([]);
     const [version, setVersion] = useState(false)
     const [newVersion, setNewVersion] = useState(false)
-    const [disBtn, setDisBtn] = useState(false)
     const [config, setConfig] = useState({ ...appConfig.defaultConfig })
     const [activeConfig, setActiveConfig] = useState({});
     const [deleteMeta, setDeleteMeta] = useState({

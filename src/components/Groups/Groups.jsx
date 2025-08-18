@@ -57,7 +57,6 @@ const GroupCard = ({ item, loadGroups, access }) => {
 };
 
 const Groups = () => {
-    const categories = useSelector(state => state.categories);
     const accessEdit = AccessCheck("view_edit", "a_page_groups", "edit");
     const [add, setAdd] = useState(false);
     const [groups, setGroups] = useState([]);

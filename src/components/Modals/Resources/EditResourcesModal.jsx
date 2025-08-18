@@ -3,7 +3,6 @@ import Modal from "../Modal";
 import { Button } from "@mui/material";
 import { LANG } from "../../../services/config";
 import Input from "../../elements/Inputs/Input";
-import Textarea from "../../elements/Inputs/Textarea";
 import { apiResponse } from "../../Functions/get_apiObj";
 import SmallTextEditor from "../../elements/TextEditor/SmallTextEditor"
 class EditResourcesModal extends Component {
@@ -20,14 +19,14 @@ class EditResourcesModal extends Component {
         this.setState({ [key]: value })
     }
     saveHandler = () => {
-        apiResponse({...this.state}, "/resources").then(res=>{
+        apiResponse({...this.state}, "resources/edit-resources.php").then(res=>{
             this.props.close()
             this.props.loadResources()
         })
     }
     render() {
         const { type } = this.state
-        return <Modal header={"Редагувати ресурс"} closeHandler={this.props.close} footer={
+        return <Modal header={LANG.resources.edit_resource} closeHandler={this.props.close} footer={
             <>
                 <Button variant="contained" onClick={this.saveHandler}>{LANG.GLOBAL.save}</Button>
                 <Button variant="contained" color="error" onClick={this.props.close}>{LANG.GLOBAL.cancel}</Button>

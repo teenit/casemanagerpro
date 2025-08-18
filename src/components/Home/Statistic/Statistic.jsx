@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 const bib =  {
   labels: [],
   datasets: [{
-      label: 'Кількість категорій кейсів',
+      label: LANG.STATISTICS.categoryAmount,
       data: [],
       borderWidth: 1,
       backgroundColor: [],
@@ -74,7 +74,7 @@ const Statistic = () =>{
         getSize().then((res) =>{
           if(res?.message) return 
           setSize( {
-            labels: ['Вільно','Зайнято'],
+            labels: [LANG.STATISTICS.free,LANG.STATISTICS.taken],
             datasets: [{
                 label: 'MB',
                 data: [res.maxSize - res.size,res.size],
@@ -90,9 +90,9 @@ const Statistic = () =>{
         // });
         apiResponse({},"statistics/count-cases.php").then((res)=>{
           setAmountCases({
-            labels: ['Створено','Доступно'],
+            labels: [LANG.STATISTICS.created,LANG.STATISTICS.avaible],
             datasets: [{
-                label: 'Доступних кейсів',
+                label: LANG.STATISTICS.avaible_cases,
                 data: [+res.count, 100 - +res.count],
                 borderWidth: 1,
                 backgroundColor: ["#f99c9c","#9ccef9"],
@@ -136,7 +136,7 @@ const Statistic = () =>{
             setGroups({
               labels: res.groups.map(item=>item.name),
               datasets: [{
-                  label: 'Обрані групи',
+                  label: LANG.STATISTICS.favorite_groups,
                   data: res.groups.map(item=>item.count),
                   borderWidth: 1,
                   backgroundColor: res.groups.map(item=>item.color),
@@ -158,10 +158,10 @@ const Statistic = () =>{
         <div className={s.home__statistic}>
           {service && 
             <div className={s.service__statistic}>
-              <span>Cases: <b> {service.cases.size} / {service.cases.total}</b></span>
-              <span>Users:  <b>{service.users.size} / {service.users.total}</b></span>
-              <span>Memory:  <b>{service.memory.size} / {service.memory.total}</b></span>
-              <span>Price: <b> {service.price.price} </b></span>
+              <span>{LANG.STATISTICS.cases}: <b> {service.cases.size} / {service.cases.total}</b></span>
+              <span>{LANG.STATISTICS.users}:  <b>{service.users.size} / {service.users.total}</b></span>
+              <span>{LANG.STATISTICS.memory}:  <b>{service.memory.size} / {service.memory.total}</b></span>
+              <span>{LANG.STATISTICS.price}: <b> {service.price.price} </b></span>
             </div>
           }
             <div className={s.amount__cases__wr}>

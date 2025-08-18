@@ -15,6 +15,7 @@
     justify-content: center;
     color: red;
     font-size: 24px;
+    z-index: 999;
 }
 .case__contact__info__img__inner{
     position: relative;

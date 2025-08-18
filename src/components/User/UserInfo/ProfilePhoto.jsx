@@ -126,7 +126,7 @@ const ProfilePhoto = ({ getUser, changePass, url, user, isChangePhoto = false })
             link={`mailto:${data.email}`} inputType="email"
           />
 
-          <InputBlock titleDefault={LANG.GLOBAL.about} value={data.datas} title={LANG.GLOBAL.about} label={data.datas} icon={"book"}
+          <InputBlock textarea titleDefault={LANG.GLOBAL.about} value={data.datas} title={LANG.GLOBAL.about} label={data.datas} icon={"book"}
             onChange={(e) => { handleChangeValue("datas", e.target.value) }} inputType="text"
             saveHandler={(value) => { handleSaveData("datas", value) }}
           />
