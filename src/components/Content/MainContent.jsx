@@ -75,7 +75,7 @@ const MainContent = () => {
         <Route path='/user/:id' element={access.user ? <User /> : <NotFound />} />
         <Route path='/settings' element={access.settings ? <Settings /> : <NotFound />} />
         <Route path='/contacts' element={access.phonebook ? <Contacts /> : <NotFound />} />
-        <Route path="/resources" element={access.resources ? <Resources /> : <NotFound />} />
+        {/* <Route path="/resources" element={access.resources ? <Resources /> : <NotFound />} /> */}
         <Route path="/access" element={access.access ? <AccessPage /> : <NotFound />} />
         <Route path="/access/:id" element={access.access ? <AccessPageRight /> : <NotFound />} />
         {/* <Route path='/events' element={access.events ? <Events /> : <NotFound />} /> */}
@@ -102,7 +102,7 @@ const MainContent = () => {
         <Route path='/fields' element={access.fields ? <FieldsPage /> : <NotFound />} />
         <Route path='/users' element={access.users ? <WrapperParams component={UsersPage} /> : <NotFound />} />
         <Route path='/tasks' element={access.tasks ? <WrapperParams component={TasksPage} /> : <NotFound />} />
-        <Route path='/resources_new' element={access.resources ? <WrapperParams component={ResourcesPage} /> : <NotFound />} />
+        <Route path='/resources' element={access.resources ? <WrapperParams component={ResourcesPage} /> : <NotFound />} />
         {/* <Route path='/update' element={<UpdateLog />} /> */}
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />

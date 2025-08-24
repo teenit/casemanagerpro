@@ -7,6 +7,14 @@
     padding: 0px 0px 0 20px;
     align-items: center;
     box-sizing: border-box;
+    &-arrow {
+        display: flex;
+        align-items: center;
+    }
+    border-radius: 5px;
+     &.active {
+            background-color: $second-color;
+        }
     &:has(.HeaderFormatter-arrows-arrow.active) {
         background-color: $second-color;
     }

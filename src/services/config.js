@@ -674,9 +674,18 @@ export const LANG = {
     edit_resource:"Редагувати ресурс",
     tabs:{
       all:"Усі",
-      media:"Медіа",
+      images:"Зображення",
+      videos:"Відео",
       docs:"Документи",
-      links:"Посилання"
+      links:"Посилання",
+
+    },
+    types: {
+      images:"Зображення",
+      videos:"Відео",
+      documents:"Документ",
+      links:"Посилання",
+      archives:"Архів",
     },
     alertMessages: {
       deleted_successfully: "Ресурс успішно видалено",
@@ -1857,5 +1866,12 @@ export const appConfig = {
       4: LANG.ratingScale5.four,
       5: LANG.ratingScale5.five
     }
+  },
+  formats: {
+    allowedToUpload: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'tiff', 'heic',
+        'mp4', 'avi', 'mov', 'mkv', 'wmv', 'flv', 'webm', 'pdf', 'doc', 'docx', 'xls', 'xlsx',
+            'ppt', 'pptx', 'txt', 'rtf', 'odt', 'ods', 'odp',
+            'csv', 'mp3', 'wav', 'aac', 'ogg', 'flac', 'm4a', 'wma', 'zip', 'rar', '7z', 'tar', 'gz'],
+    media: ""
   },
 }

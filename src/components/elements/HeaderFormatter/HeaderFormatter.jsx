@@ -5,9 +5,14 @@ const HeaderFormatter = ({ text, sortField, sortOrder, dataField, onSortClick = 
     const isActive = sortField === dataField;
 
     return (
-        <div className="HeaderFormatter">
+        <div className={`HeaderFormatter ${isActive ? "active" : ""}`}>
             <div className="HeaderFormatter-text">{text}</div>
-            <div className="HeaderFormatter-arrows">
+            <div onClick={()=>{
+                onSortClick(dataField, 'DESC' == sortOrder ? 'ASC' : 'DESC')
+            }} className={`HeaderFormatter-arrow`}>
+                {sortOrder === 'ASC' ? <Icon icon="arrow_down_sort" /> : <Icon icon="arrow_up_sort" />}
+            </div>
+            {/* <div className="HeaderFormatter-arrows">
                 <div
                     className={`HeaderFormatter-arrows-arrow ${isActive && sortOrder === 'ASC' ? "active" : ""}`}
                     onClick={() => onSortClick(dataField, 'ASC')}
@@ -20,7 +25,7 @@ const HeaderFormatter = ({ text, sortField, sortOrder, dataField, onSortClick = 
                 >
                     <Icon icon="arrow_up_sort" />
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

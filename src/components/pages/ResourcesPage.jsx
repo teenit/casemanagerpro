@@ -50,7 +50,7 @@ class ResourcesPage extends Component {
         limit: 10,
       },
       files: [],
-      totalCount: 0,
+      totalCount: null,
       users: {},
       current_resource: null,
     };
@@ -60,8 +60,9 @@ class ResourcesPage extends Component {
     return [
       { title: LANG.resources.tabs.all, value: 0, mode: "all" },
       { title: LANG.resources.tabs.docs, value: 1, mode: "documents" },
-      { title: LANG.resources.tabs.media, value: 2, mode: "media" },
-      { title: LANG.resources.tabs.links, value: 3, mode: "links" },
+      { title: LANG.resources.tabs.links, value: 2, mode: "links" },
+      { title: LANG.resources.tabs.images, value: 3, mode: "images" },
+      { title: LANG.resources.tabs.videos, value: 4, mode: "videos" },
     ];
   }
 
@@ -125,17 +126,25 @@ class ResourcesPage extends Component {
       limit: this.state.options.limit,
     };
 
-    apiResponse(obj, "resources/get-resource.php").then((res) => {
-      this.setState(
-        {
-          files: res,
-          loading: false,
-        },
-        () => {
-          const total = res.data_total || res.length;
-          this.setState({ totalCount: total });
-        }
-      );
+    apiResponse(obj, "resources/resource.php").then((res) => {
+      if (res.status) {
+        this.setState(
+          {
+            files: res.data,
+            loading: false,
+            totalCount: null
+          }
+        );
+      } else {
+        this.setState(
+          {
+            files: [],
+            loading: false,
+
+          }
+        );
+      }
+
     }).catch(() => {
       this.setState({ loading: false });
     });
@@ -143,12 +152,33 @@ class ResourcesPage extends Component {
 
   loadTotalCount = () => {
     const mode = this.tabData[this.state.tabValue]?.mode;
-    apiResponse({ action: "get_total_count", main_mode: mode }, "resources/get-resource.php").then((res) => {
+    const obj = {
+      action: "get_total_size",
+      main_mode: mode,
+      sort: this.state.sort.order,
+      order: this.state.sort.field,
+      search: this.state.search,
+      page: this.state.options.page + 1,
+      limit: this.state.options.limit,
+    };
+
+    apiResponse(obj, "resources/resource.php").then((res) => {
       if (res.status) {
         this.setState({ totalCount: res.data?.total || 0 });
       }
+    }).catch(() => {
+      this.setState({ loading: false });
     });
   };
+
+  // loadTotalCount = () => {
+  //   const mode = this.tabData[this.state.tabValue]?.mode;
+  //   apiResponse({ action: "get_total_size", main_mode: mode }, "resources/resource.php").then((res) => {
+  //     if (res.status) {
+  //       this.setState({ totalCount: res.data?.total || 0 });
+  //     }
+  //   });
+  // };
 
   getUsers = () => {
     apiResponse({ action: "get_users_list" }, "user/users.php").then((res) => {
@@ -253,8 +283,8 @@ class ResourcesPage extends Component {
     }
   };
   getPreview = (resource) => {
-    switch (resource.type) {
-      case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    switch (resource.resourceType) {
+      case "documents":
         return docxImg;
       case "application/pdf":
         return pdfImg;
@@ -262,9 +292,9 @@ class ResourcesPage extends Component {
         return pptxImg;
       case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
         return xlsxImg;
-      case "audio/mpeg":
+      case "audio":
         return mp3Img;
-      case "application/zip":
+      case "archives":
       case "application/x-rar-compressed":
       case "application/x-7z-compressed":
         return zipImg;
@@ -276,6 +306,7 @@ class ResourcesPage extends Component {
       case "application/x-java":
         return codeImg;
       case "image/png":
+      case "images":
       case "image/jpg":
       case "image/jpeg":
       case "image/svg":
@@ -294,45 +325,37 @@ class ResourcesPage extends Component {
         sort: true,
         fixed: false,
         isHidden: false,
-        headerFormatter: () => (
-          <HeaderFormatter
-            text="ID"
-            dataField="resource_id"
-            sortField={this.state.sort.field}
-            sortOrder={this.state.sort.order}
-            onSortClick={this.handleSortClick}
-          />
-        ),
       },
+      // {
+      //   dataField: "preview",
+      //   text: LANG.GLOBAL.type,
+      //   sort: false,
+      //   fixed: false,
+      //   isHidden: false,
+      //   formatter: (cell, row) => {
+      //     return row.resourceType === "link" ? <Icon icon="eye" addClass="default-icon" /> : <img src={this.getPreview(row)} alt={row.title} />
+      //   }
+      // },
       {
-        dataField: "preview",
+        dataField: "resourceType",
         text: LANG.GLOBAL.type,
-        sort: true,
+        sort: false,
         fixed: false,
         isHidden: false,
         formatter: (cell, row) => {
-          return row.type === "link" ? <Icon icon="eye" addClass="default-icon" /> : <img src={this.getPreview(row)} alt={row.title} />
+          return <div>{LANG.resources.types[cell]}</div>
         }
       },
       {
         dataField: "title",
         text: LANG.GLOBAL.title,
-        sort: true,
+        sort: false,
         formatter: (cell, row) => {
           return row.type === "link" ? <a href={row.link} target="_blank">{this.cutTitle(row.title)}</a>
-            : <div style={{ cursor: "pointer" }} onClick={() => {
+            : <div style={{ cursor: "pointer", fontWeight: "900" }} onClick={() => {
               this.setState({ current_resource: row }, this.modalHandler("open"))
             }}>{this.cutTitle(row.title)}</div>
         },
-        headerFormatter: () => (
-          <HeaderFormatter
-            text={LANG.GLOBAL.title}
-            dataField="title"
-            sortField={this.state.sort.field}
-            sortOrder={this.state.sort.order}
-            onSortClick={this.handleSortClick}
-          />
-        ),
       },
       {
         dataField: "description",
@@ -353,31 +376,13 @@ class ResourcesPage extends Component {
       {
         dataField: "uploaded_at",
         text: LANG.resources.uploaded_at,
-        sort: true,
-        headerFormatter: () => (
-          <HeaderFormatter
-            text={LANG.resources.uploaded_at}
-            dataField="uploaded_at"
-            sortField={this.state.sort.field}
-            sortOrder={this.state.sort.order}
-            onSortClick={this.handleSortClick}
-          />
-        ),
+        sort: false,
         formatter: (cell) => <div>{cell && moment(cell).format("DD-MM-YYYY HH:mm")}</div>,
       },
       {
-        dataField: "who_uploaded",
+        dataField: "user_id",
         text: LANG.resources.who_uploaded,
         sort: false,
-        headerFormatter: () => (
-          <HeaderFormatter
-            text={LANG.resources.who_uploaded}
-            dataField="who_uploaded"
-            sortField={this.state.sort.field}
-            sortOrder={this.state.sort.order}
-            onSortClick={this.handleSortClick}
-          />
-        ),
         formatter: (cell, row) => {
           const name = this.state.users[row.user_id] || LANG.GLOBAL.unknown_user;
           return <NavLink to={`/user/${row.user_id}`}>{name}</NavLink>;
@@ -423,13 +428,37 @@ class ResourcesPage extends Component {
     ];
   }
 
+  prepareColumns = (columns) => {
+    return columns.map((item) => this.prepareColumn(item));
+  };
+
+  prepareColumn = (column) => {
+    if (typeof column.formatter !== 'function') {
+      column.formatter = (cell, row) => cell;
+    }
+    if (typeof column.headerFormatter !== 'function' && column.sort) {
+      column.headerFormatter = (field, order) => {
+        return (
+          <HeaderFormatter
+            sortOrder={order}
+            sortField={field}
+            text={column.text}
+            dataField={column.dataField}
+            onSortClick={this.handleSortClick}
+          />
+        );
+      };
+    }
+    return column;
+  };
+
   render() {
     const { loading, modals, access, files, options, totalCount } = this.state;
-
+    const columns = this.prepareColumns(this.tableColumns)
     return !loading && (
       <div className="ResourcesPage">
         <div className="ResourcesPage-header" style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <SearchInput handler={(data) => { this.searchHandler(data); }} value={this.state.search} key={this.state.tabValue} />
+          {/* <SearchInput handler={(data) => { this.searchHandler(data); }} value={this.state.search} key={this.state.tabValue} /> */}
           {access.upload && <AddButton title={LANG.resources.add} click={() => { this.modalHandler("add_resource"); }} />}
         </div>
 
@@ -445,7 +474,7 @@ class ResourcesPage extends Component {
           <div role="tabpanel" style={{ paddingTop: "15px" }}>
             <Table
               loading={this.state.loading}
-              columns={this.tableColumns}
+              columns={columns}
               data={files}
               keyField="id"
               sortField={this.state.sort.field}
