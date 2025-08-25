@@ -3,6 +3,11 @@
     flex-direction: column;
     align-items: center;
     gap: 25px;
+    &-header{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
     &-list{
         width: 80%;
         display: grid;

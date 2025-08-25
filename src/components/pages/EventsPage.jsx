@@ -112,7 +112,9 @@ const EventsPage = () => {
 
     return (
         <div className="EventsPage">
-            {access.create && <AddButton title={LANG.events_page.add} click={() => modalHandler("add")} />}
+            <div className="EventsPage-header">
+                {access.create && <AddButton title={LANG.events_page.add} click={() => modalHandler("add")} />}
+            </div>
             {modal.modal && (
                 <Modal
                     closeHandler={() => setModal({ modal: false, action: "", currentEvent: null })}

@@ -77,7 +77,9 @@ const Groups = () => {
 
     return (
         <div className="Groups">
-            {AccessCheck('yes_no', 'a_group_create') && <AddButton title={LANG.groups.add_first_group} click={addHandler} />}
+            <div className="Groups-header">
+                {AccessCheck('yes_no', 'a_group_create') && <AddButton title={LANG.groups.add_first_group} click={addHandler} />}
+            </div>
             <div className="Groups-list">
                 {groups.map((item, index) => (
                     <GroupCard access={accessEdit} loadGroups={loadGroups} key={index} item={item} />

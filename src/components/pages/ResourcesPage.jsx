@@ -457,7 +457,7 @@ class ResourcesPage extends Component {
     const columns = this.prepareColumns(this.tableColumns)
     return !loading && (
       <div className="ResourcesPage">
-        <div className="ResourcesPage-header" style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <div className="ResourcesPage-header" style={{ display: "flex", gap: 8, alignItems: "center", justifyContent:"flex-end" }}>
           {/* <SearchInput handler={(data) => { this.searchHandler(data); }} value={this.state.search} key={this.state.tabValue} /> */}
           {access.upload && <AddButton title={LANG.resources.add} click={() => { this.modalHandler("add_resource"); }} />}
         </div>

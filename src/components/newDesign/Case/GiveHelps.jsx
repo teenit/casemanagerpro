@@ -134,12 +134,14 @@ const GiveHelps = ({ helps, case_id, getCaseInfo, cg }) => {
                     <div className="Help-create">
                         <div className="Help-create-date">
                             <Input
+                                addClass="w100"
                                 type="datetime-local"
                                 value={state.date_time}
                                 variant="standard"
                                 onChange={(e) => changeHandler("date_time", e.target.value)}
                             />
                             <Input
+                                addClass="w100"
                                 type="text"
                                 label={LANG.give_help.who_give_help}
                                 value={state.who}

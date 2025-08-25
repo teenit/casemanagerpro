@@ -148,7 +148,7 @@ const TransactionsPage = () => {
                     limit: options.limit,
                     field: options.sort.field,
                     order: options.sort.order,
-                    main_mode:tabData[tabValue]?.mode
+                    main_mode: tabData[tabValue]?.mode
                 },
                 "transactions/get-list.php"
             );
@@ -224,8 +224,10 @@ const TransactionsPage = () => {
 
     return (
         <div className="Transactions">
-            <AddButton title={LANG.TRANSACTIONS.add} click={addTransaction} />
-        {/* access needed */}
+            <div className="Transactions-header">
+                <AddButton title={LANG.TRANSACTIONS.add} click={addTransaction} />
+            </div>
+            {/* access needed */}
             <Box sx={{ width: "100%" }}>
                 <Box sx={{ borderBottom: 1, borderColor: "divider", overflowX: "auto", whiteSpace: "nowrap" }}>
                     <Tabs
