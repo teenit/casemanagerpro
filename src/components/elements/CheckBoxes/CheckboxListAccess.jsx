@@ -58,11 +58,11 @@ export default function CheckboxListAccess({allMas, checkedMas, onChange, onChec
         return (
           <ListItem
             key={item.id + item.name}
-            secondaryAction={
-              <IconButton edge="end" aria-label="comments">
-                <CommentIcon />
-              </IconButton>
-            }
+            // secondaryAction={
+            //   <IconButton edge="end" aria-label="comments">
+            //     <CommentIcon />
+            //   </IconButton>
+            // }
             disablePadding
           >
             <ListItemButton role={undefined} onClick={handleToggle(item)} dense>

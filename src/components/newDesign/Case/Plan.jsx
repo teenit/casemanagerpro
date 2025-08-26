@@ -136,6 +136,7 @@ const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
                                 }}
                             /> */}
                             <Input
+                                addClass="w100"
                                 type="datetime"
                                 label={LANG.start_time}
                                 value={state.start_time}
@@ -145,6 +146,7 @@ const Plan = ({ cg, plans, case_id, getCaseInfo }) => {
                                 }}
                             />  
                              <Input
+                             addClass="w100"
                                 type="datetime-local"
                                 label={LANG.end_time}
                                 value={state.end_time}

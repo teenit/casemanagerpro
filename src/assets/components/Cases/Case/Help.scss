@@ -95,8 +95,6 @@
         gap: 8px;
         &-date {
             display: flex;
-            align-items: end;
-            justify-content: space-between;
             gap: 8px;
         }
         &-status {
@@ -114,6 +112,9 @@
     }
 }
 @media screen and (max-width:500px){
+    .Help-create-date{
+        flex-direction: column;
+    }
     .Help-title{
         flex-direction: row;
         .fs30.arrow{

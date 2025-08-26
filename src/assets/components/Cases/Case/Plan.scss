@@ -92,8 +92,6 @@
 
         &-date {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
             gap: 8px;
         }
 
@@ -113,6 +111,9 @@
     }
 }
 @media screen and (max-width:500px){
+    .Plan-create-date{
+        flex-direction: column;
+    }
     .Plan-title{
         flex-direction: row;
         .fs30.arrow{
