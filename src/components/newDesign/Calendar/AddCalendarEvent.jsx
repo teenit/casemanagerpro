@@ -62,7 +62,7 @@ const AddCalendarEvent = ({ data = {}, loadEvents, close }) => {
 
         setState(payload);
 
-        const endpoint = exists ? "calendar/update.php" : "calendar/add.php";
+        const endpoint = exists ? "calendar/add.php" : "calendar/add.php";
         apiResponse(payload, endpoint)
             .then(() => {
                 loadEvents();
