@@ -1,17 +1,12 @@
 .wrap__bells{
     width: 100%;
     height: calc(100vh - 40px);
-    position: fixed;
-    top: 40px;
-    left: 0;
+   
     display: grid;
     grid-template-columns: calc(100% - 500px) 500px;
     z-index: 99999;
 }
-.black{
-    transition: all .3s;
-    width: 0;
-}
+
 .items{
     padding: 30px 0px;
     background-color: #fff;
@@ -43,7 +38,6 @@
     width: 80%;
     padding: 15px 30px;
     cursor: pointer;
-    transition: all .5s;
     background-color: var(--second-color);
     display: flex;
     align-items: center;
@@ -74,16 +68,9 @@
     align-items: center;
     gap: 10px;
 }
-.active{
-    animation-duration: .7s;
-    animation-name: active;
-    animation-iteration-count: 1;
-    animation-direction: alternate;
-    animation-fill-mode: forwards;
-}
+
 .bell__img{
     cursor: pointer;
-    transition: all .3s;
 }
 /* .bell__img:hover{
     animation-duration: .1s;
@@ -147,6 +134,6 @@
 } */
 @media screen and (max-width:600px) {
     .wrap__bells{
-        grid-template-columns: 20% 80%;
+        grid-template-columns: 0% 80%;
     }
 }
