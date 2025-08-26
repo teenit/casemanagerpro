@@ -684,7 +684,7 @@ export const LANG = {
       images:"Зображення",
       videos:"Відео",
       documents:"Документ",
-      links:"Посилання",
+      link:"Посилання",
       archives:"Архів",
     },
     alertMessages: {

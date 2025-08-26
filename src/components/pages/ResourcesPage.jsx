@@ -343,7 +343,7 @@ class ResourcesPage extends Component {
         fixed: false,
         isHidden: false,
         formatter: (cell, row) => {
-          return <div>{LANG.resources.types[cell]}</div>
+          return <div>{LANG.resources.types[cell] ? LANG.resources.types[cell] : LANG.resources.types[row.type]}</div>
         }
       },
       {
