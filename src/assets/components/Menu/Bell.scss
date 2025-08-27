@@ -1,5 +1,11 @@
 .Bell {
     position: relative;
+    &-badge {
+        .MuiBadge-badge {
+background-color: #8f0101;
+        }
+        
+    }
     &-click {
         display: flex;
         align-items: center;

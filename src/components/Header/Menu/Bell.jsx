@@ -11,7 +11,7 @@ import Icon from "../../elements/Icons/Icon";
 
 import MenuNotification from "../../elements/Notifications/MenuNotification";
 import { apiResponse } from "../../Functions/get_apiObj";
-import { Button, Drawer } from "@mui/material";
+import { Badge, Button, Drawer, IconButton } from "@mui/material";
 const Bell = () => {
     const location = useLocation()
     const [bells, setBells] = useState([])
@@ -92,14 +92,27 @@ const Bell = () => {
                     </div>
                 </div>
             </Drawer>
-            <div className={'Bell-click'}>
+             <IconButton size="small" aria-label={"test"} onClick={() => {
+                    setActive(!active)
+                    setState({ limit: 10, page: 0, more: true });
+                    getNotifications()
+                }}>
+                <Badge className="Bell-badge" anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }} badgeContent={unRead} color="secondary"
+                >
+                     <Icon addClass="Bell-click-img" icon={'notification'}  />
+                </Badge>
+                </IconButton>
+            {/* <div className={'Bell-click'}>
                 <Icon addClass="Bell-click-img" icon={'notification'} onClick={() => {
                     setActive(!active)
                     setState({ limit: 10, page: 0, more: true });
                     getNotifications()
                 }} />
                 {unRead !== 0 && <span className={'Bell-click-count'}></span>}
-            </div>
+            </div> */}
 
         </div>
     )
