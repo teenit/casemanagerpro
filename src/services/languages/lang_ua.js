@@ -1,5 +1,6 @@
 export default {
   GLOBAL: {
+    print: "Друкувати",
     add: "Додати",
     save: "Зберегти",
     download: "Скачати",
@@ -1034,4 +1035,8 @@ export default {
       year: "1 раз на рік",
     }
   },
+  case: {
+    view_settings: "Налаштування вигляду кейса",
+    fill_anceta: "Заповнити анкету",
+  }
 }

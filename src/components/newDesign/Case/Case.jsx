@@ -33,7 +33,7 @@ import TextEditor from "../../elements/TextEditor/TextEditor";
 import Files from "./Files";
 import Fields from "./Fields";
 import Histories from "./Histories";
-import { Button, Rating, Switch } from "@mui/material";
+import { Box, Button, Rating, SpeedDial, SpeedDialAction, SpeedDialIcon, Switch } from "@mui/material";
 import FieldsBlock from "./FieldsBlock";
 import CaseLikePDF from "./CaseLikePDF";
 import Icon from "../../elements/Icons/Icon";
@@ -217,10 +217,7 @@ const Case = () => {
                     setModeDisplay(e.target.checked);
                     localStorage.setItem("case_mode_display", e.target.checked ? 1 : 0)
                 }}/> */}
-                <Button disabled={ancetaForm.list.length == 0} onClick={openAncetaForm}><Icon icon='quiz'/></Button>
-                {access.case_export_pdf && <Button onClick={printPDF}><Icon icon='print'/></Button>}
-                <Button onClick={() => { setOpenSetting(!openSetting) }}><Icon icon="check-list"/></Button>
-                
+         
                 {/* <img src={setImg} alt=""
                     onClick={() => { setOpenSetting(!openSetting) }} /> */}
                 {/* {
@@ -334,11 +331,6 @@ const Case = () => {
                     </div>
                 </Modal>
             }
-            <div style={{
-                display: 'flex',
-                justifyContent: "end"
-            }}>{access.super && <Button color="error" onClick={()=>setConfirmDeleteCase(true)}><Icon icon="delete" addClass="delete-icon"/>{LANG.CASE_PAGE.delete_case}</Button>}</div>
-            
             {settingsAlert && <SmallNotification isSuccess={true} text={"Показ елементів оновлено"} close={() => { setSettingsAlert(false) }} />}
             {errorAlert && <SmallNotification isSuccess={false} text={"Не всі поля заповнено"} close={() => { setErrorAlert(false) }} />}
             {successAlert && <SmallNotification isSuccess={true} text={"Успіх"} close={() => { setSuccessAlert(false) }} />}
@@ -348,6 +340,56 @@ const Case = () => {
                 text={LANG.CASE_PAGE.confirm_case_delete}
                 successHandler={deleteCase}
             />}
+
+             
+                    <SpeedDial
+                        ariaLabel="SpeedDial basic example"
+                        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+                        icon={<SpeedDialIcon />}
+                    >
+                        <SpeedDialAction
+                            key={"quiz"}
+                            icon={<Button disabled={ancetaForm.list.length == 0} onClick={openAncetaForm}><Icon icon='quiz'/></Button>}
+                            slotProps={{
+                            tooltip: {
+                                title: LANG.case.fill_anceta,
+                            },
+                            }}
+                        />
+                       
+                        <SpeedDialAction
+                            key={"delete"}
+                            icon={<Button onClick={() => { setOpenSetting(!openSetting) }}><Icon icon="check-list"/></Button>}
+                            slotProps={{
+                            tooltip: {
+                                title: LANG.case.view_settings,
+                            },
+                            }}
+                        />
+                         {access.case_export_pdf && <SpeedDialAction
+                            key={"print"}
+                            icon={<Button onClick={printPDF}><Icon icon='print'/></Button>}
+                            slotProps={{
+                            tooltip: {
+                                title: LANG.GLOBAL.print,
+                            },
+                            }}
+                        />}
+                         {access.super &&
+                        <SpeedDialAction
+                            key={"quiz"}
+                            icon={<Button color="error" onClick={()=>setConfirmDeleteCase(true)}><Icon icon="delete" addClass="delete-icon"/></Button>}
+                            slotProps={{
+                            tooltip: {
+                                title: LANG.CASE_PAGE.delete_case,
+                            },
+                            }}
+                        />
+
+                        }
+                       
+                    </SpeedDial>
+                
 
         </div>
     ) : (
