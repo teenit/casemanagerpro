@@ -16,7 +16,7 @@ class TaskModal extends Component {
         this.state = {
             data: this.props.data || {
                 title: "",
-                description: LANG.GLOBAL.description,
+                description: "",
                 dead_line: " ",
                 from: " ",
                 to: " ",
@@ -101,7 +101,10 @@ class TaskModal extends Component {
                                 onChange={(e) => { this.dataHandler("from", e.target.value) }} />
 
                         </div>
-                        <SmallTextEditor value={data.description} onChange={(e) => this.dataHandler("description", e)}/>
+                        <label htmlFor="">{LANG.GLOBAL.description}
+                            <SmallTextEditor value={data.description} onChange={(e) => this.dataHandler("description", e)}/>
+                        </label>
+                        
                         {/* <Textarea
                             value={data.description}
                             label={LANG.GLOBAL.description}

@@ -34,7 +34,10 @@ class EditResourcesModal extends Component {
         }>
             <>
                 <Input addClass="w100" value={this.state.title} onChange={(e) => { this.editHandler("title", e.target.value) }} label={LANG.GLOBAL.title} />
-                <SmallTextEditor onChange={(e) => { this.editHandler("description", e) }} value={this.state.description}/>
+                <label htmlFor="">{LANG.GLOBAL.description}
+                    <SmallTextEditor onChange={(e) => { this.editHandler("description", e) }} value={this.state.description}/>
+                </label>
+                
                 {/* <Textarea addClass="w100" value={this.state.description} onChange={(e) => { this.editHandler("description", e.target.value) }} label={LANG.GLOBAL.description} /> */}
                 {type == "link" && <Input addClass="w100" value={this.state.link} onChange={(e) => { this.editHandler("link", e.target.value) }} label={LANG.GLOBAL.link} />}
             </>

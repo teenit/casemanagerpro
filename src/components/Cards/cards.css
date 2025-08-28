@@ -24,6 +24,9 @@
     max-width: 300px;
     min-width: 300px;
     background-color: #90CAF988;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 .card__img{
     display: flex;
@@ -48,7 +51,6 @@ border-radius: 10px;
     text-align: center;
 }
 .card__info{
-    margin-top: 30px;
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 20px;

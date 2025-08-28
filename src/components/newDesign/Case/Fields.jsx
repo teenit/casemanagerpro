@@ -11,7 +11,8 @@ import ModalConfirm from "../../Modals/ModalConfirm";
 import AccessCheck from '../../Functions/AccessCheck';
 import { useSelector } from 'react-redux';
 import ActionMenu from '../../Portals/ActionMenu';
-
+import TextDescription from '../../elements/TextFormatters/TextDescription';
+import SmallTextEditor from "../../elements/TextEditor/SmallTextEditor"
 const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
     const [alert, setAlert] = useState({
         success: false,
@@ -77,7 +78,7 @@ const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
     };
 
     const updateInfo = () => {
-        apiResponse({...formData, type: "field",}, "manage/files/update.php").then((res) => {
+        apiResponse({ ...formData, type: "field", }, "manage/files/update.php").then((res) => {
             handleAlertChange("success", LANG.fields.alertMessages.successEdit);
             getCaseInfo();
             setModal({ ...modal, add: false });
@@ -113,44 +114,44 @@ const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
     };
 
     const access = {
-        case_simple_info_edit: AccessCheck("view_edit", "a_page_case_simple_info", "edit") &&cg,
+        case_simple_info_edit: AccessCheck("view_edit", "a_page_case_simple_info", "edit") && cg,
         super: AccessCheck('super')
     }
 
     const InfoBlock = ({ item }) => {
-            const menuItems = [
-               access.case_simple_info_edit&& {
-                    title: LANG.GLOBAL.edit,
-                    isHidden: false,
-                    icon: "edit",
-                    click: () => {
-                        handleEdit(item)
-                    }
-                },
-                {
-                    itemType: 'divider'
-                },
-                access.case_simple_info_edit &&{
-                    title: LANG.GLOBAL.delete,
-                    isHidden: false,
-                    icon: "delete",
-                    color: 'error',
-                    click: () => {
-                        handleModalChange("confirm", item.id)
-                    }
-                },
-            ].filter(Boolean)
-        const user = useSelector(state=>state.auth);
+        const menuItems = [
+            access.case_simple_info_edit && {
+                title: LANG.GLOBAL.edit,
+                isHidden: false,
+                icon: "edit",
+                click: () => {
+                    handleEdit(item)
+                }
+            },
+            {
+                itemType: 'divider'
+            },
+            access.case_simple_info_edit && {
+                title: LANG.GLOBAL.delete,
+                isHidden: false,
+                icon: "delete",
+                color: 'error',
+                click: () => {
+                    handleModalChange("confirm", item.id)
+                }
+            },
+        ].filter(Boolean)
+        const user = useSelector(state => state.auth);
 
         return (
             <div className='Fields-InfoBlock'>
                 <div className='Fields-InfoBlock-title'>
                     <div className='Fields-InfoBlock-title-block'>{item.title}</div>
-                    {((access.case_simple_info_edit && item.user_id === user.id) || access.super) && 
-                    <ActionMenu menuItems={menuItems}/>
+                    {((access.case_simple_info_edit && item.user_id === user.id) || access.super) &&
+                        <ActionMenu menuItems={menuItems} />
                     }
                 </div>
-                <span>{item.description}</span>
+                <TextDescription text={item.description} />
             </div>
         );
     };
@@ -182,7 +183,9 @@ const Fields = ({ fields, getCaseInfo, case_id, cg }) => {
                 </div>
             }>
                 <Input addClass='w100' value={formData.title} onChange={(e) => { handleFormChange("title", e.target.value) }} label={LANG.GLOBAL.title} />
-                <Textarea value={formData.description} onChange={(e) => { handleFormChange("description", e.target.value) }} label={LANG.GLOBAL.description} />
+                <label htmlFor="">{LANG.GLOBAL.description}
+                    <SmallTextEditor value={formData.description} onChange={(e) => { handleFormChange("description", e) }} />
+                </label>
             </Modal>}
             {modal.confirm && <ModalConfirm closeHandler={() => { handleModalChange("confirm") }} successHandler={handleDelete}
                 text={"Ви впевнені, що хочете видалити цю інформацію?"} />}

@@ -84,7 +84,9 @@ const ResourceModal = ({ close, loadResources, type = "files" }) => {
                         value={meta.title}
                         onChange={(e) => handleMetaChange("title", e.target.value)}
                     />
-                    <SmallTextEditor value={meta.description} onChange={(e) => handleMetaChange("description", e)}/>
+                    <label htmlFor="">{LANG.GLOBAL.description}
+                        <SmallTextEditor value={meta.description} onChange={(e) => handleMetaChange("description", e)}/>
+                    </label>
                     {/* <Textarea
                         label={LANG.GLOBAL.description}
                         value={meta.description}

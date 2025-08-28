@@ -136,20 +136,28 @@ const Cases = () => {
 
     const handleNextPage = () => {
         setOptions(prev => ({ ...prev, page: prev.page + 1 }));
+        loadCases()
     };
 
     const handlePrevPage = () => {
         setOptions(prev => ({ ...prev, page: Math.max(prev.page - 1, 0) }));
+        loadCases()
     };
 
     const handleChangeRowsPerPage = (newLimit) => {
         setOptions(prev => ({ ...prev, page: 0, limit: newLimit }));
+        loadCases()
     };
 
     const handleSortClick = (field, order) => {
         setOptions(prev => ({ ...prev, sort: { field, order } }));
+        loadCases()
     };
 
+    const handleSortChange = (key, value)=>{
+        setOptions({ ...options, sort: { ...options.sort, [key]: value } })
+        loadCases()
+    }
     const prepareColumns = (columns) => {
         return columns.map((column) => {
             if (typeof column.formatter !== 'function') {
@@ -228,7 +236,7 @@ const Cases = () => {
                         <Select
                             size="small"
                             value={options.sort.field}
-                            onChange={(e) => setOptions({ ...options, sort: { ...options.sort, field: e.target.value } })}
+                            onChange={(e) => handleSortChange("field", e.target.value)}
                         >
                             {columnsTable.map((item) =>
                                 item.sort && (
@@ -244,7 +252,7 @@ const Cases = () => {
                         <Select
                             size="small"
                             value={options.sort.order}
-                            onChange={(e) => setOptions({ ...options, sort: { ...options.sort, order: e.target.value } })}
+                            onChange={(e) => handleSortChange("order", e.target.value)}
                         >
                             <MenuItem value={"ASC"}>{LANG.casesList.ascending}</MenuItem>
                             <MenuItem value={"DESC"}>{LANG.casesList.descending}</MenuItem>
@@ -284,6 +292,7 @@ const Cases = () => {
                                 click={() => {
                                     if (options.page !== 0) {
                                         setOptions(prev => ({ ...prev, page: 0 }));
+                                        loadCases()
                                     } else {
                                         navigate("/add-case");
                                     }
@@ -302,6 +311,7 @@ const Cases = () => {
                     click={() => {
                         if (options.page !== 0) {
                             setOptions(prev => ({ ...prev, page: 0 }));
+                            loadCases()
                         } else {
                             navigate("/add-case");
                         }
