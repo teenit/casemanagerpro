@@ -456,7 +456,9 @@ export default {
     categories: "Категорія",
     noCategory: "Без категорії",
     no_cases: "Кейсів не знайдено",
-    add_case: "Додати кейс"
+    add_case: "Додати кейс",
+    as_table:"Як таблицю",
+    reset_filters:"Скинути фільтри"
   },
   case_data: {
     first_name: "Ім'я",

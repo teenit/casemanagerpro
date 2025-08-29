@@ -10,7 +10,7 @@ const Textarea = ({ value = "", onChange, label = "", addClass="" }) => {
                 onChange={onChange}
                 multiline={true}
                 minRows={3}
-                maxRows={5}
+                // maxRows={7}
                 className="w100"
             />
         </div>

@@ -149,14 +149,15 @@ const GiveHelps = ({ helps, case_id, getCaseInfo, cg }) => {
                                 onChange={(e) => changeHandler("who", e.target.value)}
                             />
                         </div>
-                        <div className="Help-create-status">
+                        {categories && Object.keys(categories).length>0 && <div className="Help-create-status">
                             <div className="bold">{LANG.status}</div>
                             <SelectStatus
                                 statuses={categories}
                                 value={state.category}
                                 onChange={(e) => changeHandler("category", e)}
                             />
-                        </div>
+                        </div>}
+
                         <div className="Help-create-value">
                             <Textarea
                                 label={LANG.give_help.details_help}

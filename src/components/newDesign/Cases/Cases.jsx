@@ -12,8 +12,7 @@ import Input from "../../elements/Inputs/Input";
 import ExportPDFCasesModal from "../../Modals/ExportPDFCasesModal";
 import EmptyData from "../../EmptyData/EmptyData";
 import AccessCheck from "../../Functions/AccessCheck";
-import useAccessCheckCases from "../../Functions/AccessCheckCases"; // теперь это кастомный хук
-
+import AccessCheckCases from "../../Functions/AccessCheckCases"
 const columnsTable = [
     {
         dataField: 'id',
@@ -80,7 +79,8 @@ const mode = "cases_filter";
 const Cases = () => {
     const fields = useSelector(state => state.fields.cases);
     const activeFilter = localStorage.getItem(mode) ? JSON.parse(localStorage.getItem(mode)) : null;
-
+    const rights = useSelector(state => state.auth);
+    const categories = useSelector(state => state.categories.case);
     const [state, setState] = useState([]);
     const [options, setOptions] = useState({
         page: activeFilter?.page || 0,
@@ -96,10 +96,7 @@ const Cases = () => {
     const [exportModal, setExportModal] = useState(false);
     const [totalCount, setTotalCount] = useState("hidden");
     const [view, setView] = useState("cards");
-
-    // права на кейсы
-    const casesAccess = useAccessCheckCases(state);
-
+    const [casesAccess, setCasesAccess] = useState({ look: [], edit: [] });
     const navigate = useNavigate();
 
     const access = {
@@ -115,17 +112,19 @@ const Cases = () => {
         localStorage.setItem(mode, JSON.stringify(options));
     }, [options.page, options.limit, options.sort, options.search]);
 
-    const loadCases = () => {
-        apiResponse({
-            page: options.page + 1,
-            limit: options.limit,
-            sort: options.sort,
-            search: options.search
-        }, "case/get/cases-page-list.php").then((res) => {
-            setState(res.list || []);
-        });
-    };
-
+   const loadCases = () => {
+    setState([]);
+    setCasesAccess({ look: [], edit: [] });
+    apiResponse({
+        page: options.page + 1,
+        limit: options.limit,
+        sort: options.sort,
+        search: options.search
+    }, "case/get/cases-page-list.php").then((res) => {
+        setState(res.list || []);
+        setCasesAccess(AccessCheckCases(res.list, rights, categories));
+    });
+};
     const loadTotalCount = () => {
         apiResponse({}, "case/get/cases-list-count.php").then((res) => {
             if (res.status) {
@@ -136,27 +135,22 @@ const Cases = () => {
 
     const handleNextPage = () => {
         setOptions(prev => ({ ...prev, page: prev.page + 1 }));
-        loadCases()
     };
 
     const handlePrevPage = () => {
         setOptions(prev => ({ ...prev, page: Math.max(prev.page - 1, 0) }));
-        loadCases()
     };
 
     const handleChangeRowsPerPage = (newLimit) => {
         setOptions(prev => ({ ...prev, page: 0, limit: newLimit }));
-        loadCases()
     };
 
     const handleSortClick = (field, order) => {
         setOptions(prev => ({ ...prev, sort: { field, order } }));
-        loadCases()
     };
 
-    const handleSortChange = (key, value)=>{
+    const handleSortChange = (key, value) => {
         setOptions({ ...options, sort: { ...options.sort, [key]: value } })
-        loadCases()
     }
     const prepareColumns = (columns) => {
         return columns.map((column) => {
@@ -205,9 +199,6 @@ const Cases = () => {
 
     const casesColumns = prepareColumns(getColumns());
 
-    // применяем фильтр прав
-    const filteredCases = casesAccess.look;
-
     return (
         <div className="ListCases">
             <div className="ListCases-sort">
@@ -223,7 +214,7 @@ const Cases = () => {
                 </div>
                 <div className="ListCases-sort-right">
                     {access.look_list && (
-                        <div>Як таблицю
+                        <div>{LANG.casesList.as_table}
                             <Switch
                                 size="small"
                                 checked={view === 'table'}
@@ -267,10 +258,10 @@ const Cases = () => {
                 </div>
             </div>
 
-            {filteredCases.length > 0 && view === "cards" && (
+            {casesAccess.look.length > 0 && view === "cards" && (
                 <GetCases
-                    posts={filteredCases}
-                    postsChange={() => {}}
+                    posts={casesAccess.look}
+                    postsChange={() => { }}
                     loadCasesMore={loadCases}
                 />
             )}
@@ -279,7 +270,7 @@ const Cases = () => {
                 <div className="ListCases-table">
                     <Table
                         columns={casesColumns}
-                        data={filteredCases}
+                        data={casesAccess.look}
                         keyField={'id'}
                         addClass="without-row-menu"
                         sortField={options.sort.field}
@@ -292,7 +283,6 @@ const Cases = () => {
                                 click={() => {
                                     if (options.page !== 0) {
                                         setOptions(prev => ({ ...prev, page: 0 }));
-                                        loadCases()
                                     } else {
                                         navigate("/add-case");
                                     }
@@ -303,15 +293,14 @@ const Cases = () => {
                 </div>
             )}
 
-            {filteredCases.length === 0 && view === 'cards' && (
+            {casesAccess.look.length === 0 && view === 'cards' && (
                 <EmptyData
                     access={access.add}
                     title={LANG.casesList.no_cases}
-                    buttonText={options.page !== 0 ? "Скинути фільтри" : LANG.casesList.add_case}
+                    buttonText={options.page !== 0 ? LANG.casesList.reset_filters : LANG.casesList.add_case}
                     click={() => {
                         if (options.page !== 0) {
                             setOptions(prev => ({ ...prev, page: 0 }));
-                            loadCases()
                         } else {
                             navigate("/add-case");
                         }
@@ -319,11 +308,11 @@ const Cases = () => {
                 />
             )}
 
-            {filteredCases.length > 0 && (
+            {casesAccess.look.length > 0 && (
                 <div className="ListCases-pagination">
                     <Pagination
                         page={options.page}
-                        count={filteredCases.length}
+                        count={casesAccess.look.length}
                         nextPage={handleNextPage}
                         prewPage={handlePrevPage}
                         rowsPerPage={options.limit}

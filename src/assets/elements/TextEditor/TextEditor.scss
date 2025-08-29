@@ -21,6 +21,18 @@
         // }
     }
 }
+/* рамка вокруг квадратиков выбора цвета текста */
+.ql-color .ql-picker-item {
+  border: 1px solid #ccc !important;
+  box-sizing: border-box;   
+}
+
+/* рамка вокруг квадратиков выбора цвета заливки */
+.ql-background .ql-picker-item {
+  border: 1px solid #ccc !important;
+  box-sizing: border-box;
+}
+
 .ql-snow .ql-picker.ql-size .ql-picker-label::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item::before {
   content: attr(data-value);

@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
 
-const useAccessCheckCases = (cases) => {
-    const rights = useSelector(state => state.auth);
-    const categories = useSelector(state => state.categories.case);
+const AccessCheckCases = (cases, rights, categories) => {
+
     const userID = localStorage.getItem("id");
         if ((rights.a_super == 1 || rights.a_administartor == 1) && rights.a_blocked != 1) return {look:cases, edit:cases};
     switch (rights["a_cases_get"]) {
@@ -48,4 +47,4 @@ const useAccessCheckCases = (cases) => {
     }
 };
 
-export default useAccessCheckCases;
+export default AccessCheckCases;
