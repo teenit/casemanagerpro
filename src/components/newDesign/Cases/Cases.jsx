@@ -196,12 +196,23 @@ const Cases = () => {
         return [...columnsTable, ...extraFields];
     };
 
-    const exportCasesToPdf = () => {
+    const loadCasesToExport = (callback) => {
         apiResponse({}, "case/get/cases-page-list.php").then((res) => {
-            setListToExport(res.list || []);
-            setExportModal(true);
+            
+            if (callback) callback(res.list)
         });
+    }
+
+    const exportToExcel = () => {
+        
+    }
+
+
+    const exportCasesToPdf = () => {
+        loadCasesToExport((list)=>setListToExport(list || []));
+        setExportModal(true);
     };
+
 
     const casesColumns = prepareColumns(getColumns());
 

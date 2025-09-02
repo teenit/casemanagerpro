@@ -44,3 +44,28 @@ export async function apiResponse(objTo, url){
          throw error;
      })
  }
+
+ export async function getBlobFile(objTo, url) {
+    objTo.id = obj.id;
+    objTo.token = obj.token;
+    if (!objTo.codeOrganisation) 
+        objTo.codeOrganisation = obj.codeOrganisation;
+
+     return await axios({
+         url: serverAddres(url),
+         method: "POST",
+         credentials: 'include',
+         header: {'application/x-www-form-urlencoded': 'application/json;charset=utf-8'},
+         data: JSON.stringify(objTo),
+         responseType: "blob",
+         onUploadProgress: (event) => {
+         } 
+     })
+     .then((data)=>{
+         return (data.data)
+
+     })
+     .catch((error)=>{
+         throw error;
+     })
+ }

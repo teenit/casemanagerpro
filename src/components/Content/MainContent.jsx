@@ -41,6 +41,7 @@ import TasksPage from "../pages/TasksPage";
 import TaskPage from "../pages/TaskPage";
 import WrapperParams from "../pages/WrapperParams";
 import ResourcesPage from "../pages/ResourcesPage";
+import ExportCasesPage from "../pages/ExportCasesPage";
 
 const MainContent = () => {
   const rights = useSelector(state => state.auth);
@@ -96,6 +97,7 @@ const MainContent = () => {
         <Route path='/file/:id' element={access.file ? <File /> : <NotFound />} />
         <Route path='/calendar' element={access.calendar ? <MyBigCalendar /> : <NotFound />} />
         <Route path='/ancets' element={<AncetsPage />} />
+        <Route path='/export_cases' element={<ExportCasesPage />} />
         <Route path='/statistic' element={<Statistic />} />
         {/* <Route path='/login' element={<LoginPage />} /> */}
         {/* <Route path='/google-drive' element={<GoogleDrivePage />} /> */}
