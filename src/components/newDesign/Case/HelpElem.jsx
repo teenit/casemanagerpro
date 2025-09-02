@@ -31,7 +31,7 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
         message: null
     })
     const menuItems = [
-        editor&&{
+        editor && {
             title: LANG.GLOBAL.edit,
             isHidden: false,
             icon: "edit",
@@ -42,7 +42,7 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
         {
             itemType: 'divider'
         },
-        editor&&{
+        editor && {
             title: LANG.GLOBAL.delete,
             isHidden: false,
             icon: "delete",
@@ -127,7 +127,7 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
                             }
                         </div>
                     </div>
-                    <ActionMenu menuItems={menuItems}/>
+                    <ActionMenu menuItems={menuItems} />
                 </div>
                 <div className="task">
                     {
@@ -183,6 +183,7 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
                     <div className="Help-create">
                         <div className="Help-create-date">
                             <Input
+                                addClass="w100"
                                 type="datetime-local"
                                 value={state.date_time}
                                 variant="standard"
@@ -191,6 +192,7 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
                                 }}
                             />
                             <Input
+                                addClass="w100"
                                 type="text"
                                 label={LANG.give_help.who_give_help}
                                 value={state.who}
@@ -200,10 +202,10 @@ const HelpElem = ({ help, categories, getCaseInfo, editor }) => {
                                 }}
                             />
                         </div>
-                        <div className="Help-create-status">
+                        {categories && Object.keys(categories).length > 0 && <div className="Help-create-status">
                             <div className="bold">{LANG.status}</div>
                             <SelectStatus statuses={categories} value={state.category} onChange={(e) => changeHandler("category", e)} />
-                        </div>
+                        </div>}
                         <div className="Help-create-value">
                             <Textarea
                                 label={LANG.give_help.details_help}

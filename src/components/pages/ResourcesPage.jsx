@@ -27,6 +27,7 @@ import codeImg from "./../../img/resources/code.svg";
 import zipImg from "./../../img/resources/zip.svg";
 import imgImg from "./../../img/resources/img.svg";
 import Icon from "../elements/Icons/Icon";
+import IconByFileType from "../elements/Icons/IconByFileType";
 class ResourcesPage extends Component {
   constructor(props) {
     super(props);
@@ -51,7 +52,7 @@ class ResourcesPage extends Component {
       },
       files: [],
       totalCount: null,
-      users: {},
+      users: [],
       current_resource: null,
     };
   }
@@ -181,8 +182,8 @@ class ResourcesPage extends Component {
   // };
 
   getUsers = () => {
-    apiResponse({ action: "get_users_list" }, "user/users.php").then((res) => {
-      this.setState({ users: res.data || {} });
+    apiResponse({},"user/get-users.php").then((res) => {
+      this.setState({ users: res });
     });
   };
 
@@ -333,7 +334,7 @@ class ResourcesPage extends Component {
       //   fixed: false,
       //   isHidden: false,
       //   formatter: (cell, row) => {
-      //     return row.resourceType === "link" ? <Icon icon="eye" addClass="default-icon" /> : <img src={this.getPreview(row)} alt={row.title} />
+      //     return row.resourceType === "link" ? <Icon icon="eye" addClass="default-icon" /> : <IconByFileType extension={row.extension}/>
       //   }
       // },
       {
@@ -384,8 +385,8 @@ class ResourcesPage extends Component {
         text: LANG.resources.who_uploaded,
         sort: false,
         formatter: (cell, row) => {
-          const name = this.state.users[row.user_id] || LANG.GLOBAL.unknown_user;
-          return <NavLink to={`/user/${row.user_id}`}>{name}</NavLink>;
+          const name = this.state.users.find((item)=>item.id==cell)?.userName || LANG.GLOBAL.unknown_user;
+          return <NavLink to={`/user/${cell}`}>{name}</NavLink>;
         },
       },
       {
