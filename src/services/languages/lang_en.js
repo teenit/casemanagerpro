@@ -924,7 +924,8 @@ export default {
     ancets: "Surveys",
     statistic: "Statistics",
     users: "Users",
-    tasks: "Task manager"
+    tasks: "Task manager",
+    export_cases: "Export cases"
   },
   documents: "Added documents",
   give_help: {

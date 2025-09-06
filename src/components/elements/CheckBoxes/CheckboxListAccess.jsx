@@ -76,7 +76,7 @@ export default function CheckboxListAccess({allMas, checkedMas, onChange, onChec
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={item.name} />
+              <ListItemText id={labelId} primary={item.id + " " + item.name} />
               {item.description && <Hint text={item.description} placement='left'/>}
             </ListItemButton>
           </ListItem>

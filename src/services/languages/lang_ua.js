@@ -924,7 +924,8 @@ export default {
     ancets: "Анкети",
     statistic: "Статистика",
     users: "Користувачі",
-    tasks: "Таск-менеджер"
+    tasks: "Таск-менеджер",
+    export_cases: "Експорт кейсів"
   },
   documents: "Додані документи",
   give_help: {

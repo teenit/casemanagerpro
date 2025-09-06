@@ -63,7 +63,8 @@ const MainContent = () => {
     tasks: AccessCheck('view_edit', 'a_task_manager', 'view'),
     task: AccessCheck('view_edit', 'a_task_manager', 'view'),
     file: AccessCheck('view_edit', "a_page_file", "view"),
-    fields: AccessCheck('yes_no', "a_super")
+    fields: AccessCheck('yes_no', "a_super"),
+    export_cases: AccessCheck('yes_no', "a_case_export_pdf"),
   }
   const { isAuth } = useAuth();
   const params = useParams()
@@ -97,7 +98,8 @@ const MainContent = () => {
         <Route path='/file/:id' element={access.file ? <File /> : <NotFound />} />
         <Route path='/calendar' element={access.calendar ? <MyBigCalendar /> : <NotFound />} />
         <Route path='/ancets' element={<AncetsPage />} />
-        <Route path='/export_cases' element={<ExportCasesPage />} />
+        <Route path='/export_cases' element={access.export_cases ? <ExportCasesPage /> : <NotFound />} />
+        <Route path='/export_cases/:id' element={access.export_cases ? <WrapperParams component={ExportCasesPage} /> : <NotFound />} />
         <Route path='/statistic' element={<Statistic />} />
         {/* <Route path='/login' element={<LoginPage />} /> */}
         {/* <Route path='/google-drive' element={<GoogleDrivePage />} /> */}

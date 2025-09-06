@@ -262,7 +262,9 @@ const Cases = () => {
                     )}
 
                     {access.print && (
-                        <Button size="small" onClick={exportCasesToPdf}>
+                        <Button size="small" onClick={()=>{
+                            navigate('/export_cases ')
+                        }}>
                             {LANG.casesList.export}
                         </Button>
                     )}

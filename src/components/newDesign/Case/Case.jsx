@@ -43,6 +43,7 @@ import { DateRange } from "@mui/icons-material";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import ModalConfirm from "../../Modals/ModalConfirm";
+import ExportCasesModal from "../../Modals/ExportCasesModal";
 
 const Case = () => {
     const downloadGallery = AccessCheck('yes_no', 'a_page_case_media_download')
@@ -87,6 +88,7 @@ const Case = () => {
     });
     const [errorAlert, setErrorAlert] = useState(false)
     const [successAlert, setSuccessAlert] = useState(false)
+    const [showExportForm, setShowExportForm] = useState(false)
     const getAncetsList = (mode) => {
         apiResponse({case_id: case_id, mode}, "ancets/get-list.php").then(res => {
             if (res.status) {
@@ -368,7 +370,9 @@ const Case = () => {
                         />
                          {access.case_export_pdf && <SpeedDialAction
                             key={"print"}
-                            icon={<Button onClick={printPDF}><Icon icon='print'/></Button>}
+                            icon={<Button onClick={()=>{
+                                setShowExportForm(true);
+                            }}><Icon icon='print'/></Button>}
                             slotProps={{
                             tooltip: {
                                 title: LANG.GLOBAL.print,
@@ -389,8 +393,10 @@ const Case = () => {
                         }
                        
                     </SpeedDial>
-                
 
+                    {showExportForm && 
+                        <ExportCasesModal case_id={case_id} closeHandler={()=>setShowExportForm(false)}/>
+                    }
         </div>
     ) : (
         <>

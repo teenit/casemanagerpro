@@ -407,7 +407,13 @@ export const appConfig = {
       title: "Транзакції",
       description: "",
       path: "/transactions"
-    }
+    },
+     groups: {
+      title: LANG.pages.export_cases,
+      description: "",
+      path: '/export_cases'
+    },
+
   },
   mounths: {
     1: {

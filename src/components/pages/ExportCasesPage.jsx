@@ -8,20 +8,27 @@ import { apiResponse, getBlobFile } from "../Functions/get_apiObj";
 
 const CASE_DATA = {
     profile_photo: {
-        label: "фото (доступно тільки для ПДФ)",
+        label: "Медіа файли",
         visible: 'default',
+        exportFormat: "pdf",
         values: [
             {
                 key: 'profile_photo',
-                label: 'фото (доступно тільки для ПДФ)',
+                label: 'Фото кейсу',
                 type: 'photo'
             }
         ]
     },
     pib: {
-        label: "ПІБ, номер кейсу",
+        label: "Персональні дані",
         visible: 'default',
+        exportFormat: "all",
         values: [
+            {
+                key: 'case_id',
+                label: "Номер кейсу",
+                type: "number",
+            },
             {
                 key: 'middle_name',
                 label: "Прізвище",
@@ -37,17 +44,12 @@ const CASE_DATA = {
                 label: "По батькові",
                 type: "string",
             },
-            {
-                key: 'case_id',
-                label: "Номер кейсу",
-                type: "number",
-            },
-
         ]
     },
     main: {
-        label: "Основна інформація (номера телефонів, пошта, спосіб зв'язку, номери договорів)",
+        label: "Основні персональні дані",
         visible: 'default',
+        exportFormat: "all",
         values: [
             {
                 key: 'phone1',
@@ -87,27 +89,31 @@ const CASE_DATA = {
 
         ]
     },
-    contact: {
+    contacts: {
         label: "Контактні дані ",
         visible: 'fields',
         key: "contacts",
+        exportFormat: "all",
         values: [],
     },
-    work: {
+    works: {
         label: "Робочі дані",
         visible: 'fields',
         key: "works",
+        exportFormat: "all",
         values: [],
     },
     another: {
         label: "Дані по за групою",
         visible: 'fields',
         key: "another",
+        exportFormat: "all",
         values: [],
     },
     details_info: {
         label: "Детальна інформація",
         visible: 'default',
+        exportFormat: "all",
         values: [
             {
                 key: 'potreba',
@@ -133,6 +139,8 @@ const CASE_DATA = {
     },
 }
 
+
+
 class ExportCasesPage extends Component {
     constructor(props) {
         super(props);
@@ -156,12 +164,23 @@ class ExportCasesPage extends Component {
     }
 
     loadCases = () => {
-        apiResponse({}, "case/get/cases-page-list.php").then((res) => {
+        
+        if (this.props?.case_id) {
+        apiResponse({case_id: this.props.case_id}, "case/get/cases-one-list.php").then((res) => {
             if (res.status) {
                 this.setState({ casesList: res.list, loading: false })
             }
 
         });
+        } else {
+            apiResponse({}, "case/get/cases-page-list.php").then((res) => {
+            if (res.status) {
+                this.setState({ casesList: res.list, loading: false })
+            }
+
+        });
+        }
+
     }
 
     prepareExportData = () => {
@@ -184,7 +203,7 @@ class ExportCasesPage extends Component {
                     field_id: item.id,
                     selected: false,
                     type: item.type,
-                    key: item.id,
+                    key: "field_" + item.id,
                     }
                 }))
             }
@@ -262,29 +281,32 @@ class ExportCasesPage extends Component {
             a.click();
             a.remove();
             window.URL.revokeObjectURL(url);
+            if (this.props.successHandler) {
+                this.props.successHandler()
+            }
         })
+    }
 
-        // apiResponse({...data, action: "cases_list"}, "excel/excel.php" ).then((res) => {
-        //      console.log(res)
-        // })
+     exportToPDF = (data) => {
+        getBlobFile({ ...data, action: "cases_list" }, "excel/excel.php").then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res]));
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "cases.zip"; // ім'я файлу
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+            if (this.props.successHandler) {
+                this.props.successHandler()
+            }
+        })
     }
 
     export = () => {
         const { exportData } = this.state
         let data = {};
         data.exportData = { ...exportData };
-        // Object.entries(exportData).forEach(([key, item]) => {
-        //     if (item?.values?.length > 0) {
-        //         item.values.forEach((elem)=>{
-        //             console.log(elem)
-        //             if(elem?.selected) {
-        //                 data.exportData[elem.key] = elem.selected;
-        //             }
-        //         })
-        //     } else {
-        //         data.exportData[key] = item?.selected;
-        //     }     
-        // });
 
         if (this.state.settings.selected && this.state.settings.value) {
             data.documentPassword = this.state.settings.value
@@ -295,9 +317,15 @@ class ExportCasesPage extends Component {
         } else {
             return false;
         }
+        data.exportFormat = this.state.exportFormat;
         if (this.state.exportFormat == 'excel') {
             return this.exportToExcel(data)
         }
+        if (this.state.exportFormat == 'pdf') {
+            return this.exportToPDF(data)
+        }
+
+        this.setState({ activeStep: 3 })
 
     }
 
@@ -315,8 +343,8 @@ class ExportCasesPage extends Component {
                                 value={this.state.exportFormat}
                                 onChange={(e) => this.setState({ exportFormat: e.target.value })}
                             >
-                                <FormControlLabel value={'pdf'} control={<Radio />} label={'PDF'} />
-                                <FormControlLabel value={'excel'} control={<Radio />} label={'Excel'} />
+                                <FormControlLabel value={'pdf'} control={<Radio size="small"/>} label={'PDF'} />
+                                <FormControlLabel value={'excel'} control={<Radio size="small"/>} label={'Excel'} />
                             </RadioGroup>
                             <div>
                                 <Button onClick={() => this.setState({ activeStep: 1 })}>Наступний крок</Button>
@@ -326,8 +354,12 @@ class ExportCasesPage extends Component {
                     <Step>
                         <StepLabel>Оберіть дані для експорту</StepLabel>
                         <StepContent>
-                            <div className="ExportCasesPage-step2-list">
-                                {Object.entries(exportData).map(([key, item]) => (
+                            
+                                {this.state.exportFormat == 'excel' && 
+                                <div className="ExportCasesPage-step2-list">
+                                    {Object.entries(exportData).map(([key, item]) => {
+                                        
+                                    return (item.exportFormat == 'excel' || item.exportFormat == 'all') ?
                                     <div key={key}>
                                         <label>
                                             <Checkbox
@@ -354,39 +386,51 @@ class ExportCasesPage extends Component {
                                                 ))}
                                             </div>
                                         )}
-                                    </div>
-                                ))}
-                            </div>
+                                    </div>:<></>
+                                })}
+                                </div>}
+                                
 
+                                {this.state.exportFormat == 'pdf' && 
+                                <div className="ExportCasesPage-step2-list">
+                                    {Object.entries(exportData).map(([key, item]) => {
+                                        
+                                    return (item.exportFormat == 'pdf' || item.exportFormat == 'all') ?
+                                    <div key={key}>
+                                        <label>
+                                            <Checkbox
+                                                size="small"
+                                                checked={item.selected}
+                                                onChange={(e) => this.onChangeExportData(e, key, 'all')}
+                                            />
+                                            <span>{item.label}</span>
+                                        </label>
+
+                                        {item?.values && Object.keys(item.values).length > 0 && (
+                                            <div style={{ paddingLeft: "20px" }}>
+                                                {item.values.map((elem) => (
+                                                    <div key={elem.key}>
+                                                        <label>
+                                                            <Checkbox
+                                                                size="small"
+                                                                checked={elem.selected}
+                                                                onChange={(e) => this.onChangeExportData(e, elem.key, key)}
+                                                            />
+                                                            <span>{elem.label}</span>
+                                                        </label>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>:<></>
+                                })}
+                                </div>}
                             <div>
                                 <Button onClick={() => this.setState({ activeStep: 0 })}>Попередній крок</Button>
-                                <Button onClick={() => this.setState({ activeStep: 2 })}>Наступний крок</Button>
-                            </div>
-                        </StepContent>
-                    </Step>
-                    <Step>
-                        <StepLabel>Налаштування файлу експорту</StepLabel>
-                        <StepContent>
-                            <div>
-                                <label>
-                                    <Checkbox size="small" checked={settings.selected} onChange={(e) => {
-                                        this.setState({ settings: { ...settings, selected: e.target.checked } })
-                                    }} />
-                                    <span>{settings.label}</span>
-                                </label>
-                                {settings.selected &&
-                                    <Input label={LANG.exportPDFcasesModal.archive_pass} value={settings.value} onChange={(e) => {
-                                        this.setState({ settings: { ...settings, value: e.target.value } })
-                                    }} />
-                                }
-                            </div>
-                            <div>
-                                <Button onClick={() => this.setState({ activeStep: 1 })}>Попередній крок</Button>
                                 <Button onClick={() => {
-                                    this.setState({ activeStep: 3, loading: true }, () => {
+                                     this.setState({ activeStep: 2, loading: true }, () => {
                                         this.loadCases()
                                     })
-
                                 }}>Наступний крок</Button>
                             </div>
                         </StepContent>
@@ -405,6 +449,7 @@ class ExportCasesPage extends Component {
                                     this.setState({ selectedCasesList: [...cases] })
                                 }} />}
                             <div>
+                                <Button onClick={() => {this.setState({ activeStep: 1 })}}>Попередній крок</Button>
                                 <Button onClick={this.export}>Скачати файл</Button>
                             </div>
                         </StepContent>

@@ -1,0 +1,19 @@
+.ExportCasesPage {
+  width: 100%;
+  margin: auto;
+  display: block;
+  max-width: 600px;
+  label {
+    display: flex
+;
+    align-items: center;
+    &:hover {
+      background-color: #E9F4FE;
+      cursor: pointer;
+    }
+  }
+}
+.ExportCasesPage-step2-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
