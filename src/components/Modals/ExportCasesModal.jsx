@@ -15,10 +15,10 @@ class ExportCasesModal extends Component {
 
     render() {
         const { type } = this.state
-        return <Modal header={LANG.resources.edit_resource} closeHandler={this.props.closeHandler} footer={
+        return <Modal header={'Експорт кейсу'} closeHandler={this.props.closeHandler} footer={
             <>
-                <Button variant="contained" onClick={this.saveHandler}>{LANG.GLOBAL.save}</Button>
-                <Button variant="contained" color="error" onClick={this.props.closeHandler}>{LANG.GLOBAL.cancel}</Button>
+                {/* <Button variant="contained" onClick={this.saveHandler}>{LANG.GLOBAL.save}</Button>
+                <Button variant="contained" color="error" onClick={this.props.closeHandler}>{LANG.GLOBAL.cancel}</Button> */}
             </>
         }>
             <>

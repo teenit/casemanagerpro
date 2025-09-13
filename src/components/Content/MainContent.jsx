@@ -42,6 +42,7 @@ import TaskPage from "../pages/TaskPage";
 import WrapperParams from "../pages/WrapperParams";
 import ResourcesPage from "../pages/ResourcesPage";
 import ExportCasesPage from "../pages/ExportCasesPage";
+import PageBuilder from "../pages/PageBuilder";
 
 const MainContent = () => {
   const rights = useSelector(state => state.auth);
@@ -92,6 +93,7 @@ const MainContent = () => {
         <Route path='/task' element={<Task />} />
         <Route path='/test' element={<TestPage />} />
         <Route path='/search' element={<Search />} />
+        {/* <Route path='/page_builder' element={<PageBuilder />} /> */}
         {/* <Route path='/login_new' element={<LoginPage />} /> */}
         <Route path='/transactions' element={<TransactionsPage />} />
         <Route path='/ancets/:id' element={<AncetaPageWrapper />} />

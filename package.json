@@ -19,6 +19,8 @@
     "chart.js": "^4.1.1",
     "dayjs": "^1.11.9",
     "gapi-script": "^1.2.0",
+    "grapesjs": "^0.22.12",
+    "grapesjs-blocks-basic": "^1.0.2",
     "html-react-parser": "^5.1.10",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",

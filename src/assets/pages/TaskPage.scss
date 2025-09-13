@@ -66,8 +66,16 @@
         &-add{
             display: flex;
             align-items: center;
+            flex-direction: column;
             gap: 15px;
+            width: 100%;
+            .SmallTextEditor {
+                width: 100%;
+            }
         }
+    }
+    .ql-editor {
+        min-height: 150px;
     }
 }
 // @media screen and (max-width:400px){

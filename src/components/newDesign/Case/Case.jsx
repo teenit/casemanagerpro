@@ -2,16 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { apiResponse } from "../../Functions/get_apiObj";
 import FilesUploader from "../../elements/Uploaders/FilesUploader";
-import CasePhoto from "../../Cases/Case/Info/CasePhoto";
-import CaseShortInfo from "./Caseshortinfo";
-import setImg from "../../../img/icons/edit-outlined.svg";
-import editImg from "../../../img/icons/edit-48-black.png";
-import cameraImg from "../../../img/icons/camera-48-black.png";
-import { checkRight } from "../../Functions/checkRight";
-import Input from "../../elements/Inputs/Input";
-import { serverAddres } from "../../Functions/serverAddres";
-import axios from "axios";
-import { giveGoodPhotosCase } from "../../Functions/giveGoodPhotos";
 import LoadingPage from "../../Loading/LoadingPage";
 import Plan from "./Plan";
 import CaseProfilePhoto from "./CaseProfilePhoto";
@@ -288,7 +278,7 @@ const Case = () => {
                     <div>
                         {ancetaForm.list.map(item => {
                             return (
-                                <div style={{
+                                <div key={item.id} style={{
                                     display: 'flex',
                                     flexDirection: 'column',
                                     columnGap:'20px'
@@ -315,7 +305,7 @@ const Case = () => {
                         {ancetaForm.questions.map((item, index) => {
                             const number = index + 1;
                             return (
-                                <div key={item.id} className="Case-modal-body-answer-questions-item">
+                                <div key={item.id + index} className="Case-modal-body-answer-questions-item">
                                     <div className="Case-modal-body-answer-questions-item-question">{number}. {item.question}</div>
                                     <div className="Case-modal-body-answer-questions-item-answer">
                                     <Rating
@@ -349,19 +339,21 @@ const Case = () => {
                         sx={{ position: 'fixed', bottom: 16, right: 16 }}
                         icon={<SpeedDialIcon />}
                     >
-                        <SpeedDialAction
+                        {ancetaForm.list.length > 0 && <SpeedDialAction
                             key={"quiz"}
-                            icon={<Button disabled={ancetaForm.list.length == 0} onClick={openAncetaForm}><Icon icon='quiz'/></Button>}
+                            icon={ <Icon icon='quiz'/>}
+                            onClick={openAncetaForm}
                             slotProps={{
                             tooltip: {
                                 title: LANG.case.fill_anceta,
                             },
                             }}
-                        />
+                        />}
                        
                         <SpeedDialAction
-                            key={"delete"}
-                            icon={<Button onClick={() => { setOpenSetting(!openSetting) }}><Icon icon="check-list"/></Button>}
+                            key={"view_settings"}
+                            icon={<Icon icon="check-list"/>}
+                            onClick={() => { setOpenSetting(!openSetting) }}
                             slotProps={{
                             tooltip: {
                                 title: LANG.case.view_settings,
@@ -370,9 +362,10 @@ const Case = () => {
                         />
                          {access.case_export_pdf && <SpeedDialAction
                             key={"print"}
-                            icon={<Button onClick={()=>{
+                            icon={<Icon icon='print'/>}
+                            onClick={()=>{
                                 setShowExportForm(true);
-                            }}><Icon icon='print'/></Button>}
+                            }}
                             slotProps={{
                             tooltip: {
                                 title: LANG.GLOBAL.print,
@@ -381,17 +374,16 @@ const Case = () => {
                         />}
                          {access.super &&
                         <SpeedDialAction
-                            key={"quiz"}
-                            icon={<Button color="error" onClick={()=>setConfirmDeleteCase(true)}><Icon icon="delete" addClass="delete-icon"/></Button>}
+                            key={"delete"}
+                            icon={<Icon icon="delete" addClass="delete-icon"/>}
+                            onClick={()=>setConfirmDeleteCase(true)}
                             slotProps={{
                             tooltip: {
                                 title: LANG.CASE_PAGE.delete_case,
                             },
                             }}
                         />
-
                         }
-                       
                     </SpeedDial>
 
                     {showExportForm && 
